@@ -10,5 +10,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuProfile\MasterDetailProfile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuProfile\MenuItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuProfile\MenuListView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuProfile\MenuPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuProfile\MenuProfile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Profile\Contacts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Profile\Events.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Profile\Groups.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Profile\Information.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Profile\Messages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Profile\MyActivity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Profile\ProfileMe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Profile\ProfileTitle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Profile\Shop.cs" />
   </ItemGroup>
 </Project>
