@@ -1,10 +1,10 @@
-﻿using System;
+﻿using BeginMobile.Services.ManagerServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-//using XamarinFormProfileApp.HttpClientCustom;
 
 namespace BeginMobile.Profile
 {
@@ -12,8 +12,6 @@ namespace BeginMobile.Profile
     {
         public Information()
         {
-            //var listTest = new ManageEarthquake().GetEarthquakes();
-
             Title = "Information";
             //Icon = "";
 
