@@ -1,21 +1,22 @@
-﻿using System;
+﻿using BeginMobile.Services.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
-
 using Xamarin.Forms;
 
 namespace BeginMobile.Menu
 {
     public class HomePage : MasterDetailPage
     {
-        public HomePage()
+        public HomePage(LoginUser loginUser)
         {
             Title = "Home";
-            Master = new Menu();
+            Master = new Menu(loginUser.User);
             Detail = new DetailPage();
         }
 
+        
     }
 }

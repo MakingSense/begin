@@ -67,7 +67,7 @@ namespace BeginMobile.Accounts
                     {
                         //Application.Current.Properties["Authtoken"] = loginUser.Authtoken;
                         //Application.Current.Properties["login"] = loginUser.User;
-                        await Navigation.PushAsync(new HomePage());
+                        await Navigation.PushAsync(new HomePage(loginUser));
                     }
                     else
                     {
