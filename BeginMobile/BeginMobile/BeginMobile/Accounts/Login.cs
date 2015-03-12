@@ -5,6 +5,8 @@ using System.Text;
 using Xamarin.Forms;
 using BeginMobile.Menu;
 using BeginMobile.Utils;
+using BeginMobile.Services.DTO;
+using BeginMobile.Services.ManagerServices;
 
 namespace BeginMobile.Accounts
 {
@@ -18,7 +20,7 @@ namespace BeginMobile.Accounts
             Title = "Login Form";
             email = new Entry
             {
-                Placeholder = "Email",
+                Placeholder = "Username",
                 Keyboard = Keyboard.Email
             };
             password = new Entry
@@ -58,9 +60,20 @@ namespace BeginMobile.Accounts
                 }
                 else
                 {
-                    Application.Current.Properties["IsLoggedIn"] = true;
-                    await Navigation.PushAsync(new HomePage());
+                    var loginUserManager = new LoginUserManager();
+                    var loginUser = loginUserManager.Login(email.Text, password.Text);
 
+                    if (loginUser != null)
+                    {
+                        //Application.Current.Properties["Authtoken"] = loginUser.Authtoken;
+                        //Application.Current.Properties["login"] = loginUser.User;
+                        await Navigation.PushAsync(new HomePage());
+                    }
+                    else
+                    {
+                        DisplayAlert("Authentification Error", "Invalid email or password ",
+                               "Re - Try");
+                    }                      
                 }
             };
             buttonRegister.Clicked += async (s, e) =>
