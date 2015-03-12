@@ -5,6 +5,8 @@ using System.Text;
 using Xamarin.Forms;
 using System.Text.RegularExpressions;
 using BeginMobile.Utils;
+using BeginMobile.Services.DTO;
+using BeginMobile.Services.ManagerServices;
 
 namespace BeginMobile.Accounts
 {
@@ -14,6 +16,7 @@ namespace BeginMobile.Accounts
             @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
             @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
 
+        private readonly Entry _username;
         private readonly Entry _fullName;
         private readonly Entry _email;
         private readonly Entry _password;
@@ -23,6 +26,10 @@ namespace BeginMobile.Accounts
         public Register()
         {
             Title = "Register";
+            _username = new Entry
+            {
+                Placeholder = "Username"
+            };
             _fullName = new Entry
             {
                 Placeholder = "Full Name"
@@ -81,11 +88,24 @@ namespace BeginMobile.Accounts
                     if (isEmailValid)
                     {
                         // Application.Current.Properties["IsRegistered"] = true;
-                        if (_password.Equals(_confirmPassword))
+                        if (_password.Text.Equals(_confirmPassword.Text))
                         {
                             if (_radio.IsToggled)
                             {
-                                await Navigation.PushAsync(new Login());
+                                //
+                                LoginUserManager LoginUserManager = new LoginUserManager();
+
+                                var registerUser = LoginUserManager.Register(_username.Text, _email.Text,
+                                    _password.Text, _fullName.Text);
+
+                                if(registerUser!=null){
+                                    DisplayAlert("Successfull!", "You have successfully registered", "OK");
+                                    await Navigation.PushAsync(new Login());
+                                }
+                                else
+                                {
+                                    DisplayAlert("Error", "Has been happened an error", "OK");
+                                }
                             }
                             else
                             {
@@ -123,6 +143,7 @@ namespace BeginMobile.Accounts
                 VerticalOptions = LayoutOptions.Center,
                 Children =
                                   {
+                                      _username,
                                       _fullName,
                                       _email,
                                       _password,
