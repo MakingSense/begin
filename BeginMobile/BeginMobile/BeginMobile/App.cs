@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+using BeginMobile.Accounts;
 
 namespace BeginMobile
 {
@@ -19,7 +20,10 @@ namespace BeginMobile
 				}
 			};*/
 
-            MainPage = new MenuProfile.MasterDetailProfile();
+           // MainPage = new MenuProfile.MasterDetailProfile();
+
+            var mainNavigation = new NavigationPage(new Login());
+            MainPage = mainNavigation;
 		}
 
 		protected override void OnStart ()
