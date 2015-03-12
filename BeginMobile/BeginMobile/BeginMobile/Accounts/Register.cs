@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Xamarin.Forms;
 using System.Text.RegularExpressions;
+using BeginMobile.Pages;
 using BeginMobile.Utils;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
@@ -70,6 +71,10 @@ namespace BeginMobile.Accounts
                 BackgroundColor = Color.FromHex("77D065")
             };
 
+            buttonTermsAndConditions.Clicked += async (s , e)=>{
+                await Navigation.PushAsync(new TermsAndConditions());
+            };
+
             buttonRegister.Clicked += async (s, e) =>
             {
                 if (String.IsNullOrEmpty(_fullName.Text) ||
@@ -132,13 +137,13 @@ namespace BeginMobile.Accounts
 
             var layoutRadioButton = new StackLayout
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.Start,
                 Children = { _radio, buttonTermsAndConditions }
             };
 
             Content = new StackLayout
             {
-                Spacing = 20,
+                Spacing = 10,
                 Padding = 10,
                 VerticalOptions = LayoutOptions.Center,
                 Children =
