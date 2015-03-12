@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
 {
@@ -13,10 +8,10 @@ namespace BeginMobile.Services.DTO
         public int Id { set; get; }
 
         [JsonProperty("username")]
-        public string Userame { set; get; }
+        public string UserName { set; get; }
 
         [JsonProperty("nicename")]
-        public string Nicename { set; get; }
+        public string NiceName { set; get; }
 
         [JsonProperty("email")]
         public string Email { set; get; }
@@ -28,16 +23,16 @@ namespace BeginMobile.Services.DTO
         public string Registered { set; get; }
 
         [JsonProperty("displayname")]
-        public string Displayname { set; get; }
+        public string DisplayName { set; get; }
 
         [JsonProperty("firstname")]
-        public string Firstname { set; get; }
+        public string FirstName { set; get; }
 
         [JsonProperty("lastname")]
         public string Lastname { set; get; }
 
         [JsonProperty("nickname")]
-        public string Nickname { set; get; }
+        public string NickName { set; get; }
 
         [JsonProperty("description")]
         public string Description { set; get; }
