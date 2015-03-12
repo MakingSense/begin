@@ -139,7 +139,7 @@ namespace BeginMobile.Accounts
             Content = new StackLayout
             {
                 Spacing = 20,
-                Padding = 50,
+                Padding = 10,
                 VerticalOptions = LayoutOptions.Center,
                 Children =
                                   {
