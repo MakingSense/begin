@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="DTO\Capability.cs" />
     <Compile Include="DTO\LoginUser.cs" />
+    <Compile Include="DTO\RegisterUser.cs" />
     <Compile Include="DTO\User.cs" />
     <Compile Include="ManagerServices\LoginUserManager.cs" />
     <Compile Include="Models\User.cs" />
