@@ -12,40 +12,6 @@ namespace BeginMobile.MenuProfile
             Title = "Menu";
             BackgroundColor = Color.FromHex("333333");
 
-            var listTool1 = new ToolbarItem()
-            {
-                Icon = "",
-                Text = "Option 1",
-                Order = ToolbarItemOrder.Secondary
-            };
-
-            var listTool2 = new ToolbarItem()
-            {
-                Icon = "",
-                Text = "Option 2",
-                Order = ToolbarItemOrder.Secondary
-            };
-
-            var listTool3 = new ToolbarItem()
-            {
-                Icon = "",
-                Text = "Option 3",
-                Order = ToolbarItemOrder.Secondary
-            };
-
-            var listTool4 = new ToolbarItem()
-            {
-                Icon = "",
-                Text = "Option 4",
-                Order = ToolbarItemOrder.Secondary,
-                //Command = new Command()
-            };
-            
-            ToolbarItems.Add(listTool1);
-            ToolbarItems.Add(listTool2);
-            ToolbarItems.Add(listTool3);
-            ToolbarItems.Add(listTool4);
-
             Menu = new MenuListView();
 
             var menuLabel = new ContentView

@@ -7,6 +7,7 @@ using BeginMobile.Pages;
 using BeginMobile.Accounts;
 using BeginMobile.MenuProfile;
 using BeginMobile.Utils;
+using BeginMobile.Profile;
 
 namespace BeginMobile.Menu
 {
@@ -60,7 +61,7 @@ namespace BeginMobile.Menu
             menu.ItemSelected += async (sender, e) =>
             {
                 var item = (ConfigurationMenuItems)e.SelectedItem;
-                var itemPageProfile = new MasterDetailProfile();
+                var itemPageProfile = new ProfileMe();
                 var itemPageKnocks = new ContentPage { Title = "Knocks" };
 
                 if (item.OptionName.Equals(Items.Profile.ToString()))
