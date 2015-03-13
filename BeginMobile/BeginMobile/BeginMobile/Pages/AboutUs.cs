@@ -20,9 +20,7 @@ namespace BeginMobile.Pages
 
 					new Label
 					    {
-					        Text = "Global InSight Software is a software development company that helps to build advanced solutions for companies" +
-					               " in different industries from marketing, financial services to network management, enterprise technology providers" +
-					               " and other sectors, all over the globe. "
+					        Text = ""
 					    }
 				}
             };

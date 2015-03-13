@@ -18,7 +18,7 @@ namespace BeginMobile.Menu
     {
         private const string DefaultUri = "http://www.americanpresidents.org/images/01_150.gif";
 
-        private const string pUserDefault = "userdefault.png";
+        private const string pUserDefault = "userdefault2.png";
 
         private const string pProfileMenuIcon = "userprofile.png";
         private const string knocks = "padlock.png";
@@ -53,7 +53,7 @@ namespace BeginMobile.Menu
 
             var userInfoTableView = new TableView
             {
-                HeightRequest = 200,
+                HeightRequest = 150,
                 Root = new TableRoot
                                                        {
                                                            new TableSection
@@ -75,7 +75,7 @@ namespace BeginMobile.Menu
 
             var menu = new ListView
             {
-                HeightRequest = 250,
+                HeightRequest = 150,
                 ItemsSource = menuItemList,
                 ItemTemplate = cell
                 //ItemsSource = menuItems,
