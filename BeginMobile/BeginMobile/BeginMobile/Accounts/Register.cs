@@ -57,7 +57,8 @@ namespace BeginMobile.Accounts
 
             var buttonTermsAndConditions = new Button()
             {
-                Text = " Terms & Conditions",
+                Text = "I agree the Terms & Conditions",
+                FontSize=10,
                 Style = CustomizedButtonStyle.GetControlButtonStyle(),
                 TextColor = Color.FromHex("77D065")
             };
@@ -175,7 +176,7 @@ namespace BeginMobile.Accounts
             var layoutRadioButton = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
-                Children = { labelSwitcher, buttonTermsAndConditions, switcher }
+                Children = {  buttonTermsAndConditions, switcher }
             };
 
 

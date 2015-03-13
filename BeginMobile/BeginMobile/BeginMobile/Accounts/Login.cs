@@ -56,7 +56,7 @@ namespace BeginMobile.Accounts
             {
                 if (String.IsNullOrEmpty(email.Text) || String.IsNullOrEmpty(password.Text))
                 {
-                    await DisplayAlert("Validation Error", "Email and Password are required",
+                    await DisplayAlert("Validation Error", "Username and Password are required",
                                  "Re - Try");
                 }
                 else
@@ -75,7 +75,7 @@ namespace BeginMobile.Accounts
                     }
                     else
                     {
-                        DisplayAlert("Authentification Error", "Invalid email or password ",
+                        DisplayAlert("Authentification Error", "Invalid username or password ",
                                "Re - Try");
                     }                      
                 }
