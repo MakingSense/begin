@@ -13,7 +13,7 @@ namespace BeginMobile.iOS
         /// <summary>
         /// Used for registration with dependency service
         /// </summary>
-        public static void Init() { }
+        //public static void Init() { }
         /// <summary>
         /// 
         /// </summary>
