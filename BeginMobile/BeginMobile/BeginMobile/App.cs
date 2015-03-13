@@ -1,30 +1,36 @@
 ﻿using Xamarin.Forms;
 using BeginMobile.Accounts;
+using BeginMobile.Interfaces;
+using BeginMobile.Menu;
+using BeginMobile.Services.DTO;
 
 namespace BeginMobile
 {
-    public class App : Xamarin.Forms.Application
+    public class App : Xamarin.Forms.Application, ILoginManager
 	{
+        static ILoginManager loginManager;
+        public static App Current;
+
 		public App ()
 		{
-			// The root page of your application
-			/*MainPage = new ContentPage {
-				Content = new StackLayout {
-					VerticalOptions = LayoutOptions.Center,
-					Children = {
-						new Label {
-							XAlign = TextAlignment.Center,
-							Text = "Welcome to Xamarin Forms!"
-						}
-					}
-				}
-			};*/
+		    Current = this;
+		    loginManager = this;
 
-           // MainPage = new MenuProfile.MasterDetailProfile();
+            var isLoggedIn = Properties.ContainsKey("IsLoggedIn") ? (bool)Properties["IsLoggedIn"] : false;
+            MainPage = new LoginModalPage(this);
 
-            var mainNavigation = new NavigationPage(new Login());
-            MainPage = mainNavigation;
 		}
+
+        public void ShowMainPage(LoginUser loginUser)
+        {
+            MainPage = new NavigationPage(new HomePage(loginUser));
+        }
+
+        public void Logout()
+        {
+            Properties["IsLoggedIn"] = false;
+            MainPage = new LoginModalPage(this);
+        }
 
 		protected override void OnStart ()
 		{

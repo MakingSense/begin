@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
+using BeginMobile.Services.DTO;
 
 namespace BeginMobile.Profile
 {
     public class ProfileMe: ContentPage
     {
-        public ProfileMe()
+        public ProfileMe(User user)
         {
             Title = "Profile";
             //Icon = "";
@@ -103,7 +104,8 @@ namespace BeginMobile.Profile
 
             var lblName = new Label()
             {
-                Text = "Juan Perez",
+                //Text = "Juan Perez",
+                Text = user.DisplayName,
                 FontAttributes = FontAttributes.Bold,
                 HorizontalOptions = LayoutOptions.Center
             };

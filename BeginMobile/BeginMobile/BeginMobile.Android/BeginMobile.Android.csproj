@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
+    <AndroidResource Include="Resources\Drawable\menunav.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.Services\BeginMobile.Services.csproj">

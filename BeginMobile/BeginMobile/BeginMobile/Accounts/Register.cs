@@ -8,6 +8,7 @@ using BeginMobile.Pages;
 using BeginMobile.Utils;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
+using BeginMobile.Interfaces;
 
 namespace BeginMobile.Accounts
 {
@@ -24,7 +25,7 @@ namespace BeginMobile.Accounts
         private readonly Entry _confirmPassword;
         private readonly RadioButton _radio;
 
-        public Register()
+        public Register(ILoginManager iLoginManager)
         {
             Title = "Register";
             _username = new Entry
@@ -71,8 +72,14 @@ namespace BeginMobile.Accounts
                 BackgroundColor = Color.FromHex("77D065")
             };
 
+            var btCancel = new Button { Text = "Cancel", BackgroundColor = Color.FromHex("77D065") };
+            btCancel.Clicked += (sender, e) =>
+            {
+                MessagingCenter.Send<ContentPage>(this, "Login");
+            };
+
             buttonTermsAndConditions.Clicked += async (s , e)=>{
-                await Navigation.PushAsync(new TermsAndConditions());
+                MessagingCenter.Send<ContentPage>(this, "TermsAndConditions");
             };
 
             buttonRegister.Clicked += async (s, e) =>
@@ -104,8 +111,19 @@ namespace BeginMobile.Accounts
                                     _password.Text, _fullName.Text);
 
                                 if(registerUser!=null){
+
                                     DisplayAlert("Successfull!", "You have successfully registered", "OK");
-                                    await Navigation.PushAsync(new Login());
+
+                                    var loginUser = new LoginUser()
+                                    {
+                                        AuthToken = registerUser.AuthToken,
+                                        User = registerUser.User
+                                    };
+
+                                    App.Current.Properties["IsLoggedIn"] = true;
+                                    iLoginManager.ShowMainPage(loginUser);
+
+                                    //await Navigation.PushAsync(new Login());
                                 }
                                 else
                                 {
@@ -156,6 +174,7 @@ namespace BeginMobile.Accounts
                                       _confirmPassword,
                                       layoutRadioButton,
                                       buttonRegister,
+                                      btCancel
                                   }
             };
         }

@@ -9,6 +9,7 @@ using BeginMobile.MenuProfile;
 using BeginMobile.Utils;
 using BeginMobile.Profile;
 using BeginMobile.Services.DTO;
+using BeginMobile.Interfaces;
 
 namespace BeginMobile.Menu
 {
@@ -19,6 +20,7 @@ namespace BeginMobile.Menu
         public Menu(User user)
         {
             Title = "Menu";
+            Icon = Device.OS == TargetPlatform.iOS ? "menunav.png" : "menunav.png";
 
             var userImage = new ImageCell
             {
@@ -62,7 +64,7 @@ namespace BeginMobile.Menu
             menu.ItemSelected += async (sender, e) =>
             {
                 var item = (ConfigurationMenuItems)e.SelectedItem;
-                var itemPageProfile = new ProfileMe();
+                var itemPageProfile = new ProfileMe(user);
                 var itemPageKnocks = new ContentPage { Title = "Knocks" };
 
                 if (item.OptionName.Equals(Items.Profile.ToString()))
@@ -123,8 +125,8 @@ namespace BeginMobile.Menu
 
             buttonLogout.Clicked += async (s, e) =>
             {
-                await Navigation.PushAsync(new Login());
-                //await Navigation.PopToRootAsync();
+                //await Navigation.PushAsync(new Login());
+                App.Current.Logout();
             };
             buttonAbout.Clicked += async (s, e) =>
             {

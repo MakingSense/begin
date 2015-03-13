@@ -1,4 +1,5 @@
-﻿using BeginMobile.Services.DTO;
+﻿using BeginMobile.Interfaces;
+using BeginMobile.Services.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace BeginMobile.Menu
         public HomePage(LoginUser loginUser)
         {
             Title = "Home";
+            Icon = null;
+
             Master = new Menu(loginUser.User);
             Detail = new DetailPage();
         }

@@ -12,6 +12,7 @@ namespace BeginMobile.Menu
             public DetailPage()
             {
                 Title = "HOME";
+                Icon = null;
 
                 BackgroundColor = Color.FromHex("8A8A8A");
 

@@ -7,6 +7,7 @@ using BeginMobile.Menu;
 using BeginMobile.Utils;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
+using BeginMobile.Interfaces;
 
 namespace BeginMobile.Accounts
 {
@@ -15,7 +16,7 @@ namespace BeginMobile.Accounts
         private Entry email;
         private Entry password;
 
-        public Login()
+        public Login(ILoginManager iLoginManager)
         {
             Title = "Login Form";
             email = new Entry
@@ -67,7 +68,10 @@ namespace BeginMobile.Accounts
                     {
                         //Application.Current.Properties["Authtoken"] = loginUser.Authtoken;
                         //Application.Current.Properties["login"] = loginUser.User;
-                        await Navigation.PushAsync(new HomePage(loginUser));
+                        App.Current.Properties["IsLoggedIn"] = true;
+                        iLoginManager.ShowMainPage(loginUser); 
+
+                        //await Navigation.PushAsync(new HomePage(loginUser));
                     }
                     else
                     {
@@ -78,7 +82,8 @@ namespace BeginMobile.Accounts
             };
             buttonRegister.Clicked += async (s, e) =>
             {
-                await Navigation.PushAsync(new Register());
+                MessagingCenter.Send<ContentPage>(this, "Register");
+                //await Navigation.PushAsync(new Register());
             };
 
             Content = new StackLayout

@@ -13,13 +13,26 @@ namespace BeginMobile.Pages
         {
             Title = "Terms And Conditions";
 
+            Button btBack = null;
+
+            
+            btBack = new Button { Text = "Go back", BackgroundColor = Color.FromHex("77D065") };
+            btBack.Clicked += (sender, e) =>
+            {
+                MessagingCenter.Send<ContentPage>(this, "Register");
+            };
+
+            
+
+
             Content = new StackLayout
             {
                 Spacing = 20,
                 Padding = 50,
                 Children =
                                   {
-                                      new Label {Text = "Terms And Conditions"}
+                                      new Label {Text = "Terms And Conditions"},
+                                      btBack
                                   }
             };
         }
