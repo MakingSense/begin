@@ -98,6 +98,9 @@
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\Drawable\menunav.png" />
+    <AndroidResource Include="Resources\Drawable\userprofile.png" />
+    <AndroidResource Include="Resources\Drawable\padlock.png" />
+    <AndroidResource Include="Resources\Drawable\userdefault.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.Services\BeginMobile.Services.csproj">

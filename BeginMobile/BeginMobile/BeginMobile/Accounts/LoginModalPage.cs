@@ -12,9 +12,11 @@ namespace BeginMobile.Accounts
         ContentPage login, register, termsAndConditions;
         public LoginModalPage(ILoginManager iloginManager)
         {
+            bool isLoadByLogin = true;
+
             login = new Login(iloginManager);
             register = new Register(iloginManager);
-            termsAndConditions = new TermsAndConditions();
+            termsAndConditions = new TermsAndConditions(isLoadByLogin);
 
             this.Children.Add(login);
             this.Children.Add(register);

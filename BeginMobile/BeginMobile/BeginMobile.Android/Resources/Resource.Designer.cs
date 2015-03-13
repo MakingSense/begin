@@ -53,6 +53,15 @@ namespace BeginMobile.Android
 			// aapt resource value: 0x7f020002
 			public const int monoandroidsplash = 2130837506;
 			
+			// aapt resource value: 0x7f020003
+			public const int padlock = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public const int userdefault = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public const int userprofile = 2130837509;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

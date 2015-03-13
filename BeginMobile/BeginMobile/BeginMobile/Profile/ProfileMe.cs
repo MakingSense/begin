@@ -11,10 +11,11 @@ namespace BeginMobile.Profile
 {
     public class ProfileMe: ContentPage
     {
+        private const string pUserDefault = "userdefault.png";
         public ProfileMe(User user)
         {
             Title = "Profile";
-            //Icon = "";
+            //Icon = pUserDefault;
 
             //Toolbar menu item
             var toolMyActivity = new ToolbarItem()
@@ -91,7 +92,7 @@ namespace BeginMobile.Profile
                 WidthRequest = 100,
                 Aspect = Aspect.AspectFill,
                 HorizontalOptions = LayoutOptions.Center,
-                Source = "icon.png"
+                Source = pUserDefault
             };
 
             var lblTitle = new Label()

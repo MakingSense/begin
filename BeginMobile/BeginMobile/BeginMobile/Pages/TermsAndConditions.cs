@@ -9,32 +9,43 @@ namespace BeginMobile.Pages
 {
     public class TermsAndConditions : ContentPage
     {
-        public TermsAndConditions()
+        public TermsAndConditions(bool isLoadByLogin)
         {
             Title = "Terms And Conditions";
 
-            Button btBack = null;
-
-            
-            btBack = new Button { Text = "Go back", BackgroundColor = Color.FromHex("77D065") };
-            btBack.Clicked += (sender, e) =>
+            if (isLoadByLogin == true)
             {
-                MessagingCenter.Send<ContentPage>(this, "Register");
-            };
+                Button btBack = null;
+                btBack = new Button {Text = "Go back", BackgroundColor = Color.FromHex("77D065")};
+                btBack.Clicked += (sender, e) =>
+                {
+                    MessagingCenter.Send<ContentPage>(this, "Register");
+                };
 
-            
 
-
-            Content = new StackLayout
+                Content = new StackLayout
+                {
+                    Spacing = 20,
+                    Padding = 50,
+                    Children =
+                    {
+                        new Label {Text = "Terms And Conditions"},
+                        btBack
+                    }
+                };
+            }
+            else
             {
-                Spacing = 20,
-                Padding = 50,
-                Children =
-                                  {
-                                      new Label {Text = "Terms And Conditions"},
-                                      btBack
-                                  }
-            };
+                Content = new StackLayout
+                {
+                    Spacing = 20,
+                    Padding = 50,
+                    Children =
+                    {
+                        new Label {Text = "Terms And Conditions"},
+                    }
+                };
+            }
         }
     }
 }

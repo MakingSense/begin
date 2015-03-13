@@ -16,9 +16,12 @@ namespace BeginMobile.Menu
     public class Menu : ContentPage
     {
         private const string DefaultUri = "http://www.americanpresidents.org/images/01_150.gif";
+        private const string pProfileMenuIcon = "userprofile.png";
 
         public Menu(User user)
         {
+            bool isLoadByLogin = false;
+
             Title = "Menu";
             Icon = Device.OS == TargetPlatform.iOS ? "menunav.png" : null;
 
@@ -44,7 +47,7 @@ namespace BeginMobile.Menu
 
             var menuItemList = new List<ConfigurationMenuItems>
                                    {
-                                       new ConfigurationMenuItems {OptionName = Items.Profile.ToString(), Icon = DefaultUri},
+                                       new ConfigurationMenuItems {OptionName = Items.Profile.ToString(), Icon = pProfileMenuIcon},
                                       
                                        new ConfigurationMenuItems {OptionName = Items.Knocks.ToString(), Icon = DefaultUri}
                                    };
@@ -142,7 +145,7 @@ namespace BeginMobile.Menu
             };
             buttonTermsAndConditions.Clicked += async (s, e) =>
             {
-                await Navigation.PushAsync(new TermsAndConditions());
+                await Navigation.PushAsync(new TermsAndConditions(isLoadByLogin));
             };
 
             Content = new StackLayout
