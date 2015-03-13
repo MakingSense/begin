@@ -33,9 +33,10 @@ namespace BeginMobile.Menu
             var userImage = new ImageCell
             {
                 ImageSource =
-                    ImageSource.FromResource(pUserDefault),
+                    ImageSource.FromFile(pUserDefault),
                 Text = user.DisplayName,
-                Detail = user.Email,
+                Detail = user.Email
+                
             };
 
             var userInfoTableView = new TableView
