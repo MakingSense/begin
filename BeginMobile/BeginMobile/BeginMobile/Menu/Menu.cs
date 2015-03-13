@@ -20,7 +20,7 @@ namespace BeginMobile.Menu
         public Menu(User user)
         {
             Title = "Menu";
-            Icon = Device.OS == TargetPlatform.iOS ? "menunav.png" : "menunav.png";
+            Icon = Device.OS == TargetPlatform.iOS ? "menunav.png" : null;
 
             var userImage = new ImageCell
             {
