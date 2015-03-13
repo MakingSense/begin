@@ -13,10 +13,75 @@ namespace BeginMobile.Profile
         public ProfileMe()
         {
             Title = "Profile";
-
-            
             //Icon = "";
 
+            //Toolbar menu item
+            var toolMyActivity = new ToolbarItem()
+            {
+                Icon = "",
+                Text = "MyAct",
+                Order = ToolbarItemOrder.Primary,
+                Command = new Command(() => Navigation.PushAsync(new MyActivity()))
+
+            };
+
+            var toolInformation = new ToolbarItem()
+            {
+                Icon = "",
+                Text = "Info",
+                Order = ToolbarItemOrder.Primary,
+                Command = new Command(() => Navigation.PushAsync(new Information()))
+            };
+
+            var toolMessages = new ToolbarItem()
+            {
+                Icon = "",
+                Text = "Messages",
+                Order = ToolbarItemOrder.Secondary,
+                Command = new Command(() => Navigation.PushAsync(new Messages()))
+            };
+
+            var toolContacts = new ToolbarItem()
+            {
+                Icon = "",
+                Text = "Contacts",
+                Order = ToolbarItemOrder.Secondary,
+                Command = new Command(() => Navigation.PushAsync(new Contacts()))
+            };
+
+            var toolGroups = new ToolbarItem()
+            {
+                Icon = "",
+                Text = "Groups",
+                Order = ToolbarItemOrder.Secondary,
+                Command = new Command(() => Navigation.PushAsync(new Groups()))
+            };
+
+            var toolShop = new ToolbarItem()
+            {
+                Icon = "",
+                Text = "Shop",
+                Order = ToolbarItemOrder.Secondary,
+                Command = new Command(() => Navigation.PushAsync(new Shop()))
+            };
+
+            var toolEvents = new ToolbarItem()
+            {
+                Icon = "",
+                Text = "Events",
+                Order = ToolbarItemOrder.Secondary,
+                Command = new Command(() => Navigation.PushAsync(new Events()))
+            };
+
+            ToolbarItems.Add(toolMyActivity);
+            ToolbarItems.Add(toolInformation);
+            ToolbarItems.Add(toolMessages);
+            ToolbarItems.Add(toolContacts);
+            ToolbarItems.Add(toolGroups);
+            ToolbarItems.Add(toolShop);
+            ToolbarItems.Add(toolEvents);
+
+            //Content
             var profileImagen = new CircleImage
             {
                 BorderColor = Color.White,
@@ -27,13 +92,6 @@ namespace BeginMobile.Profile
                 HorizontalOptions = LayoutOptions.Center,
                 Source = "icon.png"
             };
-
-            /*var profileImagen = new Image()
-            {
-                Source = "icon.png",
-                HeightRequest = 60,
-                WidthRequest = 60,
-            };*/
 
             var lblTitle = new Label()
             {

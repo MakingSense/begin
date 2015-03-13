@@ -7,6 +7,8 @@ using BeginMobile.Pages;
 using BeginMobile.Accounts;
 using BeginMobile.MenuProfile;
 using BeginMobile.Utils;
+using BeginMobile.Profile;
+using BeginMobile.Services.DTO;
 
 namespace BeginMobile.Menu
 {
@@ -14,7 +16,7 @@ namespace BeginMobile.Menu
     {
         private const string DefaultUri = "http://www.americanpresidents.org/images/01_150.gif";
 
-        public Menu()
+        public Menu(User user)
         {
             Title = "Menu";
 
@@ -22,8 +24,8 @@ namespace BeginMobile.Menu
             {
                 ImageSource =
                     ImageSource.FromUri(new Uri(DefaultUri)),
-                Text = "Juan Perez",
-                Detail = "juan.perez@gmail.com",
+                Text = user.DisplayName,
+                Detail = user.Email,
             };
 
             var userInfoTableView = new TableView
@@ -60,7 +62,7 @@ namespace BeginMobile.Menu
             menu.ItemSelected += async (sender, e) =>
             {
                 var item = (ConfigurationMenuItems)e.SelectedItem;
-                var itemPageProfile = new MasterDetailProfile();
+                var itemPageProfile = new ProfileMe();
                 var itemPageKnocks = new ContentPage { Title = "Knocks" };
 
                 if (item.OptionName.Equals(Items.Profile.ToString()))

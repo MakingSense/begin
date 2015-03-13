@@ -15,6 +15,8 @@ namespace BeginMobile.Services.ManagerServices
         {
             using (var client = new HttpClient())
             {
+                LoginUser resultLoginUser = null;
+
                 client.BaseAddress = new Uri("http://104.236.207.173/");
 
                 var content = new FormUrlEncodedContent(new[] 
@@ -26,9 +28,40 @@ namespace BeginMobile.Services.ManagerServices
                 var response = client.PostAsync("api/index.php?/v1/login", content).Result;
                 var userJson = response.Content.ReadAsStringAsync().Result;
 
-                var loginUser = JsonConvert.DeserializeObject<LoginUser>(userJson);
+                if (response.IsSuccessStatusCode)
+                {
+                    resultLoginUser = JsonConvert.DeserializeObject<LoginUser>(userJson);
+                }
 
-                return loginUser;
+                return resultLoginUser;
+            }
+        }
+
+        public RegisterUser Register(string username, string email, string password, string nameSurname)
+        {
+            using (var client = new HttpClient())
+            {
+                RegisterUser resultRegisterUser = null;
+
+                client.BaseAddress = new Uri("http://104.236.207.173/");
+
+                var content = new FormUrlEncodedContent(new[] 
+                {
+                    new KeyValuePair<string, string>("username", username),
+                    new KeyValuePair<string, string>("email", email),
+                    new KeyValuePair<string, string>("password", password),
+                    new KeyValuePair<string, string>("name_surname", nameSurname)
+                });
+
+                var response = client.PostAsync("api/index.php?/v1/signup", content).Result;
+                var userJson = response.Content.ReadAsStringAsync().Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    resultRegisterUser = JsonConvert.DeserializeObject<RegisterUser>(userJson);
+                }
+
+                return resultRegisterUser;
             }
         }
     }

@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using Xamarin.Forms;
 using System.Text.RegularExpressions;
+using BeginMobile.Pages;
 using BeginMobile.Utils;
+using BeginMobile.Services.DTO;
+using BeginMobile.Services.ManagerServices;
 
 namespace BeginMobile.Accounts
 {
@@ -14,6 +17,7 @@ namespace BeginMobile.Accounts
             @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
             @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
 
+        private readonly Entry _username;
         private readonly Entry _fullName;
         private readonly Entry _email;
         private readonly Entry _password;
@@ -23,6 +27,10 @@ namespace BeginMobile.Accounts
         public Register()
         {
             Title = "Register";
+            _username = new Entry
+            {
+                Placeholder = "Username"
+            };
             _fullName = new Entry
             {
                 Placeholder = "Full Name"
@@ -63,6 +71,10 @@ namespace BeginMobile.Accounts
                 BackgroundColor = Color.FromHex("77D065")
             };
 
+            buttonTermsAndConditions.Clicked += async (s , e)=>{
+                await Navigation.PushAsync(new TermsAndConditions());
+            };
+
             buttonRegister.Clicked += async (s, e) =>
             {
                 if (String.IsNullOrEmpty(_fullName.Text) ||
@@ -72,8 +84,8 @@ namespace BeginMobile.Accounts
                     )
                 {
                     await DisplayAlert("Validation Error",
-                        "All fields are required",
-                        "Re - Try");
+                                 "All fields are required",
+                                 "Re - Try");
                 }
                 else
                 {
@@ -81,56 +93,70 @@ namespace BeginMobile.Accounts
                     if (isEmailValid)
                     {
                         // Application.Current.Properties["IsRegistered"] = true;
-                        if (_password.Equals(_confirmPassword))
+                        if (_password.Text.Equals(_confirmPassword.Text))
                         {
                             if (_radio.IsToggled)
                             {
+                                //
+                                LoginUserManager LoginUserManager = new LoginUserManager();
+
+                                var registerUser = LoginUserManager.Register(_username.Text, _email.Text,
+                                    _password.Text, _fullName.Text);
+
+                                if(registerUser!=null){
+                                    DisplayAlert("Successfull!", "You have successfully registered", "OK");
                                 await Navigation.PushAsync(new Login());
                             }
                             else
                             {
-                                await DisplayAlert("Validation Error",
-                                    "Please agree the Terms and Conditions!",
-                                    "Re - Try");
+                                    DisplayAlert("Error", "Has been happened an error", "OK");
+                                }
+                            }
+                            else
+                            {
+                                DisplayAlert("Validation Error",
+                                             "Please agree the Terms and Conditions!",
+                                             "Re - Try");
                             }
                         }
                         else
                         {
                             await DisplayAlert("Validation Error",
-                                "Password and Confirm password is not match!",
-                                "Re - Try");
+                                         "Password and Confirm password is not match!",
+                                         "Re - Try");
                         }
                     }
                     else
                     {
                         await DisplayAlert("Validation Error",
-                            "Please enter a valid email address",
-                            "Re - Try");
+                                     "Please enter a valid email address",
+                                     "Re - Try");
                     }
                 }
             };
 
             var layoutRadioButton = new StackLayout
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Children = {_radio, buttonTermsAndConditions}
+                HorizontalOptions = LayoutOptions.Start,
+                Children = { _radio, buttonTermsAndConditions }
             };
 
             Content = new StackLayout
             {
-                Spacing = 20,
-                Padding = 50,
+                Spacing = 10,
+                Padding = 10,
                 VerticalOptions = LayoutOptions.Center,
                 Children =
-                {
-                    _fullName,
-                    _email,
-                    _password,
-                    _confirmPassword,
-                    _confirmPassword,
-                    layoutRadioButton,
-                    buttonRegister,
-                }
+                                  {
+                                      _username,
+                                      _fullName,
+                                      _email,
+                                      _password,
+                                      _confirmPassword,
+                                      _confirmPassword,
+                                      layoutRadioButton,
+                                      buttonRegister,
+                                  }
             };
         }
     }

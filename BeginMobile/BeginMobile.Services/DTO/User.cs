@@ -4,7 +4,7 @@ namespace BeginMobile.Services.DTO
 {
     public class User
     {
-        [JsonProperty("Id")]
+        [JsonProperty("id")]
         public int Id { set; get; }
 
         [JsonProperty("username")]

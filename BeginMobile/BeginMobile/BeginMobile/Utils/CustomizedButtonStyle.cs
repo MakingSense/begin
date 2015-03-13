@@ -19,8 +19,8 @@ namespace BeginMobile.Utils
                                                          },
                                                      new Setter {Property = Button.BorderRadiusProperty, Value = 0},
                                                      new Setter {Property = Button.HeightRequestProperty, Value = 42},
-                                                     new Setter {Property = Button.WidthRequestProperty, Value = 100},
-                                                     new Setter {Property = Button.FontSizeProperty, Value = 8},
+                                                     new Setter {Property = Button.WidthRequestProperty, Value = 220},
+                                                     new Setter {Property = Button.FontSizeProperty, Value = 12},
                                                  }
             };
             return controlButtonStyle;
@@ -33,7 +33,7 @@ namespace BeginMobile.Utils
                 Setters =
                                           {
                                               new Setter
-                                                  {
+                                                  {                                                      
                                                       Property = Button.BackgroundColorProperty,
                                                       Value = Color.FromHex("77D065")
                                                   },

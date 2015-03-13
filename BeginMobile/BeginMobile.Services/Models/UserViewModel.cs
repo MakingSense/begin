@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BeginMobile.Services.Models
 {
-    public class User
+    public class UserViewModel
     {
+
     }
 }
