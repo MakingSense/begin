@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xamarin.Forms;
+using ImageCircle.Forms.Plugin.Abstractions;
 using BeginMobile.Pages;
 using BeginMobile.Accounts;
 using BeginMobile.MenuProfile;
@@ -16,7 +17,11 @@ namespace BeginMobile.Menu
     public class Menu : ContentPage
     {
         private const string DefaultUri = "http://www.americanpresidents.org/images/01_150.gif";
+
+        private const string pUserDefault = "userdefault.png";
+
         private const string pProfileMenuIcon = "userprofile.png";
+        private const string knocks = "padlock.png";
 
         public Menu(User user)
         {
@@ -28,14 +33,27 @@ namespace BeginMobile.Menu
             var userImage = new ImageCell
             {
                 ImageSource =
-                    ImageSource.FromUri(new Uri(DefaultUri)),
+                    ImageSource.FromResource(pUserDefault),
                 Text = user.DisplayName,
                 Detail = user.Email,
             };
 
+
+
+            //var userImage = new CircleImage
+            //{
+            //    BorderColor = Color.Transparent,
+            //    BorderThickness = 3,
+            //    HeightRequest = 100,
+            //    WidthRequest = 100,
+            //    Aspect = Aspect.AspectFill,
+            //    HorizontalOptions = LayoutOptions.Center,
+            //    Source = pUserDefault
+            //};
+
             var userInfoTableView = new TableView
             {
-
+                HeightRequest = 200,
                 Root = new TableRoot
                                                        {
                                                            new TableSection
@@ -49,7 +67,7 @@ namespace BeginMobile.Menu
                                    {
                                        new ConfigurationMenuItems {OptionName = Items.Profile.ToString(), Icon = pProfileMenuIcon},
                                       
-                                       new ConfigurationMenuItems {OptionName = Items.Knocks.ToString(), Icon = DefaultUri}
+                                       new ConfigurationMenuItems {OptionName = Items.Knocks.ToString(), Icon = knocks}
                                    };
 
 
@@ -57,6 +75,7 @@ namespace BeginMobile.Menu
 
             var menu = new ListView
             {
+                HeightRequest = 250,
                 ItemsSource = menuItemList,
                 ItemTemplate = cell
                 //ItemsSource = menuItems,
@@ -150,8 +169,9 @@ namespace BeginMobile.Menu
 
             ScrollView scroll = new ScrollView();
             StackLayout stackLayout = new StackLayout {
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Spacing = 2,
+                VerticalOptions = LayoutOptions.Start,
+                //HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
                                   {
                                       userInfoTableView,
