@@ -38,6 +38,7 @@ namespace BeginMobile.Utils
             {
                 Parent = this,
                 NumberOfTapsRequired = 1,
+                //use command instead of TappedCallback
                 TappedCallback = (view, args) => { ((RadioButton)view).IsToggled = true; }
             };
             GestureRecognizers.Add(recognizer);

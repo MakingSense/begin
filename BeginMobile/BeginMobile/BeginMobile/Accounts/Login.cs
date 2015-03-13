@@ -53,7 +53,7 @@ namespace BeginMobile.Accounts
             {
                 if (String.IsNullOrEmpty(email.Text) || String.IsNullOrEmpty(password.Text))
                 {
-                    DisplayAlert("Validation Error", "Email and Password are required",
+                    await DisplayAlert("Validation Error", "Email and Password are required",
                                  "Re - Try");
                 }
                 else
@@ -63,6 +63,7 @@ namespace BeginMobile.Accounts
 
                 }
             };
+
             buttonRegister.Clicked += async (s, e) =>
             {
                 await Navigation.PushAsync(new Register());

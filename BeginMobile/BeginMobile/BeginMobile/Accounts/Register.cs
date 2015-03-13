@@ -71,9 +71,9 @@ namespace BeginMobile.Accounts
                     || String.IsNullOrEmpty(_confirmPassword.Text)
                     )
                 {
-                    DisplayAlert("Validation Error",
-                                 "All fields are required",
-                                 "Re - Try");
+                    await DisplayAlert("Validation Error",
+                        "All fields are required",
+                        "Re - Try");
                 }
                 else
                 {
@@ -89,23 +89,23 @@ namespace BeginMobile.Accounts
                             }
                             else
                             {
-                                DisplayAlert("Validation Error",
-                                             "Please agree the Terms and Conditions!",
-                                             "Re - Try");
+                                await DisplayAlert("Validation Error",
+                                    "Please agree the Terms and Conditions!",
+                                    "Re - Try");
                             }
                         }
                         else
                         {
-                            DisplayAlert("Validation Error",
-                                         "Password and Confirm password is not match!",
-                                         "Re - Try");
+                            await DisplayAlert("Validation Error",
+                                "Password and Confirm password is not match!",
+                                "Re - Try");
                         }
                     }
                     else
                     {
-                        DisplayAlert("Validation Error",
-                                     "Please enter a valid email address",
-                                     "Re - Try");
+                        await DisplayAlert("Validation Error",
+                            "Please enter a valid email address",
+                            "Re - Try");
                     }
                 }
             };
@@ -113,7 +113,7 @@ namespace BeginMobile.Accounts
             var layoutRadioButton = new StackLayout
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Children = { _radio, buttonTermsAndConditions }
+                Children = {_radio, buttonTermsAndConditions}
             };
 
             Content = new StackLayout
@@ -122,15 +122,15 @@ namespace BeginMobile.Accounts
                 Padding = 50,
                 VerticalOptions = LayoutOptions.Center,
                 Children =
-                                  {
-                                      _fullName,
-                                      _email,
-                                      _password,
-                                      _confirmPassword,
-                                      _confirmPassword,
-                                      layoutRadioButton,
-                                      buttonRegister,
-                                  }
+                {
+                    _fullName,
+                    _email,
+                    _password,
+                    _confirmPassword,
+                    _confirmPassword,
+                    layoutRadioButton,
+                    buttonRegister,
+                }
             };
         }
     }
