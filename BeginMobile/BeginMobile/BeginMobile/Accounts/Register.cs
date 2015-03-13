@@ -85,6 +85,35 @@ namespace BeginMobile.Accounts
             switcher.Toggled += async (se, ev) =>
             { switchStatus = true; };
 
+            var switchCell = new SwitchCell
+                        {
+                            Text = ""
+                        };
+
+
+
+
+            TableView switchCellTable = new TableView
+                    {
+                        //Intent = TableIntent.Form,
+                        HeightRequest = 100,
+                        
+                        //BackgroundColor = Color.Pink,
+
+                        Root = new TableRoot
+                {                    
+                    
+                    new TableSection(" ")
+                    {
+                        switchCell
+                    }
+                }
+                
+                
+            };
+
+
+
             var buttonRegister = new Button
             {
                 Text = "Register",
@@ -122,7 +151,7 @@ namespace BeginMobile.Accounts
                         // Application.Current.Properties["IsRegistered"] = true;
                         if (_password.Text.Equals(_confirmPassword.Text))
                         {
-                            if (switchStatus)
+                            if (switchCell.On)
                             {
                                 //
                                 LoginUserManager LoginUserManager = new LoginUserManager();
@@ -176,7 +205,9 @@ namespace BeginMobile.Accounts
             var layoutRadioButton = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
-                Children = {  buttonTermsAndConditions, switcher }
+                Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 5),
+                //Children = {  buttonTermsAndConditions, switcher }
+                Children = { buttonTermsAndConditions, switchCellTable }
             };
 
 
