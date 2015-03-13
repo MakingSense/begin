@@ -204,12 +204,7 @@ namespace BeginMobile.Accounts
             };
 
             scroll.Content = stackLayout;
-            Content = new StackLayout
-            {
-                Spacing = 10,
-                Padding = 10,
-                Children = { scroll}
-            };
+            Content = scroll;
         }
     }
 }

@@ -161,11 +161,7 @@ namespace BeginMobile.Menu
             };
             scroll.Content = stackLayout;
 
-            Content = new StackLayout
-            {
-                Padding = 0,
-                Children ={ scroll}
-            };
+            Content = scroll;
 
 
         }
