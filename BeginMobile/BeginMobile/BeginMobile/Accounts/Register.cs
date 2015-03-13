@@ -24,7 +24,9 @@ namespace BeginMobile.Accounts
         private readonly Entry _password;
         private readonly Entry _confirmPassword;
         private readonly RadioButton _radio;
-
+        private Switch switcher;
+        private Label labelSwitcher;
+        private bool switchStatus = false;
         public Register(ILoginManager iLoginManager)
         {
             Title = "Register";
@@ -65,11 +67,28 @@ namespace BeginMobile.Accounts
                 StyleId = "#FF0000"
             };
 
+            //Switch
+            labelSwitcher = new Label
+            {
+                Text = "I agree to the ",
+                Font = Font.SystemFontOfSize(NamedSize.Large),
+                
+                //HorizontalOptions = LayoutOptions.Start,
+                //VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+            switcher = new Switch
+            {
+                //HorizontalOptions = LayoutOptions.End,
+                //VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+            switcher.Toggled += async (se, ev) =>
+            { switchStatus = true; };
 
             var buttonRegister = new Button
             {
                 Text = "Register",
                 BackgroundColor = Color.FromHex("77D065")
+                
             };
 
             var btCancel = new Button { Text = "Cancel", BackgroundColor = Color.FromHex("77D065") };
@@ -102,7 +121,7 @@ namespace BeginMobile.Accounts
                         // Application.Current.Properties["IsRegistered"] = true;
                         if (_password.Text.Equals(_confirmPassword.Text))
                         {
-                            if (_radio.IsToggled)
+                            if (switchStatus)
                             {
                                 //
                                 LoginUserManager LoginUserManager = new LoginUserManager();
@@ -140,7 +159,7 @@ namespace BeginMobile.Accounts
                         else
                         {
                             DisplayAlert("Validation Error",
-                                         "Password and Confirm password is not match!",
+                                         "Password and Confirm password are not match!",
                                          "Re - Try");
                         }
                     }
@@ -155,17 +174,23 @@ namespace BeginMobile.Accounts
 
             var layoutRadioButton = new StackLayout
             {
-                HorizontalOptions = LayoutOptions.Start,
-                Children = { _radio, buttonTermsAndConditions }
+                Orientation = StackOrientation.Horizontal,
+                Children = { labelSwitcher, buttonTermsAndConditions, switcher }
             };
 
-            Content = new StackLayout
+
+            ScrollView scroll = new ScrollView {
+                Padding = 10,
+            };
+            StackLayout stackLayout = new StackLayout
             {
                 Spacing = 10,
                 Padding = 10,
                 VerticalOptions = LayoutOptions.Center,
+
                 Children =
                                   {
+                                      
                                       _username,
                                       _fullName,
                                       _email,
@@ -176,6 +201,14 @@ namespace BeginMobile.Accounts
                                       buttonRegister,
                                       btCancel
                                   }
+            };
+
+            scroll.Content = stackLayout;
+            Content = new StackLayout
+            {
+                Spacing = 10,
+                Padding = 10,
+                Children = { scroll}
             };
         }
     }
