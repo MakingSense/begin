@@ -148,8 +148,8 @@ namespace BeginMobile.Menu
                 await Navigation.PushAsync(new TermsAndConditions(isLoadByLogin));
             };
 
-            Content = new StackLayout
-            {
+            ScrollView scroll = new ScrollView();
+            StackLayout stackLayout = new StackLayout {
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
@@ -158,6 +158,13 @@ namespace BeginMobile.Menu
                                       menu,
                                       controlsLayout
                                   }
+            };
+            scroll.Content = stackLayout;
+
+            Content = new StackLayout
+            {
+                Padding = 0,
+                Children ={ scroll}
             };
 
 
