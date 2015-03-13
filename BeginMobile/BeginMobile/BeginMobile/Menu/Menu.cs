@@ -41,7 +41,7 @@ namespace BeginMobile.Menu
 
             var userInfoTableView = new TableView
             {
-                HeightRequest = 150,
+                HeightRequest = 180,
                 Root = new TableRoot
                                                        {
                                                            new TableSection
