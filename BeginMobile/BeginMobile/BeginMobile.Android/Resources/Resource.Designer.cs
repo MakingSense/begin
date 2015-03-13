@@ -60,7 +60,7 @@ namespace BeginMobile.Android
 			public const int userdefault = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int userdefault2 = 2130837509;
+			public const int userdefault3 = 2130837509;
 			
 			// aapt resource value: 0x7f020006
 			public const int userprofile = 2130837510;

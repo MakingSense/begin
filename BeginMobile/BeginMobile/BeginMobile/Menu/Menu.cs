@@ -18,7 +18,7 @@ namespace BeginMobile.Menu
     {
         private const string DefaultUri = "http://www.americanpresidents.org/images/01_150.gif";
 
-        private const string pUserDefault = "userdefault2.png";
+        private const string pUserDefault = "userdefault3.png";
 
         private const string pProfileMenuIcon = "userprofile.png";
         private const string knocks = "padlock.png";
@@ -37,19 +37,6 @@ namespace BeginMobile.Menu
                 Text = user.DisplayName,
                 Detail = user.Email,
             };
-
-
-
-            //var userImage = new CircleImage
-            //{
-            //    BorderColor = Color.Transparent,
-            //    BorderThickness = 3,
-            //    HeightRequest = 100,
-            //    WidthRequest = 100,
-            //    Aspect = Aspect.AspectFill,
-            //    HorizontalOptions = LayoutOptions.Center,
-            //    Source = pUserDefault
-            //};
 
             var userInfoTableView = new TableView
             {
