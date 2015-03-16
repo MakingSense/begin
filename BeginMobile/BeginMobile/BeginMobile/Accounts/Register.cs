@@ -83,36 +83,16 @@ namespace BeginMobile.Accounts
                 //VerticalOptions = LayoutOptions.CenterAndExpand
             };
             switcher.Toggled += async (se, ev) =>
-            { switchStatus = true; };
-
-            var switchCell = new SwitchCell
-                        {
-                            Text = ""
-                        };
-
-
-
-
-            TableView switchCellTable = new TableView
-                    {
-                        //Intent = TableIntent.Form,
-                        HeightRequest = 100,
-                        
-                        //BackgroundColor = Color.Pink,
-
-                        Root = new TableRoot
-                {                    
-                    
-                    new TableSection(" ")
-                    {
-                        switchCell
-                    }
+            {
+                if (ev.Value == true)
+                {
+                    switchStatus = true;
                 }
-                
-                
+                else
+                {
+                    switchStatus = false;
+                }  
             };
-
-
 
             var buttonRegister = new Button
             {
@@ -151,7 +131,7 @@ namespace BeginMobile.Accounts
                         // Application.Current.Properties["IsRegistered"] = true;
                         if (_password.Text.Equals(_confirmPassword.Text))
                         {
-                            if (switchCell.On)
+                            if (switchStatus)
                             {
                                 //
                                 LoginUserManager LoginUserManager = new LoginUserManager();
@@ -206,8 +186,7 @@ namespace BeginMobile.Accounts
             {
                 Orientation = StackOrientation.Horizontal,
                 Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 5),
-                //Children = {  buttonTermsAndConditions, switcher }
-                Children = { buttonTermsAndConditions, switchCellTable }
+                Children = { buttonTermsAndConditions, switcher }
             };
 
 
