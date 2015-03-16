@@ -30,9 +30,11 @@ namespace BeginMobile.Accounts
                 IsPassword = true,
             };
 
-            var forgotPassword = new Label
+            var buttonForgotPassword = new Button
             {
-                Text = "Forgot Password?"
+                Text = "Forgot Password?",
+                Style = CustomizedButtonStyle.GetControlButtonStyle(), 
+                WidthRequest = 100
             };
 
             var buttonLogin = new Button
@@ -50,6 +52,10 @@ namespace BeginMobile.Accounts
                 //BackgroundColor = Color.FromHex("77D065")
                 Style = CustomizedButtonStyle.GetButtonStyle(),
             };
+
+            buttonForgotPassword.Clicked += (s, e) =>
+            {
+                MessagingCenter.Send<ContentPage>(this,"ForgotPassword"); };
 
 
             buttonLogin.Clicked += async (s, e) =>
@@ -97,7 +103,7 @@ namespace BeginMobile.Accounts
                                       email,
                                       password,
                                       buttonLogin,
-                                      forgotPassword,
+                                      buttonForgotPassword,
                                       buttonRegister
                                   }
             };

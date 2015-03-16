@@ -42,5 +42,20 @@ namespace BeginMobile.Utils
             };
             return buttonStyle;
         }
+
+
+        public static Style GetTitleStyle()
+        {
+            var buttonStyle = new Style(typeof(Label))
+            {
+                Setters =
+                                          {
+                                              new Setter  {Property = Label.TextColorProperty, Value = Color.FromHex("77D065")},
+                                              new Setter {Property = Label.FontSizeProperty, Value = 24},
+                                              new Setter {Property = Label.FontSizeProperty, Value = 24}
+                                          }
+            };
+            return buttonStyle;
+        }
     }
 }

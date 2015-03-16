@@ -9,6 +9,7 @@
     <Import_RootNamespace>BeginMobile</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Accounts\ForgotPassword.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\Login.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\LoginModalPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\Register.cs" />

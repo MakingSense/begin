@@ -9,7 +9,7 @@ namespace BeginMobile.Accounts
 {
     public class LoginModalPage: CarouselPage
     {
-        ContentPage login, register, termsAndConditions;
+        ContentPage login, register, termsAndConditions, forgotPassword;
         public LoginModalPage(ILoginManager iloginManager)
         {
             bool isLoadByLogin = true;
@@ -17,10 +17,12 @@ namespace BeginMobile.Accounts
             login = new Login(iloginManager);
             register = new Register(iloginManager);
             termsAndConditions = new TermsAndConditions(isLoadByLogin);
+            forgotPassword = new ForgotPassword();
 
             this.Children.Add(login);
             this.Children.Add(register);
             this.Children.Add(termsAndConditions);
+            this.Children.Add(forgotPassword);
 
             MessagingCenter.Subscribe<ContentPage>(this, "Login", (sender) =>
             {
@@ -35,6 +37,11 @@ namespace BeginMobile.Accounts
             {
                 this.SelectedItem = termsAndConditions;
             });
+            MessagingCenter.Subscribe<ContentPage>(this, "ForgotPassword", (sender) =>
+            {
+                this.SelectedItem = forgotPassword;
+            });
+ 
         }
     }
 }
