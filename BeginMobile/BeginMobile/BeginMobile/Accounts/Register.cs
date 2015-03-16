@@ -141,7 +141,7 @@ namespace BeginMobile.Accounts
 
                                 if(registerUser!=null){
 
-                                    DisplayAlert("Successfull!", "You have successfully registered", "OK");
+                                    DisplayAlert("Successfull!", "You've successfully registered.", "OK");
 
                                     var loginUser = new LoginUser()
                                     {
@@ -156,7 +156,7 @@ namespace BeginMobile.Accounts
                                 }
                                 else
                                 {
-                                    DisplayAlert("Error", "Has been happened an error", "OK");
+                                    DisplayAlert("Error", "Username already exists. Please choose a different usename", "OK");
                                 }
                             }
                             else
