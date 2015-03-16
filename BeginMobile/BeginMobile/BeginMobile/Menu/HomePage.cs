@@ -1,4 +1,5 @@
 ﻿using BeginMobile.Interfaces;
+using BeginMobile.Pages;
 using BeginMobile.Services.DTO;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,8 @@ namespace BeginMobile.Menu
             Icon = null;
 
             Master = new Menu(loginUser.User);
-            Detail = new DetailPage();
+            Detail = new AppHome();
+            //Detail = new DetailPage();
         }
 
         

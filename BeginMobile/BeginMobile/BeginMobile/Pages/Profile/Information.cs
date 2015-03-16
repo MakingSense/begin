@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace BeginMobile.Profile
+namespace BeginMobile.Pages.Profile
 {
     public class Information: ContentPage
     {

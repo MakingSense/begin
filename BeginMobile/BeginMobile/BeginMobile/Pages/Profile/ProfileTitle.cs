@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace BeginMobile.Profile
+namespace BeginMobile.Pages.Profile
 {
     public class ProfileTitle: Label
     {

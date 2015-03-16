@@ -7,7 +7,7 @@ using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 using BeginMobile.Services.DTO;
 
-namespace BeginMobile.Profile
+namespace BeginMobile.Pages.Profile
 {
     public class ProfileMe: ContentPage
     {
