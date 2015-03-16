@@ -11,7 +11,7 @@ namespace BeginMobile.Pages.Profile
 {
     public class ProfileMe: ContentPage
     {
-        private const string pUserDefault = "userdefault.png";
+        private const string pUserDefault = "userdefault3.png";
         public ProfileMe(User user)
         {
             Title = "Profile";
