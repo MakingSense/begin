@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BeginMobile.Profile;
+using BeginMobile.Pages.Profile;
 
 namespace BeginMobile.MenuProfile
 {

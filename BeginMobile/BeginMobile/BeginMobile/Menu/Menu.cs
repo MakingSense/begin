@@ -8,7 +8,7 @@ using BeginMobile.Pages;
 using BeginMobile.Accounts;
 using BeginMobile.MenuProfile;
 using BeginMobile.Utils;
-using BeginMobile.Profile;
+using BeginMobile.Pages.Profile;
 using BeginMobile.Services.DTO;
 using BeginMobile.Interfaces;
 

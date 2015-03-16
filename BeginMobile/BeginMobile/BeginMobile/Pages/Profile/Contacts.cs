@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace BeginMobile.Profile
+namespace BeginMobile.Pages.Profile
 {
-    public class Messages: ContentPage
+    public class Contacts: ContentPage
     {
-        public Messages()
+        public Contacts()
         {
-            Title = "Messages";
+            Title = "Contacts";
             //Icon = "";
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
-using BeginMobile.Profile;
+using BeginMobile.Pages.Profile;
 using BeginMobile.Services.DTO;
 
 namespace BeginMobile.MenuProfile

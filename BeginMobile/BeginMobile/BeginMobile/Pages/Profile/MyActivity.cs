@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace BeginMobile.Profile
+namespace BeginMobile.Pages.Profile
 {
-    public class Shop: ContentPage
+    public class MyActivity: ContentPage
     {
-        public Shop()
+        public MyActivity()
         {
-            Title = "Shop";
+            Title = "My activity";
             //Icon = "";
         }
     }
