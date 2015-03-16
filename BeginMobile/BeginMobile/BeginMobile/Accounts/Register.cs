@@ -57,7 +57,8 @@ namespace BeginMobile.Accounts
 
             var buttonTermsAndConditions = new Button()
             {
-                Text = " Terms & Conditions",
+                Text = "I agree the Terms & Conditions",
+                FontSize=10,
                 Style = CustomizedButtonStyle.GetControlButtonStyle(),
                 TextColor = Color.FromHex("77D065")
             };
@@ -83,6 +84,35 @@ namespace BeginMobile.Accounts
             };
             switcher.Toggled += async (se, ev) =>
             { switchStatus = true; };
+
+            var switchCell = new SwitchCell
+                        {
+                            Text = ""
+                        };
+
+
+
+
+            TableView switchCellTable = new TableView
+                    {
+                        //Intent = TableIntent.Form,
+                        HeightRequest = 100,
+                        
+                        //BackgroundColor = Color.Pink,
+
+                        Root = new TableRoot
+                {                    
+                    
+                    new TableSection(" ")
+                    {
+                        switchCell
+                    }
+                }
+                
+                
+            };
+
+
 
             var buttonRegister = new Button
             {
@@ -121,7 +151,7 @@ namespace BeginMobile.Accounts
                         // Application.Current.Properties["IsRegistered"] = true;
                         if (_password.Text.Equals(_confirmPassword.Text))
                         {
-                            if (switchStatus)
+                            if (switchCell.On)
                             {
                                 //
                                 LoginUserManager LoginUserManager = new LoginUserManager();
@@ -175,7 +205,9 @@ namespace BeginMobile.Accounts
             var layoutRadioButton = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
-                Children = { labelSwitcher, buttonTermsAndConditions, switcher }
+                Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 5),
+                //Children = {  buttonTermsAndConditions, switcher }
+                Children = { buttonTermsAndConditions, switchCellTable }
             };
 
 
@@ -204,12 +236,7 @@ namespace BeginMobile.Accounts
             };
 
             scroll.Content = stackLayout;
-            Content = new StackLayout
-            {
-                Spacing = 10,
-                Padding = 10,
-                Children = { scroll}
-            };
+            Content = scroll;
         }
     }
 }

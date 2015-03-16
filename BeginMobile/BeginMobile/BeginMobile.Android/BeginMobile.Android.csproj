@@ -101,6 +101,7 @@
     <AndroidResource Include="Resources\Drawable\userprofile.png" />
     <AndroidResource Include="Resources\Drawable\padlock.png" />
     <AndroidResource Include="Resources\Drawable\userdefault.png" />
+    <AndroidResource Include="Resources\Drawable\userdefault3.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.Services\BeginMobile.Services.csproj">

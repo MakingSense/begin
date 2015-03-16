@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xamarin.Forms;
+using ImageCircle.Forms.Plugin.Abstractions;
 using BeginMobile.Pages;
 using BeginMobile.Accounts;
 using BeginMobile.MenuProfile;
@@ -16,7 +17,11 @@ namespace BeginMobile.Menu
     public class Menu : ContentPage
     {
         private const string DefaultUri = "http://www.americanpresidents.org/images/01_150.gif";
+
+        private const string pUserDefault = "userdefault3.png";
+
         private const string pProfileMenuIcon = "userprofile.png";
+        private const string knocks = "padlock.png";
 
         public Menu(User user)
         {
@@ -28,14 +33,15 @@ namespace BeginMobile.Menu
             var userImage = new ImageCell
             {
                 ImageSource =
-                    ImageSource.FromUri(new Uri(DefaultUri)),
+                    ImageSource.FromFile(pUserDefault),
                 Text = user.DisplayName,
-                Detail = user.Email,
+                Detail = user.Email
+                
             };
 
             var userInfoTableView = new TableView
             {
-
+                HeightRequest = 180,
                 Root = new TableRoot
                                                        {
                                                            new TableSection
@@ -49,7 +55,7 @@ namespace BeginMobile.Menu
                                    {
                                        new ConfigurationMenuItems {OptionName = Items.Profile.ToString(), Icon = pProfileMenuIcon},
                                       
-                                       new ConfigurationMenuItems {OptionName = Items.Knocks.ToString(), Icon = DefaultUri}
+                                       new ConfigurationMenuItems {OptionName = Items.Knocks.ToString(), Icon = knocks}
                                    };
 
 
@@ -57,6 +63,7 @@ namespace BeginMobile.Menu
 
             var menu = new ListView
             {
+                HeightRequest = 150,
                 ItemsSource = menuItemList,
                 ItemTemplate = cell
                 //ItemsSource = menuItems,
@@ -148,10 +155,11 @@ namespace BeginMobile.Menu
                 await Navigation.PushAsync(new TermsAndConditions(isLoadByLogin));
             };
 
-            Content = new StackLayout
-            {
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+            ScrollView scroll = new ScrollView();
+            StackLayout stackLayout = new StackLayout {
+                Spacing = 2,
+                VerticalOptions = LayoutOptions.Start,
+                //HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
                                   {
                                       userInfoTableView,
@@ -159,6 +167,9 @@ namespace BeginMobile.Menu
                                       controlsLayout
                                   }
             };
+            scroll.Content = stackLayout;
+
+            Content = scroll;
 
 
         }

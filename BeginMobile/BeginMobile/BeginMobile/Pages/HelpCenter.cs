@@ -18,7 +18,7 @@ namespace BeginMobile.Pages
                 Spacing = 20,
                 Padding = 50,
                 Children = {
-					new Label { Text = "Hello ContentPage" }
+					new Label { Text = "" }
 				}
             };
         }
