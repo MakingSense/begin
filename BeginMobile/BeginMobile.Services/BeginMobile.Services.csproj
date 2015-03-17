@@ -39,6 +39,7 @@
     <Compile Include="DTO\Capability.cs" />
     <Compile Include="DTO\LoginUser.cs" />
     <Compile Include="DTO\ProfileInformation.cs" />
+    <Compile Include="DTO\ProfileInfoUser.cs" />
     <Compile Include="DTO\RegisterUser.cs" />
     <Compile Include="DTO\User.cs" />
     <Compile Include="ManagerServices\LoginUserManager.cs" />

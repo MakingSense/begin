@@ -1,17 +1,34 @@
-﻿using BeginMobile.Services.ManagerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using BeginMobile.Services.DTO;
+using BeginMobile.Services.ManagerServices;
 
 namespace BeginMobile.Pages.Profile
 {
     public class Information: ContentPage
     {
+        private ProfileInformation profileInformation;
+        private ProfileInfoUser profileInfoUser;
+
         public Information()
         {
+            var currentUser = (LoginUser) App.Current.Properties["LoginUser"];
+            
+            ProfileManager profileManager = new ProfileManager();
+
+            profileInformation = profileManager.GetProfileInformation(currentUser.User.UserName);
+
+            if (profileInformation!=null)
+            {
+                profileInfoUser = profileInformation.ProfileInfoUser;
+            }
+            
+            profileInfoUser = profileInformation.ProfileInfoUser;
+            
             Title = "Information";
             //Icon = "";
 
@@ -77,7 +94,7 @@ namespace BeginMobile.Pages.Profile
                 {
                     new Label()
                     {
-                        Text = "James Eduardo",
+                        Text = profileInfoUser.DisplayName,
                         FontAttributes = FontAttributes.Italic,
                     }
                 },
@@ -96,47 +113,47 @@ namespace BeginMobile.Pages.Profile
                 Children = 
                 {
                     new Label(){
-                        Text = "Birthday: 03-jan-85",
+                        Text = "Birthday: "+ profileInfoUser.BirthDay,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "Gender: M",
+                        Text = "Gender: "+ profileInfoUser.Gender.ToString(),
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "Address: 25 may avenue",
+                        Text = "Address: "+ profileInfoUser.Address,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "Country: Usa",
+                        Text = "Country: "+ profileInfoUser.Country,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "State: Nebrasca",
+                        Text = "State: "+ profileInfoUser.State,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "City: Griwell",
+                        Text = "City: "+ profileInfoUser.City,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "Phone: 591-256365",
+                        Text = "Phone: " + profileInfoUser.Phone.ToString(),
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "Cell phone: 591-6993152",
+                        Text = "Cell phone: " + profileInfoUser.CellPhone.ToString(),
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "Email: name@gmail.com",
+                        Text = "Email: " + profileInfoUser.Email,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "Skype: nameuser",
+                        Text = "Skype: " + profileInfoUser.Skype,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "Others: ",
+                        Text = "Others: " + profileInfoUser.Others,
                         FontAttributes = FontAttributes.Italic,
                     }
                 }
@@ -155,27 +172,27 @@ namespace BeginMobile.Pages.Profile
                 {
                     new Label()
                     {
-                        Text = "Level: ",
+                        Text = "Level: "+ profileInfoUser.EducationLevel,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label()
                     {
-                        Text = "Establishment: ",
+                        Text = "Establishment: "+ profileInfoUser.Establishment,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label()
                     {
-                        Text = "Title: ",
+                        Text = "Title: " + profileInfoUser.EducationTitle,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label()
                     {
-                        Text = "Category: ",
+                        Text = "Category: " + profileInfoUser.EducationCategory,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label()
                     {
-                        Text = "Subcategory: ",
+                        Text = "Subcategory: "+ profileInfoUser.EducationSubcategory,
                         FontAttributes = FontAttributes.Italic,
                     }
                 },
@@ -193,32 +210,32 @@ namespace BeginMobile.Pages.Profile
                 {
                     new Label()
                     {
-                        Text = "Company: ",
+                        Text = "Company: " + profileInfoUser.Company,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label()
                     {
-                        Text = "Position: ",
+                        Text = "Position: " + profileInfoUser.Position,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label()
                     {
-                        Text = "City: ",
+                        Text = "City: " + profileInfoUser.CityWork,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label()
                     {
-                        Text = "Work description: ",
+                        Text = "Work description: "+ profileInfoUser.WorkDescription,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label()
                     {
-                        Text = "I currently work here: ",
+                        Text = "I currently work here: "+ profileInfoUser.CurrentWork,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label()
                     {
-                        Text = "Dates: ",
+                        Text = "Dates: " +  profileInfoUser.Dates,
                         FontAttributes = FontAttributes.Italic,
                     }
                 },
