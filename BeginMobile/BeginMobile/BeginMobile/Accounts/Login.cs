@@ -71,21 +71,7 @@ namespace BeginMobile.Accounts
                     //iLoginManager.ShowMainPage(null); 
 
                     var loginUserManager = new LoginUserManager();
-                    var loginUser = new LoginUser();//loginUserManager.Login(email.Text, password.Text);
-
-
-                    loginUser.User = new User()
-                    {
-
-                        UserName = "user1",
-                        NiceName = "User user",
-                        Email = "user@gmail.com",
-                        Url = "",
-                        Registered = "2015-03-09 20:44:28",
-                        DisplayName = "User Vazques",
-                        Id = 13,
-                    };
-                    
+                    var loginUser = loginUserManager.Login(email.Text, password.Text);
 
                     if (loginUser != null)
                     {
