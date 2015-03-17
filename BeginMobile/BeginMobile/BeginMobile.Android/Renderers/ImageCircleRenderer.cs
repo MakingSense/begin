@@ -7,7 +7,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer(typeof(ImageCircle.Forms.Plugin.Abstractions.CircleImage), typeof(ImageCircleRenderer))]
-namespace BeginMobile.Android
+namespace BeginMobile.Android.Renderers
 {
     public class ImageCircleRenderer: ImageRenderer
     {

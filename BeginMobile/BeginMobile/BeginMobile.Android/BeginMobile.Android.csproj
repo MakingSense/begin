@@ -92,7 +92,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ImageCircleRenderer.cs" />
+    <Compile Include="Renderers\CustomTabbedRenderer.cs" />
+    <Compile Include="Renderers\ImageCircleRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -112,6 +113,9 @@
     <AndroidResource Include="Resources\Drawable\padlock.png" />
     <AndroidResource Include="Resources\Drawable\userdefault.png" />
     <AndroidResource Include="Resources\Drawable\userdefault3.png" />
+    <AndroidResource Include="Resources\Values\ThemeStyles.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.Services\BeginMobile.Services.csproj">

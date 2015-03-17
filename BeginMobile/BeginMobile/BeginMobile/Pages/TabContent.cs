@@ -18,10 +18,7 @@ namespace BeginMobile.Pages
 
             var buttonStyle = new Style(typeof(Label))
             {
-                Setters =
-                {
-                    new Setter {Property = Label.BackgroundColorProperty, Value = Color.Yellow}
-                }
+                
             };
 
             this.Title = title;

@@ -38,6 +38,8 @@ namespace BeginMobile.Pages
                 Text = "Sub Options"
             };
 
+            
+
             this.Children.Add(new TabContent("New Feed", "", labelA));
             this.Children.Add(new TabContent("Message", "", labelB));
             this.Children.Add(new TabContent("Notifications", "", labelC));
