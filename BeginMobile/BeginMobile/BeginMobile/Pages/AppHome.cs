@@ -15,17 +15,22 @@ namespace BeginMobile.Pages
 
             var labelA = new Label()
             {
-                Text = "Home"
+                Text = "New Feed Body"
             };
 
             var labelB = new Label()
             {
-                Text = "Groups"
+                Text = "Message Body"
             };
 
             var labelC = new Label()
             {
-                Text = "Other"
+                Text = "Notifications Body"
+            };
+
+            var labelD = new Label()
+            {
+                Text = "Groups Body"
             };
 
             var labelM = new Label()
@@ -33,47 +38,11 @@ namespace BeginMobile.Pages
                 Text = "Sub Options"
             };
 
-            this.Children.Add(new TabContent("A", labelA));
-            this.Children.Add(new TabContent("B", labelB));
-            this.Children.Add(new TabContent("C", labelC));
-            this.Children.Add(new TabContent("M", labelM));
-
-
-            /*this.Children.Add(new ContentPage()
-            {
-                Title = "A",
-                Content = new Label()
-                {
-                    Text = "Home"
-                }
-            });
-
-            this.Children.Add(new ContentPage()
-            {
-                Title = "B",
-                Content = new Label()
-                {
-                    Text = "Groups"
-                }
-            });
-
-            this.Children.Add(new ContentPage()
-            {
-                Title = "C",
-                Content = new Label()
-                {
-                    Text = "Test C"
-                }
-            });
-
-            this.Children.Add(new ContentPage()
-            {
-                Title = "M",
-                Content = new Label()
-                {
-                    Text = "Test M"
-                }
-            });*/
+            this.Children.Add(new TabContent("New Feed", "", labelA));
+            this.Children.Add(new TabContent("Message", "", labelB));
+            this.Children.Add(new TabContent("Notifications", "", labelC));
+            this.Children.Add(new TabContent("Groups", "", labelD));
+            this.Children.Add(new TabContent("M", "", labelM));
 
         }
     }

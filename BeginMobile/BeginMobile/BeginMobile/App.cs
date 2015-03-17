@@ -29,6 +29,8 @@ namespace BeginMobile
         public void Logout()
         {
             Properties["IsLoggedIn"] = false;
+            Properties["LoginUser"] = null;
+
             MainPage = new LoginModalPage(this);
         }
 

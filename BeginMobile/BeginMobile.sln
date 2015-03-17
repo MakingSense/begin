@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeginMobile.iOS", "BeginMobile\BeginMobile.iOS\BeginMobile.iOS.csproj", "{8209375D-9CC4-4A5C-97CA-27192F5E8F88}"
 EndProject
@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0B48E0
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalizeResources", "LocalizeResources\LocalizeResources.csproj", "{48226F83-3CBB-4234-9A72-4866E1939311}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -127,6 +129,30 @@ Global
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Ad-Hoc|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Ad-Hoc|Mixed Platforms.Build.0 = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.AppStore|Any CPU.Build.0 = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.AppStore|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.AppStore|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.AppStore|Mixed Platforms.Build.0 = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{48226F83-3CBB-4234-9A72-4866E1939311}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

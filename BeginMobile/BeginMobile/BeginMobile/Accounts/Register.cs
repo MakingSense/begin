@@ -150,9 +150,9 @@ namespace BeginMobile.Accounts
                                     };
 
                                     App.Current.Properties["IsLoggedIn"] = true;
-                                    iLoginManager.ShowMainPage(loginUser);
+                                    App.Current.Properties["LoginUser"] = loginUser;
 
-                                    //await Navigation.PushAsync(new Login());
+                                    iLoginManager.ShowMainPage(loginUser);
                                 }
                                 else
                                 {

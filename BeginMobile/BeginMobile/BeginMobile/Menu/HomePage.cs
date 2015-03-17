@@ -18,6 +18,8 @@ namespace BeginMobile.Menu
             Icon = null;
 
             Master = new Menu(loginUser.User);
+            //Master = new Menu(null);
+
             Detail = new AppHome();
             //Detail = new DetailPage();
         }

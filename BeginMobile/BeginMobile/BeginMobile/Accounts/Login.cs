@@ -67,17 +67,18 @@ namespace BeginMobile.Accounts
                 }
                 else
                 {
+
+                    //iLoginManager.ShowMainPage(null); 
+
                     var loginUserManager = new LoginUserManager();
                     var loginUser = loginUserManager.Login(email.Text, password.Text);
 
                     if (loginUser != null)
                     {
-                        //Application.Current.Properties["Authtoken"] = loginUser.Authtoken;
-                        //Application.Current.Properties["login"] = loginUser.User;
                         App.Current.Properties["IsLoggedIn"] = true;
-                        iLoginManager.ShowMainPage(loginUser); 
+                        App.Current.Properties["LoginUser"] = loginUser;
 
-                        //await Navigation.PushAsync(new HomePage(loginUser));
+                        iLoginManager.ShowMainPage(loginUser); 
                     }
                     else
                     {
