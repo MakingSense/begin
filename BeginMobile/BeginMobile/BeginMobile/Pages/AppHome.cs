@@ -39,12 +39,11 @@ namespace BeginMobile.Pages
             };
 
             
-
-            this.Children.Add(new TabContent("New Feed", "", labelA));
-            this.Children.Add(new TabContent("Message", "", labelB));
-            this.Children.Add(new TabContent("Notifications", "", labelC));
-            this.Children.Add(new TabContent("Groups", "", labelD));
-            this.Children.Add(new TabContent("M", "", labelM));
+            this.Children.Add(new TabContent("", "", labelA));
+            this.Children.Add(new TabContent("", "", labelB));
+            this.Children.Add(new TabContent("", "", labelC));
+            this.Children.Add(new TabContent("", "", labelD));
+            this.Children.Add(new TabContent("", "", labelM));
 
         }
     }

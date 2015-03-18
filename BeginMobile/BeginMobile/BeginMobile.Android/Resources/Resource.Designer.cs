@@ -78,8 +78,14 @@ namespace BeginMobile.Android
 		public partial class Style
 		{
 			
+			// aapt resource value: 0x7f030003
+			public const int ActionBarTab = 2130903043;
+			
 			// aapt resource value: 0x7f030002
-			public const int ActionBarTabText = 2130903042;
+			public const int ActionBarTabBar = 2130903042;
+			
+			// aapt resource value: 0x7f030004
+			public const int ActionBarTabText = 2130903044;
 			
 			// aapt resource value: 0x7f030001
 			public const int BeginMobileTheme = 2130903041;

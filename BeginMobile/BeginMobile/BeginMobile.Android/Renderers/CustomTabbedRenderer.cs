@@ -24,16 +24,13 @@ namespace BeginMobile.Android.Renderers
         private bool _isFirstDesign = true;
         private const string Color = "#FFFFFF";
 
-
-        public static void Init() { }
-
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
             _activity = this.Context as Activity;
         }
 
-        protected override void OnWindowVisibilityChanged(ViewStates visibility)
+        /*protected override void OnWindowVisibilityChanged(ViewStates visibility)
         {
             base.OnWindowVisibilityChanged(visibility);
             if (_isFirstDesign)
@@ -50,6 +47,39 @@ namespace BeginMobile.Android.Renderers
                 _isFirstDesign = false;
             }
 
+        }*/
+
+        protected override void OnDraw(global::Android.Graphics.Canvas canvas)
+        {
+            ActionBar actionBar = _activity.ActionBar;
+
+            actionBar.NavigationMode = ActionBarNavigationMode.Tabs;
+
+            if (_isFirstDesign)
+            {
+                
+                if (actionBar.TabCount > 0)
+                {
+                    var count = 0;
+                    while (count < actionBar.TabCount)
+                    {
+                        ActionBar.Tab tabOne = actionBar.GetTabAt(count);
+
+                        var imageIcon = count == (actionBar.TabCount - 1)
+                            ? Resource.Drawable.menunav
+                            : Resource.Drawable.padlock;
+
+                        tabOne.SetIcon(imageIcon);
+                        
+                        //padlock
+                        count++;
+                    }
+
+                    _isFirstDesign = false;
+
+                }
+            }
+            base.OnDraw(canvas);
         }
 
     }

@@ -19,7 +19,6 @@ namespace BeginMobile.Android
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             ImageCircleRenderer.Init();
-
             
 
             LoadApplication(new BeginMobile.App());
