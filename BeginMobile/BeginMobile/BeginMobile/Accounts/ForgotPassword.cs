@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xamarin.Forms;
+using System.Text.RegularExpressions;
 using BeginMobile.Utils;
 using BeginMobile.Services.ManagerServices;
 
@@ -35,7 +36,7 @@ namespace BeginMobile.Accounts
             buttonReset.Clicked += async (s, e) =>
                                          {
                                             
-                    var isEmailValid = Regex.IsMatch(_email.Text, EmailRegex);
+                    var isEmailValid = Regex.IsMatch(email.Text, EmailRegex);
                                              if (isEmailValid)
                                              {
                                                  LoginUserManager loginUserManager = new LoginUserManager();
@@ -51,7 +52,7 @@ namespace BeginMobile.Accounts
                                                  else
                                                  {
                                                      DisplayAlert("Error",
-                                                    "Has been happened an error in the server",
+                                                    "An error happened on the server",
                                                     "Re - Try");
                                                  }
                                              }
