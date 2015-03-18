@@ -4,18 +4,21 @@ using System.Linq;
 using System.Text;
 using Xamarin.Forms;
 using BeginMobile.Utils;
+using BeginMobile.Services.ManagerServices;
 
 namespace BeginMobile.Accounts
 {
 	public class ForgotPassword : ContentPage
-	{
-        private Entry username;
+    {
+        private const string EmailRegex =
+              @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
+              @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
         private Entry email;
         private Label labeTitle;
         private Label labelSubTitle;
         private Button buttonReset;
         private Button btBack;
-
+	 
 		public ForgotPassword ()
 		{
             labeTitle = new Label
@@ -24,13 +27,41 @@ namespace BeginMobile.Accounts
                 Style = CustomizedButtonStyle.GetTitleStyle(),
             };
             labelSubTitle = new Label{
-                Text = "Enter the username and e-mail address you registered with the Application. Instructions to reset your password will be sent to this address.",            
+                Text = "Enter the e-mail address you registered with the Application. Instructions to reset your password will be sent to this address.",            
             };
 
-            username = new Entry { Placeholder = "Enter your username" };
             email = new Entry { Placeholder = "Enter your e-mail address"};
-            buttonReset = new Button { Text= "Reset", Style = CustomizedButtonStyle.GetButtonStyle()};
-            buttonReset.Clicked += async(s, e) => { await DisplayAlert("Underconstruction", "underconstruction", "Ok"); };
+            buttonReset = new Button { Text= "Send", Style = CustomizedButtonStyle.GetButtonStyle()};
+            buttonReset.Clicked += async (s, e) =>
+                                         {
+                                            
+                    var isEmailValid = Regex.IsMatch(_email.Text, EmailRegex);
+                                             if (isEmailValid)
+                                             {
+                                                 LoginUserManager loginUserManager = new LoginUserManager();
+                                                 string webPage = loginUserManager.RetrievePassword(email.Text);
+                                                 if (webPage.Equals(""))
+                                                 {
+                                                     await
+                                                         DisplayAlert("Information",
+                                                             "Please check your email address for reset your password",
+                                                             "ok");
+                                                     MessagingCenter.Send<ContentPage>(this, "Login");
+                                                 }
+                                                 else
+                                                 {
+                                                     DisplayAlert("Error",
+                                                    "Has been happened an error in the server",
+                                                    "Re - Try");
+                                                 }
+                                             }
+                                             else
+                                             {
+                                                 DisplayAlert("Validation Error",
+                                                     "Email has wrong format",
+                                                     "Re - Try");
+                                             }
+                                         };
           
             btBack = new Button { Text = "Cancel", Style=CustomizedButtonStyle.GetButtonStyle()};
             btBack.Clicked += (sender, e) =>
@@ -43,7 +74,7 @@ namespace BeginMobile.Accounts
                 Spacing = 10,
                 Padding = 10,
                 VerticalOptions = LayoutOptions.Center,
-                Children = { labeTitle,labelSubTitle, username, email,buttonReset, btBack}                   			
+                Children = { labeTitle,labelSubTitle, email,buttonReset, btBack}                   			
 			};
 		}
 	}

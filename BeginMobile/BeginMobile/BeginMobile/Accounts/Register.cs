@@ -176,7 +176,7 @@ namespace BeginMobile.Accounts
                     else
                     {
                         DisplayAlert("Validation Error",
-                                     "Please enter a valid email address",
+                                     "Email has wrong format",
                                      "Re - Try");
                     }
                 }
