@@ -27,7 +27,7 @@ namespace BeginMobile.Services.DTO
                 if (_listGroup == null)
                 {
                     _listGroup = new List<Group>();
-                    for (var i = 0; i < 10; i++)
+                    for (var i = 0; i < 15; i++)
                     {
                         var group = new Group()
                         {
