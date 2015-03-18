@@ -11,29 +11,28 @@ namespace BeginMobile.Services.ManagerServices
 {
     public class ProfileManager
     {
-        public ProfileInformation GetProfileInformation(string username)
+        public ProfileInfoUser GetProfileInformation(string username, string authToken)
         {
             using (var client = new HttpClient())
             {
-                ProfileInformation profileInformation = null;
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authtoken", authToken);
+                ProfileInfoUser profileInfoUser = null;
 
                 client.BaseAddress = new Uri("http://104.236.207.173/");
-
+                                            
                 var content = new FormUrlEncodedContent(new[] 
                 {
-                    new KeyValuePair<string, string>("username", username),
-                    
+                    new KeyValuePair<string, string>("username", username),                    
                 });
 
-                var response = client.PostAsync("api/index.php?/v1/profile", content).Result;
-                var userJson = response.Content.ReadAsStringAsync().Result;
-
+                var response = client.GetAsync("api/index.php?/v1/profile/" + username).Result;
+                                
                 if (response.IsSuccessStatusCode)
                 {
-                    profileInformation = JsonConvert.DeserializeObject<ProfileInformation>(userJson);
+                    var userJson = response.Content.ReadAsStringAsync().Result;
+                    profileInfoUser = JsonConvert.DeserializeObject<ProfileInfoUser>(userJson);
                 }
-
-                return profileInformation;
+                return profileInfoUser;
             }
         }
     }

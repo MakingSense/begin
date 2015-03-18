@@ -11,7 +11,7 @@ namespace BeginMobile.Pages.Profile
 {
     public class Information: ContentPage
     {
-        private ProfileInformation profileInformation;
+        
         private ProfileInfoUser profileInfoUser;
 
         public Information()
@@ -20,14 +20,13 @@ namespace BeginMobile.Pages.Profile
             
             ProfileManager profileManager = new ProfileManager();
 
-            profileInformation = profileManager.GetProfileInformation(currentUser.User.UserName);
+            profileInfoUser = profileManager.GetProfileInformation(currentUser.User.UserName, currentUser.AuthToken);
 
-            if (profileInformation!=null)
+            if (profileInfoUser == null)
             {
-                profileInfoUser = profileInformation.ProfileInfoUser;
+                profileInfoUser = new ProfileInfoUser();
             }
-            
-            profileInfoUser = profileInformation.ProfileInfoUser;
+           
             
             Title = "Information";
             //Icon = "";
