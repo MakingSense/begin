@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="DTO\Activity.cs" />
     <Compile Include="DTO\Capability.cs" />
+    <Compile Include="DTO\Group.cs" />
     <Compile Include="DTO\LoginUser.cs" />
     <Compile Include="DTO\ProfileInformationActivities.cs" />
     <Compile Include="DTO\ProfileInfoUser.cs" />

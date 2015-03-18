@@ -7,16 +7,11 @@ namespace BeginMobile.Pages
 {
     public class TabContent : ContentPage
     {
-        public TabContent(string title, string icon, View content)
+        public TabContent(string title, string icon)
         {
             this.Title = title;
-            this.Icon = "menunav.png";
-            
+            this.Icon = icon;
             this.Padding = new Thickness(0, 0, 0, 0);
-            this.Content = new ScrollView()
-            {
-                Content = content
-            };
         }
     }
 }
