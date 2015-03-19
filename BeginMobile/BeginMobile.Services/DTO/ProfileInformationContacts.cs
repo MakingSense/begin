@@ -2,16 +2,16 @@
 
 namespace BeginMobile.Services.DTO
 {
-    public class ProfileInformationActivities
+    public class ProfileInformationContacts
     {
         [JsonProperty("id")]
-        public string Id { set; get; }
+        public int Id { set; get; }
 
         [JsonProperty("username")]
-        public string Username { set; get; }
+        public string UserName { set; get; }
 
         [JsonProperty("nicename")]
-        public string Nicename { set; get; }
+        public string NiceName { set; get; }
 
         [JsonProperty("email")]
         public string Email { set; get; }
@@ -23,9 +23,9 @@ namespace BeginMobile.Services.DTO
         public string Registered { set; get; }
 
         [JsonProperty("displayname")]
-        public string Displayname { set; get; }
+        public string DisplayName { set; get; }
 
-        [JsonProperty("activities")]
-        public ProfileActivity[] Activies { set; get; }
+        [JsonProperty("contacts")]
+        public User[] Contacts { set; get; }
     }
 }

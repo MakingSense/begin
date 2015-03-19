@@ -2,7 +2,7 @@
 
 namespace BeginMobile.Services.DTO
 {
-    public class ProfileInformationActivities
+    public class ProfileInformationEvents
     {
         [JsonProperty("id")]
         public string Id { set; get; }
@@ -25,7 +25,7 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("displayname")]
         public string Displayname { set; get; }
 
-        [JsonProperty("activities")]
-        public ProfileActivity[] Activies { set; get; }
+        [JsonProperty("events")]
+        public ProfileEvent[] Events { set; get; }
     }
 }

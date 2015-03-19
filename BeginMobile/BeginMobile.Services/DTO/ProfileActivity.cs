@@ -2,10 +2,10 @@
 
 namespace BeginMobile.Services.DTO
 {
-    public class Activity
+    public class ProfileActivity
     {
         [JsonProperty("user")]
-        public UserActivity User { get; set; }
+        public UserActivity UserActivity { get; set; }
 
         [JsonProperty("item_id")]
         public int ItemId { get; set; }

@@ -36,12 +36,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DTO\Activity.cs" />
+    <Compile Include="DTO\ProfileActivity.cs" />
     <Compile Include="DTO\Capability.cs" />
     <Compile Include="DTO\Group.cs" />
     <Compile Include="DTO\LoginUser.cs" />
+    <Compile Include="DTO\ProfileEvent.cs" />
+    <Compile Include="DTO\ProfileGroup.cs" />
     <Compile Include="DTO\ProfileInformationActivities.cs" />
-    <Compile Include="DTO\ProfileInfoUser.cs" />
+    <Compile Include="DTO\ProfileInformationContacts.cs" />
+    <Compile Include="DTO\ProfileInformationEvents.cs" />
+    <Compile Include="DTO\ProfileInformationGroups.cs" />
+    <Compile Include="DTO\ProfileInfo.cs" />
+    <Compile Include="DTO\ProfileInformationShop.cs" />
+    <Compile Include="DTO\ProfileShop.cs" />
     <Compile Include="DTO\RegisterUser.cs" />
     <Compile Include="DTO\User.cs" />
     <Compile Include="DTO\UserActivity.cs" />

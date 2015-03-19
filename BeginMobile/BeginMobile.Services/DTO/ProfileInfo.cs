@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
 {
-    public class ProfileInfoUser
+    public class ProfileInfo
     {
         [JsonProperty("id")]
         public int Id { set; get; }
