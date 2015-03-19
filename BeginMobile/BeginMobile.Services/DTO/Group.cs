@@ -3,14 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
 {
     public class Group
     {
+        [JsonProperty("group_id")]
         public string Id { set; get; }
 
+        [JsonProperty("creator_id")]
+        public string CreatorId { set; get; }
+
+        [JsonProperty("name")]
         public string Name { set; get; }
+
+        [JsonProperty("description")]
+        public string Description { set; get; }
+
+        [JsonProperty("status")]
+        public string Status { set; get; }
+
+        [JsonProperty("date_created")]
+        public string DateCreated { set; get; }
+
+        [JsonProperty("is_admin")]
+        public string IsAdmin { set; get; }
+
+        [JsonProperty("creator")]
+        public User Creator { set; get; }
 
         public string Category { set; get; }
 
@@ -18,6 +39,9 @@ namespace BeginMobile.Services.DTO
 
         public string Members { set; get; }
 
+
+        //TODO remove this region when it's not necessary
+        #region "Fields for test"
         private static List<Group> _listGroup;
 
         public static List<Group> ListGroup
@@ -44,5 +68,6 @@ namespace BeginMobile.Services.DTO
                 return _listGroup;
             }
         }
+        #endregion
     }
 }

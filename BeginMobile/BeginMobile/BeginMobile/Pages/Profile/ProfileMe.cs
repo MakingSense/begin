@@ -55,7 +55,7 @@ namespace BeginMobile.Pages.Profile
             {
                 Icon = "",
                 Text = "Groups",
-                Order = ToolbarItemOrder.Secondary,
+                Order = ToolbarItemOrder.Primary,
                 Command = new Command(() => Navigation.PushAsync(new Groups()))
             };
 

@@ -17,10 +17,8 @@ namespace BeginMobile.Pages.Profile
         public Information()
         {
             var currentUser = (LoginUser) App.Current.Properties["LoginUser"];
-            
-            ProfileManager profileManager = new ProfileManager();
 
-            profileInfo = profileManager.GetProfileInformation(currentUser.User.UserName, currentUser.AuthToken);
+            profileInfo = App.ProfileServices.GetInformation(currentUser.User.UserName, currentUser.AuthToken);
 
             if (profileInfo == null)
             {

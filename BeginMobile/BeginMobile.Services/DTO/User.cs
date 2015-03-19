@@ -39,5 +39,8 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("capabilities")]
         public Capability Capabilities { set; get; }
+
+        [JsonProperty("name_surname")]
+        public string NameSurname { set; get; }
     }
 }

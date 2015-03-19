@@ -41,6 +41,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Shop.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\TabContent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\TermsAndConditions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ProfileServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CustomizedButtonStyle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\RadioButton.cs" />
   </ItemGroup>

@@ -3,6 +3,7 @@ using BeginMobile.Accounts;
 using BeginMobile.Interfaces;
 using BeginMobile.Menu;
 using BeginMobile.Services.DTO;
+using BeginMobile.Services;
 
 namespace BeginMobile
 {
@@ -47,6 +48,25 @@ namespace BeginMobile
 		protected override void OnResume ()
 		{
 			// Handle when your app resumes
-		}
-	}
+        }
+
+        #region "Services"
+
+        private static ProfileServices _profileServices;
+        public static ProfileServices ProfileServices
+        {
+            get
+            {
+                if (_profileServices == null)
+                {
+                    _profileServices = new ProfileServices();
+                }
+                return _profileServices;
+            }
+        }
+
+        #endregion
+
+
+    }
 }

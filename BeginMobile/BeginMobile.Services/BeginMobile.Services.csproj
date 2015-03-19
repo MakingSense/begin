@@ -41,7 +41,6 @@
     <Compile Include="DTO\Group.cs" />
     <Compile Include="DTO\LoginUser.cs" />
     <Compile Include="DTO\ProfileEvent.cs" />
-    <Compile Include="DTO\ProfileGroup.cs" />
     <Compile Include="DTO\ProfileInformationActivities.cs" />
     <Compile Include="DTO\ProfileInformationContacts.cs" />
     <Compile Include="DTO\ProfileInformationEvents.cs" />
