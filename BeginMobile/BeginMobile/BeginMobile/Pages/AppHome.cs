@@ -10,15 +10,19 @@ namespace BeginMobile.Pages
     {
         public AppHome()
         {
+            this.LoadChilds();
+        }
+
+        public void LoadChilds()
+        {
             this.Title = "Home";
-            this.Padding = new Thickness(0,0,0,0);
+            this.Padding = new Thickness(0, 0, 0, 0);
 
             this.Children.Add(new TabContent("", "padlock.png"));
             this.Children.Add(new TabContent("", "padlock.png"));
             this.Children.Add(new TabContent("", "padlock.png"));
             this.Children.Add(new GroupListPage("", "padlock.png"));
             this.Children.Add(new TabContent("", "menunav.png"));
-
         }
     }
 }

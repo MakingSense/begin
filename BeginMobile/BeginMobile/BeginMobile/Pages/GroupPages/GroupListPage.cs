@@ -13,7 +13,7 @@ namespace BeginMobile.Pages.GroupPages
 
         public GroupListPage(string title, string iconImg): base(title, iconImg)
         {
-            lViewGroup = new ListView { StyleId = "GroupList" };
+            lViewGroup = new ListView { StyleId = "GroupList"};
 
             lViewGroup.ItemTemplate = new DataTemplate(typeof(GroupItemCell));
 
@@ -49,7 +49,6 @@ namespace BeginMobile.Pages.GroupPages
             base.OnAppearing();
 
             var listGroup = Group.ListGroup;
-
             lViewGroup.ItemsSource = listGroup;
         }
     }
