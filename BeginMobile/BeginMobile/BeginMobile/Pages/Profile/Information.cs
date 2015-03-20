@@ -91,7 +91,7 @@ namespace BeginMobile.Pages.Profile
                 {
                     new Label()
                     {
-                        Text = profileInfo.FirstName,
+                        Text = profileInfo.NameSurname,
                         FontAttributes = FontAttributes.Italic,
                     }
                 },

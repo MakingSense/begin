@@ -56,10 +56,11 @@ namespace BeginMobile.Pages.Profile
 
             Content = new StackLayout
             {
+                Padding = 10,
                 VerticalOptions = LayoutOptions.Start,
                 Children =
                 {
-                    header,scrollView
+                    scrollView
                 }
             };
 

@@ -18,6 +18,9 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("nicename")]
         public string NiceName { set; get; }
 
+        [JsonProperty("name_surname")]
+        public string NameSurname { set; get; }
+
         [JsonProperty("email")]
         public string Email { set; get; }
 
