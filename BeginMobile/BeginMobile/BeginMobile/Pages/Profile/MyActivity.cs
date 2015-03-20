@@ -28,15 +28,15 @@ namespace BeginMobile.Pages.Profile
                 ImageSource =
                     ImageSource.FromFile("userdefault3.png"),
                 Text = "What is the new," + currentUser.User.NiceName + "?",
-
             };
 
             var userInfoTableViewActivity = new TableView
             {
-                HeightRequest = 300,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Start,
                 Root = new TableRoot
                                                        {
-                                                           new TableSection
+                                                           new TableSection(" ")
                                                            {
                                                                userImageActivity
                                                            }
@@ -45,6 +45,9 @@ namespace BeginMobile.Pages.Profile
 
             var activityEditor = new StackLayout
             {
+                HeightRequest = 500,
+                Orientation = StackOrientation.Vertical,
+                VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children = { userInfoTableViewActivity}
             };
@@ -53,10 +56,8 @@ namespace BeginMobile.Pages.Profile
             var stackLayoutMain = new StackLayout
             {
                 Orientation = StackOrientation.Vertical,
-
                 Children =
                                       {
-                                          header,
                                           activityEditor,
                                           activitiesScroollView
                                       }

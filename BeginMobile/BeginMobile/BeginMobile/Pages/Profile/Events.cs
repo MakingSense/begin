@@ -27,11 +27,23 @@ namespace BeginMobile.Pages.Profile
 
             var gridEventHeaderTitle = new Grid
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-
+                HorizontalOptions = LayoutOptions.FillAndExpand,                
             };
-            // TODO: Add to header of events
-          //  gridEventHeaderTitle.ChildAdded(new Label { Text = "Date and Time"},);
+
+            gridEventHeaderTitle.Children.Add(new Label
+            {
+                WidthRequest = 200,
+                Text = "Event",
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Font = Font.SystemFontOfSize(24, FontAttributes.Bold)
+            }, 0, 1, 0, 1);
+
+            gridEventHeaderTitle.Children.Add(new Label
+            {
+                Text = "Date and Time",
+                HorizontalOptions = LayoutOptions.Start,
+                Font = Font.SystemFontOfSize(24,FontAttributes.Bold)
+            }, 1, 2, 0, 1);
 
             var listEvents = new List<EventInfoObject>();
 
@@ -40,7 +52,8 @@ namespace BeginMobile.Pages.Profile
                 {
                     EventName = eventInfo.Name,
                     EventIntervalDate = String.Format("{0} - {1}", eventInfo.StartDate, eventInfo.EndDate),
-                    EventTime = String.Format("{0} - {1}", eventInfo.StartTime, eventInfo.EndTime)
+                    EventTime = String.Format("{0} - {1}", eventInfo.StartTime, eventInfo.EndTime),
+                    eventInfo = eventInfo,
                 });
             }
 
@@ -50,6 +63,15 @@ namespace BeginMobile.Pages.Profile
             {
                 ItemsSource = listEvents,
                 ItemTemplate = eventTemplate
+            };
+
+            eventsListView.ItemSelected += async (sender, e) =>
+            {
+                var item = (EventInfoObject)e.SelectedItem;
+
+                var itemPageProfile = new EventDetailInformation(item.eventInfo);                
+                await Navigation.PushAsync(itemPageProfile);
+
             };
 
             ScrollView scrollView  = new ScrollView{
@@ -66,9 +88,10 @@ namespace BeginMobile.Pages.Profile
             Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.Start,
+                Padding = 20,
                 Children =
                 {
-                    header,scrollView
+                    gridEventHeaderTitle,scrollView
                 }
             };
 
