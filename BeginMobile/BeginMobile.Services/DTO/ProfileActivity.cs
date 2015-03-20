@@ -21,5 +21,6 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("content")]
         public string Content { get; set; }
+
     }
 }
