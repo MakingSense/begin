@@ -22,22 +22,22 @@ namespace BeginMobile.Services
 
         public ProfileInfo GetInformation(string userName, string authToken)
         {
-            return _profileManger.GetProfileInformation(userName, userName);
+            return _profileManger.GetProfileInformation(userName, authToken);
         }
 
         public ProfileInformationActivities GetActivities(string userName, string authToken)
         {
-            return _profileManger.GetActivitiesInformation(userName, userName);
+            return _profileManger.GetActivitiesInformation(userName, authToken);
         }
 
         public ProfileInformationEvents GetEvents(string userName, string authToken)
         {
-            return _profileManger.GetEventsInformation(userName, userName);
+            return _profileManger.GetEventsInformation(userName, authToken);
         }
 
         public ProfileInformationContacts GetContacts(string userName, string authToken)
         {
-            return _profileManger.GetContactsInformation(userName, userName);
+            return _profileManger.GetContactsInformation(userName, authToken);
         }
 
     }

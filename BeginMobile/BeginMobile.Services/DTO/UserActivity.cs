@@ -11,9 +11,9 @@ namespace BeginMobile.Services.DTO
         public string Email { set; get; }
 
         [JsonProperty("username")]
-        public string Username { set; get; }
+        public string UserName { set; get; }
 
-        [JsonProperty("displayname")]
+        [JsonProperty("display_name")]
         public string DisplayName { set; get; }
     }
 }

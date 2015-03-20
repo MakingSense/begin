@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
 {
@@ -8,10 +9,7 @@ namespace BeginMobile.Services.DTO
         public string Id { set; get; }
 
         [JsonProperty("username")]
-        public string Username { set; get; }
-
-        [JsonProperty("nicename")]
-        public string Nicename { set; get; }
+        public string UserName { set; get; }
 
         [JsonProperty("email")]
         public string Email { set; get; }
@@ -22,10 +20,10 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("registered")]
         public string Registered { set; get; }
 
-        [JsonProperty("displayname")]
-        public string Displayname { set; get; }
+        [JsonProperty("name_surname")]
+        public string NameSurname { set; get; }
 
         [JsonProperty("activities")]
-        public ProfileActivity[] Activies { set; get; }
+        public List<ProfileActivity> Activies { set; get; }
     }
 }

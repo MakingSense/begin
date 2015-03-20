@@ -13,7 +13,7 @@ namespace BeginMobile.Pages.Profile
     {
         public MyActivity()
         {
-            var currentUser = ((LoginUser)App.Current.Properties["LoginUser"]).User;
+            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
 
             Title = "My activity";
             Label header = new Label
@@ -27,7 +27,7 @@ namespace BeginMobile.Pages.Profile
             {
                 ImageSource =
                     ImageSource.FromFile("userdefault3.png"),
-                Text = "What is the new," + currentUser.UserName + "?",
+                Text = "What is the new," + currentUser.User.NiceName + "?",
 
             };
 
@@ -42,18 +42,14 @@ namespace BeginMobile.Pages.Profile
                                                            }
                                                        }
             };
-            var commentEditor = new Editor
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand
-            };
 
             var activityEditor = new StackLayout
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Children = { userInfoTableViewActivity, commentEditor }
+                Children = { userInfoTableViewActivity}
             };
 
-            var activitiesScroollView = new Activities(currentUser);
+            var activitiesScroollView = new Activities();
             var stackLayoutMain = new StackLayout
             {
                 Orientation = StackOrientation.Vertical,

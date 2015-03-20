@@ -10,8 +10,10 @@ namespace BeginMobile.Pages.Profile
     public class Activities : ScrollView
     {
         
-        public Activities(User user)
+        public Activities()
         {
+            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            ProfileInformationActivities activitiesInformation = App.ProfileServices.GetActivities(currentUser.User.UserName, currentUser.AuthToken);
 
             StackLayout layoutActivities = new StackLayout
             {
@@ -20,50 +22,59 @@ namespace BeginMobile.Pages.Profile
                 Padding = 50,
             };
 
-            for (int i = 0; i <= 5; i++)
+            foreach (var activity in activitiesInformation.Activies)
             {
-                layoutActivities.Children.Add(new TableView
+                if (activity != null)
                 {
-                    HeightRequest = 180,
-                    Root = new TableRoot
+                    if (activity.Content != null)
+                    {
+                        if (activity.UserActivity != null)
+                        {
+
+                            layoutActivities.Children.Add(new TableView
+                            {
+                                HeightRequest = 180,
+                                Root = new TableRoot
 		                                                 {
-		                                                     new TableSection
+		                                                     new TableSection(" ")
 		                                                     {
 		                                                         new ImageCell
 		                                                         {
 		                                                             ImageSource =
 		                                                                 ImageSource.FromFile("userdefault3.png"),
-		                                                             Text = user.DisplayName,
+		                                                             Text = activity.UserActivity.DisplayName.ToString() + " " + activity.Content.ToString(),
 		                                                             //"Sara Gomez joined the group Clases de tenis Personalizados"
-		                                                             Detail = user.Email, //"6 min ago"
+		                                                             Detail = activity.Date.ToString(), //"6 min ago"
 
 		                                                         }
 		                                                     },
 		                                                 }
-                });
-                layoutActivities.Children.Add(new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    Children =
-		                                          {
-		                                              new Button
-		                                              {
-		                                                  Text = "comment"
-		                                              },
-		                                              new Button
-		                                              {
-		                                                  Text = "delete"
-		                                              },
-		                                              new Button
-		                                              {
-		                                                  Text = "Public"
-		                                              },
+                            });
+                            //layoutActivities.Children.Add(new StackLayout
+                            //{
+                            //    Orientation = StackOrientation.Horizontal,
+                            //    HorizontalOptions = LayoutOptions.FillAndExpand,
+                            //    Children =
+                            //                      {
+                            //                          new Button
+                            //                          {
+                            //                              Text = "comment"
+                            //                          },
+                            //                          new Button
+                            //                          {
+                            //                              Text = "delete"
+                            //                          },
+                            //                          new Button
+                            //                          {
+                            //                              Text = "Public"
+                            //                          },
 
-		                                          }
-                });
+                            //                      }
+                            //});
+                        }
+                    }
+                }
             }
-
             Content = layoutActivities;
 
         }
