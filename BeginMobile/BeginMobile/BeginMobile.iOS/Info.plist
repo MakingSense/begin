@@ -21,7 +21,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string></string>
+	<string>8.2</string>
 	<key>CFBundleDisplayName</key>
 	<string>BeginMobile</string>
 	<key>CFBundleIdentifier</key>
@@ -37,9 +37,7 @@
 		<string>Icon-Small-40@2x.png</string>
 		<string>Icon-Small.png</string>
 	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen.storyboard</string>
 	<key>CFBundleShortVersionString</key>
-	<string></string>
+	<string>1.0</string>
 </dict>
 </plist>
