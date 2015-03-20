@@ -47,6 +47,6 @@ namespace BeginMobile.Services.DTO
         public string Private { set; get; }
 
         [JsonProperty("owner")]
-        public string User { set; get; }
+        public User Owner { set; get; }
     }
 }

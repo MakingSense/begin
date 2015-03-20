@@ -42,16 +42,24 @@ namespace BeginMobile.Pages.Profile
             };
 
 
-            Content = new ScrollView
+            ScrollView scrollView = new ScrollView
             {
                 Content = new StackLayout
                 {
                     Spacing = 2,
                     VerticalOptions = LayoutOptions.Start,
                     Children = {
-                        header,
                         contactlistView
                     }
+                }
+            };
+
+            Content = new StackLayout
+            {
+                VerticalOptions = LayoutOptions.Start,
+                Children =
+                {
+                    header,scrollView
                 }
             };
 
