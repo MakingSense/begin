@@ -27,7 +27,7 @@ namespace BeginMobile.Pages.Profile
             {
                 ImageSource =
                     ImageSource.FromFile("userdefault3.png"),
-                Text = "What is the new," + currentUser.username + "?",
+                Text = "What is the new," + currentUser.UserName + "?",
 
             };
 
@@ -53,7 +53,7 @@ namespace BeginMobile.Pages.Profile
                 Children = { userInfoTableViewActivity, commentEditor }
             };
 
-            var activitiesScroollView = new Activity(currentUser);
+            var activitiesScroollView = new Activities(currentUser);
             var stackLayoutMain = new StackLayout
             {
                 Orientation = StackOrientation.Vertical,
