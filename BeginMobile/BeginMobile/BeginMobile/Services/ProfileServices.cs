@@ -25,5 +25,20 @@ namespace BeginMobile.Services
             return _profileManger.GetProfileInformation(userName, userName);
         }
 
+        public ProfileInformationActivities GetActivities(string userName, string authToken)
+        {
+            return _profileManger.GetActivitiesInformation(userName, userName);
+        }
+
+        public ProfileInformationEvents GetEvents(string userName, string authToken)
+        {
+            return _profileManger.GetEventsInformation(userName, userName);
+        }
+
+        public ProfileInformationContacts GetContacts(string userName, string authToken)
+        {
+            return _profileManger.GetContactsInformation(userName, userName);
+        }
+
     }
 }
