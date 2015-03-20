@@ -1,4 +1,5 @@
-﻿using BeginMobile.Services.DTO;
+﻿using BeginMobile.Pages.GroupPages;
+using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,48 @@ namespace BeginMobile.Pages.Profile
 {
     public class Groups: ContentPage
     {
+        private ListView lViewGroup;
+        private RelativeLayout rLayout;
         public Groups()
         {
-
             Title = "Groups";
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            ProfileInformationGroups groupInformation = App.ProfileServices.GetGroups(currentUser.User.UserName, currentUser.AuthToken);
 
-            var groupInformation = App.ProfileServices.GetGroups(currentUser.User.UserName, currentUser.AuthToken);
+            lViewGroup = new ListView()
+            {
+                RowHeight = 40,
+            };
+            lViewGroup.ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell));
+            lViewGroup.ItemsSource = groupInformation.Groups;
 
-            var test = "";
-            //Icon = "";
+            lViewGroup.HasUnevenRows = true;
+            
+            /*lViewGroup.ItemSelected += async (sender, e) =>
+            {
+                if (e.SelectedItem == null)
+                {
+                    return; 
+                }
+
+                var groupItem = (Group)e.SelectedItem;
+                var groupPage = new GroupItemPage();
+                groupPage.BindingContext = groupItem;
+                await Navigation.PushAsync(groupPage);
+
+                // clears the 'selected' background
+                ((ListView)sender).SelectedItem = null; 
+            };*/
+
+            rLayout = new RelativeLayout();
+            rLayout.Children.Add(lViewGroup,
+                xConstraint: Constraint.Constant(0),
+                yConstraint: Constraint.Constant(0),
+                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
+            Content = new ScrollView() {Content = rLayout};
         }
+
     }
 }

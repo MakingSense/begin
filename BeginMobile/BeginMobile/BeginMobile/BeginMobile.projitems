@@ -27,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\GroupPages\GroupItemCell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\GroupPages\GroupItemPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\GroupPages\GroupListPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\GroupPages\ProfileGroupItemCell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\HelpCenter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AppHome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Privacy.cs" />

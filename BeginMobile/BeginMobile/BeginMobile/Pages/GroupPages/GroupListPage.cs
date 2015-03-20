@@ -16,7 +16,7 @@ namespace BeginMobile.Pages.GroupPages
             lViewGroup = new ListView { StyleId = "GroupList"};
 
             lViewGroup.ItemTemplate = new DataTemplate(typeof(GroupItemCell));
-
+            
             /*lViewGroup.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null)

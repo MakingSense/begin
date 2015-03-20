@@ -14,6 +14,7 @@ namespace BeginMobile.Pages.GroupPages
             //
             this.StyleId = "Cell";
             
+            
             /*var groupImage = new Image
             {
                 StyleId = "CellGroup",
@@ -35,6 +36,7 @@ namespace BeginMobile.Pages.GroupPages
             var lblGroupName = new Label
             {
                 StyleId = "CellGroupName",
+                
                 YAlign = TextAlignment.Center,
             };
             lblGroupName.SetBinding(Label.TextProperty, "Name");
