@@ -26,12 +26,15 @@ namespace BeginMobile.Pages.GroupPages
             var lblGrTitle = new Label()
             {
                 YAlign = TextAlignment.Center,
+                FontSize = 18,
+                FontAttributes = FontAttributes.Bold,
             };
-            lblGrTitle.SetBinding(Label.TextProperty, "Name", stringFormat: "Name: {0}");
+            lblGrTitle.SetBinding(Label.TextProperty, "Name");
 
             var lblGrDesc = new Label()
             {
                 YAlign = TextAlignment.Center,
+                FontSize = 12,
             };
             lblGrDesc.SetBinding(Label.TextProperty, "Description", stringFormat: "Description: {0}");
 
@@ -49,6 +52,8 @@ namespace BeginMobile.Pages.GroupPages
             {
                 YAlign = TextAlignment.Center,
                 HorizontalOptions = LayoutOptions.End,
+                FontSize = 15,
+                FontAttributes = FontAttributes.Bold,
             };
             lblCreate.SetBinding(Label.TextProperty, "DateCreated");
 

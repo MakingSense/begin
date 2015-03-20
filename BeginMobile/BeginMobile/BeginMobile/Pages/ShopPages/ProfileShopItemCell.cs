@@ -22,8 +22,7 @@ namespace BeginMobile.Pages.ShopPages
                 HorizontalOptions = LayoutOptions.Start,
                 Source = GroupImage
             };
-
-            //Right section
+            
             var lblGrTitle = new Label()
             {
                 YAlign = TextAlignment.Center,
@@ -32,12 +31,12 @@ namespace BeginMobile.Pages.ShopPages
             };
             lblGrTitle.SetBinding(Label.TextProperty, "Name");
 
-
+            //Left section
             var lblCreateDateTitle = new Label()
             {
                 YAlign = TextAlignment.Center,
                 Text = "Date:",
-                FontSize = 10,
+                FontSize = 12,
                 FontAttributes = FontAttributes.Bold,
                 HorizontalOptions = LayoutOptions.Start
             };
@@ -49,14 +48,6 @@ namespace BeginMobile.Pages.ShopPages
                 HorizontalOptions = LayoutOptions.Center
             };
             lblCreate.SetBinding(Label.TextProperty, "CreationDate");
-
-            var sLayoutDate = new StackLayout()
-            {
-                Children =
-                {
-                    lblCreateDateTitle, lblCreate
-                }
-            };
 
             //Right section
             var lblPriceTitle = new Label()
@@ -70,37 +61,42 @@ namespace BeginMobile.Pages.ShopPages
 
             var lblPrice = new Label()
             {
-                YAlign = TextAlignment.Center,
                 FontSize = 18,
-                HorizontalOptions = LayoutOptions.Center,
-                
+                YAlign = TextAlignment.Center,
+                XAlign = TextAlignment.Center,
+                HorizontalOptions = LayoutOptions.End
             };
             lblPrice.SetBinding(Label.TextProperty, "Price");
 
-            var stackLayoutRight = new StackLayout()
+            var gridDetails = new Grid()
             {
-                Children =
+                Padding = new Thickness(10, 5, 10, 5),
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
                 {
-                    lblPriceTitle, lblPrice
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto }
+                },
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition { Width = GridLength.Auto },
+                    new ColumnDefinition { Width = GridLength.Auto },
                 }
             };
 
-            var stackLayoutFoot = new StackLayout()
-            {
-                Orientation = StackOrientation.Horizontal,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Children =
-                {
-                    sLayoutDate, stackLayoutRight
-                }
-            };
+            gridDetails.Children.Add(lblCreateDateTitle, 0, 0);
+            gridDetails.Children.Add(lblCreate, 0, 1);
+
+            gridDetails.Children.Add(lblPriceTitle, 1, 0);
+            gridDetails.Children.Add(lblPrice, 1, 1);
 
             var stackLayCenter = new StackLayout()
             {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
                 {
                     lblGrTitle,
-                    stackLayoutFoot
+                    gridDetails
                 }
             };
 

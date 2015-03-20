@@ -28,8 +28,8 @@ namespace BeginMobile.Pages.Profile
             _lViewGroup.ItemsSource = groupInformation.Groups;
 
             _lViewGroup.HasUnevenRows = true;
-            
-            /*lViewGroup.ItemSelected += async (sender, e) =>
+
+            _lViewGroup.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null)
                 {
@@ -43,7 +43,7 @@ namespace BeginMobile.Pages.Profile
 
                 // clears the 'selected' background
                 ((ListView)sender).SelectedItem = null; 
-            };*/
+            };
 
             _rLayout = new RelativeLayout();
             _rLayout.Children.Add(_lViewGroup,

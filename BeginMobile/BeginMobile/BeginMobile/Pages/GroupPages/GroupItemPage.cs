@@ -10,6 +10,7 @@ namespace BeginMobile.Pages.GroupPages
         public GroupItemPage()
         {
             //
+            Title = "Group detail";
         }
     }
 }

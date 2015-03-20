@@ -12,12 +12,11 @@ namespace BeginMobile.Pages.Profile
     public class Shop: ContentPage
     {
         private ListView _lViewShops;
-        private StackLayout _sLayoutMain;
+        private RelativeLayout _sLayoutMain;
 
         public Shop()
         {
             Title = "Shop";
-            //Icon = "";
 
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationShop profileShop = App.ProfileServices.GetShopInfo(currentUser.User.UserName, currentUser.AuthToken);
@@ -31,8 +30,28 @@ namespace BeginMobile.Pages.Profile
 
             _lViewShops.HasUnevenRows = true;
 
-            _sLayoutMain = new StackLayout();
-            _sLayoutMain.Children.Add(_lViewShops);
+            _lViewShops.ItemSelected += async (sender, e) =>
+            {
+                if (e.SelectedItem == null)
+                {
+                    return; 
+                }
+
+                var groupItem = (ProfileShop)e.SelectedItem;
+                var groupPage = new ShopItemPage();
+                groupPage.BindingContext = groupItem;
+                await Navigation.PushAsync(groupPage);
+
+                // clears the 'selected' background
+                ((ListView)sender).SelectedItem = null; 
+            };
+
+            _sLayoutMain = new RelativeLayout();
+            _sLayoutMain.Children.Add(_lViewShops,
+                xConstraint: Constraint.Constant(0),
+                yConstraint: Constraint.Constant(0),
+                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
             Content = new ScrollView() { Content = _sLayoutMain };
         }
