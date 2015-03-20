@@ -23,9 +23,15 @@ namespace BeginMobile.Menu
         private const string pProfileMenuIcon = "userprofile.png";
         private const string knocks = "padlock.png";
 
-        public Menu(User user)
+        private readonly Action _onToggleRequest;
+
+        public Menu(Action onToggleRequest)
         {
+
+            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+
             bool isLoadByLogin = false;
+            _onToggleRequest = onToggleRequest;
 
             Title = "Menu";
             Icon = Device.OS == TargetPlatform.iOS ? "menunav.png" : null;
@@ -34,8 +40,8 @@ namespace BeginMobile.Menu
             {
                 ImageSource =
                     ImageSource.FromFile(pUserDefault),
-                Text = user.DisplayName,
-                Detail = user.Email
+                Text = currentUser.User.DisplayName,
+                Detail = currentUser.User.Email
                 
             };
 
@@ -65,7 +71,8 @@ namespace BeginMobile.Menu
             {
                 HeightRequest = 150,
                 ItemsSource = menuItemList,
-                ItemTemplate = cell
+                ItemTemplate = cell,
+                
                 //ItemsSource = menuItems,
             };
 
@@ -73,8 +80,13 @@ namespace BeginMobile.Menu
 
             menu.ItemSelected += async (sender, e) =>
             {
+                if (e.SelectedItem == null)
+                {
+                    return;
+                }
+
                 var item = (ConfigurationMenuItems)e.SelectedItem;
-                var itemPageProfile = new ProfileMe(user);
+                var itemPageProfile = new ProfileMe(currentUser.User);
                 var itemPageKnocks = new ContentPage { Title = "Knocks" };
 
                 if (item.OptionName.Equals(Items.Profile.ToString()))
@@ -86,6 +98,8 @@ namespace BeginMobile.Menu
                     await Navigation.PushAsync(itemPageKnocks);
                 }
 
+                ((ListView)sender).SelectedItem = null;
+                _onToggleRequest();
             };
 
             var controlButtonStyle = CustomizedButtonStyle.GetControlButtonStyle();
@@ -141,18 +155,22 @@ namespace BeginMobile.Menu
             buttonAbout.Clicked += async (s, e) =>
             {
                 await Navigation.PushAsync(new AboutUs());
+                _onToggleRequest();
             };
             buttonPrivacy.Clicked += async (s, e) =>
             {
                 await Navigation.PushAsync(new Privacy());
+                _onToggleRequest();
             };
             buttonSupport.Clicked += async (s, e) =>
             {
                 await Navigation.PushAsync(new HelpCenter());
+                _onToggleRequest();
             };
             buttonTermsAndConditions.Clicked += async (s, e) =>
             {
                 await Navigation.PushAsync(new TermsAndConditions(isLoadByLogin));
+                _onToggleRequest();
             };
 
             ScrollView scroll = new ScrollView();

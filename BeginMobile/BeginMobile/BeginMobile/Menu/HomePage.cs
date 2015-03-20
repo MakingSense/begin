@@ -16,13 +16,17 @@ namespace BeginMobile.Menu
             Title = "Home";
             Icon = null;
 
-            Master = new Menu(loginUser.User);
+            Master = new Menu(OnToggleRequest);
             //Master = new Menu(null);
 
             Detail = new AppHome();
             //Detail = new DetailPage();
         }
 
+        private void OnToggleRequest()
+        {
+            IsPresented = !IsPresented;
+        }
         
     }
 }
