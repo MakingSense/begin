@@ -19,7 +19,7 @@ namespace BeginMobile.Pages.Profile
             {
                 Orientation = StackOrientation.Vertical,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Padding = 50,
+                Padding = 20,
             };
 
             foreach (var activity in activitiesInformation.Activies)

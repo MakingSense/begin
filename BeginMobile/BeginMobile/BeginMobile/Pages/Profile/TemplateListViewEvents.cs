@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
+using BeginMobile.Services.DTO;
 
 namespace BeginMobile.Pages.Profile
 {
@@ -11,9 +12,12 @@ namespace BeginMobile.Pages.Profile
         {
             var eventTitle = new Label
             {
-                VerticalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.Start,
-                TextColor = Color.FromHex("77D065")
+                HeightRequest = 50,
+                WidthRequest = 200,
+                TextColor = Color.FromHex("77D065"),
+                Font = Font.SystemFontOfSize(15,FontAttributes.Bold)
 
             };
             eventTitle.SetBinding(Label.TextProperty, "EventName");
@@ -21,6 +25,7 @@ namespace BeginMobile.Pages.Profile
 
             View = new StackLayout
             {
+                HeightRequest = 60,
                 Orientation = StackOrientation.Horizontal,
                 Children = { 
                     eventTitle, eventDetailsLayout
@@ -45,6 +50,7 @@ namespace BeginMobile.Pages.Profile
 
             return new StackLayout
             {
+                HeightRequest = 50,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Orientation = StackOrientation.Vertical,
                 Children = { eventIntervalDate, eventTime }
@@ -58,5 +64,7 @@ namespace BeginMobile.Pages.Profile
         public string EventName { get; set; }
         public string EventIntervalDate { get; set; }
         public string EventTime { get; set; }
+
+        public ProfileEvent eventInfo { get; set; }
     }
 }
