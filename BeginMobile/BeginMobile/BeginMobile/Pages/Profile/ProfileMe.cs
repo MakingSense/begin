@@ -55,7 +55,7 @@ namespace BeginMobile.Pages.Profile
             {
                 Icon = "",
                 Text = "Groups",
-                Order = ToolbarItemOrder.Primary,
+                Order = ToolbarItemOrder.Secondary,
                 Command = new Command(() => Navigation.PushAsync(new Groups()))
             };
 
@@ -63,7 +63,7 @@ namespace BeginMobile.Pages.Profile
             {
                 Icon = "",
                 Text = "Shop",
-                Order = ToolbarItemOrder.Secondary,
+                Order = ToolbarItemOrder.Primary,
                 Command = new Command(() => Navigation.PushAsync(new Shop()))
             };
 

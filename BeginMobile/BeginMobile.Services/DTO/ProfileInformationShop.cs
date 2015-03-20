@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
 {
@@ -23,6 +24,6 @@ namespace BeginMobile.Services.DTO
         public string NameSurname { set; get; }
 
         [JsonProperty("shop")]
-        public ProfileShop[] Shop { set; get; }
+        public List<ProfileShop> Shop { set; get; }
     }
 }

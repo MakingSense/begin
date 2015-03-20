@@ -12,22 +12,22 @@ namespace BeginMobile.Pages.Profile
 {
     public class Groups: ContentPage
     {
-        private ListView lViewGroup;
-        private RelativeLayout rLayout;
+        private ListView _lViewGroup;
+        private RelativeLayout _rLayout;
         public Groups()
         {
             Title = "Groups";
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationGroups groupInformation = App.ProfileServices.GetGroups(currentUser.User.UserName, currentUser.AuthToken);
 
-            lViewGroup = new ListView()
+            _lViewGroup = new ListView()
             {
                 RowHeight = 40,
             };
-            lViewGroup.ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell));
-            lViewGroup.ItemsSource = groupInformation.Groups;
+            _lViewGroup.ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell));
+            _lViewGroup.ItemsSource = groupInformation.Groups;
 
-            lViewGroup.HasUnevenRows = true;
+            _lViewGroup.HasUnevenRows = true;
             
             /*lViewGroup.ItemSelected += async (sender, e) =>
             {
@@ -45,14 +45,14 @@ namespace BeginMobile.Pages.Profile
                 ((ListView)sender).SelectedItem = null; 
             };*/
 
-            rLayout = new RelativeLayout();
-            rLayout.Children.Add(lViewGroup,
+            _rLayout = new RelativeLayout();
+            _rLayout.Children.Add(_lViewGroup,
                 xConstraint: Constraint.Constant(0),
                 yConstraint: Constraint.Constant(0),
                 widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
                 heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
-            Content = new ScrollView() {Content = rLayout};
+            Content = new ScrollView() {Content = _rLayout};
         }
 
     }
