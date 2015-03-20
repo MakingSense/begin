@@ -31,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\HelpCenter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AppHome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Privacy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Activities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Contacts.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Events.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Groups.cs" />
