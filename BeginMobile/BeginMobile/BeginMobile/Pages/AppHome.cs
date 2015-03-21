@@ -18,11 +18,11 @@ namespace BeginMobile.Pages
             this.Title = "Home";
             this.Padding = new Thickness(0, 0, 0, 0);
 
-            this.Children.Add(new TabContent("", "padlock.png"));
-            this.Children.Add(new TabContent("", "padlock.png"));
-            this.Children.Add(new TabContent("", "padlock.png"));
-            this.Children.Add(new GroupListPage("", "padlock.png"));
-            this.Children.Add(new TabContent("", "menunav.png"));
+            this.Children.Add(new TabContent("New Feed", "padlock.png"));
+            this.Children.Add(new TabContent("Message", "padlock.png"));
+            this.Children.Add(new TabContent("Notifications", "padlock.png"));
+            this.Children.Add(new GroupListPage("Groups", "padlock.png"));
+            this.Children.Add(new TabContent("Opt", "menunav.png"));
         }
     }
 }

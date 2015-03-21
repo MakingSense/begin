@@ -28,7 +28,7 @@ namespace BeginMobile.Android.Renderers
             _activity = this.Context as Activity;
         }
 
-        public override void Draw(global::Android.Graphics.Canvas canvas)
+        /*public override void Draw(global::Android.Graphics.Canvas canvas)
         {
             base.Draw(canvas);
             var appHome = (AppHome)this.Element;
@@ -57,9 +57,7 @@ namespace BeginMobile.Android.Renderers
                     count++;
                 }
             }
-
-            
-         }
+         }*/
 
         private bool TabIsEmpty(ActionBar.Tab tab)
         {
