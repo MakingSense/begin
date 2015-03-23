@@ -14,11 +14,18 @@ namespace BeginMobile.Services.DTO
 
         public string Content { set; get; }
 
+        public string Type { set; get; }
+
+        public string Thumbnail { set; get; }
+
+        public string CreateDate { set; get; }
+
         private static List<Message> _listMessages;
 
         public static List<Message> Messages{
             get
             {
+                string[] type = {"Inbox", "Sent", "Compose"};
                 if (_listMessages == null)
                 {
                     _listMessages = new List<Message>();
@@ -29,6 +36,8 @@ namespace BeginMobile.Services.DTO
                             Id = i.ToString(),
                             Title = "Title "+i,
                             Content = "Content of message "+i,
+                            Type = type[new Random().Next(0, 2)],
+                            CreateDate = DateTime.Now.ToString(),
                         };
 
                         _listMessages.Add(message);

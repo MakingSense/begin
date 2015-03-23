@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
 using BeginMobile.Services.DTO;
 using Newtonsoft.Json;
@@ -164,6 +166,9 @@ namespace BeginMobile.Services.ManagerServices
 
             var profileMessages = new ProfileInformationMessages();
             profileMessages.Messages = Message.Messages;
+
+            var group = profileMessages.Messages.GroupBy(x =>x.Type).OrderBy(x => x.Key);
+            profileMessages.MessagesGroup = new ObservableCollection<IGrouping<string, Message>>(group);
 
             return profileMessages;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,5 +28,8 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("name_surname")]
         public string NameSurname { set; get; }
         public List<Message> Messages { set; get; }
+
+
+        public ObservableCollection<IGrouping<string, Message>> MessagesGroup { set; get; }
     }
 }
