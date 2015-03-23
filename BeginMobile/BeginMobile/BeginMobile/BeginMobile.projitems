@@ -32,6 +32,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AppHome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MessagePages\ProfileMessageHeader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MessagePages\ProfileMessagesItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\Notification.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\NotificationDetail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\TemplateListViewNotification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Privacy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Activities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Contacts.cs" />

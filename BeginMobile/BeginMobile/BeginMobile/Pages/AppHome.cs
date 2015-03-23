@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
+using BeginMobile.Pages.Notifications;
 
 namespace BeginMobile.Pages
 {
@@ -20,7 +21,7 @@ namespace BeginMobile.Pages
 
             this.Children.Add(new TabContent("New Feed", "padlock.png"));
             this.Children.Add(new TabContent("Message", "padlock.png"));
-            this.Children.Add(new TabContent("Notifications", "padlock.png"));
+            this.Children.Add(new Notification("Notifications", "padlock.png"));
             this.Children.Add(new GroupListPage("Groups", "padlock.png"));
             this.Children.Add(new TabContent("Opt", "menunav.png"));
         }
