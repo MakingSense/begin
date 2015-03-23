@@ -31,6 +31,9 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("regular_price")]
         public string RegularPrice { get; set; }
 
+        [JsonProperty("thumbnail")]
+        public string Thumbnail { set; get; }
+
         private string _price;
         [JsonProperty("price")]
         public string Price {

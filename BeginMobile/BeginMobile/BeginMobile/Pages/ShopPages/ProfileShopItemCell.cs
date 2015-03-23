@@ -9,6 +9,7 @@ namespace BeginMobile.Pages.ShopPages
     public class ProfileShopItemCell: ViewCell
     {
         private const string GroupImage = "Icon.png";
+        
 
         public ProfileShopItemCell()
         {
@@ -19,9 +20,9 @@ namespace BeginMobile.Pages.ShopPages
                 HeightRequest = 100,
                 WidthRequest = 100,
                 Aspect = Aspect.AspectFill,
-                HorizontalOptions = LayoutOptions.Start,
-                Source = GroupImage
+                HorizontalOptions = LayoutOptions.Start
             };
+            shopImage.SetBinding(CircleImage.SourceProperty, "Thumbnail");
             
             var lblGrTitle = new Label()
             {
