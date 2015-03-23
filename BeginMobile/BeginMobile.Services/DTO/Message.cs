@@ -34,7 +34,7 @@ namespace BeginMobile.Services.DTO
                         var message = new Message()
                         {
                             Id = i.ToString(),
-                            Title = "Title "+i,
+                            Title = "Re: Contact "+i,
                             Content = "Content of message "+i,
                             Type = type[new Random().Next(0, 2)],
                             CreateDate = DateTime.Now.ToString(),

@@ -17,9 +17,9 @@ namespace BeginMobile.Pages.GroupPages
 
             lViewGroup.ItemTemplate = new DataTemplate(typeof(GroupItemCell));
             
-            /*lViewGroup.ItemSelected += async (sender, e) =>
+            lViewGroup.ItemSelected += async (sender, e) =>
             {
-                if (e.SelectedItem == null)
+                /*if (e.SelectedItem == null)
                 {
                     return; 
                 }
@@ -27,11 +27,11 @@ namespace BeginMobile.Pages.GroupPages
                 var groupItem = (Group)e.SelectedItem;
                 var groupPage = new GroupItemPage();
                 groupPage.BindingContext = groupItem;
-                await Navigation.PushAsync(groupPage);
+                await Navigation.PushAsync(groupPage);*/
 
                 // clears the 'selected' background
                 ((ListView)sender).SelectedItem = null; 
-            };*/
+            };
 
             rLayout = new RelativeLayout();
             rLayout.Children.Add(lViewGroup,
