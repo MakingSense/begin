@@ -39,9 +39,9 @@ namespace BeginMobile.iOS
             {
                 TextColor = UIColor.White
             });
+            window.MakeKeyAndVisible();
 
             LoadApplication(new App());
-
             return base.FinishedLaunching(app, options);
         }
     }
