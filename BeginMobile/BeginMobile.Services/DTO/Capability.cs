@@ -11,5 +11,8 @@ namespace BeginMobile.Services.DTO
     {
         [JsonProperty("vendor")]
         public bool Vendor { set; get; }
+
+        [JsonProperty("bbp_participant")]
+        public bool PbpParticipant { set; get; }
     }
 }

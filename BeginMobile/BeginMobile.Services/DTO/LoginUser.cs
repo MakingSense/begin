@@ -12,5 +12,8 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("avatar")]
         public string Avatar { set; get; }
+
+        [JsonProperty("errors")]
+        public ErrorRetrieved[] Errors { set; get; }
     }
 }

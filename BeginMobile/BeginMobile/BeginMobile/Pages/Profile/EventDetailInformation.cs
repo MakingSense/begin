@@ -16,12 +16,12 @@ namespace BeginMobile.Pages.Profile
 
             Label ownerName = new Label
             {
-                Text = "Event publicated for: " + eventInfo.Owner.NameSurname,
+                Text = "Public: " + eventInfo.Owner.NameSurname,
                 Font = Font.SystemFontOfSize(14, FontAttributes.None)
             };
             Label eventDay = new Label
             {
-                Text = "Date Of Event: " + (eventInfo.StartDate.Split('-'))[2].ToString() + " FEBRARY " + (eventInfo.StartDate.Split('-'))[0].ToString(),
+                Text = "Date: " + (eventInfo.StartDate.Split('-'))[2].ToString() + " FEBRARY " + (eventInfo.StartDate.Split('-'))[0].ToString(),
                 Font = Font.SystemFontOfSize(14, FontAttributes.None)
             };
             Label time = new Label

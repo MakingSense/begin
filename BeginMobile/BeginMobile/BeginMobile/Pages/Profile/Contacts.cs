@@ -31,7 +31,7 @@ namespace BeginMobile.Pages.Profile
 
             foreach (var contact in profileInformationContacts.Contacts)
             {
-                contactsList.Add(new Contact { Icon = userDefault, NameSurname = contact.NameSurname, References = String.Format("Contacts to: {0} - {1}", contact.Email, contact.Url) });
+                contactsList.Add(new Contact { Icon = userDefault, NameSurname = contact.NameSurname, References = String.Format("e-mail: {0}", contact.Email) });
             }
             var contactListViewTemplate = new DataTemplate(typeof(CustomViewCell));
 

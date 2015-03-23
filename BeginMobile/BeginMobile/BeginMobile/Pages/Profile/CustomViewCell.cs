@@ -31,7 +31,9 @@ namespace BeginMobile.Pages.Profile
         {
             var optionText = new Label
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                FontSize = 15,
+                FontAttributes = FontAttributes.Bold,
             };
             var optionDetail = new Label
             {
