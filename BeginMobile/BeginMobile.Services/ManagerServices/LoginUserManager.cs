@@ -8,13 +8,17 @@ namespace BeginMobile.Services.ManagerServices
 {
     public class LoginUserManager
     {
+        private const string BaseAddress = "http://186.109.86.251:5432/";
+
+        private const string SubAddress = "begin/api/v1/";
+
         public LoginUser Login(string username, string password)
         {
             using (var client = new HttpClient())
             {
                 LoginUser resultLoginUser = null;
 
-                client.BaseAddress = new Uri("http://104.236.207.173/");
+                client.BaseAddress = new Uri(BaseAddress);
 
                 var content = new FormUrlEncodedContent(new[]
                                                         {
@@ -22,7 +26,7 @@ namespace BeginMobile.Services.ManagerServices
                                                             new KeyValuePair<string, string>("password", password)
                                                         });
 
-                var response = client.PostAsync("api/index.php?/v1/login", content).Result;
+                var response = client.PostAsync(SubAddress + "login", content).Result;
                 var userJson = response.Content.ReadAsStringAsync().Result;
 
                 if (response.IsSuccessStatusCode)
@@ -40,7 +44,7 @@ namespace BeginMobile.Services.ManagerServices
             {
                 RegisterUser resultRegisterUser = null;
 
-                client.BaseAddress = new Uri("http://104.236.207.173/");
+                client.BaseAddress = new Uri(BaseAddress);
 
                 var content = new FormUrlEncodedContent(new[]
                                                         {
@@ -50,7 +54,7 @@ namespace BeginMobile.Services.ManagerServices
                                                             new KeyValuePair<string, string>("name_surname", nameSurname)
                                                         });
 
-                var response = client.PostAsync("api/index.php?/v1/signup", content).Result;
+                var response = client.PostAsync(SubAddress + "signup", content).Result;
                 var userJson = response.Content.ReadAsStringAsync().Result;
 
                 if (response.IsSuccessStatusCode)
@@ -68,14 +72,14 @@ namespace BeginMobile.Services.ManagerServices
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://104.236.207.173/");
+                client.BaseAddress = new Uri(BaseAddress);
 
                 var content = new FormUrlEncodedContent(new[]
                                                         {
                                                             new KeyValuePair<string, string>("email", email),
                                                         });
 
-                var response = client.PostAsync("api/index.php?/v1/retrieve_password", content).Result;
+                var response = client.PostAsync(SubAddress + "retrieve_password", content).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var userJson = response.Content.ReadAsStringAsync().Result;

@@ -8,8 +8,8 @@ namespace BeginMobile.Services.ManagerServices
     
     public class ProfileManager
     {
-        private const string BaseAddress = "http://104.236.207.173/";
-        private const string SubAddress = "api/index.php?/v1/profile/";
+        private const string BaseAddress = "http://186.109.86.251:5432/";
+        private const string SubAddress = "begin/api/v1/profile/";
 
         public ProfileInfo GetProfileInformation(string username, string authToken)
         {
