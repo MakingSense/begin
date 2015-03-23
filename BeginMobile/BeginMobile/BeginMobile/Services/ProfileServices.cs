@@ -44,5 +44,10 @@ namespace BeginMobile.Services
         {
             return _profileManger.GetShopInformation(userName, authToken);
         }
+
+        public ProfileInformationMessages GetMessagesInfo(string userName, string authToken)
+        {
+            return _profileManger.GetMessagesInformation(userName, authToken);
+        }
     }
 }

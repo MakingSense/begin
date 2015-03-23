@@ -140,5 +140,32 @@ namespace BeginMobile.Services.ManagerServices
                 return profileInformationShop;
             }
         }
+
+        public ProfileInformationMessages GetMessagesInformation(string username, string authToken)
+        {
+            /*using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+
+                ProfileInformationShop profileInformationShop = null;
+
+                client.BaseAddress = new Uri(BaseAddress);
+
+                var response = client.GetAsync(SubAddress + username + "?sections=shop").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var userJson = response.Content.ReadAsStringAsync().Result;
+                    profileInformationShop = JsonConvert.DeserializeObject<ProfileInformationShop>(userJson);
+                }
+
+                return profileInformationShop;
+            }*/
+
+            var profileMessages = new ProfileInformationMessages();
+            profileMessages.Messages = Message.Messages;
+
+            return profileMessages;
+        }
     }
 }

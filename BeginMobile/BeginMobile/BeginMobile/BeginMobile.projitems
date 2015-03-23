@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\GroupPages\ProfileGroupItemCell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\HelpCenter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AppHome.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\MessagePages\ProfileMessagesItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Privacy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Activities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Contacts.cs" />
