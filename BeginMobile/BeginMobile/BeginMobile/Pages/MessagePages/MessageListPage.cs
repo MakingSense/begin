@@ -18,7 +18,7 @@ namespace BeginMobile.Pages.MessagePages
 
             _lViewMessages = new ListView()
             {
-                RowHeight = 40,
+                RowHeight = Device.OnPlatform<int>(iOS: 60, Android: 40, WinPhone: 40)
             };
 
             _lViewMessages.ItemTemplate = new DataTemplate(typeof(ProfileMessagesItem));

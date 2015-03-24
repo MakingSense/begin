@@ -8,35 +8,43 @@ namespace BeginMobile.Pages.MessagePages
 {
     public class ProfileMessagesItem : ViewCell
     {
-        private const string GroupImage = "userdefault3.png";
+       
+        private string GroupImage
+        {
+            get
+            {
+                return Device.OS == TargetPlatform.iOS ? "Contact.png" : "userdefault3.png";
+            }
+        }
+
         public ProfileMessagesItem()
         {
             
             var shopImage = new CircleImage()
             {
-                BorderColor = Color.White,
-                BorderThickness = 3,
-                HeightRequest = 100,
-                WidthRequest = 100,
+                BorderColor = Device.OnPlatform<Color>(iOS: Color.Black, Android: Color.White, WinPhone: Color.White),
+                BorderThickness = Device.OnPlatform<int>(iOS: 2, Android: 3, WinPhone: 3),
+                HeightRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
+                WidthRequest = Device.OnPlatform<int>(iOS: 60, Android: 100, WinPhone: 100),
                 Aspect = Aspect.AspectFill,
                 HorizontalOptions = LayoutOptions.Start,
                 Source = GroupImage
             };
-            //shopImage.SetBinding(CircleImage.SourceProperty, "Thumbnail");
 
             var lblGrTitle = new Label()
             {
                 YAlign = TextAlignment.Center,
-                FontSize = 15,
+                FontSize = Device.OnPlatform<double>(iOS: 8, Android: 15, WinPhone: 15),
                 FontAttributes = FontAttributes.Bold,
                 HorizontalOptions = LayoutOptions.Start
             };
+
             lblGrTitle.SetBinding(Label.TextProperty, "Title");
 
             var lblCreate = new Label()
             {
                 YAlign = TextAlignment.Center,
-                FontSize = 12,
+                FontSize = Device.OnPlatform<double>(iOS: 7, Android: 12, WinPhone: 12),
                 HorizontalOptions = LayoutOptions.End
             };
             lblCreate.SetBinding(Label.TextProperty, "CreateDate", stringFormat:"Date: {0}");
@@ -44,7 +52,7 @@ namespace BeginMobile.Pages.MessagePages
             var lblContent = new Label()
             {
                 YAlign = TextAlignment.Center,
-                FontSize = 12,
+                FontSize = Device.OnPlatform<double>(iOS: 7, Android: 12, WinPhone: 12),
                 HorizontalOptions = LayoutOptions.StartAndExpand
             };
             lblContent.SetBinding(Label.TextProperty, "Content");
@@ -70,7 +78,6 @@ namespace BeginMobile.Pages.MessagePages
             gridDetails.Children.Add(lblContent, 0, 1);
 
             gridDetails.Children.Add(lblCreate, 1, 0);
-            //gridDetails.Children.Add("", 1, 1);
 
             var sLayout = new StackLayout()
             {
