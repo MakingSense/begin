@@ -19,9 +19,10 @@ namespace BeginMobile.iOS
             {
                 UIApplication.Main(args, null, "AppDelegate");
             }
+
             catch (Exception exception)
             {
-                Debug.Print(exception.Message);
+                Debug.Print("MonoTouch App error: {0}", exception.Message);
                 throw;
             }
             

@@ -28,19 +28,10 @@ namespace BeginMobile.iOS
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            window = new UIWindow(UIScreen.MainScreen.Bounds);
+           window = new UIWindow(UIScreen.MainScreen.Bounds);
 
             Forms.Init();
             ImageCircleRenderer.Init();
-
-            UINavigationBar.Appearance.BackgroundColor = UIColor.FromRGBA(0, 0, 0, 0);
-            UINavigationBar.Appearance.BarTintColor = UIColor.White;
-            UINavigationBar.Appearance.SetTitleTextAttributes(new UITextAttributes()
-            {
-                TextColor = UIColor.White
-            });
-            window.MakeKeyAndVisible();
-
             LoadApplication(new App());
             return base.FinishedLaunching(app, options);
         }

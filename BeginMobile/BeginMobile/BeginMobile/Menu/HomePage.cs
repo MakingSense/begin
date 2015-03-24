@@ -14,19 +14,23 @@ namespace BeginMobile.Menu
         public HomePage(LoginUser loginUser)
         {
             Title = "Home";
-            Icon = null;
 
+            if (Device.OS != TargetPlatform.iOS)
+                Icon = null;
+
+            else
+            {
+                Icon = new FileImageSource();
+                Icon.File = "Icon-57.png";
+            }
+            
             Master = new Menu(OnToggleRequest);
-            //Master = new Menu(null);
-
             Detail = new AppHome();
-            //Detail = new DetailPage();
         }
 
         private void OnToggleRequest()
         {
             IsPresented = !IsPresented;
         }
-        
     }
 }

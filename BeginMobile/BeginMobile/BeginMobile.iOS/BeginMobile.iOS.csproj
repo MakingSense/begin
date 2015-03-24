@@ -150,9 +150,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\menunav.png" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +163,27 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\userprofile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-57.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-58.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-120.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-114.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-80.png" />
   </ItemGroup>
   <Import Project="..\BeginMobile\BeginMobile.projitems" Label="Shared" Condition="Exists('..\BeginMobile\BeginMobile.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

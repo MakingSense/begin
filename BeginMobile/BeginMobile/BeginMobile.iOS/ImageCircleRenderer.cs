@@ -1,9 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using BeginMobile.iOS;
 using ImageCircle.Forms.Plugin.Abstractions;
-using ImageCircle.Forms.Plugin.iOS;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -37,8 +35,8 @@ namespace BeginMobile.iOS
             base.OnElementPropertyChanged(sender, e);
             if (e.PropertyName == VisualElement.HeightProperty.PropertyName ||
                 e.PropertyName == VisualElement.WidthProperty.PropertyName ||
-              e.PropertyName == ImageCircle.Forms.Plugin.Abstractions.CircleImage.BorderColorProperty.PropertyName ||
-              e.PropertyName == ImageCircle.Forms.Plugin.Abstractions.CircleImage.BorderThicknessProperty.PropertyName)
+              e.PropertyName == CircleImage.BorderColorProperty.PropertyName ||
+              e.PropertyName == CircleImage.BorderThicknessProperty.PropertyName)
             {
                 CreateCircle();
             }
@@ -51,10 +49,11 @@ namespace BeginMobile.iOS
                 double min = Math.Min(Element.Width, Element.Height);
                 Control.Layer.CornerRadius = (float)(min / 2.0);
                 Control.Layer.MasksToBounds = false;
-                Control.Layer.BorderColor = ((ImageCircle.Forms.Plugin.Abstractions.CircleImage)Element).BorderColor.ToCGColor();
-                Control.Layer.BorderWidth = ((ImageCircle.Forms.Plugin.Abstractions.CircleImage)Element).BorderThickness;
+                Control.Layer.BorderColor = ((CircleImage)Element).BorderColor.ToCGColor();
+                Control.Layer.BorderWidth = ((CircleImage)Element).BorderThickness;
                 Control.ClipsToBounds = true;
             }
+
             catch (Exception ex)
             {
                 Debug.WriteLine("Unable to create circle image: " + ex);
