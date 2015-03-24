@@ -102,6 +102,13 @@ namespace BeginMobile.Pages.Notifications
             mainLayout.Children.Add(new ScrollView() { Content = listViewNotifications });
 
             Content = mainLayout;
+
+            listViewNotifications.ItemSelected += (s, e) =>
+            {
+                var item = (NotificationViewModel)e.SelectedItem;
+                var itemPage = new NotificationDetail(item.NotificationDescription);
+                Navigation.PushAsync(itemPage);
+            };
         }
 
 
@@ -109,7 +116,6 @@ namespace BeginMobile.Pages.Notifications
         {
             // TODO: to do
             DisplayAlert("Delete",model.NotificationDescription,"ok");
-
         }
 
         public void UnreadClickProcess(NotificationViewModel model)
@@ -121,12 +127,7 @@ namespace BeginMobile.Pages.Notifications
         {
             base.OnAppearing();
             listViewNotifications.ItemsSource = listNotifications;
-            listViewNotifications.ItemSelected += async (s, e) =>
-            {
-                var item = (NotificationViewModel)e.SelectedItem;
-                var itemPage = new NotificationDetail(item.NotificationDescription);
-                await Navigation.PushAsync(itemPage);
-            };
+           
         }
     }
 }
