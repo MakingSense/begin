@@ -18,13 +18,14 @@ namespace BeginMobile.Pages
         public void LoadChilds()
         {
             this.Title = "Home";
-            this.Padding = new Thickness(0, 0, 0, 0);
+            var topPadding = Device.OnPlatform<double>(20, 0, 0);
+            this.Padding = new Thickness(0, topPadding, 0, 0);
 
-            this.Children.Add(new TabContent("New Feed", "padlock.png"));
-            this.Children.Add(new MessageListPage("Message", "padlock.png"));
-            this.Children.Add(new Notification("Notifications", "padlock.png"));
-            this.Children.Add(new GroupListPage("Groups", "padlock.png"));
-            this.Children.Add(new TabContent("Opt", "menunav.png"));
+            this.Children.Add(new TabContent("New Feed", "Icon-29.png"));
+            this.Children.Add(new MessageListPage("Message", "Messages.png"));
+            this.Children.Add(new Notification("Notifications", "Icon-29.png"));
+            this.Children.Add(new GroupListPage("Groups", "Icon-29.png"));
+            this.Children.Add(new TabContent("Opt", "More.png"));
         }
     }
 }
