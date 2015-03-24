@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DTO\ChangePassword.cs" />
     <Compile Include="DTO\ErrorRetrieved.cs" />
     <Compile Include="DTO\Message.cs" />
     <Compile Include="DTO\ProfileActivity.cs" />

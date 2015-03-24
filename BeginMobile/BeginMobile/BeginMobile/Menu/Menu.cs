@@ -119,6 +119,12 @@ namespace BeginMobile.Menu
                 Style = controlButtonStyle
             };
 
+            var buttonChangePassword = new Button
+            {
+                Text = "Change your password",
+                Style = controlButtonStyle
+            };
+
             var buttonAbout = new Button
             {
                 Text = "About",
@@ -140,26 +146,18 @@ namespace BeginMobile.Menu
                 Style = controlButtonStyle
             };
 
-            var controlsLayout = new StackLayout
-            {
-
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Start,
-                Children =
-                                             {
-                                                 buttonLogout,
-                                                 buttonAbout,
-                                                 buttonPrivacy,
-                                                 buttonSupport,
-                                                 buttonTermsAndConditions
-                                             }
-            };
-
             buttonLogout.Clicked += async (s, e) =>
             {
                 //await Navigation.PushAsync(new Login());
                 App.Current.Logout();
             };
+
+            buttonChangePassword.Clicked += async (s, e) =>
+            {
+                await Navigation.PushAsync(new ChangePasswordPage());
+                _onToggleRequest();
+            };
+
             buttonAbout.Clicked += async (s, e) =>
             {
                 await Navigation.PushAsync(new AboutUs());
@@ -181,6 +179,23 @@ namespace BeginMobile.Menu
                 _onToggleRequest();
             };
 
+
+            var controlsLayout = new StackLayout
+            {
+
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Start,
+                Children =
+                                             {
+                                                 buttonLogout,
+                                                 buttonChangePassword,
+                                                 buttonAbout,
+                                                 buttonPrivacy,
+                                                 buttonSupport,
+                                                 buttonTermsAndConditions
+                                             }
+            };
+
             ScrollView scroll = new ScrollView();
             StackLayout stackLayout = new StackLayout {
                 Spacing = 2,
@@ -196,8 +211,6 @@ namespace BeginMobile.Menu
             scroll.Content = stackLayout;
 
             Content = scroll;
-
-
         }
     }
 

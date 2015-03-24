@@ -89,5 +89,29 @@ namespace BeginMobile.Services.ManagerServices
                 return result;
             }
         }
+
+
+        public ChangePassword ChangeYourPassword(string currentPassword, string newPassword, string repeatNewPassword, string authToken)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+                client.BaseAddress = new Uri(BaseAddress);
+
+                var content = new FormUrlEncodedContent(new[]
+                                                        {
+                                                            new KeyValuePair<string, string>("current_password", currentPassword),
+                                                            new KeyValuePair<string, string>("new_password", newPassword),
+                                                            new KeyValuePair<string, string>("repeat_new_password", repeatNewPassword)
+                                                        });
+
+                var response = client.PostAsync(SubAddress + "me/change_password", content).Result;
+                var retrievedJsonData = response.Content.ReadAsStringAsync().Result;
+
+
+                return JsonConvert.DeserializeObject<ChangePassword>(retrievedJsonData);
+
+            }
+        }
     }
 }
