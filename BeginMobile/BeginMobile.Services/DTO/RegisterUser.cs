@@ -15,10 +15,7 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("me")]
         public User User { set; get; }
 
-        [JsonProperty("error")]
-        public string Error { set; get; }
-
         [JsonProperty("errors")]
-        public ErrorRetrieved[] Errors { set; get; }
+        public ErrorRetrieved []Errors { set; get; }
     }
 }

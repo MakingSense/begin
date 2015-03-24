@@ -107,7 +107,7 @@ namespace BeginMobile.Accounts
                 MessagingCenter.Send<ContentPage>(this, "Login");
             };
 
-            buttonTermsAndConditions.Clicked += async (s , e)=>{
+            buttonTermsAndConditions.Clicked += async (s,e)=>{
                 MessagingCenter.Send<ContentPage>(this, "TermsAndConditions");
             };
 
@@ -119,7 +119,7 @@ namespace BeginMobile.Accounts
                     || String.IsNullOrEmpty(_confirmPassword.Text)
                     )
                 {
-                    DisplayAlert("Validation Error",
+                    await DisplayAlert("Validation Error",
                                  "All fields are required",
                                  "Re - Try");
                 }
@@ -136,46 +136,71 @@ namespace BeginMobile.Accounts
                                 //
                                 LoginUserManager LoginUserManager = new LoginUserManager();
 
-                                var registerUser = LoginUserManager.Register(_username.Text, _email.Text,
+                                RegisterUser registerUser = LoginUserManager.Register(_username.Text, _email.Text,
                                     _password.Text, _fullName.Text);
 
-                                if(registerUser!=null){
+                               if(registerUser.Errors!=null){
+                                   string errorMessages = "";
 
-                                    DisplayAlert("Successfull!", "You've successfully registered.", "OK");
+                                   foreach(var error in registerUser.Errors){
+                                       errorMessages += error.Label + "\n";
+                                   }
+                                   await DisplayAlert("Error",errorMessages, "OK");
 
-                                    var loginUser = new LoginUser()
-                                    {
-                                        AuthToken = registerUser.AuthToken,
-                                        User = registerUser.User
-                                    };
+                               }
+                               else
+                               {
+                                   await DisplayAlert("Successfull!", "You've successfully registered.", "OK");
 
-                                    App.Current.Properties["IsLoggedIn"] = true;
-                                    App.Current.Properties["LoginUser"] = loginUser;
+                                   var loginUser = new LoginUser()
+                                   {
+                                       AuthToken = registerUser.AuthToken,
+                                       User = registerUser.User
+                                   };
 
-                                    iLoginManager.ShowMainPage(loginUser);
-                                }
-                                else
-                                {
-                                    DisplayAlert("Error", "Username already exists. Please choose a different usename", "OK");
-                                }
+                                   App.Current.Properties["IsLoggedIn"] = true;
+                                   App.Current.Properties["LoginUser"] = loginUser;
+
+                                   iLoginManager.ShowMainPage(loginUser);
+                               }
+                                
+                                //if(registerUser!=null){
+
+                                //    await DisplayAlert("Successfull!", "You've successfully registered.", "OK");
+
+                                //    var loginUser = new LoginUser()
+                                //    {
+                                //        AuthToken = registerUser.AuthToken,
+                                //        User = registerUser.User
+                                //    };
+
+                                //    App.Current.Properties["IsLoggedIn"] = true;
+                                //    App.Current.Properties["LoginUser"] = loginUser;
+
+                                //    iLoginManager.ShowMainPage(loginUser);
+                                //}
+                                //else
+                                //{
+                                //    await DisplayAlert("Error", "Username already exists. Please choose a different usename", "OK");
+                                //}
                             }
                             else
                             {
-                                DisplayAlert("Validation Error",
+                                await DisplayAlert("Validation Error",
                                              "Please agree the Terms and Conditions!",
                                              "Re - Try");
                             }
                         }
                         else
                         {
-                            DisplayAlert("Validation Error",
+                            await DisplayAlert("Validation Error",
                                          "Password and Confirm password are not match!",
                                          "Re - Try");
                         }
                     }
                     else
                     {
-                        DisplayAlert("Validation Error",
+                        await DisplayAlert("Validation Error",
                                      "Email has wrong format",
                                      "Re - Try");
                     }

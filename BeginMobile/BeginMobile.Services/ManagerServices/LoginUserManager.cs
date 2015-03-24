@@ -57,10 +57,7 @@ namespace BeginMobile.Services.ManagerServices
                 var response = client.PostAsync(SubAddress + "signup", content).Result;
                 var userJson = response.Content.ReadAsStringAsync().Result;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    resultRegisterUser = JsonConvert.DeserializeObject<RegisterUser>(userJson);
-                }
+                resultRegisterUser = JsonConvert.DeserializeObject<RegisterUser>(userJson);
 
                 return resultRegisterUser;
             }
