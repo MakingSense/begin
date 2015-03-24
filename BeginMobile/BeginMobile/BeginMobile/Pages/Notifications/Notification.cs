@@ -11,35 +11,45 @@ namespace BeginMobile.Pages.Notifications
     {
         private ListView listViewNotifications;
         private List<NotificationViewModel> listNotifications;
-        private RelativeLayout rLayout;
+        
 
         public Notification(string title, string iconImg)
             : base(title, iconImg)
         {
             Title = title;
-
-            listNotifications = new List<NotificationViewModel> { 
-                    new NotificationViewModel{
+            var notification1 = new NotificationViewModel{
                 NotificationDescription = "Admin sent to you a new message",
                 IntervalDate = " 5 days, 5Hours ago",
-                actionButton = new Button{Text = "READ"},
-                deleteButton = new Button{Text = "DELETE"}
+                ActionButton = new Button{Text = "READ"},
+                DeleteButton = new Button{Text = "DELETE"}, 
                     
-                    },
+                    };
+            notification1.DeleteButton.Clicked += (s, e) => {
+                DisplayAlert("message","delete","ok");
+                DeleteClickProcess(notification1);
+
+            };
+            notification1.ActionButton.Clicked += (s, e) => {
+                var sender = (NotificationViewModel)s;
+                UnreadClickProcess(sender);
+            }; ;
+
+            listNotifications = new List<NotificationViewModel> { 
+                   notification1 ,
 
                    new NotificationViewModel{
                 NotificationDescription = "Admin mentioned you",
                 IntervalDate = " 2weeks, 3days ago",
-                actionButton = new Button{Text = "UNREAD"},
-                deleteButton = new Button{Text = "DELETE"}
+                ActionButton = new Button{Text = "UNREAD"},
+                DeleteButton = new Button{Text = "DELETE"}
                    
                    },
 
                    new NotificationViewModel{
                 NotificationDescription = "You have a friendship request from Soledad Pietro",
                 IntervalDate = " 2weeks, 3days ago",
-                actionButton = new Button{Text = "UNREAD"},
-                deleteButton = new Button{Text = "DELETE"}
+                ActionButton = new Button{Text = "UNREAD"},
+                DeleteButton = new Button{Text = "DELETE"}
                    
                    
                    },
@@ -47,8 +57,8 @@ namespace BeginMobile.Pages.Notifications
                    new NotificationViewModel{
                 NotificationDescription = "Admin mentioned you",
                 IntervalDate = " 5 days, 7Hours ago",
-                actionButton = new Button{Text = "READ"},
-                deleteButton = new Button{Text = "DELETE"}
+                ActionButton = new Button{Text = "READ"},
+                DeleteButton = new Button{Text = "DELETE"}
                    
                    },
 
@@ -60,25 +70,51 @@ namespace BeginMobile.Pages.Notifications
             };
 
 
-            rLayout = new RelativeLayout();
-            rLayout.Children.Add(listViewNotifications,
-                xConstraint: Constraint.Constant(0),
-                yConstraint: Constraint.Constant(0),
-                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
-                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
-            Content = new ScrollView() { Content = rLayout };
+            var gridEventHeaderTitle = new Grid
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+            };
 
-            //Content = new ScrollView
-            //{
-            //    Content = new StackLayout
-            //    {
-            //        VerticalOptions = LayoutOptions.Start,
-            //        Orientation = StackOrientation.Vertical,
-            //        Children = { listViewNotifications }
-            //    }
-            //};
+            gridEventHeaderTitle.Children.Add(new Label
+            {
+                WidthRequest = 350,
+                Text = "Notification",
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Font = Font.SystemFontOfSize(14, FontAttributes.Bold)
+            }, 0, 1, 0, 1);
 
+            gridEventHeaderTitle.Children.Add(new Label
+            {
+                Text = "Date received",
+                HorizontalOptions = LayoutOptions.Start,
+                Font = Font.SystemFontOfSize(14, FontAttributes.Bold)
+            }, 1, 2, 0, 1);
+
+
+            StackLayout mainLayout = new StackLayout
+            {
+                  VerticalOptions = LayoutOptions.Start,
+                  Orientation = StackOrientation.Vertical
+            };
+
+            mainLayout.Children.Add(gridEventHeaderTitle);
+            mainLayout.Children.Add(new ScrollView() { Content = listViewNotifications });
+
+            Content = mainLayout;
+        }
+
+
+        public void DeleteClickProcess(NotificationViewModel model)
+        {
+            // TODO: to do
+            DisplayAlert("Delete",model.NotificationDescription,"ok");
+
+        }
+
+        public void UnreadClickProcess(NotificationViewModel model)
+        {
+            DisplayAlert("Readed", model.NotificationDescription, "ok");
         }
 
         protected override void OnAppearing()
