@@ -33,29 +33,27 @@ namespace BeginMobile.Accounts
             var buttonForgotPassword = new Button
             {
                 Text = "Forgot Password?",
-                Style = CustomizedButtonStyle.GetControlButtonStyle(), 
+                Style = Styles.LinkButton(),
                 WidthRequest = 100
             };
 
             var buttonLogin = new Button
             {
                 TextColor = Color.White,
-                //BackgroundColor = Color.FromHex("77D065"),
                 Text = "Login",
-                Style = CustomizedButtonStyle.GetButtonStyle(),
+                Style = Styles.DefaultButton(),
 
             };
             var buttonRegister = new Button
             {
                 Text = "Register",
-                //TextColor = Color.White,
-                //BackgroundColor = Color.FromHex("77D065")
-                Style = CustomizedButtonStyle.GetButtonStyle(),
+                Style = Styles.DefaultButton(),
             };
 
             buttonForgotPassword.Clicked += (s, e) =>
             {
-                MessagingCenter.Send<ContentPage>(this,"ForgotPassword"); };
+                MessagingCenter.Send<ContentPage>(this, "ForgotPassword");
+            };
 
 
             buttonLogin.Clicked += async (s, e) =>
@@ -67,9 +65,6 @@ namespace BeginMobile.Accounts
                 }
                 else
                 {
-
-                    //iLoginManager.ShowMainPage(null); 
-
                     var loginUserManager = new LoginUserManager();
                     var loginUser = loginUserManager.Login(email.Text, password.Text);
 
@@ -78,20 +73,19 @@ namespace BeginMobile.Accounts
                         App.Current.Properties["IsLoggedIn"] = true;
                         App.Current.Properties["LoginUser"] = loginUser;
 
-                        iLoginManager.ShowMainPage(loginUser); 
+                        iLoginManager.ShowMainPage(loginUser);
                     }
                     else
                     {
-                        DisplayAlert("Authentification Error", "Invalid username or password ",
+                        await DisplayAlert("Authentification Error", "Invalid username or password ",
                                "Re - Try");
-                    }                      
+                    }
                 }
             };
 
-            buttonRegister.Clicked += async (s, e) =>
+            buttonRegister.Clicked += (s, e) =>
             {
                 MessagingCenter.Send<ContentPage>(this, "Register");
-                //await Navigation.PushAsync(new Register());
             };
 
             Content = new StackLayout
@@ -114,8 +108,6 @@ namespace BeginMobile.Accounts
         {
             Entry entry = sender as Entry;
             String value = entry.Text;
-
-
         }
     }
 }

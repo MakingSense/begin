@@ -45,7 +45,7 @@ namespace BeginMobile.Accounts
             {
                 Text = "Send",
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = CustomizedButtonStyle.GetButtonStyle()
+                Style = Styles.DefaultButton()
             };
 
             buttonChangePassword.Clicked += async (s, e) =>

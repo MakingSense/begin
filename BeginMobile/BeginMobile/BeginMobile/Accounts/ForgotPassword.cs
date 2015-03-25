@@ -25,14 +25,14 @@ namespace BeginMobile.Accounts
             labeTitle = new Label
             {
                 Text = "Password Recovery",
-                Style = CustomizedButtonStyle.GetTitleStyle(),
+                Style = Styles.Title(),
             };
             labelSubTitle = new Label{
                 Text = "Enter the e-mail address you registered with the Application. Instructions to reset your password will be sent to this address.",            
             };
 
             email = new Entry { Placeholder = "Enter your e-mail address"};
-            buttonReset = new Button { Text= "Send", Style = CustomizedButtonStyle.GetButtonStyle()};
+            buttonReset = new Button { Text= "Send", Style = Styles.DefaultButton()};
             buttonReset.Clicked += async (s, e) =>
                                          {
                                             
@@ -63,8 +63,8 @@ namespace BeginMobile.Accounts
                                                      "Re - Try");
                                              }
                                          };
-          
-            btBack = new Button { Text = "Cancel", Style=CustomizedButtonStyle.GetButtonStyle()};
+
+            btBack = new Button { Text = "Cancel", Style = Styles.DefaultButton() };
             btBack.Clicked += (sender, e) =>
             {
                 MessagingCenter.Send<ContentPage>(this, "Login");

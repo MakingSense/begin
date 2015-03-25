@@ -110,7 +110,7 @@ namespace BeginMobile.Menu
                 _onToggleRequest();
             };
 
-            var controlButtonStyle = CustomizedButtonStyle.GetControlButtonStyle();
+            var controlButtonStyle = Styles.LinkButton();
 
             //controls buttons
             var buttonLogout = new Button

@@ -59,7 +59,7 @@ namespace BeginMobile.Accounts
             {
                 Text = "I agree the Terms & Conditions",
                 FontSize=10,
-                Style = CustomizedButtonStyle.GetControlButtonStyle(),
+                Style = Styles.LinkButton(),
                 TextColor = Color.FromHex("77D065")
             };
             _radio = new RadioButton

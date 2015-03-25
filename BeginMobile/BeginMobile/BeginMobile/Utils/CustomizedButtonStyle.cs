@@ -2,60 +2,69 @@
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
+
 namespace BeginMobile.Utils
 {
-    public class CustomizedButtonStyle
+    public class Styles
     {
-        public static Style GetControlButtonStyle()
+        public static Style LinkButton()
         {
-            var controlButtonStyle = new Style(typeof(Button))
-            {
-                Setters =
-                                                 {
-                                                     new Setter
-                                                         {
-                                                             Property = Button.BackgroundColorProperty,
-                                                             Value = Color.Transparent
-                                                         },
-                                                     new Setter {Property = Button.BorderRadiusProperty, Value = 0},
-                                                     new Setter {Property = Button.HeightRequestProperty, Value = 42},
-                                                    // new Setter {Property = Button.WidthRequestProperty, Value = 220},
-                                                     new Setter {Property = Button.FontSizeProperty, Value = 14},
-                                                 }
-            };
-            return controlButtonStyle;
+            return new Style(typeof (Button))
+                   {
+                       Setters =
+                       {
+                           new Setter {Property = Button.BackgroundColorProperty, Value = Color.Transparent},
+                           new Setter {Property = Button.BorderRadiusProperty, Value = 0},
+                           new Setter {Property = Button.HeightRequestProperty, Value = 42},
+                           new Setter {Property = Button.FontSizeProperty, Value = 14},
+                       }
+                   };
         }
 
-        public static Style GetButtonStyle()
+        public static Style DefaultButton()
         {
-            var buttonStyle = new Style(typeof(Button))
-            {
-                Setters =
-                                          {
-                                              new Setter
-                                                  {                                                      
-                                                      Property = Button.BackgroundColorProperty,
-                                                      Value = Color.FromHex("77D065")
-                                                  },
-                                              new Setter {Property = Button.FontProperty, Value = Color.White}
-                                          }
-            };
-            return buttonStyle;
+            return new Style(typeof (Button))
+                   {
+                       Setters =
+                       {
+                           new Setter
+                           {
+                               Property = Button.BackgroundColorProperty,
+                               Value = Color.FromHex("77D065")
+                           },
+                           new Setter {Property = Button.FontProperty, Value = Color.White}
+                       }
+                   };
+
         }
 
 
-        public static Style GetTitleStyle()
+        public static Style Title()
         {
-            var buttonStyle = new Style(typeof(Label))
-            {
-                Setters =
-                                          {
-                                              new Setter  {Property = Label.TextColorProperty, Value = Color.FromHex("77D065")},
-                                              new Setter {Property = Label.FontSizeProperty, Value = 24},
-                                              new Setter {Property = Label.FontSizeProperty, Value = 24}
-                                          }
-            };
-            return buttonStyle;
+            return new Style(typeof (Label))
+                   {
+                       Setters =
+                       {
+                           new Setter {Property = Label.TextColorProperty, Value = Color.FromHex("77D065")},
+                           new Setter {Property = Label.FontSizeProperty, Value = 24}
+                       }
+                   };
+
+        }
+
+
+
+        public static Style SubTitle()
+        {
+            return new Style(typeof (Label))
+                   {
+                       Setters =
+                       {
+                           new Setter {Property = Label.TextColorProperty, Value = Color.FromHex("77D065")},
+                           new Setter {Property = Label.FontSizeProperty, Value = 16}
+                       }
+                   };
+
         }
     }
 }
