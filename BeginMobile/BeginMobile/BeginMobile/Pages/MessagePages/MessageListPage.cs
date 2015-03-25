@@ -52,6 +52,16 @@ namespace BeginMobile.Pages.MessagePages
                 ((ListView)sender).SelectedItem = null;
             };
 
+            var buttonStyle = new Style(typeof (Label))
+            {
+                Setters =
+                {
+                    new Setter {Property = Button.BackgroundColorProperty, Value = Color.Yellow},
+                    new Setter {Property = Button.BorderRadiusProperty, Value = 0},
+                    new Setter {Property = Button.HeightRequestProperty, Value = 42}
+                }
+            };
+
             _sLayoutMain = new RelativeLayout();
             _sLayoutMain.Children.Add(_lViewMessages,
                 xConstraint: Constraint.Constant(0),

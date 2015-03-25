@@ -110,5 +110,47 @@ namespace BeginMobile.Services.ManagerServices
 
             }
         }
+
+        public bool UpdateProfile(string nameSurname, string authToken)
+        {
+            var result = false;
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+                client.BaseAddress = new Uri(BaseAddress);
+
+                var content = new FormUrlEncodedContent(new[]
+                                                        {
+                                                            new KeyValuePair<string, string>("name_surname", nameSurname), 
+                                                        });
+
+                var response = client.PostAsync(SubAddress + "me/update_profile", content).Result;
+                //var retrievedJsonData = response.Content.ReadAsStringAsync().Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    result = true;
+                }
+
+                return result;
+            }
+        }
+
+        public ProfileMeWall GetWall(string authToken)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+
+                client.BaseAddress = new Uri(BaseAddress);
+
+                var response = client.GetAsync(SubAddress + "me/wall").Result;
+                var userJson = response.Content.ReadAsStringAsync().Result;
+
+                return JsonConvert.DeserializeObject<ProfileMeWall>(userJson);
+            }
+        }
+
     }
 }

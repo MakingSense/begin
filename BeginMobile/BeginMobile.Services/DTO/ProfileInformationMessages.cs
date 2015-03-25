@@ -30,8 +30,6 @@ namespace BeginMobile.Services.DTO
         public string NameSurname { set; get; }
         public List<Message> Messages { set; get; }
 
-
-
         public GroupingMessage GroupingMessage { set; get; }
     }
 }

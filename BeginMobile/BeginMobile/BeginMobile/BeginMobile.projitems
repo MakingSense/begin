@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\Login.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\LoginModalPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\Register.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Accounts\UpdateProfilePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILoginManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuProfile\MasterDetailProfile.cs" />

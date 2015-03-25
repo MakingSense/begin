@@ -146,6 +146,12 @@ namespace BeginMobile.Menu
                 Style = controlButtonStyle
             };
 
+            var buttonUpdateProfile = new Button
+            {
+                Text = "Update profile",
+                Style = controlButtonStyle
+            };
+
             buttonLogout.Clicked += async (s, e) =>
             {
                 //await Navigation.PushAsync(new Login());
@@ -179,6 +185,12 @@ namespace BeginMobile.Menu
                 _onToggleRequest();
             };
 
+            buttonUpdateProfile.Clicked += async (s, e) =>
+            {
+                await Navigation.PushAsync(new UpdateProfilePage());
+                _onToggleRequest();
+            };
+
 
             var controlsLayout = new StackLayout
             {
@@ -189,6 +201,7 @@ namespace BeginMobile.Menu
                                              {
                                                  buttonLogout,
                                                  buttonChangePassword,
+                                                 buttonUpdateProfile,
                                                  buttonAbout,
                                                  buttonPrivacy,
                                                  buttonSupport,
