@@ -10,8 +10,10 @@
     <TextView
         android:id="@+id/tab_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12dp"
+        android:layout_height="35dip"
+        android:gravity="bottom|center"
+        android:textColor="#FFFFFF"
+        android:textSize="11dp"
         android:textAllCaps="false" />
     <TextView
         android:id="@+id/tab_badge"
