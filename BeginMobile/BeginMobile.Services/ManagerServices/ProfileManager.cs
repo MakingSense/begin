@@ -166,11 +166,17 @@ namespace BeginMobile.Services.ManagerServices
 
             var profileMessages = new ProfileInformationMessages();
             profileMessages.Messages = Message.Messages;
+            profileMessages.GroupingMessage = new GroupingMessage();
+            profileMessages.GroupingMessage.CountByGroup = new Random().Next(0, 10);
 
             var group = profileMessages.Messages.GroupBy(x =>x.Type).OrderBy(x => x.Key);
-            profileMessages.MessagesGroup = new ObservableCollection<IGrouping<string, Message>>(group);
+            profileMessages.GroupingMessage.MessagesGroup = new ObservableCollection<IGrouping<string, Message>>(group);
 
             return profileMessages;
         }
+
+
+       
     }
+
 }

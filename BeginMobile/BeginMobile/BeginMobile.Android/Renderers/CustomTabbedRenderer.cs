@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Android.App;
 using Android.Views;
+using Android.Widget;
 using BeginMobile.Android.Renderers;
 using BeginMobile.Pages;
+using BeginMobile.Pages.MessagePages;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(TabbedPage), typeof(CustomTabbedRenderer))]
+
+[assembly: ExportRenderer(typeof(AppHome), typeof(CustomTabbedRenderer))]
 namespace BeginMobile.Android.Renderers
 {
     public class CustomTabbedRenderer: TabbedRenderer
@@ -28,10 +31,13 @@ namespace BeginMobile.Android.Renderers
             _activity = this.Context as Activity;
         }
 
-        /*public override void Draw(global::Android.Graphics.Canvas canvas)
+        public override void Draw(global::Android.Graphics.Canvas canvas)
         {
             base.Draw(canvas);
             var appHome = (AppHome)this.Element;
+            
+            
+            
 
             ActionBar actionBar = _activity.ActionBar;
 
@@ -46,18 +52,40 @@ namespace BeginMobile.Android.Renderers
 
                     if (TabIsEmpty(tabOne))
                     {
-                        var imageIcon = count == (actionBar.TabCount - 1)
-                        ? Resource.Drawable.menunav
-                        : Resource.Drawable.padlock;
+                        var childTab = (TabContent)appHome.Children[count];
 
-                        tabOne.SetIcon(imageIcon);
+                        tabOne.SetCustomView(Resource.Layout.BarTabLayout);
+
+                        var tabTextAux = tabOne.CustomView.FindViewById<TextView>(Resource.Id.tab_title);
+                        var tabBadge = tabOne.CustomView.FindViewById<TextView>(Resource.Id.tab_badge);
+                        tabTextAux.Text = childTab.Title;
+
+                        if (childTab is MessageListPage)
+                        {
+                            var tabMessage = (MessageListPage) childTab;
+                            var counter = int.Parse(tabMessage.CounterText.Text);
+
+                            tabBadge.Text = counter > 9 ?
+                                tabMessage.CounterText.Text + "+" : " " + tabMessage.CounterText.Text + " ";
+                        } 
+                        else if(childTab is Pages.Notifications.Notification)
+                        {
+                            var tabNotification = (Pages.Notifications.Notification)childTab;
+                            var counter = int.Parse(tabNotification.CounterText.Text);
+
+                            tabBadge.Text = counter > 9 ?
+                                tabNotification.CounterText.Text + "+" : " "+tabNotification.CounterText.Text+" ";
+                        }
+                        else
+                        {
+                            tabBadge.Visibility = ViewStates.Invisible;
+                        }
+
                     }
-                        
-                    //padlock
                     count++;
                 }
             }
-         }*/
+         }
 
         private bool TabIsEmpty(ActionBar.Tab tab)
         {

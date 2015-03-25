@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BeginMobile.Services.ManagerServices;
 using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
@@ -30,6 +31,7 @@ namespace BeginMobile.Services.DTO
         public List<Message> Messages { set; get; }
 
 
-        public ObservableCollection<IGrouping<string, Message>> MessagesGroup { set; get; }
+
+        public GroupingMessage GroupingMessage { set; get; }
     }
 }

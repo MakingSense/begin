@@ -27,7 +27,7 @@ namespace BeginMobile.Pages.Profile
             };
 
             _lViewMessages.ItemTemplate = new DataTemplate(typeof(ProfileMessagesItem));
-            _lViewMessages.ItemsSource = profileMessage.MessagesGroup;
+            _lViewMessages.ItemsSource = profileMessage.GroupingMessage.MessagesGroup;
 
             _lViewMessages.GroupDisplayBinding = new Binding("Key");
             _lViewMessages.IsGroupingEnabled = true;

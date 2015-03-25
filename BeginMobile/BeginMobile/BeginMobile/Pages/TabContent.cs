@@ -12,6 +12,7 @@ namespace BeginMobile.Pages
             this.Title = title;
             this.Icon = icon;
             this.Padding = new Thickness(0, 0, 0, 0);
+
         }
     }
 }

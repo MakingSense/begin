@@ -102,6 +102,12 @@
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\Layout\BarTabLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Drawable\BadgeCircle.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Drawable\Icon.png" />
@@ -116,6 +122,7 @@
     <AndroidResource Include="Resources\Values\ThemeStyles.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\Drawable\badgedefault.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.Services\BeginMobile.Services.csproj">

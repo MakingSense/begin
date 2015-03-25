@@ -11,11 +11,17 @@ namespace BeginMobile.Pages.Notifications
     {
         private ListView listViewNotifications;
         private List<NotificationViewModel> listNotifications;
-        
+        public Label CounterText;
 
         public Notification(string title, string iconImg)
             : base(title, iconImg)
         {
+
+            CounterText = new Label()
+            {
+                Text = new Random().Next(1,10).ToString()
+            };
+
             Title = title;
             var notification1 = new NotificationViewModel{
                 NotificationDescription = "Admin sent to you a new message",

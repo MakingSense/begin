@@ -45,25 +45,31 @@ namespace BeginMobile.Android
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
+			public const int BadgeCircle = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int menunav = 2130837505;
+			public const int badgedefault = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int monoandroidsplash = 2130837506;
+			public const int Icon = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int padlock = 2130837507;
+			public const int menunav = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int userdefault = 2130837508;
+			public const int monoandroidsplash = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int userdefault3 = 2130837509;
+			public const int padlock = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int userprofile = 2130837510;
+			public const int userdefault = 2130837510;
+			
+			// aapt resource value: 0x7f020007
+			public const int userdefault3 = 2130837511;
+			
+			// aapt resource value: 0x7f020008
+			public const int userprofile = 2130837512;
 			
 			static Drawable()
 			{
@@ -75,23 +81,61 @@ namespace BeginMobile.Android
 			}
 		}
 		
+		public partial class Id
+		{
+			
+			// aapt resource value: 0x7f050002
+			public const int tab_badge = 2131034114;
+			
+			// aapt resource value: 0x7f050000
+			public const int tab_icon = 2131034112;
+			
+			// aapt resource value: 0x7f050001
+			public const int tab_title = 2131034113;
+			
+			static Id()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Id()
+			{
+			}
+		}
+		
+		public partial class Layout
+		{
+			
+			// aapt resource value: 0x7f030000
+			public const int BarTabLayout = 2130903040;
+			
+			static Layout()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Layout()
+			{
+			}
+		}
+		
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f030003
-			public const int ActionBarTab = 2130903043;
+			// aapt resource value: 0x7f040003
+			public const int ActionBarTab = 2130968579;
 			
-			// aapt resource value: 0x7f030002
-			public const int ActionBarTabBar = 2130903042;
+			// aapt resource value: 0x7f040002
+			public const int ActionBarTabBar = 2130968578;
 			
-			// aapt resource value: 0x7f030004
-			public const int ActionBarTabText = 2130903044;
+			// aapt resource value: 0x7f040004
+			public const int ActionBarTabText = 2130968580;
 			
-			// aapt resource value: 0x7f030001
-			public const int BeginMobileTheme = 2130903041;
+			// aapt resource value: 0x7f040001
+			public const int BeginMobileTheme = 2130968577;
 			
-			// aapt resource value: 0x7f030000
-			public const int Mono_Android_Theme_Splash = 2130903040;
+			// aapt resource value: 0x7f040000
+			public const int Mono_Android_Theme_Splash = 2130968576;
 			
 			static Style()
 			{

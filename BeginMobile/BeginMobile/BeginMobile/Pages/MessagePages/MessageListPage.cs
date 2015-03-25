@@ -11,10 +11,17 @@ namespace BeginMobile.Pages.MessagePages
         private ListView _lViewMessages;
         private RelativeLayout _sLayoutMain;
 
+        public Label CounterText;
+
         public MessageListPage(string title, string iconImg): base(title, iconImg)
         {
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationMessages profileMessage = App.ProfileServices.GetMessagesInfo(currentUser.User.UserName, currentUser.AuthToken);
+
+            CounterText = new Label()
+            {
+                Text = profileMessage.GroupingMessage.CountByGroup.ToString()
+            };
 
             _lViewMessages = new ListView()
             {
@@ -22,7 +29,7 @@ namespace BeginMobile.Pages.MessagePages
             };
 
             _lViewMessages.ItemTemplate = new DataTemplate(typeof(ProfileMessagesItem));
-            _lViewMessages.ItemsSource = profileMessage.MessagesGroup;
+            _lViewMessages.ItemsSource = profileMessage.GroupingMessage.MessagesGroup;
 
             _lViewMessages.GroupDisplayBinding = new Binding("Key");
             _lViewMessages.IsGroupingEnabled = true;

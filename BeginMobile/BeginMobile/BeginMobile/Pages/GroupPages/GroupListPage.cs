@@ -41,7 +41,6 @@ namespace BeginMobile.Pages.GroupPages
                 heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
             Content = new ScrollView() {Content = rLayout};
-            //Content = rLayout;
         }
 
         protected override void OnAppearing()

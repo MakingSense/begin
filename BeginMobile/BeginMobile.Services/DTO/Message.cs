@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +21,15 @@ namespace BeginMobile.Services.DTO
 
         public string CreateDate { set; get; }
 
+        public string IsRead { set; get; }
+
         private static List<Message> _listMessages;
 
         public static List<Message> Messages{
             get
             {
                 string[] type = {"Inbox", "Sent", "Compose"};
+                string[] isRead = {"0", "1", "0"};
                 if (_listMessages == null)
                 {
                     _listMessages = new List<Message>();
@@ -38,6 +42,7 @@ namespace BeginMobile.Services.DTO
                             Content = "Content of message "+i,
                             Type = type[new Random().Next(0, 2)],
                             CreateDate = DateTime.Now.ToString(),
+                            IsRead = isRead[new Random().Next(0, 2)],
                         };
 
                         _listMessages.Add(message);
@@ -47,5 +52,13 @@ namespace BeginMobile.Services.DTO
                 return _listMessages;
             }
         }
+    }
+
+
+    public class GroupingMessage
+    {
+        public int CountByGroup { set; get; }
+
+        public ObservableCollection<IGrouping<string, Message>> MessagesGroup { set; get; }
     }
 }
