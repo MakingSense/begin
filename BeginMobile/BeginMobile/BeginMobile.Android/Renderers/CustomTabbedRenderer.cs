@@ -17,8 +17,9 @@ namespace BeginMobile.Android.Renderers
     public class CustomTabbedRenderer: TabbedRenderer
     {
         private Activity _activity;
-        private bool _isFirstDesign = true;
-        private const string Color = "#FFFFFF";
+
+        private const string LimitCounter = "9+";
+        private const string SpaceCounter = " ";
 
         public CustomTabbedRenderer()
         {
@@ -96,8 +97,8 @@ namespace BeginMobile.Android.Renderers
                             {
                                 if (counter > 0)
                                 {
-                                    tabBadge.Text = counter > 9 ?
-                                        tabMessage.CounterText.Text + "+" : " " + tabMessage.CounterText.Text + " ";
+                                    tabBadge.Text = counter >= 9 ?
+                                        LimitCounter : SpaceCounter + tabMessage.CounterText.Text + SpaceCounter;
 
                                     tabTextAux.Gravity = GravityFlags.Bottom | GravityFlags.Left;
                                 }
@@ -122,9 +123,9 @@ namespace BeginMobile.Android.Renderers
                             {
                                 if (counter > 0)
                                 {
-                                    tabBadge.Text = counter > 9
-                                        ? tabNotification.CounterText.Text + "+"
-                                        : " " + tabNotification.CounterText.Text + " ";
+                                    tabBadge.Text = counter >= 9
+                                        ? LimitCounter
+                                        : SpaceCounter + tabNotification.CounterText.Text + SpaceCounter;
 
                                     tabTextAux.Gravity = GravityFlags.Bottom | GravityFlags.Left;
                                 }

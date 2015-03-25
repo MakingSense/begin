@@ -19,7 +19,7 @@ namespace BeginMobile.Pages.Notifications
 
             CounterText = new Label()
             {
-                Text = new Random().Next(1,10).ToString()
+                Text = new Random().Next(0,12).ToString()
             };
 
             Title = title;
