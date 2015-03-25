@@ -16,12 +16,6 @@ namespace BeginMobile.Pages.Notifications
         public Notification(string title, string iconImg)
             : base(title, iconImg)
         {
-
-            CounterText = new Label()
-            {
-                Text = new Random().Next(0,12).ToString()
-            };
-
             Title = title;
             var notification1 = new NotificationViewModel{
                 NotificationDescription = "Admin sent to you a new message",
@@ -68,6 +62,12 @@ namespace BeginMobile.Pages.Notifications
                    
                    },
 
+            };
+
+            CounterText = new Label()
+            {
+                //Text = new Random().Next(0, listNotifications.Count).ToString()
+                Text =  listNotifications.Count.ToString()
             };
 
             listViewNotifications = new ListView
