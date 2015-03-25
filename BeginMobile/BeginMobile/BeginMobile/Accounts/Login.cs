@@ -33,21 +33,24 @@ namespace BeginMobile.Accounts
             var buttonForgotPassword = new Button
             {
                 Text = "Forgot Password?",
-                Style = Styles.LinkButton(),
-                WidthRequest = 100
+                Style = App.Styles.LinkButton,
             };
 
             var buttonLogin = new Button
             {
-                TextColor = Color.White,
                 Text = "Login",
-                Style = Styles.DefaultButton(),
+                Style = App.Styles.DefaultButton,
 
             };
+            buttonLogin.FontSize = Device.OnPlatform(
+                Device.GetNamedSize(NamedSize.Medium, buttonLogin),
+                Device.GetNamedSize(NamedSize.Medium, buttonLogin),
+                Device.GetNamedSize(NamedSize.Medium, buttonLogin));
+
             var buttonRegister = new Button
             {
                 Text = "Register",
-                Style = Styles.DefaultButton(),
+                Style = App.Styles.DefaultButton,
             };
 
             buttonForgotPassword.Clicked += (s, e) =>
@@ -88,7 +91,7 @@ namespace BeginMobile.Accounts
                 MessagingCenter.Send<ContentPage>(this, "Register");
             };
 
-            Content = new StackLayout
+            StackLayout mainLayout = new StackLayout
             {
                 Spacing = 20,
                 Padding = 50,
@@ -102,6 +105,16 @@ namespace BeginMobile.Accounts
                                       buttonRegister
                                   }
             };
+
+            if (Device.Idiom == TargetIdiom.Tablet)
+            {
+                buttonLogin.FontSize = Device.OnPlatform(
+    Device.GetNamedSize(NamedSize.Large, buttonLogin),
+    Device.GetNamedSize(NamedSize.Large, buttonLogin),
+    Device.GetNamedSize(NamedSize.Large, buttonLogin));                
+            }
+
+            Content = mainLayout;
         }
 
         void OnTextChanged(object sender, EventArgs e)

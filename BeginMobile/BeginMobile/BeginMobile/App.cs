@@ -4,6 +4,7 @@ using BeginMobile.Interfaces;
 using BeginMobile.Menu;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services;
+using BeginMobile.Utils;
 
 namespace BeginMobile
 {
@@ -67,6 +68,20 @@ namespace BeginMobile
 
         #endregion
 
+        #region "Styles"
+        private static Styles styles;
+        public static Styles Styles
+        {
+            get
+            {
+                if (styles == null)
+                {
+                    styles = new Styles();
+                }
+                return styles;
+            }
+        }
 
+        #endregion
     }
 }
