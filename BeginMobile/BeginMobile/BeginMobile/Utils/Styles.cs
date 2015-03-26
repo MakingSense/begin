@@ -106,7 +106,7 @@ namespace BeginMobile.Utils
                        {
                            new Setter {Property = Button.BackgroundColorProperty, Value = Color.Transparent},
                            new Setter {Property = Button.BorderRadiusProperty, Value = 0},
-                           new Setter {Property = Button.FontProperty, Value = fontfamily},
+                           new Setter {Property = Button.FontFamilyProperty, Value = "Roboto"},
                        }
                 };
                 style.Setters.Add(buttonFontSize);
@@ -124,8 +124,9 @@ namespace BeginMobile.Utils
                     Setters =
                        {
                            new Setter {Property = Button.BackgroundColorProperty, Value = Color.FromHex("77D065")},
-                           new Setter {Property = Button.BorderRadiusProperty, Value = 0},                      
+                           new Setter {Property = Button.BorderRadiusProperty, Value = 8},                      
                            new Setter {Property = Button.FontProperty, Value = Color.White},
+                           new Setter {Property = Button.FontFamilyProperty, Value = FontFamily},
                        }
                 };
                 style.Setters.Add(buttonFontSize);
@@ -139,6 +140,7 @@ namespace BeginMobile.Utils
             get
             {
                 Device.Styles.TitleStyle.Setters.Add(titleFontSize);
+                Device.Styles.TitleStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });                
                 return Device.Styles.TitleStyle;
             }
         }
@@ -147,8 +149,9 @@ namespace BeginMobile.Utils
         {
             get
             {
+                Device.Styles.SubtitleStyle.Setters.Add(new Setter { Property = Label.TextColorProperty, Value = Color.FromHex("77D065") });
+                Device.Styles.SubtitleStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });   
                 Device.Styles.SubtitleStyle.Setters.Add(subTitleFontSize);
-                Device.Styles.SubtitleStyle.Setters.Add(new Setter { Property = Label.FontProperty, Value = Color.FromHex("77D065") });// TODO: Delete
                 return Device.Styles.SubtitleStyle;
             }
         }
@@ -158,8 +161,8 @@ namespace BeginMobile.Utils
         {
             get
             {
+                Device.Styles.BodyStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });
                 Device.Styles.BodyStyle.Setters.Add(textBodyFontSize);
-
                 return Device.Styles.BodyStyle;
             }
         }
@@ -168,6 +171,7 @@ namespace BeginMobile.Utils
         {
             get
             {
+                Device.Styles.CaptionStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });
                 return Device.Styles.CaptionStyle;
             }
         }
@@ -177,6 +181,7 @@ namespace BeginMobile.Utils
         {
             get
             {
+                Device.Styles.ListItemDetailTextStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });
                 return Device.Styles.ListItemDetailTextStyle;
             }
         }
@@ -185,7 +190,24 @@ namespace BeginMobile.Utils
         {
             get
             {
+                Device.Styles.ListItemTextStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });
                 return Device.Styles.ListItemTextStyle;
+            }
+        }
+
+        public Color BlackBackground
+        {
+            get
+            {
+                return Color.Black;
+            }
+        }
+
+        public Color BrownBackground
+        {
+            get
+            {
+                return Color.Black;
             }
         }
     }

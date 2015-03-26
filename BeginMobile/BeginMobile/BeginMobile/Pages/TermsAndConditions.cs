@@ -12,25 +12,33 @@ namespace BeginMobile.Pages
         public TermsAndConditions(bool isLoadByLogin)
         {
             Title = "Terms And Conditions";
+            var labelBody = new Label
+            {
+                Text = "Terms And Conditions",
+                Style = App.Styles.BodyStyle
+            };
 
             if (isLoadByLogin == true)
-            {
-                Button btBack = null;
-                btBack = new Button {Text = "Go back", BackgroundColor = Color.FromHex("77D065")};
+            {                
+                var btBack = new Button
+                {
+                    Text = "Go back",
+                    Style = App.Styles.DefaultButton    
+                };
+
                 btBack.Clicked += (sender, e) =>
                 {
                     MessagingCenter.Send<ContentPage>(this, "Register");
                 };
-
-
+                
                 Content = new StackLayout
                 {
                     Spacing = 20,
                     Padding = 50,
                     Children =
                     {
-                        new Label {Text = "Terms And Conditions"},
-                        btBack
+                       labelBody,
+                       btBack
                     }
                 };
             }
@@ -42,7 +50,7 @@ namespace BeginMobile.Pages
                     Padding = 50,
                     Children =
                     {
-                        new Label {Text = "Terms And Conditions"},
+                        labelBody
                     }
                 };
             }

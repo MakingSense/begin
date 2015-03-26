@@ -42,10 +42,6 @@ namespace BeginMobile.Accounts
                 Style = App.Styles.DefaultButton,
 
             };
-            buttonLogin.FontSize = Device.OnPlatform(
-                Device.GetNamedSize(NamedSize.Medium, buttonLogin),
-                Device.GetNamedSize(NamedSize.Medium, buttonLogin),
-                Device.GetNamedSize(NamedSize.Medium, buttonLogin));
 
             var buttonRegister = new Button
             {
@@ -91,7 +87,7 @@ namespace BeginMobile.Accounts
                 MessagingCenter.Send<ContentPage>(this, "Register");
             };
 
-            StackLayout mainLayout = new StackLayout
+            Content = new StackLayout
             {
                 Spacing = 20,
                 Padding = 50,
@@ -105,16 +101,7 @@ namespace BeginMobile.Accounts
                                       buttonRegister
                                   }
             };
-
-            if (Device.Idiom == TargetIdiom.Tablet)
-            {
-                buttonLogin.FontSize = Device.OnPlatform(
-    Device.GetNamedSize(NamedSize.Large, buttonLogin),
-    Device.GetNamedSize(NamedSize.Large, buttonLogin),
-    Device.GetNamedSize(NamedSize.Large, buttonLogin));                
-            }
-
-            Content = mainLayout;
+            
         }
 
         void OnTextChanged(object sender, EventArgs e)

@@ -27,15 +27,21 @@ namespace BeginMobile.Accounts
                 Text = "Password Recovery",
                 Style = App.Styles.SubtitleStyle
             };
+
             labelSubTitle = new Label{
-                Text = "Enter the e-mail address you registered with the Application. Instructions to reset your password will be sent to this address.",            
+                Text = "Enter the e-mail address you registered with the Application. Instructions to reset your password will be sent to this address.", 
+                Style = App.Styles.BodyStyle
             };
 
             email = new Entry { Placeholder = "Enter your e-mail address"};
-            buttonReset = new Button { Text= "Send", Style = App.Styles.DefaultButton};
+
+            buttonReset = new Button { 
+                Text= "Send", 
+                Style = App.Styles.DefaultButton
+            };
+            
             buttonReset.Clicked += async (s, e) =>
-                                         {
-                                            
+                                         {                                            
                     var isEmailValid = Regex.IsMatch(email.Text, EmailRegex);
                                              if (isEmailValid)
                                              {
@@ -51,14 +57,14 @@ namespace BeginMobile.Accounts
                                                  }
                                                  else
                                                  {
-                                                     DisplayAlert("Error",
+                                                     await DisplayAlert("Error",
                                                     "An error happened on the server",
                                                     "Re - Try");
                                                  }
                                              }
                                              else
                                              {
-                                                 DisplayAlert("Validation Error",
+                                                 await DisplayAlert("Validation Error",
                                                      "Email has wrong format",
                                                      "Re - Try");
                                              }
@@ -73,9 +79,14 @@ namespace BeginMobile.Accounts
              
 			Content = new StackLayout {
                 Spacing = 10,
-                Padding = 10,
+                Padding = 15,
                 VerticalOptions = LayoutOptions.Center,
-                Children = { labeTitle,labelSubTitle, email,buttonReset, btBack}                   			
+                Children = { 
+                    labeTitle,
+                    labelSubTitle,
+                    email,
+                    buttonReset,
+                    btBack}                   			
 			};
 		}
 	}

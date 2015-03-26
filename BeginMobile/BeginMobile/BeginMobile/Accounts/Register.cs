@@ -30,6 +30,7 @@ namespace BeginMobile.Accounts
         public Register(ILoginManager iLoginManager)
         {
             Title = "Register";
+
             _username = new Entry
             {
                 Placeholder = "Username"
@@ -53,12 +54,10 @@ namespace BeginMobile.Accounts
                 IsPassword = true
             };
 
-            //Intengrar radio button para tdos 
-
             var buttonTermsAndConditions = new Button()
             {
                 Text = "I agree the Terms & Conditions",
-                FontSize=10,
+                FontSize = 10,
                 Style = App.Styles.LinkButton,
                 TextColor = Color.FromHex("77D065")
             };
@@ -72,17 +71,9 @@ namespace BeginMobile.Accounts
             labelSwitcher = new Label
             {
                 Text = "I agree to the ",
-                Font = Font.SystemFontOfSize(NamedSize.Large),
-                
-                //HorizontalOptions = LayoutOptions.Start,
-                //VerticalOptions = LayoutOptions.CenterAndExpand
             };
-            switcher = new Switch
-            {
-                //HorizontalOptions = LayoutOptions.End,
-                //VerticalOptions = LayoutOptions.CenterAndExpand
-            };
-            switcher.Toggled += async (se, ev) =>
+            switcher = new Switch();
+            switcher.Toggled += (se, ev) =>
             {
                 if (ev.Value == true)
                 {
@@ -91,23 +82,29 @@ namespace BeginMobile.Accounts
                 else
                 {
                     switchStatus = false;
-                }  
+                }
             };
 
             var buttonRegister = new Button
             {
                 Text = "Register",
-                BackgroundColor = Color.FromHex("77D065")
-                
+                Style = App.Styles.DefaultButton
+
             };
 
-            var btCancel = new Button { Text = "Cancel", BackgroundColor = Color.FromHex("77D065") };
+            var btCancel = new Button
+            {
+                Text = "Cancel",
+                Style = App.Styles.DefaultButton
+            };
+
             btCancel.Clicked += (sender, e) =>
             {
                 MessagingCenter.Send<ContentPage>(this, "Login");
             };
 
-            buttonTermsAndConditions.Clicked += async (s,e)=>{
+            buttonTermsAndConditions.Clicked += (s, e) =>
+            {
                 MessagingCenter.Send<ContentPage>(this, "TermsAndConditions");
             };
 
@@ -128,42 +125,41 @@ namespace BeginMobile.Accounts
                     var isEmailValid = Regex.IsMatch(_email.Text, EmailRegex);
                     if (isEmailValid)
                     {
-                        // Application.Current.Properties["IsRegistered"] = true;
                         if (_password.Text.Equals(_confirmPassword.Text))
                         {
                             if (switchStatus)
                             {
-                                //
                                 LoginUserManager LoginUserManager = new LoginUserManager();
-
                                 RegisterUser registerUser = LoginUserManager.Register(_username.Text, _email.Text,
                                     _password.Text, _fullName.Text);
 
-                               if(registerUser.Errors!=null){
-                                   string errorMessages = "";
+                                if (registerUser.Errors != null)
+                                {
+                                    string errorMessages = "";
 
-                                   foreach(var error in registerUser.Errors){
-                                       errorMessages += error.Label + "\n";
-                                   }
-                                   await DisplayAlert("Error",errorMessages, "OK");
+                                    foreach (var error in registerUser.Errors)
+                                    {
+                                        errorMessages += error.Label + "\n";
+                                    }
+                                    await DisplayAlert("Error", errorMessages, "OK");
 
-                               }
-                               else
-                               {
-                                   await DisplayAlert("Successfull!", "You've successfully registered.", "OK");
+                                }
+                                else
+                                {
+                                    await DisplayAlert("Successfull!", "You've successfully registered.", "OK");
 
-                                   var loginUser = new LoginUser()
-                                   {
-                                       AuthToken = registerUser.AuthToken,
-                                       User = registerUser.User
-                                   };
+                                    var loginUser = new LoginUser()
+                                    {
+                                        AuthToken = registerUser.AuthToken,
+                                        User = registerUser.User
+                                    };
 
-                                   App.Current.Properties["IsLoggedIn"] = true;
-                                   App.Current.Properties["LoginUser"] = loginUser;
+                                    App.Current.Properties["IsLoggedIn"] = true;
+                                    App.Current.Properties["LoginUser"] = loginUser;
 
-                                   iLoginManager.ShowMainPage(loginUser);
-                               }
-                                
+                                    iLoginManager.ShowMainPage(loginUser);
+                                }
+
                                 //if(registerUser!=null){
 
                                 //    await DisplayAlert("Successfull!", "You've successfully registered.", "OK");
@@ -215,18 +211,15 @@ namespace BeginMobile.Accounts
             };
 
 
-            ScrollView scroll = new ScrollView {
-                Padding = 10,
-            };
-            StackLayout stackLayout = new StackLayout
+            Content = new ScrollView
+            {
+                Content = new StackLayout
             {
                 Spacing = 10,
                 Padding = 10,
                 VerticalOptions = LayoutOptions.Center,
-
                 Children =
-                                  {
-                                      
+                                  {                                      
                                       _username,
                                       _fullName,
                                       _email,
@@ -237,10 +230,8 @@ namespace BeginMobile.Accounts
                                       buttonRegister,
                                       btCancel
                                   }
+            }
             };
-
-            scroll.Content = stackLayout;
-            Content = scroll;
         }
     }
 }
