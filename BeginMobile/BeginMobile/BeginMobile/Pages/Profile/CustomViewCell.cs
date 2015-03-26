@@ -32,12 +32,12 @@ namespace BeginMobile.Pages.Profile
             var optionText = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                FontSize = 15,
-                FontAttributes = FontAttributes.Bold,
+                Style = App.Styles.ListItemTextStyle                
             };
             var optionDetail = new Label
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Style = App.Styles.ListItemDetailTextStyle
             };
 
             optionText.SetBinding(Label.TextProperty, "NameSurname");

@@ -18,9 +18,9 @@ namespace BeginMobile.Pages.Notifications
             {
                 VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.Start,
-                HeightRequest = 50,
+                //HeightRequest = 50,
                 WidthRequest = 350,
-                TextColor = Color.FromHex("77D065"),                
+                Style = App.Styles.ListItemTextStyle            
             };
             notificationDescription.SetBinding(Label.TextProperty, "NotificationDescription");
             var detailsLayout = CreateLayoutDetail();
@@ -39,7 +39,8 @@ namespace BeginMobile.Pages.Notifications
         {
             var intervalDate = new Label
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Style = App.Styles.ListItemDetailTextStyle
             };
 
             var button1 = new Button { Text = "READ" };

@@ -85,16 +85,18 @@ namespace BeginMobile.Pages.Notifications
             gridEventHeaderTitle.Children.Add(new Label
             {
                 WidthRequest = 350,
+                HeightRequest = 50,
                 Text = "Notification",
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Font = Font.SystemFontOfSize(14, FontAttributes.Bold)
+                Style = App.Styles.SubtitleStyle
             }, 0, 1, 0, 1);
 
             gridEventHeaderTitle.Children.Add(new Label
             {
+                HeightRequest = 50,
                 Text = "Date received",
                 HorizontalOptions = LayoutOptions.Start,
-                Font = Font.SystemFontOfSize(14, FontAttributes.Bold)
+                Style = App.Styles.SubtitleStyle
             }, 1, 2, 0, 1);
 
 

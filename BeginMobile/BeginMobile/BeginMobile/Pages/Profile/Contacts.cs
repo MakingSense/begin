@@ -20,8 +20,8 @@ namespace BeginMobile.Pages.Profile
             Label header = new Label
             {
                 Text = "My Contacts",
-                Font = Font.SystemFontOfSize(50, FontAttributes.Bold),
-                HorizontalOptions = LayoutOptions.Center
+                HorizontalOptions = LayoutOptions.Center,
+                Style = App.Styles.TitleStyle
             };
 
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];

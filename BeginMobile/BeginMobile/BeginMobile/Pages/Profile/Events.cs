@@ -21,7 +21,7 @@ namespace BeginMobile.Pages.Profile
             Label header = new Label
             {
                 Text = "My Events",
-                Font = Font.SystemFontOfSize(50, FontAttributes.Bold),
+                Style = App.Styles.TitleStyle,
                 HorizontalOptions = LayoutOptions.Center
             };
 
@@ -35,14 +35,14 @@ namespace BeginMobile.Pages.Profile
                 WidthRequest = 200,
                 Text = "Event",
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Font = Font.SystemFontOfSize(24, FontAttributes.Bold)
+                Style = App.Styles.SubtitleStyle
             }, 0, 1, 0, 1);
 
             gridEventHeaderTitle.Children.Add(new Label
             {
                 Text = "Date and Time",
                 HorizontalOptions = LayoutOptions.Start,
-                Font = Font.SystemFontOfSize(24,FontAttributes.Bold)
+                Style = App.Styles.SubtitleStyle
             }, 1, 2, 0, 1);
 
             var listEvents = new List<EventInfoObject>();

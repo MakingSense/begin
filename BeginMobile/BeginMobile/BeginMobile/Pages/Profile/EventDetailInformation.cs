@@ -17,17 +17,17 @@ namespace BeginMobile.Pages.Profile
             Label ownerName = new Label
             {
                 Text = "Public: " + eventInfo.Owner.NameSurname,
-                Font = Font.SystemFontOfSize(14, FontAttributes.None)
+                Style = App.Styles.SubtitleStyle
             };
             Label eventDay = new Label
             {
                 Text = "Date: " + (eventInfo.StartDate.Split('-'))[2].ToString() + " FEBRARY " + (eventInfo.StartDate.Split('-'))[0].ToString(),
-                Font = Font.SystemFontOfSize(14, FontAttributes.None)
+                Style = App.Styles.SubtitleStyle
             };
             Label time = new Label
             {
                 Text = "Time: " + eventInfo.StartTime,
-                Font = Font.SystemFontOfSize(14, FontAttributes.None)
+                Style = App.Styles.SubtitleStyle
             };
 
             Image image = new Image

@@ -45,7 +45,6 @@ namespace BeginMobile.Pages.Profile
 		                                                             Text = activity.UserActivity.DisplayName.ToString() + " " + activity.Content.ToString(),
 		                                                             //"Sara Gomez joined the group Clases de tenis Personalizados"
 		                                                             Detail = activity.Date.ToString(), //"6 min ago"
-
 		                                                         }
 		                                                     },
 		                                                 }

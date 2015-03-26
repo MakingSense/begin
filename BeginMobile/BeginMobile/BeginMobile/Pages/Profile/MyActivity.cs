@@ -19,7 +19,7 @@ namespace BeginMobile.Pages.Profile
             Label header = new Label
             {
                 Text = "My Activities",
-                Font = Font.SystemFontOfSize(50, FontAttributes.Bold),
+                Style = App.Styles.TitleStyle,
                 HorizontalOptions = LayoutOptions.Center
             };
 
