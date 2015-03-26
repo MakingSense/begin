@@ -1,12 +1,13 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using BeginMobile.iOS.Renderers;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(CircleImage), typeof(BeginMobile.iOS.ImageCircleRenderer))]
-namespace BeginMobile.iOS
+[assembly: ExportRenderer(typeof(CircleImage), typeof(ImageCircleRenderer))]
+namespace BeginMobile.iOS.Renderers
 {
     public class ImageCircleRenderer: ImageRenderer
     {
