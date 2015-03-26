@@ -24,10 +24,18 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("date")]
         public string Date { set; get; }
 
+        [JsonProperty("user")]
+        public SubUser User { set; get; }
+
         [JsonProperty("user_1")]
         public SubUser User1 { set; get; }
 
         [JsonProperty("user_2")]
         public SubUser User2 { set; get; }
+
+        [JsonProperty("event")]
+        public ProfileEvent Event { set; get; }
+
+
     }
 }

@@ -60,6 +60,7 @@
     <Compile Include="DTO\UserActivity.cs" />
     <Compile Include="ManagerServices\LoginUserManager.cs" />
     <Compile Include="ManagerServices\ProfileManager.cs" />
+    <Compile Include="Models\BeginWallViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

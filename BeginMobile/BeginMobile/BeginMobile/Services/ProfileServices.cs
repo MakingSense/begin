@@ -49,5 +49,10 @@ namespace BeginMobile.Services
         {
             return _profileManger.GetMessagesInformation(userName, authToken);
         }
+
+        public ProfileMeWall GetWall(string authToken, string filter = null, string type = null)
+        {
+            return _profileManger.GetWall(authToken, filter, type);
+        }
     }
 }

@@ -48,5 +48,9 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("owner")]
         public User Owner { set; get; }
+
+        //Extra fields for Wall
+        [JsonProperty("post_id")]
+        public string PostId { set; get; }
     }
 }

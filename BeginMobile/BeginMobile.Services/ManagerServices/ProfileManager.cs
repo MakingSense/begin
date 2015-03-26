@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
@@ -12,6 +13,7 @@ namespace BeginMobile.Services.ManagerServices
     {
         private const string BaseAddress = "http://186.109.86.251:5432/";
         private const string SubAddress = "begin/api/v1/profile/";
+        private const string SubAddressWall = "begin/api/v1/";
 
         public ProfileInfo GetProfileInformation(string username, string authToken)
         {
@@ -175,7 +177,51 @@ namespace BeginMobile.Services.ManagerServices
             return profileMessages;
         }
 
+        public ProfileMeWall GetWall(string authToken, string filter = null, string type = null)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
 
+                client.BaseAddress = new Uri(BaseAddress);
+
+                var urlGetParams = "";
+
+                if (!(string.IsNullOrEmpty(filter) && string.IsNullOrEmpty(type)))
+                {
+                    //
+                    urlGetParams = "?filter=" + filter + "&type=" + type;
+                }
+                else if (!string.IsNullOrEmpty(filter))
+                {
+                    //
+                    urlGetParams = "?filter=" + filter;
+                }
+                else if (!string.IsNullOrEmpty(type))
+                {
+                    //
+                    urlGetParams = "?type=" + type;
+                }
+
+
+                var response = client.GetAsync(SubAddressWall + "me/wall" + urlGetParams).Result;
+                var userJson = response.Content.ReadAsStringAsync().Result;
+
+                var profileMeWall = new ProfileMeWall();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var listWall = JsonConvert.DeserializeObject<List<Wall>>(userJson);
+                    profileMeWall.ListOfWall = listWall;
+                }
+                else
+                {
+                    profileMeWall = JsonConvert.DeserializeObject<ProfileMeWall>(userJson);
+                }
+
+                return profileMeWall;
+            }
+        }
        
     }
 

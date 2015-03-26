@@ -56,6 +56,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\ShopPages\ShopItemPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\TabContent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\TermsAndConditions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\Wall\WallItemCell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\Wall\WallPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ProfileServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\LinkButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Styles.cs" />

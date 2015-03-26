@@ -8,16 +8,16 @@ namespace BeginMobile.Pages.GroupPages
 {
     public class GroupListPage : TabContent
     {
-        private ListView lViewGroup;
-        private RelativeLayout rLayout;
+        private ListView _lViewGroup;
+        private RelativeLayout _rLayout;
 
         public GroupListPage(string title, string iconImg): base(title, iconImg)
         {
-            lViewGroup = new ListView { StyleId = "GroupList"};
+            _lViewGroup = new ListView { StyleId = "GroupList"};
 
-            lViewGroup.ItemTemplate = new DataTemplate(typeof(GroupItemCell));
+            _lViewGroup.ItemTemplate = new DataTemplate(typeof(GroupItemCell));
             
-            lViewGroup.ItemSelected += async (sender, e) =>
+            _lViewGroup.ItemSelected += async (sender, e) =>
             {
                 /*if (e.SelectedItem == null)
                 {
@@ -33,14 +33,14 @@ namespace BeginMobile.Pages.GroupPages
                 ((ListView)sender).SelectedItem = null; 
             };
 
-            rLayout = new RelativeLayout();
-            rLayout.Children.Add(lViewGroup,
+            _rLayout = new RelativeLayout();
+            _rLayout.Children.Add(_lViewGroup,
                 xConstraint: Constraint.Constant(0),
                 yConstraint: Constraint.Constant(0),
                 widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
                 heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
-            Content = new ScrollView() {Content = rLayout};
+            Content = new ScrollView() {Content = _rLayout};
         }
 
         protected override void OnAppearing()
@@ -48,7 +48,7 @@ namespace BeginMobile.Pages.GroupPages
             base.OnAppearing();
 
             var listGroup = Group.ListGroup;
-            lViewGroup.ItemsSource = listGroup;
+            _lViewGroup.ItemsSource = listGroup;
         }
     }
 }

@@ -137,20 +137,5 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public ProfileMeWall GetWall(string authToken)
-        {
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var response = client.GetAsync(SubAddress + "me/wall").Result;
-                var userJson = response.Content.ReadAsStringAsync().Result;
-
-                return JsonConvert.DeserializeObject<ProfileMeWall>(userJson);
-            }
-        }
-
     }
 }
