@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\ExtendedButtonRenderer.cs" />
     <Compile Include="Renderers\ExtendedTabbedRenderer.cs" />
     <Compile Include="Renderers\ImageCircleRenderer.cs" />
     <None Include="Entitlements.plist" />

@@ -1,4 +1,5 @@
-﻿using ImageCircle.Forms.Plugin.Abstractions;
+﻿using BeginMobile.Utils;
+using ImageCircle.Forms.Plugin.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,7 +26,7 @@ namespace BeginMobile.Pages.MessagePages
                 BorderColor = Device.OnPlatform<Color>(iOS: Color.Black, Android: Color.White, WinPhone: Color.White),
                 BorderThickness = Device.OnPlatform<int>(iOS: 2, Android: 3, WinPhone: 3),
                 HeightRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
-                WidthRequest = Device.OnPlatform<int>(iOS: 60, Android: 100, WinPhone: 100),
+                WidthRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
                 Aspect = Aspect.AspectFill,
                 HorizontalOptions = LayoutOptions.Start,
                 Source = GroupImage
@@ -34,7 +35,7 @@ namespace BeginMobile.Pages.MessagePages
             var lblGrTitle = new Label()
             {
                 YAlign = TextAlignment.Center,
-                FontSize = Device.OnPlatform<double>(iOS: 8, Android: 15, WinPhone: 15),
+                Style = App.Styles.ListItemTextStyle,
                 FontAttributes = FontAttributes.Bold,
                 HorizontalOptions = LayoutOptions.Start
             };
@@ -44,7 +45,7 @@ namespace BeginMobile.Pages.MessagePages
             var lblCreate = new Label()
             {
                 YAlign = TextAlignment.Center,
-                FontSize = Device.OnPlatform<double>(iOS: 7, Android: 12, WinPhone: 12),
+                Style = App.Styles.ListItemDetailTextStyle,
                 HorizontalOptions = LayoutOptions.End
             };
             lblCreate.SetBinding(Label.TextProperty, "CreateDate", stringFormat:"Date: {0}");
@@ -52,7 +53,7 @@ namespace BeginMobile.Pages.MessagePages
             var lblContent = new Label()
             {
                 YAlign = TextAlignment.Center,
-                FontSize = Device.OnPlatform<double>(iOS: 7, Android: 12, WinPhone: 12),
+                Style = App.Styles.ListItemDetailTextStyle,
                 HorizontalOptions = LayoutOptions.StartAndExpand
             };
             lblContent.SetBinding(Label.TextProperty, "Content");
