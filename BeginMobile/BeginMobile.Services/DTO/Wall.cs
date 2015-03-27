@@ -36,6 +36,10 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("event")]
         public ProfileEvent Event { set; get; }
 
+        [JsonProperty("group")]
+        public Group Group { set; get; }
 
+        [JsonProperty("content")]
+        public string Content { set; get; }
     }
 }

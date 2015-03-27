@@ -33,6 +33,9 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("creator")]
         public User Creator { set; get; }
 
+        [JsonProperty("slug")]
+        public string Slug { set; get; }
+
         public string Category { set; get; }
 
         public string Type { set; get; }

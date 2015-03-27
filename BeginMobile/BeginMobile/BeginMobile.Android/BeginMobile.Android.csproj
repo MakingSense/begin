@@ -123,6 +123,8 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\Drawable\badgedefault.png" />
+    <AndroidResource Include="Resources\Drawable\ratingon.png" />
+    <AndroidResource Include="Resources\Drawable\ratingoff.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.Services\BeginMobile.Services.csproj">
