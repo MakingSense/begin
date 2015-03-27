@@ -31,6 +31,13 @@ namespace BeginMobile.Accounts
         {
             Title = "Register";
 
+            Image logo = new Image
+            {
+                Source = Device.OS == TargetPlatform.iOS
+                    ? ImageSource.FromFile("logotype.png")
+                    : ImageSource.FromFile("logotype.png"),
+                Aspect = Aspect.AspectFit,
+            };
             _username = new Entry
             {
                 Placeholder = "Username"
@@ -219,7 +226,7 @@ namespace BeginMobile.Accounts
                 Padding = 10,
                 VerticalOptions = LayoutOptions.Center,
                 Children =
-                                  {                                      
+                                  {    logo,                                  
                                       _username,
                                       _fullName,
                                       _email,

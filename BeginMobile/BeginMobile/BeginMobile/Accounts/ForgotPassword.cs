@@ -22,6 +22,14 @@ namespace BeginMobile.Accounts
 	 
 		public ForgotPassword ()
 		{
+            Image logo = new Image
+            {
+                Source = Device.OS == TargetPlatform.iOS
+                    ? ImageSource.FromFile("logotype.png")
+                    : ImageSource.FromFile("logotype.png"),
+                Aspect = Aspect.AspectFit,
+            };
+
             labeTitle = new Label
             {
                 Text = "Password Recovery",
@@ -82,6 +90,7 @@ namespace BeginMobile.Accounts
                 Padding = 15,
                 VerticalOptions = LayoutOptions.Center,
                 Children = { 
+                    logo,
                     labeTitle,
                     labelSubTitle,
                     email,

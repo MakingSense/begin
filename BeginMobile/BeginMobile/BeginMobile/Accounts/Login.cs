@@ -18,6 +18,14 @@ namespace BeginMobile.Accounts
 
         public Login(ILoginManager iLoginManager)
         {
+            Image logo = new Image
+            {
+                Source = Device.OS == TargetPlatform.iOS
+                    ? ImageSource.FromFile("logotype.png")
+                    : ImageSource.FromFile("logotype.png"),
+                Aspect = Aspect.AspectFit,
+            };
+
             Title = "Login Form";
             email = new Entry
             {
@@ -94,6 +102,7 @@ namespace BeginMobile.Accounts
                 VerticalOptions = LayoutOptions.Center,
                 Children =
                                   {
+                                      logo,
                                       email,
                                       password,
                                       buttonLogin,
