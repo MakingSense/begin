@@ -57,6 +57,13 @@ namespace BeginMobile.Pages.Profile
     {
         public string Icon { get; set; }
         public string NameSurname { get; set; }
+        public string FirstName
+        {
+            get
+            {
+                return NameSurname.Split(' ')[0];
+            }            
+        }
         public string References { get; set; }
     }
 }
