@@ -36,16 +36,26 @@ namespace BeginMobile.iOS.Renderers
 
                 if (type == typeof(MessageListPage))
                 {
-                    if (!string.IsNullOrEmpty
-                        (((MessageListPage)childFromTab).CounterText.Text))
+                    if (string.IsNullOrEmpty
+                        (((MessageListPage) childFromTab).CounterText.Text)) continue;
+
+                    var counter = int.Parse(((MessageListPage) childFromTab).CounterText.Text);
+                    if (counter > 0)
+                    {
                         viewController.TabBarItem.BadgeValue = ((MessageListPage)childFromTab).CounterText.Text;
+                    }
                 }
 
                 else if (type == typeof(Notification))
                 {
-                    if (!string.IsNullOrEmpty
-                       (((Notification)childFromTab).CounterText.Text))
+                    if (string.IsNullOrEmpty
+                        (((Notification) childFromTab).CounterText.Text)) continue;
+
+                    var counter = int.Parse(((Notification)childFromTab).CounterText.Text);
+                    if (counter > 0)
+                    {
                         viewController.TabBarItem.BadgeValue = ((Notification)childFromTab).CounterText.Text;
+                    }
                 }
             }
         }

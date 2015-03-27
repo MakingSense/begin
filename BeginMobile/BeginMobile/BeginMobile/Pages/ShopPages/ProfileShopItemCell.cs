@@ -8,27 +8,37 @@ namespace BeginMobile.Pages.ShopPages
 {
     public class ProfileShopItemCell: ViewCell
     {
-        private const string GroupImage = "Icon.png";
-        
+        private string GroupImage
+        {
+            get
+            {
+                return Device.OS == TargetPlatform.iOS ? "userdefault.png" : "Icon.png";
+            }
+        }
 
         public ProfileShopItemCell()
         {
             var shopImage = new CircleImage()
-            {
-                BorderColor = Color.White,
-                BorderThickness = 3,
-                HeightRequest = 100,
-                WidthRequest = 100,
-                Aspect = Aspect.AspectFill,
-                HorizontalOptions = LayoutOptions.Start
-            };
+                            {
+                                BorderColor =
+                                    Device.OnPlatform<Color>(iOS: Color.Black, Android: Color.White,
+                                        WinPhone: Color.White),
+                                BorderThickness = Device.OnPlatform<int>(iOS: 2, Android: 3, WinPhone: 3),
+                                HeightRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
+                                WidthRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
+
+                                Aspect = Aspect.AspectFill,
+                                HorizontalOptions = LayoutOptions.Start
+                            };
+
             shopImage.SetBinding(CircleImage.SourceProperty, "Thumbnail");
             
             var lblGrTitle = new Label()
             {
                 YAlign = TextAlignment.Center,
-                FontSize = 15,
                 FontAttributes = FontAttributes.Bold,
+                Style = App.Styles.ListItemTextStyle,
+
             };
             lblGrTitle.SetBinding(Label.TextProperty, "Name");
 
@@ -37,17 +47,19 @@ namespace BeginMobile.Pages.ShopPages
             {
                 YAlign = TextAlignment.Center,
                 Text = "Date:",
-                FontSize = 12,
                 FontAttributes = FontAttributes.Bold,
+                Style = App.Styles.ListItemTextStyle,
                 HorizontalOptions = LayoutOptions.Start
             };
 
             var lblCreate = new Label()
             {
                 YAlign = TextAlignment.Center,
-                FontSize = 12,
+                Style = App.Styles.ListItemDetailTextStyle,
                 HorizontalOptions = LayoutOptions.Center
+
             };
+
             lblCreate.SetBinding(Label.TextProperty, "CreationDate");
 
             //Right section
@@ -55,18 +67,19 @@ namespace BeginMobile.Pages.ShopPages
             {
                 YAlign = TextAlignment.Center,
                 Text = "Price:",
-                FontSize = 12,
                 FontAttributes = FontAttributes.Bold,
+                Style = App.Styles.ListItemTextStyle,
                 HorizontalOptions = LayoutOptions.Start
             };
 
             var lblPrice = new Label()
             {
-                FontSize = 18,
                 YAlign = TextAlignment.Center,
                 XAlign = TextAlignment.Center,
+                Style = App.Styles.ListItemDetailTextStyle,
                 HorizontalOptions = LayoutOptions.End
             };
+
             lblPrice.SetBinding(Label.TextProperty, "Price");
 
             var gridDetails = new Grid()

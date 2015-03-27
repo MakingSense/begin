@@ -21,10 +21,8 @@ namespace BeginMobile.Pages.Profile
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationShop profileShop = App.ProfileServices.GetShopInfo(currentUser.User.UserName, currentUser.AuthToken);
 
-            _lViewShops = new ListView()
-            {
-                RowHeight = 40,
-            };
+            _lViewShops = new ListView() { };
+
             _lViewShops.ItemTemplate = new DataTemplate(typeof(ProfileShopItemCell));
             _lViewShops.ItemsSource = profileShop.Shop;
 
