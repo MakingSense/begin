@@ -5,26 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using BeginMobile.Services.DTO;
+using BeginMobile.Utils.Extensions;
 using BeginMobile.Services.ManagerServices;
 
 namespace BeginMobile.Pages.Profile
 {
     public class Events: ContentPage
     {
+        private Label noContactsMessage;
+        private List<EventInfoObject> listEvents;
+        private ListView eventsListView;
+
         public Events()
         {
             Title = "Events";
-
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            ProfileInformationEvents profileInformationEvents = App.ProfileServices.GetEvents(currentUser.User.UserName, currentUser.AuthToken);
-
             Label header = new Label
             {
                 Text = "My Events",
                 Style = App.Styles.TitleStyle,
                 HorizontalOptions = LayoutOptions.Center
             };
+            #region call api
+            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            ProfileInformationEvents profileInformationEvents = App.ProfileServices.GetEvents(currentUser.User.UserName, currentUser.AuthToken);
+            #endregion
 
+            #region search components
+            SearchBar searchBar = new SearchBar
+            {
+                Placeholder = "Search by event name",
+            };
+            searchBar.TextChanged += OnTextChanged;
+
+            noContactsMessage = new Label();
+            #endregion
+
+            #region subtitles layout
             var gridEventHeaderTitle = new Grid
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,                
@@ -45,7 +61,10 @@ namespace BeginMobile.Pages.Profile
                                                   Style = App.Styles.SubtitleStyle
                                               }, 1, 2, 0, 1);
 
-            var listEvents = new List<EventInfoObject>();
+            #endregion 
+
+            #region list components
+            listEvents = new List<EventInfoObject>();
 
             foreach(var eventInfo in profileInformationEvents.Events){
                 listEvents.Add(new EventInfoObject
@@ -59,7 +78,7 @@ namespace BeginMobile.Pages.Profile
 
             var eventTemplate = new DataTemplate(typeof(TemplateListViewEvents));
 
-            var eventsListView = new ListView
+            eventsListView = new ListView
             {
                 ItemsSource = listEvents,
                 ItemTemplate = eventTemplate
@@ -73,13 +92,16 @@ namespace BeginMobile.Pages.Profile
                 await Navigation.PushAsync(itemPageProfile);
 
             };
+            #endregion
 
+            #region main layout
             ScrollView scrollView  = new ScrollView{
                 Content = new StackLayout{
                     Spacing = 2,
                     VerticalOptions = LayoutOptions.Start,
                     Children =
                     {
+                        searchBar,
                         eventsListView
                     }
                 }
@@ -94,7 +116,46 @@ namespace BeginMobile.Pages.Profile
                     gridEventHeaderTitle,scrollView
                 }
             };
+            #endregion
+        }
 
+
+        //Method that to the search
+        void OnTextChanged(object sender, EventArgs args)
+        {
+            SearchBar searchBar = (SearchBar)sender;
+            string searchText = searchBar.Text; // recovery the text of search bar
+
+            if (!string.IsNullOrEmpty(searchText) || !string.IsNullOrWhiteSpace(searchText))
+            {
+
+                if (listEvents.Count == 0)
+                {
+                    noContactsMessage.Text = "There is no contacts";
+                }
+
+                else
+                {
+                    List<EventInfoObject> list = (
+                        from e in listEvents
+                        where e.EventName.Contains(searchText, StringComparison.InvariantCultureIgnoreCase) select e).ToList<EventInfoObject>();
+
+                    if (list.Any())
+                    {
+                        eventsListView.ItemsSource = list;
+                        noContactsMessage.Text = "";
+                    }
+
+                    else
+                    {
+                        eventsListView.ItemsSource = listEvents;
+                    }
+                }
+            }
+            else
+            {
+                eventsListView.ItemsSource = listEvents;
+            }
         }
     }
 }
