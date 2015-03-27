@@ -9,7 +9,8 @@ namespace BeginMobile.Pages.Wall
 {
     public class WallItemCell : ViewCell
     {
-        private const string UserImage = "userdefault.png";
+        private const string UserImage = "userdefault3.png";
+        private const string StarImage = "ratingoff.png";
         public WallItemCell()
         {
             //Do something
@@ -22,21 +23,26 @@ namespace BeginMobile.Pages.Wall
                               FontAttributes = FontAttributes.Bold,
                               Style = App.Styles.ListItemTextStyle
                           };
-
-            lblName.SetBinding(Label.TextProperty, "Name");
+            lblName.SetBinding(Label.TextProperty, "DisplayName");
 
             var lblExtraText = new Label()
                                {
                                    YAlign = TextAlignment.Center,
                                    Style = App.Styles.ListItemDetailTextStyle,
                                };
-
             lblExtraText.SetBinding(Label.TextProperty, "ExtraText");
+
+            var lblNameTwo = new Label()
+            {
+                YAlign = TextAlignment.Center,
+                Style = App.Styles.ListItemTextStyle,
+                FontAttributes = FontAttributes.Bold,
+            };
+            lblNameTwo.SetBinding(Label.TextProperty, "DisplayNameTwo");
 
             var lblReason = new Label()
                             {
                                 YAlign = TextAlignment.Center,
-                                FontAttributes = FontAttributes.Bold,
                                 Style = App.Styles.ListItemTextStyle,
                             };
 
@@ -65,7 +71,7 @@ namespace BeginMobile.Pages.Wall
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
                 {
-                    lblName, lblExtraText, lblReason, lblDescription
+                    lblName, lblExtraText, lblNameTwo, lblReason, lblDescription
                 }
             };
 
@@ -90,11 +96,6 @@ namespace BeginMobile.Pages.Wall
 
             var shopImage = new CircleImage()
             {
-                //BorderColor = Color.White,
-                //BorderThickness = 3,
-                //HeightRequest = 100,
-                //WidthRequest = 100,
-
                 BorderColor = Device.OnPlatform<Color>(iOS: Color.Black, Android: Color.White, WinPhone: Color.White),
                 BorderThickness = Device.OnPlatform<int>(iOS: 2, Android: 3, WinPhone: 3),
                 HeightRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
@@ -107,8 +108,11 @@ namespace BeginMobile.Pages.Wall
 
             var starImage = new Image()
             {
-                VerticalOptions = LayoutOptions.Start
+                Aspect = Aspect.AspectFit,
+                VerticalOptions = LayoutOptions.Start,
+                Source = StarImage
             };
+
 
             var layoutItem = new StackLayout()
             {
@@ -116,7 +120,7 @@ namespace BeginMobile.Pages.Wall
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
                 {
-                    shopImage, gridDetails
+                    shopImage, gridDetails, starImage
                 }
             };
 

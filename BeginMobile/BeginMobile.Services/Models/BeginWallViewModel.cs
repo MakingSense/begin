@@ -8,9 +8,12 @@ namespace BeginMobile.Services.Models
 {
     public class BeginWallViewModel
     {
-        public string Name { set; get; }
+        public string DisplayName { set; get; }
+
+        public string DisplayNameTwo { set; get; }
 
         public string ExtraText { set; get; }
+
         public string Description { set; get; }
 
         public string Reason { set; get; }

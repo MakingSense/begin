@@ -69,57 +69,137 @@ namespace BeginMobile.Pages.Wall
             switch (wallItem.Type)
             {
                 case WallParameters.CreatedGroup:
-                    beginWall.Name = wallItem.User.DisplayName;
+                    beginWall.DisplayName = wallItem.User.DisplayName;
                     beginWall.ExtraText = "";
+                    beginWall.DisplayNameTwo = "";
                     beginWall.Reason = WallParameters.DescCreatedGroup;
-                    beginWall.Description = "Group " + new Random().Next(0, 100);
+                    beginWall.Description = wallItem.Group.Name;
+                    beginWall.Date = wallItem.Date;
+                    break;
+                case WallParameters.JoinedGroup:
+                    beginWall.DisplayName = wallItem.User.DisplayName;
+                    beginWall.ExtraText = "";
+                    beginWall.DisplayNameTwo = "";
+                    beginWall.Reason = WallParameters.DescJoinedGroup;
+                    beginWall.Description = wallItem.Group.Name;
+                    beginWall.Date = wallItem.Date;
+                    break;
+                case WallParameters.RtmediaUpdate:
+                    beginWall.DisplayName = wallItem.User.DisplayName;
+                    beginWall.ExtraText = "";
+                    beginWall.DisplayNameTwo = "";
+                    beginWall.Reason = WallParameters.DescRtmediaUpdate;
+                    beginWall.Description = wallItem.Group.Name;
                     beginWall.Date = wallItem.Date;
                     break;
                 case WallParameters.ActivityUpdate:
-                    beginWall.Name = wallItem.User.DisplayName;
-                    beginWall.ExtraText = "";
-                    beginWall.Reason = WallParameters.DescActivityUpdate;
-                    beginWall.Description = "";
-                    beginWall.Date = wallItem.Date;
+
+                    if(wallItem.Component == WallParameters.Groups){
+                        beginWall.DisplayName = wallItem.User.DisplayName;
+                        beginWall.ExtraText = "";
+                        beginWall.DisplayNameTwo = "";
+                        beginWall.Reason = WallParameters.DescActivityUpdate + " group";
+                        beginWall.Description = wallItem.Group.Name;
+                        beginWall.Date = wallItem.Date;
+                    }
+                    else if (wallItem.Component == WallParameters.Activity)
+                    {
+                        beginWall.DisplayName = wallItem.User.DisplayName;
+                        beginWall.ExtraText = "";
+                        beginWall.DisplayNameTwo = "";
+                        beginWall.Reason = WallParameters.DescActivityUpdate + " activity";
+                        beginWall.Description = wallItem.Content;
+                        beginWall.Date = wallItem.Date;
+                    }
+                    else
+                    {
+                        beginWall.DisplayName = wallItem.User.DisplayName;
+                        beginWall.ExtraText = "";
+                        beginWall.DisplayNameTwo = "";
+                        beginWall.Reason = WallParameters.DescActivityUpdate;
+                        beginWall.Description = "";
+                        beginWall.Date = wallItem.Date;
+                    }
                     break;
                 case WallParameters.FriendshipCreated:
                 case WallParameters.FriendshipAccepted:
-                    beginWall.Name = wallItem.User1.DisplayName;
+                    beginWall.DisplayName = wallItem.User1.DisplayName;
                     beginWall.ExtraText = "and";
-                    beginWall.Reason = wallItem.User2.DisplayName;
+                    beginWall.DisplayNameTwo = wallItem.User2.DisplayName;
+                    beginWall.Reason = "";
                     beginWall.Description = WallParameters.DescFriendshipAccepted;
                     beginWall.Date = wallItem.Date;
                     break;
                 case WallParameters.NewBooking:
-                    beginWall.Name = wallItem.Event.Owner.DisplayName;
+                    beginWall.DisplayName = wallItem.Event.Owner.NameSurname;
                     beginWall.ExtraText = "";
+                    beginWall.DisplayNameTwo = "";
                     beginWall.Reason = WallParameters.DescNewBooking;
                     beginWall.Description = wallItem.Event.Name;
+                    beginWall.Date = wallItem.Event.StartDate + " - " + wallItem.Event.EndDate;
+                    break;
+                case WallParameters.NewEvent:
+
+                    if(wallItem.Component ==  WallParameters.Groups){
+                        beginWall.DisplayName = wallItem.User.DisplayName;
+                        beginWall.ExtraText = "";
+                        beginWall.DisplayNameTwo = "";
+                        beginWall.Reason = WallParameters.DescNewEvent +" group";
+                        beginWall.Description = wallItem.Group.Name;
+                        beginWall.Date = wallItem.Date;
+
+                    } else if(wallItem.Component ==  WallParameters.Event){
+                        beginWall.DisplayName = wallItem.Event.Owner.NameSurname;
+                        beginWall.ExtraText = "";
+                        beginWall.DisplayNameTwo = "";
+                        beginWall.Reason = WallParameters.DescNewEvent;
+                        beginWall.Description = wallItem.Event.Name;
+                        beginWall.Date = wallItem.Event.StartDate + " -" +
+                                         "" +
+                                         " " + wallItem.Event.EndTime;
+                    }
+                    break;
+                case WallParameters.NewMember:
+                    beginWall.DisplayName = wallItem.User.DisplayName;
+                    beginWall.ExtraText = "";
+                    beginWall.DisplayNameTwo = "";
+                    beginWall.Reason = WallParameters.DescNewMember;
+                    beginWall.Description = "";
                     beginWall.Date = wallItem.Date;
                     break;
+                case WallParameters.UpdatedProfile:
+                    if (wallItem.Component == WallParameters.Profile)
+                    {
+                        beginWall.DisplayName = wallItem.User.DisplayName;
+                        beginWall.ExtraText = "";
+                        beginWall.DisplayNameTwo = "";
+                        beginWall.Reason = WallParameters.DescUpdatedProfile;
+                        beginWall.Description = "";
+                        beginWall.Date = wallItem.Date;
+                    }
+                    break;
+                case WallParameters.ActivityComment:
+                        beginWall.DisplayName = wallItem.User.DisplayName;
+                        beginWall.ExtraText = "";
+                        beginWall.DisplayNameTwo = "";
+                        beginWall.Reason = WallParameters.DescActivityComment;
+                        beginWall.Description = wallItem.Content;
+                        beginWall.Date = wallItem.Date;
+                        break;
                 case WallParameters.NewBlogPost:
                 case WallParameters.NewBlogComment:
-                case WallParameters.JoinedGroup:
-                case WallParameters.NewMember:
                 case WallParameters.BbpTopicCreate:
                 case WallParameters.CbpReplyCreate:
                 case WallParameters.Everything:
-                    beginWall.Name = "";
-                    beginWall.ExtraText = "";
-                    beginWall.Reason = "";
-                    beginWall.Description = "";
-                    beginWall.Date = "";
-                    break;
                 default:
-                    beginWall.Name = "";
+                    beginWall.DisplayName = "";
                     beginWall.ExtraText = "";
+                    beginWall.DisplayNameTwo = "";
                     beginWall.Reason = "";
                     beginWall.Description = "";
                     beginWall.Date = "";
                     break;
-
             }
-
             return beginWall;
         }
     }
@@ -138,20 +218,34 @@ namespace BeginMobile.Pages.Wall
         public const string BbpTopicCreate = "bbp_topic_create";
         public const string CbpReplyCreate = "bbp_reply_create";
         public const string NewBooking = "new_booking";
+        public const string NewEvent = "new_event";
+        public const string RtmediaUpdate = "rtmedia_update";
+        public const string UpdatedProfile = "updated_profile";
+        public const string ActivityComment = "activity_comment";
         public const string Everything = "-1";
+        
 
         public const string DescCreatedGroup = "created the group";
-        public const string DescActivityUpdate = "posted an update";
+        public const string DescActivityUpdate = "update";
         public const string DescNewBlogPost = "created the group";
         public const string DescNewBlogComment = "created the group";
-        public const string DescJoinedGroup = "created the group";
+        public const string DescJoinedGroup = "joined to the group";
         public const string DescFriendshipAccepted = "now are friends";
         public const string DescFriendshipCreated = "now are friends";
-        public const string DescNewMember = "created the group";
+        public const string DescNewMember = "new member";
         public const string DescBbpTopicCreate = "created the group";
         public const string DescCbpReplyCreate = "created the group";
         public const string DescEverything = "";
         public const string DescNewBooking = "create new booking";
+        public const string DescNewEvent = "create new event";
+        public const string DescRtmediaUpdate = "update";
+        public const string DescUpdatedProfile = "update profile";
+        public const string DescActivityComment = "comment to";
 
+        public const string Activity = "activity";
+        public const string Profile = "profile";
+        public const string Groups = "groups";
+        public const string Friends = "friends";
+        public const string Event = "event";
     }
 }
