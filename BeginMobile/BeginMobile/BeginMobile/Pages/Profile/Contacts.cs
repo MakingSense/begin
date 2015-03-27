@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using BeginMobile.Services.ManagerServices;
 using BeginMobile.Services.DTO;
+using BeginMobile.Utils.Extensions;
 
 namespace BeginMobile.Pages.Profile
 {
@@ -85,21 +86,25 @@ namespace BeginMobile.Pages.Profile
             
             if (!string.IsNullOrEmpty(searchText) || !string.IsNullOrWhiteSpace(searchText))
             {
+
                 if (contactsList.Count == 0)
                 {
                     noContactsMessage.Text = "There is no contacts";
                 }
+
                 else
                 {
                     List<Contact> list = (from c in contactsList
-                                          where (String.Equals(c.NameSurname, searchText, StringComparison.OrdinalIgnoreCase) ||
-                                              String.Equals(c.FirstName, searchText, StringComparison.OrdinalIgnoreCase))
-                                          select c).ToList<Contact>();
+                        where (c.NameSurname.Contains(searchText, StringComparison.InvariantCultureIgnoreCase) ||
+                               c.FirstName.Contains(searchText, StringComparison.InvariantCultureIgnoreCase))
+                        select c).ToList<Contact>();
+
                     if (list.Any())
                     {
                         contactlistView.ItemsSource = list;
                         noContactsMessage.Text = "";
                     }
+
                     else
                     {
                         contactlistView.ItemsSource = contactsList;

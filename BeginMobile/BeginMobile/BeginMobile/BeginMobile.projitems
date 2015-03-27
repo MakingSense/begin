@@ -59,6 +59,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Wall\WallItemCell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Wall\WallPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ProfileServices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions\StringExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\LinkButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Styles.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\RadioButton.cs" />
