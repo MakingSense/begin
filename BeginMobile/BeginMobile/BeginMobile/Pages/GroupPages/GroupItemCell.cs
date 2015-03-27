@@ -8,7 +8,7 @@ namespace BeginMobile.Pages.GroupPages
 {
     public class GroupItemCell: ViewCell
     {
-        private const string GroupImage = "userdefault3.png";
+        private const string GroupImage = "userdefault.png";
         public GroupItemCell()
         {
             //
@@ -38,6 +38,7 @@ namespace BeginMobile.Pages.GroupPages
             {
                 StyleId = "CellGroupName",
                 YAlign = TextAlignment.Center,
+                FontAttributes = FontAttributes.Bold,
                 Style = App.Styles.ListItemTextStyle,
             };
             lblGroupName.SetBinding(Label.TextProperty, "Name");

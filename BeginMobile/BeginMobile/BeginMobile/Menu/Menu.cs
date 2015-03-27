@@ -17,8 +17,7 @@ namespace BeginMobile.Menu
     public class Menu : ContentPage
     {
         private const string DefaultUri = "http://www.americanpresidents.org/images/01_150.gif";
-
-        //private const string pUserDefault = "userdefault3.png";
+        
         private const string pProfileMenuIcon = "userprofile.png";
         private const string knocks = "padlock.png";
 
@@ -41,7 +40,6 @@ namespace BeginMobile.Menu
             _onToggleRequest = onToggleRequest;
 
             Title = "Menu";
-            //Icon = Device.OS == TargetPlatform.iOS ? "menunav.png" : null;
             Icon = Device.OS == TargetPlatform.iOS ? "More.png" : null;
 
             var userImage = new ImageCell

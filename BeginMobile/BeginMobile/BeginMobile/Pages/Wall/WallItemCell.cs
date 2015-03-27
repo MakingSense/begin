@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Wall
 {
-    public class WallItemCell: ViewCell
+    public class WallItemCell : ViewCell
     {
         private const string UserImage = "userdefault.png";
         public WallItemCell()
@@ -16,43 +16,46 @@ namespace BeginMobile.Pages.Wall
 
             var obj = (BeginMobile.Services.DTO.Wall)this.BindingContext;
 
-            
-
             var lblName = new Label()
-            {
-                YAlign = TextAlignment.Center,
-                FontSize = 15,
-                FontAttributes = FontAttributes.Bold,
-            };
+                          {
+                              YAlign = TextAlignment.Center,
+                              FontAttributes = FontAttributes.Bold,
+                              Style = App.Styles.ListItemTextStyle
+                          };
+
             lblName.SetBinding(Label.TextProperty, "Name");
 
             var lblExtraText = new Label()
-            {
-                YAlign = TextAlignment.Center,
-                FontSize = 12,
-            };
+                               {
+                                   YAlign = TextAlignment.Center,
+                                   Style = App.Styles.ListItemDetailTextStyle,
+                               };
+
             lblExtraText.SetBinding(Label.TextProperty, "ExtraText");
 
             var lblReason = new Label()
-            {
-                YAlign = TextAlignment.Center,
-                FontSize = 15,
-                FontAttributes = FontAttributes.Bold,
-            };
+                            {
+                                YAlign = TextAlignment.Center,
+                                FontAttributes = FontAttributes.Bold,
+                                Style = App.Styles.ListItemTextStyle,
+                            };
+
             lblReason.SetBinding(Label.TextProperty, "Reason");
 
             var lblDescription = new Label()
-            {
-                YAlign = TextAlignment.Center,
-                FontSize = 12,
-            };
+                                 {
+                                     YAlign = TextAlignment.Center,
+                                     Style = App.Styles.ListItemDetailTextStyle
+                                 };
+
             lblDescription.SetBinding(Label.TextProperty, "Description");
 
             var lblDate = new Label()
-            {
-                YAlign = TextAlignment.Center,
-                FontSize = 12,
-            };
+                          {
+                              YAlign = TextAlignment.Center,
+                              Style = App.Styles.ListItemDetailTextStyle
+                          };
+
             lblDate.SetBinding(Label.TextProperty, "Date");
 
 
@@ -65,7 +68,6 @@ namespace BeginMobile.Pages.Wall
                     lblName, lblExtraText, lblReason, lblDescription
                 }
             };
-
 
             var gridDetails = new Grid()
             {
@@ -88,10 +90,16 @@ namespace BeginMobile.Pages.Wall
 
             var shopImage = new CircleImage()
             {
-                BorderColor = Color.White,
-                BorderThickness = 3,
-                HeightRequest = 100,
-                WidthRequest = 100,
+                //BorderColor = Color.White,
+                //BorderThickness = 3,
+                //HeightRequest = 100,
+                //WidthRequest = 100,
+
+                BorderColor = Device.OnPlatform<Color>(iOS: Color.Black, Android: Color.White, WinPhone: Color.White),
+                BorderThickness = Device.OnPlatform<int>(iOS: 2, Android: 3, WinPhone: 3),
+                HeightRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
+                WidthRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
+
                 Aspect = Aspect.AspectFill,
                 HorizontalOptions = LayoutOptions.Start,
                 Source = UserImage

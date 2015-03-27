@@ -21,10 +21,7 @@ namespace BeginMobile.Pages.Profile
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationMessages profileMessage = App.ProfileServices.GetMessagesInfo(currentUser.User.UserName, currentUser.AuthToken);
 
-            _lViewMessages = new ListView()
-            {
-                RowHeight = 40,
-            };
+            _lViewMessages = new ListView() { };
 
             _lViewMessages.ItemTemplate = new DataTemplate(typeof(ProfileMessagesItem));
             _lViewMessages.ItemsSource = profileMessage.GroupingMessage.MessagesGroup;

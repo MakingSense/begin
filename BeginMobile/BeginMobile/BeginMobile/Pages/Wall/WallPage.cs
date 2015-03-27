@@ -20,7 +20,11 @@ namespace BeginMobile.Pages.Wall
             ProfileMeWall profileShop = App.ProfileServices.GetWall(currentUser.AuthToken);
             var listWall = NewListWall(profileShop.ListOfWall);
 
-            _lViewWall = new ListView { StyleId = "WallList", RowHeight = 40, };
+            _lViewWall = new ListView
+                         {
+                             StyleId = "WallList"
+                         };
+
             _lViewWall.HasUnevenRows = true;
             _lViewWall.ItemTemplate = new DataTemplate(typeof(WallItemCell));
             _lViewWall.ItemsSource = listWall;

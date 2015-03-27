@@ -20,10 +20,8 @@ namespace BeginMobile.Pages.Profile
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationGroups groupInformation = App.ProfileServices.GetGroups(currentUser.User.UserName, currentUser.AuthToken);
 
-            _lViewGroup = new ListView()
-            {
-                RowHeight = 40,
-            };
+            _lViewGroup = new ListView(){ };
+            
             _lViewGroup.ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell));
             _lViewGroup.ItemsSource = groupInformation.Groups;
 

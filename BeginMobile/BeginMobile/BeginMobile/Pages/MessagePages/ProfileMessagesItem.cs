@@ -14,7 +14,7 @@ namespace BeginMobile.Pages.MessagePages
         {
             get
             {
-                return Device.OS == TargetPlatform.iOS ? "Contact.png" : "userdefault3.png";
+                return Device.OS == TargetPlatform.iOS ? "userdefault.png" : "userdefault.png";
             }
         }
 
