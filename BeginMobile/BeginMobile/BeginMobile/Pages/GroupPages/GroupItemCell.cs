@@ -23,10 +23,11 @@ namespace BeginMobile.Pages.GroupPages
 
             var groupImage = new CircleImage
             {
-                BorderColor = Color.White,
-                BorderThickness = 3,
-                HeightRequest = 80,
-                WidthRequest = 80,
+                BorderColor = Device.OnPlatform<Color>(iOS: Color.Black, Android: Color.White, WinPhone: Color.White),
+                BorderThickness = Device.OnPlatform<int>(iOS: 2, Android: 3, WinPhone: 3),
+                HeightRequest = Device.OnPlatform<int>(iOS: 40, Android: 80, WinPhone: 80),
+                WidthRequest = Device.OnPlatform<int>(iOS: 45, Android: 80, WinPhone: 80),
+
                 Aspect = Aspect.AspectFill,
                 HorizontalOptions = LayoutOptions.Start,
                 Source = GroupImage
@@ -36,8 +37,8 @@ namespace BeginMobile.Pages.GroupPages
             var lblGroupName = new Label
             {
                 StyleId = "CellGroupName",
-                
                 YAlign = TextAlignment.Center,
+                Style = App.Styles.ListItemTextStyle,
             };
             lblGroupName.SetBinding(Label.TextProperty, "Name");
 
@@ -45,6 +46,7 @@ namespace BeginMobile.Pages.GroupPages
             {
                 StyleId = "CellGroupCategory",
                 YAlign = TextAlignment.Center,
+                Style = App.Styles.ListItemDetailTextStyle,
             };
             lblGroupCategory.SetBinding(Label.TextProperty, "Category");
 
@@ -62,6 +64,7 @@ namespace BeginMobile.Pages.GroupPages
             {
                 StyleId = "CellGroupType",
                 YAlign = TextAlignment.Center,
+                Style = App.Styles.ListItemDetailTextStyle,
             };
             lblType.SetBinding(Label.TextProperty, "Type");
 
@@ -69,6 +72,7 @@ namespace BeginMobile.Pages.GroupPages
             {
                 StyleId = "CellGroupMembers",
                 YAlign = TextAlignment.Center,
+                Style = App.Styles.ListItemDetailTextStyle,
             };
             lblMemebers.SetBinding(Label.TextProperty, "Members");
 

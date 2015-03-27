@@ -24,7 +24,7 @@ namespace BeginMobile.Utils
         public Styles()
         {
             fontfamily = Device.OnPlatform(
-                   iOS: "MarkerFelt-Thin",
+                   iOS: "Helvetica",
                    Android: "Droid Sans Mono",
                    WinPhone: "Comic Sans MS"); //
 
