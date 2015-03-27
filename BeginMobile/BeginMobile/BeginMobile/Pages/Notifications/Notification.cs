@@ -111,11 +111,19 @@ namespace BeginMobile.Pages.Notifications
 
             Content = mainLayout;
 
-            listViewNotifications.ItemSelected += (s, e) =>
+            listViewNotifications.ItemSelected += async (s, e) =>
             {
+                if (e.SelectedItem == null)
+                {
+                    return;
+                }
+
                 var item = (NotificationViewModel)e.SelectedItem;
                 var itemPage = new NotificationDetail(item.NotificationDescription);
-                Navigation.PushAsync(itemPage);
+                await Navigation.PushAsync(itemPage);
+
+                ((ListView)s).SelectedItem = null;
+
             };
         }
 
