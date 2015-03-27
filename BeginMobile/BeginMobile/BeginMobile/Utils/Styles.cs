@@ -228,7 +228,7 @@ namespace BeginMobile.Utils
                 return Device.OnPlatform<Color>
                     (iOS: Color.FromHex("354B60"),
                         Android: Color.FromHex("77D065"),
-                        WinPhone: Color.FromHex("77D065")),
+                        WinPhone: Color.FromHex("77D065"));
             }
         }
     }
