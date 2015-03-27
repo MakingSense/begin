@@ -11,14 +11,14 @@ namespace BeginMobile.Pages.Profile
         public TemplateListViewEvents()
         {
             var eventTitle = new Label
-            {
-                VerticalOptions = LayoutOptions.Start,
-                HorizontalOptions = LayoutOptions.Start,
-                HeightRequest = 50,
-                WidthRequest = 200,
-                TextColor = Color.FromHex("77D065"),
+                             {
+                                 VerticalOptions = LayoutOptions.Start,
+                                 HorizontalOptions = LayoutOptions.Start,
+                                 HeightRequest = 50,
+                                 WidthRequest = 200,
+                                 TextColor = App.Styles.LabelTextColor
+                             };
 
-            };
             eventTitle.SetBinding(Label.TextProperty, "EventName");
             var eventDetailsLayout = CreateDetailsLayout();
 

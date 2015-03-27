@@ -31,19 +31,19 @@ namespace BeginMobile.Pages.Profile
             };
 
             gridEventHeaderTitle.Children.Add(new Label
-            {
-                WidthRequest = 200,
-                Text = "Event",
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = App.Styles.SubtitleStyle
-            }, 0, 1, 0, 1);
+                                              {
+                                                  WidthRequest = 200,
+                                                  Text = "Event",
+                                                  HorizontalOptions = LayoutOptions.FillAndExpand,
+                                                  Style = App.Styles.SubtitleStyle
+                                              }, 0, 1, 0, 1);
 
             gridEventHeaderTitle.Children.Add(new Label
-            {
-                Text = "Date and Time",
-                HorizontalOptions = LayoutOptions.Start,
-                Style = App.Styles.SubtitleStyle
-            }, 1, 2, 0, 1);
+                                              {
+                                                  Text = "Date and Time",
+                                                  HorizontalOptions = LayoutOptions.Start,
+                                                  Style = App.Styles.SubtitleStyle
+                                              }, 1, 2, 0, 1);
 
             var listEvents = new List<EventInfoObject>();
 

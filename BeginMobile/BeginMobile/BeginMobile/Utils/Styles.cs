@@ -149,13 +149,21 @@ namespace BeginMobile.Utils
         {
             get
             {
-                Device.Styles.SubtitleStyle.Setters.Add(new Setter { Property = Label.TextColorProperty, Value = Color.FromHex("77D065") });
+                Device.Styles.SubtitleStyle.Setters.Add(new Setter
+                                                        {
+                                                            Property = Label.TextColorProperty,
+                                                            Value =
+                                                                Device.OnPlatform<Color>(
+                                                                    iOS: Color.FromHex("354B60"),
+                                                                    Android: Color.FromHex("77D065"),
+                                                                    WinPhone: Color.FromHex("77D065"))
+                                                        });
+
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter { Property = Label.FontSizeProperty, Value = textfontSizeMedium });
                 return Device.Styles.SubtitleStyle;
             }
         }
-
 
         public Style BodyStyle
         {
@@ -210,6 +218,17 @@ namespace BeginMobile.Utils
             get
             {
                 return Color.Black;
+            }
+        }
+
+        public Color LabelTextColor
+        {
+            get
+            {
+                return Device.OnPlatform<Color>
+                    (iOS: Color.FromHex("354B60"),
+                        Android: Color.FromHex("77D065"),
+                        WinPhone: Color.FromHex("77D065")),
             }
         }
     }

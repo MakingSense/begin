@@ -31,12 +31,14 @@ namespace BeginMobile.Pages.Profile
             };
 
             Image image = new Image
-            {
-                Source = ImageSource.FromFile("Icon.png"),
-                Aspect = Aspect.AspectFit,
-                HeightRequest = 500,
-                WidthRequest= 500,
-            };
+                          {
+                              Source = Device.OS == TargetPlatform.iOS
+                                  ? ImageSource.FromFile("Icon-76.png")
+                                  : ImageSource.FromFile("Icon.png"),
+                              Aspect = Aspect.AspectFit,
+                              HeightRequest = 500,
+                              WidthRequest = 500,
+                          };
 
             Content = new ScrollView
             {
