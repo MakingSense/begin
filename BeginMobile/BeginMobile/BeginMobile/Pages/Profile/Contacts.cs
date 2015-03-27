@@ -14,7 +14,7 @@ namespace BeginMobile.Pages.Profile
         private const string userDefault = "userdefault3.png";
         private ListView contactlistView;
         private List<Contact> contactsList;
-        private Label resultsLabel;
+        private Label noContactsMessage;
         public Contacts()
         {
             Title = "Contacts";
@@ -48,9 +48,9 @@ namespace BeginMobile.Pages.Profile
             {
                 Placeholder = "Search by Name and Surname",
             };
-            searchBar.SearchButtonPressed += OnSearchBarButtonPressed;
-            resultsLabel = new Label();
-
+            searchBar.TextChanged += OnSearchBarButtonPressed;
+            
+            noContactsMessage = new Label();
             /**/
             ScrollView scrollView = new ScrollView
             {
@@ -60,7 +60,7 @@ namespace BeginMobile.Pages.Profile
                     VerticalOptions = LayoutOptions.Start,
                     Children = {
                         searchBar,
-                        resultsLabel,
+                        noContactsMessage,
                         contactlistView
                     }
                 }
@@ -82,33 +82,35 @@ namespace BeginMobile.Pages.Profile
         {
             SearchBar searchBar = (SearchBar)sender;
             string searchText = searchBar.Text; // recovery the text of search bar
-
-            // if the list is empty
-            if (contactsList.Count == 0)
+            
+            if (!string.IsNullOrEmpty(searchText) || !string.IsNullOrWhiteSpace(searchText))
             {
-                resultsLabel.Text =
-                    String.Format("There is not contacts",
-                                  searchText);
-            }
-            else
-            {
-                resultsLabel.Text = "The ";
-                foreach (Contact contact in contactsList)
+                if (contactsList.Count == 0)
                 {
-
-                    if (String.Equals(contact.NameSurname, searchText, StringComparison.OrdinalIgnoreCase) ||
-                        String.Equals(contact.FirstName, searchText, StringComparison.OrdinalIgnoreCase))
+                    noContactsMessage.Text = "There is no contacts";
+                }
+                else
+                {
+                    List<Contact> list = (from c in contactsList
+                                          where (String.Equals(c.NameSurname, searchText, StringComparison.OrdinalIgnoreCase) ||
+                                              String.Equals(c.FirstName, searchText, StringComparison.OrdinalIgnoreCase))
+                                          select c).ToList<Contact>();
+                    if (list.Any())
                     {
-                        resultsLabel.Text = String.Format("{0} Exist!", contact.NameSurname);
-                        break;
+                        contactlistView.ItemsSource = list;
+                        noContactsMessage.Text = "";
                     }
                     else
                     {
-                        resultsLabel.Text = "Contact not found so sorry!";
+                        contactlistView.ItemsSource = contactsList;
                     }
                 }
-                resultsLabel.Text += ".";
+            }
+            else
+            {
+                contactlistView.ItemsSource = contactsList;
             }
         }
+
     }
 }
