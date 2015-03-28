@@ -49,14 +49,16 @@ namespace BeginMobile.Pages.Profile
             gridEventHeaderTitle.Children.Add(new Label
                                               {
                                                   WidthRequest = 200,
-                                                  Text = "Event",
+                                                  HeightRequest = 50,
+                                                  Text = "Event Name",
                                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                                   Style = App.Styles.SubtitleStyle
                                               }, 0, 1, 0, 1);
 
             gridEventHeaderTitle.Children.Add(new Label
                                               {
-                                                  Text = "Date and Time",
+                                                  Text = "Date",
+                                                  HeightRequest = 50,
                                                   HorizontalOptions = LayoutOptions.Start,
                                                   Style = App.Styles.SubtitleStyle
                                               }, 1, 2, 0, 1);
@@ -83,13 +85,18 @@ namespace BeginMobile.Pages.Profile
                 ItemsSource = listEvents,
                 ItemTemplate = eventTemplate
             };
-
+            
             eventsListView.ItemSelected += async (sender, e) =>
             {
+                if (e.SelectedItem == null)
+                {
+                    return;
+                }
                 var item = (EventInfoObject)e.SelectedItem;
 
-                var itemPageProfile = new EventDetailInformation(item.eventInfo);                
+                var itemPageProfile = new EventDetailInformation(item.eventInfo);               
                 await Navigation.PushAsync(itemPageProfile);
+                ((ListView)sender).SelectedItem = null;
 
             };
             #endregion
@@ -101,7 +108,6 @@ namespace BeginMobile.Pages.Profile
                     VerticalOptions = LayoutOptions.Start,
                     Children =
                     {
-                        searchBar,
                         eventsListView
                     }
                 }
@@ -113,7 +119,7 @@ namespace BeginMobile.Pages.Profile
                 Padding = 20,
                 Children =
                 {
-                    gridEventHeaderTitle,scrollView
+                    searchBar,gridEventHeaderTitle,scrollView
                 }
             };
             #endregion

@@ -37,7 +37,7 @@ namespace BeginMobile.Accounts
 
             repeatNewPassword = new Entry
             {
-                Placeholder = "Repeat New Password",
+                Placeholder = "Confirm New Password",
                 IsPassword = true,
             };
 

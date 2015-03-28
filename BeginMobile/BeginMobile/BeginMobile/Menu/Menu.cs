@@ -34,6 +34,7 @@ namespace BeginMobile.Menu
         public Menu(Action onToggleRequest)
         {
 
+            BackgroundColor = App.Styles.MenuBackground;
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
 
             bool isLoadByLogin = false;

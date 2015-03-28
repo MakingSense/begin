@@ -231,5 +231,41 @@ namespace BeginMobile.Utils
                         WinPhone: Color.FromHex("77D065"));
             }
         }
+
+        public Color MenuBackground
+        {
+            get
+            {
+                return Device.OnPlatform<Color>
+                    (iOS: Color.FromHex("323232"),
+                        Android: Color.FromHex("323232"),
+                        WinPhone: Color.FromHex("323232"));
+            }
+        }
+        public Style StyleNavigationTitle
+        {
+            get
+            {
+                if (Device.Idiom == TargetIdiom.Tablet)
+                {
+                    return new Style(typeof(Label)) { Setters = { new Setter { Property = Label.FontSizeProperty, Value = Device.OnPlatform<double>(iOS: 12, Android: 12, WinPhone: 12) } } };
+                }
+                else
+                {
+                    return new Style(typeof(Label)) { Setters = { new Setter { Property = Label.FontSizeProperty, Value = Device.OnPlatform<double>(iOS: 8, Android: 10, WinPhone: 10) } } };
+                }
+               
+            }
+        }
+         public Thickness LayoutThickness
+        {
+            get
+            {
+                return Device.OnPlatform<Thickness>(
+                    iOS: new Thickness(20, 0, 0, 0),
+                    Android: new Thickness(20, 0, 0, 0),
+                    WinPhone: new Thickness(20, 0, 0, 0));
+            }
+        }
     }
 }

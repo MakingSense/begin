@@ -58,7 +58,6 @@ namespace BeginMobile.Pages.Profile
                 Orientation = StackOrientation.Vertical,
                 Children =
                                       {
-                                          activityEditor,
                                           activitiesScroollView
                                       }
 
