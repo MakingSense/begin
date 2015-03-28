@@ -108,5 +108,7 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("dates")]
         public string Dates { set; get; }
 
+        [JsonProperty("details")]
+        public UserDetails Details { set; get; }
     }
 }

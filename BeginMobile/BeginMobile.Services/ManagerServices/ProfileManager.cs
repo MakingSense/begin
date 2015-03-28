@@ -35,6 +35,26 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
+        public ProfileInfo GetProfileInformationDetail(string username, string authToken)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+                ProfileInfo profileInfo = null;
+
+                client.BaseAddress = new Uri(BaseAddress);
+
+                var response = client.GetAsync(SubAddress + username + "?sections=details").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var userJson = response.Content.ReadAsStringAsync().Result;
+                    profileInfo = JsonConvert.DeserializeObject<ProfileInfo>(userJson);
+                }
+                return profileInfo;
+            }
+        }
+
         public ProfileInformationActivities GetActivitiesInformation(string username, string authToken)
         {
             using (var client = new HttpClient())

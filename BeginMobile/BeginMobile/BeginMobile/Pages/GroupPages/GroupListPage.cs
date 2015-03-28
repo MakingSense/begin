@@ -13,24 +13,48 @@ namespace BeginMobile.Pages.GroupPages
 
         public GroupListPage(string title, string iconImg): base(title, iconImg)
         {
-            _lViewGroup = new ListView { StyleId = "GroupList"};
+            //_lViewGroup = new ListView { StyleId = "GroupList"};
 
-            _lViewGroup.ItemTemplate = new DataTemplate(typeof(GroupItemCell));
+            //_lViewGroup.ItemTemplate = new DataTemplate(typeof(GroupItemCell));
             
+            //_lViewGroup.ItemSelected += async (sender, e) =>
+            //{
+            //    ((ListView)sender).SelectedItem = null; 
+            //};
+
+            //_rLayout = new RelativeLayout();
+            //_rLayout.Children.Add(_lViewGroup,
+            //    xConstraint: Constraint.Constant(0),
+            //    yConstraint: Constraint.Constant(0),
+            //    widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+            //    heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
+            //Content = new ScrollView() {Content = _rLayout};
+
+            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            ProfileInformationGroups groupInformation = App.ProfileServices.GetGroups(currentUser.User.UserName, currentUser.AuthToken);
+
+            _lViewGroup = new ListView() { };
+
+            _lViewGroup.ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell));
+            _lViewGroup.ItemsSource = groupInformation.Groups;
+
+            _lViewGroup.HasUnevenRows = true;
+
             _lViewGroup.ItemSelected += async (sender, e) =>
             {
-                /*if (e.SelectedItem == null)
+                if (e.SelectedItem == null)
                 {
-                    return; 
+                    return;
                 }
 
                 var groupItem = (Group)e.SelectedItem;
                 var groupPage = new GroupItemPage();
                 groupPage.BindingContext = groupItem;
-                await Navigation.PushAsync(groupPage);*/
+                await Navigation.PushAsync(groupPage);
 
                 // clears the 'selected' background
-                ((ListView)sender).SelectedItem = null; 
+                ((ListView)sender).SelectedItem = null;
             };
 
             _rLayout = new RelativeLayout();
@@ -40,15 +64,7 @@ namespace BeginMobile.Pages.GroupPages
                 widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
                 heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
-            Content = new ScrollView() {Content = _rLayout};
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            var listGroup = Group.ListGroup;
-            _lViewGroup.ItemsSource = listGroup;
+            Content = new ScrollView() { Content = _rLayout };
         }
     }
 }

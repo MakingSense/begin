@@ -18,11 +18,14 @@ namespace BeginMobile.Pages.Profile
         {
             var currentUser = (LoginUser) App.Current.Properties["LoginUser"];
 
-            profileInfo = App.ProfileServices.GetInformation(currentUser.User.UserName, currentUser.AuthToken);
+            profileInfo = App.ProfileServices.GetInformationDetail(currentUser.User.UserName, currentUser.AuthToken);
 
             if (profileInfo == null)
             {
-                profileInfo = new ProfileInfo();
+                profileInfo = new ProfileInfo()
+                {
+                    Details = new UserDetails()
+                };
             }
            
             
@@ -110,31 +113,31 @@ namespace BeginMobile.Pages.Profile
                 Children = 
                 {
                     new Label(){
-                        Text = "Birthday: "+ profileInfo.BirthDay,
+                        Text = "Birthday: "+ profileInfo.Details.Birthday,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "Gender: "+ profileInfo.Gender.ToString(),
+                        Text = "Gender: "+ profileInfo.Details.Gender,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "Address: "+ profileInfo.Address,
+                        Text = "Address: "+ profileInfo.Details.Address,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "Country: "+ profileInfo.Country,
+                        Text = "Country: "+ profileInfo.Details.Country,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "State: "+ profileInfo.State,
+                        Text = "State: "+ profileInfo.Details.State,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "City: "+ profileInfo.City,
+                        Text = "City: "+ profileInfo.Details.City,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){
-                        Text = "Phone: " + profileInfo.Phone.ToString(),
+                        Text = "Phone: " + profileInfo.Details.Phone,
                         FontAttributes = FontAttributes.Italic,
                     },
                     new Label(){

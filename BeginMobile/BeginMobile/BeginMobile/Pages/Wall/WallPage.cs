@@ -30,6 +30,7 @@ namespace BeginMobile.Pages.Wall
             _lViewWall.ItemsSource = listWall;
             _lViewWall.ItemSelected += async (sender, e) =>
             {
+                if (e.SelectedItem == null) return; 
                 ((ListView)sender).SelectedItem = null;
             };
 
@@ -186,9 +187,19 @@ namespace BeginMobile.Pages.Wall
                         beginWall.Description = wallItem.Content;
                         beginWall.Date = wallItem.Date;
                         break;
+                case WallParameters.BbpTopicCreate:
+                    if (wallItem.Component == WallParameters.Groups)
+                    {
+                        beginWall.DisplayName = wallItem.User.DisplayName;
+                        beginWall.ExtraText = "";
+                        beginWall.DisplayNameTwo = "";
+                        beginWall.Reason = WallParameters.DescBbpTopicCreate + " group topic";
+                        beginWall.Description = wallItem.Group.Name;
+                        beginWall.Date = wallItem.Date;
+                    }
+                    break;
                 case WallParameters.NewBlogPost:
                 case WallParameters.NewBlogComment:
-                case WallParameters.BbpTopicCreate:
                 case WallParameters.CbpReplyCreate:
                 case WallParameters.Everything:
                 default:
@@ -233,7 +244,7 @@ namespace BeginMobile.Pages.Wall
         public const string DescFriendshipAccepted = "now are friends";
         public const string DescFriendshipCreated = "now are friends";
         public const string DescNewMember = "new member";
-        public const string DescBbpTopicCreate = "created the group";
+        public const string DescBbpTopicCreate = "created";
         public const string DescCbpReplyCreate = "created the group";
         public const string DescEverything = "";
         public const string DescNewBooking = "create new booking";

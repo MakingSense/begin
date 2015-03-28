@@ -8,7 +8,7 @@ namespace BeginMobile.Pages.GroupPages
 {
     public class ProfileGroupItemCell: ViewCell
     {
-        private const string GroupImage = "userdefault.png";
+        private const string GroupImage = "userdefault3.png";
 
         public ProfileGroupItemCell()
         {
