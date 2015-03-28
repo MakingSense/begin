@@ -100,16 +100,24 @@ namespace BeginMobile.Utils
         {
             get
             {
-                var style = new Style(typeof(Button))
-                {
-                    Setters =
-                       {
-                           new Setter {Property = Button.BackgroundColorProperty, Value = Color.Transparent},
-                           new Setter {Property = Button.BorderRadiusProperty, Value = 0},
-                           new Setter {Property = Button.FontFamilyProperty, Value = FontFamily},
-                           new Setter {Property = Button.FontSizeProperty, Value = fontSizeButtonSmall},
-                       }
-                };                
+                var style = new Style(typeof (Button))
+                            {
+                                Setters =
+                                {
+                                    new Setter {Property = Button.BackgroundColorProperty, Value = Color.Transparent},
+                                    new Setter {Property = Button.BorderRadiusProperty, Value = 0},
+                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamily},
+                                    new Setter {Property = Button.FontSizeProperty, Value = fontSizeButtonSmall},
+                                    new Setter
+                                    {
+                                        Property = Button.TextColorProperty,
+                                        Value = Device.OnPlatform<Color>
+                                            (iOS: Color.FromHex("354B60"),
+                                                Android: Color.White,
+                                                WinPhone: Color.White)
+                                    },
+                                }
+                            };                
 
                 return style;
             }
@@ -237,7 +245,7 @@ namespace BeginMobile.Utils
             get
             {
                 return Device.OnPlatform<Color>
-                    (iOS: Color.FromHex("323232"),
+                    (iOS: Color.FromHex("ECECEC"),
                         Android: Color.FromHex("323232"),
                         WinPhone: Color.FromHex("323232"));
             }

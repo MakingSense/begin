@@ -54,6 +54,7 @@ namespace BeginMobile.Menu
 
             var userInfoTableView = new TableView
             {
+                BackgroundColor = App.Styles.MenuBackground,
                 HeightRequest = 180,
                 Root = new TableRoot
                                                        {
@@ -65,7 +66,7 @@ namespace BeginMobile.Menu
             };
 
             var menuItemList = new List<ConfigurationMenuItems>
-                                   {
+                                   {                                       
                                        new ConfigurationMenuItems {OptionName = Items.Profile.ToString(), Icon = pProfileMenuIcon},
                                       
                                        new ConfigurationMenuItems {OptionName = Items.Knocks.ToString(), Icon = knocks}
@@ -76,6 +77,7 @@ namespace BeginMobile.Menu
 
             var menu = new ListView
             {
+                BackgroundColor = App.Styles.MenuBackground,
                 HeightRequest = 150,
                 ItemsSource = menuItemList,
                 ItemTemplate = cell,
