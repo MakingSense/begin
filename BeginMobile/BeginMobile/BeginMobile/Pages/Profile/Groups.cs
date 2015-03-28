@@ -55,27 +55,29 @@ namespace BeginMobile.Pages.Profile
             };
 
             searchBar.TextChanged += OnSearchBarButtonPressed;
-
-            _rLayout = new RelativeLayout();
             
-            _rLayout.Children.Add(searchBar,
-                xConstraint: Constraint.Constant(0),
-                yConstraint: Constraint.Constant(0),
-                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
-                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+            //_rLayout = new RelativeLayout();
 
-            _rLayout.Children.Add(_lViewGroup,
-                xConstraint: Constraint.Constant(0),
-                yConstraint: Constraint.Constant(0),
-                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
-                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+            ////_rLayout.Children.Add(_lViewGroup,
+            //    xConstraint: Constraint.Constant(0),
+            //    yConstraint: Constraint.Constant(0),
+            //    widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+            //    heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
-            Content = new ScrollView() { Content = _rLayout };
+            //Content = new ScrollView() { Content = _rLayout };
 
-           
+            StackLayout mainLayout = new StackLayout
+            {
+                VerticalOptions = LayoutOptions.Start,
+                Orientation = StackOrientation.Vertical
+            };
+
+            mainLayout.Children.Add(searchBar);
+            mainLayout.Children.Add(new ScrollView() { Content = _lViewGroup });
+
+            Content = mainLayout;
+
         }
-
-        
 
         private void OnSearchBarButtonPressed(object sender, EventArgs args)
         {
@@ -107,7 +109,7 @@ namespace BeginMobile.Pages.Profile
 
                     else
                     {
-                         _lViewGroup.ItemsSource = groupInformation.Groups;
+                         _lViewGroup.ItemsSource = new List<Group>();
                     }
                 }
             }
