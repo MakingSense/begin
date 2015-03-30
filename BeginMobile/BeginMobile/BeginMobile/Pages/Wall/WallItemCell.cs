@@ -19,7 +19,7 @@ namespace BeginMobile.Pages.Wall
 
             var lblName = new Label()
                           {
-                              YAlign = TextAlignment.Center,
+                              YAlign = TextAlignment.End,
                               FontAttributes = FontAttributes.Bold,
                               Style = App.Styles.ListItemTextStyle
                           };
@@ -27,14 +27,14 @@ namespace BeginMobile.Pages.Wall
 
             var lblExtraText = new Label()
                                {
-                                   YAlign = TextAlignment.Center,
+                                   YAlign = TextAlignment.End,
                                    Style = App.Styles.ListItemDetailTextStyle,
                                };
             lblExtraText.SetBinding(Label.TextProperty, "ExtraText");
 
             var lblNameTwo = new Label()
             {
-                YAlign = TextAlignment.Center,
+                YAlign = TextAlignment.End,
                 Style = App.Styles.ListItemTextStyle,
                 FontAttributes = FontAttributes.Bold,
             };
@@ -42,7 +42,7 @@ namespace BeginMobile.Pages.Wall
 
             var lblReason = new Label()
                             {
-                                YAlign = TextAlignment.Center,
+                                YAlign = TextAlignment.End,
                                 Style = App.Styles.ListItemTextStyle,
                             };
 
@@ -50,7 +50,7 @@ namespace BeginMobile.Pages.Wall
 
             var lblDescription = new Label()
                                  {
-                                     YAlign = TextAlignment.Center,
+                                     YAlign = TextAlignment.End,
                                      Style = App.Styles.ListItemDetailTextStyle
                                  };
 
@@ -58,7 +58,7 @@ namespace BeginMobile.Pages.Wall
 
             var lblDate = new Label()
                           {
-                              YAlign = TextAlignment.Center,
+                              YAlign = TextAlignment.End,
                               Style = App.Styles.ListItemDetailTextStyle
                           };
 

@@ -13,23 +13,6 @@ namespace BeginMobile.Pages.GroupPages
 
         public GroupListPage(string title, string iconImg): base(title, iconImg)
         {
-            //_lViewGroup = new ListView { StyleId = "GroupList"};
-
-            //_lViewGroup.ItemTemplate = new DataTemplate(typeof(GroupItemCell));
-            
-            //_lViewGroup.ItemSelected += async (sender, e) =>
-            //{
-            //    ((ListView)sender).SelectedItem = null; 
-            //};
-
-            //_rLayout = new RelativeLayout();
-            //_rLayout.Children.Add(_lViewGroup,
-            //    xConstraint: Constraint.Constant(0),
-            //    yConstraint: Constraint.Constant(0),
-            //    widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
-            //    heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
-
-            //Content = new ScrollView() {Content = _rLayout};
 
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationGroups groupInformation = App.ProfileServices.GetGroups(currentUser.User.UserName, currentUser.AuthToken);

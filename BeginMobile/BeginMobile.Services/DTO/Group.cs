@@ -36,6 +36,9 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("slug")]
         public string Slug { set; get; }
 
+        [JsonProperty("owner")]
+        public User Owner { set; get; }
+
         public string Category { set; get; }
 
         public string Type { set; get; }
