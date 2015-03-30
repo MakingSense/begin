@@ -49,7 +49,7 @@ namespace BeginMobile.Pages.Profile
             gridEventHeaderTitle.Children.Add(new Label
                                               {
                                                   WidthRequest = 200,
-                                                  HeightRequest = 50,
+                                                  HeightRequest = 80,
                                                   Text = "Event Name",
                                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                                   Style = App.Styles.SubtitleStyle
