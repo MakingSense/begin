@@ -58,12 +58,17 @@ namespace BeginMobile.Pages.Profile
        
             StackLayout mainLayout = new StackLayout
             {
+                Padding = 10,
+                Spacing = 2,
                 VerticalOptions = LayoutOptions.Start,
                 Orientation = StackOrientation.Vertical
             };
 
             mainLayout.Children.Add(searchBar);
-            mainLayout.Children.Add(new ScrollView() { Content = _lViewGroup });
+            mainLayout.Children.Add(new ScrollView()
+                                    {
+                                        Content = _lViewGroup
+                                    });
 
             Content = mainLayout;
 

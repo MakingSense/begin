@@ -287,6 +287,5 @@ namespace BeginMobile.Utils
                  
              }
          }
-
     }
 }

@@ -129,6 +129,7 @@ namespace BeginMobile.Pages.Profile
         //Method that to the search
         void OnTextChanged(object sender, EventArgs args)
         {
+            //TODO: User custom SearchVIew or Page
             SearchBar searchBar = (SearchBar)sender;
             string searchText = searchBar.Text; // recovery the text of search bar
 
@@ -144,7 +145,8 @@ namespace BeginMobile.Pages.Profile
                 {
                     List<EventInfoObject> list = (
                         from e in listEvents
-                        where e.EventName.Contains(searchText, StringComparison.InvariantCultureIgnoreCase) select e).ToList<EventInfoObject>();
+                        where e.EventName.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)
+                        select e).ToList<EventInfoObject>();
 
                     if (list.Any())
                     {
