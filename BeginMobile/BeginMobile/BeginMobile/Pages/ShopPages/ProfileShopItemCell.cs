@@ -12,7 +12,7 @@ namespace BeginMobile.Pages.ShopPages
         {
             get
             {
-                return Device.OS == TargetPlatform.iOS ? "userdefault.png" : "Icon.png";
+                return Device.OS == TargetPlatform.iOS ? "userdefault.png" : "userdefault3.png";
             }
         }
 
@@ -28,7 +28,8 @@ namespace BeginMobile.Pages.ShopPages
                                 WidthRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
 
                                 Aspect = Aspect.AspectFill,
-                                HorizontalOptions = LayoutOptions.Start
+                                HorizontalOptions = LayoutOptions.Start,
+                                Source = GroupImage
                             };
 
             shopImage.SetBinding(CircleImage.SourceProperty, "Thumbnail");
