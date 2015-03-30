@@ -15,7 +15,7 @@ namespace BeginMobile.Pages.Profile
         private Label noContactsMessage;
         private List<EventInfoObject> listEvents;
         private ListView eventsListView;
-
+        private List<EventInfoObject> defaultList = new List<EventInfoObject>();
         public Events()
         {
             Title = "Events";
@@ -154,7 +154,7 @@ namespace BeginMobile.Pages.Profile
 
                     else
                     {
-                        eventsListView.ItemsSource = new List<EventInfoObject>(); ;
+                        eventsListView.ItemsSource = defaultList;
                     }
                 }
             }

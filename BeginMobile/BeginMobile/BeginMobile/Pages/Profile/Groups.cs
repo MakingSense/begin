@@ -17,7 +17,7 @@ namespace BeginMobile.Pages.Profile
         private RelativeLayout _rLayout;
         private ProfileInformationGroups groupInformation;
         private Label noGroupsMessage;
-
+        private List<Group> defaultList = new List<Group>();
         public Groups()
         {
             Title = "Groups";
@@ -55,17 +55,7 @@ namespace BeginMobile.Pages.Profile
             };
 
             searchBar.TextChanged += OnSearchBarButtonPressed;
-            
-            //_rLayout = new RelativeLayout();
-
-            ////_rLayout.Children.Add(_lViewGroup,
-            //    xConstraint: Constraint.Constant(0),
-            //    yConstraint: Constraint.Constant(0),
-            //    widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
-            //    heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
-
-            //Content = new ScrollView() { Content = _rLayout };
-
+       
             StackLayout mainLayout = new StackLayout
             {
                 VerticalOptions = LayoutOptions.Start,
@@ -109,7 +99,7 @@ namespace BeginMobile.Pages.Profile
 
                     else
                     {
-                         _lViewGroup.ItemsSource = new List<Group>();
+                         _lViewGroup.ItemsSource = defaultList;
                     }
                 }
             }

@@ -17,6 +17,7 @@ namespace BeginMobile.Pages.Profile
         private ListView contactlistView;
         private List<Contact> contactsList;
         private Label noContactsMessage;
+        private List<Contact> defaultList = new List<Contact>();
         public Contacts()
         {
             Title = "Contacts";
@@ -119,7 +120,7 @@ namespace BeginMobile.Pages.Profile
 
                     else
                     {
-                        contactlistView.ItemsSource = new List<Contact>();
+                        contactlistView.ItemsSource = defaultList;
                     }
                 }
             }
