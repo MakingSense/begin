@@ -154,7 +154,7 @@ namespace BeginMobile.Pages.Profile
 
                     else
                     {
-                        eventsListView.ItemsSource = listEvents;
+                        eventsListView.ItemsSource = new List<EventInfoObject>(); ;
                     }
                 }
             }

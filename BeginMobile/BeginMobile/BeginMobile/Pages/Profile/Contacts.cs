@@ -8,6 +8,7 @@ using BeginMobile.Services.ManagerServices;
 using BeginMobile.Services.DTO;
 using BeginMobile.Utils.Extensions;
 
+
 namespace BeginMobile.Pages.Profile
 {
     public class Contacts : ContentPage
@@ -43,7 +44,18 @@ namespace BeginMobile.Pages.Profile
                 ItemsSource = contactsList,
                 ItemTemplate = contactListViewTemplate
             };
-
+            contactlistView.HasUnevenRows = true;
+            contactlistView.ItemSelected +=  (s, e) =>
+            {
+                if (e.SelectedItem == null)
+                {
+                    return;
+                }
+                // TODO: Add here the logic to go the contact details
+                ((ListView)s).SelectedItem = null;
+            };
+            
+            
             /*Search component */
             SearchBar searchBar = new SearchBar
             {
@@ -107,7 +119,7 @@ namespace BeginMobile.Pages.Profile
 
                     else
                     {
-                        contactlistView.ItemsSource = contactsList;
+                        contactlistView.ItemsSource = new List<Contact>();
                     }
                 }
             }

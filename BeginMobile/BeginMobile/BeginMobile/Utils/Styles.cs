@@ -275,5 +275,18 @@ namespace BeginMobile.Utils
                     WinPhone: new Thickness(20, 0, 0, 0));
             }
         }
+
+         public Thickness ListDetailThickness
+         {
+             get
+             {
+                 return Device.OnPlatform( 
+                    iOS: new Thickness(10, 5, 10, 5),
+                    Android: new Thickness(10, 5, 10, 5),
+                    WinPhone: new Thickness(10, 5, 10, 5));
+                 
+             }
+         }
+
     }
 }

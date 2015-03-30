@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
+using ImageCircle.Forms.Plugin.Abstractions;
 namespace BeginMobile.Pages.Profile
 {
     public class CustomViewCell : ViewCell
     {
         public CustomViewCell()
         {
-            var icon = new Image
+            var icon = new CircleImage
             {
-                HorizontalOptions = LayoutOptions.Start
+                HeightRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
+                WidthRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
+                Aspect = Aspect.AspectFill,
+                HorizontalOptions = LayoutOptions.Start,
+                BorderThickness = Device.OnPlatform<int>(iOS: 2, Android: 3, WinPhone: 3),
             };
+
             icon.SetBinding(Image.SourceProperty, new Binding("Icon"));
-            icon.WidthRequest = icon.HeightRequest = 40;
 
             var optionLayout = CreateOptionLayout();
             View = new StackLayout
@@ -27,29 +32,44 @@ namespace BeginMobile.Pages.Profile
             };
         }
 
-        public static StackLayout CreateOptionLayout()
+        public static Grid CreateOptionLayout()
         {
             var optionText = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
+                YAlign = TextAlignment.Center,
                 Style = App.Styles.ListItemTextStyle                
             };
             var optionDetail = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
+                YAlign = TextAlignment.Center,
                 Style = App.Styles.ListItemDetailTextStyle
             };
 
             optionText.SetBinding(Label.TextProperty, "NameSurname");
             optionDetail.SetBinding(Label.TextProperty, "References");
 
-            var optionLayout = new StackLayout
+            var gridDetails = new Grid()
             {
+                Padding = App.Styles.ListDetailThickness,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Orientation = StackOrientation.Vertical,
-                Children = { optionText, optionDetail }
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
+                {
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto }
+                },
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition { Width = GridLength.Auto },
+                    new ColumnDefinition { Width = GridLength.Auto },
+                }
             };
-            return optionLayout;
+            gridDetails.Children.Add(optionText, 0, 0);
+            gridDetails.Children.Add(optionDetail, 0,1);
+
+            return gridDetails;
         }
     }
 
