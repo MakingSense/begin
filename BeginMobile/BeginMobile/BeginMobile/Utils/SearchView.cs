@@ -12,15 +12,17 @@ namespace BeginMobile.Utils
         private Picker limit;
         protected Picker category;
         private StackLayout container;
-
+        private const int limitMax = 100;
         public SearchView(params string[] categories)
         {
             Categories = categories;
             limit = new Picker
             {
-                Title = "Filter by Limit"
-            };
+                Title = "Filter by Limit",
 
+            };
+            limit.BackgroundColor =Color.FromHex("484E5C"); //494949 //333335;            
+            
             searchBar = new SearchBar
             {
                 Placeholder = "Filter by Name"
@@ -31,11 +33,17 @@ namespace BeginMobile.Utils
                 Title = "Filter by Category",
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
+            
 
-            for (int i = 10; i < 50; i++ )
+            for (int i = 1; i <= limitMax; i++ )
             {
                 var iterator = i.ToString();
+               
                 Limit.Items.Add(iterator);
+                if (i == limitMax)
+                {
+                    Limit.Items.Add("All items");
+                }
             }
             
             if (Categories != null)
