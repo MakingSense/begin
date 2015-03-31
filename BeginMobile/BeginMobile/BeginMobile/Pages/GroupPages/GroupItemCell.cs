@@ -11,16 +11,7 @@ namespace BeginMobile.Pages.GroupPages
         private const string GroupImage = "userdefault.png";
         public GroupItemCell()
         {
-            //
             this.StyleId = "Cell";
-            
-            
-            /*var groupImage = new Image
-            {
-                StyleId = "CellGroup",
-                Source = FileImageSource.FromFile("Icon.png"),
-                HorizontalOptions = LayoutOptions.Start};*/
-
             var groupImage = new CircleImage
             {
                 BorderColor = Device.OnPlatform<Color>(iOS: Color.Black, Android: Color.White, WinPhone: Color.White),

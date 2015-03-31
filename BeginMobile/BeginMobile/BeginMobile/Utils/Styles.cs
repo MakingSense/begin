@@ -315,5 +315,20 @@ namespace BeginMobile.Utils
                 };
             }
         }
+
+        public Style LabelLargeTextTitle
+        {
+            get
+            {
+                return new Style(typeof(Label))
+                {
+                    Setters =
+                    {
+                        new Setter { Property = Label.FontFamilyProperty, Value = FontFamily },
+                        new Setter { Property = Label.FontSizeProperty, Value = Device.OnPlatform<double>(iOS: 10, Android: 16, WinPhone: 16) }
+                    }
+                };
+            }
+        }
     }
 }

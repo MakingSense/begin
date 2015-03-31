@@ -124,7 +124,28 @@ namespace BeginMobile.Pages.GroupPages
             gridMain.Children.Add(stackLayoutTitle, 0, 1);
             gridMain.Children.Add(lblDescription, 0, 2);
 
+            if (_groupInformation.Members != null && _groupInformation.Members.Count > 0)
+            {
+                var lblTitleMember = new Label()
+                {
+                    YAlign = TextAlignment.End,
+                    Style = App.Styles.LabelLargeTextTitle,
+                    FontAttributes = FontAttributes.Bold,
+                    HorizontalOptions = LayoutOptions.Start,
+                    Text = "Members:"
+                };
 
+                var stackLayoutMembers = new StackLayout()
+                {
+
+                    Children =
+                    {
+                        lblTitleMember, GetListViewMembers(_groupInformation.Members)
+                    }
+                };
+
+                gridMain.Children.Add(stackLayoutMembers, 0, 3);
+            }
 
             Content = new ScrollView()
             {
@@ -149,6 +170,25 @@ namespace BeginMobile.Pages.GroupPages
         private BoxView BoxViewLine()
         {
             return new BoxView() { Color = Color.White, WidthRequest = 100, HeightRequest = 2 };
+        }
+
+        private ListView GetListViewMembers(List<User> members)
+        {
+            var listViewMembers = new ListView() { };
+
+            listViewMembers.ItemTemplate = new DataTemplate(typeof(MemberItemCell));
+            listViewMembers.ItemsSource = members;
+            listViewMembers.HasUnevenRows = true;
+            listViewMembers.ItemSelected += async (sender, e) =>
+            {
+                if (e.SelectedItem == null)
+                {
+                    return;
+                }
+                ((ListView)sender).SelectedItem = null;
+            };
+
+            return listViewMembers;
         }
     }
 }
