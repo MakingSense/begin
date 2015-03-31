@@ -100,9 +100,9 @@ namespace BeginMobile.Utils
         {
             get
             {
-                var style = new Style(typeof (Button))
-                            {
-                                Setters =
+                var style = new Style(typeof(Button))
+                {
+                    Setters =
                                 {
                                     new Setter {Property = Button.BackgroundColorProperty, Value = Color.Transparent},
                                     new Setter {Property = Button.BorderRadiusProperty, Value = 0},
@@ -117,7 +117,7 @@ namespace BeginMobile.Utils
                                                 WinPhone: Color.White)
                                     },
                                 }
-                            };                
+                };
 
                 return style;
             }
@@ -148,7 +148,7 @@ namespace BeginMobile.Utils
             get
             {
                 Device.Styles.TitleStyle.Setters.Add(titleFontSize);
-                Device.Styles.TitleStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });                
+                Device.Styles.TitleStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });
                 return Device.Styles.TitleStyle;
             }
         }
@@ -158,14 +158,14 @@ namespace BeginMobile.Utils
             get
             {
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter
-                                                        {
-                                                            Property = Label.TextColorProperty,
-                                                            Value =
-                                                                Device.OnPlatform<Color>(
-                                                                    iOS: Color.FromHex("354B60"),
-                                                                    Android: Color.FromHex("77D065"),
-                                                                    WinPhone: Color.FromHex("77D065"))
-                                                        });
+                {
+                    Property = Label.TextColorProperty,
+                    Value =
+                        Device.OnPlatform<Color>(
+                            iOS: Color.FromHex("354B60"),
+                            Android: Color.FromHex("77D065"),
+                            WinPhone: Color.FromHex("77D065"))
+                });
 
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter { Property = Label.FontSizeProperty, Value = textfontSizeMedium });
@@ -208,7 +208,7 @@ namespace BeginMobile.Utils
             get
             {
                 Device.Styles.ListItemTextStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });
-                Device.Styles.ListItemTextStyle.Setters.Add(new Setter { Property = Label.FontSizeProperty, Value = Device.OnPlatform<double>(iOS: 8, Android: 15, WinPhone: 15)});
+                Device.Styles.ListItemTextStyle.Setters.Add(new Setter { Property = Label.FontSizeProperty, Value = Device.OnPlatform<double>(iOS: 8, Android: 15, WinPhone: 15) });
                 return Device.Styles.ListItemTextStyle;
             }
         }
@@ -246,10 +246,23 @@ namespace BeginMobile.Utils
             {
                 return Device.OnPlatform<Color>
                     (iOS: Color.FromHex("ECECEC"),
-                        Android: Color.FromHex("323232"),
+                    //Android: Color.FromHex("323232"),
+                        Android: Color.FromHex("1E2225"),
                         WinPhone: Color.FromHex("323232"));
             }
         }
+
+        public Color SearchBackground
+        {
+            get
+            {
+                return Device.OnPlatform<Color>
+                    (iOS: Color.FromHex("C6C6CB"),
+                        Android: Color.FromHex("1E2225"),
+                        WinPhone: Color.FromHex("425961"));
+            }
+        }
+
         public Style StyleNavigationTitle
         {
             get
@@ -262,10 +275,10 @@ namespace BeginMobile.Utils
                 {
                     return new Style(typeof(Label)) { Setters = { new Setter { Property = Label.FontSizeProperty, Value = Device.OnPlatform<double>(iOS: 8, Android: 10, WinPhone: 10) } } };
                 }
-               
+
             }
         }
-         public Thickness LayoutThickness
+        public Thickness LayoutThickness
         {
             get
             {
@@ -276,16 +289,17 @@ namespace BeginMobile.Utils
             }
         }
 
-         public Thickness ListDetailThickness
-         {
-             get
-             {
-                 return Device.OnPlatform( 
-                    iOS: new Thickness(10, 5, 10, 5),
-                    Android: new Thickness(10, 5, 10, 5),
-                    WinPhone: new Thickness(10, 5, 10, 5));
-                 
-             }
-         }
+        public Thickness ListDetailThickness
+        {
+            get
+            {
+                return Device.OnPlatform(
+                   iOS: new Thickness(10, 5, 10, 5),
+                   Android: new Thickness(10, 5, 10, 5),
+                   WinPhone: new Thickness(10, 5, 10, 5));
+
+            }
+        }
+
     }
 }

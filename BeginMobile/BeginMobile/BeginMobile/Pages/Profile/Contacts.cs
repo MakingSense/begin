@@ -7,7 +7,7 @@ using Xamarin.Forms;
 using BeginMobile.Services.ManagerServices;
 using BeginMobile.Services.DTO;
 using BeginMobile.Utils.Extensions;
-
+using BeginMobile.Utils;
 
 namespace BeginMobile.Pages.Profile
 {
@@ -18,10 +18,11 @@ namespace BeginMobile.Pages.Profile
         private List<Contact> contactsList;
         private Label noContactsMessage;
         private List<Contact> defaultList = new List<Contact>();
+        private SearchView searchView;   
         public Contacts()
         {
             Title = "Contacts";
-
+            searchView = new SearchView("Profesional", "Personal", "Job", "Important", "Needs Attention", "Other");
             Label header = new Label
             {
                 Text = "My Contacts",
@@ -55,15 +56,9 @@ namespace BeginMobile.Pages.Profile
                 // TODO: Add here the logic to go the contact details
                 ((ListView)s).SelectedItem = null;
             };
-            
-            
-            /*Search component */
-            SearchBar searchBar = new SearchBar
-            {
-                Placeholder = "Search by Name and Surname",
-            };
-            searchBar.TextChanged += OnSearchBarButtonPressed;
-            
+
+            searchView.SearchBar.TextChanged += OnSearchBarButtonPressed;
+            searchView.Category.SelectedIndexChanged += OnSelectedIndexChanged;
             noContactsMessage = new Label();
             /**/
             ScrollView scrollView = new ScrollView
@@ -73,7 +68,7 @@ namespace BeginMobile.Pages.Profile
                     Spacing = 2,
                     VerticalOptions = LayoutOptions.Start,
                     Children = {
-                        searchBar,
+                        searchView.Container,
                         noContactsMessage,
                         contactlistView
                     }
@@ -128,6 +123,16 @@ namespace BeginMobile.Pages.Profile
             {
                 contactlistView.ItemsSource = contactsList;
             }
+        }
+
+        /// <summary>
+        /// When Category selected index change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        void OnSelectedIndexChanged(object sender, EventArgs args)
+        {
+
         }
 
     }
