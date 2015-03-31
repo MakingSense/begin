@@ -32,7 +32,7 @@ namespace BeginMobile.Pages.GroupPages
                 }
 
                 var groupItem = (Group)e.SelectedItem;
-                var groupPage = new GroupItemPage();
+                var groupPage = new GroupItemPage(groupItem);
                 groupPage.BindingContext = groupItem;
                 await Navigation.PushAsync(groupPage);
 

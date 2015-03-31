@@ -45,7 +45,6 @@ namespace BeginMobile.Pages.Wall
                                 YAlign = TextAlignment.End,
                                 Style = App.Styles.ListItemTextStyle,
                             };
-
             lblReason.SetBinding(Label.TextProperty, "Reason");
 
             var lblDescription = new Label()
