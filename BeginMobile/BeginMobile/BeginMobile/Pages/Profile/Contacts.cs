@@ -63,8 +63,8 @@ namespace BeginMobile.Pages.Profile
             };
 
             searchView.SearchBar.TextChanged += CommonSearchItemChanged;
-            searchView.Limit.SelectedIndexChanged += CommonSearchItemChanged;
-            searchView.Category.SelectedIndexChanged += CommonSearchItemChanged;
+            //searchView.Limit.SelectedIndexChanged += CommonSearchItemChanged;
+            //searchView.Category.SelectedIndexChanged += CommonSearchItemChanged;
             noContactsMessage = new Label();
             /**/
             ScrollView scrollView = new ScrollView
