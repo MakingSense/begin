@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using BeginMobile.Utils;
 using BeginMobile.Utils.Extensions;
 
 namespace BeginMobile.Pages.Profile
@@ -18,9 +19,29 @@ namespace BeginMobile.Pages.Profile
         private ProfileInformationGroups groupInformation;
         private Label noGroupsMessage;
         private List<Group> defaultList = new List<Group>();
+
+        private Picker sectionsPicker;
+        private SearchView searchView;
+        private List<string> sections = new List<String> { "Members", "Activities", "All Sections" };
         public Groups()
         {
             Title = "Groups";
+
+            searchView = new SearchView("All Categories");
+            searchView.SetPlaceholder("Search by group name");
+            sectionsPicker = new Picker
+                             {
+                                 Title = "Sections",
+                                 VerticalOptions = LayoutOptions.CenterAndExpand
+                             };
+
+            foreach (var item in sections)
+            {
+                sectionsPicker.Items.Add(item);
+            }
+
+            searchView.Container.Children.Add(sectionsPicker);
+
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             groupInformation = App.ProfileServices.GetGroups(currentUser.User.UserName, currentUser.AuthToken);
 
@@ -46,15 +67,10 @@ namespace BeginMobile.Pages.Profile
                 // clears the 'selected' background
                 ((ListView)sender).SelectedItem = null;
             };
-
+           
+            searchView.SearchBar.TextChanged += OnSearchBarButtonPressed;
+            searchView.Category.SelectedIndexChanged += OnSelectedIndexChanged;
             noGroupsMessage = new Label();
-
-            SearchBar searchBar = new SearchBar
-            {
-                Placeholder = "Search by name",
-            };
-
-            searchBar.TextChanged += OnSearchBarButtonPressed;
        
             StackLayout mainLayout = new StackLayout
             {
@@ -64,7 +80,7 @@ namespace BeginMobile.Pages.Profile
                 Orientation = StackOrientation.Vertical
             };
 
-            mainLayout.Children.Add(searchBar);
+            mainLayout.Children.Add(searchView.Container);
             mainLayout.Children.Add(new ScrollView()
                                     {
                                         Content = _lViewGroup
@@ -114,5 +130,6 @@ namespace BeginMobile.Pages.Profile
             }
 
         }
+        private void OnSelectedIndexChanged(object sender, EventArgs args) { }
     }
 }
