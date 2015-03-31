@@ -9,29 +9,35 @@ namespace BeginMobile.Utils
     public class SearchView
     {
         private SearchBar searchBar;
-        private Entry limit;
+        private Picker limit;
         protected Picker category;
         private StackLayout container;
 
         public SearchView(params string[] categories)
         {
             Categories = categories;
-            limit = new Entry
+            limit = new Picker
             {
-                Placeholder = "Limit Filter"
+                Title = "Filter by Limit"
             };
 
             searchBar = new SearchBar
             {
-                Placeholder = "Search by Name and Surname"
+                Placeholder = "Filter by Name"
             };
 
             category = new Picker
             {
-                Title = "Category",
+                Title = "Filter by Category",
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
+            for (int i = 10; i < 50; i++ )
+            {
+                var iterator = i.ToString();
+                Limit.Items.Add(iterator);
+            }
+            
             if (Categories != null)
             {
                 foreach (string c in Categories)
@@ -54,8 +60,8 @@ namespace BeginMobile.Utils
             };
 
             container.Children.Add(searchBar);
-            container.Children.Add(limit);
             container.Children.Add(category);
+            container.Children.Add(limit);
         }
 
         public SearchBar SearchBar
@@ -64,7 +70,7 @@ namespace BeginMobile.Utils
             set { searchBar = value; }
         }
 
-        public Entry Limit
+        public Picker Limit
         {
             get { return limit; }
             set { limit = value; }
