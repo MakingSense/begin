@@ -301,5 +301,19 @@ namespace BeginMobile.Utils
             }
         }
 
+        public Style LabelTextDate
+        {
+            get
+            {
+                return new Style(typeof(Label))
+                {
+                    Setters =
+                    {
+                        new Setter { Property = Label.FontFamilyProperty, Value = FontFamily },
+                        new Setter { Property = Label.FontSizeProperty, Value = Device.OnPlatform<double>(iOS: 7, Android: 12, WinPhone: 12) }
+                    }
+                };
+            }
+        }
     }
 }
