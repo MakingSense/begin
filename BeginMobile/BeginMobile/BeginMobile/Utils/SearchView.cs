@@ -23,7 +23,7 @@ namespace BeginMobile.Utils
 
             searchBar = new SearchBar
             {
-                Placeholder = "Search by Name and Surname",
+                Placeholder = "Search by Name and Surname"
             };
 
             category = new Picker
@@ -84,6 +84,14 @@ namespace BeginMobile.Utils
         {
             get { return container; }
             set { container = value; }
+        }
+
+        public void SetPlaceholder(string placeholder)
+        {
+            if (!string.IsNullOrEmpty(placeholder))
+            {
+                this.searchBar.Placeholder = placeholder;
+            }
         }
     }
 }

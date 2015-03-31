@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using BeginMobile.Services.DTO;
+using BeginMobile.Utils;
 using BeginMobile.Utils.Extensions;
 using BeginMobile.Services.ManagerServices;
 
@@ -16,28 +17,32 @@ namespace BeginMobile.Pages.Profile
         private List<EventInfoObject> listEvents;
         private ListView eventsListView;
         private List<EventInfoObject> defaultList = new List<EventInfoObject>();
+        private SearchView searchView;   
         public Events()
         {
             Title = "Events";
+            
+            searchView = new SearchView("All Categories");
+            searchView.SetPlaceholder("Search by event name");
+
             Label header = new Label
             {
                 Text = "My Events",
                 Style = App.Styles.TitleStyle,
                 HorizontalOptions = LayoutOptions.Center
             };
+
             #region call api
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationEvents profileInformationEvents = App.ProfileServices.GetEvents(currentUser.User.UserName, currentUser.AuthToken);
             #endregion
 
             #region search components
-            SearchBar searchBar = new SearchBar
-            {
-                Placeholder = "Search by event name",
-            };
-            searchBar.TextChanged += OnTextChanged;
-
+          
+            searchView.SearchBar.TextChanged += OnSearchBarButtonPressed;
+            searchView.Category.SelectedIndexChanged += OnSelectedIndexChanged;
             noContactsMessage = new Label();
+
             #endregion
 
             #region subtitles layout
@@ -68,14 +73,16 @@ namespace BeginMobile.Pages.Profile
             #region list components
             listEvents = new List<EventInfoObject>();
 
-            foreach(var eventInfo in profileInformationEvents.Events){
+            foreach(var eventInfo in profileInformationEvents.Events)
+            {
                 listEvents.Add(new EventInfoObject
-                {
-                    EventName = eventInfo.Name,
-                    EventIntervalDate = String.Format("{0} - {1}", eventInfo.StartDate, eventInfo.EndDate),
-                    EventTime = String.Format("{0} - {1}", eventInfo.StartTime, eventInfo.EndTime),
-                    eventInfo = eventInfo,
-                });
+                               {
+                                   EventName = eventInfo.Name,
+                                   EventIntervalDate =
+                                       String.Format("{0} - {1}", eventInfo.StartDate, eventInfo.EndDate),
+                                   EventTime = String.Format("{0} - {1}", eventInfo.StartTime, eventInfo.EndTime),
+                                   eventInfo = eventInfo,
+                               });
             }
 
             var eventTemplate = new DataTemplate(typeof(TemplateListViewEvents));
@@ -114,20 +121,23 @@ namespace BeginMobile.Pages.Profile
             };
 
             Content = new StackLayout
-            {
-                VerticalOptions = LayoutOptions.Start,
-                Padding = 20,
-                Children =
-                {
-                    searchBar,gridEventHeaderTitle,scrollView
-                }
-            };
+                      {
+                          VerticalOptions = LayoutOptions.Start,
+                          Padding = 20,
+                          Children =
+                          {
+                              searchView.Container,
+                              gridEventHeaderTitle,
+                              scrollView
+                          }
+                      };
+
             #endregion
         }
 
 
         //Method that to the search
-        void OnTextChanged(object sender, EventArgs args)
+        void OnSearchBarButtonPressed(object sender, EventArgs args)
         {
             //TODO: User custom SearchVIew or Page
             SearchBar searchBar = (SearchBar)sender;
@@ -138,7 +148,7 @@ namespace BeginMobile.Pages.Profile
 
                 if (listEvents.Count == 0)
                 {
-                    noContactsMessage.Text = "There is no contacts";
+                    noContactsMessage.Text = "There is no events.";
                 }
 
                 else
@@ -164,6 +174,16 @@ namespace BeginMobile.Pages.Profile
             {
                 eventsListView.ItemsSource = listEvents;
             }
+        }
+
+        /// <summary>
+        /// When Category selected index change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        void OnSelectedIndexChanged(object sender, EventArgs args)
+        {
+
         }
     }
 }
