@@ -11,11 +11,15 @@ namespace BeginMobile.Pages.Profile
 {
     public class MyActivity : ContentPage
     {
+        private const string userDefault = "userdefault3.png";
+
         public MyActivity()
         {
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            var profileActivity = App.ProfileServices.GetActivities(currentUser.User.UserName, currentUser.AuthToken);
 
             Title = "My activity";
+
             Label header = new Label
             {
                 Text = "My Activities",
@@ -23,47 +27,84 @@ namespace BeginMobile.Pages.Profile
                 HorizontalOptions = LayoutOptions.Center
             };
 
-            var userImageActivity = new ImageCell
+            var listDataSource = new List<ActivityViewModel>();
+
+            if (profileActivity != null)
             {
-                ImageSource =
-                    ImageSource.FromFile("userdefault3.png"),
-                Text = "What is the new," + currentUser.User.NiceName + "?",
+                foreach (var activity in profileActivity.Activities)
+                {
+                    if (activity.Component.Equals("activity", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        listDataSource.Add(new ActivityViewModel
+                        {
+                            Icon = userDefault,
+                            NameSurname = profileActivity.NameSurname,
+                            ActivityDescription = activity.Content,
+                            ActivityType = activity.Type,
+                            DateAndTime = activity.Date
+                        });
+                    }
+                }
+            }
+
+            var listViewTemplate = new DataTemplate(typeof(Activities));
+            var listViewActivities = new ListView
+            {
+                ItemsSource = listDataSource,
+                ItemTemplate = listViewTemplate
             };
 
-            var userInfoTableViewActivity = new TableView
+            listViewActivities.ItemSelected += (s, e) =>
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                if (e.SelectedItem == null)
+                {
+                    return;
+                }
+                ((ListView)s).SelectedItem = null;
+            };
+
+            listViewActivities.HasUnevenRows = true;
+
+            ScrollView scroll = new ScrollView()
+            {
+
+                Content = new StackLayout
+                {
+                    Spacing = 2,
+                    VerticalOptions = LayoutOptions.Start,
+                    //HorizontalOptions = LayoutOptions.FillAndExpand,
+                    Children =
+                                  {
+                                    listViewActivities
+                                  }
+                }
+            };
+            StackLayout stackLayout = new StackLayout
+            {
+                Spacing = 2,
                 VerticalOptions = LayoutOptions.Start,
-                Root = new TableRoot
-                                                       {
-                                                           new TableSection(" ")
-                                                           {
-                                                               userImageActivity
-                                                           }
-                                                       }
-            };
-
-            var activityEditor = new StackLayout
-            {
-                HeightRequest = 500,
-                Orientation = StackOrientation.Vertical,
-                VerticalOptions = LayoutOptions.Start,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Children = { userInfoTableViewActivity}
-            };
-
-            var activitiesScroollView = new Activities();
-            var stackLayoutMain = new StackLayout
-            {
-                Orientation = StackOrientation.Vertical,
+                //HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
-                                      {
-                                          activitiesScroollView
-                                      }
-
+                                  {
+                                    scroll
+                                  }
             };
 
-            Content = stackLayoutMain;
+
+            Content = stackLayout;
+
+
+            //Content = new ScrollView
+            //{               
+            //    Content = new StackLayout
+            //    {
+            //        VerticalOptions = LayoutOptions.StartAndExpand,
+            //        Orientation = StackOrientation.Vertical,                                     
+            //        Children = {                      
+            //            listViewActivities
+            //        }
+            //    }
+            //};
         }
     }
 }
