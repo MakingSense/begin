@@ -23,6 +23,8 @@ namespace BeginMobile.Pages.Profile
         private Picker sectionsPicker;
         private SearchView searchView;
         private List<string> sections = new List<String> { "Members", "Activities", "All Sections" };
+
+        private LoginUser currentUser;
         public Groups()
         {
             Title = "Groups";
@@ -42,7 +44,7 @@ namespace BeginMobile.Pages.Profile
 
             searchView.Container.Children.Add(sectionsPicker);
 
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             groupInformation = App.ProfileServices.GetGroups(currentUser.User.UserName, currentUser.AuthToken);
 
             _lViewGroup = new ListView() { };
@@ -67,11 +69,18 @@ namespace BeginMobile.Pages.Profile
                 // clears the 'selected' background
                 ((ListView)sender).SelectedItem = null;
             };
-           
-            searchView.SearchBar.TextChanged += OnSearchBarButtonPressed;
-            searchView.Category.SelectedIndexChanged += OnSelectedIndexChanged;
+
+            #region Search components
+
+            searchView.SearchBar.TextChanged += CommonSearchItemChanged;
+            searchView.Category.SelectedIndexChanged += CommonSearchItemChanged;
+            searchView.Limit.SelectedIndexChanged += CommonSearchItemChanged;
+            sectionsPicker.SelectedIndexChanged += CommonSearchItemChanged;
+
             noGroupsMessage = new Label();
-       
+
+            #endregion
+
             StackLayout mainLayout = new StackLayout
             {
                 Padding = 10,
@@ -87,7 +96,92 @@ namespace BeginMobile.Pages.Profile
                                     });
 
             Content = mainLayout;
+        }
 
+        #region Events
+
+        private void CommonSearchItemChanged(object sender, EventArgs args)
+        {
+            string q;
+            string limit;
+            string cat;
+            string sections;
+
+            if (sender.GetType() == typeof(SearchBar))
+            {
+                q = ((SearchBar)sender).Text;
+            }
+
+            else
+            {
+                q = searchView.SearchBar.Text;
+            }
+
+            RetrieveLimitSelected(out limit);
+            RetrieveCategorySelected(out cat);
+            RetrieveSectionSelected(out sections);
+            
+            List<Group> groupsList =
+                App.ProfileServices.GetGroupsByParams(currentUser.AuthToken, q, cat, limit, sections);
+
+            if (groupsList.Any())
+            {
+                _lViewGroup.ItemsSource = groupsList;
+                noGroupsMessage.Text = string.Empty;
+            }
+
+            else
+            {
+                _lViewGroup.ItemsSource = defaultList;
+            }
+        }
+
+        private void RetrieveSectionSelected(out string sections)
+        {
+            var sectionSelectedIndex = sectionsPicker.SelectedIndex;
+            var sectionLastIndex = sectionsPicker.Items.Count - 1;
+
+            if (sectionSelectedIndex == -1 || sectionSelectedIndex == sectionLastIndex)
+            {
+                sections = null;
+            }
+
+            else
+            {
+                sections = sectionsPicker.Items[sectionSelectedIndex];
+            }
+        }
+
+        private void RetrieveCategorySelected(out string cat)
+        {
+            var catSelectedIndex = searchView.Category.SelectedIndex;
+            var catLastIndex = searchView.Category.Items.Count - 1;
+
+            if (catSelectedIndex == -1 || catSelectedIndex == catLastIndex)
+            {
+                cat = null;
+            }
+
+            else
+            {
+                cat = searchView.Category.Items[catSelectedIndex];
+            }
+        }
+
+        private void RetrieveLimitSelected(out string limit)
+        {
+            var limitSelectedIndex = searchView.Limit.SelectedIndex;
+            var limitLastIndex = searchView.Limit.Items.Count - 1;
+
+            if (limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex)
+            {
+                limit = null;
+            }
+
+            else
+            {
+                limit = searchView.Limit.Items[limitSelectedIndex];
+            }
         }
 
         private void OnSearchBarButtonPressed(object sender, EventArgs args)
@@ -108,19 +202,19 @@ namespace BeginMobile.Pages.Profile
                 else
                 {
                     List<Group> list =
-                        (from g in groupsList 
-                            where g.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)
-                            select g).ToList<Group>();
+                        (from g in groupsList
+                         where g.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)
+                         select g).ToList<Group>();
 
                     if (list.Any())
                     {
-                         _lViewGroup.ItemsSource = list;
+                        _lViewGroup.ItemsSource = list;
                         noGroupsMessage.Text = "";
                     }
 
                     else
                     {
-                         _lViewGroup.ItemsSource = defaultList;
+                        _lViewGroup.ItemsSource = defaultList;
                     }
                 }
             }
@@ -130,6 +224,7 @@ namespace BeginMobile.Pages.Profile
             }
 
         }
-        private void OnSelectedIndexChanged(object sender, EventArgs args) { }
+
+        #endregion
     }
 }

@@ -15,7 +15,7 @@ namespace BeginMobile.Pages.Profile
 {
     public class Events : ContentPage
     {
-        private Label noContactsMessage;
+        private Label noEventsMessage;
         private List<EventInfoObject> listEvents;
         private ListView eventsListView;
         private List<EventInfoObject> defaultList = new List<EventInfoObject>();
@@ -47,7 +47,7 @@ namespace BeginMobile.Pages.Profile
             searchView.SearchBar.TextChanged += CommonSearchItemChanged;
             searchView.Category.SelectedIndexChanged += CommonSearchItemChanged;
             searchView.Limit.SelectedIndexChanged += CommonSearchItemChanged;
-            noContactsMessage = new Label();
+            noEventsMessage = new Label();
 
             #endregion
 
@@ -166,31 +166,8 @@ namespace BeginMobile.Pages.Profile
                 q = searchView.SearchBar.Text;
             }
 
-            var limitSelectedIndex = searchView.Limit.SelectedIndex;
-            var limitLastIndex = searchView.Limit.Items.Count - 1;
-
-            if (limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex)
-            {
-                limit = null;
-            }
-           
-            else
-            {
-                limit = searchView.Limit.Items[limitSelectedIndex];
-            }
-
-            var catSelectedIndex = searchView.Category.SelectedIndex;
-            var catLastIndex = searchView.Category.Items.Count - 1;
-
-            if (catSelectedIndex == -1 || catSelectedIndex == catLastIndex)
-            {
-                cat = null;
-            }
-
-            else
-            {
-                cat = searchView.Category.Items[catSelectedIndex];
-            }
+            RetrieveLimitSelected(out limit);
+            RetrieveCategorySelected(out cat);
 
             List<ProfileEvent> profileEventList =
                 App.ProfileServices.GetEventsByParams(currentUser.AuthToken, q, cat, limit);
@@ -198,7 +175,7 @@ namespace BeginMobile.Pages.Profile
             if (profileEventList.Any())
             {
                 eventsListView.ItemsSource = RetrieveEventInfoObjectList(profileEventList);
-                noContactsMessage.Text = string.Empty;
+                noEventsMessage.Text = string.Empty;
             }
 
             else
@@ -206,7 +183,7 @@ namespace BeginMobile.Pages.Profile
                 eventsListView.ItemsSource = defaultList;
             }
         }
-
+        
         /// <summary>
         /// Event that is raised when the SearchBar text changed
         /// </summary>
@@ -223,7 +200,7 @@ namespace BeginMobile.Pages.Profile
 
                 if (listEvents.Count == 0)
                 {
-                    noContactsMessage.Text = "There is no events.";
+                    noEventsMessage.Text = "There is no events.";
                 }
 
                 else
@@ -236,7 +213,7 @@ namespace BeginMobile.Pages.Profile
                     if (list.Any())
                     {
                         eventsListView.ItemsSource = list;
-                        noContactsMessage.Text = "";
+                        noEventsMessage.Text = "";
                     }
 
                     else
@@ -253,6 +230,37 @@ namespace BeginMobile.Pages.Profile
 
         #endregion
 
+        #region Private methods
+        private void RetrieveCategorySelected(out string cat)
+        {
+            var catSelectedIndex = searchView.Category.SelectedIndex;
+            var catLastIndex = searchView.Category.Items.Count - 1;
+
+            if (catSelectedIndex == -1 || catSelectedIndex == catLastIndex)
+            {
+                cat = null;
+            }
+
+            else
+            {
+                cat = searchView.Category.Items[catSelectedIndex];
+            }
+        }
+        private void RetrieveLimitSelected(out string limit)
+        {
+            var limitSelectedIndex = searchView.Limit.SelectedIndex;
+            var limitLastIndex = searchView.Limit.Items.Count - 1;
+
+            if (limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex)
+            {
+                limit = null;
+            }
+
+            else
+            {
+                limit = searchView.Limit.Items[limitSelectedIndex];
+            }
+        }
         private IEnumerable<EventInfoObject> RetrieveEventInfoObjectList(IEnumerable<ProfileEvent> profileEventList)
         {
             return profileEventList.Select(eventInfo => new EventInfoObject()
@@ -267,5 +275,8 @@ namespace BeginMobile.Pages.Profile
                 eventInfo = eventInfo
             });
         }
+
+        #endregion
+
     }
 }
