@@ -5,23 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using BeginMobile.Services.DTO;
+
 using BeginMobile.Utils;
 using BeginMobile.Utils.Extensions;
+
 using BeginMobile.Services.ManagerServices;
 
 namespace BeginMobile.Pages.Profile
 {
-    public class Events: ContentPage
+    public class Events : ContentPage
     {
         private Label noContactsMessage;
         private List<EventInfoObject> listEvents;
         private ListView eventsListView;
         private List<EventInfoObject> defaultList = new List<EventInfoObject>();
-        private SearchView searchView;   
+        private SearchView searchView;
+
+        private LoginUser currentUser;
+
         public Events()
         {
             Title = "Events";
-            
+
             searchView = new SearchView("All Categories");
             searchView.SetPlaceholder("Search by event name");
 
@@ -32,23 +37,24 @@ namespace BeginMobile.Pages.Profile
                 HorizontalOptions = LayoutOptions.Center
             };
 
-            #region call api
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            #region Call api
+            currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationEvents profileInformationEvents = App.ProfileServices.GetEvents(currentUser.User.UserName, currentUser.AuthToken);
             #endregion
 
-            #region search components
-          
-            searchView.SearchBar.TextChanged += OnSearchBarButtonPressed;
-            searchView.Category.SelectedIndexChanged += OnSelectedIndexChanged;
+            #region Search components
+
+            searchView.SearchBar.TextChanged += CommonSearchItemChanged;
+            searchView.Category.SelectedIndexChanged += CommonSearchItemChanged;
+            searchView.Limit.SelectedIndexChanged += CommonSearchItemChanged;
             noContactsMessage = new Label();
 
             #endregion
 
-            #region subtitles layout
+            #region Subtitles layout
             var gridEventHeaderTitle = new Grid
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,                
+                HorizontalOptions = LayoutOptions.FillAndExpand,
             };
 
             gridEventHeaderTitle.Children.Add(new Label
@@ -68,12 +74,12 @@ namespace BeginMobile.Pages.Profile
                                                   Style = App.Styles.SubtitleStyle
                                               }, 1, 2, 0, 1);
 
-            #endregion 
+            #endregion
 
-            #region list components
+            #region List components
             listEvents = new List<EventInfoObject>();
 
-            foreach(var eventInfo in profileInformationEvents.Events)
+            foreach (var eventInfo in profileInformationEvents.Events)
             {
                 listEvents.Add(new EventInfoObject
                                {
@@ -92,7 +98,7 @@ namespace BeginMobile.Pages.Profile
                 ItemsSource = listEvents,
                 ItemTemplate = eventTemplate
             };
-            
+
             eventsListView.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null)
@@ -101,16 +107,18 @@ namespace BeginMobile.Pages.Profile
                 }
                 var item = (EventInfoObject)e.SelectedItem;
 
-                var itemPageProfile = new EventDetailInformation(item.eventInfo);               
+                var itemPageProfile = new EventDetailInformation(item.eventInfo);
                 await Navigation.PushAsync(itemPageProfile);
                 ((ListView)sender).SelectedItem = null;
 
             };
             #endregion
 
-            #region main layout
-            ScrollView scrollView  = new ScrollView{
-                Content = new StackLayout{
+            #region Main layout
+            ScrollView scrollView = new ScrollView
+            {
+                Content = new StackLayout
+                {
                     Spacing = 2,
                     VerticalOptions = LayoutOptions.Start,
                     Children =
@@ -135,8 +143,75 @@ namespace BeginMobile.Pages.Profile
             #endregion
         }
 
+        #region Events
 
-        //Method that to the search
+        /// <summary>
+        /// Common handler when an searchBar item has changed 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void CommonSearchItemChanged(object sender, EventArgs args)
+        {
+            string q;
+            string limit;
+            string cat;
+
+            if (sender.GetType() == typeof(SearchBar))
+            {
+                q = ((SearchBar)sender).Text;
+            }
+
+            else
+            {
+                q = searchView.SearchBar.Text;
+            }
+
+            var limitSelectedIndex = searchView.Limit.SelectedIndex;
+            var limitLastIndex = searchView.Limit.Items.Count - 1;
+
+            if (limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex)
+            {
+                limit = null;
+            }
+           
+            else
+            {
+                limit = searchView.Limit.Items[limitSelectedIndex];
+            }
+
+            var catSelectedIndex = searchView.Category.SelectedIndex;
+            var catLastIndex = searchView.Category.Items.Count - 1;
+
+            if (catSelectedIndex == -1 || catSelectedIndex == catLastIndex)
+            {
+                cat = null;
+            }
+
+            else
+            {
+                cat = searchView.Category.Items[catSelectedIndex];
+            }
+
+            List<ProfileEvent> profileEventList =
+                App.ProfileServices.GetEventsByParams(currentUser.AuthToken, q, cat, limit);
+
+            if (profileEventList.Any())
+            {
+                eventsListView.ItemsSource = RetrieveEventInfoObjectList(profileEventList);
+                noContactsMessage.Text = string.Empty;
+            }
+
+            else
+            {
+                eventsListView.ItemsSource = defaultList;
+            }
+        }
+
+        /// <summary>
+        /// Event that is raised when the SearchBar text changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         void OnSearchBarButtonPressed(object sender, EventArgs args)
         {
             //TODO: User custom SearchVIew or Page
@@ -176,14 +251,21 @@ namespace BeginMobile.Pages.Profile
             }
         }
 
-        /// <summary>
-        /// When Category selected index change
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        void OnSelectedIndexChanged(object sender, EventArgs args)
-        {
+        #endregion
 
+        private IEnumerable<EventInfoObject> RetrieveEventInfoObjectList(IEnumerable<ProfileEvent> profileEventList)
+        {
+            return profileEventList.Select(eventInfo => new EventInfoObject()
+            {
+                EventName = eventInfo.Name,
+                EventIntervalDate =
+                    String.Format("{0} - {1}", eventInfo.StartDate,
+                        eventInfo.EndDate),
+                EventTime =
+                    String.Format("{0} - {1}", eventInfo.StartTime,
+                        eventInfo.EndTime),
+                eventInfo = eventInfo
+            });
         }
     }
 }
