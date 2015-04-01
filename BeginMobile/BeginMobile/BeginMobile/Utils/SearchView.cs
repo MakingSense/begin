@@ -21,7 +21,7 @@ namespace BeginMobile.Utils
                 Title = "Filter by Limit",
 
             };
-            limit.BackgroundColor =Color.FromHex("484E5C"); //494949 //333335;            
+            //limit.BackgroundColor =Color.FromHex("484E5C"); //494949 //333335;            
             
             searchBar = new SearchBar
             {

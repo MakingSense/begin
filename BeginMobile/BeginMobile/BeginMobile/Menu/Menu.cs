@@ -17,7 +17,7 @@ namespace BeginMobile.Menu
     public class Menu : ContentPage
     {
         private const string DefaultUri = "http://www.americanpresidents.org/images/01_150.gif";
-        
+
         private const string pProfileMenuIcon = "userprofile.png";
         private const string knocks = "padlock.png";
 
@@ -49,7 +49,7 @@ namespace BeginMobile.Menu
                     ImageSource.FromFile(pUserDefault),
                 Text = currentUser.User.DisplayName,
                 Detail = currentUser.User.Email
-                
+
             };
 
             var userInfoTableView = new TableView
@@ -81,7 +81,7 @@ namespace BeginMobile.Menu
                 HeightRequest = 150,
                 ItemsSource = menuItemList,
                 ItemTemplate = cell,
-                
+
                 //ItemsSource = menuItems,
             };
 
@@ -111,120 +111,170 @@ namespace BeginMobile.Menu
                 _onToggleRequest();
             };
 
-            var controlButtonStyle = App.Styles.LinkButton;
 
-            //controls buttons
-            var buttonLogout = new Button
-            {
-                Text = "Logout",
-                Style = controlButtonStyle
-            };
+            var listButtonsData = new List<ConfigurationMenuItems>();
+            listButtonsData.Add(new ConfigurationMenuItems{OptionName=MenuItemsNames.Logout});
+            listButtonsData.Add(new ConfigurationMenuItems{Icon= "", OptionName=MenuItemsNames.ChangePassword});
+            listButtonsData.Add(new ConfigurationMenuItems{Icon= "", OptionName=MenuItemsNames.About});
+            listButtonsData.Add(new ConfigurationMenuItems{Icon= "", OptionName=MenuItemsNames.Privacy});
+            listButtonsData.Add(new ConfigurationMenuItems{Icon= "", OptionName=MenuItemsNames.HelpCenter});
+            listButtonsData.Add(new ConfigurationMenuItems{Icon= "", OptionName=MenuItemsNames.TermsAndConditions});
+            listButtonsData.Add(new ConfigurationMenuItems {Icon = "", OptionName = MenuItemsNames.UpdateProfile });
 
-            var buttonChangePassword = new Button
+            var listViewOptionButtons = new ListView
             {
-                Text = "Change your password",
-                Style = controlButtonStyle
-            };
-
-            var buttonAbout = new Button
-            {
-                Text = "About",
-                Style = controlButtonStyle
-            };
-            var buttonPrivacy = new Button
-            {
-                Text = "Privacy",
-                Style = controlButtonStyle
-            };
-            var buttonSupport = new Button
-            {
-                Text = "Help Center",
-                Style = controlButtonStyle
-            };
-            var buttonTermsAndConditions = new Button
-            {
-                Text = "Terms And Conditions",
-                Style = controlButtonStyle
+                ItemsSource = listButtonsData,
+                ItemTemplate = cell
             };
 
-            var buttonUpdateProfile = new Button
+            listViewOptionButtons.ItemSelected += async (s, e) =>
             {
-                Text = "Update profile",
-                Style = controlButtonStyle
-            };
+                if (e.SelectedItem == null)
+                {
+                    return;
+                }
+                string item = ((ConfigurationMenuItems)e.SelectedItem).OptionName;
 
-            buttonLogout.Clicked += async (s, e) =>
-            {
-                //await Navigation.PushAsync(new Login());
-                App.Current.Logout();
+                switch (item)
+                {
+                    case MenuItemsNames.Logout:
+                        App.Current.Logout();
+                        break;
+                    case MenuItemsNames.ChangePassword:
+                        await Navigation.PushAsync(new ChangePasswordPage());
+                        _onToggleRequest();
+                        break;
+                    case MenuItemsNames.About:
+                        await Navigation.PushAsync(new AboutUs());
+                        _onToggleRequest();
+                        break;
+                    case MenuItemsNames.Privacy:
+                        await Navigation.PushAsync(new Privacy());
+                        _onToggleRequest();
+                        break;
+                    case MenuItemsNames.HelpCenter:
+                        await Navigation.PushAsync(new HelpCenter());
+                        _onToggleRequest();
+                        break;
+                    case MenuItemsNames.TermsAndConditions:
+                        await Navigation.PushAsync(new TermsAndConditions(isLoadByLogin));
+                        _onToggleRequest();
+                        break;
+                    case MenuItemsNames.UpdateProfile:
+                        await Navigation.PushAsync(new UpdateProfilePage());
+                        _onToggleRequest();
+                        break;
+                }
+                ((ListView)s).SelectedItem = null;
             };
+            listViewOptionButtons.HasUnevenRows = true;
+            
 
-            buttonChangePassword.Clicked += async (s, e) =>
-            {
-                await Navigation.PushAsync(new ChangePasswordPage());
-                _onToggleRequest();
-            };
+            //var controlButtonStyle = App.Styles.LinkButton;
 
-            buttonAbout.Clicked += async (s, e) =>
-            {
-                await Navigation.PushAsync(new AboutUs());
-                _onToggleRequest();
-            };
-            buttonPrivacy.Clicked += async (s, e) =>
-            {
-                await Navigation.PushAsync(new Privacy());
-                _onToggleRequest();
-            };
-            buttonSupport.Clicked += async (s, e) =>
-            {
-                await Navigation.PushAsync(new HelpCenter());
-                _onToggleRequest();
-            };
-            buttonTermsAndConditions.Clicked += async (s, e) =>
-            {
-                await Navigation.PushAsync(new TermsAndConditions(isLoadByLogin));
-                _onToggleRequest();
-            };
+            ////controls buttons
+            //var buttonLogout = new Button
+            //{
+            //    Text = "Logout",
+            //    Style = controlButtonStyle
+            //};
 
-            buttonUpdateProfile.Clicked += async (s, e) =>
+            //var buttonChangePassword = new Button
+            //{
+            //    Text = "Change your password",
+            //    Style = controlButtonStyle
+            //};
+
+            //var buttonAbout = new Button
+            //{
+            //    Text = "About",
+            //    Style = controlButtonStyle
+            //};
+            //var buttonPrivacy = new Button
+            //{
+            //    Text = "Privacy",
+            //    Style = controlButtonStyle
+            //};
+            //var buttonSupport = new Button
+            //{
+            //    Text = "Help Center",
+            //    Style = controlButtonStyle
+            //};
+            //var buttonTermsAndConditions = new Button
+            //{
+            //    Text = "Terms And Conditions",
+            //    Style = controlButtonStyle
+            //};
+
+            //var buttonUpdateProfile = new Button
+            //{
+            //    Text = "Update profile",
+            //    Style = controlButtonStyle
+            //};
+
+            //buttonLogout.Clicked += async (s, e) =>
+            //{
+            //    //await Navigation.PushAsync(new Login());
+            //    App.Current.Logout();
+            //};
+
+            //buttonChangePassword.Clicked += async (s, e) =>
+            //{
+            //    await Navigation.PushAsync(new ChangePasswordPage());
+            //    _onToggleRequest();
+            //};
+
+            //buttonAbout.Clicked += async (s, e) =>
+            //{
+            //    await Navigation.PushAsync(new AboutUs());
+            //    _onToggleRequest();
+            //};
+            //buttonPrivacy.Clicked += async (s, e) =>
+            //{
+            //    await Navigation.PushAsync(new Privacy());
+            //    _onToggleRequest();
+            //};
+            //buttonSupport.Clicked += async (s, e) =>
+            //{
+            //    await Navigation.PushAsync(new HelpCenter());
+            //    _onToggleRequest();
+            //};
+            //buttonTermsAndConditions.Clicked += async (s, e) =>
+            //{
+            //    await Navigation.PushAsync(new TermsAndConditions(isLoadByLogin));
+            //    _onToggleRequest();
+            //};
+
+            //buttonUpdateProfile.Clicked += async (s, e) =>
+            //{
+            //    await Navigation.PushAsync(new UpdateProfilePage());
+            //    _onToggleRequest();
+            //};
+
+
+            var stackLayoutControls = new StackLayout
             {
-                await Navigation.PushAsync(new UpdateProfilePage());
-                _onToggleRequest();
-            };
 
-
-            var controlsLayout = new StackLayout
-            {
-
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Start,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Orientation = StackOrientation.Vertical,
                 Children =
                                              {
-                                                 buttonLogout,
-                                                 buttonChangePassword,
-                                                 buttonUpdateProfile,
-                                                 buttonAbout,
-                                                 buttonPrivacy,
-                                                 buttonSupport,
-                                                 buttonTermsAndConditions
+                                                 listViewOptionButtons
                                              }
             };
 
-            ScrollView scroll = new ScrollView();
-            StackLayout stackLayout = new StackLayout {
+            StackLayout mainStackLayout = new StackLayout
+            {
                 Spacing = 2,
-                VerticalOptions = LayoutOptions.Start,
-                //HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
                                   {
                                       userInfoTableView,
                                       menu,
-                                      controlsLayout
+                                      stackLayoutControls
                                   }
             };
-            scroll.Content = stackLayout;
 
-            Content = scroll;
+            Content = mainStackLayout;
         }
     }
 
@@ -255,7 +305,9 @@ namespace BeginMobile.Menu
         {
             var optionName = new Label
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Style = App.Styles.ListItemTextStyle,
+                TextColor = App.Styles.MenuOptionsColor
             };
             optionName.SetBinding(Label.TextProperty, "OptionName");
             var optionLayout = new StackLayout
@@ -278,5 +330,16 @@ namespace BeginMobile.Menu
     {
         Profile,
         Knocks
+    }
+
+    public static class MenuItemsNames
+    {
+        public const string Logout = "Logout";
+        public const string ChangePassword = "Change your password";
+        public const string About = "About Us";
+        public const string Privacy = "Privacy";
+        public const string HelpCenter = "Help Center";
+        public const string TermsAndConditions = "Terms And Conditions";
+        public const string UpdateProfile = "Update Profile";
     }
 }

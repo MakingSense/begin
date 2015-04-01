@@ -209,6 +209,7 @@ namespace BeginMobile.Utils
             {
                 Device.Styles.ListItemTextStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });
                 Device.Styles.ListItemTextStyle.Setters.Add(new Setter { Property = Label.FontSizeProperty, Value = Device.OnPlatform<double>(iOS: 8, Android: 15, WinPhone: 15) });
+                Device.Styles.ListItemTextStyle.Setters.Add(new Setter { Property = Label.TextColorProperty, Value = Device.OnPlatform<Color>(iOS: Color.FromHex("354B60"), Android: Color.FromHex("FFFFFF"), WinPhone: Color.FromHex("FFFFFF"))});
                 return Device.Styles.ListItemTextStyle;
             }
         }
@@ -328,6 +329,27 @@ namespace BeginMobile.Utils
                         new Setter { Property = Label.FontSizeProperty, Value = Device.OnPlatform<double>(iOS: 10, Android: 16, WinPhone: 16) }
                     }
                 };
+            }
+        }
+
+        public Color MenuOptionsColor
+        {
+            get
+            {
+                return Device.OnPlatform<Color>
+                    (iOS: Color.FromHex("020202"),
+                        Android: Color.FromHex("DDDDDD"),
+                        WinPhone: Color.FromHex("77D065"));
+            }
+        }
+        public Color PageBackgroundColor
+        {
+            get
+            {
+                return Device.OnPlatform<Color>
+                    (iOS: Color.FromHex("DDDDDD"),
+                        Android: Color.FromHex("292929"),
+                        WinPhone: Color.FromHex("77D065"));
             }
         }
     }
