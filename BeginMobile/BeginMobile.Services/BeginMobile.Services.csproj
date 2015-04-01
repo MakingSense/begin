@@ -64,6 +64,7 @@
     <Compile Include="ManagerServices\LoginUserManager.cs" />
     <Compile Include="ManagerServices\ProfileManager.cs" />
     <Compile Include="Models\BeginWallViewModel.cs" />
+    <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\GroupViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

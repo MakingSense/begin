@@ -108,6 +108,8 @@ namespace BeginMobile.Pages.Profile
                 var item = (EventInfoObject)e.SelectedItem;
 
                 var itemPageProfile = new EventDetailInformation(item.eventInfo);
+                itemPageProfile.BindingContext = item.eventInfo;
+
                 await Navigation.PushAsync(itemPageProfile);
                 ((ListView)sender).SelectedItem = null;
 

@@ -15,13 +15,15 @@ namespace BeginMobile.Pages.GroupPages
         private const string GroupImage = "userdefault3.png";
         public GroupItemPage(Group group)
         {
-            //Title = "Group detail";
-            
-            this.SetBinding(TitleProperty, "Name", stringFormat:"Group {0}");
-            this._groupInformation = group;
+            this.SetBinding(TitleProperty, "Name", stringFormat:"Group - {0}");
 
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             _groupInformation = App.ProfileServices.GetGroup(currentUser.AuthToken, group.Id, Sections);
+
+            if (_groupInformation == null)
+            {
+                return;
+            }
 
             var groupDetail = GetGroupModel();
 

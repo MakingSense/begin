@@ -55,32 +55,39 @@ namespace BeginMobile.Services.ManagerServices
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var urlId = "/" + groupId;
-
-                if (!string.IsNullOrEmpty(sections))
+                try
                 {
-                    urlId += "?sections=" + sections;
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+
+                    client.BaseAddress = new Uri(BaseAddress);
+
+                    var urlId = "/" + groupId;
+
+                    if (!string.IsNullOrEmpty(sections))
+                    {
+                        urlId += "?sections=" + sections;
+                    }
+
+                    var response = client.GetAsync(SubAddress + urlId).Result;
+                    var userJson = response.Content.ReadAsStringAsync().Result;
+
+                    Group profileGroup;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        profileGroup = JsonConvert.DeserializeObject<Group>(userJson);
+                    }
+                    else
+                    {
+                        profileGroup = JsonConvert.DeserializeObject<Group>(userJson);
+                    }
+
+                    return profileGroup;
                 }
-
-                var response = client.GetAsync(SubAddress + urlId).Result;
-                var userJson = response.Content.ReadAsStringAsync().Result;
-
-                Group profileGroup;
-
-                if (response.IsSuccessStatusCode)
+                catch (Exception ex)
                 {
-                    profileGroup = JsonConvert.DeserializeObject<Group>(userJson);
+                    return null;
                 }
-                else
-                {
-                    profileGroup = JsonConvert.DeserializeObject<Group>(userJson);
-                }
-
-                return profileGroup;
             }
         }
 
