@@ -24,7 +24,6 @@ namespace BeginMobile
 		        AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
 		    }
 
-
             var isLoggedIn = Properties.ContainsKey("IsLoggedIn") ? (bool)Properties["IsLoggedIn"] : false;
             MainPage = new LoginModalPage(this);
 
