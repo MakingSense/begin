@@ -5,21 +5,27 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
+using BeginMobile.Services.Interfaces;
 using Newtonsoft.Json;
 
 namespace BeginMobile.Services.ManagerServices
 {
-    public class GroupManager
+    public class GroupManager 
     {
         private const string BaseAddress = "http://186.109.86.251:5432/";
-        private const string SubAddress = "begin/api/v1/groups";
+        private const string SubAddress = "begin/api/v1/";
+        private const string Identifier = "groups";
+
+
+        /*private readonly GenericBaseClient<Group, string, string> _groupClient =
+            new GenericBaseClient<Group, string, string>(BaseAddress, SubAddress);*/
 
         public GroupManager(){ }
 
         public List<Group> GetGroupsByParams(
-            string authToken, 
-            string name = null, 
-            string cat = null, 
+            string authToken,
+            string name = null,
+            string cat = null,
             string limit = null,
             string sections = null
             )
@@ -30,10 +36,10 @@ namespace BeginMobile.Services.ManagerServices
 
                 client.BaseAddress = new Uri(BaseAddress);
 
-                var urlGetParams = "?q=" + name + "&cat=" + cat + "&limit=" + limit + "&sections=" + sections; 
+                var urlGetParams = "?q=" + name + "&cat=" + cat + "&limit=" + limit + "&sections=" + sections;
 
 
-                var response = client.GetAsync(SubAddress + urlGetParams).Result;
+                var response = client.GetAsync(SubAddress + Identifier + urlGetParams).Result;
                 var userJson = response.Content.ReadAsStringAsync().Result;
 
                 List<Group> groups;
@@ -68,7 +74,7 @@ namespace BeginMobile.Services.ManagerServices
                         urlId += "?sections=" + sections;
                     }
 
-                    var response = client.GetAsync(SubAddress + urlId).Result;
+                    var response = client.GetAsync(SubAddress + Identifier + urlId).Result;
                     var userJson = response.Content.ReadAsStringAsync().Result;
 
                     Group profileGroup;

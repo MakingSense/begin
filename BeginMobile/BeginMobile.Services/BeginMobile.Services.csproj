@@ -59,6 +59,7 @@
     <Compile Include="DTO\SubUser.cs" />
     <Compile Include="DTO\User.cs" />
     <Compile Include="DTO\UserActivity.cs" />
+    <Compile Include="Interfaces\GenericBaseClient.cs" />
     <Compile Include="ManagerServices\EventManager.cs" />
     <Compile Include="ManagerServices\GroupManager.cs" />
     <Compile Include="ManagerServices\LoginUserManager.cs" />
@@ -72,7 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
   <ItemGroup>

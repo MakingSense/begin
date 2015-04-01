@@ -34,7 +34,8 @@ namespace BeginMobile.Pages.Profile
             Label ownerName = new Label
             {
                 Text = "Public by " + eventInfo.Owner.NameSurname,
-                Style = App.Styles.SubtitleStyle
+                Style = App.Styles.SubtitleStyle,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
             };
 
             Image image = new Image
@@ -104,9 +105,11 @@ namespace BeginMobile.Pages.Profile
 
             var gridMainContent = new Grid()
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Padding = 5,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
                 RowDefinitions =
                 {
+                    new RowDefinition() {Height = GridLength.Auto},
                     new RowDefinition() {Height = GridLength.Auto},
                     new RowDefinition() {Height = GridLength.Auto},
                     new RowDefinition() {Height = GridLength.Auto},
@@ -125,26 +128,22 @@ namespace BeginMobile.Pages.Profile
                 Children =
                 {
                     lblTextCategories,
-                    lblTextContent
+                    lblCategories
                 }
             };
 
-            gridMainContent.Children.Add(image, 0, 0);
-            gridMainContent.Children.Add(lblTextDateAndHour, 0, 1);
-            gridMainContent.Children.Add(lblDates, 0, 2);
-            gridMainContent.Children.Add(lblTimes, 0, 3);
-            gridMainContent.Children.Add(stackLayoutSectionCategories, 0, 4);
-            gridMainContent.Children.Add(lblTextContent, 0, 5);
-            gridMainContent.Children.Add(lblEventDescription, 0, 6);
+            gridMainContent.Children.Add(ownerName, 0, 0);
+            gridMainContent.Children.Add(image, 0, 1);
+            gridMainContent.Children.Add(lblTextDateAndHour, 0, 2);
+            gridMainContent.Children.Add(lblDates, 0, 3);
+            gridMainContent.Children.Add(lblTimes, 0, 4);
+            gridMainContent.Children.Add(stackLayoutSectionCategories, 0, 5);
+            gridMainContent.Children.Add(lblTextContent, 0, 6);
+            gridMainContent.Children.Add(lblEventDescription, 0, 7);
 
             Content = new ScrollView
             {
-                Content = new StackLayout
-                    {
-                        Padding = 5,
-                        VerticalOptions = LayoutOptions.Start,
-                        Children = { ownerName, gridMainContent}
-                    }
+                Content = gridMainContent
             };
         }
 
