@@ -65,46 +65,24 @@ namespace BeginMobile.Pages.Profile
 
             listViewActivities.HasUnevenRows = true;
 
-            ScrollView scroll = new ScrollView()
-            {
-
-                Content = new StackLayout
+            StackLayout stackLayout = new StackLayout
                 {
                     Spacing = 2,
-                    VerticalOptions = LayoutOptions.Start,
-                    //HorizontalOptions = LayoutOptions.FillAndExpand,
-                    Children =
-                                  {
-                                    listViewActivities
-                                  }
-                }
-            };
-            StackLayout stackLayout = new StackLayout
+                    VerticalOptions = LayoutOptions.FillAndExpand,
+                    Orientation = StackOrientation.Vertical,
+                };
+            stackLayout.Children.Add(listViewActivities);
+
+            StackLayout mainStackLayout = new StackLayout
             {
                 Spacing = 2,
-                VerticalOptions = LayoutOptions.Start,
-                //HorizontalOptions = LayoutOptions.FillAndExpand,
-                Children =
-                                  {
-                                    scroll
-                                  }
+                Padding = App.Styles.LayoutThickness,
+                     
             };
 
+            mainStackLayout.Children.Add(stackLayout);
 
-            Content = stackLayout;
-
-
-            //Content = new ScrollView
-            //{               
-            //    Content = new StackLayout
-            //    {
-            //        VerticalOptions = LayoutOptions.StartAndExpand,
-            //        Orientation = StackOrientation.Vertical,                                     
-            //        Children = {                      
-            //            listViewActivities
-            //        }
-            //    }
-            //};
+            Content = mainStackLayout;
         }
     }
 }

@@ -34,14 +34,24 @@ namespace BeginMobile.Pages.Wall
                 ((ListView)sender).SelectedItem = null;
             };
 
-            _rLayoutMain = new RelativeLayout();
+            _rLayoutMain = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand};
             _rLayoutMain.Children.Add(_lViewWall,
                 xConstraint: Constraint.Constant(0),
                 yConstraint: Constraint.Constant(0),
                 widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
                 heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
-            Content = new ScrollView() { Content = _rLayoutMain };
+            //Content = new ScrollView() { Content = _rLayoutMain };
+            
+            Content = new StackLayout()
+            {
+                Spacing = 2,
+                Padding = App.Styles.LayoutThickness,
+                Children =
+                {
+                    _rLayoutMain
+                }
+            };
 
         }
 
