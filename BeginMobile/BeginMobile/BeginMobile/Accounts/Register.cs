@@ -9,6 +9,7 @@ using BeginMobile.Utils;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
 using BeginMobile.Interfaces;
+using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.Accounts
 {
@@ -29,7 +30,7 @@ namespace BeginMobile.Accounts
         private bool switchStatus = false;
         public Register(ILoginManager iLoginManager)
         {
-            Title = "Register";
+            Title = AppResources.RegisterFormTitle;
 
             Image logo = new Image
             {
@@ -38,23 +39,28 @@ namespace BeginMobile.Accounts
                     : ImageSource.FromFile("logotype.png"),
                 Aspect = Aspect.AspectFit,
             };
+
             _username = new Entry
             {
-                Placeholder = "Username"
+                Placeholder = AppResources.EntryUsernamePlaceholder
             };
+
             _fullName = new Entry
             {
-                Placeholder = "Full Name"
+                Placeholder = AppResources.EntryFullNamePlaceholder
             };
+
             _email = new Entry
             {
-                Placeholder = "Email"
+                Placeholder = AppResources.EntryEmailPlaceholder
             };
+
             _password = new Entry
             {
-                Placeholder = "Password",
+                Placeholder = AppResources.EntryPasswordPlaceholder,
                 IsPassword = true
             };
+
             _confirmPassword = new Entry
             {
                 Placeholder = "Confirm Password",
@@ -68,6 +74,7 @@ namespace BeginMobile.Accounts
                 Style = App.Styles.LinkButton,
                 TextColor = Color.FromHex("77D065")
             };
+
             _radio = new RadioButton
             {
                 Text = "I agree to the ",
@@ -94,7 +101,7 @@ namespace BeginMobile.Accounts
 
             var buttonRegister = new Button
             {
-                Text = "Register",
+                Text = AppResources.ButtonRegister,
                 Style = App.Styles.DefaultButton
 
             };
@@ -166,27 +173,8 @@ namespace BeginMobile.Accounts
 
                                     iLoginManager.ShowMainPage(loginUser);
                                 }
-
-                                //if(registerUser!=null){
-
-                                //    await DisplayAlert("Successfull!", "You've successfully registered.", "OK");
-
-                                //    var loginUser = new LoginUser()
-                                //    {
-                                //        AuthToken = registerUser.AuthToken,
-                                //        User = registerUser.User
-                                //    };
-
-                                //    App.Current.Properties["IsLoggedIn"] = true;
-                                //    App.Current.Properties["LoginUser"] = loginUser;
-
-                                //    iLoginManager.ShowMainPage(loginUser);
-                                //}
-                                //else
-                                //{
-                                //    await DisplayAlert("Error", "Username already exists. Please choose a different usename", "OK");
-                                //}
                             }
+
                             else
                             {
                                 await DisplayAlert("Validation Error",

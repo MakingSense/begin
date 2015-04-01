@@ -117,10 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="password" xml:space="preserve">
+  <data name="ButtonForgotPassword" xml:space="preserve">
+    <value>Dimenticato Contrassegno?</value>
+  </data>
+  <data name="ButtonLogin" xml:space="preserve">
+    <value>Accesso</value>
+  </data>
+  <data name="ButtonRegister" xml:space="preserve">
+    <value>Registratore</value>
+  </data>
+  <data name="EntryEmailPlaceholder" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="EntryFullNamePlaceholder" xml:space="preserve">
+    <value>Nome E Cognome</value>
+  </data>
+  <data name="EntryPasswordPlaceholder" xml:space="preserve">
     <value>Contrassegno</value>
   </data>
-  <data name="username" xml:space="preserve">
+  <data name="EntryUsernamePlaceholder" xml:space="preserve">
+    <value>Nome Utente</value>
+  </data>
+  <data name="LoginFormTitle" xml:space="preserve">
+    <value>Modulo Di Accesso</value>
+  </data>
+  <data name="PasswordPlaceholder" xml:space="preserve">
+    <value>Contrassegno</value>
+  </data>
+  <data name="RegisterFormTitle" xml:space="preserve">
+    <value>Registratore</value>
+  </data>
+  <data name="UsernamePlaceholder" xml:space="preserve">
     <value>Nome Utente</value>
   </data>
 </root>

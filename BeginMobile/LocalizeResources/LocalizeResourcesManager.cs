@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Xamarin.Forms;
 
-using Xamarin.Forms;
-
-namespace LocalizeResources
+namespace BeginMobile.LocalizeResources
 {
     public class LocalizeResourcesManager : ContentPage
     {

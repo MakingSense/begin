@@ -8,6 +8,7 @@ using BeginMobile.Utils;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
 using BeginMobile.Interfaces;
+using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.Accounts
 {
@@ -26,34 +27,34 @@ namespace BeginMobile.Accounts
                 Aspect = Aspect.AspectFit,
             };
 
-            Title = "Login Form";
+            Title = AppResources.LoginFormTitle;
             email = new Entry
             {
-                Placeholder = "Username",
+                Placeholder = AppResources.UsernamePlaceholder,
                 Keyboard = Keyboard.Email
             };
+
             password = new Entry
             {
-                Placeholder = "Password",
+                Placeholder = AppResources.PasswordPlaceholder,
                 IsPassword = true,
             };
 
             var buttonForgotPassword = new Button
             {
-                Text = "Forgot Password?",
+                Text = AppResources.ButtonForgotPassword,
                 Style = App.Styles.LinkButton,
             };
 
             var buttonLogin = new Button
             {
-                Text = "Login",
+                Text = AppResources.ButtonLogin,
                 Style = App.Styles.DefaultButton,
-
             };
 
             var buttonRegister = new Button
             {
-                Text = "Register",
+                Text = AppResources.ButtonRegister,
                 Style = App.Styles.DefaultButton,
             };
 
@@ -96,21 +97,20 @@ namespace BeginMobile.Accounts
             };
 
             Content = new StackLayout
-            {
-                Spacing = 20,
-                Padding = 50,
-                VerticalOptions = LayoutOptions.Center,
-                Children =
-                                  {
-                                      logo,
-                                      email,
-                                      password,
-                                      buttonLogin,
-                                      buttonForgotPassword,
-                                      buttonRegister
-                                  }
-            };
-            
+                      {
+                          Spacing = 20,
+                          Padding = 50,
+                          VerticalOptions = LayoutOptions.Center,
+                          Children =
+                          {
+                              logo,
+                              email,
+                              password,
+                              buttonLogin,
+                              buttonForgotPassword,
+                              buttonRegister
+                          }
+                      };
         }
 
         void OnTextChanged(object sender, EventArgs e)
