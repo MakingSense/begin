@@ -70,7 +70,7 @@ namespace BeginMobile.Pages.Wall
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
                 {
-                    lblName, lblExtraText, lblNameTwo, lblReason, lblDescription
+                    lblName, lblExtraText, lblNameTwo, lblReason
                 }
             };
 
@@ -80,6 +80,7 @@ namespace BeginMobile.Pages.Wall
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 RowDefinitions =
                 {
+                    new RowDefinition { Height = GridLength.Auto },
                     new RowDefinition { Height = GridLength.Auto },
                     new RowDefinition { Height = GridLength.Auto }
                 },
@@ -91,7 +92,8 @@ namespace BeginMobile.Pages.Wall
             };
 
             gridDetails.Children.Add(stackTopTitle, 0, 0);
-            gridDetails.Children.Add(lblDate, 0, 1);
+            gridDetails.Children.Add(lblDescription, 0, 1);
+            gridDetails.Children.Add(lblDate, 0, 2);
 
             var shopImage = new CircleImage()
             {

@@ -3,30 +3,37 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 using BeginMobile.Services.DTO;
+using BeginMobile.Services.Models;
 
 
 namespace BeginMobile.Pages.Profile
 {
     public class EventDetailInformation:ContentPage
     {
+        private ProfileEvent _profileEvent;
+        private const string AllCategories = "No Categories";
+        private const string TextCategories = "Categories";
+        private const string TextDateAndHour = "Date/Hour";
+        private const string TextContent= "Event Description";
 
         public EventDetailInformation(ProfileEvent eventInfo)
         {
-            Title = "Event Detail";
+            this.SetBinding(TitleProperty, "Name", stringFormat: "Event - {0}");
+
+            //var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            //_profileEvent = App.ProfileServices.GetEvent(currentUser.AuthToken, eventInfo.EventId);
+            _profileEvent = eventInfo;
+
+            if (_profileEvent == null)
+            {
+                return;
+            }
+
+            var profileEventViewModel = GetEvenViewModel(_profileEvent); 
 
             Label ownerName = new Label
             {
-                Text = "Public: " + eventInfo.Owner.NameSurname,
-                Style = App.Styles.SubtitleStyle
-            };
-            Label eventDay = new Label
-            {
-                Text = "Date: " + (eventInfo.StartDate.Split('-'))[2].ToString() + " FEBRARY " + (eventInfo.StartDate.Split('-'))[0].ToString(),
-                Style = App.Styles.SubtitleStyle
-            };
-            Label time = new Label
-            {
-                Text = "Time: " + eventInfo.StartTime,
+                Text = "Public by " + eventInfo.Owner.NameSurname,
                 Style = App.Styles.SubtitleStyle
             };
 
@@ -40,15 +47,123 @@ namespace BeginMobile.Pages.Profile
                               WidthRequest = 500,
                           };
 
+
+            var lblTextDateAndHour = new Label
+            {
+                YAlign = TextAlignment.End,
+                FontAttributes = FontAttributes.Bold,
+                Style = App.Styles.ListItemTextStyle,
+                Text = TextDateAndHour
+            }; 
+
+            var lblDates = new Label
+            {
+                YAlign = TextAlignment.End,
+                Style = App.Styles.ListItemDetailTextStyle,
+                Text= profileEventViewModel.TextDates
+            };
+
+            var lblTimes = new Label
+            {
+                YAlign = TextAlignment.End,
+                Style = App.Styles.ListItemDetailTextStyle,
+                Text= profileEventViewModel.TextTimes
+            };
+
+            var lblTextCategories = new Label
+            {
+                YAlign = TextAlignment.End,
+                FontAttributes = FontAttributes.Bold,
+                Style = App.Styles.ListItemTextStyle,
+                Text = TextCategories
+            }; 
+
+            var lblCategories = new Label
+            {
+                YAlign = TextAlignment.End,
+                Style = App.Styles.ListItemDetailTextStyle,
+                Text = AllCategories
+            };
+
+            var lblTextContent = new Label()
+                {
+                    YAlign = TextAlignment.End,
+                    Style = App.Styles.LabelLargeTextTitle,
+                    FontAttributes = FontAttributes.Bold,
+                    HorizontalOptions = LayoutOptions.Start,
+                    Text = TextContent
+                };
+
+            var lblEventDescription= new Label()
+                {
+                    YAlign = TextAlignment.End,
+                    Style = App.Styles.ListItemDetailTextStyle,
+                    Text = profileEventViewModel.EventDescription
+                };
+
+
+            var gridMainContent = new Grid()
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
+                {
+                    new RowDefinition() {Height = GridLength.Auto},
+                    new RowDefinition() {Height = GridLength.Auto},
+                    new RowDefinition() {Height = GridLength.Auto},
+                    new RowDefinition() {Height = GridLength.Auto},
+                    new RowDefinition() {Height = GridLength.Auto},
+                    new RowDefinition() {Height = GridLength.Auto},
+                    new RowDefinition() {Height = GridLength.Auto},
+                }
+            };
+
+
+            var stackLayoutSectionCategories = new StackLayout()
+            {
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.StartAndExpand,
+                Children =
+                {
+                    lblTextCategories,
+                    lblTextContent
+                }
+            };
+
+            gridMainContent.Children.Add(image, 0, 0);
+            gridMainContent.Children.Add(lblTextDateAndHour, 0, 1);
+            gridMainContent.Children.Add(lblDates, 0, 2);
+            gridMainContent.Children.Add(lblTimes, 0, 3);
+            gridMainContent.Children.Add(stackLayoutSectionCategories, 0, 4);
+            gridMainContent.Children.Add(lblTextContent, 0, 5);
+            gridMainContent.Children.Add(lblEventDescription, 0, 6);
+
             Content = new ScrollView
             {
                 Content = new StackLayout
                     {
-                        Padding= 10,
+                        Padding = 5,
                         VerticalOptions = LayoutOptions.Start,
-                        Children = { ownerName, eventDay, time, image }
+                        Children = { ownerName, gridMainContent}
                     }
             };
+        }
+
+        public EventViewModel GetEvenViewModel(ProfileEvent profileEvent)
+        {
+            {
+                var modelView = new EventViewModel()
+                {
+                    UserFullName = profileEvent.Owner.NameSurname,
+                    TextDates = profileEvent.StartDate + " to " + profileEvent.EndDate,
+                    TextTimes = profileEvent.StartTime + " - " + profileEvent.EndTime,
+                    Name = profileEvent.Name,
+                    Categories = AllCategories,
+                    EventDescription = profileEvent.Content,
+                };
+
+                return modelView;
+
+            }
         }
     }
 }
