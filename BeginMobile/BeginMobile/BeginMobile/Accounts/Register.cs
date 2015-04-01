@@ -63,7 +63,7 @@ namespace BeginMobile.Accounts
 
             _confirmPassword = new Entry
             {
-                Placeholder = "Confirm Password",
+                Placeholder = AppResources.EntryConfirmPasswordPlaceholder,
                 IsPassword = true
             };
 
@@ -108,7 +108,7 @@ namespace BeginMobile.Accounts
 
             var btCancel = new Button
             {
-                Text = "Cancel",
+                Text = AppResources.ButtonCancel,
                 Style = App.Styles.DefaultButton
             };
 

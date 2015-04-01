@@ -1,4 +1,5 @@
 ﻿using BeginMobile.Interfaces;
+using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages;
 using BeginMobile.Services.DTO;
 using System;
@@ -13,7 +14,7 @@ namespace BeginMobile.Menu
     {
         public HomePage(LoginUser loginUser)
         {
-            Title = "Home";
+            Title = AppResources.HomePageTitle;
 
             if (Device.OS != TargetPlatform.iOS)
                 Icon = null;

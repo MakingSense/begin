@@ -62,6 +62,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ButtonCancel {
+            get {
+                return ResourceManager.GetString("ButtonCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forgot Password?.
         /// </summary>
         public static string ButtonForgotPassword {
@@ -85,6 +94,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string ButtonRegister {
             get {
                 return ResourceManager.GetString("ButtonRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Password.
+        /// </summary>
+        public static string EntryConfirmPasswordPlaceholder {
+            get {
+                return ResourceManager.GetString("EntryConfirmPasswordPlaceholder", resourceCulture);
             }
         }
         
@@ -121,6 +139,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string EntryUsernamePlaceholder {
             get {
                 return ResourceManager.GetString("EntryUsernamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string HomePageTitle {
+            get {
+                return ResourceManager.GetString("HomePageTitle", resourceCulture);
             }
         }
         
