@@ -5,6 +5,7 @@ using BeginMobile.Menu;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services;
 using BeginMobile.Utils;
+using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile
 {
@@ -17,6 +18,12 @@ namespace BeginMobile
 		{
 		    Current = this;
 		    loginManager = this;
+
+		    if (Device.OS != TargetPlatform.WinPhone)
+		    {
+		        AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
+		    }
+
 
             var isLoggedIn = Properties.ContainsKey("IsLoggedIn") ? (bool)Properties["IsLoggedIn"] : false;
             MainPage = new LoginModalPage(this);

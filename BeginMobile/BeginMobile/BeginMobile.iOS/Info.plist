@@ -42,5 +42,11 @@
 	<string>1.0</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleBlackOpaque</string>
+	<key>CFBundleLocalizations</key>
+<array>
+   <string>it</string>
+</array>
+<key>CFBundleDevelopmentRegion</key>
+<string>en</string>
 </dict>
 </plist>
