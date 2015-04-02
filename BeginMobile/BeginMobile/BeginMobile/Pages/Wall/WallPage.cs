@@ -9,39 +9,37 @@ namespace BeginMobile.Pages.Wall
 {
     public class WallPage : TabContent
     {
-        private ListView _lViewWall;
-        private RelativeLayout _rLayoutMain;
+        private ListView _listViewWall;
+        private RelativeLayout _relativeLayoutMain;
 
-        public WallPage(string title, string iconImg)
-            : base(title, iconImg)
+        public WallPage(string title, string iconImage)
+            : base(title, iconImage)
         {
             //Do something
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileMeWall profileShop = App.ProfileServices.GetWall(currentUser.AuthToken);
-            var listWall = NewListWall(profileShop.ListOfWall);
+            var listProfileWall = ListBeginWallViewModel(profileShop.ListOfWall);
 
-            _lViewWall = new ListView
+            _listViewWall = new ListView
                          {
                              StyleId = "WallList"
                          };
 
-            _lViewWall.HasUnevenRows = true;
-            _lViewWall.ItemTemplate = new DataTemplate(typeof(WallItemCell));
-            _lViewWall.ItemsSource = listWall;
-            _lViewWall.ItemSelected += async (sender, e) =>
+            _listViewWall.HasUnevenRows = true;
+            _listViewWall.ItemTemplate = new DataTemplate(typeof(WallItemCell));
+            _listViewWall.ItemsSource = listProfileWall;
+            _listViewWall.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null) return; 
                 ((ListView)sender).SelectedItem = null;
             };
 
-            _rLayoutMain = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand};
-            _rLayoutMain.Children.Add(_lViewWall,
+            _relativeLayoutMain = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand};
+            _relativeLayoutMain.Children.Add(_listViewWall,
                 xConstraint: Constraint.Constant(0),
                 yConstraint: Constraint.Constant(0),
                 widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
                 heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
-
-            //Content = new ScrollView() { Content = _rLayoutMain };
             
             Content = new StackLayout()
             {
@@ -49,13 +47,13 @@ namespace BeginMobile.Pages.Wall
                 Padding = App.Styles.LayoutThickness,
                 Children =
                 {
-                    _rLayoutMain
+                    _relativeLayoutMain
                 }
             };
 
         }
 
-        private List<BeginWallViewModel> NewListWall(List<BeginMobile.Services.DTO.Wall> oldListWall)
+        private List<BeginWallViewModel> ListBeginWallViewModel(List<BeginMobile.Services.DTO.Wall> oldListWall)
         {
             List<BeginWallViewModel> resultList = null; 
 
@@ -65,7 +63,7 @@ namespace BeginMobile.Pages.Wall
 
                 foreach (var wall in oldListWall)
                 {
-                    var modelItem = GetModel(wall);
+                    var modelItem = GetBeginWallViewModel(wall);
                     resultList.Add(modelItem);
                 }
             }
@@ -73,7 +71,7 @@ namespace BeginMobile.Pages.Wall
             return resultList;
         }
 
-        private BeginWallViewModel GetModel(BeginMobile.Services.DTO.Wall wallItem)
+        private BeginWallViewModel GetBeginWallViewModel(BeginMobile.Services.DTO.Wall wallItem)
         {
             var beginWall = new BeginWallViewModel();
 

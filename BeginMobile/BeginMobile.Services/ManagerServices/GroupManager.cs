@@ -17,8 +17,8 @@ namespace BeginMobile.Services.ManagerServices
         private const string Identifier = "groups";
 
 
-        /*private readonly GenericBaseClient<Group, string, string> _groupClient =
-            new GenericBaseClient<Group, string, string>(BaseAddress, SubAddress);*/
+        private readonly GenericBaseClient<Group> _groupClient =
+            new GenericBaseClient<Group>(BaseAddress, SubAddress);
 
         public GroupManager(){ }
 
@@ -30,70 +30,34 @@ namespace BeginMobile.Services.ManagerServices
             string sections = null
             )
         {
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-
-                client.BaseAddress = new Uri(BaseAddress);
-
                 var urlGetParams = "?q=" + name + "&cat=" + cat + "&limit=" + limit + "&sections=" + sections;
-
-
-                var response = client.GetAsync(SubAddress + Identifier + urlGetParams).Result;
-                var userJson = response.Content.ReadAsStringAsync().Result;
-
-                List<Group> groups;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    groups = JsonConvert.DeserializeObject<List<Group>>(userJson);
-                }
-                else
-                {
-                    groups = JsonConvert.DeserializeObject<List<Group>>(userJson);
-                }
-
-                return groups;
+                return _groupClient.GetListAsync(authToken, Identifier, urlGetParams).ToList();
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
 
         public Group GetGroupById(string authToken, string groupId, string sections = null)
         {
-            using (var client = new HttpClient())
+            try
             {
-                try
+                var urlId = "/" + groupId;
+
+                if (!string.IsNullOrEmpty(sections))
                 {
-                    client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-
-                    client.BaseAddress = new Uri(BaseAddress);
-
-                    var urlId = "/" + groupId;
-
-                    if (!string.IsNullOrEmpty(sections))
-                    {
-                        urlId += "?sections=" + sections;
-                    }
-
-                    var response = client.GetAsync(SubAddress + Identifier + urlId).Result;
-                    var userJson = response.Content.ReadAsStringAsync().Result;
-
-                    Group profileGroup;
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        profileGroup = JsonConvert.DeserializeObject<Group>(userJson);
-                    }
-                    else
-                    {
-                        profileGroup = JsonConvert.DeserializeObject<Group>(userJson);
-                    }
-
-                    return profileGroup;
+                    urlId += "?sections=" + sections;
                 }
-                catch (Exception ex)
-                {
-                    return null;
-                }
+
+                return _groupClient.GetAsync(authToken, Identifier, urlId);
+
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
 
