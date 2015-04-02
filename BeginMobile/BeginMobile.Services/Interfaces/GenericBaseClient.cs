@@ -10,70 +10,41 @@ using System.Collections;
 
 namespace BeginMobile.Services.Interfaces
 {
-    public class GenericBaseClient<T, TResourceIdentifier, TUrlParams> where T : class
+    public class GenericBaseClient<T> where T : class
     {
-        private HttpClient _httpClient;
-        protected readonly string ServiceBaseAddress;
+        private readonly string _serviceBaseAddress;
         private readonly string _subAddress;
-        private bool _disposed = false;
 
         public GenericBaseClient(string baseAddress, string subAddress)
         {
-            ServiceBaseAddress = baseAddress;
+            _serviceBaseAddress = baseAddress;
             _subAddress = subAddress;
-            _httpClient = MakeHttpClient(ServiceBaseAddress);
-        }
-
-        protected virtual HttpClient MakeHttpClient(string serviceBaseAddress)
-        {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(serviceBaseAddress);
-
-            return _httpClient;
-        }
-
-        public void SetAuthToken(string authtoken)
-        {
-            if (_httpClient != null)
-            {
-                if (!string.IsNullOrEmpty(authtoken))
-                {
-                    _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authtoken);
-                }
-            }
-            
-        }
-
-        public void RemoveAuthToken()
-        {
-            if (_httpClient != null)
-            {
-                if (_httpClient.DefaultRequestHeaders.Contains("authtoken"))
-                {
-                    _httpClient.DefaultRequestHeaders.Remove("authtoken");
-                }
-            }
         }
 
         /// <summary>
         /// Gets the asynchronous.
         /// </summary>
         /// <param name="identifier">The identifier examples user, groups, etc</param>
-        /// <param name="urlParams">The URL parameters examples '?user=user1' </param>
-        /// <returns>return class T</returns>
-        public T GetAsync(TResourceIdentifier identifier, TUrlParams urlParams)
+        /// <param name="urlParams">The URL parameters examples '?user=user1'</param>
+        /// <param name="authToken">The authentication token.</param>
+        public T GetAsync(string authToken, string identifier, string urlParams)
         {
-            T profileInformationGroups = null;
-            var response = _httpClient.GetAsync(_subAddress + identifier + urlParams).Result;
-
-            if (response.IsSuccessStatusCode)
+            using (var httpClient = new HttpClient())
             {
-                var userJson = response.Content.ReadAsStringAsync().Result;
-                profileInformationGroups = JsonConvert.DeserializeObject<T>(userJson);
-            }
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
 
-            RemoveAuthToken();
-            return profileInformationGroups;
+                T profileInformationGroups = null;
+                var response = httpClient.GetAsync(_subAddress + identifier + urlParams).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var userJson = response.Content.ReadAsStringAsync().Result;
+                    profileInformationGroups = JsonConvert.DeserializeObject<T>(userJson);
+                }
+
+                return profileInformationGroups;
+            }
         }
 
         /// <summary>
@@ -82,45 +53,70 @@ namespace BeginMobile.Services.Interfaces
         /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
         /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
         /// <returns></returns>
-        public T PostAsync(FormUrlEncodedContent content, TResourceIdentifier addressSuffix)
+        public T PostAsync(FormUrlEncodedContent content, string addressSuffix)
         {
-            T result = null;
-
-            var response = _httpClient.PostAsync(_subAddress + addressSuffix.ToString(), content).Result;
-            var userJson = response.Content.ReadAsStringAsync().Result;
-
-            if (response.IsSuccessStatusCode)
+            using (var httpClient = new HttpClient())
             {
-                result = JsonConvert.DeserializeObject<T>(userJson);
-            }
+                T result = null;
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
 
-            return result;
+                var response = httpClient.PostAsync(_subAddress + addressSuffix, content).Result;
+                var userJson = response.Content.ReadAsStringAsync().Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    result = JsonConvert.DeserializeObject<T>(userJson);
+                }
+
+                return result;
+            }
         }
 
         /// <summary>
-        /// Gets the list asynchronous).
+        /// Gets the list asynchronous.
         /// </summary>
         /// <param name="identifier">The identifier examples user, groups, etc</param>
-        /// <param name="urlParams">The URL parameters examples '?user=user1' </param>
-        /// <returns>return class T</returns>
-        public IEnumerable<T> GetListAsync(TResourceIdentifier identifier, TUrlParams urlParams)
+        /// <param name="urlParams">The URL parameters examples '?user=user1'</param>
+        /// <param name="authToken">The authentication token.</param>
+        public IEnumerable<T> GetListAsync(string authToken, string identifier, string urlParams)
         {
-            IEnumerable<T> groups;
-
-            var response = _httpClient.GetAsync(_subAddress + identifier.ToString() + urlParams.ToString()).Result;
-            var userJson = response.Content.ReadAsStringAsync().Result;
-
-            if (response.IsSuccessStatusCode)
+            using (var httpClient = new HttpClient())
             {
-                groups = JsonConvert.DeserializeObject<List<T>>(userJson);
-            }
-            else
-            {
-                groups = JsonConvert.DeserializeObject<List<T>>(userJson);
-            }
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
 
-            RemoveAuthToken();
-            return groups;
+                var response = httpClient.GetAsync(_subAddress + identifier + urlParams).Result;
+                var userJson = response.Content.ReadAsStringAsync().Result;
+
+                return JsonConvert.DeserializeObject<List<T>>(userJson);
+            }
+        }
+
+
+        /// <summary>
+        /// Posts the asynchronous.
+        /// </summary>
+        /// <param name="authToken">The authentication token.</param>
+        /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
+        /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
+        public T PostAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                T result = null;
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+
+                var response = httpClient.PostAsync(_subAddress + addressSuffix, content).Result;
+                var userJson = response.Content.ReadAsStringAsync().Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    result = JsonConvert.DeserializeObject<T>(userJson);
+                }
+
+                return result;
+            }
         }
     }
 }

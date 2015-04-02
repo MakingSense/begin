@@ -14,63 +14,60 @@ namespace BeginMobile.Pages.Wall
         public WallItemCell()
         {
             //Do something
-
-            var obj = (BeginMobile.Services.DTO.Wall)this.BindingContext;
-
-            var lblName = new Label()
+            var labelName = new Label()
                           {
                               YAlign = TextAlignment.End,
                               FontAttributes = FontAttributes.Bold,
                               Style = App.Styles.ListItemTextStyle
                           };
-            lblName.SetBinding(Label.TextProperty, "DisplayName");
+            labelName.SetBinding(Label.TextProperty, "DisplayName");
 
-            var lblExtraText = new Label()
+            var labelExtraText = new Label()
                                {
                                    YAlign = TextAlignment.End,
                                    Style = App.Styles.ListItemDetailTextStyle,
                                };
-            lblExtraText.SetBinding(Label.TextProperty, "ExtraText");
+            labelExtraText.SetBinding(Label.TextProperty, "ExtraText");
 
-            var lblNameTwo = new Label()
+            var labelNameTwo = new Label()
             {
                 YAlign = TextAlignment.End,
                 Style = App.Styles.ListItemTextStyle,
                 FontAttributes = FontAttributes.Bold,
             };
-            lblNameTwo.SetBinding(Label.TextProperty, "DisplayNameTwo");
+            labelNameTwo.SetBinding(Label.TextProperty, "DisplayNameTwo");
 
-            var lblReason = new Label()
+            var labelReason = new Label()
                             {
                                 YAlign = TextAlignment.End,
                                 Style = App.Styles.ListItemTextStyle,
                             };
-            lblReason.SetBinding(Label.TextProperty, "Reason");
+            labelReason.SetBinding(Label.TextProperty, "Reason");
 
-            var lblDescription = new Label()
+            var labelDescription = new Label()
                                  {
                                      YAlign = TextAlignment.End,
                                      Style = App.Styles.ListItemDetailTextStyle
                                  };
 
-            lblDescription.SetBinding(Label.TextProperty, "Description");
+            labelDescription.SetBinding(Label.TextProperty, "Description");
 
-            var lblDate = new Label()
+            var labelDate = new Label()
                           {
                               YAlign = TextAlignment.End,
                               Style = App.Styles.ListItemDetailTextStyle
                           };
 
-            lblDate.SetBinding(Label.TextProperty, "Date");
+            labelDate.SetBinding(Label.TextProperty, "Date");
 
 
-            var stackTopTitle = new StackLayout()
+            var stackLayoutTopTitle = new StackLayout()
             {
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
                 {
-                    lblName, lblExtraText, lblNameTwo, lblReason
+                    labelName, labelExtraText, labelNameTwo, labelReason
                 }
             };
 
@@ -91,11 +88,11 @@ namespace BeginMobile.Pages.Wall
                 }
             };
 
-            gridDetails.Children.Add(stackTopTitle, 0, 0);
-            gridDetails.Children.Add(lblDescription, 0, 1);
-            gridDetails.Children.Add(lblDate, 0, 2);
+            gridDetails.Children.Add(stackLayoutTopTitle, 0, 0);
+            gridDetails.Children.Add(labelDescription, 0, 1);
+            gridDetails.Children.Add(labelDate, 0, 2);
 
-            var shopImage = new CircleImage()
+            var circleImageShop = new CircleImage()
             {
                 BorderColor = Device.OnPlatform<Color>(iOS: Color.Black, Android: Color.White, WinPhone: Color.White),
                 BorderThickness = Device.OnPlatform<int>(iOS: 2, Android: 3, WinPhone: 3),
@@ -107,7 +104,7 @@ namespace BeginMobile.Pages.Wall
                 Source = UserImage
             };
 
-            var starImage = new Image()
+            var imageStar = new Image()
             {
                 Aspect = Aspect.AspectFit,
                 VerticalOptions = LayoutOptions.Start,
@@ -115,17 +112,17 @@ namespace BeginMobile.Pages.Wall
             };
 
 
-            var layoutItem = new StackLayout()
+            var layoutStackItem = new StackLayout()
             {
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
                 {
-                    shopImage, gridDetails, starImage
+                    circleImageShop, gridDetails, imageStar
                 }
             };
 
-            View = layoutItem;
+            View = layoutStackItem;
         }
     }
 }

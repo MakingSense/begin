@@ -39,16 +39,19 @@ namespace BeginMobile.Accounts
                 var updateProfileResponse =
                     loginUserManager.UpdateProfile(_nameSurname.Text, currentUser.AuthToken);
 
-                if (updateProfileResponse == true)
-                {
-                    await this.DisplayAlert("Successfuly updated!", "Your profile has been updated successfuly", "Ok");
-                    await this.Navigation.PopToRootAsync();
-                }
-                else
-                {
-                    await DisplayAlert("Server Error", "An error happened on the server", "Ok");
-                    await this.Navigation.PopToRootAsync();
-                }
+                await this.DisplayAlert("Successfuly updated!", "Your profile has been updated successfuly", "Ok");
+                await this.Navigation.PopToRootAsync();
+
+                //if (updateProfileResponse != null)
+                //{
+                //    await this.DisplayAlert("Successfuly updated!", "Your profile has been updated successfuly", "Ok");
+                //    await this.Navigation.PopToRootAsync();
+                //}
+                //else
+                //{
+                //    await DisplayAlert("Server Error", "An error happened on the server", "Ok");
+                //    await this.Navigation.PopToRootAsync();
+                //}
             };
 
             var mainLayout = new StackLayout
