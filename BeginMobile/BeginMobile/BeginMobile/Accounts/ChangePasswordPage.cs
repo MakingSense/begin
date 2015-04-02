@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xamarin.Forms;
+﻿using System.Linq;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
-using BeginMobile.Utils;
+using Xamarin.Forms;
 
 namespace BeginMobile.Accounts
 {
     public class ChangePasswordPage : ContentPage
     {
-        private Entry currentPassword;
-        private Entry newPassword;
-        private Entry repeatNewPassword;
-        private Button buttonChangePassword;
+        private readonly Entry _entryCurrentPassword;
+        private readonly Entry _entryNewPassword;
+        private readonly Entry _entryRepeatNewPassword;
 
         public ChangePasswordPage()
         {
@@ -23,73 +18,68 @@ namespace BeginMobile.Accounts
 
             Title = "Change your Password";
 
-            currentPassword = new Entry
+            _entryCurrentPassword = new Entry
             {
                 Placeholder = "Password",
                 IsPassword = true,
             };
 
-            newPassword = new Entry
+            _entryNewPassword = new Entry
             {
                 Placeholder = "New Password",
                 IsPassword = true,
             };
 
-            repeatNewPassword = new Entry
+            _entryRepeatNewPassword = new Entry
             {
                 Placeholder = "Confirm New Password",
                 IsPassword = true,
             };
 
-            buttonChangePassword = new Button
-            {
-                Text = "Send",
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = App.Styles.DefaultButton
-            };
+            var buttonChangePassword = new Button
+                                           {
+                                               Text = "Send",
+                                               HorizontalOptions = LayoutOptions.FillAndExpand,
+                                               Style = App.Styles.DefaultButton
+                                           };
 
-            buttonChangePassword.Clicked += async (s, e) =>
+            buttonChangePassword.Clicked += async (sender, eventArgs) =>
             {
                 var changePasswordResponse =
-                    loginUserManager.ChangeYourPassword(currentPassword.Text, newPassword.Text, repeatNewPassword.Text, currentUser.AuthToken);
+                    loginUserManager.ChangeYourPassword(_entryCurrentPassword.Text, _entryNewPassword.Text, _entryRepeatNewPassword.Text, currentUser.AuthToken);
 
                 if (changePasswordResponse != null)
                 {
-                    var messageErrors = "";
-
                     if (changePasswordResponse.Errors != null)
                     {
-                        foreach (var error in changePasswordResponse.Errors)
-                        {
-                            messageErrors += error.Label + "\n";
-                        }
+                        var messageErrors = changePasswordResponse.Errors.Aggregate("", (current, error) => current + "\n");
                         await DisplayAlert("Error", messageErrors, "Re-try");
-                        currentPassword.Text = "";
-                        newPassword.Text = "";
-                        repeatNewPassword.Text = "";
+                        _entryCurrentPassword.Text = "";
+                        _entryNewPassword.Text = "";
+                        _entryRepeatNewPassword.Text = "";
                     }
                     else
                     {
                         await DisplayAlert("Server Error", "An error happened on the server", "Ok");
-                        await this.Navigation.PopToRootAsync();
+                        await Navigation.PopToRootAsync();
                     }
                 }
                 else
                 {
-                    await this.DisplayAlert("Successfuly changed!", "Your password has been changed successfuly", "Ok");
-                    await this.Navigation.PopToRootAsync();
+                    await DisplayAlert("Successfuly changed!", "Your password has been changed successfuly", "Ok");
+                    await Navigation.PopToRootAsync();
                 }
             };
 
-            StackLayout mainLayout = new StackLayout
+            var mainLayout = new StackLayout
             {
                 Spacing = 20,
-                Padding = 50,
+                Padding = App.Styles.LayoutThickness,
                 VerticalOptions = LayoutOptions.Start,
                 Orientation = StackOrientation.Vertical,
                 Children =
                 {
-                    currentPassword, newPassword, repeatNewPassword, buttonChangePassword
+                    _entryCurrentPassword, _entryNewPassword, _entryRepeatNewPassword, buttonChangePassword
                 }
             };
 

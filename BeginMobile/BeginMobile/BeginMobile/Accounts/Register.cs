@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Xamarin.Forms;
 using System.Text.RegularExpressions;
-using BeginMobile.Pages;
-using BeginMobile.Utils;
-using BeginMobile.Services.DTO;
-using BeginMobile.Services.ManagerServices;
 using BeginMobile.Interfaces;
 using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Services.DTO;
+using BeginMobile.Services.ManagerServices;
+using Xamarin.Forms;
 
 namespace BeginMobile.Accounts
 {
@@ -19,20 +15,17 @@ namespace BeginMobile.Accounts
             @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
             @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
 
-        private readonly Entry _username;
-        private readonly Entry _fullName;
-        private readonly Entry _email;
-        private readonly Entry _password;
-        private readonly Entry _confirmPassword;
-        private readonly RadioButton _radio;
-        private Switch switcher;
-        private Label labelSwitcher;
-        private bool switchStatus = false;
+        private readonly Entry _entryUsername;
+        private readonly Entry _entryFullName;
+        private readonly Entry _entryEmail;
+        private readonly Entry _entryPassword;
+        private readonly Entry _entryConfirmPassword;
+        private bool _switchStatus;
         public Register(ILoginManager iLoginManager)
         {
-            Title = AppResources.RegisterFormTitle;
+            if (AppResources.RegisterFormTitle != null) Title = AppResources.RegisterFormTitle;
 
-            Image logo = new Image
+            var imageLogo = new Image
             {
                 Source = Device.OS == TargetPlatform.iOS
                     ? ImageSource.FromFile("logotype.png")
@@ -40,28 +33,28 @@ namespace BeginMobile.Accounts
                 Aspect = Aspect.AspectFit,
             };
 
-            _username = new Entry
+            _entryUsername = new Entry
             {
                 Placeholder = AppResources.EntryUsernamePlaceholder
             };
 
-            _fullName = new Entry
+            _entryFullName = new Entry
             {
                 Placeholder = AppResources.EntryFullNamePlaceholder
             };
 
-            _email = new Entry
+            _entryEmail = new Entry
             {
                 Placeholder = AppResources.EntryEmailPlaceholder
             };
 
-            _password = new Entry
+            _entryPassword = new Entry
             {
                 Placeholder = AppResources.EntryPasswordPlaceholder,
                 IsPassword = true
             };
 
-            _confirmPassword = new Entry
+            _entryConfirmPassword = new Entry
             {
                 Placeholder = AppResources.EntryConfirmPasswordPlaceholder,
                 IsPassword = true
@@ -75,29 +68,8 @@ namespace BeginMobile.Accounts
                 TextColor = Color.FromHex("77D065")
             };
 
-            _radio = new RadioButton
-            {
-                Text = "I agree to the ",
-                StyleId = "#FF0000"
-            };
-
-            //Switch
-            labelSwitcher = new Label
-            {
-                Text = "I agree to the ",
-            };
-            switcher = new Switch();
-            switcher.Toggled += (se, ev) =>
-            {
-                if (ev.Value == true)
-                {
-                    switchStatus = true;
-                }
-                else
-                {
-                    switchStatus = false;
-                }
-            };
+            var switchTermsAndConditions = new Switch();
+            switchTermsAndConditions.Toggled += (sender, eventArgs) => { _switchStatus = eventArgs != null && eventArgs.Value; };
 
             var buttonRegister = new Button
             {
@@ -106,28 +78,28 @@ namespace BeginMobile.Accounts
 
             };
 
-            var btCancel = new Button
+            var buttonCancel = new Button
             {
                 Text = AppResources.ButtonCancel,
                 Style = App.Styles.DefaultButton
             };
 
-            btCancel.Clicked += (sender, e) =>
+            buttonCancel.Clicked += (sender, eventArgs) =>
             {
                 MessagingCenter.Send<ContentPage>(this, "Login");
             };
 
-            buttonTermsAndConditions.Clicked += (s, e) =>
+            buttonTermsAndConditions.Clicked += (senedr, eventArgs) =>
             {
                 MessagingCenter.Send<ContentPage>(this, "TermsAndConditions");
             };
 
-            buttonRegister.Clicked += async (s, e) =>
+            buttonRegister.Clicked += async (sender, eventArgs) =>
             {
-                if (String.IsNullOrEmpty(_fullName.Text) ||
-                    String.IsNullOrEmpty(_email.Text)
-                    || String.IsNullOrEmpty(_password.Text)
-                    || String.IsNullOrEmpty(_confirmPassword.Text)
+                if (String.IsNullOrEmpty(_entryFullName.Text) ||
+                    String.IsNullOrEmpty(_entryEmail.Text)
+                    || String.IsNullOrEmpty(_entryPassword.Text)
+                    || String.IsNullOrEmpty(_entryConfirmPassword.Text)
                     )
                 {
                     await DisplayAlert("Validation Error",
@@ -136,25 +108,21 @@ namespace BeginMobile.Accounts
                 }
                 else
                 {
-                    var isEmailValid = Regex.IsMatch(_email.Text, EmailRegex);
+                    var isEmailValid = Regex.IsMatch(_entryEmail.Text, EmailRegex);
                     if (isEmailValid)
                     {
-                        if (_password.Text.Equals(_confirmPassword.Text))
+                        if (_entryPassword.Text.Equals(_entryConfirmPassword.Text))
                         {
-                            if (switchStatus)
+                            if (_switchStatus)
                             {
-                                LoginUserManager LoginUserManager = new LoginUserManager();
-                                RegisterUser registerUser = LoginUserManager.Register(_username.Text, _email.Text,
-                                    _password.Text, _fullName.Text);
+                                var loginUserManager = new LoginUserManager();
+                                var registerUser = loginUserManager.Register(_entryUsername.Text, _entryEmail.Text,
+                                    _entryPassword.Text, _entryFullName.Text);
 
                                 if (registerUser.Errors != null)
                                 {
-                                    string errorMessages = "";
+                                    var errorMessages = registerUser.Errors.Aggregate("", (current, error) => current + (error.Label + "\n"));
 
-                                    foreach (var error in registerUser.Errors)
-                                    {
-                                        errorMessages += error.Label + "\n";
-                                    }
                                     await DisplayAlert("Error", errorMessages, "OK");
 
                                 }
@@ -162,8 +130,8 @@ namespace BeginMobile.Accounts
                                 {
                                     await DisplayAlert("Successfull!", "You've successfully registered.", "OK");
 
-                                    var loginUser = new LoginUser()
-                                    {
+                                    var loginUser = new LoginUser
+                                                    {
                                         AuthToken = registerUser.AuthToken,
                                         User = registerUser.User
                                     };
@@ -198,11 +166,11 @@ namespace BeginMobile.Accounts
                 }
             };
 
-            var layoutRadioButton = new StackLayout
+            var stackLayoutSwitch = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
                 Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 5),
-                Children = { buttonTermsAndConditions, switcher }
+                Children = { buttonTermsAndConditions, switchTermsAndConditions }
             };
 
 
@@ -214,16 +182,16 @@ namespace BeginMobile.Accounts
                 Padding = 10,
                 VerticalOptions = LayoutOptions.Center,
                 Children =
-                                  {    logo,                                  
-                                      _username,
-                                      _fullName,
-                                      _email,
-                                      _password,
-                                      _confirmPassword,
-                                      _confirmPassword,
-                                      layoutRadioButton,
+                                  {    imageLogo,                                  
+                                      _entryUsername,
+                                      _entryFullName,
+                                      _entryEmail,
+                                      _entryPassword,
+                                      _entryConfirmPassword,
+                                      _entryConfirmPassword,
+                                      stackLayoutSwitch,
                                       buttonRegister,
-                                      btCancel
+                                      buttonCancel
                                   }
             }
             };

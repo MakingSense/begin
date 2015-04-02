@@ -1,27 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xamarin.Forms;
-using ImageCircle.Forms.Plugin.Abstractions;
-using BeginMobile.Pages;
 using BeginMobile.Accounts;
-using BeginMobile.MenuProfile;
-using BeginMobile.Utils;
+using BeginMobile.Pages;
 using BeginMobile.Pages.Profile;
 using BeginMobile.Services.DTO;
-using BeginMobile.Interfaces;
+using Xamarin.Forms;
 
 namespace BeginMobile.Menu
 {
     public class Menu : ContentPage
     {
-        private const string DefaultUri = "http://www.americanpresidents.org/images/01_150.gif";
+        private const string ProfileMenuIcon = "userprofile.png";
+        private const string KnocksMenuIcon = "padlock.png";
 
-        private const string pProfileMenuIcon = "userprofile.png";
-        private const string knocks = "padlock.png";
-
-        private string pUserDefault
+        private static string ProfileUserDefault
         {
             get
             {
@@ -37,67 +29,128 @@ namespace BeginMobile.Menu
             BackgroundColor = App.Styles.MenuBackground;
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
 
-            bool isLoadByLogin = false;
+            const bool isLoadByLogin = false;
             _onToggleRequest = onToggleRequest;
 
             Title = "Menu";
             Icon = Device.OS == TargetPlatform.iOS ? "More.png" : null;
-            var listData = new List<ConfigurationMenuItems>
+            var listMenuData = new List<MenuItemViewModel>
             {              
-                new ConfigurationMenuItems { Icon = pUserDefault, OptionName = currentUser.User.DisplayName, OptionDetail= currentUser.User.Email}
+                new MenuItemViewModel { Icon = ProfileUserDefault, OptionName = currentUser.User.DisplayName, OptionDetail= currentUser.User.Email}
             };
-            var iconTemplate = new DataTemplate(typeof(MenuIconTemplate));
-            var userImageListView = new ListView
+            var dataTemplateListViewMenuIcon = new DataTemplate(typeof(MenuIconDataTemplate));
+            var listViewMenuIcon = new ListView
+                                    {
+                                        VerticalOptions = LayoutOptions.Start,
+                                        ItemsSource = listMenuData,
+                                        ItemTemplate = dataTemplateListViewMenuIcon,
+                                        BackgroundColor = App.Styles.MenuBackground,
+                                        HeightRequest = 180,
+                                        HasUnevenRows = true
+                                    };
+
+
+            var dataTemplateMenuOptions = new DataTemplate(typeof(MenuDataTemplate));
+
+            var listOptionsData = new List<MenuItemViewModel>
+                                  {
+                                      new MenuItemViewModel
+                                      {
+                                          Icon =
+                                              ProfileMenuIcon,
+                                          OptionName =
+                                              MenuItemsNames
+                                              .Profile
+                                      },
+                                      new MenuItemViewModel
+                                      {
+                                          Icon = KnocksMenuIcon,
+                                          OptionName =
+                                              MenuItemsNames
+                                              .Knocks
+                                      },
+                                      new MenuItemViewModel
+                                      {
+                                          Icon = "",
+                                          OptionName = ""
+                                      },
+                                      new MenuItemViewModel
+                                      {
+                                          Icon = "",
+                                          OptionName =
+                                              MenuItemsNames
+                                              .Logout
+                                      },
+                                      new MenuItemViewModel
+                                      {
+                                          Icon = "",
+                                          OptionName =
+                                              MenuItemsNames
+                                              .ChangePassword
+                                      },
+                                      new MenuItemViewModel
+                                      {
+                                          Icon = "",
+                                          OptionName =
+                                              MenuItemsNames
+                                              .About
+                                      },
+                                      new MenuItemViewModel
+                                      {
+                                          Icon = "",
+                                          OptionName =
+                                              MenuItemsNames
+                                              .Privacy
+                                      },
+                                      new MenuItemViewModel
+                                      {
+                                          Icon = "",
+                                          OptionName =
+                                              MenuItemsNames
+                                              .HelpCenter
+                                      },
+                                      new MenuItemViewModel
+                                      {
+                                          Icon = "",
+                                          OptionName =
+                                              MenuItemsNames
+                                              .TermsAndConditions
+                                      },
+                                      new MenuItemViewModel
+                                      {
+                                          Icon = "",
+                                          OptionName =
+                                              MenuItemsNames
+                                              .UpdateProfile
+                                      }
+                                  };
+
+            var listViewMenuOptions = new ListView
             {
                 VerticalOptions = LayoutOptions.Start,
-                ItemsSource = listData,
-                ItemTemplate = iconTemplate,
-                BackgroundColor = App.Styles.MenuBackground,
-                HeightRequest = 180,
-            };
-            userImageListView.HasUnevenRows = true;
-
-
-            var cell = new DataTemplate(typeof(CustomMenuItemTemplateCell));
-
-            var listButtonsData = new List<ConfigurationMenuItems>();
-            listButtonsData.Add(new ConfigurationMenuItems { Icon = pProfileMenuIcon, OptionName = MenuItemsNames.Profile });
-            listButtonsData.Add(new ConfigurationMenuItems { Icon = knocks, OptionName = MenuItemsNames.Knocks });
-            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = "" });
-            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.Logout });
-            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.ChangePassword });
-            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.About });
-            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.Privacy });
-            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.HelpCenter });
-            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.TermsAndConditions });
-            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.UpdateProfile });
-
-            var listViewOptionButtons = new ListView
-            {
-                VerticalOptions = LayoutOptions.Start,
-                ItemsSource = listButtonsData,
-                ItemTemplate = cell,
+                ItemsSource = listOptionsData,
+                ItemTemplate = dataTemplateMenuOptions,
                 BackgroundColor = App.Styles.MenuBackground,
             };
 
-            listViewOptionButtons.ItemSelected += async (s, e) =>
+            listViewMenuOptions.ItemSelected += async (sender, eventArgs) =>
             {
-                if (e.SelectedItem == null)
+                if (eventArgs.SelectedItem == null)
                 {
                     return;
                 }
-                string item = ((ConfigurationMenuItems)e.SelectedItem).OptionName;
-                var itemPageProfile = new ProfileMe(currentUser.User);
-                var itemPageKnocks = new ContentPage { Title = "Knocks" };
+                var selectedItemOptionName = ((MenuItemViewModel)eventArgs.SelectedItem).OptionName;
+                var profileMe = new ProfileMe(currentUser.User);
+                var contentPageKnocks = new ContentPage { Title = "Knocks" };
 
-                switch (item)
+                switch (selectedItemOptionName)
                 {
                     case MenuItemsNames.Knocks:
-                       await Navigation.PushAsync(itemPageKnocks);
+                       await Navigation.PushAsync(contentPageKnocks);
                         _onToggleRequest();
                         break;
                     case MenuItemsNames.Profile:
-                        await Navigation.PushAsync(itemPageProfile);
+                        await Navigation.PushAsync(profileMe);
                         _onToggleRequest();
                         break;
                     case MenuItemsNames.Logout:
@@ -128,10 +181,10 @@ namespace BeginMobile.Menu
                         _onToggleRequest();
                         break;
                 }
-                ((ListView)s).SelectedItem = null;
+                ((ListView)sender).SelectedItem = null;
                 _onToggleRequest();
             };
-            listViewOptionButtons.HasUnevenRows = true;            
+            listViewMenuOptions.HasUnevenRows = true;            
 
             var stackLayoutControls = new StackLayout
             {
@@ -140,16 +193,17 @@ namespace BeginMobile.Menu
                 Orientation = StackOrientation.Vertical,
                 Children =
                                              {                                                 
-                                                 listViewOptionButtons
+                                                 listViewMenuOptions
                                              }
             };
 
             StackLayout mainStackLayout = new StackLayout
             {
                 Spacing = 2,
+                Padding = App.Styles.LayoutThickness,
                 Children =
                                   {        
-                                      userImageListView,
+                                      listViewMenuIcon,
                                       stackLayoutControls
                                   }
             };
@@ -158,9 +212,9 @@ namespace BeginMobile.Menu
         }
     }
 
-    public class CustomMenuItemTemplateCell : ViewCell
+    public class MenuDataTemplate : ViewCell
     {
-        public CustomMenuItemTemplateCell()
+        public MenuDataTemplate()
         {
             var icon = new Image
             {
@@ -183,30 +237,30 @@ namespace BeginMobile.Menu
 
         public static StackLayout CreateOptionLayout()
         {
-            var optionName = new Label
+            var labelOptionName = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Style = App.Styles.ListItemTextStyle,
                 TextColor = App.Styles.MenuOptionsColor
             };
 
-            optionName.SetBinding(Label.TextProperty, "OptionName");
+            labelOptionName.SetBinding(Label.TextProperty, "OptionName");
          
 
-            var optionLayout = new StackLayout
+            var stackLayoutOptions = new StackLayout
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Orientation = StackOrientation.Vertical,
-                Children = { optionName }
+                Children = { labelOptionName }
             };
 
-            return optionLayout;
+            return stackLayoutOptions;
         }
     }
 
-    public class MenuIconTemplate : ViewCell
+    public class MenuIconDataTemplate : ViewCell
     {
-        public MenuIconTemplate()
+        public MenuIconDataTemplate()
         {
             var icon = new Image
             {
@@ -233,7 +287,7 @@ namespace BeginMobile.Menu
 
         public static StackLayout CreateOptionLayout()
         {
-            var optionName = new Label
+            var labelOptionName = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 YAlign = TextAlignment.Center,
@@ -246,22 +300,21 @@ namespace BeginMobile.Menu
                 Style = App.Styles.ListItemDetailTextStyle
             };
             labelDescription.SetBinding(Label.TextProperty, "OptionDetail");
-            optionName.SetBinding(Label.TextProperty, "OptionName");
+            labelOptionName.SetBinding(Label.TextProperty, "OptionName");
 
             var optionLayout = new StackLayout
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Orientation = StackOrientation.Vertical,
-                Children = { optionName, labelDescription }
+                Children = { labelOptionName, labelDescription }
             };
             return optionLayout;
         }
     }
 
-    public class ConfigurationMenuItems
+    public class MenuItemViewModel
     {
         public string Icon { get; set; }
-
         public string OptionName { get; set; }
         public string OptionDetail { get; set; }
     }
@@ -276,7 +329,6 @@ namespace BeginMobile.Menu
         public const string Privacy = "Privacy";
         public const string HelpCenter = "Help Center";
         public const string TermsAndConditions = "Terms And Conditions";
-        public const string UpdateProfile = "Update Profile";
-        
+        public const string UpdateProfile = "Update Profile";        
     }
 }

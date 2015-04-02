@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xamarin.Forms;
-using System.Text.RegularExpressions;
-using BeginMobile.Utils;
+﻿using System.Text.RegularExpressions;
 using BeginMobile.Services.ManagerServices;
+using Xamarin.Forms;
 
 namespace BeginMobile.Accounts
 {
@@ -14,15 +9,11 @@ namespace BeginMobile.Accounts
         private const string EmailRegex =
               @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
               @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
-        private Entry email;
-        private Label labeTitle;
-        private Label labelSubTitle;
-        private Button buttonReset;
-        private Button btBack;
-	 
-		public ForgotPassword ()
+        private readonly Entry _entryEmail;
+
+	    public ForgotPassword ()
 		{
-            Image logo = new Image
+		    var logo = new Image
             {
                 Source = Device.OS == TargetPlatform.iOS
                     ? ImageSource.FromFile("logotype.png")
@@ -30,31 +21,31 @@ namespace BeginMobile.Accounts
                 Aspect = Aspect.AspectFit,
             };
 
-            labeTitle = new Label
-            {
-                Text = "Password Recovery",
-                Style = App.Styles.SubtitleStyle
-            };
+            var labelTitle = new Label
+                               {
+                                   Text = "Password Recovery",
+                                   Style = App.Styles.TitleStyle
+                               };
 
-            labelSubTitle = new Label{
-                Text = "Enter the e-mail address you registered with the Application. Instructions to reset your password will be sent to this address.", 
-                Style = App.Styles.BodyStyle
-            };
+            var labelSubTitle = new Label{
+                                               Text = "Enter the e-mail address you registered with the Application. Instructions to reset your password will be sent to this address.", 
+                                               Style = App.Styles.BodyStyle
+                                           };
 
-            email = new Entry { Placeholder = "Enter your e-mail address"};
+            _entryEmail = new Entry { Placeholder = "Enter your e-mail address"};
 
-            buttonReset = new Button { 
-                Text= "Send", 
-                Style = App.Styles.DefaultButton
-            };
+            var buttonReset = new Button { 
+                                                Text= "Send", 
+                                                Style = App.Styles.DefaultButton
+                                            };
             
-            buttonReset.Clicked += async (s, e) =>
+            buttonReset.Clicked += async (sender, eventArgs) =>
                                          {                                            
-                    var isEmailValid = Regex.IsMatch(email.Text, EmailRegex);
+                    var isEmailValid = Regex.IsMatch(_entryEmail.Text, EmailRegex);
                                              if (isEmailValid)
                                              {
-                                                 LoginUserManager loginUserManager = new LoginUserManager();
-                                                 string webPage = loginUserManager.RetrievePassword(email.Text);
+                                                 var loginUserManager = new LoginUserManager();
+                                                 string webPage = loginUserManager.RetrievePassword(_entryEmail.Text);
                                                  if (webPage.Equals(""))
                                                  {
                                                      await
@@ -78,8 +69,8 @@ namespace BeginMobile.Accounts
                                              }
                                          };
 
-            btBack = new Button { Text = "Cancel", Style = App.Styles.DefaultButton };
-            btBack.Clicked += (sender, e) =>
+            var buttonBack = new Button { Text = "Cancel", Style = App.Styles.DefaultButton };
+            buttonBack.Clicked += (sender, eventArgs) =>
             {
                 MessagingCenter.Send<ContentPage>(this, "Login");
             };
@@ -87,15 +78,15 @@ namespace BeginMobile.Accounts
              
 			Content = new StackLayout {
                 Spacing = 10,
-                Padding = 15,
+                Padding = App.Styles.LayoutThickness,
                 VerticalOptions = LayoutOptions.Center,
                 Children = { 
                     logo,
-                    labeTitle,
+                    labelTitle,
                     labelSubTitle,
-                    email,
+                    _entryEmail,
                     buttonReset,
-                    btBack}                   			
+                    buttonBack}                   			
 			};
 		}
 	}

@@ -1,45 +1,46 @@
 ﻿using BeginMobile.Interfaces;
 using BeginMobile.Pages;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace BeginMobile.Accounts
 {
     public class LoginModalPage: CarouselPage
     {
-        ContentPage login, register, termsAndConditions, forgotPassword;
+        readonly ContentPage _contentPageLogin;
+        readonly ContentPage _contentPageRegister;
+        readonly ContentPage _contentPageTermsAndConditions;
+        readonly ContentPage _contentPageForgotPassword;
+
         public LoginModalPage(ILoginManager iloginManager)
         {
-            bool isLoadByLogin = true;
+            const bool isLoadByLogin = true;
 
-            login = new Login(iloginManager);
-            register = new Register(iloginManager);
-            termsAndConditions = new TermsAndConditions(isLoadByLogin);
-            forgotPassword = new ForgotPassword();
+            _contentPageLogin = new Login(iloginManager);
+            _contentPageRegister = new Register(iloginManager);
+            _contentPageTermsAndConditions = new TermsAndConditions(isLoadByLogin);
+            _contentPageForgotPassword = new ForgotPassword();
 
-            this.Children.Add(login);
-            this.Children.Add(register);
-            this.Children.Add(termsAndConditions);
-            this.Children.Add(forgotPassword);
+            Children.Add(_contentPageLogin);
+            Children.Add(_contentPageRegister);
+            Children.Add(_contentPageTermsAndConditions);
+            Children.Add(_contentPageForgotPassword);
 
-            MessagingCenter.Subscribe<ContentPage>(this, "Login", (sender) =>
+            MessagingCenter.Subscribe<ContentPage>(this, "Login", sender =>
             {
-                this.SelectedItem = login;
+                SelectedItem = _contentPageLogin;
             });
-            MessagingCenter.Subscribe<ContentPage>(this, "Register", (sender) =>
+            MessagingCenter.Subscribe<ContentPage>(this, "Register", sender =>
             {
-                this.SelectedItem = register;
+                SelectedItem = _contentPageRegister;
             });
 
-            MessagingCenter.Subscribe<ContentPage>(this, "TermsAndConditions", (sender) =>
+            MessagingCenter.Subscribe<ContentPage>(this, "TermsAndConditions", sender =>
             {
-                this.SelectedItem = termsAndConditions;
+                SelectedItem = _contentPageTermsAndConditions;
             });
-            MessagingCenter.Subscribe<ContentPage>(this, "ForgotPassword", (sender) =>
+            MessagingCenter.Subscribe<ContentPage>(this, "ForgotPassword", sender =>
             {
-                this.SelectedItem = forgotPassword;
+                SelectedItem = _contentPageForgotPassword;
             });
  
         }

@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xamarin.Forms;
-using BeginMobile.Menu;
-using BeginMobile.Utils;
-using BeginMobile.Services.DTO;
-using BeginMobile.Services.ManagerServices;
 using BeginMobile.Interfaces;
 using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Services.ManagerServices;
+using Xamarin.Forms;
 
 namespace BeginMobile.Accounts
 {
     public class Login : ContentPage
     {
-        private Entry email;
-        private Entry password;
+        private readonly Entry _entryEmail;
+        private readonly Entry _entryPassword;
 
         public Login(ILoginManager iLoginManager)
         {
-            Image logo = new Image
+            var logo = new Image
             {
                 Source = Device.OS == TargetPlatform.iOS
                     ? ImageSource.FromFile("logotype.png")
@@ -28,13 +22,13 @@ namespace BeginMobile.Accounts
             };
 
             Title = AppResources.LoginFormTitle;
-            email = new Entry
+            _entryEmail = new Entry
             {
                 Placeholder = AppResources.UsernamePlaceholder,
                 Keyboard = Keyboard.Email
             };
 
-            password = new Entry
+            _entryPassword = new Entry
             {
                 Placeholder = AppResources.PasswordPlaceholder,
                 IsPassword = true,
@@ -58,15 +52,15 @@ namespace BeginMobile.Accounts
                 Style = App.Styles.DefaultButton,
             };
 
-            buttonForgotPassword.Clicked += (s, e) =>
+            buttonForgotPassword.Clicked += (sender, eventArgs) =>
             {
                 MessagingCenter.Send<ContentPage>(this, "ForgotPassword");
             };
 
 
-            buttonLogin.Clicked += async (s, e) =>
+            buttonLogin.Clicked += async (sender, eventArgs) =>
             {
-                if (String.IsNullOrEmpty(email.Text) || String.IsNullOrEmpty(password.Text))
+                if (String.IsNullOrEmpty(_entryEmail.Text) || String.IsNullOrEmpty(_entryPassword.Text))
                 {
                     await DisplayAlert("Validation Error", "Username and Password are required",
                                  "Re - Try");
@@ -74,7 +68,7 @@ namespace BeginMobile.Accounts
                 else
                 {
                     var loginUserManager = new LoginUserManager();
-                    var loginUser = loginUserManager.Login(email.Text, password.Text);
+                    var loginUser = loginUserManager.Login(_entryEmail.Text, _entryPassword.Text);
 
                     if (loginUser != null)
                     {
@@ -91,7 +85,7 @@ namespace BeginMobile.Accounts
                 }
             };
 
-            buttonRegister.Clicked += (s, e) =>
+            buttonRegister.Clicked += (sender, eventArgs) =>
             {
                 MessagingCenter.Send<ContentPage>(this, "Register");
             };
@@ -99,24 +93,18 @@ namespace BeginMobile.Accounts
             Content = new StackLayout
                       {
                           Spacing = 20,
-                          Padding = 50,
+                          Padding = App.Styles.LayoutThickness,
                           VerticalOptions = LayoutOptions.Center,
                           Children =
                           {
                               logo,
-                              email,
-                              password,
+                              _entryEmail,
+                              _entryPassword,
                               buttonLogin,
                               buttonForgotPassword,
                               buttonRegister
                           }
                       };
-        }
-
-        void OnTextChanged(object sender, EventArgs e)
-        {
-            Entry entry = sender as Entry;
-            String value = entry.Text;
         }
     }
 }
