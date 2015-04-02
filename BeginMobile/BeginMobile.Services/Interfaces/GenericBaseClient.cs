@@ -73,6 +73,59 @@ namespace BeginMobile.Services.Interfaces
         }
 
         /// <summary>
+        /// Posts the asynchronous.
+        /// </summary>
+        /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
+        /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
+        /// <returns></returns>
+        public string PostContentResultAsync(FormUrlEncodedContent content, string addressSuffix)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                string result = "";
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+
+                var response = httpClient.PostAsync(_subAddress + addressSuffix, content).Result;
+                
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var userJson = response.Content.ReadAsStringAsync().Result;
+                    result = userJson;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Posts the asynchronous.
+        /// </summary>
+        /// <param name="authToken">The authentication token.</param>
+        /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
+        /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
+        public string PostContentResultAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                string result = "";
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+
+                var response = httpClient.PostAsync(_subAddress + addressSuffix, content).Result;
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var userJson = response.Content.ReadAsStringAsync().Result;
+                    result = userJson;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets the list asynchronous.
         /// </summary>
         /// <param name="identifier">The identifier examples user, groups, etc</param>

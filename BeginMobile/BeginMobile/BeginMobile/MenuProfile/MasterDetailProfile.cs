@@ -10,7 +10,7 @@ namespace BeginMobile.MenuProfile
         public MasterDetailProfile()
         {
             var menuPage = new MenuPage();
-            menuPage.Menu.ItemSelected += (sender, e) => NavigateTo(e.SelectedItem as MenuItem);
+            menuPage.ListViewMenu.ItemSelected += (sender, e) => NavigateTo(e.SelectedItem as MenuItem);
 
             User user = null;
             

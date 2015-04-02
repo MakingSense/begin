@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using BeginMobile.Services.DTO;
+using BeginMobile.Services.Interfaces;
 using Newtonsoft.Json;
 
 namespace BeginMobile.Services.ManagerServices
@@ -9,44 +10,36 @@ namespace BeginMobile.Services.ManagerServices
     public class LoginUserManager
     {
         private const string BaseAddress = "http://186.109.86.251:5432/";
-
         private const string SubAddress = "begin/api/v1/";
+
+        private readonly GenericBaseClient<LoginUser> _loginManagerClient =
+            new GenericBaseClient<LoginUser>(BaseAddress, SubAddress);
+
+        private readonly GenericBaseClient<RegisterUser> _registerUserClient =
+            new GenericBaseClient<RegisterUser>(BaseAddress, SubAddress);
+
+        private readonly GenericBaseClient<ChangePassword> _changePasswordClient =
+            new GenericBaseClient<ChangePassword>(BaseAddress, SubAddress);
+
+        private readonly GenericBaseClient<string> _stringResultClient =
+            new GenericBaseClient<string>(BaseAddress, SubAddress);
+
 
         public LoginUser Login(string username, string password)
         {
-            using (var client = new HttpClient())
-            {
-                LoginUser resultLoginUser = null;
 
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var content = new FormUrlEncodedContent(new[]
+            var content = new FormUrlEncodedContent(new[]
                                                         {
                                                             new KeyValuePair<string, string>("username", username),
                                                             new KeyValuePair<string, string>("password", password)
                                                         });
-
-                var response = client.PostAsync(SubAddress + "login", content).Result;
-                var userJson = response.Content.ReadAsStringAsync().Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    resultLoginUser = JsonConvert.DeserializeObject<LoginUser>(userJson);
-                }
-
-                return resultLoginUser;
-            }
+            const string addressSuffix = "login";
+            return _loginManagerClient.PostAsync(content, addressSuffix);
         }
 
         public RegisterUser Register(string username, string email, string password, string nameSurname)
         {
-            using (var client = new HttpClient())
-            {
-                RegisterUser resultRegisterUser = null;
-
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var content = new FormUrlEncodedContent(new[]
+            var content = new FormUrlEncodedContent(new[]
                                                         {
                                                             new KeyValuePair<string, string>("username", username),
                                                             new KeyValuePair<string, string>("email", email),
@@ -54,86 +47,51 @@ namespace BeginMobile.Services.ManagerServices
                                                             new KeyValuePair<string, string>("name_surname", nameSurname)
                                                         });
 
-                var response = client.PostAsync(SubAddress + "signup", content).Result;
-                var userJson = response.Content.ReadAsStringAsync().Result;
-
-                resultRegisterUser = JsonConvert.DeserializeObject<RegisterUser>(userJson);
-
-                return resultRegisterUser;
-            }
+            const string addressSuffix = "signup";
+            return _registerUserClient.PostAsync(content, addressSuffix);
         }
 
         public string RetrievePassword(string email)
         {
-            var result = "";
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var content = new FormUrlEncodedContent(new[]
+            var content = new FormUrlEncodedContent(new[]
                                                         {
                                                             new KeyValuePair<string, string>("email", email),
                                                         });
 
-                var response = client.PostAsync(SubAddress + "retrieve_password", content).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var userJson = response.Content.ReadAsStringAsync().Result;
-                    result = userJson;
-                }
-
-                return result;
-            }
+            const string addressSuffix = "retrieve_password";
+            return _stringResultClient.PostContentResultAsync(content, addressSuffix);
         }
 
 
         public ChangePassword ChangeYourPassword(string currentPassword, string newPassword, string repeatNewPassword, string authToken)
         {
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var content = new FormUrlEncodedContent(new[]
+            var content = new FormUrlEncodedContent(new[]
                                                         {
                                                             new KeyValuePair<string, string>("current_password", currentPassword),
                                                             new KeyValuePair<string, string>("new_password", newPassword),
                                                             new KeyValuePair<string, string>("repeat_new_password", repeatNewPassword)
                                                         });
 
-                var response = client.PostAsync(SubAddress + "me/change_password", content).Result;
-                var retrievedJsonData = response.Content.ReadAsStringAsync().Result;
-
-
-                return JsonConvert.DeserializeObject<ChangePassword>(retrievedJsonData);
-
-            }
+            const string addressSuffix = "me/change_password";
+            return _changePasswordClient.PostAsync(authToken, content, addressSuffix);
         }
 
-        public bool UpdateProfile(string nameSurname, string authToken)
+        public string UpdateProfile(string nameSurname, string authToken)
         {
-            var result = false;
 
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-                client.BaseAddress = new Uri(BaseAddress);
-
                 var content = new FormUrlEncodedContent(new[]
                                                         {
                                                             new KeyValuePair<string, string>("name_surname", nameSurname), 
                                                         });
 
-                var response = client.PostAsync(SubAddress + "me/update_profile", content).Result;
-                //var retrievedJsonData = response.Content.ReadAsStringAsync().Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    result = true;
-                }
-
-                return result;
+                const string addressSuffix = "me/update_profile";
+                return _stringResultClient.PostContentResultAsync(authToken, content, addressSuffix);
+            }
+            catch(Exception ex)
+            {
+                return null;
             }
         }
 

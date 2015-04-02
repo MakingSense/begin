@@ -7,14 +7,14 @@ namespace BeginMobile.MenuProfile
 {
     public class MenuPage: ContentPage
     {
-        public ListView Menu { get; set; }
+        public ListView ListViewMenu { get; set; }
         public MenuPage()
         {
             //Icon = "settings.png";
             Title = "Menu";
             BackgroundColor = Color.FromHex("333333");
 
-            Menu = new MenuListView();
+            ListViewMenu = new MenuListView();
 
             var menuLabel = new ContentView
             {
@@ -27,16 +27,16 @@ namespace BeginMobile.MenuProfile
             };
 
             //Layout
-            var layout = new StackLayout
+            var stackLayoutMain = new StackLayout
             {
                 Spacing = 0,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
-            layout.Children.Add(menuLabel);
-            layout.Children.Add(Menu);
+            stackLayoutMain.Children.Add(menuLabel);
+            stackLayoutMain.Children.Add(ListViewMenu);
 
             //Content
-            Content = layout;
+            Content = stackLayoutMain;
 
         }
     }

@@ -6,18 +6,18 @@ namespace BeginMobile.MenuProfile
     {
         public MenuListView()
         {
-            var data = new BeginMobile.MenuProfile.MenuProfile();
+            var dataMenuProfile = new BeginMobile.MenuProfile.MenuProfile();
 
-            ItemsSource = data;
+            ItemsSource = dataMenuProfile;
             VerticalOptions = LayoutOptions.FillAndExpand;
             BackgroundColor = Color.Transparent;
 
-            var cell = new DataTemplate(typeof (ImageCell));
-            cell.SetBinding(TextCell.TextProperty, "Title");
+            var imageCell = new DataTemplate(typeof (ImageCell));
+            imageCell.SetBinding(TextCell.TextProperty, "Title");
             //cell.SetBinding(ImageCell.ImageSourceProperty, "IconSource");
 
-            ItemTemplate = cell;
-            SelectedItem = data[0];
+            ItemTemplate = imageCell;
+            SelectedItem = dataMenuProfile[0];
 
            
         }
