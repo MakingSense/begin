@@ -1,61 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 using BeginMobile.Services.DTO;
-
 using BeginMobile.Utils;
-using BeginMobile.Utils.Extensions;
-
-using BeginMobile.Services.ManagerServices;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
 {
     public class Events : ContentPage
     {
-        private Label noEventsMessage;
-        private List<EventInfoObject> listEvents;
-        private ListView eventsListView;
-        private List<EventInfoObject> defaultList = new List<EventInfoObject>();
-        private SearchView searchView;
-
-        private LoginUser currentUser;
+        private readonly Label _noEventsMessage;
+        private readonly List<EventInfoObject> _listEvents;
+        private readonly ListView _eventsListView;
+        private readonly List<EventInfoObject> _defaultList = new List<EventInfoObject>();
+        private readonly SearchView _searchView;
+        private readonly LoginUser _currentUser;
 
         public Events()
         {
             Title = "Events";
 
-            searchView = new SearchView("All Categories");
-            searchView.SetPlaceholder("Search by event name");
-
-            Label header = new Label
-            {
-                Text = "My Events",
-                Style = App.Styles.TitleStyle,
-                HorizontalOptions = LayoutOptions.Center
-            };
+            _searchView = new SearchView("All Categories");
+            _searchView.SetPlaceholder("Search by event name");
 
             #region Call api
-            currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            ProfileInformationEvents profileInformationEvents = App.ProfileServices.GetEvents(currentUser.User.UserName, currentUser.AuthToken);
+            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            ProfileInformationEvents profileInformationEvents = App.ProfileServices.GetEvents(_currentUser.User.UserName, _currentUser.AuthToken);
             #endregion
 
             #region Search components
 
-            searchView.SearchBar.TextChanged += CommonSearchItemChanged;
-            searchView.Category.SelectedIndexChanged += CommonSearchItemChanged;
-            searchView.Limit.SelectedIndexChanged += CommonSearchItemChanged;
-            noEventsMessage = new Label();
+            _searchView.SearchBar.TextChanged += SearchItemEventHandler;
+            _searchView.Category.SelectedIndexChanged += SearchItemEventHandler;
+            _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
+            _noEventsMessage = new Label();
 
             #endregion
 
             #region Subtitles layout
+
             var gridEventHeaderTitle = new Grid
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-            };
+                                       {
+                                           HorizontalOptions = LayoutOptions.FillAndExpand
+                                       };
 
             gridEventHeaderTitle.Children.Add(new Label
                                               {
@@ -77,29 +64,29 @@ namespace BeginMobile.Pages.Profile
             #endregion
 
             #region List components
-            listEvents = new List<EventInfoObject>();
+            _listEvents = new List<EventInfoObject>();
 
             foreach (var eventInfo in profileInformationEvents.Events)
             {
-                listEvents.Add(new EventInfoObject
+                _listEvents.Add(new EventInfoObject
                                {
                                    EventName = eventInfo.Name,
                                    EventIntervalDate =
                                        String.Format("{0} - {1}", eventInfo.StartDate, eventInfo.EndDate),
                                    EventTime = String.Format("{0} - {1}", eventInfo.StartTime, eventInfo.EndTime),
-                                   eventInfo = eventInfo,
+                                   EventInfo = eventInfo
                                });
             }
 
             var eventTemplate = new DataTemplate(typeof(TemplateListViewEvents));
 
-            eventsListView = new ListView
+            _eventsListView = new ListView
             {
-                ItemsSource = listEvents,
+                ItemsSource = _listEvents,
                 ItemTemplate = eventTemplate
             };
 
-            eventsListView.ItemSelected += async (sender, e) =>
+            _eventsListView.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null)
                 {
@@ -107,8 +94,7 @@ namespace BeginMobile.Pages.Profile
                 }
                 var item = (EventInfoObject)e.SelectedItem;
 
-                var itemPageProfile = new EventDetailInformation(item.eventInfo);
-                itemPageProfile.BindingContext = item.eventInfo;
+                var itemPageProfile = new EventDetailInformation(item.EventInfo) { BindingContext = item.EventInfo };
 
                 await Navigation.PushAsync(itemPageProfile);
                 ((ListView)sender).SelectedItem = null;
@@ -125,7 +111,7 @@ namespace BeginMobile.Pages.Profile
                     VerticalOptions = LayoutOptions.Start,
                     Children =
                     {
-                        eventsListView
+                        _eventsListView
                     }
                 }
             };
@@ -136,7 +122,7 @@ namespace BeginMobile.Pages.Profile
                           Padding = 20,
                           Children =
                           {
-                              searchView.Container,
+                              _searchView.Container,
                               gridEventHeaderTitle,
                               scrollView
                           }
@@ -152,81 +138,28 @@ namespace BeginMobile.Pages.Profile
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void CommonSearchItemChanged(object sender, EventArgs args)
+        private void SearchItemEventHandler(object sender, EventArgs args)
         {
-            string q;
             string limit;
             string cat;
 
-            if (sender.GetType() == typeof(SearchBar))
-            {
-                q = ((SearchBar)sender).Text;
-            }
-
-            else
-            {
-                q = searchView.SearchBar.Text;
-            }
+            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
 
             RetrieveLimitSelected(out limit);
             RetrieveCategorySelected(out cat);
 
             List<ProfileEvent> profileEventList =
-                App.ProfileServices.GetEventsByParams(currentUser.AuthToken, q, cat, limit);
+                App.ProfileServices.GetEventsByParams(_currentUser.AuthToken, q, cat, limit);
 
             if (profileEventList.Any())
             {
-                eventsListView.ItemsSource = RetrieveEventInfoObjectList(profileEventList);
-                noEventsMessage.Text = string.Empty;
+                _eventsListView.ItemsSource = RetrieveEventInfoObjectList(profileEventList);
+                _noEventsMessage.Text = string.Empty;
             }
 
             else
             {
-                eventsListView.ItemsSource = defaultList;
-            }
-        }
-        
-        /// <summary>
-        /// Event that is raised when the SearchBar text changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        void OnSearchBarButtonPressed(object sender, EventArgs args)
-        {
-            //TODO: User custom SearchVIew or Page
-            SearchBar searchBar = (SearchBar)sender;
-            string searchText = searchBar.Text; // recovery the text of search bar
-
-            if (!string.IsNullOrEmpty(searchText) || !string.IsNullOrWhiteSpace(searchText))
-            {
-
-                if (listEvents.Count == 0)
-                {
-                    noEventsMessage.Text = "There is no events.";
-                }
-
-                else
-                {
-                    List<EventInfoObject> list = (
-                        from e in listEvents
-                        where e.EventName.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)
-                        select e).ToList<EventInfoObject>();
-
-                    if (list.Any())
-                    {
-                        eventsListView.ItemsSource = list;
-                        noEventsMessage.Text = "";
-                    }
-
-                    else
-                    {
-                        eventsListView.ItemsSource = defaultList;
-                    }
-                }
-            }
-            else
-            {
-                eventsListView.ItemsSource = listEvents;
+                _eventsListView.ItemsSource = _defaultList;
             }
         }
 
@@ -235,47 +168,35 @@ namespace BeginMobile.Pages.Profile
         #region Private methods
         private void RetrieveCategorySelected(out string cat)
         {
-            var catSelectedIndex = searchView.Category.SelectedIndex;
-            var catLastIndex = searchView.Category.Items.Count - 1;
+            var catSelectedIndex = _searchView.Category.SelectedIndex;
+            var catLastIndex = _searchView.Category.Items.Count - 1;
 
-            if (catSelectedIndex == -1 || catSelectedIndex == catLastIndex)
-            {
-                cat = null;
-            }
-
-            else
-            {
-                cat = searchView.Category.Items[catSelectedIndex];
-            }
+            cat = catSelectedIndex == -1 || catSelectedIndex == catLastIndex
+                ? null
+                : _searchView.Category.Items[catSelectedIndex];
         }
         private void RetrieveLimitSelected(out string limit)
         {
-            var limitSelectedIndex = searchView.Limit.SelectedIndex;
-            var limitLastIndex = searchView.Limit.Items.Count - 1;
+            var limitSelectedIndex = _searchView.Limit.SelectedIndex;
+            var limitLastIndex = _searchView.Limit.Items.Count - 1;
 
-            if (limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex)
-            {
-                limit = null;
-            }
-
-            else
-            {
-                limit = searchView.Limit.Items[limitSelectedIndex];
-            }
+            limit = limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex
+                ? null
+                : _searchView.Limit.Items[limitSelectedIndex];
         }
-        private IEnumerable<EventInfoObject> RetrieveEventInfoObjectList(IEnumerable<ProfileEvent> profileEventList)
+        private static IEnumerable<EventInfoObject> RetrieveEventInfoObjectList(IEnumerable<ProfileEvent> profileEventList)
         {
-            return profileEventList.Select(eventInfo => new EventInfoObject()
-            {
-                EventName = eventInfo.Name,
-                EventIntervalDate =
-                    String.Format("{0} - {1}", eventInfo.StartDate,
-                        eventInfo.EndDate),
-                EventTime =
-                    String.Format("{0} - {1}", eventInfo.StartTime,
-                        eventInfo.EndTime),
-                eventInfo = eventInfo
-            });
+            return profileEventList.Select(eventInfo => new EventInfoObject
+                                                        {
+                                                            EventName = eventInfo.Name,
+                                                            EventIntervalDate =
+                                                                String.Format("{0} - {1}", eventInfo.StartDate,
+                                                                    eventInfo.EndDate),
+                                                            EventTime =
+                                                                String.Format("{0} - {1}", eventInfo.StartTime,
+                                                                    eventInfo.EndTime),
+                                                            EventInfo = eventInfo
+                                                        });
         }
 
         #endregion

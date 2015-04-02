@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Notifications
 {
@@ -12,11 +7,12 @@ namespace BeginMobile.Pages.Notifications
         public NotificationDetail(string notificationDescription)
         {
             Content = new StackLayout
-            {
-                Children = {
-					new Label { Text = notificationDescription }
-				}
-            };
+                      {
+                          Children =
+                          {
+                              new Label {Text = notificationDescription}
+                          }
+                      };
         }
     }
 }

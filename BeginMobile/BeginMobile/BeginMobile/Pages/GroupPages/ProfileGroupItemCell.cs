@@ -1,12 +1,9 @@
 ﻿using ImageCircle.Forms.Plugin.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.GroupPages
 {
-    public class ProfileGroupItemCell: ViewCell
+    public class ProfileGroupItemCell : ViewCell
     {
         private const string GroupImage = "userdefault3.png";
 
@@ -15,18 +12,17 @@ namespace BeginMobile.Pages.GroupPages
             var groupImage = new CircleImage
                              {
                                  BorderColor =
-                                     Device.OnPlatform<Color>(iOS: Color.Black, Android: Color.White,
-                                         WinPhone: Color.White),
-                                 BorderThickness = Device.OnPlatform<int>(iOS: 2, Android: 3, WinPhone: 3),
-                                 HeightRequest = Device.OnPlatform<int>(iOS: 40, Android: 80, WinPhone: 80),
-                                 WidthRequest = Device.OnPlatform<int>(iOS: 45, Android: 80, WinPhone: 80),
+                                     Device.OnPlatform(Color.Black, Color.White, Color.White),
+                                 BorderThickness = Device.OnPlatform(2, 3, 3),
+                                 HeightRequest = Device.OnPlatform(40, 80, 80),
+                                 WidthRequest = Device.OnPlatform(45, 80, 80),
 
                                  Aspect = Aspect.AspectFill,
                                  HorizontalOptions = LayoutOptions.Start,
                                  Source = GroupImage
                              };
 
-            var lblGrTitle = new Label()
+            var lblGrTitle = new Label
                              {
                                  YAlign = TextAlignment.Center,
                                  FontAttributes = FontAttributes.Bold,
@@ -35,27 +31,25 @@ namespace BeginMobile.Pages.GroupPages
 
             lblGrTitle.SetBinding(Label.TextProperty, "Name");
 
-            var lblGrDesc = new Label()
+            var lblGrDesc = new Label
                             {
                                 YAlign = TextAlignment.Center,
-                                Style = App.Styles.ListItemDetailTextStyle,
+                                Style = App.Styles.ListItemDetailTextStyle
                             };
 
             lblGrDesc.SetBinding(Label.TextProperty, "Description", stringFormat: "Description: {0}");
 
-
             //Other section
-
-            var lblStatus = new Label()
+            var lblStatus = new Label
                             {
                                 YAlign = TextAlignment.Center,
                                 HorizontalOptions = LayoutOptions.Start,
-                                Style = App.Styles.ListItemDetailTextStyle,
+                                Style = App.Styles.ListItemDetailTextStyle
                             };
 
             lblStatus.SetBinding(Label.TextProperty, "Status");
 
-            var lblCreate = new Label()
+            var lblCreate = new Label
                             {
                                 YAlign = TextAlignment.Center,
                                 HorizontalOptions = LayoutOptions.End,
@@ -65,7 +59,7 @@ namespace BeginMobile.Pages.GroupPages
 
             lblCreate.SetBinding(Label.TextProperty, "DateCreated");
 
-            var stackLayoutPie = new StackLayout()
+            var stackLayoutPie = new StackLayout
                                  {
                                      Orientation = StackOrientation.Horizontal,
                                      HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -76,7 +70,7 @@ namespace BeginMobile.Pages.GroupPages
                                      }
                                  };
 
-            var stackLayCenter = new StackLayout()
+            var stackLayCenter = new StackLayout
                                  {
                                      Children =
                                      {
@@ -86,7 +80,7 @@ namespace BeginMobile.Pages.GroupPages
                                      }
                                  };
 
-            var sLayItem = new StackLayout()
+            var sLayItem = new StackLayout
                            {
                                Orientation = StackOrientation.Horizontal,
                                HorizontalOptions = LayoutOptions.FillAndExpand,

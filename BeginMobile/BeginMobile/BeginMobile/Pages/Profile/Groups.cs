@@ -1,56 +1,52 @@
-﻿using BeginMobile.Pages.GroupPages;
-using BeginMobile.Services.DTO;
-using BeginMobile.Services.ManagerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+using BeginMobile.Pages.GroupPages;
+using BeginMobile.Services.DTO;
 using BeginMobile.Utils;
 using BeginMobile.Utils.Extensions;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
 {
     public class Groups : ContentPage
     {
-        private ListView _lViewGroup;
-        private RelativeLayout _rLayout;
-        private ProfileInformationGroups groupInformation;
-        private Label noGroupsMessage;
-        private List<Group> defaultList = new List<Group>();
+        private readonly ListView _lViewGroup;
+        private readonly ProfileInformationGroups _groupInformation;
+        private readonly Label _noGroupsMessage;
+        private readonly List<Group> _defaultList = new List<Group>();
 
-        private Picker sectionsPicker;
-        private SearchView searchView;
-        private List<string> sections = new List<String> { "Members", "Activities", "All Sections" };
+        private readonly Picker _sectionsPicker;
+        private readonly SearchView _searchView;
+        private readonly List<string> _sectionsList = new List<String> { "Members", "Activities", "All Sections" };
 
-        private LoginUser currentUser;
+        private readonly LoginUser _currentUser;
         public Groups()
         {
             Title = "Groups";
 
-            searchView = new SearchView("All Categories");
-            searchView.SetPlaceholder("Search by group name");
-            sectionsPicker = new Picker
+            _searchView = new SearchView("All Categories");
+            _searchView.SetPlaceholder("Search by group name");
+            _sectionsPicker = new Picker
                              {
                                  Title = "Sections",
                                  VerticalOptions = LayoutOptions.CenterAndExpand
                              };
 
-            foreach (var item in sections)
+            foreach (var item in _sectionsList)
             {
-                sectionsPicker.Items.Add(item);
+                _sectionsPicker.Items.Add(item);
             }
 
-            searchView.Container.Children.Add(sectionsPicker);
+            _searchView.Container.Children.Add(_sectionsPicker);
 
-            currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            groupInformation = App.ProfileServices.GetGroups(currentUser.User.UserName, currentUser.AuthToken);
+            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            _groupInformation = App.ProfileServices.GetGroups(_currentUser.User.UserName, _currentUser.AuthToken);
 
-            _lViewGroup = new ListView() { };
+            _lViewGroup = new ListView();
 
             _lViewGroup.ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell));
-            _lViewGroup.ItemsSource = groupInformation.Groups;
+            _lViewGroup.ItemsSource = _groupInformation.Groups;
 
             _lViewGroup.HasUnevenRows = true;
 
@@ -72,12 +68,12 @@ namespace BeginMobile.Pages.Profile
 
             #region Search components
 
-            searchView.SearchBar.TextChanged += CommonSearchItemChanged;
-            searchView.Category.SelectedIndexChanged += CommonSearchItemChanged;
-            searchView.Limit.SelectedIndexChanged += CommonSearchItemChanged;
-            sectionsPicker.SelectedIndexChanged += CommonSearchItemChanged;
+            _searchView.SearchBar.TextChanged += SearchItemEventHandler;
+            _searchView.Category.SelectedIndexChanged += SearchItemEventHandler;
+            _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
+            _sectionsPicker.SelectedIndexChanged += SearchItemEventHandler;
 
-            noGroupsMessage = new Label();
+            _noGroupsMessage = new Label();
 
             #endregion
 
@@ -89,8 +85,8 @@ namespace BeginMobile.Pages.Profile
                 Orientation = StackOrientation.Vertical
             };
 
-            mainLayout.Children.Add(searchView.Container);
-            mainLayout.Children.Add(new ScrollView()
+            mainLayout.Children.Add(_searchView.Container);
+            mainLayout.Children.Add(new ScrollView
                                     {
                                         Content = _lViewGroup
                                     });
@@ -100,46 +96,37 @@ namespace BeginMobile.Pages.Profile
 
         #region Events
 
-        private void CommonSearchItemChanged(object sender, EventArgs args)
+        private void SearchItemEventHandler(object sender, EventArgs args)
         {
-            string q;
             string limit;
             string cat;
             string sections;
 
-            if (sender.GetType() == typeof(SearchBar))
-            {
-                q = ((SearchBar)sender).Text;
-            }
-
-            else
-            {
-                q = searchView.SearchBar.Text;
-            }
+            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
 
             RetrieveLimitSelected(out limit);
             RetrieveCategorySelected(out cat);
             RetrieveSectionSelected(out sections);
             
             List<Group> groupsList =
-                App.ProfileServices.GetGroupsByParams(currentUser.AuthToken, q, cat, limit, sections);
+                App.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, q, cat, limit, sections);
 
             if (groupsList.Any())
             {
                 _lViewGroup.ItemsSource = groupsList;
-                noGroupsMessage.Text = string.Empty;
+                _noGroupsMessage.Text = string.Empty;
             }
 
             else
             {
-                _lViewGroup.ItemsSource = defaultList;
+                _lViewGroup.ItemsSource = _defaultList;
             }
         }
 
         private void RetrieveSectionSelected(out string sections)
         {
-            var sectionSelectedIndex = sectionsPicker.SelectedIndex;
-            var sectionLastIndex = sectionsPicker.Items.Count - 1;
+            var sectionSelectedIndex = _sectionsPicker.SelectedIndex;
+            var sectionLastIndex = _sectionsPicker.Items.Count - 1;
 
             if (sectionSelectedIndex == -1 || sectionSelectedIndex == sectionLastIndex)
             {
@@ -148,14 +135,14 @@ namespace BeginMobile.Pages.Profile
 
             else
             {
-                sections = sectionsPicker.Items[sectionSelectedIndex];
+                sections = _sectionsPicker.Items[sectionSelectedIndex];
             }
         }
 
         private void RetrieveCategorySelected(out string cat)
         {
-            var catSelectedIndex = searchView.Category.SelectedIndex;
-            var catLastIndex = searchView.Category.Items.Count - 1;
+            var catSelectedIndex = _searchView.Category.SelectedIndex;
+            var catLastIndex = _searchView.Category.Items.Count - 1;
 
             if (catSelectedIndex == -1 || catSelectedIndex == catLastIndex)
             {
@@ -164,14 +151,14 @@ namespace BeginMobile.Pages.Profile
 
             else
             {
-                cat = searchView.Category.Items[catSelectedIndex];
+                cat = _searchView.Category.Items[catSelectedIndex];
             }
         }
 
         private void RetrieveLimitSelected(out string limit)
         {
-            var limitSelectedIndex = searchView.Limit.SelectedIndex;
-            var limitLastIndex = searchView.Limit.Items.Count - 1;
+            var limitSelectedIndex = _searchView.Limit.SelectedIndex;
+            var limitLastIndex = _searchView.Limit.Items.Count - 1;
 
             if (limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex)
             {
@@ -180,13 +167,13 @@ namespace BeginMobile.Pages.Profile
 
             else
             {
-                limit = searchView.Limit.Items[limitSelectedIndex];
+                limit = _searchView.Limit.Items[limitSelectedIndex];
             }
         }
 
         private void OnSearchBarButtonPressed(object sender, EventArgs args)
         {
-            var groupsList = groupInformation.Groups;
+            var groupsList = _groupInformation.Groups;
 
             SearchBar searchBar = (SearchBar)sender;
             string searchText = searchBar.Text; // recovery the text of search bar
@@ -196,7 +183,7 @@ namespace BeginMobile.Pages.Profile
 
                 if (groupsList.Count == 0)
                 {
-                    noGroupsMessage.Text = "There is no groups";
+                    _noGroupsMessage.Text = "There is no groups";
                 }
 
                 else
@@ -209,18 +196,18 @@ namespace BeginMobile.Pages.Profile
                     if (list.Any())
                     {
                         _lViewGroup.ItemsSource = list;
-                        noGroupsMessage.Text = "";
+                        _noGroupsMessage.Text = "";
                     }
 
                     else
                     {
-                        _lViewGroup.ItemsSource = defaultList;
+                        _lViewGroup.ItemsSource = _defaultList;
                     }
                 }
             }
             else
             {
-                _lViewGroup.ItemsSource = groupInformation.Groups;
+                _lViewGroup.ItemsSource = _groupInformation.Groups;
             }
 
         }

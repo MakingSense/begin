@@ -1,75 +1,48 @@
-﻿using BeginMobile.Services.DTO;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Globalization;
+using BeginMobile.Services.DTO;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.MessagePages
 {
-    public class MessageListPage:TabContent
+    public class MessageListPage : TabContent
     {
-        private ListView _lViewMessages;
-        private RelativeLayout _sLayoutMain;
+        private readonly ListView _lViewMessages;
+        private readonly RelativeLayout _sLayoutMain;
 
-        public Label CounterText;
+        public readonly Label CounterText;
 
-        public MessageListPage(string title, string iconImg): base(title, iconImg)
+        public MessageListPage(string title, string iconImg)
+            : base(title, iconImg)
         {
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationMessages profileMessage = App.ProfileServices.GetMessagesInfo(currentUser.User.UserName, currentUser.AuthToken);
 
-            CounterText = new Label()
+            CounterText = new Label
+                          {
+                              Text = profileMessage.GroupingMessage.CountByGroup.ToString(CultureInfo.InvariantCulture)
+                          };
+
+            _lViewMessages = new ListView
+                             {
+                                 ItemTemplate = new DataTemplate(typeof (ProfileMessagesItem)),
+                                 ItemsSource = profileMessage.GroupingMessage.MessagesGroup,
+                                 GroupDisplayBinding = new Binding("Key"),
+                                 IsGroupingEnabled = true,
+                                 HasUnevenRows = true,
+                                 GroupHeaderTemplate = new DataTemplate(typeof (ProfileMessageHeader))
+                             };
+
+            _lViewMessages.ItemSelected += (sender, e) =>
             {
-                Text = profileMessage.GroupingMessage.CountByGroup.ToString()
-            };
-
-            _lViewMessages = new ListView()
-            {
-                //RowHeight = Device.OnPlatform<int>(iOS: 60, Android: 40, WinPhone: 40)
-            };
-
-            _lViewMessages.ItemTemplate = new DataTemplate(typeof(ProfileMessagesItem));
-            _lViewMessages.ItemsSource = profileMessage.GroupingMessage.MessagesGroup;
-
-            _lViewMessages.GroupDisplayBinding = new Binding("Key");
-            _lViewMessages.IsGroupingEnabled = true;
-
-            _lViewMessages.HasUnevenRows = true;
-            _lViewMessages.GroupHeaderTemplate = new DataTemplate(typeof(ProfileMessageHeader));
-
-            _lViewMessages.ItemSelected += async (sender, e) =>
-            {
-                /*if (e.SelectedItem == null)
-                {
-                    return;
-                }
-
-                var groupItem = (ProfileShop)e.SelectedItem;
-                var groupPage = new ShopItemPage();
-                groupPage.BindingContext = groupItem;
-                await Navigation.PushAsync(groupPage);*/
-
                 ((ListView)sender).SelectedItem = null;
             };
 
-            var buttonStyle = new Style(typeof (Label))
-            {
-                Setters =
-                {
-                    new Setter {Property = Button.BackgroundColorProperty, Value = Color.Yellow},
-                    new Setter {Property = Button.BorderRadiusProperty, Value = 0},
-                    new Setter {Property = Button.HeightRequestProperty, Value = 42}
-                }
-            };
-
             _sLayoutMain = new RelativeLayout();
-            _sLayoutMain.Children.Add(_lViewMessages,
-                xConstraint: Constraint.Constant(0),
-                yConstraint: Constraint.Constant(0),
-                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
-                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+            _sLayoutMain.Children.Add(_lViewMessages, Constraint.Constant(0), Constraint.Constant(0),
+                Constraint.RelativeToParent(parent => parent.Width),
+                Constraint.RelativeToParent(parent => parent.Height));
 
-            Content = new ScrollView() { Content = _sLayoutMain };
+            Content = new ScrollView { Content = _sLayoutMain };
         }
     }
 }

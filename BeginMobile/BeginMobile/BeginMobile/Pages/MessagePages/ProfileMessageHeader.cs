@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace BeginMobile.Pages.MessagePages
 {
@@ -9,24 +6,25 @@ namespace BeginMobile.Pages.MessagePages
     {
         public ProfileMessageHeader()
         {
-            this.Height = 30;
+            Height = 30;
 
-            var labelHeader = new Label()
-            {
-                FontSize = 18,
-                FontAttributes = FontAttributes.Bold,
-            };
+            var labelHeader = new Label
+                              {
+                                  FontSize = 18,
+                                  FontAttributes = FontAttributes.Bold
+                              };
+
             labelHeader.SetBinding(Label.TextProperty, "Key");
 
-            var stLayout = new StackLayout()
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Orientation = StackOrientation.Horizontal,
-                Children =
-                {
-                    labelHeader
-                }
-            };
+            var stLayout = new StackLayout
+                           {
+                               HorizontalOptions = LayoutOptions.FillAndExpand,
+                               Orientation = StackOrientation.Horizontal,
+                               Children =
+                               {
+                                   labelHeader
+                               }
+                           };
 
             View = stLayout;
         }

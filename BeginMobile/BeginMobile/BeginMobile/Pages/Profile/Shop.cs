@@ -1,15 +1,10 @@
 ﻿using BeginMobile.Pages.ShopPages;
 using BeginMobile.Services.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
 {
-    public class Shop: ContentPage
+    public class Shop : ContentPage
     {
         private ListView _lViewShops;
         private RelativeLayout _sLayoutMain;
@@ -21,37 +16,35 @@ namespace BeginMobile.Pages.Profile
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationShop profileShop = App.ProfileServices.GetShopInfo(currentUser.User.UserName, currentUser.AuthToken);
 
-            _lViewShops = new ListView() { };
-
-            _lViewShops.ItemTemplate = new DataTemplate(typeof(ProfileShopItemCell));
-            _lViewShops.ItemsSource = profileShop.Shop;
-
-            _lViewShops.HasUnevenRows = true;
+            _lViewShops = new ListView
+                          {
+                              ItemTemplate = new DataTemplate(typeof (ProfileShopItemCell)),
+                              ItemsSource = profileShop.Shop,
+                              HasUnevenRows = true
+                          };
 
             _lViewShops.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null)
                 {
-                    return; 
+                    return;
                 }
 
                 var groupItem = (ProfileShop)e.SelectedItem;
-                var groupPage = new ShopItemPage();
-                groupPage.BindingContext = groupItem;
+                var groupPage = new ShopItemPage { BindingContext = groupItem };
                 await Navigation.PushAsync(groupPage);
 
                 // clears the 'selected' background
-                ((ListView)sender).SelectedItem = null; 
+                ((ListView)sender).SelectedItem = null;
             };
 
             _sLayoutMain = new RelativeLayout();
             _sLayoutMain.Children.Add(_lViewShops,
-                xConstraint: Constraint.Constant(0),
-                yConstraint: Constraint.Constant(0),
-                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
-                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+                Constraint.Constant(0), Constraint.Constant(0),
+                Constraint.RelativeToParent(parent => parent.Width),
+                Constraint.RelativeToParent(parent => parent.Height));
 
-            Content = new ScrollView() { Content = _sLayoutMain };
+            Content = new ScrollView { Content = _sLayoutMain };
         }
     }
 }

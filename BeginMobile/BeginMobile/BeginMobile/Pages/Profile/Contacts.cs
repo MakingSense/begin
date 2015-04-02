@@ -1,58 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using BeginMobile.Services.ManagerServices;
 using BeginMobile.Services.DTO;
-using BeginMobile.Utils.Extensions;
 using BeginMobile.Utils;
+using BeginMobile.Utils.Extensions;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
 {
     public class Contacts : ContentPage
     {
-        private const string userDefault = "userdefault3.png";
-        private ListView contactlistView;
-        private List<Contact> contactsList;
-        private Label noContactsMessage;
-        private List<Contact> defaultList = new List<Contact>();
-        private SearchView searchView;
+        private const string UserDefault = "userdefault3.png";
+        private readonly ListView _contactlistView;
+        private readonly List<Contact> _contactsList;
+        private readonly Label _noContactsMessage;
+        private readonly List<Contact> _defaultList = new List<Contact>();
+        private readonly SearchView _searchView;
 
-        private LoginUser currentUser;
+        private readonly LoginUser _currentUser;
 
         public Contacts()
         {
             Title = "Contacts";
-            searchView = new SearchView("Profesional", "Personal", "Job", "Important", "Needs Attention", "Other");
+            _searchView = new SearchView("Profesional", "Personal", "Job", "Important", "Needs Attention", "Other");
 
-            Label header = new Label
-            {
-                Text = "My Contacts",
-                HorizontalOptions = LayoutOptions.Center,
-                Style = App.Styles.TitleStyle
-            };
+            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            ProfileInformationContacts profileInformationContacts = App.ProfileServices.GetContacts(_currentUser.User.UserName, _currentUser.AuthToken);
 
-            currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            ProfileInformationContacts profileInformationContacts = App.ProfileServices.GetContacts(currentUser.User.UserName, currentUser.AuthToken);
-
-            contactsList = new List<Contact>();
+            _contactsList = new List<Contact>();
 
             foreach (var contact in profileInformationContacts.Contacts)
             {
-                contactsList.Add(new Contact { Icon = userDefault, NameSurname = contact.NameSurname, References = String.Format("e-mail: {0}", contact.Email) });
+                _contactsList.Add(new Contact { Icon = UserDefault, NameSurname = contact.NameSurname, References = String.Format("e-mail: {0}", contact.Email) });
             }
 
             var contactListViewTemplate = new DataTemplate(typeof(CustomViewCell));
 
-            contactlistView = new ListView
-            {
-                ItemsSource = contactsList,
-                ItemTemplate = contactListViewTemplate
-            };
-            contactlistView.HasUnevenRows = true;
-            contactlistView.ItemSelected += (s, e) =>
+            _contactlistView = new ListView
+                               {
+                                   ItemsSource = _contactsList,
+                                   ItemTemplate = contactListViewTemplate,
+                                   HasUnevenRows = true
+                               };
+
+            _contactlistView.ItemSelected += (s, e) =>
             {
                 if (e.SelectedItem == null)
                 {
@@ -62,21 +53,19 @@ namespace BeginMobile.Pages.Profile
                 ((ListView)s).SelectedItem = null;
             };
 
-            searchView.SearchBar.TextChanged += CommonSearchItemChanged;
-            //searchView.Limit.SelectedIndexChanged += CommonSearchItemChanged;
-            //searchView.Category.SelectedIndexChanged += CommonSearchItemChanged;
-            noContactsMessage = new Label();
-            /**/
-            ScrollView scrollView = new ScrollView
+            _searchView.SearchBar.TextChanged += SearchItemEventHandler;
+            _noContactsMessage = new Label();
+            
+            var scrollView = new ScrollView
             {
                 Content = new StackLayout
                 {
                     Spacing = 2,
                     VerticalOptions = LayoutOptions.Start,
                     Children = {
-                        searchView.Container,
-                        noContactsMessage,
-                        contactlistView
+                        _searchView.Container,
+                        _noContactsMessage,
+                        _contactlistView
                     }
                 }
             };
@@ -99,79 +88,31 @@ namespace BeginMobile.Pages.Profile
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        void CommonSearchItemChanged(object sender, EventArgs args)
+        void SearchItemEventHandler(object sender, EventArgs args)
         {
-            string q;
             string limit;
             string cat;
-            string sort;
 
-            if (sender.GetType() == typeof(SearchBar))
-            {
-                q = ((SearchBar)sender).Text;
-            }
-
-            else
-            {
-                q = searchView.SearchBar.Text;
-            }
+            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
 
             RetrieveLimitSelected(out limit);
             RetrieveCategorySelected(out cat);
 
             //TODO: request API
-            List<Contact> list = (from c in contactsList
+            List<Contact> list = (from c in _contactsList
                 where (c.NameSurname.Contains(q, StringComparison.InvariantCultureIgnoreCase) ||
                        c.FirstName.Contains(q, StringComparison.InvariantCultureIgnoreCase))
                 select c).ToList<Contact>();
 
             if (list.Any())
             {
-                contactlistView.ItemsSource = list;
-                noContactsMessage.Text = string.Empty;
+                _contactlistView.ItemsSource = list;
+                _noContactsMessage.Text = string.Empty;
             }
 
             else
             {
-                contactlistView.ItemsSource = defaultList;
-            }
-        }
-
-        void OnSearchBarButtonPressed(object sender, EventArgs args)
-        {
-            SearchBar searchBar = (SearchBar)sender;
-            string searchText = searchBar.Text; // recovery the text of search bar
-
-            if (!string.IsNullOrEmpty(searchText) || !string.IsNullOrWhiteSpace(searchText))
-            {
-
-                if (contactsList.Count == 0)
-                {
-                    noContactsMessage.Text = "There is no contacts";
-                }
-
-                else
-                {
-                    List<Contact> list = (from c in contactsList
-                                          where (c.NameSurname.Contains(searchText, StringComparison.InvariantCultureIgnoreCase) ||
-                                                 c.FirstName.Contains(searchText, StringComparison.InvariantCultureIgnoreCase))
-                                          select c).ToList<Contact>();
-
-                    if (list.Any())
-                    {
-                        contactlistView.ItemsSource = list;
-                        noContactsMessage.Text = "";
-                    }
-
-                    else
-                    {
-                        contactlistView.ItemsSource = defaultList;
-                    }
-                }
-            }
-            else
-            {
-                contactlistView.ItemsSource = contactsList;
+                _contactlistView.ItemsSource = _defaultList;
             }
         }
 
@@ -180,33 +121,21 @@ namespace BeginMobile.Pages.Profile
         #region Private methods
         private void RetrieveCategorySelected(out string cat)
         {
-            var catSelectedIndex = searchView.Category.SelectedIndex;
-            var catLastIndex = searchView.Category.Items.Count - 1;
+            var catSelectedIndex = _searchView.Category.SelectedIndex;
+            var catLastIndex = _searchView.Category.Items.Count - 1;
 
-            if (catSelectedIndex == -1 || catSelectedIndex == catLastIndex)
-            {
-                cat = null;
-            }
-
-            else
-            {
-                cat = searchView.Category.Items[catSelectedIndex];
-            }
+            cat = catSelectedIndex == -1 || catSelectedIndex == catLastIndex
+                ? null
+                : _searchView.Category.Items[catSelectedIndex];
         }
         private void RetrieveLimitSelected(out string limit)
         {
-            var limitSelectedIndex = searchView.Limit.SelectedIndex;
-            var limitLastIndex = searchView.Limit.Items.Count - 1;
+            var limitSelectedIndex = _searchView.Limit.SelectedIndex;
+            var limitLastIndex = _searchView.Limit.Items.Count - 1;
 
-            if (limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex)
-            {
-                limit = null;
-            }
-
-            else
-            {
-                limit = searchView.Limit.Items[limitSelectedIndex];
-            }
+            limit = limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex
+                ? null
+                : _searchView.Limit.Items[limitSelectedIndex];
         }
 
         #endregion

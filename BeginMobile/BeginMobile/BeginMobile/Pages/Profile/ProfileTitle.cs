@@ -6,10 +6,10 @@ namespace BeginMobile.Pages.Profile
     {
         public ProfileTitle(string title)
         {
-            this.Text = title;
-            this.FontSize = Device.GetNamedSize(NamedSize.Large, typeof (Label));
-            this.FontAttributes = FontAttributes.Bold;
-            this.HorizontalOptions = LayoutOptions.Center;
+            Text = title;
+            FontSize = Device.GetNamedSize(NamedSize.Large, typeof (Label));
+            FontAttributes = FontAttributes.Bold;
+            HorizontalOptions = LayoutOptions.Center;
         }
     }
 }

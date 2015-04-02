@@ -1,141 +1,144 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Notifications
 {
     public class Notification : TabContent
     {
-        private ListView listViewNotifications;
-        private List<NotificationViewModel> listNotifications;
-        public Label CounterText;
+        private readonly ListView listViewNotifications;
+        private readonly List<NotificationViewModel> listNotifications;
+
+        public readonly Label CounterText;
 
         public Notification(string title, string iconImg)
             : base(title, iconImg)
         {
             Title = title;
-            var notification1 = new NotificationViewModel{
-                NotificationDescription = "Admin sent to you a new message",
-                IntervalDate = " 5 days, 5Hours ago",
-                ActionButton = new Button{Text = "READ"},
-                DeleteButton = new Button{Text = "DELETE"}, 
-                    
-                    };
-            notification1.DeleteButton.Clicked += (s, e) => {
-                DisplayAlert("message","delete","ok");
-                DeleteClickProcess(notification1);
+            var notification1 = new NotificationViewModel
+                                {
+                                    NotificationDescription = "Admin sent to you a new message",
+                                    IntervalDate = " 5 days, 5Hours ago",
+                                    ActionButton = new Button { Text = "READ" },
+                                    DeleteButton = new Button { Text = "DELETE" }
 
-            };
-            notification1.ActionButton.Clicked += (s, e) => {
-                var sender = (NotificationViewModel)s;
-                UnreadClickProcess(sender);
-            }; ;
+                                };
 
-            listNotifications = new List<NotificationViewModel> { 
-                   notification1 ,
+            notification1.DeleteButton.Clicked += (s, e) =>
+                                                  {
+                                                      DisplayAlert("message", "delete", "ok");
+                                                      DeleteClickProcess(notification1);
 
-                   new NotificationViewModel{
-                NotificationDescription = "Admin mentioned you",
-                IntervalDate = " 2weeks, 3days ago",
-                ActionButton = new Button{Text = "UNREAD"},
-                DeleteButton = new Button{Text = "DELETE"}
-                   
-                   },
+                                                  };
 
-                   new NotificationViewModel{
-                NotificationDescription = "You have a friendship request from Soledad Pietro",
-                IntervalDate = " 2weeks, 3days ago",
-                ActionButton = new Button{Text = "UNREAD"},
-                DeleteButton = new Button{Text = "DELETE"}
-                   
-                   
-                   },
+            notification1.ActionButton.Clicked += (s, e) =>
+                                                  {
+                                                      var sender = (NotificationViewModel)s;
+                                                      UnreadClickProcess(sender);
+                                                  };
 
-                   new NotificationViewModel{
-                NotificationDescription = "Admin mentioned you",
-                IntervalDate = " 5 days, 7Hours ago",
-                ActionButton = new Button{Text = "READ"},
-                DeleteButton = new Button{Text = "DELETE"}
-                   
-                   },
+            listNotifications = new List<NotificationViewModel>
+                                {
+                                    notification1,
 
-            };
+                                    new NotificationViewModel
+                                    {
+                                        NotificationDescription = "Admin mentioned you",
+                                        IntervalDate = " 2weeks, 3days ago",
+                                        ActionButton = new Button {Text = "UNREAD"},
+                                        DeleteButton = new Button {Text = "DELETE"}
 
-            CounterText = new Label()
-            {
-                //Text = new Random().Next(0, listNotifications.Count).ToString()
-                Text =  listNotifications.Count.ToString()
-            };
+                                    },
+
+                                    new NotificationViewModel
+                                    {
+                                        NotificationDescription = "You have a friendship request from Soledad Pietro",
+                                        IntervalDate = " 2weeks, 3days ago",
+                                        ActionButton = new Button {Text = "UNREAD"},
+                                        DeleteButton = new Button {Text = "DELETE"}
+
+
+                                    },
+
+                                    new NotificationViewModel
+                                    {
+                                        NotificationDescription = "Admin mentioned you",
+                                        IntervalDate = " 5 days, 7Hours ago",
+                                        ActionButton = new Button {Text = "READ"},
+                                        DeleteButton = new Button {Text = "DELETE"}
+
+                                    }
+                                };
+
+            CounterText = new Label
+                          {
+                              Text = listNotifications.Count.ToString()
+                          };
 
             listViewNotifications = new ListView
-            {
-                ItemTemplate = new DataTemplate(typeof(TemplateListViewNotification))
-            };
-
+                                    {
+                                        ItemTemplate = new DataTemplate(typeof(TemplateListViewNotification))
+                                    };
 
 
             var gridEventHeaderTitle = new Grid
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-            };
+                                       {
+                                           HorizontalOptions = LayoutOptions.FillAndExpand
+                                       };
 
             gridEventHeaderTitle.Children.Add(new Label
-            {
-                WidthRequest = 350,
-                HeightRequest = 50,
-                Text = "Notification",
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = App.Styles.SubtitleStyle
-            }, 0, 1, 0, 1);
+                                              {
+                                                  WidthRequest = 350,
+                                                  HeightRequest = 50,
+                                                  Text = "Notification",
+                                                  HorizontalOptions = LayoutOptions.FillAndExpand,
+                                                  Style = App.Styles.SubtitleStyle
+                                              }, 0, 1, 0, 1);
 
             gridEventHeaderTitle.Children.Add(new Label
-            {
-                HeightRequest = 50,
-                Text = "Date received",
-                HorizontalOptions = LayoutOptions.Start,
-                Style = App.Styles.SubtitleStyle
-            }, 1, 2, 0, 1);
+                                              {
+                                                  HeightRequest = 50,
+                                                  Text = "Date received",
+                                                  HorizontalOptions = LayoutOptions.Start,
+                                                  Style = App.Styles.SubtitleStyle
+                                              }, 1, 2, 0, 1);
 
 
-            StackLayout mainLayout = new StackLayout
-            {
-                  VerticalOptions = LayoutOptions.Start,
-                  Orientation = StackOrientation.Vertical
-            };
+            var mainLayout = new StackLayout
+                             {
+                                 VerticalOptions = LayoutOptions.Start,
+                                 Orientation = StackOrientation.Vertical
+                             };
 
             mainLayout.Children.Add(gridEventHeaderTitle);
-            mainLayout.Children.Add(new ScrollView() { Content = listViewNotifications });
+            mainLayout.Children.Add(new ScrollView { Content = listViewNotifications });
 
             Content = mainLayout;
 
             listViewNotifications.ItemSelected += async (s, e) =>
-            {
-                if (e.SelectedItem == null)
-                {
-                    return;
-                }
+                                                        {
+                                                            if (e.SelectedItem == null)
+                                                            {
+                                                                return;
+                                                            }
 
-                var item = (NotificationViewModel)e.SelectedItem;
-                var itemPage = new NotificationDetail(item.NotificationDescription);
-                await Navigation.PushAsync(itemPage);
+                                                            var item = (NotificationViewModel) e.SelectedItem;
+                                                            var itemPage =
+                                                                new NotificationDetail(item.NotificationDescription);
+                                                            await Navigation.PushAsync(itemPage);
 
-                ((ListView)s).SelectedItem = null;
+                                                            ((ListView) s).SelectedItem = null;
 
-            };
+                                                        };
+        }
+        private void DeleteClickProcess(NotificationViewModel model)
+        {
+            // TODO: Delete Logic here
+            DisplayAlert("Delete", model.NotificationDescription, "ok");
         }
 
-
-        public void DeleteClickProcess(NotificationViewModel model)
+        private void UnreadClickProcess(NotificationViewModel model)
         {
-            // TODO: to do
-            DisplayAlert("Delete",model.NotificationDescription,"ok");
-        }
-
-        public void UnreadClickProcess(NotificationViewModel model)
-        {
+            //TODO: Unread logic here
             DisplayAlert("Readed", model.NotificationDescription, "ok");
         }
 
@@ -143,7 +146,6 @@ namespace BeginMobile.Pages.Notifications
         {
             base.OnAppearing();
             listViewNotifications.ItemsSource = listNotifications;
-           
         }
     }
 }

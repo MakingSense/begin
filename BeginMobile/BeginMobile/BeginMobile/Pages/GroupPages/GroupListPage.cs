@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BeginMobile.Services.DTO;
 using Xamarin.Forms;
-using BeginMobile.Services.DTO;
 
 namespace BeginMobile.Pages.GroupPages
 {
     public class GroupListPage : TabContent
     {
-        private ListView _lViewGroup;
-        private RelativeLayout _rLayout;
+        private readonly ListView _lViewGroup;
+        private readonly RelativeLayout _rLayout;
 
-        public GroupListPage(string title, string iconImg): base(title, iconImg)
+        public GroupListPage(string title, string iconImg)
+            : base(title, iconImg)
         {
 
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationGroups groupInformation = App.ProfileServices.GetGroups(currentUser.User.UserName, currentUser.AuthToken);
 
-            _lViewGroup = new ListView() { };
-
-            _lViewGroup.ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell));
-            _lViewGroup.ItemsSource = groupInformation.Groups;
-
-            _lViewGroup.HasUnevenRows = true;
+            _lViewGroup = new ListView
+                          {
+                              ItemTemplate = new DataTemplate(typeof (ProfileGroupItemCell)),
+                              ItemsSource = groupInformation.Groups,
+                              HasUnevenRows = true
+                          };
 
             _lViewGroup.ItemSelected += async (sender, e) =>
             {
@@ -32,8 +30,7 @@ namespace BeginMobile.Pages.GroupPages
                 }
 
                 var groupItem = (Group)e.SelectedItem;
-                var groupPage = new GroupItemPage(groupItem);
-                groupPage.BindingContext = groupItem;
+                var groupPage = new GroupItemPage(groupItem) { BindingContext = groupItem };
                 await Navigation.PushAsync(groupPage);
 
                 // clears the 'selected' background
@@ -41,13 +38,9 @@ namespace BeginMobile.Pages.GroupPages
             };
 
             _rLayout = new RelativeLayout();
-            _rLayout.Children.Add(_lViewGroup,
-                xConstraint: Constraint.Constant(0),
-                yConstraint: Constraint.Constant(0),
-                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
-                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+            _rLayout.Children.Add(_lViewGroup, Constraint.Constant(0), Constraint.Constant(0), Constraint.RelativeToParent(parent => { return parent.Width; }), Constraint.RelativeToParent(parent => { return parent.Height; }));
 
-            Content = new ScrollView() { Content = _rLayout };
+            Content = new ScrollView { Content = _rLayout };
         }
     }
 }

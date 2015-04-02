@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BeginMobile.Services.DTO;
 using Xamarin.Forms;
-using BeginMobile.Services.DTO;
 
 namespace BeginMobile.Pages.Profile
 {
-    public class TemplateListViewEvents:ViewCell
+    public class TemplateListViewEvents : ViewCell
     {
         public TemplateListViewEvents()
         {
@@ -23,17 +20,18 @@ namespace BeginMobile.Pages.Profile
             var eventDetailsLayout = CreateDetailsLayout();
 
             View = new StackLayout
-            {
-                HeightRequest = 60,
-                Orientation = StackOrientation.Horizontal,
-                Children = { 
-                    eventTitle, eventDetailsLayout
-                }
-            };
-
+                   {
+                       HeightRequest = 60,
+                       Orientation = StackOrientation.Horizontal,
+                       Children =
+                       {
+                           eventTitle,
+                           eventDetailsLayout
+                       }
+                   };
         }
 
-        public static StackLayout CreateDetailsLayout()
+        private static StackLayout CreateDetailsLayout()
         {
             var eventIntervalDate = new Label
             {
@@ -59,13 +57,11 @@ namespace BeginMobile.Pages.Profile
         }
     }
 
-
     public class EventInfoObject
     {
         public string EventName { get; set; }
         public string EventIntervalDate { get; set; }
         public string EventTime { get; set; }
-
-        public ProfileEvent eventInfo { get; set; }
+        public ProfileEvent EventInfo { get; set; }
     }
 }

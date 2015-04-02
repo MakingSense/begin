@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 using BeginMobile.Services.DTO;
-using BeginMobile.Services.ManagerServices;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
 {
     public class MyActivity : ContentPage
     {
-        private const string userDefault = "userdefault3.png";
+        private const string UserDefault = "userdefault3.png";
 
         public MyActivity()
         {
@@ -20,31 +17,20 @@ namespace BeginMobile.Pages.Profile
 
             Title = "My activity";
 
-            Label header = new Label
-            {
-                Text = "My Activities",
-                Style = App.Styles.TitleStyle,
-                HorizontalOptions = LayoutOptions.Center
-            };
-
             var listDataSource = new List<ActivityViewModel>();
 
             if (profileActivity != null)
             {
-                foreach (var activity in profileActivity.Activities)
-                {
-                    if (activity.Component.Equals("activity", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        listDataSource.Add(new ActivityViewModel
-                        {
-                            Icon = userDefault,
-                            NameSurname = profileActivity.NameSurname,
-                            ActivityDescription = activity.Content,
-                            ActivityType = activity.Type,
-                            DateAndTime = activity.Date
-                        });
-                    }
-                }
+                listDataSource.AddRange(from activity in profileActivity.Activities
+                                        where activity.Component.Equals("activity", StringComparison.InvariantCultureIgnoreCase)
+                                        select new ActivityViewModel
+                                               {
+                                                   Icon = UserDefault,
+                                                   NameSurname = profileActivity.NameSurname,
+                                                   ActivityDescription = activity.Content,
+                                                   ActivityType = activity.Type,
+                                                   DateAndTime = activity.Date
+                                               });
             }
 
             var listViewTemplate = new DataTemplate(typeof(Activities));
@@ -55,29 +41,30 @@ namespace BeginMobile.Pages.Profile
             };
 
             listViewActivities.ItemSelected += (s, e) =>
-            {
-                if (e.SelectedItem == null)
-                {
-                    return;
-                }
-                ((ListView)s).SelectedItem = null;
-            };
+                                               {
+                                                   if (e.SelectedItem == null)
+                                                   {
+                                                       return;
+                                                   }
+
+                                                   ((ListView) s).SelectedItem = null;
+                                               };
 
             listViewActivities.HasUnevenRows = true;
 
-            StackLayout stackLayout = new StackLayout
-                {
-                    Spacing = 2,
-                    VerticalOptions = LayoutOptions.FillAndExpand,
-                    Orientation = StackOrientation.Vertical,
-                };
+            var stackLayout = new StackLayout
+                              {
+                                  Spacing = 2,
+                                  VerticalOptions = LayoutOptions.FillAndExpand,
+                                  Orientation = StackOrientation.Vertical
+                              };
+
             stackLayout.Children.Add(listViewActivities);
 
-            StackLayout mainStackLayout = new StackLayout
+            var mainStackLayout = new StackLayout
             {
                 Spacing = 2,
-                Padding = App.Styles.LayoutThickness,
-                     
+                Padding = App.Styles.LayoutThickness
             };
 
             mainStackLayout.Children.Add(stackLayout);
