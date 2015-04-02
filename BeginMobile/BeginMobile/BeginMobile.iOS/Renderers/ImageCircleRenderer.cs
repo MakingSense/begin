@@ -15,8 +15,9 @@ namespace BeginMobile.iOS.Renderers
         /// Used for registration with dependency service
         /// </summary>
         public static void Init() { }
+
         /// <summary>
-        /// 
+        /// Event that is raised when an element has changed
         /// </summary>
         /// <param name="e"></param>
         protected override void OnElementChanged(ElementChangedEventArgs<Image> e)
@@ -26,8 +27,9 @@ namespace BeginMobile.iOS.Renderers
                 return;
             CreateCircle();
         }
+
         /// <summary>
-        /// 
+        /// Event that is raised when a property has changed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -47,7 +49,7 @@ namespace BeginMobile.iOS.Renderers
         {
             try
             {
-                double min = Math.Min(Element.Width, Element.Height);
+                var min = Math.Min(Element.Width, Element.Height);
                 Control.Layer.CornerRadius = (float)(min / 2.0);
                 Control.Layer.MasksToBounds = false;
                 Control.Layer.BorderColor = ((CircleImage)Element).BorderColor.ToCGColor();

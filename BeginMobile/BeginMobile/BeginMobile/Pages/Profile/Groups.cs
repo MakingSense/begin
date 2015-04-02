@@ -4,7 +4,6 @@ using System.Linq;
 using BeginMobile.Pages.GroupPages;
 using BeginMobile.Services.DTO;
 using BeginMobile.Utils;
-using BeginMobile.Utils.Extensions;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
@@ -43,12 +42,12 @@ namespace BeginMobile.Pages.Profile
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             _groupInformation = App.ProfileServices.GetGroups(_currentUser.User.UserName, _currentUser.AuthToken);
 
-            _lViewGroup = new ListView();
-
-            _lViewGroup.ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell));
-            _lViewGroup.ItemsSource = _groupInformation.Groups;
-
-            _lViewGroup.HasUnevenRows = true;
+            _lViewGroup = new ListView
+                          {
+                              ItemTemplate = new DataTemplate(typeof (ProfileGroupItemCell)),
+                              ItemsSource = _groupInformation.Groups,
+                              HasUnevenRows = true
+                          };
 
             _lViewGroup.ItemSelected += async (sender, e) =>
             {
@@ -77,7 +76,7 @@ namespace BeginMobile.Pages.Profile
 
             #endregion
 
-            StackLayout mainLayout = new StackLayout
+            var mainLayout = new StackLayout
             {
                 Padding = 10,
                 Spacing = 2,
@@ -96,6 +95,11 @@ namespace BeginMobile.Pages.Profile
 
         #region Events
 
+        /// <summary>
+        /// Common handler when an searchBar item has changed 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void SearchItemEventHandler(object sender, EventArgs args)
         {
             string limit;
@@ -122,7 +126,6 @@ namespace BeginMobile.Pages.Profile
                 _lViewGroup.ItemsSource = _defaultList;
             }
         }
-
         private void RetrieveSectionSelected(out string sections)
         {
             var sectionSelectedIndex = _sectionsPicker.SelectedIndex;
@@ -138,7 +141,6 @@ namespace BeginMobile.Pages.Profile
                 sections = _sectionsPicker.Items[sectionSelectedIndex];
             }
         }
-
         private void RetrieveCategorySelected(out string cat)
         {
             var catSelectedIndex = _searchView.Category.SelectedIndex;
@@ -154,7 +156,6 @@ namespace BeginMobile.Pages.Profile
                 cat = _searchView.Category.Items[catSelectedIndex];
             }
         }
-
         private void RetrieveLimitSelected(out string limit)
         {
             var limitSelectedIndex = _searchView.Limit.SelectedIndex;
@@ -169,47 +170,6 @@ namespace BeginMobile.Pages.Profile
             {
                 limit = _searchView.Limit.Items[limitSelectedIndex];
             }
-        }
-
-        private void OnSearchBarButtonPressed(object sender, EventArgs args)
-        {
-            var groupsList = _groupInformation.Groups;
-
-            SearchBar searchBar = (SearchBar)sender;
-            string searchText = searchBar.Text; // recovery the text of search bar
-
-            if (!string.IsNullOrEmpty(searchText) || !string.IsNullOrWhiteSpace(searchText))
-            {
-
-                if (groupsList.Count == 0)
-                {
-                    _noGroupsMessage.Text = "There is no groups";
-                }
-
-                else
-                {
-                    List<Group> list =
-                        (from g in groupsList
-                         where g.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)
-                         select g).ToList<Group>();
-
-                    if (list.Any())
-                    {
-                        _lViewGroup.ItemsSource = list;
-                        _noGroupsMessage.Text = "";
-                    }
-
-                    else
-                    {
-                        _lViewGroup.ItemsSource = _defaultList;
-                    }
-                }
-            }
-            else
-            {
-                _lViewGroup.ItemsSource = _groupInformation.Groups;
-            }
-
         }
 
         #endregion

@@ -11,8 +11,6 @@ using Xamarin.Forms.Platform.iOS;
     {
         public class ExtendedButtonRenderer : ButtonRenderer
         {
-            public ExtendedButtonRenderer() { }
-
             public override void Draw(CGRect rect)
             {
                 base.Draw(rect);
