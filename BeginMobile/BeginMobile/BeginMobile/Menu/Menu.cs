@@ -42,89 +42,42 @@ namespace BeginMobile.Menu
 
             Title = "Menu";
             Icon = Device.OS == TargetPlatform.iOS ? "More.png" : null;
-
-            var userImage = new ImageCell
-            {
-                ImageSource =
-                    ImageSource.FromFile(pUserDefault),
-                Text = currentUser.User.DisplayName,
-                Detail = currentUser.User.Email
-
+            var listData = new List<ConfigurationMenuItems>
+            {              
+                new ConfigurationMenuItems { Icon = pUserDefault, OptionName = currentUser.User.DisplayName, OptionDetail= currentUser.User.Email}
             };
-
-            var userInfoTableView = new TableView
+            var iconTemplate = new DataTemplate(typeof(MenuIconTemplate));
+            var userImageListView = new ListView
             {
+                VerticalOptions = LayoutOptions.Start,
+                ItemsSource = listData,
+                ItemTemplate = iconTemplate,
                 BackgroundColor = App.Styles.MenuBackground,
                 HeightRequest = 180,
-                Root = new TableRoot
-                                                       {
-                                                           new TableSection
-                                                               {
-                                                                   userImage
-                                                               },
-                                                       }
             };
-
-            var menuItemList = new List<ConfigurationMenuItems>
-                                   {                                       
-                                       new ConfigurationMenuItems {OptionName = Items.Profile.ToString(), Icon = pProfileMenuIcon},
-                                      
-                                       new ConfigurationMenuItems {OptionName = Items.Knocks.ToString(), Icon = knocks}
-                                   };
+            userImageListView.HasUnevenRows = true;
 
 
             var cell = new DataTemplate(typeof(CustomMenuItemTemplateCell));
 
-            var menu = new ListView
-            {
-                BackgroundColor = App.Styles.MenuBackground,
-                HeightRequest = 150,
-                ItemsSource = menuItemList,
-                ItemTemplate = cell,
-
-                //ItemsSource = menuItems,
-            };
-
-
-
-            menu.ItemSelected += async (sender, e) =>
-            {
-                if (e.SelectedItem == null)
-                {
-                    return;
-                }
-
-                var item = (ConfigurationMenuItems)e.SelectedItem;
-                var itemPageProfile = new ProfileMe(currentUser.User);
-                var itemPageKnocks = new ContentPage { Title = "Knocks" };
-
-                if (item.OptionName.Equals(Items.Profile.ToString()))
-                {
-                    await Navigation.PushAsync(itemPageProfile);
-                }
-                else if (item.OptionName.Equals(Items.Knocks.ToString()))
-                {
-                    await Navigation.PushAsync(itemPageKnocks);
-                }
-
-                ((ListView)sender).SelectedItem = null;
-                _onToggleRequest();
-            };
-
-
             var listButtonsData = new List<ConfigurationMenuItems>();
-            listButtonsData.Add(new ConfigurationMenuItems{OptionName=MenuItemsNames.Logout});
-            listButtonsData.Add(new ConfigurationMenuItems{Icon= "", OptionName=MenuItemsNames.ChangePassword});
-            listButtonsData.Add(new ConfigurationMenuItems{Icon= "", OptionName=MenuItemsNames.About});
-            listButtonsData.Add(new ConfigurationMenuItems{Icon= "", OptionName=MenuItemsNames.Privacy});
-            listButtonsData.Add(new ConfigurationMenuItems{Icon= "", OptionName=MenuItemsNames.HelpCenter});
-            listButtonsData.Add(new ConfigurationMenuItems{Icon= "", OptionName=MenuItemsNames.TermsAndConditions});
-            listButtonsData.Add(new ConfigurationMenuItems {Icon = "", OptionName = MenuItemsNames.UpdateProfile });
+            listButtonsData.Add(new ConfigurationMenuItems { Icon = pProfileMenuIcon, OptionName = MenuItemsNames.Profile });
+            listButtonsData.Add(new ConfigurationMenuItems { Icon = knocks, OptionName = MenuItemsNames.Knocks });
+            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = "" });
+            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.Logout });
+            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.ChangePassword });
+            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.About });
+            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.Privacy });
+            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.HelpCenter });
+            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.TermsAndConditions });
+            listButtonsData.Add(new ConfigurationMenuItems { Icon = "", OptionName = MenuItemsNames.UpdateProfile });
 
             var listViewOptionButtons = new ListView
             {
+                VerticalOptions = LayoutOptions.Start,
                 ItemsSource = listButtonsData,
-                ItemTemplate = cell
+                ItemTemplate = cell,
+                BackgroundColor = App.Styles.MenuBackground,
             };
 
             listViewOptionButtons.ItemSelected += async (s, e) =>
@@ -134,9 +87,19 @@ namespace BeginMobile.Menu
                     return;
                 }
                 string item = ((ConfigurationMenuItems)e.SelectedItem).OptionName;
+                var itemPageProfile = new ProfileMe(currentUser.User);
+                var itemPageKnocks = new ContentPage { Title = "Knocks" };
 
                 switch (item)
                 {
+                    case MenuItemsNames.Knocks:
+                       await Navigation.PushAsync(itemPageKnocks);
+                        _onToggleRequest();
+                        break;
+                    case MenuItemsNames.Profile:
+                        await Navigation.PushAsync(itemPageProfile);
+                        _onToggleRequest();
+                        break;
                     case MenuItemsNames.Logout:
                         App.Current.Logout();
                         break;
@@ -166,91 +129,9 @@ namespace BeginMobile.Menu
                         break;
                 }
                 ((ListView)s).SelectedItem = null;
+                _onToggleRequest();
             };
-            listViewOptionButtons.HasUnevenRows = true;
-            
-
-            //var controlButtonStyle = App.Styles.LinkButton;
-
-            ////controls buttons
-            //var buttonLogout = new Button
-            //{
-            //    Text = "Logout",
-            //    Style = controlButtonStyle
-            //};
-
-            //var buttonChangePassword = new Button
-            //{
-            //    Text = "Change your password",
-            //    Style = controlButtonStyle
-            //};
-
-            //var buttonAbout = new Button
-            //{
-            //    Text = "About",
-            //    Style = controlButtonStyle
-            //};
-            //var buttonPrivacy = new Button
-            //{
-            //    Text = "Privacy",
-            //    Style = controlButtonStyle
-            //};
-            //var buttonSupport = new Button
-            //{
-            //    Text = "Help Center",
-            //    Style = controlButtonStyle
-            //};
-            //var buttonTermsAndConditions = new Button
-            //{
-            //    Text = "Terms And Conditions",
-            //    Style = controlButtonStyle
-            //};
-
-            //var buttonUpdateProfile = new Button
-            //{
-            //    Text = "Update profile",
-            //    Style = controlButtonStyle
-            //};
-
-            //buttonLogout.Clicked += async (s, e) =>
-            //{
-            //    //await Navigation.PushAsync(new Login());
-            //    App.Current.Logout();
-            //};
-
-            //buttonChangePassword.Clicked += async (s, e) =>
-            //{
-            //    await Navigation.PushAsync(new ChangePasswordPage());
-            //    _onToggleRequest();
-            //};
-
-            //buttonAbout.Clicked += async (s, e) =>
-            //{
-            //    await Navigation.PushAsync(new AboutUs());
-            //    _onToggleRequest();
-            //};
-            //buttonPrivacy.Clicked += async (s, e) =>
-            //{
-            //    await Navigation.PushAsync(new Privacy());
-            //    _onToggleRequest();
-            //};
-            //buttonSupport.Clicked += async (s, e) =>
-            //{
-            //    await Navigation.PushAsync(new HelpCenter());
-            //    _onToggleRequest();
-            //};
-            //buttonTermsAndConditions.Clicked += async (s, e) =>
-            //{
-            //    await Navigation.PushAsync(new TermsAndConditions(isLoadByLogin));
-            //    _onToggleRequest();
-            //};
-
-            //buttonUpdateProfile.Clicked += async (s, e) =>
-            //{
-            //    await Navigation.PushAsync(new UpdateProfilePage());
-            //    _onToggleRequest();
-            //};
-
+            listViewOptionButtons.HasUnevenRows = true;            
 
             var stackLayoutControls = new StackLayout
             {
@@ -258,7 +139,7 @@ namespace BeginMobile.Menu
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Orientation = StackOrientation.Vertical,
                 Children =
-                                             {
+                                             {                                                 
                                                  listViewOptionButtons
                                              }
             };
@@ -267,9 +148,8 @@ namespace BeginMobile.Menu
             {
                 Spacing = 2,
                 Children =
-                                  {
-                                      userInfoTableView,
-                                      menu,
+                                  {        
+                                      userImageListView,
                                       stackLayoutControls
                                   }
             };
@@ -309,12 +189,70 @@ namespace BeginMobile.Menu
                 Style = App.Styles.ListItemTextStyle,
                 TextColor = App.Styles.MenuOptionsColor
             };
+
             optionName.SetBinding(Label.TextProperty, "OptionName");
+         
+
             var optionLayout = new StackLayout
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Orientation = StackOrientation.Vertical,
                 Children = { optionName }
+            };
+
+            return optionLayout;
+        }
+    }
+
+    public class MenuIconTemplate : ViewCell
+    {
+        public MenuIconTemplate()
+        {
+            var icon = new Image
+            {
+                HeightRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
+                WidthRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
+                Aspect = Aspect.AspectFill,
+                HorizontalOptions = LayoutOptions.Start,
+                //BorderThickness = Device.OnPlatform<int>(iOS: 2, Android: 3, WinPhone: 3),
+            };
+           
+            icon.SetBinding(Image.SourceProperty, new Binding("Icon"));
+
+            var optionLayout = CreateOptionLayout();
+            View = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                Children =
+                               {
+                                   icon,
+                                   optionLayout
+                               }
+            };
+        }
+
+        public static StackLayout CreateOptionLayout()
+        {
+            var optionName = new Label
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                YAlign = TextAlignment.Center,
+                Style = App.Styles.ListItemTextStyle,
+            };
+            var labelDescription = new Label
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                YAlign = TextAlignment.Center,
+                Style = App.Styles.ListItemDetailTextStyle
+            };
+            labelDescription.SetBinding(Label.TextProperty, "OptionDetail");
+            optionName.SetBinding(Label.TextProperty, "OptionName");
+
+            var optionLayout = new StackLayout
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Orientation = StackOrientation.Vertical,
+                Children = { optionName, labelDescription }
             };
             return optionLayout;
         }
@@ -325,15 +263,13 @@ namespace BeginMobile.Menu
         public string Icon { get; set; }
 
         public string OptionName { get; set; }
-    }
-    public enum Items
-    {
-        Profile,
-        Knocks
+        public string OptionDetail { get; set; }
     }
 
     public static class MenuItemsNames
     {
+        public const string Profile = "Profile";
+        public const string Knocks = "Knocks";
         public const string Logout = "Logout";
         public const string ChangePassword = "Change your password";
         public const string About = "About Us";
@@ -341,5 +277,6 @@ namespace BeginMobile.Menu
         public const string HelpCenter = "Help Center";
         public const string TermsAndConditions = "Terms And Conditions";
         public const string UpdateProfile = "Update Profile";
+        
     }
 }
