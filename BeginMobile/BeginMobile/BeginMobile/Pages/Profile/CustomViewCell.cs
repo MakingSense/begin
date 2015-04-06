@@ -1,4 +1,6 @@
-﻿using ImageCircle.Forms.Plugin.Abstractions;
+﻿using System;
+using BeginMobile.LocalizeResources.Resources;
+using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
@@ -32,6 +34,13 @@ namespace BeginMobile.Pages.Profile
         }
         private static Grid CreateOptionLayout()
         {
+            var buttonAddFriend = new Button
+            {
+                Text = AppResources.ButtonAddFriend
+            };
+
+            buttonAddFriend.Clicked += AddFriendEventHandler;
+
             var labelOptionText = new Label
                              {
                                  HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -46,10 +55,11 @@ namespace BeginMobile.Pages.Profile
                                    Style = App.Styles.ListItemDetailTextStyle
                                };
 
+
             labelOptionText.SetBinding(Label.TextProperty, "NameSurname");
             labelOptionDetail.SetBinding(Label.TextProperty, "References");
 
-            var gridDetails = new Grid
+            var grid = new Grid
                               {
                                   Padding = App.Styles.ListDetailThickness,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -66,24 +76,18 @@ namespace BeginMobile.Pages.Profile
                                   }
                               };
 
-            gridDetails.Children.Add(labelOptionText, 0, 0);
-            gridDetails.Children.Add(labelOptionDetail, 0,1);
+            grid.Children.Add(labelOptionText, 0, 0);
+            grid.Children.Add(labelOptionDetail, 0, 1);
+            grid.Children.Add(buttonAddFriend, 1, 0);
 
-            return gridDetails;
+            return grid;
         }
-    }
 
-    public class Contact
-    {
-        public string Icon { get; set; }
-        public string NameSurname { get; set; }
-        public string FirstName
+        static void AddFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            get
-            {
-                return NameSurname.Split(' ')[0];
-            }            
+            var objectSender = sender;
+
         }
-        public string References { get; set; }
+
     }
 }

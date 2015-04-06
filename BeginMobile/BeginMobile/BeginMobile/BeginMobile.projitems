@@ -42,6 +42,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\TemplateListViewNotification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Privacy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Activities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\ContactDetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Contacts.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\CustomViewCell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\EventDetailInformation.cs" />

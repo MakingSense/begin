@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BeginMobile.Services.DTO;
+using BeginMobile.Services.Models;
 using BeginMobile.Utils;
 using BeginMobile.Utils.Extensions;
 using Xamarin.Forms;
@@ -22,61 +23,79 @@ namespace BeginMobile.Pages.Profile
             Title = "Contacts";
             _searchView = new SearchView("Profesional", "Personal", "Job", "Important", "Needs Attention", "Other");
 
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            ProfileInformationContacts profileInformationContacts = App.ProfileServices.GetContacts(currentUser.User.UserName, currentUser.AuthToken);
+            var currentUser = (LoginUser) App.Current.Properties["LoginUser"];
+            ProfileInformationContacts profileInformationContacts =
+                App.ProfileServices.GetContacts(currentUser.User.UserName, currentUser.AuthToken);
 
             _contactsList = new List<Contact>();
 
             foreach (var contact in profileInformationContacts.Contacts)
             {
-                _contactsList.Add(new Contact { Icon = UserDefault, NameSurname = contact.NameSurname, References = String.Format("e-mail: {0}", contact.Email) });
+                _contactsList.Add(new Contact
+                                  {
+                                      Icon = UserDefault,
+                                      NameSurname = contact.NameSurname,
+                                      Email = String.Format("e-mail: {0}", contact.Email),
+                                      Url = contact.Url,
+                                      Username = contact.UserName,
+                                      Registered = contact.Registered,
+                                      Id = contact.Id.ToString()
+                                  });
             }
 
-            var contactListViewTemplate = new DataTemplate(typeof(CustomViewCell));
+            var contactListViewTemplate = new DataTemplate(typeof (CustomViewCell));
 
             _listViewContacts = new ListView
-                               {
-                                   ItemsSource = _contactsList,
-                                   ItemTemplate = contactListViewTemplate,
-                                   HasUnevenRows = true
-                               };
+                                {
+                                    ItemsSource = _contactsList,
+                                    ItemTemplate = contactListViewTemplate,
+                                    HasUnevenRows = true
+                                };
 
-            _listViewContacts.ItemSelected += (s, e) =>
-            {
-                if (e.SelectedItem == null)
-                {
-                    return;
-                }
-                // TODO: Add here the logic to go the contact details
-                ((ListView)s).SelectedItem = null;
-            };
+            _listViewContacts.ItemSelected += async (sender, eventArgs) =>
+                                                    {
+                                                        if (eventArgs.SelectedItem == null)
+                                                        {
+                                                            return;
+                                                        }
+                                                        var contactItem = (Contact) eventArgs.SelectedItem;
+                                                        var contentPageContactDetail = new ContactDetail(contactItem)
+                                                                                       {
+                                                                                           BindingContext
+                                                                                               =
+                                                                                               contactItem
+                                                                                       };
+                                                        await Navigation.PushAsync(contentPageContactDetail);
+                                                        ((ListView) sender).SelectedItem = null;
+                                                    };
 
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
             _labelNoContactsMessage = new Label();
-            
+
             var scrollView = new ScrollView
-            {
-                Content = new StackLayout
-                {
-                    Spacing = 2,
-                    VerticalOptions = LayoutOptions.Start,
-                    Children = {
-                        _searchView.Container,
-                        _labelNoContactsMessage,
-                        _listViewContacts
-                    }
-                }
-            };
+                             {
+                                 Content = new StackLayout
+                                           {
+                                               Spacing = 2,
+                                               VerticalOptions = LayoutOptions.Start,
+                                               Children =
+                                               {
+                                                   _searchView.Container,
+                                                   _labelNoContactsMessage,
+                                                   _listViewContacts
+                                               }
+                                           }
+                             };
 
             Content = new StackLayout
-            {
-                Padding = 10,
-                VerticalOptions = LayoutOptions.Start,
-                Children =
-                {
-                    scrollView
-                }
-            };
+                      {
+                          Padding = 10,
+                          VerticalOptions = LayoutOptions.Start,
+                          Children =
+                          {
+                              scrollView
+                          }
+                      };
         }
 
         #region Events
@@ -86,7 +105,7 @@ namespace BeginMobile.Pages.Profile
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        void SearchItemEventHandler(object sender, EventArgs args)
+        private void SearchItemEventHandler(object sender, EventArgs args)
         {
             string limit;
             string cat;
@@ -117,6 +136,7 @@ namespace BeginMobile.Pages.Profile
         #endregion
 
         #region Private methods
+
         private void RetrieveCategorySelected(out string cat)
         {
             var catSelectedIndex = _searchView.Category.SelectedIndex;
@@ -126,6 +146,7 @@ namespace BeginMobile.Pages.Profile
                 ? null
                 : _searchView.Category.Items[catSelectedIndex];
         }
+
         private void RetrieveLimitSelected(out string limit)
         {
             var limitSelectedIndex = _searchView.Limit.SelectedIndex;
@@ -137,6 +158,5 @@ namespace BeginMobile.Pages.Profile
         }
 
         #endregion
-
     }
 }
