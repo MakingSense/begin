@@ -264,11 +264,10 @@ namespace BeginMobile.Menu
         {
             var icon = new Image
             {
-                HeightRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
-                WidthRequest = Device.OnPlatform<int>(iOS: 50, Android: 100, WinPhone: 100),
+                HeightRequest = Device.OnPlatform(50, 100, 100),
+                WidthRequest = Device.OnPlatform(50, 100, 100),
                 Aspect = Aspect.AspectFill,
                 HorizontalOptions = LayoutOptions.Start,
-                //BorderThickness = Device.OnPlatform<int>(iOS: 2, Android: 3, WinPhone: 3),
             };
            
             icon.SetBinding(Image.SourceProperty, new Binding("Icon"));

@@ -6,7 +6,7 @@ namespace BeginMobile.Accounts
 {
     public class UpdateProfilePage : ContentPage
     {
-        private readonly Entry _nameSurname;
+        private readonly Entry _entryNameSurname;
 
         public UpdateProfilePage()
         {
@@ -15,7 +15,7 @@ namespace BeginMobile.Accounts
 
             Title = "Update profile";
 
-            _nameSurname = new Entry
+            _entryNameSurname = new Entry
                            {
                                Placeholder = "Name and Surname",
                                IsPassword = false,
@@ -31,7 +31,7 @@ namespace BeginMobile.Accounts
 
             buttonUpdateProfile.Clicked += async (s, e) =>
                                                  {
-                                                     loginUserManager.UpdateProfile(_nameSurname.Text,
+                                                     loginUserManager.UpdateProfile(_entryNameSurname.Text,
                                                          currentUser.AuthToken);
 
                                                      await
@@ -48,7 +48,7 @@ namespace BeginMobile.Accounts
                                  Orientation = StackOrientation.Vertical,
                                  Children =
                                  {
-                                     _nameSurname,
+                                     _entryNameSurname,
                                      buttonUpdateProfile
                                  }
                              };
