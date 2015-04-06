@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Threading.Tasks;
-using System.Collections;
-
 
 namespace BeginMobile.Services.Interfaces
 {
@@ -86,7 +81,7 @@ namespace BeginMobile.Services.Interfaces
                 httpClient.BaseAddress = new Uri(_serviceBaseAddress);
 
                 var response = httpClient.PostAsync(_subAddress + addressSuffix, content).Result;
-                
+
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -173,4 +168,3 @@ namespace BeginMobile.Services.Interfaces
         }
     }
 }
- 

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BeginMobile.Services.DTO
 {
@@ -25,7 +23,8 @@ namespace BeginMobile.Services.DTO
 
         private static List<Message> _listMessages;
 
-        public static List<Message> Messages{
+        public static List<Message> Messages
+        {
             get
             {
                 string[] type = {"Inbox", "Sent", "Compose"};
@@ -36,14 +35,14 @@ namespace BeginMobile.Services.DTO
                     for (var i = 0; i < 10; i++)
                     {
                         var message = new Message()
-                        {
-                            Id = i.ToString(),
-                            Title = "Re: Contact "+i,
-                            Content = "Content of message "+i,
-                            Type = type[new Random().Next(0, 2)],
-                            CreateDate = DateTime.Now.ToString(),
-                            IsRead = isRead[new Random().Next(0, 2)],
-                        };
+                                      {
+                                          Id = i.ToString(),
+                                          Title = "Re: Contact " + i,
+                                          Content = "Content of message " + i,
+                                          Type = type[new Random().Next(0, 2)],
+                                          CreateDate = DateTime.Now.ToString(),
+                                          IsRead = isRead[new Random().Next(0, 2)],
+                                      };
 
                         _listMessages.Add(message);
                     }

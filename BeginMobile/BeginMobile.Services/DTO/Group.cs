@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
@@ -43,13 +40,15 @@ namespace BeginMobile.Services.DTO
 
         public string Type { set; get; }
 
-        public string MembersContent{ set; get; }
+        public string MembersContent { set; get; }
 
         [JsonProperty("members")]
         public List<User> Members { set; get; }
 
         //TODO remove this region when it's not necessary
+
         #region "Fields for test"
+
         private static List<Group> _listGroup;
 
         public static List<Group> ListGroup
@@ -62,13 +61,13 @@ namespace BeginMobile.Services.DTO
                     for (var i = 0; i < 15; i++)
                     {
                         var group = new Group()
-                        {
-                            Id = i.ToString(),
-                            Name = "Name " + i,
-                            Type = "Type " + i,
-                            Category = "Category " + i,
-                            MembersContent = ((new Random().Next(1, 100)) + i).ToString(), 
-                        };
+                                    {
+                                        Id = i.ToString(),
+                                        Name = "Name " + i,
+                                        Type = "Type " + i,
+                                        Category = "Category " + i,
+                                        MembersContent = ((new Random().Next(1, 100)) + i).ToString(),
+                                    };
                         _listGroup.Add(group);
                     }
                 }
@@ -76,6 +75,7 @@ namespace BeginMobile.Services.DTO
                 return _listGroup;
             }
         }
+
         #endregion
     }
 }

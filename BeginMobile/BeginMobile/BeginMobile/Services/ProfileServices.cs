@@ -1,16 +1,14 @@
-﻿using BeginMobile.Services.DTO;
+﻿using System.Collections.Generic;
+using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BeginMobile.Services
 {
     public class ProfileServices
     {
-        private ProfileManager _profileManager;
-        private GroupManager _groupManager;
-        private EventManager _eventManager;
+        private readonly ProfileManager _profileManager;
+        private readonly GroupManager _groupManager;
+        private readonly EventManager _eventManager;
 
         public ProfileServices()
         {
@@ -65,7 +63,7 @@ namespace BeginMobile.Services
         }
 
         //Groups and events
-        public List<Group> GetGroupsByParams(string authToken, string name = null, string cat = null, 
+        public List<Group> GetGroupsByParams(string authToken, string name = null, string cat = null,
             string limit = null, string sections = null)
         {
             return _groupManager.GetGroupsByParams(authToken, name, cat, limit, sections);
@@ -76,7 +74,7 @@ namespace BeginMobile.Services
             return _groupManager.GetGroupById(authToken, groupId, sections);
         }
 
-        public List<ProfileEvent> GetEventsByParams(string authToken, string name = null, 
+        public List<ProfileEvent> GetEventsByParams(string authToken, string name = null,
             string cat = null, string limit = null)
         {
             return _eventManager.GetEventsByParams(authToken, name, cat, limit);

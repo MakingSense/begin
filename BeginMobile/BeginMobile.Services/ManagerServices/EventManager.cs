@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
-using Newtonsoft.Json;
 using BeginMobile.Services.Interfaces;
 
 namespace BeginMobile.Services.ManagerServices
@@ -19,12 +15,14 @@ namespace BeginMobile.Services.ManagerServices
         private readonly GenericBaseClient<ProfileEvent> _eventClient =
             new GenericBaseClient<ProfileEvent>(BaseAddress, SubAddress);
 
-        public EventManager() { }
+        public EventManager()
+        {
+        }
 
         public List<ProfileEvent> GetEventsByParams(
-            string authToken, 
-            string name = null, 
-            string cat = null, 
+            string authToken,
+            string name = null,
+            string cat = null,
             string limit = null
             )
         {
@@ -45,7 +43,6 @@ namespace BeginMobile.Services.ManagerServices
             {
                 var urlId = "/" + eventId;
                 return _eventClient.GetAsync(authToken, Identifier, urlId);
-
             }
             catch (Exception ex)
             {
@@ -88,6 +85,5 @@ namespace BeginMobile.Services.ManagerServices
 
             return resultUrl;
         }
-
     }
 }

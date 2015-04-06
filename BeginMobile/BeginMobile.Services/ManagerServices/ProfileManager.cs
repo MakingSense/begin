@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 
 namespace BeginMobile.Services.ManagerServices
 {
-    
     public class ProfileManager
     {
         private const string BaseAddress = "http://186.109.86.251:5432/";
@@ -66,7 +65,7 @@ namespace BeginMobile.Services.ManagerServices
                 client.BaseAddress = new Uri(BaseAddress);
 
                 var response = client.GetAsync(SubAddress + username + "?sections=activities").Result;
-                
+
                 if (response.IsSuccessStatusCode)
                 {
                     var userJson = response.Content.ReadAsStringAsync().Result;
@@ -167,12 +166,19 @@ namespace BeginMobile.Services.ManagerServices
 
         public ProfileInformationMessages GetMessagesInformation(string username, string authToken)
         {
-            var profileMessages = new ProfileInformationMessages();
-            profileMessages.Messages = Message.Messages;
-            profileMessages.GroupingMessage = new GroupingMessage();
-            profileMessages.GroupingMessage.CountByGroup = new Random().Next(0, 12);
+            var profileMessages = new ProfileInformationMessages
+                                  {
+                                      Messages = Message.Messages,
+                                      GroupingMessage =
+                                          new GroupingMessage
+                                          {
+                                              CountByGroup =
+                                                  new Random().Next(0,
+                                                      12)
+                                          }
+                                  };
 
-            var group = profileMessages.Messages.GroupBy(x =>x.Type).OrderBy(x => x.Key);
+            var group = profileMessages.Messages.GroupBy(x => x.Type).OrderBy(x => x.Key);
             profileMessages.GroupingMessage.MessagesGroup = new ObservableCollection<IGrouping<string, Message>>(group);
 
             return profileMessages;
@@ -223,7 +229,5 @@ namespace BeginMobile.Services.ManagerServices
                 return profileMeWall;
             }
         }
-       
     }
-
 }

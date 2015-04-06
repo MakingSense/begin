@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
 {
@@ -47,7 +42,7 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("bithday")]
         public string BirthDay { set; get; }
-        
+
         [JsonProperty("gender")]
         public char Gender { set; get; }
 
@@ -104,7 +99,7 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("currentwork")]
         public string CurrentWork { set; get; }
-        
+
         [JsonProperty("dates")]
         public string Dates { set; get; }
 

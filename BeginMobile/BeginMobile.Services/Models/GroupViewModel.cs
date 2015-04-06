@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BeginMobile.Services.Utils;
 
 namespace BeginMobile.Services.Models
@@ -14,6 +10,7 @@ namespace BeginMobile.Services.Models
         private const string Private = "private";
 
         private string _statusGroup;
+
         public string StatusGroup
         {
             set
@@ -27,13 +24,11 @@ namespace BeginMobile.Services.Models
                     _statusGroup = value == Private ? PrivateGroup : PublicGroup;
                 }
             }
-            get
-            {
-                return _statusGroup;
-            }
+            get { return _statusGroup; }
         }
 
         private string _textActiveDate;
+
         public string TextActiveDate
         {
             set
@@ -48,10 +43,7 @@ namespace BeginMobile.Services.Models
                     _textActiveDate = DateConverter.GetTimeSpan(groupDate);
                 }
             }
-            get
-            {
-                return _textActiveDate;
-            }
+            get { return _textActiveDate; }
         }
 
         public string Description { set; get; }

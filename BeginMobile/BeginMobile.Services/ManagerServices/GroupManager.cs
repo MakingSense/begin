@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
-using Newtonsoft.Json;
 
 namespace BeginMobile.Services.ManagerServices
 {
-    public class GroupManager 
+    public class GroupManager
     {
         private const string BaseAddress = "http://186.109.86.251:5432/";
         private const string SubAddress = "begin/api/v1/";
@@ -20,7 +16,9 @@ namespace BeginMobile.Services.ManagerServices
         private readonly GenericBaseClient<Group> _groupClient =
             new GenericBaseClient<Group>(BaseAddress, SubAddress);
 
-        public GroupManager(){ }
+        public GroupManager()
+        {
+        }
 
         public List<Group> GetGroupsByParams(
             string authToken,
@@ -35,7 +33,7 @@ namespace BeginMobile.Services.ManagerServices
                 var urlGetParams = "?q=" + name + "&cat=" + cat + "&limit=" + limit + "&sections=" + sections;
                 return _groupClient.GetListAsync(authToken, Identifier, urlGetParams).ToList();
             }
-            catch (Exception ex)
+            catch (Exception exeption)
             {
                 return null;
             }
@@ -53,9 +51,8 @@ namespace BeginMobile.Services.ManagerServices
                 }
 
                 return _groupClient.GetAsync(authToken, Identifier, urlId);
-
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
                 return null;
             }
@@ -66,7 +63,7 @@ namespace BeginMobile.Services.ManagerServices
             var resultUrl = "";
 
             if (!(string.IsNullOrEmpty(name) && string.IsNullOrEmpty(cat) &&
-                string.IsNullOrEmpty(limit) && string.IsNullOrEmpty(sections)))
+                  string.IsNullOrEmpty(limit) && string.IsNullOrEmpty(sections)))
             {
                 resultUrl = "?q=" + name + "&cat=" + cat + "&limit=" + limit + "&sections=" + sections;
             }

@@ -35,8 +35,10 @@ namespace BeginMobile.Services.DTO
         public string Thumbnail { set; get; }
 
         private string _price;
+
         [JsonProperty("price")]
-        public string Price {
+        public string Price
+        {
             set
             {
                 if (string.IsNullOrEmpty(value) || value == "0")
@@ -49,10 +51,7 @@ namespace BeginMobile.Services.DTO
                 }
             }
 
-            get
-            {
-                return _price;
-            }
+            get { return _price; }
         }
     }
 }

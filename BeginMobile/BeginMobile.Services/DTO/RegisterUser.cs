@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
 {
@@ -16,6 +11,6 @@ namespace BeginMobile.Services.DTO
         public User User { set; get; }
 
         [JsonProperty("errors")]
-        public ErrorRetrieved []Errors { set; get; }
+        public ErrorRetrieved[] Errors { set; get; }
     }
 }

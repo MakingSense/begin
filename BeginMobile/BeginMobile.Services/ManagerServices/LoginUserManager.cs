@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
-using Newtonsoft.Json;
 
 namespace BeginMobile.Services.ManagerServices
 {
@@ -27,12 +26,11 @@ namespace BeginMobile.Services.ManagerServices
 
         public LoginUser Login(string username, string password)
         {
-
             var content = new FormUrlEncodedContent(new[]
-                                                        {
-                                                            new KeyValuePair<string, string>("username", username),
-                                                            new KeyValuePair<string, string>("password", password)
-                                                        });
+                                                    {
+                                                        new KeyValuePair<string, string>("username", username),
+                                                        new KeyValuePair<string, string>("password", password)
+                                                    });
             const string addressSuffix = "login";
             return _loginManagerClient.PostAsync(content, addressSuffix);
         }
@@ -40,12 +38,12 @@ namespace BeginMobile.Services.ManagerServices
         public RegisterUser Register(string username, string email, string password, string nameSurname)
         {
             var content = new FormUrlEncodedContent(new[]
-                                                        {
-                                                            new KeyValuePair<string, string>("username", username),
-                                                            new KeyValuePair<string, string>("email", email),
-                                                            new KeyValuePair<string, string>("password", password),
-                                                            new KeyValuePair<string, string>("name_surname", nameSurname)
-                                                        });
+                                                    {
+                                                        new KeyValuePair<string, string>("username", username),
+                                                        new KeyValuePair<string, string>("email", email),
+                                                        new KeyValuePair<string, string>("password", password),
+                                                        new KeyValuePair<string, string>("name_surname", nameSurname)
+                                                    });
 
             const string addressSuffix = "signup";
             return _registerUserClient.PostAsync(content, addressSuffix);
@@ -54,23 +52,26 @@ namespace BeginMobile.Services.ManagerServices
         public string RetrievePassword(string email)
         {
             var content = new FormUrlEncodedContent(new[]
-                                                        {
-                                                            new KeyValuePair<string, string>("email", email),
-                                                        });
+                                                    {
+                                                        new KeyValuePair<string, string>("email", email),
+                                                    });
 
             const string addressSuffix = "retrieve_password";
             return _stringResultClient.PostContentResultAsync(content, addressSuffix);
         }
 
 
-        public ChangePassword ChangeYourPassword(string currentPassword, string newPassword, string repeatNewPassword, string authToken)
+        public ChangePassword ChangeYourPassword(string currentPassword, string newPassword, string repeatNewPassword,
+            string authToken)
         {
             var content = new FormUrlEncodedContent(new[]
-                                                        {
-                                                            new KeyValuePair<string, string>("current_password", currentPassword),
-                                                            new KeyValuePair<string, string>("new_password", newPassword),
-                                                            new KeyValuePair<string, string>("repeat_new_password", repeatNewPassword)
-                                                        });
+                                                    {
+                                                        new KeyValuePair<string, string>("current_password",
+                                                            currentPassword),
+                                                        new KeyValuePair<string, string>("new_password", newPassword),
+                                                        new KeyValuePair<string, string>("repeat_new_password",
+                                                            repeatNewPassword)
+                                                    });
 
             const string addressSuffix = "me/change_password";
             return _changePasswordClient.PostAsync(authToken, content, addressSuffix);
@@ -78,22 +79,20 @@ namespace BeginMobile.Services.ManagerServices
 
         public string UpdateProfile(string nameSurname, string authToken)
         {
-
             try
             {
                 var content = new FormUrlEncodedContent(new[]
                                                         {
-                                                            new KeyValuePair<string, string>("name_surname", nameSurname), 
+                                                            new KeyValuePair<string, string>("name_surname", nameSurname),
                                                         });
 
                 const string addressSuffix = "me/update_profile";
                 return _stringResultClient.PostContentResultAsync(authToken, content, addressSuffix);
             }
-            catch(Exception ex)
+            catch (Exception exception)
             {
                 return null;
             }
         }
-
     }
 }
