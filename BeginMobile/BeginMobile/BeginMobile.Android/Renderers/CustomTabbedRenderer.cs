@@ -114,13 +114,13 @@ namespace BeginMobile.Android.Renderers
                             var tabNotification = (Pages.Notifications.Notification)childTab;
                             int counter;
 
-                            if (int.TryParse(tabNotification.LabelCounterText.Text, out counter))
+                            if (int.TryParse(tabNotification.LabelCounter.Text, out counter))
                             {
                                 if (counter > 0)
                                 {
                                     tabBadge.Text = counter >= 9
                                         ? LimitCounter
-                                        : SpaceCounter + tabNotification.LabelCounterText.Text + SpaceCounter;
+                                        : SpaceCounter + tabNotification.LabelCounter.Text + SpaceCounter;
 
                                     tabTextAux.Gravity = GravityFlags.Bottom | GravityFlags.Left;
                                 }

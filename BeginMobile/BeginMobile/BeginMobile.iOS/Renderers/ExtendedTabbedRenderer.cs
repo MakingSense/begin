@@ -49,12 +49,12 @@ namespace BeginMobile.iOS.Renderers
                 else if (type == typeof(Notification))
                 {
                     if (string.IsNullOrEmpty
-                        (((Notification)childFromTab).LabelCounterText.Text)) continue;
+                        (((Notification)childFromTab).LabelCounter.Text)) continue;
 
-                    var counter = int.Parse(((Notification)childFromTab).LabelCounterText.Text);
+                    var counter = int.Parse(((Notification)childFromTab).LabelCounter.Text);
                     if (counter > 0)
                     {
-                        viewController.TabBarItem.BadgeValue = ((Notification)childFromTab).LabelCounterText.Text;
+                        viewController.TabBarItem.BadgeValue = ((Notification)childFromTab).LabelCounter.Text;
                     }
                 }
             }

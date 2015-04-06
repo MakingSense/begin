@@ -8,7 +8,7 @@ namespace BeginMobile.Pages.Notifications
         private readonly ListView _listViewNotifications;
         private readonly List<NotificationViewModel> _listNotifications;
 
-        public readonly Label LabelCounterText;
+        public readonly Label LabelCounter;
 
         public Notification(string title, string iconImg)
             : base(title, iconImg)
@@ -69,7 +69,7 @@ namespace BeginMobile.Pages.Notifications
                                     }
                                 };
 
-            LabelCounterText = new Label
+            LabelCounter = new Label
                           {
                               Text = _listNotifications.Count.ToString()
                           };
