@@ -25,7 +25,7 @@ namespace BeginMobile.Pages.GroupPages
 
             var groupDetail = GetGroupModel();
 
-            var groupImg = new CircleImage
+            var circleGroupImage = new CircleImage
                            {
                                BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
                                BorderThickness = Device.OnPlatform(2, 3, 3),
@@ -80,10 +80,10 @@ namespace BeginMobile.Pages.GroupPages
                                         };
 
             gridImage.Children.Add(stackLayoutLinesLeft, 0, 0);
-            gridImage.Children.Add(groupImg, 1, 0);
+            gridImage.Children.Add(circleGroupImage, 1, 0);
             gridImage.Children.Add(stackLayoutLinesRight, 2, 0);
 
-            var lblStatusGroup = new Label
+            var labelStatusGroup = new Label
                                  {
                                      YAlign = TextAlignment.End,
                                      Style = App.Styles.ListItemTextStyle,
@@ -92,7 +92,7 @@ namespace BeginMobile.Pages.GroupPages
                                      HorizontalOptions = LayoutOptions.FillAndExpand
                                  };
 
-            var lblDateText = new Label
+            var labelDateText = new Label
                               {
                                   YAlign = TextAlignment.End,
                                   Style = App.Styles.LabelTextDate,
@@ -100,7 +100,7 @@ namespace BeginMobile.Pages.GroupPages
                                   HorizontalOptions = LayoutOptions.FillAndExpand
                               };
 
-            var lblDescription = new Label
+            var labelDescription = new Label
                                  {
                                      YAlign = TextAlignment.Center,
                                      XAlign = TextAlignment.Center,
@@ -115,18 +115,19 @@ namespace BeginMobile.Pages.GroupPages
                                        HorizontalOptions = LayoutOptions.CenterAndExpand,
                                        VerticalOptions = LayoutOptions.Start,
                                        Children =
-                {
-                    lblStatusGroup, lblDateText
-                }
+                                       {
+                                           labelStatusGroup,
+                                           labelDateText
+                                       }
                                    };
 
             gridMain.Children.Add(gridImage, 0, 0);
             gridMain.Children.Add(stackLayoutTitle, 0, 1);
-            gridMain.Children.Add(lblDescription, 0, 2);
+            gridMain.Children.Add(labelDescription, 0, 2);
 
             if (_groupInformation.Members != null && _groupInformation.Members.Count > 0)
             {
-                var lblTitleMember = new Label
+                var labelTitleMember = new Label
                                      {
                                          YAlign = TextAlignment.End,
                                          Style = App.Styles.LabelLargeTextTitle,
@@ -139,9 +140,10 @@ namespace BeginMobile.Pages.GroupPages
                                          {
 
                                              Children =
-                    {
-                        lblTitleMember, GetListViewMembers(_groupInformation.Members)
-                    }
+                                             {
+                                                 labelTitleMember,
+                                                 GetListViewMembers(_groupInformation.Members)
+                                             }
                                          };
 
                 gridMain.Children.Add(stackLayoutMembers, 0, 3);
@@ -167,18 +169,20 @@ namespace BeginMobile.Pages.GroupPages
             return groupViewModel;
         }
 
-        private BoxView BoxViewLine()
+        private static BoxView BoxViewLine()
         {
             return new BoxView { Color = Color.White, WidthRequest = 100, HeightRequest = 2 };
         }
 
-        private ListView GetListViewMembers(IEnumerable<User> members)
+        private static ListView GetListViewMembers(IEnumerable<User> members)
         {
-            var listViewMembers = new ListView();
+            var listViewMembers = new ListView
+                                  {
+                                      ItemTemplate = new DataTemplate(typeof (MemberItemCell)),
+                                      ItemsSource = members,
+                                      HasUnevenRows = true
+                                  };
 
-            listViewMembers.ItemTemplate = new DataTemplate(typeof(MemberItemCell));
-            listViewMembers.ItemsSource = members;
-            listViewMembers.HasUnevenRows = true;
             listViewMembers.ItemSelected += (sender, e) =>
             {
                 if (e.SelectedItem == null)

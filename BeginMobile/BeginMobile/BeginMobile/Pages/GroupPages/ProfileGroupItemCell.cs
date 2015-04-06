@@ -9,7 +9,7 @@ namespace BeginMobile.Pages.GroupPages
 
         public ProfileGroupItemCell()
         {
-            var groupImage = new CircleImage
+            var circleGroupImage = new CircleImage
                              {
                                  BorderColor =
                                      Device.OnPlatform(Color.Black, Color.White, Color.White),
@@ -22,34 +22,34 @@ namespace BeginMobile.Pages.GroupPages
                                  Source = GroupImage
                              };
 
-            var lblGrTitle = new Label
+            var labelTitle = new Label
                              {
                                  YAlign = TextAlignment.Center,
                                  FontAttributes = FontAttributes.Bold,
                                  Style = App.Styles.ListItemTextStyle
                              };
 
-            lblGrTitle.SetBinding(Label.TextProperty, "Name");
+            labelTitle.SetBinding(Label.TextProperty, "Name");
 
-            var lblGrDesc = new Label
+            var labelDesc = new Label
                             {
                                 YAlign = TextAlignment.Center,
                                 Style = App.Styles.ListItemDetailTextStyle
                             };
 
-            lblGrDesc.SetBinding(Label.TextProperty, "Description", stringFormat: "Description: {0}");
+            labelDesc.SetBinding(Label.TextProperty, "Description", stringFormat: "Description: {0}");
 
             //Other section
-            var lblStatus = new Label
+            var labelStatus = new Label
                             {
                                 YAlign = TextAlignment.Center,
                                 HorizontalOptions = LayoutOptions.Start,
                                 Style = App.Styles.ListItemDetailTextStyle
                             };
 
-            lblStatus.SetBinding(Label.TextProperty, "Status");
+            labelStatus.SetBinding(Label.TextProperty, "Status");
 
-            var lblCreate = new Label
+            var labelCreate = new Label
                             {
                                 YAlign = TextAlignment.Center,
                                 HorizontalOptions = LayoutOptions.End,
@@ -57,7 +57,7 @@ namespace BeginMobile.Pages.GroupPages
                                 Style = App.Styles.ListItemTextStyle
                             };
 
-            lblCreate.SetBinding(Label.TextProperty, "DateCreated");
+            labelCreate.SetBinding(Label.TextProperty, "DateCreated");
 
             var stackLayoutPie = new StackLayout
                                  {
@@ -65,34 +65,33 @@ namespace BeginMobile.Pages.GroupPages
                                      HorizontalOptions = LayoutOptions.FillAndExpand,
                                      Children =
                                      {
-                                         lblStatus,
-                                         lblCreate
+                                         labelStatus,
+                                         labelCreate
                                      }
                                  };
 
-            var stackLayCenter = new StackLayout
+            var stackLayoutCenter = new StackLayout
                                  {
                                      Children =
                                      {
-                                         lblGrTitle,
-                                         lblGrDesc,
+                                         labelTitle,
+                                         labelDesc,
                                          stackLayoutPie
                                      }
                                  };
 
-            var sLayItem = new StackLayout
+            var stackLayoutItem = new StackLayout
                            {
                                Orientation = StackOrientation.Horizontal,
                                HorizontalOptions = LayoutOptions.FillAndExpand,
                                Children =
                                {
-                                   groupImage,
-                                   stackLayCenter
+                                   circleGroupImage,
+                                   stackLayoutCenter
                                }
                            };
 
-            View = sLayItem;
-
+            View = stackLayoutItem;
         }
     }
 }

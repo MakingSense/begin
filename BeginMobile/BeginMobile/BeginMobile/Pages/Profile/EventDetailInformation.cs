@@ -25,7 +25,7 @@ namespace BeginMobile.Pages.Profile
 
             var profileEventViewModel = GetEvenViewModel(_profileEvent);
 
-            var ownerName = new Label
+            var labelOwnerName = new Label
                             {
                                 Text = "Public by " + eventInfo.Owner.NameSurname,
                                 Style = App.Styles.SubtitleStyle,
@@ -43,7 +43,7 @@ namespace BeginMobile.Pages.Profile
                           };
 
 
-            var lblTextDateAndHour = new Label
+            var labelTextDateAndHour = new Label
                                      {
                                          YAlign = TextAlignment.End,
                                          FontAttributes = FontAttributes.Bold,
@@ -51,21 +51,21 @@ namespace BeginMobile.Pages.Profile
                                          Text = TextDateAndHour
                                      };
 
-            var lblDates = new Label
+            var labelDates = new Label
                            {
                                YAlign = TextAlignment.End,
                                Style = App.Styles.ListItemDetailTextStyle,
                                Text = profileEventViewModel.TextDates
                            };
 
-            var lblTimes = new Label
+            var labelTimes = new Label
                            {
                                YAlign = TextAlignment.End,
                                Style = App.Styles.ListItemDetailTextStyle,
                                Text = profileEventViewModel.TextTimes
                            };
 
-            var lblTextCategories = new Label
+            var labelTextCategories = new Label
                                     {
                                         YAlign = TextAlignment.End,
                                         FontAttributes = FontAttributes.Bold,
@@ -73,14 +73,14 @@ namespace BeginMobile.Pages.Profile
                                         Text = TextCategories
                                     };
 
-            var lblCategories = new Label
+            var labelCategories = new Label
                                 {
                                     YAlign = TextAlignment.End,
                                     Style = App.Styles.ListItemDetailTextStyle,
                                     Text = AllCategories
                                 };
 
-            var lblTextContent = new Label
+            var labelTextContent = new Label
                                  {
                                      YAlign = TextAlignment.End,
                                      Style = App.Styles.LabelLargeTextTitle,
@@ -89,7 +89,7 @@ namespace BeginMobile.Pages.Profile
                                      Text = TextContent
                                  };
 
-            var lblEventDescription = new Label
+            var labelEventDescription = new Label
                                       {
                                           YAlign = TextAlignment.End,
                                           Style = App.Styles.ListItemDetailTextStyle,
@@ -120,19 +120,19 @@ namespace BeginMobile.Pages.Profile
                                                    HorizontalOptions = LayoutOptions.StartAndExpand,
                                                    Children =
                                                    {
-                                                       lblTextCategories,
-                                                       lblCategories
+                                                       labelTextCategories,
+                                                       labelCategories
                                                    }
                                                };
 
-            gridMainContent.Children.Add(ownerName, 0, 0);
+            gridMainContent.Children.Add(labelOwnerName, 0, 0);
             gridMainContent.Children.Add(image, 0, 1);
-            gridMainContent.Children.Add(lblTextDateAndHour, 0, 2);
-            gridMainContent.Children.Add(lblDates, 0, 3);
-            gridMainContent.Children.Add(lblTimes, 0, 4);
+            gridMainContent.Children.Add(labelTextDateAndHour, 0, 2);
+            gridMainContent.Children.Add(labelDates, 0, 3);
+            gridMainContent.Children.Add(labelTimes, 0, 4);
             gridMainContent.Children.Add(stackLayoutSectionCategories, 0, 5);
-            gridMainContent.Children.Add(lblTextContent, 0, 6);
-            gridMainContent.Children.Add(lblEventDescription, 0, 7);
+            gridMainContent.Children.Add(labelTextContent, 0, 6);
+            gridMainContent.Children.Add(labelEventDescription, 0, 7);
 
             Content = new ScrollView
                       {

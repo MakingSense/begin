@@ -21,11 +21,6 @@ namespace BeginMobile.Android.Renderers
         private const string LimitCounter = "9+";
         private const string SpaceCounter = " ";
 
-        public CustomTabbedRenderer()
-        {
-            //this.SetWillNotDraw(false);
-        }
-
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
@@ -93,12 +88,12 @@ namespace BeginMobile.Android.Renderers
                             var tabMessage = (MessageListPage)childTab;
                             int counter;
 
-                            if (int.TryParse(tabMessage.CounterText.Text, out counter))
+                            if (int.TryParse(tabMessage.LabelCounter.Text, out counter))
                             {
                                 if (counter > 0)
                                 {
                                     tabBadge.Text = counter >= 9 ?
-                                        LimitCounter : SpaceCounter + tabMessage.CounterText.Text + SpaceCounter;
+                                        LimitCounter : SpaceCounter + tabMessage.LabelCounter.Text + SpaceCounter;
 
                                     tabTextAux.Gravity = GravityFlags.Bottom | GravityFlags.Left;
                                 }
@@ -119,13 +114,13 @@ namespace BeginMobile.Android.Renderers
                             var tabNotification = (Pages.Notifications.Notification)childTab;
                             int counter;
 
-                            if (int.TryParse(tabNotification.CounterText.Text, out counter))
+                            if (int.TryParse(tabNotification.LabelCounterText.Text, out counter))
                             {
                                 if (counter > 0)
                                 {
                                     tabBadge.Text = counter >= 9
                                         ? LimitCounter
-                                        : SpaceCounter + tabNotification.CounterText.Text + SpaceCounter;
+                                        : SpaceCounter + tabNotification.LabelCounterText.Text + SpaceCounter;
 
                                     tabTextAux.Gravity = GravityFlags.Bottom | GravityFlags.Left;
                                 }

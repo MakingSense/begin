@@ -8,7 +8,7 @@ namespace BeginMobile.Pages.GroupPages
         private const string GroupImage = "userprofile.png";
         public MemberItemCell()
         {
-            var memberImage = new CircleImage
+            var circleMemberImage = new CircleImage
                               {
                                   BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
                                   BorderThickness = Device.OnPlatform(2, 3, 3),
@@ -30,7 +30,7 @@ namespace BeginMobile.Pages.GroupPages
                                   }
                               };
 
-            var lblName = new Label
+            var labelName = new Label
                           {
                               YAlign = TextAlignment.End,
                               Style = App.Styles.ListItemTextStyle,
@@ -38,26 +38,26 @@ namespace BeginMobile.Pages.GroupPages
                               HorizontalOptions = LayoutOptions.Start
                           };
 
-            lblName.SetBinding(Label.TextProperty,  "NameUsername");
+            labelName.SetBinding(Label.TextProperty,  "NameUsername");
 
-            var lblEmail = new Label
+            var labelEmail = new Label
                            {
                                YAlign = TextAlignment.End,
                                Style = App.Styles.ListItemTextStyle,
                                HorizontalOptions = LayoutOptions.Start
                            };
 
-            lblEmail.SetBinding(Label.TextProperty,  "Email");
+            labelEmail.SetBinding(Label.TextProperty,  "Email");
 
-            gridListRow.Children.Add(lblName, 0, 0);
-            gridListRow.Children.Add(lblEmail, 0, 1);
+            gridListRow.Children.Add(labelName, 0, 0);
+            gridListRow.Children.Add(labelEmail, 0, 1);
 
             var stackLayoutRow = new StackLayout
                                  {
                                      Padding = new Thickness(10, 5, 10, 5),
                                      Orientation = StackOrientation.Horizontal,
                                      HorizontalOptions = LayoutOptions.FillAndExpand,
-                                     Children = {memberImage, gridListRow}
+                                     Children = {circleMemberImage, gridListRow}
                                  };
             
 

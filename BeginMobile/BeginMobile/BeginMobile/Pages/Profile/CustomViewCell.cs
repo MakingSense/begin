@@ -7,7 +7,7 @@ namespace BeginMobile.Pages.Profile
     {
         public CustomViewCell()
         {
-            var icon = new CircleImage
+            var circleIconImage = new CircleImage
             {
                 HeightRequest = Device.OnPlatform(50, 100, 100),
                 WidthRequest = Device.OnPlatform(50, 100, 100),
@@ -16,37 +16,38 @@ namespace BeginMobile.Pages.Profile
                 BorderThickness = Device.OnPlatform(2, 3, 3)
             };
 
-            icon.SetBinding(Image.SourceProperty, new Binding("Icon"));
+            circleIconImage.SetBinding(Image.SourceProperty, new Binding("Icon"));
 
             var optionLayout = CreateOptionLayout();
+
             View = new StackLayout
                    {
                        Orientation = StackOrientation.Horizontal,
                        Children =
                        {
-                           icon,
+                           circleIconImage,
                            optionLayout
                        }
                    };
         }
         private static Grid CreateOptionLayout()
         {
-            var optionText = new Label
+            var labelOptionText = new Label
                              {
                                  HorizontalOptions = LayoutOptions.FillAndExpand,
                                  YAlign = TextAlignment.Center,
                                  Style = App.Styles.ListItemTextStyle
                              };
 
-            var optionDetail = new Label
+            var labelOptionDetail = new Label
                                {
                                    HorizontalOptions = LayoutOptions.FillAndExpand,
                                    YAlign = TextAlignment.Center,
                                    Style = App.Styles.ListItemDetailTextStyle
                                };
 
-            optionText.SetBinding(Label.TextProperty, "NameSurname");
-            optionDetail.SetBinding(Label.TextProperty, "References");
+            labelOptionText.SetBinding(Label.TextProperty, "NameSurname");
+            labelOptionDetail.SetBinding(Label.TextProperty, "References");
 
             var gridDetails = new Grid
                               {
@@ -65,8 +66,8 @@ namespace BeginMobile.Pages.Profile
                                   }
                               };
 
-            gridDetails.Children.Add(optionText, 0, 0);
-            gridDetails.Children.Add(optionDetail, 0,1);
+            gridDetails.Children.Add(labelOptionText, 0, 0);
+            gridDetails.Children.Add(labelOptionDetail, 0,1);
 
             return gridDetails;
         }

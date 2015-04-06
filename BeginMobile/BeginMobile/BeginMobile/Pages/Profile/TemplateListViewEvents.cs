@@ -7,7 +7,7 @@ namespace BeginMobile.Pages.Profile
     {
         public TemplateListViewEvents()
         {
-            var eventTitle = new Label
+            var labelEventTitle = new Label
                              {
                                  VerticalOptions = LayoutOptions.Start,
                                  HorizontalOptions = LayoutOptions.Start,
@@ -16,7 +16,7 @@ namespace BeginMobile.Pages.Profile
                                  TextColor = App.Styles.LabelTextColor
                              };
 
-            eventTitle.SetBinding(Label.TextProperty, "EventName");
+            labelEventTitle.SetBinding(Label.TextProperty, "EventName");
             var eventDetailsLayout = CreateDetailsLayout();
 
             View = new StackLayout
@@ -25,7 +25,7 @@ namespace BeginMobile.Pages.Profile
                        Orientation = StackOrientation.Horizontal,
                        Children =
                        {
-                           eventTitle,
+                           labelEventTitle,
                            eventDetailsLayout
                        }
                    };
@@ -33,26 +33,26 @@ namespace BeginMobile.Pages.Profile
 
         private static StackLayout CreateDetailsLayout()
         {
-            var eventIntervalDate = new Label
+            var labelEventIntervalDate = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Style = App.Styles.ListItemTextStyle
             };
-            var eventTime = new Label
+            var labelEventTime = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Style = App.Styles.ListItemDetailTextStyle
             };
 
-            eventIntervalDate.SetBinding(Label.TextProperty, "EventIntervalDate");
-            eventTime.SetBinding(Label.TextProperty, "EventTime");
+            labelEventIntervalDate.SetBinding(Label.TextProperty, "EventIntervalDate");
+            labelEventTime.SetBinding(Label.TextProperty, "EventTime");
 
             return new StackLayout
             {
                 HeightRequest = 50,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Orientation = StackOrientation.Vertical,
-                Children = { eventIntervalDate, eventTime }
+                Children = { labelEventIntervalDate, labelEventTime }
             };
         }
     }

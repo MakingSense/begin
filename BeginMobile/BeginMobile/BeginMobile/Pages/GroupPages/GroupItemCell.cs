@@ -9,7 +9,7 @@ namespace BeginMobile.Pages.GroupPages
         public GroupItemCell()
         {
             StyleId = "Cell";
-            var groupImage = new CircleImage
+            var circleGroupImage = new CircleImage
             {
                 BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
                 BorderThickness = Device.OnPlatform(2, 3, 3),
@@ -22,48 +22,52 @@ namespace BeginMobile.Pages.GroupPages
             };
 
             //First center column
-            var lblGroupName = new Label
+            var labelGroupName = new Label
             {
                 StyleId = "CellGroupName",
                 YAlign = TextAlignment.Center,
                 FontAttributes = FontAttributes.Bold,
                 Style = App.Styles.ListItemTextStyle
             };
-            lblGroupName.SetBinding(Label.TextProperty, "Name");
 
-            var lblGroupCategory = new Label
+            labelGroupName.SetBinding(Label.TextProperty, "Name");
+
+            var labelGroupCategory = new Label
             {
                 StyleId = "CellGroupCategory",
                 YAlign = TextAlignment.Center,
                 Style = App.Styles.ListItemDetailTextStyle
             };
-            lblGroupCategory.SetBinding(Label.TextProperty, "Category");
+
+            labelGroupCategory.SetBinding(Label.TextProperty, "Category");
 
             var stackLayoutLeft = new StackLayout
                                   {
                                       HorizontalOptions = LayoutOptions.Start,
                                       Children =
                 {
-                    lblGroupName, lblGroupCategory
+                    labelGroupName, labelGroupCategory
                 }
                                   };
 
             //Second center column
-            var lblType = new Label
+            var labelType = new Label
             {
                 StyleId = "CellGroupType",
                 YAlign = TextAlignment.Center,
                 Style = App.Styles.ListItemDetailTextStyle
             };
-            lblType.SetBinding(Label.TextProperty, "Type");
 
-            var lblMemebers = new Label
+            labelType.SetBinding(Label.TextProperty, "Type");
+
+            var labelMemebers = new Label
             {
                 StyleId = "CellGroupMembers",
                 YAlign = TextAlignment.Center,
                 Style = App.Styles.ListItemDetailTextStyle
             };
-            lblMemebers.SetBinding(Label.TextProperty, "Members");
+
+            labelMemebers.SetBinding(Label.TextProperty, "Members");
 
 
             var stackLayoutRight = new StackLayout
@@ -71,8 +75,8 @@ namespace BeginMobile.Pages.GroupPages
                                        HorizontalOptions = LayoutOptions.CenterAndExpand,
                                        Children =
                                        {
-                                           lblType,
-                                           lblMemebers
+                                           labelType,
+                                           labelMemebers
                                        }
                                    };
 
@@ -87,21 +91,21 @@ namespace BeginMobile.Pages.GroupPages
                                         }
                                     };
 
-            var arrow = new Image
+            var imageArrow = new Image
                         {
                             StyleId = "CellArrow",
                             HorizontalOptions = LayoutOptions.End
                         };
 
-            var layout = new StackLayout
+            var layoutView = new StackLayout
                          {
                              Padding = new Thickness(5, 0, 5, 0),
                              Orientation = StackOrientation.Horizontal,
                              HorizontalOptions = LayoutOptions.FillAndExpand,
-                             Children = { groupImage, stackLayoutCenter, arrow }
+                             Children = { circleGroupImage, stackLayoutCenter, imageArrow }
                          };
 
-            View = layout;
+            View = layoutView;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace BeginMobile.Pages.MessagePages
 
             labelHeader.SetBinding(Label.TextProperty, "Key");
 
-            var stLayout = new StackLayout
+            var stackLayoutView = new StackLayout
                            {
                                HorizontalOptions = LayoutOptions.FillAndExpand,
                                Orientation = StackOrientation.Horizontal,
@@ -26,7 +26,7 @@ namespace BeginMobile.Pages.MessagePages
                                }
                            };
 
-            View = stLayout;
+            View = stackLayoutView;
         }
     }
 }

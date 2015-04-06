@@ -16,7 +16,7 @@ namespace BeginMobile.Pages.MessagePages
         public ProfileMessagesItem()
         {
 
-            var shopImage = new CircleImage
+            var circleShopImage = new CircleImage
                             {
                                 BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
                                 BorderThickness = Device.OnPlatform(2, 3, 3),
@@ -27,7 +27,7 @@ namespace BeginMobile.Pages.MessagePages
                                 Source = GroupImage
                             };
 
-            var lblGrTitle = new Label
+            var labelTitle = new Label
                              {
                                  YAlign = TextAlignment.Center,
                                  Style = App.Styles.ListItemTextStyle,
@@ -35,25 +35,25 @@ namespace BeginMobile.Pages.MessagePages
                                  HorizontalOptions = LayoutOptions.Start
                              };
 
-            lblGrTitle.SetBinding(Label.TextProperty, "Title");
+            labelTitle.SetBinding(Label.TextProperty, "Title");
 
-            var lblCreate = new Label
+            var labelCreate = new Label
                             {
                                 YAlign = TextAlignment.Center,
                                 Style = App.Styles.ListItemDetailTextStyle,
                                 HorizontalOptions = LayoutOptions.End
                             };
 
-            lblCreate.SetBinding(Label.TextProperty, "CreateDate", stringFormat: "Date: {0}");
+            labelCreate.SetBinding(Label.TextProperty, "CreateDate", stringFormat: "Date: {0}");
 
-            var lblContent = new Label
+            var labelContent = new Label
                              {
                                  YAlign = TextAlignment.Center,
                                  Style = App.Styles.ListItemDetailTextStyle,
                                  HorizontalOptions = LayoutOptions.StartAndExpand
                              };
 
-            lblContent.SetBinding(Label.TextProperty, "Content");
+            labelContent.SetBinding(Label.TextProperty, "Content");
 
             var gridDetails = new Grid
                               {
@@ -72,23 +72,23 @@ namespace BeginMobile.Pages.MessagePages
                                   }
                               };
 
-            gridDetails.Children.Add(lblGrTitle, 0, 0);
-            gridDetails.Children.Add(lblContent, 0, 1);
+            gridDetails.Children.Add(labelTitle, 0, 0);
+            gridDetails.Children.Add(labelContent, 0, 1);
 
-            gridDetails.Children.Add(lblCreate, 1, 0);
+            gridDetails.Children.Add(labelCreate, 1, 0);
 
-            var sLayout = new StackLayout
+            var stackLayoutView = new StackLayout
                           {
                               Orientation = StackOrientation.Horizontal,
                               HorizontalOptions = LayoutOptions.FillAndExpand,
                               Children =
                               {
-                                  shopImage,
+                                  circleShopImage,
                                   gridDetails
                               }
                           };
 
-            View = sLayout;
+            View = stackLayoutView;
         }
     }
 }

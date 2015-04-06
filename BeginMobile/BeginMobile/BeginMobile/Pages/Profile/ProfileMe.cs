@@ -12,7 +12,7 @@ namespace BeginMobile.Pages.Profile
             Title = "Profile";
 
             //Toolbar menu item
-            var toolMyActivity = new ToolbarItem
+            var toolBarItemMyActivity = new ToolbarItem
                                  {
                                      Icon = "",
                                      Text = "MyAct",
@@ -20,7 +20,7 @@ namespace BeginMobile.Pages.Profile
                                      Command = new Command(() => Navigation.PushAsync(new MyActivity()))
                                  };
 
-            var toolInformation = new ToolbarItem
+            var toolBarItemInformation = new ToolbarItem
                                   {
                                       Icon = "",
                                       Text = "Info",
@@ -28,7 +28,7 @@ namespace BeginMobile.Pages.Profile
                                       Command = new Command(() => Navigation.PushAsync(new Information()))
                                   };
 
-            var toolMessages = new ToolbarItem
+            var toolBarItemMessages = new ToolbarItem
                                {
                                    Icon = "",
                                    Text = "Messages",
@@ -36,7 +36,7 @@ namespace BeginMobile.Pages.Profile
                                    Command = new Command(() => Navigation.PushAsync(new Messages()))
                                };
 
-            var toolContacts = new ToolbarItem
+            var toolBarItemContacts = new ToolbarItem
                                {
                                    Icon = "",
                                    Text = "Contacts",
@@ -44,7 +44,7 @@ namespace BeginMobile.Pages.Profile
                                    Command = new Command(() => Navigation.PushAsync(new Contacts()))
                                };
 
-            var toolGroups = new ToolbarItem
+            var toolBarItemGroups = new ToolbarItem
                              {
                                  Icon = "",
                                  Text = "Groups",
@@ -52,7 +52,7 @@ namespace BeginMobile.Pages.Profile
                                  Command = new Command(() => Navigation.PushAsync(new Groups()))
                              };
 
-            var toolShop = new ToolbarItem
+            var toolBarItemShop = new ToolbarItem
                            {
                                Icon = "",
                                Text = "Shop",
@@ -60,7 +60,7 @@ namespace BeginMobile.Pages.Profile
                                Command = new Command(() => Navigation.PushAsync(new Shop()))
                            };
 
-            var toolEvents = new ToolbarItem
+            var toolBarItemEvents = new ToolbarItem
                              {
                                  Icon = "",
                                  Text = "Events",
@@ -68,16 +68,16 @@ namespace BeginMobile.Pages.Profile
                                  Command = new Command(() => Navigation.PushAsync(new Events()))
                              };
 
-            ToolbarItems.Add(toolMyActivity);
-            ToolbarItems.Add(toolInformation);
-            ToolbarItems.Add(toolMessages);
-            ToolbarItems.Add(toolContacts);
-            ToolbarItems.Add(toolGroups);
-            ToolbarItems.Add(toolShop);
-            ToolbarItems.Add(toolEvents);
+            ToolbarItems.Add(toolBarItemMyActivity);
+            ToolbarItems.Add(toolBarItemInformation);
+            ToolbarItems.Add(toolBarItemMessages);
+            ToolbarItems.Add(toolBarItemContacts);
+            ToolbarItems.Add(toolBarItemGroups);
+            ToolbarItems.Add(toolBarItemShop);
+            ToolbarItems.Add(toolBarItemEvents);
 
             //Content
-            var profileImagen = new CircleImage
+            var circleProfileImage = new CircleImage
             {
                 BorderColor = Color.White,
                 BorderThickness = 3,
@@ -88,7 +88,7 @@ namespace BeginMobile.Pages.Profile
                 Source = UserDefault
             };
 
-            var lblTitle = new Label
+            var labelTitle = new Label
                            {
                                Text = "Profile",
                                FontSize = 20,
@@ -96,21 +96,20 @@ namespace BeginMobile.Pages.Profile
                                HorizontalOptions = LayoutOptions.Center
                            };
 
-            var lblName = new Label
+            var labelName = new Label
                           {
-                              //Text = "Juan Perez",
                               Text = user.DisplayName,
                               FontAttributes = FontAttributes.Bold,
                               HorizontalOptions = LayoutOptions.Center
                           };
 
-            var lblJob = new Label
+            var labelJob = new Label
                          {
                              Text = "Business Development At Global",
                              HorizontalOptions = LayoutOptions.Center
                          };
 
-            var lblDirection = new Label
+            var labelDirection = new Label
                                {
                                    Text = "San Francisco, CA",
                                    HorizontalOptions = LayoutOptions.Center
@@ -126,13 +125,13 @@ namespace BeginMobile.Pages.Profile
                                 HorizontalOptions = LayoutOptions.FillAndExpand,
                                 Children =
                                 {
-                                    profileImagen,
+                                    circleProfileImage,
                                     boxViewProfile,
-                                    lblTitle,
+                                    labelTitle,
                                     boxViewProfile1,
-                                    lblName,
-                                    lblJob,
-                                    lblDirection
+                                    labelName,
+                                    labelJob,
+                                    labelDirection
                                 }
                             };
 

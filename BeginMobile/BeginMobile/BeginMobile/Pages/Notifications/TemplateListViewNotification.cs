@@ -6,7 +6,7 @@ namespace BeginMobile.Pages.Notifications
     {
         public TemplateListViewNotification()
         {
-            var notificationDescription = new Label
+            var labelnotificationDesc = new Label
                                           {
                                               VerticalOptions = LayoutOptions.Start,
                                               HorizontalOptions = LayoutOptions.Start,
@@ -14,7 +14,7 @@ namespace BeginMobile.Pages.Notifications
                                               Style = App.Styles.ListItemTextStyle
                                           };
 
-            notificationDescription.SetBinding(Label.TextProperty, "NotificationDescription");
+            labelnotificationDesc.SetBinding(Label.TextProperty, "NotificationDescription");
             var detailsLayout = CreateLayoutDetail();
 
             View = new StackLayout
@@ -23,7 +23,7 @@ namespace BeginMobile.Pages.Notifications
                        Orientation = StackOrientation.Horizontal,
                        Children =
                        {
-                           notificationDescription,
+                           labelnotificationDesc,
                            detailsLayout
                        }
                    };
@@ -31,20 +31,20 @@ namespace BeginMobile.Pages.Notifications
 
         private static StackLayout CreateLayoutDetail()
         {
-            var intervalDate = new Label
+            var labelintervalDate = new Label
                                {
                                    HorizontalOptions = LayoutOptions.FillAndExpand,
                                    Style = App.Styles.ListItemDetailTextStyle
                                };
 
-            intervalDate.SetBinding(Label.TextProperty, "IntervalDate");
+            labelintervalDate.SetBinding(Label.TextProperty, "IntervalDate");
 
             return new StackLayout
                    {
                        HeightRequest = 50,
                        HorizontalOptions = LayoutOptions.FillAndExpand,
                        Orientation = StackOrientation.Horizontal,
-                       Children = { intervalDate }
+                       Children = { labelintervalDate }
                    };
         }
     }

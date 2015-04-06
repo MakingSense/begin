@@ -16,13 +16,13 @@ namespace BeginMobile.Pages
 
             if (isLoadByLogin)
             {
-                var btBack = new Button
+                var buttonBack = new Button
                              {
                                  Text = "Go back",
                                  Style = App.Styles.DefaultButton
                              };
 
-                btBack.Clicked += (sender, e) =>
+                buttonBack.Clicked += (sender, e) =>
                                   {
                                       MessagingCenter.Send<ContentPage>(this, "Register");
                                   };
@@ -34,7 +34,7 @@ namespace BeginMobile.Pages
                               Children =
                               {
                                   labelBody,
-                                  btBack
+                                  buttonBack
                               }
                           };
             }

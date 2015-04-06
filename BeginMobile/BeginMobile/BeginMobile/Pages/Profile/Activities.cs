@@ -7,7 +7,7 @@ namespace BeginMobile.Pages.Profile
     {
         public Activities()
         {
-            var icon = new CircleImage
+            var circleIconImage = new CircleImage
                        {
                            HeightRequest = Device.OnPlatform(50, 100, 100),
                            WidthRequest = Device.OnPlatform(50, 100, 100),
@@ -16,15 +16,16 @@ namespace BeginMobile.Pages.Profile
                            BorderThickness = Device.OnPlatform(2, 3, 3)
                        };
 
-            icon.SetBinding(Image.SourceProperty, new Binding("Icon"));
+            circleIconImage.SetBinding(Image.SourceProperty, new Binding("Icon"));
 
             var optionLayout = CreateOptionLayout();
+
             View = new StackLayout
                    {
                        Orientation = StackOrientation.Horizontal,
                        Children =
                        {
-                           icon,
+                           circleIconImage,
                            optionLayout
                        }
                    };
@@ -53,7 +54,7 @@ namespace BeginMobile.Pages.Profile
                                         Style = App.Styles.ListItemDetailTextStyle
                                     };
 
-            var dateAndTime = new Label
+            var labelDateTime = new Label
                               {
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   YAlign = TextAlignment.Center,
@@ -62,7 +63,7 @@ namespace BeginMobile.Pages.Profile
 
             labelUserName.SetBinding(Label.TextProperty, "NameSurname");
             labelActivityDescription.SetBinding(Label.TextProperty, "ActivityDescription");
-            dateAndTime.SetBinding(Label.TextProperty, "DateAndTime");
+            labelDateTime.SetBinding(Label.TextProperty, "DateAndTime");
             labelActivityType.SetBinding(Label.TextProperty, "ActivityType");
 
             var gridDetails = new Grid
@@ -85,7 +86,7 @@ namespace BeginMobile.Pages.Profile
             gridDetails.Children.Add(labelUserName, 0, 0);
             gridDetails.Children.Add(labelActivityDescription, 1, 0);
             gridDetails.Children.Add(labelActivityType, 0, 1);
-            gridDetails.Children.Add(dateAndTime, 1, 1);
+            gridDetails.Children.Add(labelDateTime, 1, 1);
 
             return gridDetails;
         }

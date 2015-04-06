@@ -6,8 +6,8 @@ namespace BeginMobile.Pages.Profile
 {
     public class Shop : ContentPage
     {
-        private ListView _lViewShops;
-        private RelativeLayout _sLayoutMain;
+        private ListView _listViewShops;
+        private RelativeLayout _relativeLayoutMain;
 
         public Shop()
         {
@@ -16,14 +16,14 @@ namespace BeginMobile.Pages.Profile
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationShop profileShop = App.ProfileServices.GetShopInfo(currentUser.User.UserName, currentUser.AuthToken);
 
-            _lViewShops = new ListView
+            _listViewShops = new ListView
                           {
                               ItemTemplate = new DataTemplate(typeof (ProfileShopItemCell)),
                               ItemsSource = profileShop.Shop,
                               HasUnevenRows = true
                           };
 
-            _lViewShops.ItemSelected += async (sender, e) =>
+            _listViewShops.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null)
                 {
@@ -38,13 +38,13 @@ namespace BeginMobile.Pages.Profile
                 ((ListView)sender).SelectedItem = null;
             };
 
-            _sLayoutMain = new RelativeLayout();
-            _sLayoutMain.Children.Add(_lViewShops,
+            _relativeLayoutMain = new RelativeLayout();
+            _relativeLayoutMain.Children.Add(_listViewShops,
                 Constraint.Constant(0), Constraint.Constant(0),
                 Constraint.RelativeToParent(parent => parent.Width),
                 Constraint.RelativeToParent(parent => parent.Height));
 
-            Content = new ScrollView { Content = _sLayoutMain };
+            Content = new ScrollView { Content = _relativeLayoutMain };
         }
     }
 }

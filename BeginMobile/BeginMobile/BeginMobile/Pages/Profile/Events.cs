@@ -9,7 +9,7 @@ namespace BeginMobile.Pages.Profile
 {
     public class Events : ContentPage
     {
-        private readonly Label _noEventsMessage;
+        private readonly Label _labelNoEventsMessage;
         private readonly List<EventInfoObject> _listEvents;
         private readonly ListView _eventsListView;
         private readonly List<EventInfoObject> _defaultList = new List<EventInfoObject>();
@@ -33,7 +33,7 @@ namespace BeginMobile.Pages.Profile
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
             _searchView.Category.SelectedIndexChanged += SearchItemEventHandler;
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
-            _noEventsMessage = new Label();
+            _labelNoEventsMessage = new Label();
 
             #endregion
 
@@ -103,7 +103,7 @@ namespace BeginMobile.Pages.Profile
             #endregion
 
             #region Main layout
-            ScrollView scrollView = new ScrollView
+            var scrollView = new ScrollView
             {
                 Content = new StackLayout
                 {
@@ -154,7 +154,7 @@ namespace BeginMobile.Pages.Profile
             if (profileEventList.Any())
             {
                 _eventsListView.ItemsSource = RetrieveEventInfoObjectList(profileEventList);
-                _noEventsMessage.Text = string.Empty;
+                _labelNoEventsMessage.Text = string.Empty;
             }
 
             else

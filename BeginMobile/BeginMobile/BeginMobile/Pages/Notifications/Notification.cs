@@ -5,16 +5,16 @@ namespace BeginMobile.Pages.Notifications
 {
     public class Notification : TabContent
     {
-        private readonly ListView listViewNotifications;
-        private readonly List<NotificationViewModel> listNotifications;
+        private readonly ListView _listViewNotifications;
+        private readonly List<NotificationViewModel> _listNotifications;
 
-        public readonly Label CounterText;
+        public readonly Label LabelCounterText;
 
         public Notification(string title, string iconImg)
             : base(title, iconImg)
         {
             Title = title;
-            var notification1 = new NotificationViewModel
+            var notificationViewModel = new NotificationViewModel
                                 {
                                     NotificationDescription = "Admin sent to you a new message",
                                     IntervalDate = " 5 days, 5Hours ago",
@@ -23,22 +23,22 @@ namespace BeginMobile.Pages.Notifications
 
                                 };
 
-            notification1.DeleteButton.Clicked += (s, e) =>
+            notificationViewModel.DeleteButton.Clicked += (s, e) =>
                                                   {
                                                       DisplayAlert("message", "delete", "ok");
-                                                      DeleteClickProcess(notification1);
+                                                      DeleteClickProcess(notificationViewModel);
 
                                                   };
 
-            notification1.ActionButton.Clicked += (s, e) =>
+            notificationViewModel.ActionButton.Clicked += (s, e) =>
                                                   {
                                                       var sender = (NotificationViewModel)s;
                                                       UnreadClickProcess(sender);
                                                   };
 
-            listNotifications = new List<NotificationViewModel>
+            _listNotifications = new List<NotificationViewModel>
                                 {
-                                    notification1,
+                                    notificationViewModel,
 
                                     new NotificationViewModel
                                     {
@@ -69,12 +69,12 @@ namespace BeginMobile.Pages.Notifications
                                     }
                                 };
 
-            CounterText = new Label
+            LabelCounterText = new Label
                           {
-                              Text = listNotifications.Count.ToString()
+                              Text = _listNotifications.Count.ToString()
                           };
 
-            listViewNotifications = new ListView
+            _listViewNotifications = new ListView
                                     {
                                         ItemTemplate = new DataTemplate(typeof(TemplateListViewNotification))
                                     };
@@ -110,11 +110,11 @@ namespace BeginMobile.Pages.Notifications
                              };
 
             mainLayout.Children.Add(gridEventHeaderTitle);
-            mainLayout.Children.Add(new ScrollView { Content = listViewNotifications });
+            mainLayout.Children.Add(new ScrollView { Content = _listViewNotifications });
 
             Content = mainLayout;
 
-            listViewNotifications.ItemSelected += async (s, e) =>
+            _listViewNotifications.ItemSelected += async (s, e) =>
                                                         {
                                                             if (e.SelectedItem == null)
                                                             {
@@ -145,7 +145,7 @@ namespace BeginMobile.Pages.Notifications
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            listViewNotifications.ItemsSource = listNotifications;
+            _listViewNotifications.ItemsSource = _listNotifications;
         }
     }
 }

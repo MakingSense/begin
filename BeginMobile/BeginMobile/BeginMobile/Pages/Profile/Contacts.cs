@@ -11,21 +11,19 @@ namespace BeginMobile.Pages.Profile
     public class Contacts : ContentPage
     {
         private const string UserDefault = "userdefault3.png";
-        private readonly ListView _contactlistView;
+        private readonly ListView _listViewContacts;
         private readonly List<Contact> _contactsList;
-        private readonly Label _noContactsMessage;
+        private readonly Label _labelNoContactsMessage;
         private readonly List<Contact> _defaultList = new List<Contact>();
         private readonly SearchView _searchView;
-
-        private readonly LoginUser _currentUser;
 
         public Contacts()
         {
             Title = "Contacts";
             _searchView = new SearchView("Profesional", "Personal", "Job", "Important", "Needs Attention", "Other");
 
-            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            ProfileInformationContacts profileInformationContacts = App.ProfileServices.GetContacts(_currentUser.User.UserName, _currentUser.AuthToken);
+            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            ProfileInformationContacts profileInformationContacts = App.ProfileServices.GetContacts(currentUser.User.UserName, currentUser.AuthToken);
 
             _contactsList = new List<Contact>();
 
@@ -36,14 +34,14 @@ namespace BeginMobile.Pages.Profile
 
             var contactListViewTemplate = new DataTemplate(typeof(CustomViewCell));
 
-            _contactlistView = new ListView
+            _listViewContacts = new ListView
                                {
                                    ItemsSource = _contactsList,
                                    ItemTemplate = contactListViewTemplate,
                                    HasUnevenRows = true
                                };
 
-            _contactlistView.ItemSelected += (s, e) =>
+            _listViewContacts.ItemSelected += (s, e) =>
             {
                 if (e.SelectedItem == null)
                 {
@@ -54,7 +52,7 @@ namespace BeginMobile.Pages.Profile
             };
 
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
-            _noContactsMessage = new Label();
+            _labelNoContactsMessage = new Label();
             
             var scrollView = new ScrollView
             {
@@ -64,8 +62,8 @@ namespace BeginMobile.Pages.Profile
                     VerticalOptions = LayoutOptions.Start,
                     Children = {
                         _searchView.Container,
-                        _noContactsMessage,
-                        _contactlistView
+                        _labelNoContactsMessage,
+                        _listViewContacts
                     }
                 }
             };
@@ -106,13 +104,13 @@ namespace BeginMobile.Pages.Profile
 
             if (list.Any())
             {
-                _contactlistView.ItemsSource = list;
-                _noContactsMessage.Text = string.Empty;
+                _listViewContacts.ItemsSource = list;
+                _labelNoContactsMessage.Text = string.Empty;
             }
 
             else
             {
-                _contactlistView.ItemsSource = _defaultList;
+                _listViewContacts.ItemsSource = _defaultList;
             }
         }
 

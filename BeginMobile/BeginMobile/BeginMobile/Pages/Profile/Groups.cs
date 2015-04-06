@@ -10,9 +10,9 @@ namespace BeginMobile.Pages.Profile
 {
     public class Groups : ContentPage
     {
-        private readonly ListView _lViewGroup;
+        private readonly ListView _listViewGroup;
         private readonly ProfileInformationGroups _groupInformation;
-        private readonly Label _noGroupsMessage;
+        private readonly Label _labelNoGroupsMessage;
         private readonly List<Group> _defaultList = new List<Group>();
 
         private readonly Picker _sectionsPicker;
@@ -42,14 +42,14 @@ namespace BeginMobile.Pages.Profile
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             _groupInformation = App.ProfileServices.GetGroups(_currentUser.User.UserName, _currentUser.AuthToken);
 
-            _lViewGroup = new ListView
+            _listViewGroup = new ListView
                           {
                               ItemTemplate = new DataTemplate(typeof (ProfileGroupItemCell)),
                               ItemsSource = _groupInformation.Groups,
                               HasUnevenRows = true
                           };
 
-            _lViewGroup.ItemSelected += async (sender, e) =>
+            _listViewGroup.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null)
                 {
@@ -57,8 +57,7 @@ namespace BeginMobile.Pages.Profile
                 }
 
                 var groupItem = (Group)e.SelectedItem;
-                var groupPage = new GroupItemPage(groupItem);
-                groupPage.BindingContext = groupItem;
+                var groupPage = new GroupItemPage(groupItem) { BindingContext = groupItem };
                 await Navigation.PushAsync(groupPage);
 
                 // clears the 'selected' background
@@ -72,7 +71,7 @@ namespace BeginMobile.Pages.Profile
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
             _sectionsPicker.SelectedIndexChanged += SearchItemEventHandler;
 
-            _noGroupsMessage = new Label();
+            _labelNoGroupsMessage = new Label();
 
             #endregion
 
@@ -87,7 +86,7 @@ namespace BeginMobile.Pages.Profile
             mainLayout.Children.Add(_searchView.Container);
             mainLayout.Children.Add(new ScrollView
                                     {
-                                        Content = _lViewGroup
+                                        Content = _listViewGroup
                                     });
 
             Content = mainLayout;
@@ -117,13 +116,13 @@ namespace BeginMobile.Pages.Profile
 
             if (groupsList.Any())
             {
-                _lViewGroup.ItemsSource = groupsList;
-                _noGroupsMessage.Text = string.Empty;
+                _listViewGroup.ItemsSource = groupsList;
+                _labelNoGroupsMessage.Text = string.Empty;
             }
 
             else
             {
-                _lViewGroup.ItemsSource = _defaultList;
+                _listViewGroup.ItemsSource = _defaultList;
             }
         }
         private void RetrieveSectionSelected(out string sections)

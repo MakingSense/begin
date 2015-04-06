@@ -33,7 +33,7 @@ namespace BeginMobile.Pages.Profile
             var boxViewBegWorkExp = new BoxView { Color = Color.White, WidthRequest = 100, HeightRequest = 2 };
             var boxViewEndWorkExp = new BoxView { Color = Color.White, WidthRequest = 100, HeightRequest = 2 };
 
-            var stackInfo = new StackLayout
+            var stackLayoutInfo = new StackLayout
                             {
                                 Spacing = 0,
                                 Padding = 1,
@@ -58,19 +58,19 @@ namespace BeginMobile.Pages.Profile
                                 }
                             };
 
-            var sclViewInfo = new ScrollView
+            var scrollViewInfo = new ScrollView
                               {
-                                  Content = stackInfo
+                                  Content = stackLayoutInfo
                               };
 
-            Content = sclViewInfo;
+            Content = scrollViewInfo;
         }
 
         //Information details
         #region Information
         private StackLayout GetNameAndSurname()
         {
-            var subStackNameAndSur = new StackLayout
+            var stackLayoutNameAndSur = new StackLayout
                                      {
                                          Spacing = 2,
                                          Padding = new Thickness(10, 0, 0, 0),
@@ -84,7 +84,7 @@ namespace BeginMobile.Pages.Profile
                                          }
                                      };
 
-            return subStackNameAndSur;
+            return stackLayoutNameAndSur;
         }
 
         public StackLayout GetInformationDetail()
