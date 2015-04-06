@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BeginMobile.Services.Utils
 {
@@ -20,24 +16,24 @@ namespace BeginMobile.Services.Utils
             var stringy = string.Empty;
             var diff = DateTime.Now.Subtract(postDate);
             double days = diff.Days;
-            double hours = diff.Hours + days * Day;
-            double minutes = diff.Minutes + hours * Minute;
+            var hours = diff.Hours + days*Day;
+            var minutes = diff.Minutes + hours*Minute;
 
             if (minutes <= One)
             {
                 return "Just Now";
             }
 
-            double years = Math.Floor(diff.TotalDays / Year);
+            var years = Math.Floor(diff.TotalDays/Year);
             if (years >= One)
             {
                 return string.Format("active {0} year{1} ago", years, years >= 2 ? "s" : null);
             }
 
-            double weeks = Math.Floor(diff.TotalDays / Week);
+            var weeks = Math.Floor(diff.TotalDays/Week);
             if (weeks >= One)
             {
-                double partOfWeek = days - weeks * Week;
+                double partOfWeek = days - weeks*Week;
                 if (partOfWeek > 0)
                 {
                     stringy = string.Format(", {0} day{1}", partOfWeek, partOfWeek > 1 ? "s" : null);
@@ -47,7 +43,7 @@ namespace BeginMobile.Services.Utils
 
             if (days >= One)
             {
-                double partOfDay = hours - days * Day;
+                var partOfDay = hours - days*Day;
                 if (partOfDay > 0)
                 {
                     stringy = string.Format(", {0} hour{1}", partOfDay, partOfDay > 1 ? "s" : null);
@@ -55,18 +51,15 @@ namespace BeginMobile.Services.Utils
                 return string.Format("active {0} day{1}{2} ago", days, days >= 2 ? "s" : null, stringy);
             }
 
-            if (hours >= One)
+            if (!(hours >= One)) return minutes.ToString("active {0} minutes ago");
+            var partOfHour = minutes - hours*Hour;
+            if (partOfHour > 0)
             {
-                double partOfHour = minutes - hours * Hour;
-                if (partOfHour > 0)
-                {
-                    stringy = string.Format(", {0} minute{1}", partOfHour, partOfHour > 1 ? "s" : null);
-                }
-                return string.Format("active {0} hour{1}{2} ago", hours, hours >= 2 ? "s" : null, stringy);
+                stringy = string.Format(", {0} minute{1}", partOfHour, partOfHour > 1 ? "s" : null);
             }
+            return string.Format("active {0} hour{1}{2} ago", hours, hours >= 2 ? "s" : null, stringy);
 
             // Only condition left is minutes > 1
-            return minutes.ToString("active {0} minutes ago");
         }
     }
 }

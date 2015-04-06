@@ -9,25 +9,23 @@ using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile
 {
-    public class App : Xamarin.Forms.Application, ILoginManager
-	{
-        static ILoginManager loginManager;
+    public class App : Application, ILoginManager
+    {
+        private static ILoginManager _loginManager;
         public static App Current;
 
-		public App ()
-		{
-		    Current = this;
-		    loginManager = this;
+        public App()
+        {
+            Current = this;
+            _loginManager = this;
 
-		    if (Device.OS != TargetPlatform.WinPhone)
-		    {
-		        AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
-		    }
+            if (Device.OS != TargetPlatform.WinPhone)
+            {
+                AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
+            }
 
-            var isLoggedIn = Properties.ContainsKey("IsLoggedIn") ? (bool)Properties["IsLoggedIn"] : false;
             MainPage = new LoginModalPage(this);
-
-		}
+        }
 
         public void ShowMainPage(LoginUser loginUser)
         {
@@ -42,50 +40,39 @@ namespace BeginMobile
             MainPage = new LoginModalPage(this);
         }
 
-		protected override void OnStart ()
-		{
-			// Handle when your app starts
-		}
+        protected override void OnStart()
+        {
+            // Handle when your app starts
+        }
 
-		protected override void OnSleep ()
-		{
-			// Handle when your app sleeps
-		}
+        protected override void OnSleep()
+        {
+            // Handle when your app sleeps
+        }
 
-		protected override void OnResume ()
-		{
-			// Handle when your app resumes
+        protected override void OnResume()
+        {
+            // Handle when your app resumes
         }
 
         #region "Services"
 
         private static ProfileServices _profileServices;
+
         public static ProfileServices ProfileServices
         {
-            get
-            {
-                if (_profileServices == null)
-                {
-                    _profileServices = new ProfileServices();
-                }
-                return _profileServices;
-            }
+            get { return _profileServices ?? (_profileServices = new ProfileServices()); }
         }
 
         #endregion
 
         #region "Styles"
-        private static Styles styles;
+
+        private static Styles _styles;
+
         public static Styles Styles
         {
-            get
-            {
-                if (styles == null)
-                {
-                    styles = new Styles();
-                }
-                return styles;
-            }
+            get { return _styles ?? (_styles = new Styles()); }
         }
 
         #endregion

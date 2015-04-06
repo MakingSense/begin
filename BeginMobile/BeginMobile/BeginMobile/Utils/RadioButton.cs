@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace BeginMobile.Utils
@@ -14,9 +13,9 @@ namespace BeginMobile.Utils
         public RadioButton()
         {
             _checkLabel = new Label
-            {
-                Text = CheckOff
-            };
+                          {
+                              Text = CheckOff
+                          };
             var textLabel = new Label();
 
             _checkLabel.BindingContext = this;
@@ -28,86 +27,79 @@ namespace BeginMobile.Utils
 
 
             Content = new StackLayout
-            {
-                Orientation = StackOrientation.Horizontal,
-                Children = { _checkLabel, textLabel }
-            };
+                      {
+                          Orientation = StackOrientation.Horizontal,
+                          Children = {_checkLabel, textLabel}
+                      };
 
             //Taps
             var recognizer = new TapGestureRecognizer
-            {
-                Parent = this,
-                NumberOfTapsRequired = 1,
-                //use command instead of TappedCallback
-                TappedCallback = (view, args) => { ((RadioButton)view).IsToggled = true; }
-            };
+                             {
+                                 Parent = this,
+                                 NumberOfTapsRequired = 1,
+                                 //use command instead of TappedCallback
+                                 TappedCallback = (view, args) => { ((RadioButton) view).IsToggled = true; }
+                             };
             GestureRecognizers.Add(recognizer);
         }
 
         public static readonly BindableProperty TextProperty =
             BindableProperty.Create("Text",
-                                    typeof(string),
-                                    typeof(RadioButton), null);
+                typeof (string),
+                typeof (RadioButton), null);
 
         private static readonly BindableProperty FontProperty =
             BindableProperty.Create<RadioButton, Font>(radio => radio.Font,
-                                                       Font.SystemFontOfSize(NamedSize.Large));
+                Font.SystemFontOfSize(NamedSize.Large));
 
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
+            get { return (string) GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
 
         public Font Font
         {
             set { SetValue(FontProperty, value); }
-            get { return (Font)GetValue(FontProperty); }
+            get { return (Font) GetValue(FontProperty); }
         }
 
         public static readonly BindableProperty IsToggledProperty =
             BindableProperty.Create("IsToggled",
-                                    typeof(bool),
-                                    typeof(RadioButton),
-                                    false,
-                                    BindingMode.TwoWay,
-                                    null,
-                                    OnIsToggledPropertyChanged);
+                typeof (bool),
+                typeof (RadioButton),
+                false,
+                BindingMode.TwoWay,
+                null,
+                OnIsToggledPropertyChanged);
 
         public event EventHandler<ToggledEventArgs> Toggled;
 
         public bool IsToggled
         {
-            get { return (bool)GetValue(IsToggledProperty); }
+            get { return (bool) GetValue(IsToggledProperty); }
             set { SetValue(IsToggledProperty, value); }
         }
 
         private static void OnIsToggledPropertyChanged(BindableObject sender, object oldValue, object newValue)
         {
-            var radioButton = (RadioButton)sender;
-            radioButton.OnIsToggledPropertyChanged((bool)oldValue, (bool)newValue);
+            var radioButton = (RadioButton) sender;
+            radioButton.OnIsToggledPropertyChanged((bool) newValue);
         }
 
-        private void OnIsToggledPropertyChanged(bool oldValue, bool newValue)
+        private void OnIsToggledPropertyChanged(bool newValue)
         {
             _checkLabel.Text = newValue ? CheckOn : CheckOff;
             if (Toggled != null)
             {
                 Toggled(this, new ToggledEventArgs(IsToggled));
             }
-            if (IsToggled)
+            if (!IsToggled) return;
+            var parent = ParentView as Layout<View>;
+            if (parent == null) return;
+            foreach (View view in parent.Children.Where(view => view is RadioButton && view != this))
             {
-                var parent = ParentView as Layout<View>;
-                if (parent != null)
-                {
-                    foreach (View view in parent.Children)
-                    {
-                        if (view is RadioButton && view != this)
-                        {
-                            ((RadioButton)view).IsToggled = false;
-                        }
-                    }
-                }
+                ((RadioButton) view).IsToggled = false;
             }
         }
     }
