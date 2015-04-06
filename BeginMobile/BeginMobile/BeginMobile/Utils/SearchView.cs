@@ -6,9 +6,8 @@ namespace BeginMobile.Utils
     {
         private const int LimitMax = 100;
 
-        public SearchView(params string[] categories)
+        public SearchView()
         {
-            Categories = categories;
             Limit = new Picker
                     {
                         Title = "Filter by Limit",
@@ -18,13 +17,6 @@ namespace BeginMobile.Utils
                         {
                             Placeholder = "Filter by Name"
                         };
-
-            Category = new Picker
-                       {
-                           Title = "Filter by Category",
-                           VerticalOptions = LayoutOptions.CenterAndExpand
-                       };
-
 
             for (var i = 1; i <= LimitMax; i++)
             {
@@ -37,18 +29,6 @@ namespace BeginMobile.Utils
                 }
             }
 
-            if (Categories != null)
-            {
-                foreach (string c in Categories)
-                {
-                    Category.Items.Add(c);
-                }
-            }
-            else
-            {
-                Categories = new[] {"All Categories"};
-            }
-
             Container = new StackLayout
                         {
                             HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -59,20 +39,12 @@ namespace BeginMobile.Utils
                         };
 
             Container.Children.Add(SearchBar);
-            Container.Children.Add(Category);
             Container.Children.Add(Limit);
         }
 
         public SearchBar SearchBar { get; set; }
-
         public Picker Limit { get; set; }
-
-        public Picker Category { get; set; }
-
-        public string[] Categories { get; set; }
-
         public StackLayout Container { get; set; }
-
         public void SetPlaceholder(string placeholder)
         {
             if (!string.IsNullOrEmpty(placeholder))

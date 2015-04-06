@@ -10,29 +10,39 @@ namespace BeginMobile.Pages.Profile
     public class Events : ContentPage
     {
         private readonly Label _labelNoEventsMessage;
-        private readonly List<EventInfoObject> _listEvents;
         private readonly ListView _eventsListView;
+
         private readonly List<EventInfoObject> _defaultList = new List<EventInfoObject>();
         private readonly SearchView _searchView;
+        private Picker _categoriesPicker;
+        private List<string> _categoriesList = new List<string> { "All Categories" };
+
         private readonly LoginUser _currentUser;
+        private const string DefaultLimit = "10";
 
         public Events()
         {
             Title = "Events";
 
-            _searchView = new SearchView("All Categories");
+            _searchView = new SearchView();
             _searchView.SetPlaceholder("Search by event name");
+
+            LoadCategoriesPicker();
 
             #region Call api
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            ProfileInformationEvents profileInformationEvents = App.ProfileServices.GetEvents(_currentUser.User.UserName, _currentUser.AuthToken);
+
+            var profileEvents =
+                App.ProfileServices.GetEventsByParams(_currentUser.AuthToken, limit: DefaultLimit);
+
             #endregion
 
             #region Search components
 
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
-            _searchView.Category.SelectedIndexChanged += SearchItemEventHandler;
+            _categoriesPicker.SelectedIndexChanged += SearchItemEventHandler;
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
+
             _labelNoEventsMessage = new Label();
 
             #endregion
@@ -64,25 +74,14 @@ namespace BeginMobile.Pages.Profile
             #endregion
 
             #region List components
-            _listEvents = new List<EventInfoObject>();
 
-            foreach (var eventInfo in profileInformationEvents.Events)
-            {
-                _listEvents.Add(new EventInfoObject
-                               {
-                                   EventName = eventInfo.Name,
-                                   EventIntervalDate =
-                                       String.Format("{0} - {1}", eventInfo.StartDate, eventInfo.EndDate),
-                                   EventTime = String.Format("{0} - {1}", eventInfo.StartTime, eventInfo.EndTime),
-                                   EventInfo = eventInfo
-                               });
-            }
+            var listEvents = RetrieveEventInfoObjectList(profileEvents);
 
             var eventTemplate = new DataTemplate(typeof(TemplateListViewEvents));
 
             _eventsListView = new ListView
             {
-                ItemsSource = _listEvents,
+                ItemsSource = listEvents,
                 ItemTemplate = eventTemplate
             };
 
@@ -131,6 +130,30 @@ namespace BeginMobile.Pages.Profile
             #endregion
         }
 
+        private void LoadCategoriesPicker()
+        {
+            _categoriesPicker = new Picker
+            {
+                Title = "Filter by Category",
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            if (_categoriesList != null)
+            {
+                foreach (string c in _categoriesList)
+                {
+                    _categoriesPicker.Items.Add(c);
+                }
+            }
+
+            else
+            {
+                _categoriesList = new List<string> { "All Categories" };
+            }
+
+            _searchView.Container.Children.Add(_categoriesPicker);
+        }
+
         #region Events
 
         /// <summary>
@@ -143,7 +166,7 @@ namespace BeginMobile.Pages.Profile
             string limit;
             string cat;
 
-            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
+            var q = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
 
             RetrieveLimitSelected(out limit);
             RetrieveCategorySelected(out cat);
@@ -168,12 +191,16 @@ namespace BeginMobile.Pages.Profile
         #region Private methods
         private void RetrieveCategorySelected(out string cat)
         {
-            var catSelectedIndex = _searchView.Category.SelectedIndex;
-            var catLastIndex = _searchView.Category.Items.Count - 1;
+            //var catSelectedIndex = _searchView.Category.SelectedIndex;
+            //var catLastIndex = _searchView.Category.Items.Count - 1;
+
+            var catSelectedIndex = _categoriesPicker.SelectedIndex;
+            var catLastIndex = _categoriesPicker.Items.Count - 1;
 
             cat = catSelectedIndex == -1 || catSelectedIndex == catLastIndex
                 ? null
-                : _searchView.Category.Items[catSelectedIndex];
+                //: _searchView.Category.Items[catSelectedIndex];
+                : _categoriesPicker.Items[catSelectedIndex];
         }
         private void RetrieveLimitSelected(out string limit)
         {

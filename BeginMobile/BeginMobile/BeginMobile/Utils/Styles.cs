@@ -316,8 +316,8 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return Device.OnPlatform(new Thickness(20, 0, 0, 0), new Thickness(20, 0, 0, 0),
-                    new Thickness(20, 0, 0, 0));
+                return Device.OnPlatform(new Thickness(20, 0, 20, 0), new Thickness(20, 0, 20, 0),
+                    new Thickness(20, 0, 20, 0));
             }
         }
 

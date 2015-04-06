@@ -18,16 +18,26 @@ namespace BeginMobile.Pages.Profile
         private readonly List<Contact> _defaultList = new List<Contact>();
         private readonly SearchView _searchView;
 
+        private Dictionary<string, string> _sortOptionsDictionary = new Dictionary<string, string>
+                                                                  {
+                                                                      {"last_active", "Last Active"},
+                                                                      {"newest_registered", "Newest Registered"},
+                                                                      {"alpha", "Alphabetical"}
+                                                                  };
+        private Picker _sortPicker;
+
         public Contacts()
         {
             Title = "Contacts";
-            _searchView = new SearchView("Profesional", "Personal", "Job", "Important", "Needs Attention", "Other");
+            _searchView = new SearchView();
 
             var currentUser = (LoginUser) App.Current.Properties["LoginUser"];
             ProfileInformationContacts profileInformationContacts =
                 App.ProfileServices.GetContacts(currentUser.User.UserName, currentUser.AuthToken);
 
             _contactsList = new List<Contact>();
+
+            LoadSortOptionsPicker();
 
             foreach (var contact in profileInformationContacts.Contacts)
             {
@@ -108,12 +118,12 @@ namespace BeginMobile.Pages.Profile
         private void SearchItemEventHandler(object sender, EventArgs args)
         {
             string limit;
-            string cat;
+            string sort;
 
             var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
 
             RetrieveLimitSelected(out limit);
-            RetrieveCategorySelected(out cat);
+            RetrieveSortOptionSelected(out sort);
 
             //TODO: request API
             List<Contact> list = (from c in _contactsList
@@ -137,14 +147,39 @@ namespace BeginMobile.Pages.Profile
 
         #region Private methods
 
-        private void RetrieveCategorySelected(out string cat)
+        private void LoadSortOptionsPicker()
         {
-            var catSelectedIndex = _searchView.Category.SelectedIndex;
-            var catLastIndex = _searchView.Category.Items.Count - 1;
+            _sortPicker = new Picker
+                          {
+                              Title = "Sort by",
+                              VerticalOptions = LayoutOptions.CenterAndExpand
+                          };
 
-            cat = catSelectedIndex == -1 || catSelectedIndex == catLastIndex
+            if (_sortOptionsDictionary != null)
+            {
+                foreach (var op in _sortOptionsDictionary.Values)
+                {
+                    _sortPicker.Items.Add(op);
+                }
+            }
+
+            else
+            {
+                _sortOptionsDictionary = new Dictionary<string, string> { { "last_active", "Last Active" } };
+            }
+
+            _searchView.Container.Children.Add(_sortPicker);
+
+        }
+
+        private void RetrieveSortOptionSelected(out string sort)
+        {
+            var catSelectedIndex =_sortPicker.SelectedIndex;
+            var catLastIndex = _sortPicker.Items.Count - 1;
+
+            sort = catSelectedIndex == -1 || catSelectedIndex == catLastIndex
                 ? null
-                : _searchView.Category.Items[catSelectedIndex];
+                : _sortPicker.Items[catSelectedIndex];
         }
 
         private void RetrieveLimitSelected(out string limit)

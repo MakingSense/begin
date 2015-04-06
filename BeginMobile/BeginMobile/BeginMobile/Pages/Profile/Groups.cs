@@ -11,41 +11,34 @@ namespace BeginMobile.Pages.Profile
     public class Groups : ContentPage
     {
         private readonly ListView _listViewGroup;
-        private readonly ProfileInformationGroups _groupInformation;
         private readonly Label _labelNoGroupsMessage;
         private readonly List<Group> _defaultList = new List<Group>();
 
-        private readonly Picker _sectionsPicker;
+        private Picker _sectionsPicker;
+        private Picker _categoriesPicker;
+
         private readonly SearchView _searchView;
         private readonly List<string> _sectionsList = new List<String> { "Members", "Activities", "All Sections" };
+        private List<string> _categoriesList = new List<string> { "All Categories" };
+        private const string DefaultLimit = "10";
 
         private readonly LoginUser _currentUser;
         public Groups()
         {
             Title = "Groups";
-
-            _searchView = new SearchView("All Categories");
+            _searchView = new SearchView();
             _searchView.SetPlaceholder("Search by group name");
-            _sectionsPicker = new Picker
-                             {
-                                 Title = "Sections",
-                                 VerticalOptions = LayoutOptions.CenterAndExpand
-                             };
 
-            foreach (var item in _sectionsList)
-            {
-                _sectionsPicker.Items.Add(item);
-            }
-
-            _searchView.Container.Children.Add(_sectionsPicker);
+            LoadSectionsPicker();
+            LoadCategoriesPicker();
 
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            _groupInformation = App.ProfileServices.GetGroups(_currentUser.User.UserName, _currentUser.AuthToken);
+            var groupInformation = App.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, limit: DefaultLimit);
 
             _listViewGroup = new ListView
                           {
-                              ItemTemplate = new DataTemplate(typeof (ProfileGroupItemCell)),
-                              ItemsSource = _groupInformation.Groups,
+                              ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell)),
+                              ItemsSource = groupInformation,
                               HasUnevenRows = true
                           };
 
@@ -67,7 +60,7 @@ namespace BeginMobile.Pages.Profile
             #region Search components
 
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
-            _searchView.Category.SelectedIndexChanged += SearchItemEventHandler;
+            _categoriesPicker.SelectedIndexChanged += SearchItemEventHandler;
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
             _sectionsPicker.SelectedIndexChanged += SearchItemEventHandler;
 
@@ -92,6 +85,46 @@ namespace BeginMobile.Pages.Profile
             Content = mainLayout;
         }
 
+        private void LoadSectionsPicker()
+        {
+            _sectionsPicker = new Picker
+                              {
+                                  Title = "Sections",
+                                  VerticalOptions = LayoutOptions.CenterAndExpand
+                              };
+
+            foreach (var item in _sectionsList)
+            {
+                _sectionsPicker.Items.Add(item);
+            }
+
+            _searchView.Container.Children.Add(_sectionsPicker);
+        }
+
+        private void LoadCategoriesPicker()
+        {
+            _categoriesPicker = new Picker
+                                {
+                                    Title = "Filter by Category",
+                                    VerticalOptions = LayoutOptions.CenterAndExpand
+                                };
+
+            if (_categoriesList != null)
+            {
+                foreach (string c in _categoriesList)
+                {
+                    _categoriesPicker.Items.Add(c);
+                }
+            }
+
+            else
+            {
+                _categoriesList = new List<string> { "All Categories" };
+            }
+
+            _searchView.Container.Children.Add(_categoriesPicker);
+        }
+
         #region Events
 
         /// <summary>
@@ -105,12 +138,12 @@ namespace BeginMobile.Pages.Profile
             string cat;
             string sections;
 
-            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
+            var q = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
 
             RetrieveLimitSelected(out limit);
             RetrieveCategorySelected(out cat);
             RetrieveSectionSelected(out sections);
-            
+
             List<Group> groupsList =
                 App.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, q, cat, limit, sections);
 
@@ -142,33 +175,21 @@ namespace BeginMobile.Pages.Profile
         }
         private void RetrieveCategorySelected(out string cat)
         {
-            var catSelectedIndex = _searchView.Category.SelectedIndex;
-            var catLastIndex = _searchView.Category.Items.Count - 1;
+            var catSelectedIndex = _categoriesPicker.SelectedIndex;
+            var catLastIndex = _categoriesPicker.Items.Count - 1;
 
-            if (catSelectedIndex == -1 || catSelectedIndex == catLastIndex)
-            {
-                cat = null;
-            }
-
-            else
-            {
-                cat = _searchView.Category.Items[catSelectedIndex];
-            }
+            cat = catSelectedIndex == -1 || catSelectedIndex == catLastIndex
+                ? null
+                : _categoriesPicker.Items[catSelectedIndex];
         }
         private void RetrieveLimitSelected(out string limit)
         {
             var limitSelectedIndex = _searchView.Limit.SelectedIndex;
             var limitLastIndex = _searchView.Limit.Items.Count - 1;
 
-            if (limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex)
-            {
-                limit = null;
-            }
-
-            else
-            {
-                limit = _searchView.Limit.Items[limitSelectedIndex];
-            }
+            limit = limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex
+                ? null
+                : _searchView.Limit.Items[limitSelectedIndex];
         }
 
         #endregion
