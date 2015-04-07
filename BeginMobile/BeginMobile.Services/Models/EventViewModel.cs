@@ -12,6 +12,8 @@
 
         public string EventDescription { set; get; }
 
+        public string EventAvailableSpaces { set; get; }
+
         public string Name { set; get; }
     }
 }
