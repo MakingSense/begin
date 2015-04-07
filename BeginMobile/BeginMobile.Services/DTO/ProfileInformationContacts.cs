@@ -27,5 +27,6 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("contacts")]
         public User[] Contacts { set; get; }
+
     }
 }

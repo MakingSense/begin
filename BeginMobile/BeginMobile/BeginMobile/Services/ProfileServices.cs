@@ -9,12 +9,14 @@ namespace BeginMobile.Services
         private readonly ProfileManager _profileManager;
         private readonly GroupManager _groupManager;
         private readonly EventManager _eventManager;
+        private readonly ContactManager _contactManager;
 
         public ProfileServices()
         {
             _profileManager = new ProfileManager();
             _eventManager = new EventManager();
             _groupManager = new GroupManager();
+            _contactManager = new ContactManager();
         }
 
         public ProfileInformationGroups GetGroups(string userName, string authToken)
@@ -62,7 +64,7 @@ namespace BeginMobile.Services
             return _profileManager.GetProfileInformationDetail(userName, authToken);
         }
 
-        //Groups and events
+        //Groups, events and contacts
         public List<Group> GetGroupsByParams(string authToken, string name = null, string cat = null,
             string limit = null, string sections = null)
         {
@@ -83,6 +85,11 @@ namespace BeginMobile.Services
         public ProfileEvent GetEvent(string authToken, string eventId)
         {
             return _eventManager.GetEventById(authToken, eventId);
+        }
+
+        public List<User> GetContacts(string authToken, string name = null, string sort = null, string limit = null)
+        {
+            return _contactManager.GetContacts(authToken,name, sort, limit);
         }
     }
 }
