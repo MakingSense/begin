@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DTO\ChangePassword.cs" />
+    <Compile Include="DTO\ContactServiceError.cs" />
     <Compile Include="DTO\ErrorRetrieved.cs" />
     <Compile Include="DTO\GroupOptions.cs" />
     <Compile Include="DTO\Message.cs" />

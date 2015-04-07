@@ -88,6 +88,7 @@ namespace BeginMobile.Services.Interfaces
                 return result;
             }
         }
+
         /// <summary>
         /// Posts the asynchronous.
         /// </summary>
@@ -98,19 +99,13 @@ namespace BeginMobile.Services.Interfaces
         {
             using (var httpClient = new HttpClient())
             {
-                T result = null;
                 httpClient.BaseAddress = new Uri(_serviceBaseAddress);
                 httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
 
                 var response = httpClient.PostAsync(_subAddress + addressSuffix, content).Result;
                 var userJson = response.Content.ReadAsStringAsync().Result;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    result = JsonConvert.DeserializeObject<T>(userJson);
-                }
-
-                return result;
+                return JsonConvert.DeserializeObject<T>(userJson);
             }
         }
 
@@ -181,6 +176,26 @@ namespace BeginMobile.Services.Interfaces
                 httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
 
                 var response = httpClient.GetAsync(_subAddress + identifier + urlParams).Result;
+                var userJson = response.Content.ReadAsStringAsync().Result;
+
+                return JsonConvert.DeserializeObject<List<T>>(userJson);
+            }
+        }
+
+        /// <summary>
+        /// Posts the asynchronous.
+        /// </summary>
+        /// <param name="authToken">The authentication token.</param>
+        /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
+        /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
+        public IEnumerable<T> PostListAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+
+                var response = httpClient.PostAsync(_subAddress + addressSuffix, content).Result;
                 var userJson = response.Content.ReadAsStringAsync().Result;
 
                 return JsonConvert.DeserializeObject<List<T>>(userJson);

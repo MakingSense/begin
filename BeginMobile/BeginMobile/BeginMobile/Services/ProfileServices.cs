@@ -91,5 +91,31 @@ namespace BeginMobile.Services
         {
             return _contactManager.GetContacts(authToken,name, sort, limit);
         }
+
+        public User GetContact(string authToken, string contactId)
+        {
+            return _contactManager.GetContactById(authToken, contactId);
+        }
+
+        //Contact options 
+        public List<ContactServiceError> SendRequest(string authToken, string userName)
+        {
+            return _contactManager.SendRequest(authToken, userName);
+        }
+
+        public List<ContactServiceError> AcceptRequest(string authToken, string userName)
+        {
+            return _contactManager.SendRequest(authToken, userName);
+        }
+
+        public List<ContactServiceError> RejectRequest(string authToken, string userName)
+        {
+            return _contactManager.SendRequest(authToken, userName);
+        }
+
+        public List<ContactServiceError> RemoveFriendship(string authToken, string userName)
+        {
+            return _contactManager.SendRequest(authToken, userName);
+        }
     }
 }

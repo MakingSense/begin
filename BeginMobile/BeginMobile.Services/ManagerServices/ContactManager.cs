@@ -18,6 +18,9 @@ namespace BeginMobile.Services.ManagerServices
         private readonly GenericBaseClient<User> _contactClient =
             new GenericBaseClient<User>(BaseAddress, SubAddress);
 
+        private readonly GenericBaseClient<ContactServiceError> _contactServiceClient =
+            new GenericBaseClient<ContactServiceError>(BaseAddress, SubAddress);
+
 
         public List<User> GetContacts(
             string authToken,
@@ -34,6 +37,99 @@ namespace BeginMobile.Services.ManagerServices
             catch (Exception exeption)
             {
                 return null;
+            }
+        }
+
+        public User GetContactById(string authToken, string contactId)
+        {
+            try
+            {
+                var urlId = "/" + contactId;
+                return _contactClient.GetAsync(authToken, Identifier, urlId);
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
+        }
+
+        public List<ContactServiceError> SendRequest(string authToken, string userName)
+        {
+            try
+            {
+                string addressSuffix = Identifier + "/send_request/" + userName;
+                return _contactServiceClient.PostListAsync(authToken, null, addressSuffix).ToList();
+            }
+            catch (Exception exception)
+            {
+                var listError = new List<ContactServiceError>()
+                {
+                    new ContactServiceError
+                    {
+                        Message = exception.Message
+                    }
+                };
+                return listError;
+            }
+        }
+
+        public List<ContactServiceError> AcceptRequest(string authToken, string userName)
+        {
+            try
+            {
+                string addressSuffix = Identifier + "/accept_request/" + userName;
+                return _contactServiceClient.PostListAsync(authToken, null, addressSuffix).ToList();
+            }
+            catch (Exception exception)
+            {
+                var listError = new List<ContactServiceError>()
+                {
+                    new ContactServiceError
+                    {
+                        Message = exception.Message
+                    }
+                };
+                return listError;
+            }
+        }
+
+        public List<ContactServiceError> RejectRequest(string authToken, string userName)
+        {
+            try
+            {
+                string addressSuffix = Identifier + "/reject_request/" + userName;
+                return _contactServiceClient.PostListAsync(authToken, null, addressSuffix).ToList();
+            }
+            catch (Exception exception)
+            {
+                var listError = new List<ContactServiceError>()
+                {
+                    new ContactServiceError
+                    {
+                        Message = exception.Message
+                    }
+                };
+                return listError;
+            }
+        }
+
+        public List<ContactServiceError> RemoveFriendship(string authToken, string userName)
+        {
+            try
+            {
+                string addressSuffix = Identifier + "/remove/" + userName;
+                return _contactServiceClient.PostListAsync(authToken, null, addressSuffix).ToList();
+            }
+            catch (Exception exception)
+            {
+                var listError = new List<ContactServiceError>()
+                {
+                    new ContactServiceError
+                    {
+                        Message = exception.Message
+                    }
+                };
+                return listError;
             }
         }
     }
