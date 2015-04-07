@@ -62,6 +62,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Friend.
+        /// </summary>
+        public static string ButtonAddFriend {
+            get {
+                return ResourceManager.GetString("ButtonAddFriend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string ButtonCancel {
