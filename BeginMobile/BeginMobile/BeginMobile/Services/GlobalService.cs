@@ -15,7 +15,7 @@ namespace BeginMobile.Services
         {
             private set
             {
-                _sections = value == null ? new List<string>(): value;
+                _sections = value ?? new List<string>();
             }
             get
             {
@@ -28,8 +28,9 @@ namespace BeginMobile.Services
         {
             private set
             {
-                _groupSections = value == null ? new List<string>() : value;
+                _groupSections = value ?? new List<string>();
             }
+
             get
             {
                 return _groupSections;

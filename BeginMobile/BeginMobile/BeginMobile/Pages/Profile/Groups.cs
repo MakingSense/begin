@@ -18,7 +18,7 @@ namespace BeginMobile.Pages.Profile
         private Picker _categoriesPicker;
 
         private readonly SearchView _searchView;
-        private readonly List<string> _sectionsList = new List<String> { "Members", "Activities", "All Sections" };
+        private List<string> _sectionsList;
         private List<string> _categoriesList = new List<string> { "All Categories" };
         private const string DefaultLimit = "10";
 
@@ -87,6 +87,8 @@ namespace BeginMobile.Pages.Profile
 
         private void LoadSectionsPicker()
         {
+            _sectionsList = App.GlobalService.GroupSections;
+
             _sectionsPicker = new Picker
                               {
                                   Title = "Sections",
@@ -100,7 +102,6 @@ namespace BeginMobile.Pages.Profile
 
             _searchView.Container.Children.Add(_sectionsPicker);
         }
-
         private void LoadCategoriesPicker()
         {
             _categoriesPicker = new Picker
@@ -163,15 +164,9 @@ namespace BeginMobile.Pages.Profile
             var sectionSelectedIndex = _sectionsPicker.SelectedIndex;
             var sectionLastIndex = _sectionsPicker.Items.Count - 1;
 
-            if (sectionSelectedIndex == -1 || sectionSelectedIndex == sectionLastIndex)
-            {
-                sections = null;
-            }
-
-            else
-            {
-                sections = _sectionsPicker.Items[sectionSelectedIndex];
-            }
+            sections = sectionSelectedIndex == -1 || sectionSelectedIndex == sectionLastIndex
+                ? null
+                : _sectionsPicker.Items[sectionSelectedIndex];
         }
         private void RetrieveCategorySelected(out string cat)
         {

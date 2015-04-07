@@ -191,15 +191,11 @@ namespace BeginMobile.Pages.Profile
         #region Private methods
         private void RetrieveCategorySelected(out string cat)
         {
-            //var catSelectedIndex = _searchView.Category.SelectedIndex;
-            //var catLastIndex = _searchView.Category.Items.Count - 1;
-
             var catSelectedIndex = _categoriesPicker.SelectedIndex;
             var catLastIndex = _categoriesPicker.Items.Count - 1;
 
             cat = catSelectedIndex == -1 || catSelectedIndex == catLastIndex
                 ? null
-                //: _searchView.Category.Items[catSelectedIndex];
                 : _categoriesPicker.Items[catSelectedIndex];
         }
         private void RetrieveLimitSelected(out string limit)
