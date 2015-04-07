@@ -4,7 +4,6 @@ using System.Linq;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
 using BeginMobile.Utils;
-using BeginMobile.Utils.Extensions;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
@@ -13,17 +12,20 @@ namespace BeginMobile.Pages.Profile
     {
         private const string UserDefault = "userdefault3.png";
         private readonly ListView _listViewContacts;
-        private readonly List<Contact> _contactsList;
         private readonly Label _labelNoContactsMessage;
         private readonly List<Contact> _defaultList = new List<Contact>();
         private readonly SearchView _searchView;
+        private readonly LoginUser _currentUser;
+
+        private const string DefaultLimit = "10";
 
         private Dictionary<string, string> _sortOptionsDictionary = new Dictionary<string, string>
-                                                                  {
-                                                                      {"last_active", "Last Active"},
-                                                                      {"newest_registered", "Newest Registered"},
-                                                                      {"alpha", "Alphabetical"}
-                                                                  };
+                                                                    {
+                                                                        {"last_active", "Last Active"},
+                                                                        {"newest_registered", "Newest Registered"},
+                                                                        {"alpha", "Alphabetical"},
+                                                                        {string.Empty, "None"}
+                                                                    };
         private Picker _sortPicker;
 
         public Contacts()
@@ -31,81 +33,73 @@ namespace BeginMobile.Pages.Profile
             Title = "Contacts";
             _searchView = new SearchView();
 
-            var currentUser = (LoginUser) App.Current.Properties["LoginUser"];
-            ProfileInformationContacts profileInformationContacts =
-                App.ProfileServices.GetContacts(currentUser.User.UserName, currentUser.AuthToken);
+            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            var profileInformationContacts = App.ProfileServices.GetContacts(_currentUser.AuthToken, limit: DefaultLimit);
 
-            _contactsList = new List<Contact>();
+            var contactsList = new List<Contact>();
 
             LoadSortOptionsPicker();
 
-            foreach (var contact in profileInformationContacts.Contacts)
-            {
-                _contactsList.Add(new Contact
-                                  {
-                                      Icon = UserDefault,
-                                      NameSurname = contact.NameSurname,
-                                      Email = String.Format("e-mail: {0}", contact.Email),
-                                      Url = contact.Url,
-                                      UserName = contact.UserName,
-                                      Registered = contact.Registered,
-                                      Id = contact.Id.ToString()
-                                  });
-            }
+            contactsList.AddRange(RetrieveContacts(profileInformationContacts));
 
-            var contactListViewTemplate = new DataTemplate(typeof (CustomViewCell));
+            var contactListViewTemplate = new DataTemplate(typeof(CustomViewCell));
 
             _listViewContacts = new ListView
-                                {
-                                    ItemsSource = _contactsList,
-                                    ItemTemplate = contactListViewTemplate,
-                                    HasUnevenRows = true
-                                };
+            {
+                ItemsSource = contactsList,
+                ItemTemplate = contactListViewTemplate,
+                HasUnevenRows = true
+            };
 
             _listViewContacts.ItemSelected += async (sender, eventArgs) =>
-                                                    {
-                                                        if (eventArgs.SelectedItem == null)
-                                                        {
-                                                            return;
-                                                        }
-                                                        var contactItem = (Contact) eventArgs.SelectedItem;
-                                                        var contentPageContactDetail = new ContactDetail(contactItem)
-                                                                                       {
-                                                                                           BindingContext
-                                                                                               =
-                                                                                               contactItem
-                                                                                       };
-                                                        await Navigation.PushAsync(contentPageContactDetail);
-                                                        ((ListView) sender).SelectedItem = null;
-                                                    };
+            {
+                if (eventArgs.SelectedItem == null)
+                {
+                    return;
+                }
+
+                var contactItem = (Contact)eventArgs.SelectedItem;
+                var contentPageContactDetail = new ContactDetail(contactItem)
+                {
+                    BindingContext
+                        =
+                        contactItem
+                };
+
+                await Navigation.PushAsync(contentPageContactDetail);
+                ((ListView)sender).SelectedItem = null;
+            };
 
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
+            _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
+            _sortPicker.SelectedIndexChanged += SearchItemEventHandler;
+
             _labelNoContactsMessage = new Label();
 
             var scrollView = new ScrollView
-                             {
-                                 Content = new StackLayout
-                                           {
-                                               Spacing = 2,
-                                               VerticalOptions = LayoutOptions.Start,
-                                               Children =
+            {
+                Content = new StackLayout
+                {
+                    Spacing = 2,
+                    VerticalOptions = LayoutOptions.Start,
+                    Children =
                                                {
                                                    _searchView.Container,
                                                    _labelNoContactsMessage,
                                                    _listViewContacts
                                                }
-                                           }
-                             };
+                }
+            };
 
             Content = new StackLayout
-                      {
-                          Padding = 10,
-                          VerticalOptions = LayoutOptions.Start,
-                          Children =
+            {
+                Padding = 10,
+                VerticalOptions = LayoutOptions.Start,
+                Children =
                           {
                               scrollView
                           }
-                      };
+            };
         }
 
         #region Events
@@ -120,20 +114,17 @@ namespace BeginMobile.Pages.Profile
             string limit;
             string sort;
 
-            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
+            var q = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
 
             RetrieveLimitSelected(out limit);
             RetrieveSortOptionSelected(out sort);
 
-            //TODO: request API
-            List<Contact> list = (from c in _contactsList
-                where (c.NameSurname.Contains(q, StringComparison.InvariantCultureIgnoreCase) ||
-                       c.FirstName.Contains(q, StringComparison.InvariantCultureIgnoreCase))
-                select c).ToList<Contact>();
+            var list = App.ProfileServices.GetContacts(_currentUser.AuthToken, q, sort, limit) ?? new List<User>();
+
 
             if (list.Any())
             {
-                _listViewContacts.ItemsSource = list;
+                _listViewContacts.ItemsSource = RetrieveContacts(list);
                 _labelNoContactsMessage.Text = string.Empty;
             }
 
@@ -150,10 +141,10 @@ namespace BeginMobile.Pages.Profile
         private void LoadSortOptionsPicker()
         {
             _sortPicker = new Picker
-                          {
-                              Title = "Sort by",
-                              VerticalOptions = LayoutOptions.CenterAndExpand
-                          };
+            {
+                Title = "Sort by",
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
 
             if (_sortOptionsDictionary != null)
             {
@@ -174,12 +165,14 @@ namespace BeginMobile.Pages.Profile
 
         private void RetrieveSortOptionSelected(out string sort)
         {
-            var catSelectedIndex =_sortPicker.SelectedIndex;
+            var catSelectedIndex = _sortPicker.SelectedIndex;
             var catLastIndex = _sortPicker.Items.Count - 1;
 
-            sort = catSelectedIndex == -1 || catSelectedIndex == catLastIndex
+            var selected = catSelectedIndex == -1 || catSelectedIndex == catLastIndex
                 ? null
                 : _sortPicker.Items[catSelectedIndex];
+
+            sort = selected == null ? null : _sortOptionsDictionary.FirstOrDefault(s => s.Value == selected).Key;
         }
 
         private void RetrieveLimitSelected(out string limit)
@@ -190,6 +183,22 @@ namespace BeginMobile.Pages.Profile
             limit = limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex
                 ? null
                 : _searchView.Limit.Items[limitSelectedIndex];
+        }
+
+        private static IEnumerable<Contact> RetrieveContacts(IEnumerable<User> profileInformationContacts)
+        {
+            return profileInformationContacts.Select(contact => new Contact
+            {
+                Icon = UserDefault,
+                NameSurname = contact.NameSurname,
+                Email =
+                    string.Format("e-mail: {0}",
+                        contact.Email),
+                Url = contact.Url,
+                UserName = contact.UserName,
+                Registered = contact.Registered,
+                Id = contact.Id.ToString()
+            });
         }
 
         #endregion
