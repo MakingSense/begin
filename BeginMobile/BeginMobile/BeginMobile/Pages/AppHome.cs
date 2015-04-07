@@ -21,22 +21,22 @@ namespace BeginMobile.Pages
 
             Children.Add(new WallPage(
                 new Label { Text = "News Feed", Style = App.Styles.StyleNavigationTitle }.Text,
-                Device.OnPlatform("RSS.png", "padlok.png", "padlok.png")));
+                Device.OnPlatform("RSS.png", "padlock.png", "padlock.png")));
 
             Children.Add(
                 new MessageListPage(new Label { Text = "Message", Style = App.Styles.StyleNavigationTitle }.Text,
-                    Device.OnPlatform("Messages.png", "padlok.png", "padlok.png")));
+                    Device.OnPlatform("Messages.png", "padlock.png", "padlock.png")));
 
             Children.Add(
                 new Notification(new Label { Text = "Notifications", Style = App.Styles.StyleNavigationTitle }.Text,
-                    Device.OnPlatform("Chat.png", "padlok.png", "padlok.png")));
+                    Device.OnPlatform("Chat.png", "padlock.png", "padlock.png")));
 
             Children.Add(
                 new GroupListPage(new Label { Text = "Groups", Style = App.Styles.StyleNavigationTitle }.Text,
-                    Device.OnPlatform("Users_three_2.png", "padlok.png", "padlok.png")));
+                    Device.OnPlatform("Users_three_2.png", "padlock.png", "padlock.png")));
 
             Children.Add(new TabContent(new Label { Text = "Opt", Style = App.Styles.StyleNavigationTitle }.Text,
-                Device.OnPlatform("More.png", "padlok.png", "padlok.png")));
+                Device.OnPlatform("More.png", "padlock.png", "padlock.png")));
         }
     }
 }
