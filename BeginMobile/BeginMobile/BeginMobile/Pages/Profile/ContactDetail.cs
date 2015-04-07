@@ -46,7 +46,27 @@ namespace BeginMobile.Pages.Profile
                                   {
                                       Text = AppResources.ButtonAddFriend
                                   };
+            var buttonRemove = new Button
+                               {
+                                   Text = "Remove" //TODO: Add to resources
+                               };
+            var gridButtons = new Grid
+                              {
+                                  VerticalOptions = LayoutOptions.FillAndExpand,
+                                  HorizontalOptions = LayoutOptions.CenterAndExpand,
+                                  RowDefinitions =
+                                  {
+                                      new RowDefinition {Height = GridLength.Auto}
+                                  },
+                                  ColumnDefinitions =
+                                  {
+                                      new ColumnDefinition {Width = GridLength.Auto},
+                                      new ColumnDefinition {Width = GridLength.Auto},
+                                  }
+                              };
 
+            gridButtons.Children.Add(buttonAddFriend, 0, 0);
+            gridButtons.Children.Add(buttonRemove, 1, 0);
 
             Content = new StackLayout
                       {
@@ -59,7 +79,7 @@ namespace BeginMobile.Pages.Profile
                               labelUsername,
                               labelEmail,
                               labelRegistered,
-                              buttonAddFriend
+                              gridButtons
                           }
                       };
         }

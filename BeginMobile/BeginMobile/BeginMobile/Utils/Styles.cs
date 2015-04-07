@@ -385,5 +385,13 @@ namespace BeginMobile.Utils
                     (Color.FromHex("DDDDDD"), Color.FromHex("292929"), Color.FromHex("77D065"));
             }
         }
+        public Thickness GridImagePadding
+        {
+            get
+            {
+                return Device.OnPlatform(new Thickness(10, 5, 10, 5), new Thickness(10, 5, 10, 5),
+                    new Thickness(10, 5, 10, 5));
+            }
+        }
     }
 }

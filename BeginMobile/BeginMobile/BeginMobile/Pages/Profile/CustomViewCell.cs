@@ -108,7 +108,22 @@ namespace BeginMobile.Pages.Profile
             if (itemGridUserName != null)
             {
                 // TODO: Integrate with request services here
-                                
+
+                objectSender.IsVisible = false;
+                var buttonAdd = objectSender;
+                var buttonCancelRequestFriend = new Button
+                                                {
+                                                    Text = "Cancel Request Friend"
+                                                };
+                parentGrid.Children.RemoveAt(1);
+                parentGrid.Children.Add(buttonCancelRequestFriend, 1, 0);
+
+                buttonCancelRequestFriend.Clicked += (s, e) =>
+                                                     {
+                                                         parentGrid.Children.RemoveAt(1);
+                                                         buttonAdd.IsVisible = true;
+                                                         parentGrid.Children.Add(buttonAdd, 1, 0);
+                                                     };            
             }
         }
 
