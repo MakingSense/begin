@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace BeginMobile.Services.Interfaces
@@ -199,6 +200,52 @@ namespace BeginMobile.Services.Interfaces
                 var userJson = response.Content.ReadAsStringAsync().Result;
 
                 return JsonConvert.DeserializeObject<List<T>>(userJson);
+            }
+        }
+
+        /// <summary>
+        /// Gets the list asynchronous.
+        /// </summary>
+        /// <param name="identifier">The identifier examples user, groups, etc</param>
+        /// <param name="urlParams">The URL parameters examples '?user=user1'</param>
+        /// <param name="authToken">The authentication token.</param>
+        public async Task<List<T>> GetTestListAsync(string authToken, string identifier, string urlParams)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+
+                var response = await httpClient.GetAsync(_subAddress + identifier + urlParams).ConfigureAwait(false);
+                var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var resultList = await Task.Run(() =>
+                            JsonConvert.DeserializeObject<List<T>>(userJson)
+                        ).ConfigureAwait(false);
+
+                return resultList;
+            }
+        }
+
+        public async Task<T> GetTestAsync(string authToken, string identifier, string urlParams)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+
+                T resultModel = null;
+                var response = await httpClient.GetAsync(_subAddress + identifier + urlParams).ConfigureAwait(false);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                    resultModel = await Task.Run(() =>
+                            JsonConvert.DeserializeObject<T>(userJson)
+                        ).ConfigureAwait(false);
+                }
+
+                return resultModel;
             }
         }
     }

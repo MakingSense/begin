@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
+using BeginMobile.Services.Interfaces;
 using Newtonsoft.Json;
 
 namespace BeginMobile.Services.ManagerServices
@@ -11,161 +13,129 @@ namespace BeginMobile.Services.ManagerServices
     public class ProfileManager
     {
         private const string BaseAddress = "http://186.109.86.251:5432/";
-        private const string SubAddress = "begin/api/v1/profile/";
-        private const string SubAddressWall = "begin/api/v1/";
+        private const string SubAddress = "begin/api/v1/";
+        private const string Identifier = "profile";
+
+        private readonly GenericBaseClient<Wall> _wallClient;
+        private readonly GenericBaseClient<ProfileInfo> _profileInfoClient;
+        private readonly GenericBaseClient<ProfileInformationActivities> _profileActivityClient;
+        private readonly GenericBaseClient<ProfileInformationEvents> _profileEventClient;
+        private readonly GenericBaseClient<ProfileInformationGroups> _profileGroupClient;
+        private readonly GenericBaseClient<ProfileInformationContacts> _profileContactClient;
+        private readonly GenericBaseClient<ProfileInformationShop> _profileShopClient;
+
+
+        public ProfileManager()
+        {
+            _wallClient = new GenericBaseClient<Wall>(BaseAddress, SubAddress);
+            _profileInfoClient = new GenericBaseClient<ProfileInfo>(BaseAddress, SubAddress);
+            _profileEventClient = new GenericBaseClient<ProfileInformationEvents>(BaseAddress, SubAddress);
+            _profileActivityClient = new GenericBaseClient<ProfileInformationActivities>(BaseAddress, SubAddress);
+            _profileGroupClient =  new GenericBaseClient<ProfileInformationGroups>(BaseAddress, SubAddress);
+            _profileContactClient = new GenericBaseClient<ProfileInformationContacts>(BaseAddress, SubAddress);
+            _profileShopClient = new GenericBaseClient<ProfileInformationShop>(BaseAddress, SubAddress);
+        }
 
         public ProfileInfo GetProfileInformation(string username, string authToken)
         {
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-                ProfileInfo profileInfo = null;
-
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var response = client.GetAsync(SubAddress + username).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var userJson = response.Content.ReadAsStringAsync().Result;
-                    profileInfo = JsonConvert.DeserializeObject<ProfileInfo>(userJson);
-                }
-                return profileInfo;
+                var addressSuffix = Identifier + "/" + username;
+                return _profileInfoClient.GetAsync(authToken, addressSuffix, "");
+            }
+            catch (Exception exception)
+            {
+                return null;
             }
         }
 
         public ProfileInfo GetProfileInformationDetail(string username, string authToken)
         {
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-                ProfileInfo profileInfo = null;
-
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var response = client.GetAsync(SubAddress + username + "?sections=details").Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var userJson = response.Content.ReadAsStringAsync().Result;
-                    profileInfo = JsonConvert.DeserializeObject<ProfileInfo>(userJson);
-                }
-                return profileInfo;
+                const string urlGetParams = "?sections=details";
+                var addressSuffix = Identifier + "/" + username;
+                return _profileInfoClient.GetAsync(authToken, addressSuffix, urlGetParams);
+            }
+            catch (Exception exception)
+            {
+                return null;
             }
         }
 
         public ProfileInformationActivities GetActivitiesInformation(string username, string authToken)
         {
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-
-                ProfileInformationActivities profileInformationActivities = null;
-
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var response = client.GetAsync(SubAddress + username + "?sections=activities").Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var userJson = response.Content.ReadAsStringAsync().Result;
-                    profileInformationActivities = JsonConvert.DeserializeObject<ProfileInformationActivities>(userJson);
-                }
-
-                return profileInformationActivities;
+                const string urlGetParams = "?sections=activities";
+                var addressSuffix = Identifier + "/" + username;
+                return _profileActivityClient.GetAsync(authToken, addressSuffix, urlGetParams);
+            }
+            catch (Exception exception)
+            {
+                return null;
             }
         }
 
         public ProfileInformationEvents GetEventsInformation(string username, string authToken)
         {
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-
-                ProfileInformationEvents profileInformationEvents = null;
-
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var response = client.GetAsync(SubAddress + username + "?sections=events").Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var userJson = response.Content.ReadAsStringAsync().Result;
-                    profileInformationEvents = JsonConvert.DeserializeObject<ProfileInformationEvents>(userJson);
-                }
-
-                return profileInformationEvents;
+                const string urlGetParams = "?sections=events";
+                var addressSuffix = Identifier + "/" + username;
+                return _profileEventClient.GetAsync(authToken, addressSuffix, urlGetParams);
+            }
+            catch (Exception exception)
+            {
+                return null;
             }
         }
 
-        public ProfileInformationGroups GetGroupsInformation(string username, string authToken)
+        public async Task<ProfileInformationGroups> GetGroupsInformation(string username, string authToken)
         {
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-
-                ProfileInformationGroups profileInformationGroups = null;
-
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var response = client.GetAsync(SubAddress + username + "?sections=groups").Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var userJson = response.Content.ReadAsStringAsync().Result;
-                    profileInformationGroups = JsonConvert.DeserializeObject<ProfileInformationGroups>(userJson);
-                }
-
-                return profileInformationGroups;
+                const string urlGetParams = "?sections=groups";
+                var addressSuffix = Identifier + "/" + username;
+                return await _profileGroupClient.GetTestAsync(authToken, addressSuffix, urlGetParams);
+            }
+            catch (Exception exception)
+            {
+                return null;
             }
         }
 
         public ProfileInformationContacts GetContactsInformation(string username, string authToken)
         {
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-
-                ProfileInformationContacts profileInformationContacts = null;
-
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var response = client.GetAsync(SubAddress + username + "?sections=contacts").Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var userJson = response.Content.ReadAsStringAsync().Result;
-                    profileInformationContacts = JsonConvert.DeserializeObject<ProfileInformationContacts>(userJson);
-                }
-
-                return profileInformationContacts;
+                const string urlGetParams = "?sections=contacts";
+                var addressSuffix = Identifier + "/" + username;
+                return _profileContactClient.GetAsync(authToken, addressSuffix, urlGetParams);
+            }
+            catch (Exception exception)
+            {
+                return null;
             }
         }
 
         public ProfileInformationShop GetShopInformation(string username, string authToken)
         {
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-
-                ProfileInformationShop profileInformationShop = null;
-
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var response = client.GetAsync(SubAddress + username + "?sections=shop").Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var userJson = response.Content.ReadAsStringAsync().Result;
-                    profileInformationShop = JsonConvert.DeserializeObject<ProfileInformationShop>(userJson);
-                }
-
-                return profileInformationShop;
+                const string urlGetParams = "?sections=shop";
+                var addressSuffix = Identifier + "/" + username;
+                return _profileShopClient.GetAsync(authToken, addressSuffix, urlGetParams);
+            }
+            catch (Exception exception)
+            {
+                return null;
             }
         }
 
         public ProfileInformationMessages GetMessagesInformation(string username, string authToken)
         {
+            //TODO For while this block code is static, change once that the api service is available
             var profileMessages = new ProfileInformationMessages
                                   {
                                       Messages = Message.Messages,
@@ -184,49 +154,23 @@ namespace BeginMobile.Services.ManagerServices
             return profileMessages;
         }
 
-        public ProfileMeWall GetWall(string authToken, string filter = null, string type = null)
+        public async Task<ProfileMeWall> GetWall(string authToken, string filter = null, string type = null)
         {
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+                var urlGetParams = "?filter=" + filter + "&type=" + type;
+                const string addressSuffix = "me/wall";
 
-                client.BaseAddress = new Uri(BaseAddress);
-
-                var urlGetParams = "";
-
-                if (!(string.IsNullOrEmpty(filter) && string.IsNullOrEmpty(type)))
+                var profileMeWall = new ProfileMeWall()
                 {
-                    //
-                    urlGetParams = "?filter=" + filter + "&type=" + type;
-                }
-                else if (!string.IsNullOrEmpty(filter))
-                {
-                    //
-                    urlGetParams = "?filter=" + filter;
-                }
-                else if (!string.IsNullOrEmpty(type))
-                {
-                    //
-                    urlGetParams = "?type=" + type;
-                }
-
-
-                var response = client.GetAsync(SubAddressWall + "me/wall" + urlGetParams).Result;
-                var userJson = response.Content.ReadAsStringAsync().Result;
-
-                var profileMeWall = new ProfileMeWall();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var listWall = JsonConvert.DeserializeObject<List<Wall>>(userJson);
-                    profileMeWall.ListOfWall = listWall;
-                }
-                else
-                {
-                    profileMeWall = JsonConvert.DeserializeObject<ProfileMeWall>(userJson);
-                }
+                    ListOfWall = await _wallClient.GetTestListAsync(authToken, addressSuffix, urlGetParams)
+                };
 
                 return profileMeWall;
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
     }

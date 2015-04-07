@@ -3,6 +3,7 @@ using BeginMobile.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Wall
@@ -11,45 +12,14 @@ namespace BeginMobile.Pages.Wall
     {
         private ListView _listViewWall;
         private RelativeLayout _relativeLayoutMain;
+        private ProfileMeWall _profileShop;
 
         public WallPage(string title, string iconImage)
             : base(title, iconImage)
         {
             //Do something
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            ProfileMeWall profileShop = App.ProfileServices.GetWall(currentUser.AuthToken);
-            var listProfileWall = ListBeginWallViewModel(profileShop.ListOfWall);
-
-            _listViewWall = new ListView
-                         {
-                             StyleId = "WallList"
-                         };
-
-            _listViewWall.HasUnevenRows = true;
-            _listViewWall.ItemTemplate = new DataTemplate (() => new WallItemCell());
-            _listViewWall.ItemsSource = listProfileWall;
-            _listViewWall.ItemSelected += async (sender, e) =>
-            {
-                if (e.SelectedItem == null) return; 
-                ((ListView)sender).SelectedItem = null;
-            };
-
-            _relativeLayoutMain = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand};
-            _relativeLayoutMain.Children.Add(_listViewWall,
-                xConstraint: Constraint.Constant(0),
-                yConstraint: Constraint.Constant(0),
-                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
-                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
-            
-            Content = new StackLayout()
-            {
-                Spacing = 2,
-                Padding = App.Styles.LayoutThickness,
-                Children =
-                {
-                    _relativeLayoutMain
-                }
-            };
+            Init(currentUser);
 
         }
 
@@ -70,6 +40,44 @@ namespace BeginMobile.Pages.Wall
 
             return resultList;
         }
+
+        private async Task Init(LoginUser currentUser)
+        {
+            _profileShop = await App.ProfileServices.GetWall(currentUser.AuthToken);
+            var listProfileWall = ListBeginWallViewModel(_profileShop.ListOfWall);
+
+            _listViewWall = new ListView
+            {
+                StyleId = "WallList"
+            };
+
+            _listViewWall.HasUnevenRows = true;
+            _listViewWall.ItemTemplate = new DataTemplate(() => new WallItemCell());
+            _listViewWall.ItemsSource = listProfileWall;
+            _listViewWall.ItemSelected += async (sender, e) =>
+            {
+                if (e.SelectedItem == null) return;
+                ((ListView)sender).SelectedItem = null;
+            };
+
+            _relativeLayoutMain = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand };
+            _relativeLayoutMain.Children.Add(_listViewWall,
+                xConstraint: Constraint.Constant(0),
+                yConstraint: Constraint.Constant(0),
+                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
+            Content = new StackLayout()
+            {
+                Spacing = 2,
+                Padding = App.Styles.LayoutThickness,
+                Children =
+                {
+                    _relativeLayoutMain
+                }
+            };
+        }
+
 
         private BeginWallViewModel GetBeginWallViewModel(BeginMobile.Services.DTO.Wall wallItem)
         {

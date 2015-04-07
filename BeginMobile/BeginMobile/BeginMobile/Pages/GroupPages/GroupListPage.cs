@@ -1,27 +1,33 @@
 ﻿using BeginMobile.Services.DTO;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.GroupPages
 {
     public class GroupListPage : TabContent
     {
-        private readonly ListView _listViewGroup;
-        private readonly RelativeLayout _relativeLayout;
+        private ListView _listViewGroup;
+        private RelativeLayout _relativeLayout;
+        private ProfileInformationGroups _groupInformation;
 
         public GroupListPage(string title, string iconImg)
             : base(title, iconImg)
         {
-
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            ProfileInformationGroups groupInformation = App.ProfileServices.GetGroups(currentUser.User.UserName,
+            Init(currentUser);
+        }
+
+        private async Task Init(LoginUser currentUser)
+        {
+            _groupInformation = await App.ProfileServices.GetGroups(currentUser.User.UserName,
                 currentUser.AuthToken);
 
             _listViewGroup = new ListView
-                          {
-                              ItemTemplate = new DataTemplate (() => new ProfileGroupItemCell()),
-                              ItemsSource = groupInformation.Groups,
-                              HasUnevenRows = true
-                          };
+            {
+                ItemTemplate = new DataTemplate(() => new ProfileGroupItemCell()),
+                ItemsSource = _groupInformation.Groups,
+                HasUnevenRows = true
+            };
 
             _listViewGroup.ItemSelected += async (sender, e) =>
             {

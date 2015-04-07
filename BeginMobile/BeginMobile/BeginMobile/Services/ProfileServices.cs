@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
+using System.Threading.Tasks;
 
 namespace BeginMobile.Services
 {
@@ -19,9 +20,9 @@ namespace BeginMobile.Services
             _contactManager = new ContactManager();
         }
 
-        public ProfileInformationGroups GetGroups(string userName, string authToken)
+        public async Task<ProfileInformationGroups> GetGroups(string userName, string authToken)
         {
-            return _profileManager.GetGroupsInformation(userName, authToken);
+            return await _profileManager.GetGroupsInformation(userName, authToken);
         }
 
         public ProfileInfo GetInformation(string userName, string authToken)
@@ -54,9 +55,9 @@ namespace BeginMobile.Services
             return _profileManager.GetMessagesInformation(userName, authToken);
         }
 
-        public ProfileMeWall GetWall(string authToken, string filter = null, string type = null)
+        public async Task<ProfileMeWall> GetWall(string authToken, string filter = null, string type = null)
         {
-            return _profileManager.GetWall(authToken, filter, type);
+            return await _profileManager.GetWall(authToken, filter, type);
         }
 
         public ProfileInfo GetInformationDetail(string userName, string authToken)

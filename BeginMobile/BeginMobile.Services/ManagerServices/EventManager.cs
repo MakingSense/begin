@@ -49,41 +49,5 @@ namespace BeginMobile.Services.ManagerServices
                 return null;
             }
         }
-
-        private string BuildUrlParams(string name, string cat, string limit)
-        {
-            var resultUrl = "";
-
-            if (!(string.IsNullOrEmpty(name) && string.IsNullOrEmpty(cat) && string.IsNullOrEmpty(limit)))
-            {
-                resultUrl = "?q=" + name + "&cat=" + cat + "&limit=" + limit;
-            }
-            else if (!(string.IsNullOrEmpty(name) && string.IsNullOrEmpty(cat)))
-            {
-                resultUrl = "?q=" + name + "&cat=" + cat;
-            }
-            else if (!(string.IsNullOrEmpty(cat) && string.IsNullOrEmpty(limit)))
-            {
-                resultUrl = "?cat=" + cat + "&limit=" + limit;
-            }
-            else if (!(string.IsNullOrEmpty(name) && string.IsNullOrEmpty(limit)))
-            {
-                resultUrl = "?q=" + name + "&limit=" + limit;
-            }
-            else if (!string.IsNullOrEmpty(name))
-            {
-                resultUrl = "?q=" + name;
-            }
-            else if (!string.IsNullOrEmpty(cat))
-            {
-                resultUrl = "?cat=" + cat;
-            }
-            else if (!string.IsNullOrEmpty(limit))
-            {
-                resultUrl = "?limit=" + limit;
-            }
-
-            return resultUrl;
-        }
     }
 }
