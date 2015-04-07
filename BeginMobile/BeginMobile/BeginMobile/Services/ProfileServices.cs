@@ -105,17 +105,17 @@ namespace BeginMobile.Services
 
         public List<ContactServiceError> AcceptRequest(string authToken, string userName)
         {
-            return _contactManager.SendRequest(authToken, userName);
+            return _contactManager.AcceptRequest(authToken, userName);
         }
 
         public List<ContactServiceError> RejectRequest(string authToken, string userName)
         {
-            return _contactManager.SendRequest(authToken, userName);
+            return _contactManager.RejectRequest(authToken, userName);
         }
 
         public List<ContactServiceError> RemoveFriendship(string authToken, string userName)
         {
-            return _contactManager.SendRequest(authToken, userName);
+            return _contactManager.RemoveFriendship(authToken, userName);
         }
     }
 }
