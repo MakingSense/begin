@@ -10,7 +10,7 @@ namespace BeginMobile.Pages.Notifications
                       {
                           Children =
                           {
-                              new Label {Text = notificationDescription}
+                              new Label { Text = notificationDescription }
                           }
                       };
         }

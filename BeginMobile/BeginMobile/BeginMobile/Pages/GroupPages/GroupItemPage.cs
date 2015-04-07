@@ -42,12 +42,12 @@ namespace BeginMobile.Pages.GroupPages
                                Padding = new Thickness(10, 5, 10, 5),
                                HorizontalOptions = LayoutOptions.FillAndExpand,
                                RowDefinitions =
-                {
-                    new RowDefinition{Height= GridLength.Auto},
-                    new RowDefinition{Height= GridLength.Auto},
-                    new RowDefinition{Height= GridLength.Auto},
-                    new RowDefinition{Height= GridLength.Auto}
-                }
+                               {
+                                   new RowDefinition {Height = GridLength.Auto},
+                                   new RowDefinition {Height = GridLength.Auto},
+                                   new RowDefinition {Height = GridLength.Auto},
+                                   new RowDefinition {Height = GridLength.Auto}
+                               }
 
                            };
 
@@ -62,10 +62,10 @@ namespace BeginMobile.Pages.GroupPages
                                            VerticalOptions = LayoutOptions.CenterAndExpand,
                                            HorizontalOptions = LayoutOptions.FillAndExpand,
                                            Children =
-                {
-                    BoxViewLine(),
-                    BoxViewLine()
-                }
+                                           {
+                                               BoxViewLine(),
+                                               BoxViewLine()
+                                           }
                                        };
 
             var stackLayoutLinesRight = new StackLayout
@@ -73,10 +73,10 @@ namespace BeginMobile.Pages.GroupPages
                                             VerticalOptions = LayoutOptions.CenterAndExpand,
                                             HorizontalOptions = LayoutOptions.FillAndExpand,
                                             Children =
-                {
-                    BoxViewLine(),
-                    BoxViewLine()
-                }
+                                            {
+                                                BoxViewLine(),
+                                                BoxViewLine()
+                                            }
                                         };
 
             gridImage.Children.Add(stackLayoutLinesLeft, 0, 0);
@@ -138,7 +138,8 @@ namespace BeginMobile.Pages.GroupPages
 
                 var stackLayoutMembers = new StackLayout
                                          {
-
+                                             Spacing = 2,
+                                             Padding = App.Styles.LayoutThickness,
                                              Children =
                                              {
                                                  labelTitleMember,

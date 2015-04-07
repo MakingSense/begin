@@ -9,7 +9,7 @@ namespace BeginMobile.Pages.MessagePages
         {
             get
             {
-                return Device.OS == TargetPlatform.iOS ? "userdefault.png" : "userdefault3.png";
+                return "userdefault3.png";
             }
         }
 
@@ -79,6 +79,8 @@ namespace BeginMobile.Pages.MessagePages
 
             var stackLayoutView = new StackLayout
                           {
+                              Spacing = 2,
+                              Padding = App.Styles.LayoutThickness,
                               Orientation = StackOrientation.Horizontal,
                               HorizontalOptions = LayoutOptions.FillAndExpand,
                               Children =

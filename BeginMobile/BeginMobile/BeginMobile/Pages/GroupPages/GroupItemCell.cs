@@ -45,9 +45,10 @@ namespace BeginMobile.Pages.GroupPages
                                   {
                                       HorizontalOptions = LayoutOptions.Start,
                                       Children =
-                {
-                    labelGroupName, labelGroupCategory
-                }
+                                      {
+                                          labelGroupName,
+                                          labelGroupCategory
+                                      }
                                   };
 
             //Second center column
@@ -99,7 +100,8 @@ namespace BeginMobile.Pages.GroupPages
 
             var layoutView = new StackLayout
                          {
-                             Padding = new Thickness(5, 0, 5, 0),
+                             Spacing = 2,
+                             Padding = App.Styles.LayoutThickness,
                              Orientation = StackOrientation.Horizontal,
                              HorizontalOptions = LayoutOptions.FillAndExpand,
                              Children = { circleGroupImage, stackLayoutCenter, imageArrow }

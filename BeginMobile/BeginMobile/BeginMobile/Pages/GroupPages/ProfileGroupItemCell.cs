@@ -61,6 +61,8 @@ namespace BeginMobile.Pages.GroupPages
 
             var stackLayoutPie = new StackLayout
                                  {
+                                     Spacing = 2,
+                                     Padding = App.Styles.LayoutThickness,
                                      Orientation = StackOrientation.Horizontal,
                                      HorizontalOptions = LayoutOptions.FillAndExpand,
                                      Children =
@@ -72,6 +74,8 @@ namespace BeginMobile.Pages.GroupPages
 
             var stackLayoutCenter = new StackLayout
                                  {
+                                     Spacing = 2,
+                                     Padding = App.Styles.LayoutThickness,
                                      Children =
                                      {
                                          labelTitle,
@@ -82,6 +86,8 @@ namespace BeginMobile.Pages.GroupPages
 
             var stackLayoutItem = new StackLayout
                            {
+                               Spacing = 2,
+                               Padding = App.Styles.LayoutThickness,
                                Orientation = StackOrientation.Horizontal,
                                HorizontalOptions = LayoutOptions.FillAndExpand,
                                Children =

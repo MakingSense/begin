@@ -105,6 +105,8 @@ namespace BeginMobile.Pages.Notifications
 
             var mainLayout = new StackLayout
                              {
+                                 Spacing = 2,
+                                 Padding = App.Styles.LayoutThickness,
                                  VerticalOptions = LayoutOptions.Start,
                                  Orientation = StackOrientation.Vertical
                              };
