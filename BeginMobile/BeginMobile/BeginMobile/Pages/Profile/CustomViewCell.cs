@@ -1,5 +1,6 @@
 ﻿using System;
 using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Services.DTO;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
@@ -7,8 +8,13 @@ namespace BeginMobile.Pages.Profile
 {
     public class CustomViewCell : ViewCell
     {
-        public CustomViewCell()
+        private Button _buttonAddFriend;
+        private Button _buttonCancelRequestFriend;
+        private LoginUser _loginUser;
+        public CustomViewCell(LoginUser loginUser)
         {
+            _loginUser = loginUser;
+
             var circleIconImage = new CircleImage
             {
                 HeightRequest = Device.OnPlatform(50, 100, 100),
@@ -32,14 +38,21 @@ namespace BeginMobile.Pages.Profile
                        }
                    };
         }
-        private static Grid CreateOptionLayout()
+        private Grid CreateOptionLayout()
         {
-            var buttonAddFriend = new Button
+            _buttonAddFriend = new Button
             {
                 Text = AppResources.ButtonAddFriend
             };
 
-            buttonAddFriend.Clicked += AddFriendEventHandler;
+            _buttonAddFriend.Clicked += AddFriendEventHandler;
+
+            _buttonCancelRequestFriend = new Button
+                                        {
+                                            Text = AppResources.ButtonCancelRequestFriend
+                                        };
+
+            _buttonCancelRequestFriend.Clicked += CancelFriendEventHandler;
 
             var labelNameSurname = new Label
                              {
@@ -86,18 +99,18 @@ namespace BeginMobile.Pages.Profile
                               };
 
             grid.Children.Add(labelNameSurname, 0, 0);
-            grid.Children.Add(buttonAddFriend, 1, 0);
+            grid.Children.Add(_buttonAddFriend, 1, 0);
             grid.Children.Add(labelUserName, 0, 1);
             grid.Children.Add(labelEmail, 0, 2);
-            
 
             return grid;
         }
 
-        static void AddFriendEventHandler(object sender, EventArgs eventArgs)
+        #region Events
+        private void AddFriendEventHandler(object sender, EventArgs eventArgs)
         {
             var objectSender = sender as Button;
-           
+
             if (objectSender == null) return;
 
             var parentGrid = objectSender.Parent as Grid;
@@ -110,22 +123,34 @@ namespace BeginMobile.Pages.Profile
                 // TODO: Integrate with request services here
 
                 objectSender.IsVisible = false;
-                var buttonAdd = objectSender;
-                var buttonCancelRequestFriend = new Button
-                                                {
-                                                    Text = "Cancel Request Friend"
-                                                };
-                parentGrid.Children.RemoveAt(1);
-                parentGrid.Children.Add(buttonCancelRequestFriend, 1, 0);
+                parentGrid.Children.Remove(objectSender);
+                parentGrid.Children.Add(_buttonCancelRequestFriend, 1, 0);
+                _buttonCancelRequestFriend.IsVisible = true;
+            }
+        }
+        private void CancelFriendEventHandler(object sender, EventArgs eventArgs)
+        {
+            var objectSender = sender as Button;
 
-                buttonCancelRequestFriend.Clicked += (s, e) =>
-                                                     {
-                                                         parentGrid.Children.RemoveAt(1);
-                                                         buttonAdd.IsVisible = true;
-                                                         parentGrid.Children.Add(buttonAdd, 1, 0);
-                                                     };            
+            if (objectSender == null) return;
+
+            var parentGrid = objectSender.Parent as Grid;
+
+            if (parentGrid == null) return;
+            var itemGridUserName = parentGrid.Children[1] as Label;
+
+            if (itemGridUserName != null)
+            {
+                // TODO: Integrate with request services here
+
+                objectSender.IsVisible = false;
+                parentGrid.Children.Remove(objectSender);
+                parentGrid.Children.Add(_buttonAddFriend, 1, 0);
+                _buttonAddFriend.IsVisible = true;
+
             }
         }
 
+        #endregion
     }
 }

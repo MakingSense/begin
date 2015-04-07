@@ -41,8 +41,8 @@ namespace BeginMobile.Pages.Profile
             LoadSortOptionsPicker();
 
             contactsList.AddRange(RetrieveContacts(profileInformationContacts));
-
-            var contactListViewTemplate = new DataTemplate(typeof(CustomViewCell));
+            
+            var contactListViewTemplate = new DataTemplate(() => new CustomViewCell(_currentUser));
 
             _listViewContacts = new ListView
             {

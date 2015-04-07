@@ -80,6 +80,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel Friend Request.
+        /// </summary>
+        public static string ButtonCancelRequestFriend {
+            get {
+                return ResourceManager.GetString("ButtonCancelRequestFriend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forgot Password?.
         /// </summary>
         public static string ButtonForgotPassword {

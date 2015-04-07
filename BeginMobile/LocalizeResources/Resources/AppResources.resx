@@ -123,6 +123,9 @@
   <data name="ButtonCancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="ButtonCancelRequestFriend" xml:space="preserve">
+    <value>Cancel Friend Request</value>
+  </data>
   <data name="ButtonForgotPassword" xml:space="preserve">
     <value>Forgot Password?</value>
   </data>
