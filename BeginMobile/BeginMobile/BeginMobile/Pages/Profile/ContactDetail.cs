@@ -35,7 +35,7 @@ namespace BeginMobile.Pages.Profile
                              };
             var labelUsername = new Label
                                 {
-                                    Text = contact1.Username
+                                    Text = contact1.UserName
                                 };
             var labelRegistered = new Label
                                   {

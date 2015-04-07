@@ -1,6 +1,7 @@
 ﻿using System;
 using BeginMobile.LocalizeResources.Resources;
 using ImageCircle.Forms.Plugin.Abstractions;
+using Java.IO;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
@@ -41,14 +42,21 @@ namespace BeginMobile.Pages.Profile
 
             buttonAddFriend.Clicked += AddFriendEventHandler;
 
-            var labelOptionText = new Label
+            var labelNameSurname = new Label
                              {
                                  HorizontalOptions = LayoutOptions.FillAndExpand,
                                  YAlign = TextAlignment.Center,
                                  Style = App.Styles.ListItemTextStyle
                              };
 
-            var labelOptionDetail = new Label
+            var labelUserName = new Label
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                YAlign = TextAlignment.Center,
+                Style = App.Styles.ListItemDetailTextStyle
+            };
+
+            var labelEmail = new Label
                                {
                                    HorizontalOptions = LayoutOptions.FillAndExpand,
                                    YAlign = TextAlignment.Center,
@@ -56,8 +64,9 @@ namespace BeginMobile.Pages.Profile
                                };
 
 
-            labelOptionText.SetBinding(Label.TextProperty, "NameSurname");
-            labelOptionDetail.SetBinding(Label.TextProperty, "References");
+            labelNameSurname.SetBinding(Label.TextProperty, "NameSurname");
+            labelUserName.SetBinding(Label.TextProperty, "UserName");
+            labelEmail.SetBinding(Label.TextProperty, "Email");
 
             var grid = new Grid
                               {
@@ -66,6 +75,7 @@ namespace BeginMobile.Pages.Profile
                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =
                                   {
+                                      new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto}
                                   },
@@ -76,17 +86,31 @@ namespace BeginMobile.Pages.Profile
                                   }
                               };
 
-            grid.Children.Add(labelOptionText, 0, 0);
-            grid.Children.Add(labelOptionDetail, 0, 1);
+            grid.Children.Add(labelNameSurname, 0, 0);
             grid.Children.Add(buttonAddFriend, 1, 0);
+            grid.Children.Add(labelUserName, 0, 1);
+            grid.Children.Add(labelEmail, 0, 2);
+            
 
             return grid;
         }
 
         static void AddFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var objectSender = sender;
+            var objectSender = sender as Button;
+           
+            if (objectSender == null) return;
 
+            var parentGrid = objectSender.Parent as Grid;
+
+            if (parentGrid == null) return;
+            var itemGridUserName = parentGrid.Children[2] as Label;
+
+            if (itemGridUserName != null)
+            {
+                // TODO: Integrate with request services here
+                                
+            }
         }
 
     }

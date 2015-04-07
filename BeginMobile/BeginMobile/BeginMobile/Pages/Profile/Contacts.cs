@@ -47,7 +47,7 @@ namespace BeginMobile.Pages.Profile
                                       NameSurname = contact.NameSurname,
                                       Email = String.Format("e-mail: {0}", contact.Email),
                                       Url = contact.Url,
-                                      Username = contact.UserName,
+                                      UserName = contact.UserName,
                                       Registered = contact.Registered,
                                       Id = contact.Id.ToString()
                                   });

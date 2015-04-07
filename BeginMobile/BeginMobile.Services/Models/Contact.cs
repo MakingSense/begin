@@ -4,7 +4,7 @@
     {
         public string Icon { get; set; }
         public string NameSurname { get; set; }
-        public string Username { get; set; }
+        public string UserName { get; set; }
         public string Registered { get; set; }
         public string Id { get; set; }
         public string Url { get; set; }
