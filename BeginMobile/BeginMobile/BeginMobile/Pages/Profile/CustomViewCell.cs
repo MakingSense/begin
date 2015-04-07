@@ -36,7 +36,7 @@ namespace BeginMobile.Pages.Profile
         {
             var buttonAddFriend = new Button
             {
-                Text = "Add Friend"//AppResources.ButtonAddFriend
+                Text = AppResources.ButtonAddFriend
             };
 
             buttonAddFriend.Clicked += AddFriendEventHandler;
