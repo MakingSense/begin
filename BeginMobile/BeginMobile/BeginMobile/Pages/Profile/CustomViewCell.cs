@@ -1,7 +1,6 @@
 ﻿using System;
 using BeginMobile.LocalizeResources.Resources;
 using ImageCircle.Forms.Plugin.Abstractions;
-using Java.IO;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
