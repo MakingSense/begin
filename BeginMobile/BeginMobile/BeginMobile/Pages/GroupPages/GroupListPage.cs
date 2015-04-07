@@ -18,7 +18,7 @@ namespace BeginMobile.Pages.GroupPages
 
             _listViewGroup = new ListView
                           {
-                              ItemTemplate = new DataTemplate(typeof (ProfileGroupItemCell)),
+                              ItemTemplate = new DataTemplate (() => new ProfileGroupItemCell()),
                               ItemsSource = groupInformation.Groups,
                               HasUnevenRows = true
                           };

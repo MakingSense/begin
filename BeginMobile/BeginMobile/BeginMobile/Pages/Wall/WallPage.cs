@@ -26,7 +26,7 @@ namespace BeginMobile.Pages.Wall
                          };
 
             _listViewWall.HasUnevenRows = true;
-            _listViewWall.ItemTemplate = new DataTemplate(typeof(WallItemCell));
+            _listViewWall.ItemTemplate = new DataTemplate (() => new WallItemCell());
             _listViewWall.ItemsSource = listProfileWall;
             _listViewWall.ItemSelected += async (sender, e) =>
             {
@@ -140,12 +140,24 @@ namespace BeginMobile.Pages.Wall
                     beginWall.Date = wallItem.Date;
                     break;
                 case WallParameters.NewBooking:
-                    beginWall.DisplayName = wallItem.Event.Owner.NameSurname;
-                    beginWall.ExtraText = "";
-                    beginWall.DisplayNameTwo = "";
-                    beginWall.Reason = WallParameters.DescNewBooking;
-                    beginWall.Description = wallItem.Event.Name;
-                    beginWall.Date = wallItem.Event.StartDate + " - " + wallItem.Event.EndDate;
+                    if (wallItem.Component == WallParameters.Groups)
+                    {
+                        beginWall.DisplayName = wallItem.User.DisplayName;
+                        beginWall.ExtraText = "";
+                        beginWall.DisplayNameTwo = "";
+                        beginWall.Reason = WallParameters.DescNewBooking + " group";
+                        beginWall.Description = wallItem.Group.Name;
+                        beginWall.Date = wallItem.Date;
+                    }
+                    else if (wallItem.Component == WallParameters.Event)
+                    {
+                        beginWall.DisplayName = wallItem.Event.Owner.NameSurname;
+                        beginWall.ExtraText = "";
+                        beginWall.DisplayNameTwo = "";
+                        beginWall.Reason = WallParameters.DescNewBooking;
+                        beginWall.Description = wallItem.Event.Name;
+                        beginWall.Date = wallItem.Event.StartDate + " - " + wallItem.Event.EndDate;
+                    }
                     break;
                 case WallParameters.NewEvent:
 
