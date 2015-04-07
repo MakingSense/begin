@@ -19,6 +19,28 @@ namespace BeginMobile.Services.Interfaces
         /// <summary>
         /// Gets the asynchronous.
         /// </summary>
+        public T GetAsync(string addressSuffix)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+
+                T profileInformationGroups = null;
+                var response = httpClient.GetAsync(_subAddress + addressSuffix).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var userJson = response.Content.ReadAsStringAsync().Result;
+                    profileInformationGroups = JsonConvert.DeserializeObject<T>(userJson);
+                }
+
+                return profileInformationGroups;
+            }
+        }
+
+        /// <summary>
+        /// Gets the asynchronous.
+        /// </summary>
         /// <param name="identifier">The identifier examples user, groups, etc</param>
         /// <param name="urlParams">The URL parameters examples '?user=user1'</param>
         /// <param name="authToken">The authentication token.</param>
@@ -54,6 +76,31 @@ namespace BeginMobile.Services.Interfaces
             {
                 T result = null;
                 httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+
+                var response = httpClient.PostAsync(_subAddress + addressSuffix, content).Result;
+                var userJson = response.Content.ReadAsStringAsync().Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    result = JsonConvert.DeserializeObject<T>(userJson);
+                }
+
+                return result;
+            }
+        }
+        /// <summary>
+        /// Posts the asynchronous.
+        /// </summary>
+        /// <param name="authToken">The authentication token.</param>
+        /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
+        /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
+        public T PostAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                T result = null;
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
 
                 var response = httpClient.PostAsync(_subAddress + addressSuffix, content).Result;
                 var userJson = response.Content.ReadAsStringAsync().Result;
@@ -137,33 +184,6 @@ namespace BeginMobile.Services.Interfaces
                 var userJson = response.Content.ReadAsStringAsync().Result;
 
                 return JsonConvert.DeserializeObject<List<T>>(userJson);
-            }
-        }
-
-
-        /// <summary>
-        /// Posts the asynchronous.
-        /// </summary>
-        /// <param name="authToken">The authentication token.</param>
-        /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
-        /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
-        public T PostAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                T result = null;
-                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
-                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
-
-                var response = httpClient.PostAsync(_subAddress + addressSuffix, content).Result;
-                var userJson = response.Content.ReadAsStringAsync().Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    result = JsonConvert.DeserializeObject<T>(userJson);
-                }
-
-                return result;
             }
         }
     }

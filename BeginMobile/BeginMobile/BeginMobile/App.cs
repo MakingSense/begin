@@ -58,10 +58,15 @@ namespace BeginMobile
         #region "Services"
 
         private static ProfileServices _profileServices;
-
         public static ProfileServices ProfileServices
         {
             get { return _profileServices ?? (_profileServices = new ProfileServices()); }
+        }
+
+        private static GlobalService _globalService;
+        public static GlobalService GlobalService
+        {
+            get { return _globalService ?? (_globalService = new GlobalService()); }
         }
 
         #endregion

@@ -38,7 +38,9 @@
   <ItemGroup>
     <Compile Include="DTO\ChangePassword.cs" />
     <Compile Include="DTO\ErrorRetrieved.cs" />
+    <Compile Include="DTO\GroupOptions.cs" />
     <Compile Include="DTO\Message.cs" />
+    <Compile Include="DTO\Options.cs" />
     <Compile Include="DTO\ProfileActivity.cs" />
     <Compile Include="DTO\Capability.cs" />
     <Compile Include="DTO\Group.cs" />
@@ -59,8 +61,10 @@
     <Compile Include="DTO\SubUser.cs" />
     <Compile Include="DTO\User.cs" />
     <Compile Include="DTO\UserActivity.cs" />
+    <Compile Include="DTO\WallOptions.cs" />
     <Compile Include="Interfaces\GenericBaseClient.cs" />
     <Compile Include="ManagerServices\EventManager.cs" />
+    <Compile Include="ManagerServices\GlobalManager.cs" />
     <Compile Include="ManagerServices\GroupManager.cs" />
     <Compile Include="ManagerServices\LoginUserManager.cs" />
     <Compile Include="ManagerServices\ProfileManager.cs" />
