@@ -1,4 +1,7 @@
-﻿using System;
+﻿//#define FriendshipActions
+
+using System;
+using System.Threading;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
 using ImageCircle.Forms.Plugin.Abstractions;
@@ -98,10 +101,12 @@ namespace BeginMobile.Pages.Profile
                                   }
                               };
 
+
             grid.Children.Add(labelNameSurname, 0, 0);
-            grid.Children.Add(_buttonAddFriend, 1, 0);
             grid.Children.Add(labelUserName, 0, 1);
             grid.Children.Add(labelEmail, 0, 2);
+            //Keep button at the end
+            grid.Children.Add(_buttonAddFriend, 1, 0);
 
             return grid;
         }
@@ -116,12 +121,17 @@ namespace BeginMobile.Pages.Profile
             var parentGrid = objectSender.Parent as Grid;
 
             if (parentGrid == null) return;
-            var itemGridUserName = parentGrid.Children[2] as Label;
+            var itemGridUserName = parentGrid.Children[1] as Label;
 
             if (itemGridUserName != null)
             {
-                // TODO: Integrate with request services here
 
+#if FriendshipActions
+                var username = itemGridUserName.Text;
+                var responseWithErrors = App.ProfileServices.SendRequest(_loginUser.AuthToken, username);
+                Thread.Sleep(200); //Find a better way, maybe 'await SendRequest'.
+                if (responseWithErrors != null) return;
+#endif
                 objectSender.IsVisible = false;
                 parentGrid.Children.Remove(objectSender);
                 parentGrid.Children.Add(_buttonCancelRequestFriend, 1, 0);
@@ -141,8 +151,13 @@ namespace BeginMobile.Pages.Profile
 
             if (itemGridUserName != null)
             {
-                // TODO: Integrate with request services here
 
+#if FriendshipActions
+                var username = itemGridUserName.Text;
+                var responseWithErrors = App.ProfileServices.RejectRequest(_loginUser.AuthToken, username);
+                Thread.Sleep(200); //Find a better way, maybe 'await RejectRequest'.
+                if (responseWithErrors != null) return;
+#endif
                 objectSender.IsVisible = false;
                 parentGrid.Children.Remove(objectSender);
                 parentGrid.Children.Add(_buttonAddFriend, 1, 0);
