@@ -30,9 +30,9 @@ namespace BeginMobile.Services
             return _profileManager.GetProfileInformation(userName, authToken);
         }
 
-        public ProfileInformationActivities GetActivities(string userName, string authToken)
+        public async Task<ProfileInformationActivities> GetActivities(string userName, string authToken)
         {
-            return _profileManager.GetActivitiesInformation(userName, authToken);
+            return await _profileManager.GetActivitiesInformation(userName, authToken);
         }
 
         public ProfileInformationEvents GetEvents(string userName, string authToken)
@@ -45,9 +45,9 @@ namespace BeginMobile.Services
             return _profileManager.GetContactsInformation(userName, authToken);
         }
 
-        public ProfileInformationShop GetShopInfo(string userName, string authToken)
+        public async Task<ProfileInformationShop> GetShopInfo(string userName, string authToken)
         {
-            return _profileManager.GetShopInformation(userName, authToken);
+            return await _profileManager.GetShopInformation(userName, authToken);
         }
 
         public ProfileInformationMessages GetMessagesInfo(string userName, string authToken)
@@ -60,9 +60,9 @@ namespace BeginMobile.Services
             return await _profileManager.GetWall(authToken, filter, type);
         }
 
-        public ProfileInfo GetInformationDetail(string userName, string authToken)
+        public async Task<ProfileInfo> GetInformationDetail(string userName, string authToken)
         {
-            return _profileManager.GetProfileInformationDetail(userName, authToken);
+            return await _profileManager.GetProfileInformationDetail(userName, authToken);
         }
 
         //Groups, events and contacts
@@ -72,9 +72,9 @@ namespace BeginMobile.Services
             return await _groupManager.GetGroupsByParams(authToken, name, cat, limit, sections);
         }
 
-        public Group GetGroup(string authToken, string groupId, string sections = null)
+        public async Task<Group> GetGroup(string authToken, string groupId, string sections = null)
         {
-            return _groupManager.GetGroupById(authToken, groupId, sections);
+            return await _groupManager.GetGroupById(authToken, groupId, sections);
         }
 
         public async Task<List<ProfileEvent>> GetEventsByParams(string authToken, string name = null,

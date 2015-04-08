@@ -40,7 +40,7 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public Group GetGroupById(string authToken, string groupId, string sections = null)
+        public async Task<Group> GetGroupById(string authToken, string groupId, string sections = null)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace BeginMobile.Services.ManagerServices
                     urlId += "?sections=" + sections;
                 }
 
-                return _groupClient.Get(authToken, Identifier, urlId);
+                return await _groupClient.GetAsync(authToken, Identifier, urlId);
             }
             catch (Exception exception)
             {

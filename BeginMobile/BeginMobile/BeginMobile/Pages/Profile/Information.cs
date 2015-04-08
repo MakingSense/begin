@@ -1,21 +1,25 @@
 ﻿using BeginMobile.Services.DTO;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
 {
     public class Information : ContentPage
     {
-
-        private readonly ProfileInfo _profileInfo;
+        private ProfileInfo _profileInfo;
+        private LoginUser _currentUser;
 
         public Information()
         {
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-
-            _profileInfo = App.ProfileServices.GetInformationDetail(currentUser.User.UserName, currentUser.AuthToken) ??
-                           new ProfileInfo { Details = new UserDetails() };
-
             Title = "Information";
+            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            Init();
+        }
+
+        private async Task Init()
+        {
+            _profileInfo = await App.ProfileServices.GetInformationDetail(_currentUser.User.UserName, _currentUser.AuthToken) ??
+                           new ProfileInfo { Details = new UserDetails() };
 
             //Name and surname
             var boxViewBegNameSurname = new BoxView { Color = Color.White, WidthRequest = 100, HeightRequest = 2 };
@@ -34,10 +38,10 @@ namespace BeginMobile.Pages.Profile
             var boxViewEndWorkExp = new BoxView { Color = Color.White, WidthRequest = 100, HeightRequest = 2 };
 
             var stackLayoutInfo = new StackLayout
-                            {
-                                Spacing = 0,
-                                Padding = 1,
-                                Children =
+            {
+                Spacing = 0,
+                Padding = 1,
+                Children =
                                 {
                                     boxViewBegNameSurname,
                                     new ProfileTitle("Name and surname"),
@@ -56,12 +60,12 @@ namespace BeginMobile.Pages.Profile
                                     boxViewEndWorkExp,
                                     GetWorkExperience()
                                 }
-                            };
+            };
 
             var scrollViewInfo = new ScrollView
-                              {
-                                  Content = stackLayoutInfo
-                              };
+            {
+                Content = stackLayoutInfo
+            };
 
             Content = scrollViewInfo;
         }

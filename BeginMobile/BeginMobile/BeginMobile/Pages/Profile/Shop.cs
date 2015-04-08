@@ -1,5 +1,6 @@
 ﻿using BeginMobile.Pages.ShopPages;
 using BeginMobile.Services.DTO;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
@@ -8,20 +9,26 @@ namespace BeginMobile.Pages.Profile
     {
         private ListView _listViewShops;
         private RelativeLayout _relativeLayoutMain;
-
+        private ProfileInformationShop _profileShop;
+        private LoginUser currentUser;
         public Shop()
         {
             Title = "Shop";
+            
+            currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            Init();
+        }
 
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            ProfileInformationShop profileShop = App.ProfileServices.GetShopInfo(currentUser.User.UserName, currentUser.AuthToken);
+        private async Task Init()
+        {
+            _profileShop = await App.ProfileServices.GetShopInfo(currentUser.User.UserName, currentUser.AuthToken);
 
             _listViewShops = new ListView
-                          {
-                              ItemTemplate = new DataTemplate(typeof (ProfileShopItemCell)),
-                              ItemsSource = profileShop.Shop,
-                              HasUnevenRows = true
-                          };
+            {
+                ItemTemplate = new DataTemplate(typeof(ProfileShopItemCell)),
+                ItemsSource = _profileShop.Shop,
+                HasUnevenRows = true
+            };
 
             _listViewShops.ItemSelected += async (sender, e) =>
             {

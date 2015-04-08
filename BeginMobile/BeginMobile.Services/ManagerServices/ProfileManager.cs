@@ -49,13 +49,13 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public ProfileInfo GetProfileInformationDetail(string username, string authToken)
+        public async Task<ProfileInfo> GetProfileInformationDetail(string username, string authToken)
         {
             try
             {
                 const string urlGetParams = "?sections=details";
                 var addressSuffix = Identifier + "/" + username;
-                return _profileInfoClient.Get(authToken, addressSuffix, urlGetParams);
+                return await _profileInfoClient.GetAsync(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
             {
@@ -63,13 +63,13 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public ProfileInformationActivities GetActivitiesInformation(string username, string authToken)
+        public async Task<ProfileInformationActivities> GetActivitiesInformation(string username, string authToken)
         {
             try
             {
                 const string urlGetParams = "?sections=activities";
                 var addressSuffix = Identifier + "/" + username;
-                return _profileActivityClient.Get(authToken, addressSuffix, urlGetParams);
+                return await _profileActivityClient.GetAsync(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
             {
@@ -119,13 +119,13 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public ProfileInformationShop GetShopInformation(string username, string authToken)
+        public async Task<ProfileInformationShop> GetShopInformation(string username, string authToken)
         {
             try
             {
                 const string urlGetParams = "?sections=shop";
                 var addressSuffix = Identifier + "/" + username;
-                return _profileShopClient.Get(authToken, addressSuffix, urlGetParams);
+                return await _profileShopClient.GetAsync(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
             {

@@ -44,6 +44,17 @@ namespace BeginMobile.Pages.Profile
 
             _groupInformation = await App.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, limit: DefaultLimit);
 
+            #region Search components
+
+            _searchView.SearchBar.TextChanged += SearchItemEventHandler;
+            _categoriesPicker.SelectedIndexChanged += SearchItemEventHandler;
+            _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
+            _sectionsPicker.SelectedIndexChanged += SearchItemEventHandler;
+
+            _labelNoGroupsMessage = new Label();
+
+            #endregion
+
             _listViewGroup = new ListView
             {
                 ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell)),
@@ -65,17 +76,6 @@ namespace BeginMobile.Pages.Profile
                 // clears the 'selected' background
                 ((ListView)sender).SelectedItem = null;
             };
-
-            #region Search components
-
-            _searchView.SearchBar.TextChanged += SearchItemEventHandler;
-            _categoriesPicker.SelectedIndexChanged += SearchItemEventHandler;
-            _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
-            _sectionsPicker.SelectedIndexChanged += SearchItemEventHandler;
-
-            _labelNoGroupsMessage = new Label();
-
-            #endregion
 
             var mainLayout = new StackLayout
             {
