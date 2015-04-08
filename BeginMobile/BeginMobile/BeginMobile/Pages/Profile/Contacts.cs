@@ -68,8 +68,7 @@ namespace BeginMobile.Pages.Profile
 
                                                         var contactItem = (Contact) eventArgs.SelectedItem;
 
-                                                        var contentPageContactDetail = new ContactDetail(contactItem,
-                                                            _currentUser)
+                                                        var contentPageContactDetail = new ContactDetail(contactItem)
                                                                                        {
                                                                                            BindingContext = contactItem
                                                                                        };

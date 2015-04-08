@@ -16,10 +16,11 @@ namespace BeginMobile.Pages.Profile
         private readonly Contact _contact;
         private readonly LoginUser _loginUser;
 
-        public ContactDetail(Contact contact, LoginUser loginUser)
+        public ContactDetail(Contact contact)
         {
+
             _contact = contact;
-            _loginUser = loginUser;
+            _loginUser = (LoginUser)App.Current.Properties["LoginUser"]; ;
 
             if (_contact == null) throw new ArgumentNullException("contact1");
 

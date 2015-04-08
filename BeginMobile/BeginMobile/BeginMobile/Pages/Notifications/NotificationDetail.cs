@@ -1,18 +1,23 @@
-﻿using Xamarin.Forms;
+﻿using BeginMobile.Services.Models;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Notifications
 {
     public class NotificationDetail : ContentPage
     {
-        public NotificationDetail(string notificationDescription)
+        private readonly NotificationViewModel _notificationViewModel;
+
+        public NotificationDetail(NotificationViewModel notificationViewModel)
         {
+            _notificationViewModel = notificationViewModel;
+
             Content = new StackLayout
-                      {
-                          Children =
+            {
+                Children =
                           {
-                              new Label { Text = notificationDescription }
+                              new Label {Text = _notificationViewModel.NotificationDescription}
                           }
-                      };
+            };
         }
     }
 }

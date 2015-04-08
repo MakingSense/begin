@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using BeginMobile.Pages.Profile;
+using BeginMobile.Services.DTO;
+using BeginMobile.Services.Models;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Notifications
@@ -6,102 +10,85 @@ namespace BeginMobile.Pages.Notifications
     public class Notification : TabContent
     {
         private readonly ListView _listViewNotifications;
-        private readonly List<NotificationViewModel> _listNotifications;
-
         public readonly Label LabelCounter;
 
         public Notification(string title, string iconImg)
             : base(title, iconImg)
         {
             Title = title;
-            var notificationViewModel = new NotificationViewModel
-                                {
-                                    NotificationDescription = "Admin sent to you a new message",
-                                    IntervalDate = " 5 days, 5Hours ago",
-                                    ActionButton = new Button { Text = "READ" },
-                                    DeleteButton = new Button { Text = "DELETE" }
-
-                                };
-
-            notificationViewModel.DeleteButton.Clicked += (s, e) =>
-                                                  {
-                                                      DisplayAlert("message", "delete", "ok");
-                                                      DeleteClickProcess(notificationViewModel);
-
-                                                  };
-
-            notificationViewModel.ActionButton.Clicked += (s, e) =>
-                                                  {
-                                                      var sender = (NotificationViewModel)s;
-                                                      UnreadClickProcess(sender);
-                                                  };
-
-            _listNotifications = new List<NotificationViewModel>
-                                {
-                                    notificationViewModel,
-
-                                    new NotificationViewModel
-                                    {
-                                        NotificationDescription = "Admin mentioned you",
-                                        IntervalDate = " 2weeks, 3days ago",
-                                        ActionButton = new Button {Text = "UNREAD"},
-                                        DeleteButton = new Button {Text = "DELETE"}
-
-                                    },
-
-                                    new NotificationViewModel
-                                    {
-                                        NotificationDescription = "You have a friendship request from Soledad Pietro",
-                                        IntervalDate = " 2weeks, 3days ago",
-                                        ActionButton = new Button {Text = "UNREAD"},
-                                        DeleteButton = new Button {Text = "DELETE"}
-
-
-                                    },
-
-                                    new NotificationViewModel
-                                    {
-                                        NotificationDescription = "Admin mentioned you",
-                                        IntervalDate = " 5 days, 7Hours ago",
-                                        ActionButton = new Button {Text = "READ"},
-                                        DeleteButton = new Button {Text = "DELETE"}
-
-                                    }
-                                };
-
             LabelCounter = new Label
-                          {
-                              Text = _listNotifications.Count.ToString()
-                          };
+                           {
+                               Text = GetNotificationViewModels().Count().ToString()
+                           };
+
+            var listViewDataTemplate = new DataTemplate(typeof (TemplateListViewNotification));
 
             _listViewNotifications = new ListView
-                                    {
-                                        ItemTemplate = new DataTemplate(typeof(TemplateListViewNotification))
-                                    };
+                                     {
+                                         ItemTemplate = listViewDataTemplate,
+                                         HasUnevenRows = true
+                                     };
+            _listViewNotifications.ItemSelected += async (sender, eventArgs) =>
+                                                         {
+                                                             if (eventArgs.SelectedItem == null)
+                                                             {
+                                                                 return;
+                                                             }
+
+                                                             MessagingCenter.Subscribe<ContentPage, Contact>(this,
+                                                                 "friend", (s, arg) =>
+                                                                           {
+                                                                               if (arg == null) return;
+                                                                               var contactDetail =
+                                                                                   new ContactDetail(arg);
+                                                                               Navigation.PushAsync(contactDetail);
+                                                                           });
+
+                                                             var item = (NotificationViewModel) eventArgs.SelectedItem;
+
+                                                             var currentUser =
+                                                                 (LoginUser) App.Current.Properties["LoginUser"];
+                                                             var contactList = await App.ProfileServices.GetContacts(currentUser.AuthToken, null, null, null) ?? new List<User>();                                                                 
+
+                                                             var friend = (from contact in RetrieveContacts(contactList)
+                                                                 where contact.Id.Equals(item.Id)
+                                                                 select contact).FirstOrDefault();
+                                                             MessagingCenter.Send<ContentPage, Contact>(this, "friend",
+                                                                 friend);
+                                                             MessagingCenter.Unsubscribe<ContentPage, Contact>(this,
+                                                                 "friend");
+
+                                                             ((ListView) sender).SelectedItem = null;
+                                                         };
+
+            var gridHeaderTitle = new Grid
+                                  {
+                                      HorizontalOptions = LayoutOptions.FillAndExpand,
+                                      RowDefinitions =
+                                      {
+                                          new RowDefinition {Height = GridLength.Auto},
+                                          new RowDefinition {Height = GridLength.Auto}
+                                      },
+                                      ColumnDefinitions =
+                                      {
+                                          new ColumnDefinition {Width = 350},
+                                          new ColumnDefinition {Width = 350}
+                                      }
+                                  };
 
 
-            var gridEventHeaderTitle = new Grid
-                                       {
-                                           HorizontalOptions = LayoutOptions.FillAndExpand
-                                       };
+            gridHeaderTitle.Children.Add(new Label
+                                         {
+                                             Text = "Notification", // TODO:Add to resources
+                                             Style = App.Styles.SubtitleStyle
+                                         }, 0, 0);
 
-            gridEventHeaderTitle.Children.Add(new Label
-                                              {
-                                                  WidthRequest = 350,
-                                                  HeightRequest = 50,
-                                                  Text = "Notification",
-                                                  HorizontalOptions = LayoutOptions.FillAndExpand,
-                                                  Style = App.Styles.SubtitleStyle
-                                              }, 0, 1, 0, 1);
-
-            gridEventHeaderTitle.Children.Add(new Label
-                                              {
-                                                  HeightRequest = 50,
-                                                  Text = "Date received",
-                                                  HorizontalOptions = LayoutOptions.Start,
-                                                  Style = App.Styles.SubtitleStyle
-                                              }, 1, 2, 0, 1);
-
+            gridHeaderTitle.Children.Add(new Label
+                                         {
+                                             HeightRequest = 50,
+                                             Text = "Date received", // TODO:Add to resources
+                                             Style = App.Styles.SubtitleStyle
+                                         }, 1, 0);
 
             var mainLayout = new StackLayout
                              {
@@ -111,43 +98,62 @@ namespace BeginMobile.Pages.Notifications
                                  Orientation = StackOrientation.Vertical
                              };
 
-            mainLayout.Children.Add(gridEventHeaderTitle);
-            mainLayout.Children.Add(new ScrollView { Content = _listViewNotifications });
+            mainLayout.Children.Add(gridHeaderTitle);
+            mainLayout.Children.Add(new StackLayout
+                                    {
+                                        VerticalOptions = LayoutOptions.FillAndExpand,
+                                        Orientation = StackOrientation.Vertical,
+                                        Children = {_listViewNotifications}
+                                    });
 
             Content = mainLayout;
-
-            _listViewNotifications.ItemSelected += async (s, e) =>
-                                                        {
-                                                            if (e.SelectedItem == null)
-                                                            {
-                                                                return;
-                                                            }
-
-                                                            var item = (NotificationViewModel) e.SelectedItem;
-                                                            var itemPage =
-                                                                new NotificationDetail(item.NotificationDescription);
-                                                            await Navigation.PushAsync(itemPage);
-
-                                                            ((ListView) s).SelectedItem = null;
-
-                                                        };
-        }
-        private void DeleteClickProcess(NotificationViewModel model)
-        {
-            // TODO: Delete Logic here
-            DisplayAlert("Delete", model.NotificationDescription, "ok");
         }
 
-        private void UnreadClickProcess(NotificationViewModel model)
+        private static IEnumerable<Contact> RetrieveContacts(IEnumerable<User> profileInformationContacts)
         {
-            //TODO: Unread logic here
-            DisplayAlert("Readed", model.NotificationDescription, "ok");
+            return profileInformationContacts.Select(contact => new Contact
+                                                                {
+                                                                    Icon = "",
+                                                                    NameSurname = contact.NameSurname,
+                                                                    Email =
+                                                                        string.Format("e-mail: {0}",
+                                                                            contact.Email),
+                                                                    Url = contact.Url,
+                                                                    UserName = contact.UserName,
+                                                                    Registered = contact.Registered,
+                                                                    Id = contact.Id.ToString()
+                                                                });
+        }
+
+        private static IEnumerable<NotificationViewModel> GetNotificationViewModels()
+        {
+            return new List<NotificationViewModel>
+                   {
+                       new NotificationViewModel
+                       {
+                           Id = "21",
+                           NotificationDescription = "You have a friendship request from Toni Montana",
+                           IntervalDate = " 2weeks, 3days ago"
+                       },
+                       new NotificationViewModel
+                       {
+                           Id = "30",
+                           NotificationDescription = "You have a friendship request from Soledad Pietro",
+                           IntervalDate = " 2weeks, 3days ago",
+                       },
+                       new NotificationViewModel
+                       {
+                           Id = "31",
+                           NotificationDescription = "You have a friendship request from Maria Di Lorenzo",
+                           IntervalDate = " 5 days, 7Hours ago",
+                       }
+                   };
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _listViewNotifications.ItemsSource = _listNotifications;
+            _listViewNotifications.ItemsSource = GetNotificationViewModels();
         }
     }
 }
