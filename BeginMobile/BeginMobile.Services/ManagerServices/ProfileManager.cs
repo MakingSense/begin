@@ -41,7 +41,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var addressSuffix = Identifier + "/" + username;
-                return _profileInfoClient.GetAsync(authToken, addressSuffix, "");
+                return _profileInfoClient.Get(authToken, addressSuffix, "");
             }
             catch (Exception exception)
             {
@@ -55,7 +55,7 @@ namespace BeginMobile.Services.ManagerServices
             {
                 const string urlGetParams = "?sections=details";
                 var addressSuffix = Identifier + "/" + username;
-                return _profileInfoClient.GetAsync(authToken, addressSuffix, urlGetParams);
+                return _profileInfoClient.Get(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
             {
@@ -69,7 +69,7 @@ namespace BeginMobile.Services.ManagerServices
             {
                 const string urlGetParams = "?sections=activities";
                 var addressSuffix = Identifier + "/" + username;
-                return _profileActivityClient.GetAsync(authToken, addressSuffix, urlGetParams);
+                return _profileActivityClient.Get(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
             {
@@ -83,7 +83,7 @@ namespace BeginMobile.Services.ManagerServices
             {
                 const string urlGetParams = "?sections=events";
                 var addressSuffix = Identifier + "/" + username;
-                return _profileEventClient.GetAsync(authToken, addressSuffix, urlGetParams);
+                return _profileEventClient.Get(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
             {
@@ -111,7 +111,7 @@ namespace BeginMobile.Services.ManagerServices
             {
                 const string urlGetParams = "?sections=contacts";
                 var addressSuffix = Identifier + "/" + username;
-                return _profileContactClient.GetAsync(authToken, addressSuffix, urlGetParams);
+                return _profileContactClient.Get(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
             {
@@ -125,7 +125,7 @@ namespace BeginMobile.Services.ManagerServices
             {
                 const string urlGetParams = "?sections=shop";
                 var addressSuffix = Identifier + "/" + username;
-                return _profileShopClient.GetAsync(authToken, addressSuffix, urlGetParams);
+                return _profileShopClient.Get(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
             {

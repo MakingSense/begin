@@ -24,8 +24,11 @@ namespace BeginMobile
                 AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
             }
 
+            
             MainPage = new LoginModalPage(this);
         }
+
+
 
         public void ShowMainPage(LoginUser loginUser)
         {

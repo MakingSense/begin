@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
 
@@ -20,7 +21,7 @@ namespace BeginMobile.Services.ManagerServices
         {
         }
 
-        public List<Group> GetGroupsByParams(
+        public async Task<List<Group>> GetGroupsByParams(
             string authToken,
             string name = null,
             string cat = null,
@@ -31,7 +32,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var urlGetParams = "?q=" + name + "&cat=" + cat + "&limit=" + limit + "&sections=" + sections;
-                return _groupClient.GetListAsync(authToken, Identifier, urlGetParams).ToList();
+                return await _groupClient.GetTestListAsync(authToken, Identifier, urlGetParams);
             }
             catch (Exception exeption)
             {
@@ -50,7 +51,7 @@ namespace BeginMobile.Services.ManagerServices
                     urlId += "?sections=" + sections;
                 }
 
-                return _groupClient.GetAsync(authToken, Identifier, urlId);
+                return _groupClient.Get(authToken, Identifier, urlId);
             }
             catch (Exception exception)
             {

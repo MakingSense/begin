@@ -29,7 +29,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var urlGetParams = "?q=" + name + "&cat=" + cat + "&limit=" + limit;
-                return _eventClient.GetListAsync(authToken, Identifier, urlGetParams).ToList();
+                return _eventClient.GetList(authToken, Identifier, urlGetParams).ToList();
             }
             catch (Exception ex)
             {
@@ -42,7 +42,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var urlId = "/" + eventId;
-                return _eventClient.GetAsync(authToken, Identifier, urlId);
+                return _eventClient.Get(authToken, Identifier, urlId);
             }
             catch (Exception ex)
             {

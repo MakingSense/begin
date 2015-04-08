@@ -32,7 +32,7 @@ namespace BeginMobile.Services.ManagerServices
                                                         new KeyValuePair<string, string>("password", password)
                                                     });
             const string addressSuffix = "login";
-            return _loginManagerClient.PostAsync(content, addressSuffix);
+            return _loginManagerClient.Post(content, addressSuffix);
         }
 
         public RegisterUser Register(string username, string email, string password, string nameSurname)
@@ -46,7 +46,7 @@ namespace BeginMobile.Services.ManagerServices
                                                     });
 
             const string addressSuffix = "signup";
-            return _registerUserClient.PostAsync(content, addressSuffix);
+            return _registerUserClient.Post(content, addressSuffix);
         }
 
         public string RetrievePassword(string email)
@@ -74,7 +74,7 @@ namespace BeginMobile.Services.ManagerServices
                                                     });
 
             const string addressSuffix = "me/change_password";
-            return _changePasswordClient.PostAsync(authToken, content, addressSuffix);
+            return _changePasswordClient.Post(authToken, content, addressSuffix);
         }
 
         public string UpdateProfile(string nameSurname, string authToken)

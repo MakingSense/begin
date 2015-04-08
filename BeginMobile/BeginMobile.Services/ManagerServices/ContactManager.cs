@@ -32,7 +32,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var urlGetParams = "?q=" + name + "&sort=" + sort + "&limit=" + limit;
-                return _contactClient.GetListAsync(authToken, Identifier, urlGetParams).ToList();
+                return _contactClient.GetList(authToken, Identifier, urlGetParams).ToList();
             }
             catch (Exception exeption)
             {
@@ -45,7 +45,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var urlId = "/" + contactId;
-                return _contactClient.GetAsync(authToken, Identifier, urlId);
+                return _contactClient.Get(authToken, Identifier, urlId);
             }
             catch (Exception exception)
             {
@@ -58,7 +58,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 string addressSuffix = Identifier + "/send_request/" + userName;
-                return _contactServiceClient.PostListAsync(authToken, null, addressSuffix).ToList();
+                return _contactServiceClient.PostList(authToken, null, addressSuffix).ToList();
             }
             catch (Exception exception)
             {
@@ -78,7 +78,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 string addressSuffix = Identifier + "/accept_request/" + userName;
-                return _contactServiceClient.PostListAsync(authToken, null, addressSuffix).ToList();
+                return _contactServiceClient.PostList(authToken, null, addressSuffix).ToList();
             }
             catch (Exception exception)
             {
@@ -98,7 +98,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 string addressSuffix = Identifier + "/reject_request/" + userName;
-                return _contactServiceClient.PostListAsync(authToken, null, addressSuffix).ToList();
+                return _contactServiceClient.PostList(authToken, null, addressSuffix).ToList();
             }
             catch (Exception exception)
             {
@@ -118,7 +118,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 string addressSuffix = Identifier + "/remove/" + userName;
-                return _contactServiceClient.PostListAsync(authToken, null, addressSuffix).ToList();
+                return _contactServiceClient.PostList(authToken, null, addressSuffix).ToList();
             }
             catch (Exception exception)
             {

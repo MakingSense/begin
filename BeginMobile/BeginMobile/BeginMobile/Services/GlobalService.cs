@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using BeginMobile.Services.ManagerServices;
 using BeginMobile.Services.DTO;
+using System.Threading.Tasks;
 
 namespace BeginMobile.Services
 {
@@ -72,9 +73,9 @@ namespace BeginMobile.Services
 
         }
 
-        private void LoadMeOptions()
+        private async Task LoadMeOptions()
         {
-            var resultRequest = _globalManager.GetMeOptions();
+            var resultRequest = await _globalManager.GetMeOptions();
             if (resultRequest != null)
             {
                 Sections = resultRequest.Sections;
@@ -84,9 +85,9 @@ namespace BeginMobile.Services
 
         }
 
-        private void LoadGroupSections()
+        private async Task LoadGroupSections()
         {
-            var resultRequest = _globalManager.GetGroupOptions();
+            var resultRequest = await _globalManager.GetGroupOptions();
             if (resultRequest != null)
             {
                 GroupSections = resultRequest.GroupSections;

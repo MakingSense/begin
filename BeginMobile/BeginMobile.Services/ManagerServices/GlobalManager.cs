@@ -21,12 +21,12 @@ namespace BeginMobile.Services.ManagerServices
             new GenericBaseClient<GroupOptions>(BaseAddress, SubAddress);
 
 
-        public Options GetMeOptions()
+        public async Task<Options> GetMeOptions()
         {
             try
             {
                 const string addressSuffix = "me/options";
-                return _loginGlobalClient.GetAsync(addressSuffix);
+                return await _loginGlobalClient.GetTestAsync(addressSuffix);
             }
             catch (Exception exception)
             {
@@ -34,12 +34,12 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public GroupOptions GetGroupOptions()
+        public async Task<GroupOptions> GetGroupOptions()
         {
             try
             {
                 const string addressSuffix = "groups/options";
-                return _loginGroupClient.GetAsync(addressSuffix);
+                return await _loginGroupClient.GetTestAsync(addressSuffix);
             }
             catch (Exception exception)
             {

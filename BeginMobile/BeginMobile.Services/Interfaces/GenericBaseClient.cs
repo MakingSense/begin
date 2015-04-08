@@ -18,9 +18,9 @@ namespace BeginMobile.Services.Interfaces
         }
 
         /// <summary>
-        /// Gets the asynchronous.
+        /// Gets.
         /// </summary>
-        public T GetAsync(string addressSuffix)
+        public T Get(string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {
@@ -40,12 +40,12 @@ namespace BeginMobile.Services.Interfaces
         }
 
         /// <summary>
-        /// Gets the asynchronous.
+        /// Gets.
         /// </summary>
         /// <param name="identifier">The identifier examples user, groups, etc</param>
         /// <param name="urlParams">The URL parameters examples '?user=user1'</param>
         /// <param name="authToken">The authentication token.</param>
-        public T GetAsync(string authToken, string identifier, string urlParams)
+        public T Get(string authToken, string identifier, string urlParams)
         {
             using (var httpClient = new HttpClient())
             {
@@ -71,7 +71,7 @@ namespace BeginMobile.Services.Interfaces
         /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
         /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
         /// <returns></returns>
-        public T PostAsync(FormUrlEncodedContent content, string addressSuffix)
+        public T Post(FormUrlEncodedContent content, string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {
@@ -96,7 +96,7 @@ namespace BeginMobile.Services.Interfaces
         /// <param name="authToken">The authentication token.</param>
         /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
         /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
-        public T PostAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        public T Post(string authToken, FormUrlEncodedContent content, string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {
@@ -169,7 +169,7 @@ namespace BeginMobile.Services.Interfaces
         /// <param name="identifier">The identifier examples user, groups, etc</param>
         /// <param name="urlParams">The URL parameters examples '?user=user1'</param>
         /// <param name="authToken">The authentication token.</param>
-        public IEnumerable<T> GetListAsync(string authToken, string identifier, string urlParams)
+        public IEnumerable<T> GetList(string authToken, string identifier, string urlParams)
         {
             using (var httpClient = new HttpClient())
             {
@@ -189,7 +189,7 @@ namespace BeginMobile.Services.Interfaces
         /// <param name="authToken">The authentication token.</param>
         /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
         /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
-        public IEnumerable<T> PostListAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        public IEnumerable<T> PostList(string authToken, FormUrlEncodedContent content, string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {
@@ -203,12 +203,9 @@ namespace BeginMobile.Services.Interfaces
             }
         }
 
-        /// <summary>
-        /// Gets the list asynchronous.
-        /// </summary>
-        /// <param name="identifier">The identifier examples user, groups, etc</param>
-        /// <param name="urlParams">The URL parameters examples '?user=user1'</param>
-        /// <param name="authToken">The authentication token.</param>
+        /**
+         * Methods async in services
+         */
         public async Task<List<T>> GetTestListAsync(string authToken, string identifier, string urlParams)
         {
             using (var httpClient = new HttpClient())
@@ -223,6 +220,42 @@ namespace BeginMobile.Services.Interfaces
                         ).ConfigureAwait(false);
 
                 return resultList;
+            }
+        }
+
+        public async Task<List<T>> PostTestListAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+
+                var response = await httpClient.PostAsync(_subAddress + addressSuffix, content).ConfigureAwait(false);
+                var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var resultList = await Task.Run(() => 
+                    JsonConvert.DeserializeObject<List<T>>(userJson)).ConfigureAwait(false);
+
+                return resultList;
+            }
+        }
+
+        public async Task<T> GetTestAsync(string addressSuffix)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+
+                T profileInformationGroups = null;
+                var response = await httpClient.GetAsync(_subAddress + addressSuffix).ConfigureAwait(false);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    profileInformationGroups = await Task.Run(() => 
+                        JsonConvert.DeserializeObject<T>(userJson)).ConfigureAwait(false);
+                }
+
+                return profileInformationGroups;
             }
         }
 
@@ -246,6 +279,42 @@ namespace BeginMobile.Services.Interfaces
                 }
 
                 return resultModel;
+            }
+        }
+
+        public async  Task<T> PostTestAsync(FormUrlEncodedContent content, string addressSuffix)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                T result = null;
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+
+                var response = await httpClient.PostAsync(_subAddress + addressSuffix, content).ConfigureAwait(false);
+                var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    result = await Task.Run(() => 
+                        JsonConvert.DeserializeObject<T>(userJson)).ConfigureAwait(false);
+                }
+
+                return result;
+            }
+        }
+
+        public async Task<T> PostTestAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+
+                var response = await httpClient.PostAsync(_subAddress + addressSuffix, content).ConfigureAwait(false);
+                var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var result = await Task.Run(() => 
+                    JsonConvert.DeserializeObject<T>(userJson)).ConfigureAwait(false);
+
+                return result;
             }
         }
     }

@@ -66,10 +66,10 @@ namespace BeginMobile.Services
         }
 
         //Groups, events and contacts
-        public List<Group> GetGroupsByParams(string authToken, string name = null, string cat = null,
+        public async Task<List<Group>> GetGroupsByParams(string authToken, string name = null, string cat = null,
             string limit = null, string sections = null)
         {
-            return _groupManager.GetGroupsByParams(authToken, name, cat, limit, sections);
+            return await _groupManager.GetGroupsByParams(authToken, name, cat, limit, sections);
         }
 
         public Group GetGroup(string authToken, string groupId, string sections = null)

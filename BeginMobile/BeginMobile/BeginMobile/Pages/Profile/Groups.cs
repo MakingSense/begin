@@ -5,13 +5,14 @@ using BeginMobile.Pages.GroupPages;
 using BeginMobile.Services.DTO;
 using BeginMobile.Utils;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace BeginMobile.Pages.Profile
 {
     public class Groups : ContentPage
     {
-        private readonly ListView _listViewGroup;
-        private readonly Label _labelNoGroupsMessage;
+        private ListView _listViewGroup;
+        private Label _labelNoGroupsMessage;
         private readonly List<Group> _defaultList = new List<Group>();
 
         private Picker _sectionsPicker;
@@ -21,6 +22,8 @@ namespace BeginMobile.Pages.Profile
         private List<string> _sectionsList;
         private List<string> _categoriesList = new List<string> { "All Categories" };
         private const string DefaultLimit = "10";
+
+        private List<Group> _groupInformation;
 
         private readonly LoginUser _currentUser;
         public Groups()
@@ -33,14 +36,20 @@ namespace BeginMobile.Pages.Profile
             LoadCategoriesPicker();
 
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            var groupInformation = App.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, limit: DefaultLimit);
+            Init();
+        }
+
+        private async Task Init()
+        {
+
+            _groupInformation = await App.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, limit: DefaultLimit);
 
             _listViewGroup = new ListView
-                          {
-                              ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell)),
-                              ItemsSource = groupInformation,
-                              HasUnevenRows = true
-                          };
+            {
+                ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell)),
+                ItemsSource = _groupInformation,
+                HasUnevenRows = true
+            };
 
             _listViewGroup.ItemSelected += async (sender, e) =>
             {
@@ -78,9 +87,9 @@ namespace BeginMobile.Pages.Profile
 
             mainLayout.Children.Add(_searchView.Container);
             mainLayout.Children.Add(new ScrollView
-                                    {
-                                        Content = _listViewGroup
-                                    });
+            {
+                Content = _listViewGroup
+            });
 
             Content = mainLayout;
         }
@@ -133,7 +142,7 @@ namespace BeginMobile.Pages.Profile
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void SearchItemEventHandler(object sender, EventArgs args)
+        private async void SearchItemEventHandler(object sender, EventArgs args)
         {
             string limit;
             string cat;
@@ -146,7 +155,7 @@ namespace BeginMobile.Pages.Profile
             RetrieveSectionSelected(out sections);
 
             List<Group> groupsList =
-                App.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, q, cat, limit, sections);
+                await App.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, q, cat, limit, sections);
 
             if (groupsList.Any())
             {
