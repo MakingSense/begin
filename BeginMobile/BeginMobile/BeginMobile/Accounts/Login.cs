@@ -15,9 +15,7 @@ namespace BeginMobile.Accounts
         {
             var logo = new Image
             {
-                Source = Device.OS == TargetPlatform.iOS
-                    ? ImageSource.FromFile("logotype.png")
-                    : ImageSource.FromFile("logotype.png"),
+                Source = ImageSource.FromFile("logotype.png"),
                 Aspect = Aspect.AspectFit,
             };
 

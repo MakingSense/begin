@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ButtonAcceptFriend" xml:space="preserve">
+    <value>Friendship Requested</value>
+  </data>
   <data name="ButtonAddFriend" xml:space="preserve">
     <value>Add Friend</value>
   </data>
@@ -134,6 +137,12 @@
   </data>
   <data name="ButtonRegister" xml:space="preserve">
     <value>Register</value>
+  </data>
+  <data name="ButtonRejectFriend" xml:space="preserve">
+    <value>Reject</value>
+  </data>
+  <data name="ButtonRemoveFriend" xml:space="preserve">
+    <value>Remove</value>
   </data>
   <data name="EntryConfirmPasswordPlaceholder" xml:space="preserve">
     <value>Confirm Password</value>

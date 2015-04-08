@@ -62,6 +62,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Friendship Requested.
+        /// </summary>
+        public static string ButtonAcceptFriend {
+            get {
+                return ResourceManager.GetString("ButtonAcceptFriend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Friend.
         /// </summary>
         public static string ButtonAddFriend {
@@ -112,6 +121,24 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string ButtonRegister {
             get {
                 return ResourceManager.GetString("ButtonRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reject.
+        /// </summary>
+        public static string ButtonRejectFriend {
+            get {
+                return ResourceManager.GetString("ButtonRejectFriend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string ButtonRemoveFriend {
+            get {
+                return ResourceManager.GetString("ButtonRemoveFriend", resourceCulture);
             }
         }
         
