@@ -1,9 +1,10 @@
-﻿//#define FriendshipActions
+﻿#define FriendshipActions
 
 using System;
-using System.Threading;
+using System.Linq;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
+using BeginMobile.Utils;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
@@ -13,7 +14,7 @@ namespace BeginMobile.Pages.Profile
     {
         private Button _buttonAddFriend;
         private Button _buttonCancelRequestFriend;
-        private LoginUser _loginUser;
+        private readonly LoginUser _loginUser;
         public CustomViewCell(LoginUser loginUser)
         {
             _loginUser = loginUser;
@@ -125,13 +126,14 @@ namespace BeginMobile.Pages.Profile
 
             if (itemGridUserName != null)
             {
-
-#if FriendshipActions
                 var username = itemGridUserName.Text;
-                var responseWithErrors = App.ProfileServices.SendRequest(_loginUser.AuthToken, username);
-                Thread.Sleep(200); //Find a better way, maybe 'await SendRequest'.
-                if (responseWithErrors != null) return;
-#endif
+                var responseErrors = FriendshipActions.Request(FriendshipOption.Send, _loginUser.AuthToken, username);
+
+                if (responseErrors.Any())
+                {
+                    //TODO: Logic here
+                }
+
                 objectSender.IsVisible = false;
                 parentGrid.Children.Remove(objectSender);
                 parentGrid.Children.Add(_buttonCancelRequestFriend, 1, 0);
@@ -151,13 +153,14 @@ namespace BeginMobile.Pages.Profile
 
             if (itemGridUserName != null)
             {
-
-#if FriendshipActions
                 var username = itemGridUserName.Text;
-                var responseWithErrors = App.ProfileServices.RejectRequest(_loginUser.AuthToken, username);
-                Thread.Sleep(200); //Find a better way, maybe 'await RejectRequest'.
-                if (responseWithErrors != null) return;
-#endif
+                var responseErrors = FriendshipActions.Request(FriendshipOption.Reject, _loginUser.AuthToken, username);
+
+                if (responseErrors.Any())
+                {
+                    //TODO: Logic here
+                }
+
                 objectSender.IsVisible = false;
                 parentGrid.Children.Remove(objectSender);
                 parentGrid.Children.Add(_buttonAddFriend, 1, 0);

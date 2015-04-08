@@ -121,99 +121,72 @@ namespace BeginMobile.Pages.Profile
         #region Events
         private void AddFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var responseErrors = FriendshipAction(Friendship.Send);
+            var responseErrors = FriendshipActions.Request(FriendshipOption.Send, _loginUser.AuthToken, _contact.UserName);
             if (!responseErrors.Any())
             {
                 //TODO: Logic here
                 return;
             }
-            DisplayResponseErrors(responseErrors);
+
+           DisplayResponseErrors(responseErrors);
         }
         private void AcceptFriendEventHandler(object senser, EventArgs eventArgs)
         {
-            var responseErrors = FriendshipAction(Friendship.Accept);
+            var responseErrors = FriendshipActions.Request(FriendshipOption.Accept, _loginUser.AuthToken, _contact.UserName);
             if (!responseErrors.Any())
             {
                 //TODO: Logic here
                 return;
             }
+
             DisplayResponseErrors(responseErrors);
         }
         private void RejectFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var responseErrors = FriendshipAction(Friendship.Reject);
+            var responseErrors = FriendshipActions.Request(FriendshipOption.Reject, _loginUser.AuthToken, _contact.UserName);
             if (!responseErrors.Any())
             {
                 //TODO: Logic here
                 return;
             }
+
             DisplayResponseErrors(responseErrors);
         }
         private void CancelFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var responseErrors = FriendshipAction(Friendship.Remove);
+            var responseErrors = FriendshipActions.Request(FriendshipOption.Remove, _loginUser.AuthToken, _contact.UserName);
+
             if (!responseErrors.Any())
             {
                 //TODO: Logic here
                 return;
             }
-            DisplayResponseErrors(responseErrors);
+
+           DisplayResponseErrors(responseErrors);
         }
         private void RemoveEventHandler(object sender, EventArgs eventArgs)
         {
-            var responseErrors = FriendshipAction(Friendship.Remove);
+            var responseErrors = FriendshipActions.Request(FriendshipOption.Remove, _loginUser.AuthToken, _contact.UserName);
+
             if (!responseErrors.Any())
             {
                 //TODO: Logic here
                 return;
             }
-            DisplayResponseErrors(responseErrors);
+
+           DisplayResponseErrors(responseErrors);
         }
 
         #endregion
 
         #region Private methods
 
-        /// <summary>
-        /// Execute friendship action.
-        /// </summary>/
-        /// <param name="friendship"></param>
-        private List<ContactServiceError> FriendshipAction(Friendship friendship)
-        {
-            var responseErrors = new List<ContactServiceError>();
-
-            switch (friendship)
-            {
-                case Friendship.Send:
-                    responseErrors = App.ProfileServices.SendRequest(_loginUser.AuthToken, _contact.UserName);
-                    break;
-
-                case Friendship.Cancel:
-                    //TODO: Cancel request here
-                    //responseErrors = App.ProfileServices.CancelFriendship(_loginUser.AuthToken, _contact.UserName);
-                    break;
-
-                case Friendship.Accept:
-                    responseErrors = App.ProfileServices.AcceptRequest(_loginUser.AuthToken, _contact.UserName);
-                    break;
-
-                case Friendship.Reject:
-                    responseErrors = App.ProfileServices.RejectRequest(_loginUser.AuthToken, _contact.UserName);
-                    break;
-
-                case Friendship.Remove:
-                    responseErrors = App.ProfileServices.RemoveFriendship(_loginUser.AuthToken, _contact.UserName);
-                    break;
-            }
-
-            return responseErrors;
-        }
         private void DisplayResponseErrors(IEnumerable<ContactServiceError> addResponseErrors)
         {
             var message = addResponseErrors.Aggregate(string.Empty,
                 (current, contactServiceError) => current + (contactServiceError.Message + "\n"));
 
-            DisplayAlert("Error", message, "ok");
+            DisplayAlert("Error", message, "Ok");
         }
 
         #endregion
