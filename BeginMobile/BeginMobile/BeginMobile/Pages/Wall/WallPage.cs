@@ -13,14 +13,34 @@ namespace BeginMobile.Pages.Wall
         private ListView _listViewWall;
         private RelativeLayout _relativeLayoutMain;
         private ProfileMeWall _profileShop;
+        private ActivityIndicator _indicator;
+        private LoginUser _currentUser;
+        private StackLayout _stackLayoutMain;
+        private List<BeginWallViewModel> _listWall;
+        private bool _isLoading;
 
         public WallPage(string title, string iconImage)
             : base(title, iconImage)
         {
-            //Do something
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            Init(currentUser);
+            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            _indicator = new ActivityIndicator
+            {
+              HorizontalOptions = LayoutOptions.CenterAndExpand,
+              Color = Color.Yellow,
+              IsVisible = false 
+            };
 
+            _stackLayoutMain = new StackLayout()
+            {
+                Spacing = 2,
+                Padding = App.Styles.LayoutThickness
+            };
+
+            _stackLayoutMain.Children.Add(_indicator);
+
+            Content = _stackLayoutMain;
+
+            Init();
         }
 
         private List<BeginWallViewModel> ListBeginWallViewModel(List<BeginMobile.Services.DTO.Wall> oldListWall)
@@ -41,10 +61,13 @@ namespace BeginMobile.Pages.Wall
             return resultList;
         }
 
-        private async Task Init(LoginUser currentUser)
+        private async Task Init()
         {
-            _profileShop = await App.ProfileServices.GetWall(currentUser.AuthToken);
-            var listProfileWall = ListBeginWallViewModel(_profileShop.ListOfWall);
+            _indicator.IsRunning = true;
+            _indicator.IsVisible = true;
+
+            _profileShop = await App.ProfileServices.GetWall(_currentUser.AuthToken);
+            _listWall = ListBeginWallViewModel(_profileShop.ListOfWall);
 
             _listViewWall = new ListView
             {
@@ -53,12 +76,23 @@ namespace BeginMobile.Pages.Wall
 
             _listViewWall.HasUnevenRows = true;
             _listViewWall.ItemTemplate = new DataTemplate(() => new WallItemCell());
-            _listViewWall.ItemsSource = listProfileWall;
+            _listViewWall.ItemsSource = _listWall;
             _listViewWall.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null) return;
                 ((ListView)sender).SelectedItem = null;
             };
+
+            /*_listViewWall.ItemAppearing += async (sender, e) =>
+            {
+                if (_isLoading || _listWall.Count == 0)
+                    return;
+
+                if (e.Item.ToString() == _listWall[_listWall.Count - 1].ToString())
+                {
+                    LoadItems();
+                }
+            };*/
 
             _relativeLayoutMain = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand };
             _relativeLayoutMain.Children.Add(_listViewWall,
@@ -67,17 +101,28 @@ namespace BeginMobile.Pages.Wall
                 widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
                 heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
-            Content = new StackLayout()
-            {
-                Spacing = 2,
-                Padding = App.Styles.LayoutThickness,
-                Children =
-                {
-                    _relativeLayoutMain
-                }
-            };
+            _stackLayoutMain.Children.Add(_relativeLayoutMain);
+
+            Content = _stackLayoutMain;
+
+            _indicator.IsRunning = false;
+            _indicator.IsVisible = false;
         }
 
+        /*private async Task LoadItems()
+        {
+            _isLoading = true;
+
+            Device.StartTimer(TimeSpan.FromSeconds(2), () =>
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    _listWall.Add(_listWall[i]);
+                }
+                _isLoading = false;
+                return false;
+            });
+        }*/
 
         private BeginWallViewModel GetBeginWallViewModel(BeginMobile.Services.DTO.Wall wallItem)
         {

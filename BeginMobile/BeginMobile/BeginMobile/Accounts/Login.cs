@@ -66,7 +66,7 @@ namespace BeginMobile.Accounts
                 else
                 {
                     var loginUserManager = new LoginUserManager();
-                    var loginUser = loginUserManager.Login(_entryEmail.Text, _entryPassword.Text);
+                    var loginUser = await loginUserManager.Login(_entryEmail.Text, _entryPassword.Text);
 
                     if (loginUser != null)
                     {

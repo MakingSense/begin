@@ -46,7 +46,7 @@ namespace BeginMobile.Accounts
             buttonChangePassword.Clicked += async (sender, eventArgs) =>
             {
                 var changePasswordResponse =
-                    loginUserManager.ChangeYourPassword(_entryCurrentPassword.Text, _entryNewPassword.Text, _entryRepeatNewPassword.Text, currentUser.AuthToken);
+                    await loginUserManager.ChangeYourPassword(_entryCurrentPassword.Text, _entryNewPassword.Text, _entryRepeatNewPassword.Text, currentUser.AuthToken);
 
                 if (changePasswordResponse != null)
                 {

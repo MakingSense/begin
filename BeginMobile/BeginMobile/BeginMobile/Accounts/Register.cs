@@ -116,7 +116,7 @@ namespace BeginMobile.Accounts
                             if (_switchStatus)
                             {
                                 var loginUserManager = new LoginUserManager();
-                                var registerUser = loginUserManager.Register(_entryUsername.Text, _entryEmail.Text,
+                                var registerUser = await loginUserManager.Register(_entryUsername.Text, _entryEmail.Text,
                                     _entryPassword.Text, _entryFullName.Text);
 
                                 if (registerUser.Errors != null)

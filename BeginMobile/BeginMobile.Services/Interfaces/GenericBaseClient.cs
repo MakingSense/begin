@@ -142,7 +142,7 @@ namespace BeginMobile.Services.Interfaces
         /// <param name="authToken">The authentication token.</param>
         /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
         /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
-        public string PostContentResultAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        public async Task<string> PostContentResultAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {
@@ -150,12 +150,10 @@ namespace BeginMobile.Services.Interfaces
                 httpClient.BaseAddress = new Uri(_serviceBaseAddress);
                 httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
 
-                var response = httpClient.PostAsync(_subAddress + addressSuffix, content).Result;
-
-
+                var response = await httpClient.PostAsync(_subAddress + addressSuffix, content).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
-                    var userJson = response.Content.ReadAsStringAsync().Result;
+                    var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = userJson;
                 }
 

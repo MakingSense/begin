@@ -31,7 +31,7 @@ namespace BeginMobile.Accounts
 
             buttonUpdateProfile.Clicked += async (s, e) =>
                                                  {
-                                                     loginUserManager.UpdateProfile(_entryNameSurname.Text,
+                                                     await loginUserManager.UpdateProfile(_entryNameSurname.Text,
                                                          currentUser.AuthToken);
 
                                                      await

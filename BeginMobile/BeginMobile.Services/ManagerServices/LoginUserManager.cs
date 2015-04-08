@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace BeginMobile.Services.ManagerServices
 {
@@ -24,7 +25,7 @@ namespace BeginMobile.Services.ManagerServices
             new GenericBaseClient<string>(BaseAddress, SubAddress);
 
 
-        public LoginUser Login(string username, string password)
+        public async Task<LoginUser> Login(string username, string password)
         {
             var content = new FormUrlEncodedContent(new[]
                                                     {
@@ -32,10 +33,10 @@ namespace BeginMobile.Services.ManagerServices
                                                         new KeyValuePair<string, string>("password", password)
                                                     });
             const string addressSuffix = "login";
-            return _loginManagerClient.Post(content, addressSuffix);
+            return await _loginManagerClient.PostAsync(content, addressSuffix);
         }
 
-        public RegisterUser Register(string username, string email, string password, string nameSurname)
+        public async Task<RegisterUser> Register(string username, string email, string password, string nameSurname)
         {
             var content = new FormUrlEncodedContent(new[]
                                                     {
@@ -46,7 +47,7 @@ namespace BeginMobile.Services.ManagerServices
                                                     });
 
             const string addressSuffix = "signup";
-            return _registerUserClient.Post(content, addressSuffix);
+            return await _registerUserClient.PostAsync(content, addressSuffix);
         }
 
         public string RetrievePassword(string email)
@@ -61,7 +62,7 @@ namespace BeginMobile.Services.ManagerServices
         }
 
 
-        public ChangePassword ChangeYourPassword(string currentPassword, string newPassword, string repeatNewPassword,
+        public async Task<ChangePassword> ChangeYourPassword(string currentPassword, string newPassword, string repeatNewPassword,
             string authToken)
         {
             var content = new FormUrlEncodedContent(new[]
@@ -74,10 +75,10 @@ namespace BeginMobile.Services.ManagerServices
                                                     });
 
             const string addressSuffix = "me/change_password";
-            return _changePasswordClient.Post(authToken, content, addressSuffix);
+            return await _changePasswordClient.PostAsync(authToken, content, addressSuffix);
         }
 
-        public string UpdateProfile(string nameSurname, string authToken)
+        public async Task<string> UpdateProfile(string nameSurname, string authToken)
         {
             try
             {
@@ -87,7 +88,7 @@ namespace BeginMobile.Services.ManagerServices
                                                         });
 
                 const string addressSuffix = "me/update_profile";
-                return _stringResultClient.PostContentResultAsync(authToken, content, addressSuffix);
+                return await _stringResultClient.PostContentResultAsync(authToken, content, addressSuffix);
             }
             catch (Exception exception)
             {
