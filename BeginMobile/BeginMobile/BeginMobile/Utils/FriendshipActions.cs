@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using BeginMobile.Services.DTO;
-using Xamarin.Forms;
 
 namespace BeginMobile.Utils
 {
@@ -15,7 +14,7 @@ namespace BeginMobile.Utils
         Remove = 4
     }
 
-    public class FriendshipActions : Page
+    public static class FriendshipActions
     {
         /// <summary>
         /// Execute friendship action.
@@ -55,5 +54,10 @@ namespace BeginMobile.Utils
 
             return responseErrors;
         }
+    }
+
+    public static class FriendshipMessages
+    {
+        public const string DisplayAlert = "DisplayAlert";
     }
 }

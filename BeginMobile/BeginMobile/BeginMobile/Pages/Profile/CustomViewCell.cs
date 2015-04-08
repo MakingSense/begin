@@ -1,6 +1,7 @@
 ﻿#define FriendshipActions
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
@@ -131,15 +132,19 @@ namespace BeginMobile.Pages.Profile
 
                 if (responseErrors.Any())
                 {
-                    //TODO: Logic here
+                    SubscribeAlert(responseErrors);
                 }
 
-                objectSender.IsVisible = false;
-                parentGrid.Children.Remove(objectSender);
-                parentGrid.Children.Add(_buttonCancelRequestFriend, 1, 0);
-                _buttonCancelRequestFriend.IsVisible = true;
+                else
+                {
+                    objectSender.IsVisible = false;
+                    parentGrid.Children.Remove(objectSender);
+                    parentGrid.Children.Add(_buttonCancelRequestFriend, 1, 0);
+                    _buttonCancelRequestFriend.IsVisible = true;
+                }
             }
         }
+
         private void CancelFriendEventHandler(object sender, EventArgs eventArgs)
         {
             var objectSender = sender as Button;
@@ -158,15 +163,25 @@ namespace BeginMobile.Pages.Profile
 
                 if (responseErrors.Any())
                 {
-                    //TODO: Logic here
+                    SubscribeAlert(responseErrors);
                 }
 
-                objectSender.IsVisible = false;
-                parentGrid.Children.Remove(objectSender);
-                parentGrid.Children.Add(_buttonAddFriend, 1, 0);
-                _buttonAddFriend.IsVisible = true;
-
+                else
+                {
+                    objectSender.IsVisible = false;
+                    parentGrid.Children.Remove(objectSender);
+                    parentGrid.Children.Add(_buttonAddFriend, 1, 0);
+                    _buttonAddFriend.IsVisible = true;
+                }
             }
+        }
+
+        private void SubscribeAlert(IEnumerable<ContactServiceError> responseErrors)
+        {
+            var message = responseErrors.Aggregate(string.Empty,
+                (current, contactServiceError) => current + (contactServiceError.Message + "\n"));
+
+            MessagingCenter.Send(this, FriendshipMessages.DisplayAlert, message);
         }
 
         #endregion

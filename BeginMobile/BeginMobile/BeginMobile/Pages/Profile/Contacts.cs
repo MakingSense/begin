@@ -50,6 +50,7 @@ namespace BeginMobile.Pages.Profile
             contactsList.AddRange(RetrieveContacts(_profileInformationContacts));
 
             var contactListViewTemplate = new DataTemplate(() => new CustomViewCell(_currentUser));
+            MessagingCenter.Subscribe(this, FriendshipMessages.DisplayAlert, DisplayAlertCallBack());
 
             _listViewContacts = new ListView
             {
@@ -59,24 +60,23 @@ namespace BeginMobile.Pages.Profile
             };
 
             _listViewContacts.ItemSelected += async (sender, eventArgs) =>
-            {
-                if (eventArgs.SelectedItem == null)
-                {
-                    return;
-                }
+                                                    {
+                                                        if (eventArgs.SelectedItem == null)
+                                                        {
+                                                            return;
+                                                        }
 
-                var contactItem = (Contact)eventArgs.SelectedItem;
+                                                        var contactItem = (Contact) eventArgs.SelectedItem;
 
-                var contentPageContactDetail = new ContactDetail(contactItem, _currentUser)
-                {
-                    BindingContext
-                        =
-                        contactItem
-                };
+                                                        var contentPageContactDetail = new ContactDetail(contactItem,
+                                                            _currentUser)
+                                                                                       {
+                                                                                           BindingContext = contactItem
+                                                                                       };
 
-                await Navigation.PushAsync(contentPageContactDetail);
-                ((ListView)sender).SelectedItem = null;
-            };
+                                                        await Navigation.PushAsync(contentPageContactDetail);
+                                                        ((ListView) sender).SelectedItem = null;
+                                                    };
 
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
@@ -207,6 +207,14 @@ namespace BeginMobile.Pages.Profile
                 Registered = contact.Registered,
                 Id = contact.Id.ToString()
             });
+        }
+
+        private Action<CustomViewCell, string> DisplayAlertCallBack()
+        {
+            return (sender, arg) =>
+                   {
+                       DisplayAlert("Error", arg, "Ok");
+                   };
         }
 
         #endregion
