@@ -26,7 +26,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 const string addressSuffix = "me/options";
-                return await _loginGlobalClient.GetTestAsync(addressSuffix);
+                return await _loginGlobalClient.GetAsync(addressSuffix);
             }
             catch (Exception exception)
             {
@@ -39,7 +39,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 const string addressSuffix = "groups/options";
-                return await _loginGroupClient.GetTestAsync(addressSuffix);
+                return await _loginGroupClient.GetAsync(addressSuffix);
             }
             catch (Exception exception)
             {

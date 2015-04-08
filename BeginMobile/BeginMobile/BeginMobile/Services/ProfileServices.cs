@@ -77,10 +77,10 @@ namespace BeginMobile.Services
             return _groupManager.GetGroupById(authToken, groupId, sections);
         }
 
-        public List<ProfileEvent> GetEventsByParams(string authToken, string name = null,
+        public async Task<List<ProfileEvent>> GetEventsByParams(string authToken, string name = null,
             string cat = null, string limit = null)
         {
-            return _eventManager.GetEventsByParams(authToken, name, cat, limit);
+            return await _eventManager.GetEventsByParams(authToken, name, cat, limit);
         }
 
         public ProfileEvent GetEvent(string authToken, string eventId)
@@ -88,9 +88,9 @@ namespace BeginMobile.Services
             return _eventManager.GetEventById(authToken, eventId);
         }
 
-        public List<User> GetContacts(string authToken, string name = null, string sort = null, string limit = null)
+        public async Task<List<User>> GetContacts(string authToken, string name = null, string sort = null, string limit = null)
         {
-            return _contactManager.GetContacts(authToken,name, sort, limit);
+            return await _contactManager.GetContacts(authToken,name, sort, limit);
         }
 
         public User GetContact(string authToken, string contactId)

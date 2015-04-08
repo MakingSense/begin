@@ -97,7 +97,7 @@ namespace BeginMobile.Services.ManagerServices
             {
                 const string urlGetParams = "?sections=groups";
                 var addressSuffix = Identifier + "/" + username;
-                return await _profileGroupClient.GetTestAsync(authToken, addressSuffix, urlGetParams);
+                return await _profileGroupClient.GetAsync(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
             {
@@ -163,7 +163,7 @@ namespace BeginMobile.Services.ManagerServices
 
                 var profileMeWall = new ProfileMeWall()
                 {
-                    ListOfWall = await _wallClient.GetTestListAsync(authToken, addressSuffix, urlGetParams)
+                    ListOfWall = await _wallClient.GetListAsync(authToken, addressSuffix, urlGetParams)
                 };
 
                 return profileMeWall;

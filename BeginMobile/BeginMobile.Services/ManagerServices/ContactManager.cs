@@ -22,7 +22,7 @@ namespace BeginMobile.Services.ManagerServices
             new GenericBaseClient<ContactServiceError>(BaseAddress, SubAddress);
 
 
-        public List<User> GetContacts(
+        public async  Task<List<User>> GetContacts(
             string authToken,
             string name = null,
             string sort = null,
@@ -32,7 +32,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var urlGetParams = "?q=" + name + "&sort=" + sort + "&limit=" + limit;
-                return _contactClient.GetList(authToken, Identifier, urlGetParams).ToList();
+                return await _contactClient.GetListAsync(authToken, Identifier, urlGetParams);
             }
             catch (Exception exeption)
             {

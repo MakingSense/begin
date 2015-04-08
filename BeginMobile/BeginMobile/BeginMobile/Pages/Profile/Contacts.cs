@@ -5,17 +5,19 @@ using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
 using BeginMobile.Utils;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace BeginMobile.Pages.Profile
 {
     public class Contacts : ContentPage
     {
         private const string UserDefault = "userdefault3.png";
-        private readonly ListView _listViewContacts;
-        private readonly Label _labelNoContactsMessage;
+        private ListView _listViewContacts;
+        private Label _labelNoContactsMessage;
         private readonly List<Contact> _defaultList = new List<Contact>();
         private readonly SearchView _searchView;
         private readonly LoginUser _currentUser;
+        private List<User> _profileInformationContacts;
 
         private const string DefaultLimit = "10";
 
@@ -32,16 +34,21 @@ namespace BeginMobile.Pages.Profile
         {
             Title = "Contacts";
             _searchView = new SearchView();
-
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            var profileInformationContacts = App.ProfileServices.GetContacts(_currentUser.AuthToken, limit: DefaultLimit);
+
+            Init();
+        }
+
+        private async Task Init()
+        {
+            _profileInformationContacts = await App.ProfileServices.GetContacts(_currentUser.AuthToken, limit: DefaultLimit);
 
             var contactsList = new List<Contact>();
 
             LoadSortOptionsPicker();
 
-            contactsList.AddRange(RetrieveContacts(profileInformationContacts));
-            
+            contactsList.AddRange(RetrieveContacts(_profileInformationContacts));
+
             var contactListViewTemplate = new DataTemplate(() => new CustomViewCell(_currentUser));
 
             _listViewContacts = new ListView
@@ -109,7 +116,7 @@ namespace BeginMobile.Pages.Profile
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void SearchItemEventHandler(object sender, EventArgs args)
+        private async void SearchItemEventHandler(object sender, EventArgs args)
         {
             string limit;
             string sort;
@@ -119,7 +126,7 @@ namespace BeginMobile.Pages.Profile
             RetrieveLimitSelected(out limit);
             RetrieveSortOptionSelected(out sort);
 
-            var list = App.ProfileServices.GetContacts(_currentUser.AuthToken, q, sort, limit) ?? new List<User>();
+            var list = await App.ProfileServices.GetContacts(_currentUser.AuthToken, q, sort, limit) ?? new List<User>();
 
 
             if (list.Any())

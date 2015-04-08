@@ -32,7 +32,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var urlGetParams = "?q=" + name + "&cat=" + cat + "&limit=" + limit + "&sections=" + sections;
-                return await _groupClient.GetTestListAsync(authToken, Identifier, urlGetParams);
+                return await _groupClient.GetListAsync(authToken, Identifier, urlGetParams);
             }
             catch (Exception exeption)
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
 
@@ -19,7 +20,7 @@ namespace BeginMobile.Services.ManagerServices
         {
         }
 
-        public List<ProfileEvent> GetEventsByParams(
+        public async  Task<List<ProfileEvent>> GetEventsByParams(
             string authToken,
             string name = null,
             string cat = null,
@@ -29,7 +30,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var urlGetParams = "?q=" + name + "&cat=" + cat + "&limit=" + limit;
-                return _eventClient.GetList(authToken, Identifier, urlGetParams).ToList();
+                return await _eventClient.GetListAsync(authToken, Identifier, urlGetParams);
             }
             catch (Exception ex)
             {

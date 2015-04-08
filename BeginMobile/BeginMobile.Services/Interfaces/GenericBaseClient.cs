@@ -206,7 +206,7 @@ namespace BeginMobile.Services.Interfaces
         /**
          * Methods async in services
          */
-        public async Task<List<T>> GetTestListAsync(string authToken, string identifier, string urlParams)
+        public async Task<List<T>> GetListAsync(string authToken, string identifier, string urlParams)
         {
             using (var httpClient = new HttpClient())
             {
@@ -223,7 +223,7 @@ namespace BeginMobile.Services.Interfaces
             }
         }
 
-        public async Task<List<T>> PostTestListAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        public async Task<List<T>> PostListAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {
@@ -239,7 +239,7 @@ namespace BeginMobile.Services.Interfaces
             }
         }
 
-        public async Task<T> GetTestAsync(string addressSuffix)
+        public async Task<T> GetAsync(string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {
@@ -259,7 +259,7 @@ namespace BeginMobile.Services.Interfaces
             }
         }
 
-        public async Task<T> GetTestAsync(string authToken, string identifier, string urlParams)
+        public async Task<T> GetAsync(string authToken, string identifier, string urlParams)
         {
             using (var httpClient = new HttpClient())
             {
@@ -282,7 +282,7 @@ namespace BeginMobile.Services.Interfaces
             }
         }
 
-        public async  Task<T> PostTestAsync(FormUrlEncodedContent content, string addressSuffix)
+        public async  Task<T> PostAsync(FormUrlEncodedContent content, string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {
@@ -302,7 +302,7 @@ namespace BeginMobile.Services.Interfaces
             }
         }
 
-        public async Task<T> PostTestAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        public async Task<T> PostAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {

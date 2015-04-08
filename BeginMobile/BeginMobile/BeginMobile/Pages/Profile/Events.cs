@@ -4,13 +4,14 @@ using System.Linq;
 using BeginMobile.Services.DTO;
 using BeginMobile.Utils;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace BeginMobile.Pages.Profile
 {
     public class Events : ContentPage
     {
-        private readonly Label _labelNoEventsMessage;
-        private readonly ListView _eventsListView;
+        private Label _labelNoEventsMessage;
+        private ListView _eventsListView;
 
         private readonly List<EventInfoObject> _defaultList = new List<EventInfoObject>();
         private readonly SearchView _searchView;
@@ -19,6 +20,8 @@ namespace BeginMobile.Pages.Profile
 
         private readonly LoginUser _currentUser;
         private const string DefaultLimit = "10";
+
+        private List<ProfileEvent> _profileEvents;
 
         public Events()
         {
@@ -32,8 +35,13 @@ namespace BeginMobile.Pages.Profile
             #region Call api
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
 
-            var profileEvents =
-                App.ProfileServices.GetEventsByParams(_currentUser.AuthToken, limit: DefaultLimit);
+            Init();
+        }
+
+        private async Task Init()
+        {
+            _profileEvents =
+                await App.ProfileServices.GetEventsByParams(_currentUser.AuthToken, limit: DefaultLimit);
 
             #endregion
 
@@ -50,32 +58,32 @@ namespace BeginMobile.Pages.Profile
             #region Subtitles layout
 
             var gridEventHeaderTitle = new Grid
-                                       {
-                                           HorizontalOptions = LayoutOptions.FillAndExpand
-                                       };
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand
+            };
 
             gridEventHeaderTitle.Children.Add(new Label
-                                              {
-                                                  WidthRequest = 200,
-                                                  HeightRequest = 80,
-                                                  Text = "Event Name",
-                                                  HorizontalOptions = LayoutOptions.FillAndExpand,
-                                                  Style = App.Styles.SubtitleStyle
-                                              }, 0, 1, 0, 1);
+            {
+                WidthRequest = 200,
+                HeightRequest = 80,
+                Text = "Event Name",
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Style = App.Styles.SubtitleStyle
+            }, 0, 1, 0, 1);
 
             gridEventHeaderTitle.Children.Add(new Label
-                                              {
-                                                  Text = "Date",
-                                                  HeightRequest = 50,
-                                                  HorizontalOptions = LayoutOptions.Start,
-                                                  Style = App.Styles.SubtitleStyle
-                                              }, 1, 2, 0, 1);
+            {
+                Text = "Date",
+                HeightRequest = 50,
+                HorizontalOptions = LayoutOptions.Start,
+                Style = App.Styles.SubtitleStyle
+            }, 1, 2, 0, 1);
 
             #endregion
 
             #region List components
 
-            var listEvents = RetrieveEventInfoObjectList(profileEvents);
+            var listEvents = RetrieveEventInfoObjectList(_profileEvents);
 
             var eventTemplate = new DataTemplate(typeof(TemplateListViewEvents));
 
@@ -116,19 +124,20 @@ namespace BeginMobile.Pages.Profile
             };
 
             Content = new StackLayout
-                      {
-                          VerticalOptions = LayoutOptions.Start,
-                          Padding = 20,
-                          Children =
+            {
+                VerticalOptions = LayoutOptions.Start,
+                Padding = 20,
+                Children =
                           {
                               _searchView.Container,
                               gridEventHeaderTitle,
                               scrollView
                           }
-                      };
+            };
 
             #endregion
         }
+
 
         private void LoadCategoriesPicker()
         {
@@ -161,7 +170,7 @@ namespace BeginMobile.Pages.Profile
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void SearchItemEventHandler(object sender, EventArgs args)
+        private async void SearchItemEventHandler(object sender, EventArgs args)
         {
             string limit;
             string cat;
@@ -172,7 +181,7 @@ namespace BeginMobile.Pages.Profile
             RetrieveCategorySelected(out cat);
 
             List<ProfileEvent> profileEventList =
-                App.ProfileServices.GetEventsByParams(_currentUser.AuthToken, q, cat, limit);
+                await App.ProfileServices.GetEventsByParams(_currentUser.AuthToken, q, cat, limit);
 
             if (profileEventList.Any())
             {
