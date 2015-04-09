@@ -28,20 +28,22 @@ namespace BeginMobile.Pages.Profile
                                                                         {"alpha", "Alphabetical"},
                                                                         {string.Empty, "None"}
                                                                     };
+
         private Picker _sortPicker;
 
         public Contacts()
         {
             Title = "Contacts";
             _searchView = new SearchView();
-            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser) App.Current.Properties["LoginUser"];
 
             Init();
         }
 
         private async Task Init()
         {
-            _profileInformationContacts = await App.ProfileServices.GetContacts(_currentUser.AuthToken, limit: DefaultLimit);
+            _profileInformationContacts =
+                await App.ProfileServices.GetContacts(_currentUser.AuthToken, limit: DefaultLimit);
 
             var contactsList = new List<Contact>();
 
@@ -53,11 +55,11 @@ namespace BeginMobile.Pages.Profile
             MessagingCenter.Subscribe(this, FriendshipMessages.DisplayAlert, DisplayAlertCallBack());
 
             _listViewContacts = new ListView
-            {
-                ItemsSource = contactsList,
-                ItemTemplate = contactListViewTemplate,
-                HasUnevenRows = true
-            };
+                                {
+                                    ItemsSource = contactsList,
+                                    ItemTemplate = contactListViewTemplate,
+                                    HasUnevenRows = true
+                                };
 
             _listViewContacts.ItemSelected += async (sender, eventArgs) =>
                                                     {
@@ -83,30 +85,28 @@ namespace BeginMobile.Pages.Profile
 
             _labelNoContactsMessage = new Label();
 
-            var scrollView = new ScrollView
-            {
-                Content = new StackLayout
-                {
-                    Spacing = 2,
-                    VerticalOptions = LayoutOptions.Start,
-                    Children =
-                                               {
-                                                   _searchView.Container,
-                                                   _labelNoContactsMessage,
-                                                   _listViewContacts
-                                               }
-                }
-            };
+            var stackLayoutContactsList = new StackLayout
+                                          {
+                                              Padding = App.Styles.LayoutThickness,
+                                              VerticalOptions = LayoutOptions.FillAndExpand,
+                                              Orientation = StackOrientation.Vertical,
+                                              Children =
+                                              {
+                                                  _listViewContacts
+                                              }
+                                          };
 
             Content = new StackLayout
-            {
-                Padding = 10,
-                VerticalOptions = LayoutOptions.Start,
-                Children =
+                      {
+                          Spacing = 2,
+                          VerticalOptions = LayoutOptions.Start,
+                          Children =
                           {
-                              scrollView
+                              _searchView.Container,
+                              _labelNoContactsMessage,
+                              stackLayoutContactsList
                           }
-            };
+                      };
         }
 
         #region Events
@@ -121,7 +121,7 @@ namespace BeginMobile.Pages.Profile
             string limit;
             string sort;
 
-            var q = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
+            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
 
             RetrieveLimitSelected(out limit);
             RetrieveSortOptionSelected(out sort);
@@ -148,10 +148,10 @@ namespace BeginMobile.Pages.Profile
         private void LoadSortOptionsPicker()
         {
             _sortPicker = new Picker
-            {
-                Title = "Sort by",
-                VerticalOptions = LayoutOptions.CenterAndExpand
-            };
+                          {
+                              Title = "Sort by",
+                              VerticalOptions = LayoutOptions.CenterAndExpand
+                          };
 
             if (_sortOptionsDictionary != null)
             {
@@ -163,11 +163,10 @@ namespace BeginMobile.Pages.Profile
 
             else
             {
-                _sortOptionsDictionary = new Dictionary<string, string> { { "last_active", "Last Active" } };
+                _sortOptionsDictionary = new Dictionary<string, string> {{"last_active", "Last Active"}};
             }
 
             _searchView.Container.Children.Add(_sortPicker);
-
         }
 
         private void RetrieveSortOptionSelected(out string sort)
@@ -195,25 +194,22 @@ namespace BeginMobile.Pages.Profile
         private static IEnumerable<Contact> RetrieveContacts(IEnumerable<User> profileInformationContacts)
         {
             return profileInformationContacts.Select(contact => new Contact
-            {
-                Icon = UserDefault,
-                NameSurname = contact.NameSurname,
-                Email =
-                    string.Format("e-mail: {0}",
-                        contact.Email),
-                Url = contact.Url,
-                UserName = contact.UserName,
-                Registered = contact.Registered,
-                Id = contact.Id.ToString()
-            });
+                                                                {
+                                                                    Icon = UserDefault,
+                                                                    NameSurname = contact.NameSurname,
+                                                                    Email =
+                                                                        string.Format("e-mail: {0}",
+                                                                            contact.Email),
+                                                                    Url = contact.Url,
+                                                                    UserName = contact.UserName,
+                                                                    Registered = contact.Registered,
+                                                                    Id = contact.Id.ToString()
+                                                                });
         }
 
         private Action<CustomViewCell, string> DisplayAlertCallBack()
         {
-            return (sender, arg) =>
-                   {
-                       DisplayAlert("Error", arg, "Ok");
-                   };
+            return (sender, arg) => { DisplayAlert("Error", arg, "Ok"); };
         }
 
         #endregion
