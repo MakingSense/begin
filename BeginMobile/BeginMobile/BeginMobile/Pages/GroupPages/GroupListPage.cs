@@ -7,13 +7,22 @@ namespace BeginMobile.Pages.GroupPages
     public class GroupListPage : TabContent
     {
         private ListView _listViewGroup;
-        private RelativeLayout _relativeLayout;
+        private StackLayout _stackLayoutMain;
         private ProfileInformationGroups _groupInformation;
 
         public GroupListPage(string title, string iconImg)
             : base(title, iconImg)
         {
             var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+
+            _stackLayoutMain = new StackLayout()
+            {
+                Spacing = 2
+            };
+
+            _stackLayoutMain.Children.Add(CreateStackLayoutWithLoadingIndicator());
+            Content = _stackLayoutMain;
+
             Init(currentUser);
         }
 
@@ -44,10 +53,17 @@ namespace BeginMobile.Pages.GroupPages
                 ((ListView)sender).SelectedItem = null;
             };
 
-            _relativeLayout = new RelativeLayout();
-            _relativeLayout.Children.Add(_listViewGroup, Constraint.Constant(0), Constraint.Constant(0), Constraint.RelativeToParent(parent => { return parent.Width; }), Constraint.RelativeToParent(parent => { return parent.Height; }));
+            var relativeLayout = new RelativeLayout();
+            relativeLayout.Children.Add(_listViewGroup, 
+                Constraint.Constant(0), 
+                Constraint.Constant(0), 
+                Constraint.RelativeToParent(parent => { return parent.Width; }), 
+                Constraint.RelativeToParent(parent => { return parent.Height; }));
 
-            Content = new ScrollView { Content = _relativeLayout };
+            _stackLayoutMain.Children.Add(relativeLayout);
+
+            //Content = new ScrollView { Content = _stackLayoutMain };
+            Content = _stackLayoutMain;
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿using Xamarin.Forms;
+﻿using BeginMobile.Interfaces;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages
 {
-    public class TabContent : ContentPage
+    public class TabContent : BaseContentPage
     {
         public TabContent(string title, string icon)
         {

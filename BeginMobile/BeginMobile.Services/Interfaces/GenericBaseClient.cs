@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace BeginMobile.Services.Interfaces
 {
@@ -217,6 +218,7 @@ namespace BeginMobile.Services.Interfaces
                             JsonConvert.DeserializeObject<List<T>>(userJson)
                         ).ConfigureAwait(false);
 
+                //return resultList.Take(20).ToList();
                 return resultList;
             }
         }

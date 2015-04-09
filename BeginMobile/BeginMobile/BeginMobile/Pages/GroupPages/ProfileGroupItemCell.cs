@@ -37,7 +37,7 @@ namespace BeginMobile.Pages.GroupPages
                                 Style = App.Styles.ListItemDetailTextStyle
                             };
 
-            labelDesc.SetBinding(Label.TextProperty, "Description", stringFormat: "Description: {0}");
+            labelDesc.SetBinding(Label.TextProperty, "Description");
 
             //Other section
             var labelStatus = new Label

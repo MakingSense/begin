@@ -27,27 +27,41 @@ namespace BeginMobile.Services.ManagerServices
 
         public async Task<LoginUser> Login(string username, string password)
         {
-            var content = new FormUrlEncodedContent(new[]
-                                                    {
-                                                        new KeyValuePair<string, string>("username", username),
-                                                        new KeyValuePair<string, string>("password", password)
-                                                    });
-            const string addressSuffix = "login";
-            return await _loginManagerClient.PostAsync(content, addressSuffix);
+            try
+            {
+                var content = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("username", username),
+                    new KeyValuePair<string, string>("password", password)
+                });
+                const string addressSuffix = "login";
+                return await _loginManagerClient.PostAsync(content, addressSuffix);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public async Task<RegisterUser> Register(string username, string email, string password, string nameSurname)
         {
-            var content = new FormUrlEncodedContent(new[]
-                                                    {
-                                                        new KeyValuePair<string, string>("username", username),
-                                                        new KeyValuePair<string, string>("email", email),
-                                                        new KeyValuePair<string, string>("password", password),
-                                                        new KeyValuePair<string, string>("name_surname", nameSurname)
-                                                    });
+            try
+            {
+                var content = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("username", username),
+                    new KeyValuePair<string, string>("email", email),
+                    new KeyValuePair<string, string>("password", password),
+                    new KeyValuePair<string, string>("name_surname", nameSurname)
+                });
 
-            const string addressSuffix = "signup";
-            return await _registerUserClient.PostAsync(content, addressSuffix);
+                const string addressSuffix = "signup";
+                return await _registerUserClient.PostAsync(content, addressSuffix);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public string RetrievePassword(string email)

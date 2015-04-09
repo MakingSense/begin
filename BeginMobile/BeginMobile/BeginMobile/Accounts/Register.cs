@@ -119,27 +119,36 @@ namespace BeginMobile.Accounts
                                 var registerUser = await loginUserManager.Register(_entryUsername.Text, _entryEmail.Text,
                                     _entryPassword.Text, _entryFullName.Text);
 
-                                if (registerUser.Errors != null)
+                                if (registerUser != null)
                                 {
-                                    var errorMessages = registerUser.Errors.Aggregate("", (current, error) => current + (error.Label + "\n"));
 
-                                    await DisplayAlert("Error", errorMessages, "OK");
+                                    if (registerUser.Errors != null)
+                                    {
+                                        var errorMessages = registerUser.Errors.Aggregate("",
+                                            (current, error) => current + (error.Label + "\n"));
 
+                                        await DisplayAlert("Error", errorMessages, "OK");
+
+                                    }
+                                    else
+                                    {
+                                        await DisplayAlert("Successfull!", "You've successfully registered.", "OK");
+
+                                        var loginUser = new LoginUser
+                                        {
+                                            AuthToken = registerUser.AuthToken,
+                                            User = registerUser.User
+                                        };
+
+                                        App.Current.Properties["IsLoggedIn"] = true;
+                                        App.Current.Properties["LoginUser"] = loginUser;
+
+                                        iLoginManager.ShowMainPage(loginUser);
+                                    }
                                 }
                                 else
                                 {
-                                    await DisplayAlert("Successfull!", "You've successfully registered.", "OK");
-
-                                    var loginUser = new LoginUser
-                                                    {
-                                        AuthToken = registerUser.AuthToken,
-                                        User = registerUser.User
-                                    };
-
-                                    App.Current.Properties["IsLoggedIn"] = true;
-                                    App.Current.Properties["LoginUser"] = loginUser;
-
-                                    iLoginManager.ShowMainPage(loginUser);
+                                    await DisplayAlert("Error", "There was a problem to connect to service.", "OK");
                                 }
                             }
 

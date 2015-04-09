@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace BeginMobile.Accounts
 {
-    public class Login : ContentPage
+    public class Login : BaseContentPage
     {
         private readonly Entry _entryEmail;
         private readonly Entry _entryPassword;
@@ -65,8 +65,13 @@ namespace BeginMobile.Accounts
                 }
                 else
                 {
+                    ActivityIndicatorLoading.IsVisible = true;
+                    ActivityIndicatorLoading.IsRunning = true;
+
                     var loginUserManager = new LoginUserManager();
                     var loginUser = await loginUserManager.Login(_entryEmail.Text, _entryPassword.Text);
+
+
 
                     if (loginUser != null)
                     {
@@ -80,6 +85,9 @@ namespace BeginMobile.Accounts
                         await DisplayAlert("Authentification Error", "Invalid username or password ",
                                "Re - Try");
                     }
+
+                    ActivityIndicatorLoading.IsVisible = false;
+                    ActivityIndicatorLoading.IsRunning = false;
                 }
             };
 
@@ -88,6 +96,8 @@ namespace BeginMobile.Accounts
                 MessagingCenter.Send<ContentPage>(this, "Register");
             };
 
+            var stackLayoutLoading = CreateStackLayoutWithLoadingIndicator();
+
             Content = new StackLayout
                       {
                           Spacing = 20,
@@ -95,6 +105,7 @@ namespace BeginMobile.Accounts
                           VerticalOptions = LayoutOptions.Center,
                           Children =
                           {
+                              stackLayoutLoading,
                               logo,
                               _entryEmail,
                               _entryPassword,

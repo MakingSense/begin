@@ -1,4 +1,5 @@
-﻿using BeginMobile.Services.DTO;
+﻿using BeginMobile.Interfaces;
+using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,7 @@ namespace BeginMobile.Pages.Wall
     public class WallPage : TabContent
     {
         private ListView _listViewWall;
-        private RelativeLayout _relativeLayoutMain;
         private ProfileMeWall _profileShop;
-        private ActivityIndicator _indicator;
         private LoginUser _currentUser;
         private StackLayout _stackLayoutMain;
         private List<BeginWallViewModel> _listWall;
@@ -23,21 +22,17 @@ namespace BeginMobile.Pages.Wall
             : base(title, iconImage)
         {
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            _indicator = new ActivityIndicator
-            {
-              HorizontalOptions = LayoutOptions.CenterAndExpand,
-              Color = Color.Yellow,
-              IsVisible = false 
-            };
 
             _stackLayoutMain = new StackLayout()
             {
                 Spacing = 2,
-                Padding = App.Styles.LayoutThickness
+                Padding = App.Styles.LayoutThickness,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions =LayoutOptions.FillAndExpand
             };
 
-            _stackLayoutMain.Children.Add(_indicator);
-
+            _stackLayoutMain.Children.Add(CreateStackLayoutWithLoadingIndicator());
+    
             Content = _stackLayoutMain;
 
             Init();
@@ -63,11 +58,12 @@ namespace BeginMobile.Pages.Wall
 
         private async Task Init()
         {
-            _indicator.IsRunning = true;
-            _indicator.IsVisible = true;
+            ActivityIndicatorLoading.IsRunning = true;
+            ActivityIndicatorLoading.IsVisible = true;
 
             _profileShop = await App.ProfileServices.GetWall(_currentUser.AuthToken);
             _listWall = ListBeginWallViewModel(_profileShop.ListOfWall);
+            //_listWall = new List<BeginWallViewModel>();
 
             _listViewWall = new ListView
             {
@@ -94,19 +90,20 @@ namespace BeginMobile.Pages.Wall
                 }
             };*/
 
-            _relativeLayoutMain = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand };
-            _relativeLayoutMain.Children.Add(_listViewWall,
+            var relativeLayoutMain = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand };
+            relativeLayoutMain.Children.Add(_listViewWall,
                 xConstraint: Constraint.Constant(0),
                 yConstraint: Constraint.Constant(0),
                 widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
                 heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
-            _stackLayoutMain.Children.Add(_relativeLayoutMain);
-
+            _stackLayoutMain.Children.Add(relativeLayoutMain);
             Content = _stackLayoutMain;
 
-            _indicator.IsRunning = false;
-            _indicator.IsVisible = false;
+            //LoadItems();
+
+            ActivityIndicatorLoading.IsRunning = false;
+            ActivityIndicatorLoading.IsVisible = false;
         }
 
         /*private async Task LoadItems()
@@ -115,10 +112,7 @@ namespace BeginMobile.Pages.Wall
 
             Device.StartTimer(TimeSpan.FromSeconds(2), () =>
             {
-                for (int i = 0; i < 5; i++)
-                {
-                    _listWall.Add(_listWall[i]);
-                }
+                _listWall.AddRange(ListBeginWallViewModel(_profileShop.ListOfWall));
                 _isLoading = false;
                 return false;
             });
