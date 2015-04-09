@@ -1,4 +1,4 @@
-﻿#define FriendshipEnable
+﻿//#define FriendshipEnable
 
 using System.Collections.Generic;
 using BeginMobile.Services.DTO;
@@ -59,5 +59,6 @@ namespace BeginMobile.Utils
     public static class FriendshipMessages
     {
         public const string DisplayAlert = "DisplayAlert";
+        public const string RemoveContact = "RemoveContact";
     }
 }

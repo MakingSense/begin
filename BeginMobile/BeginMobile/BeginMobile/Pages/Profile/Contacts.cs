@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
 using BeginMobile.Utils;
 using Xamarin.Forms;
-using System.Threading.Tasks;
 
 namespace BeginMobile.Pages.Profile
 {
@@ -35,7 +36,7 @@ namespace BeginMobile.Pages.Profile
         {
             Title = "Contacts";
             _searchView = new SearchView();
-            _currentUser = (LoginUser) App.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
 
             Init();
         }
@@ -52,11 +53,11 @@ namespace BeginMobile.Pages.Profile
             contactsList.AddRange(RetrieveContacts(_profileInformationContacts));
 
             var contactListViewTemplate = new DataTemplate(() => new CustomViewCell(_currentUser));
-            MessagingCenter.Subscribe(this, FriendshipMessages.DisplayAlert, DisplayAlertCallBack());
+            MessagingSubscriptions();
 
             _listViewContacts = new ListView
                                 {
-                                    ItemsSource = contactsList,
+                                    ItemsSource = new ObservableCollection<Contact>(contactsList),
                                     ItemTemplate = contactListViewTemplate,
                                     HasUnevenRows = true
                                 };
@@ -68,7 +69,7 @@ namespace BeginMobile.Pages.Profile
                                                             return;
                                                         }
 
-                                                        var contactItem = (Contact) eventArgs.SelectedItem;
+                                                        var contactItem = (Contact)eventArgs.SelectedItem;
 
                                                         var contentPageContactDetail = new ContactDetail(contactItem)
                                                                                        {
@@ -76,7 +77,7 @@ namespace BeginMobile.Pages.Profile
                                                                                        };
 
                                                         await Navigation.PushAsync(contentPageContactDetail);
-                                                        ((ListView) sender).SelectedItem = null;
+                                                        ((ListView)sender).SelectedItem = null;
                                                     };
 
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
@@ -121,7 +122,7 @@ namespace BeginMobile.Pages.Profile
             string limit;
             string sort;
 
-            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
+            var q = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
 
             RetrieveLimitSelected(out limit);
             RetrieveSortOptionSelected(out sort);
@@ -131,13 +132,13 @@ namespace BeginMobile.Pages.Profile
 
             if (list.Any())
             {
-                _listViewContacts.ItemsSource = RetrieveContacts(list);
+                _listViewContacts.ItemsSource = new ObservableCollection<Contact>(RetrieveContacts(list));
                 _labelNoContactsMessage.Text = string.Empty;
             }
 
             else
             {
-                _listViewContacts.ItemsSource = _defaultList;
+                _listViewContacts.ItemsSource = new ObservableCollection<Contact>(_defaultList);
             }
         }
 
@@ -163,7 +164,7 @@ namespace BeginMobile.Pages.Profile
 
             else
             {
-                _sortOptionsDictionary = new Dictionary<string, string> {{"last_active", "Last Active"}};
+                _sortOptionsDictionary = new Dictionary<string, string> { { "last_active", "Last Active" } };
             }
 
             _searchView.Container.Children.Add(_sortPicker);
@@ -207,9 +208,45 @@ namespace BeginMobile.Pages.Profile
                                                                 });
         }
 
+        private void MessagingSubscriptions()
+        {
+            MessagingCenter.Subscribe(this, FriendshipMessages.DisplayAlert, DisplayAlertCallBack());
+            MessagingCenter.Subscribe(this, FriendshipMessages.RemoveContact, RemoveContactCallback());
+        }
+
         private Action<CustomViewCell, string> DisplayAlertCallBack()
         {
-            return (sender, arg) => { DisplayAlert("Error", arg, "Ok"); };
+            return async (sender, arg) => { await DisplayAlert("Error", arg, "Ok"); };
+        }
+
+        private Action<CustomViewCell, string> RemoveContactCallback()
+        {
+            return async (sender, arg) =>
+                         {
+                             var removeUsername = arg;
+
+                             if (!string.IsNullOrEmpty(removeUsername))
+                             {
+
+                                 var confirm = await DisplayAlert("Confirm",
+                                     string.Format("Are you sure you want to remove '{0}' from contacts?", removeUsername), "Yes", "No");
+                                 
+                                 if (confirm)
+                                 {
+                                     var contacts = ((ObservableCollection<Contact>)_listViewContacts.ItemsSource);
+                                     var toRemove =
+                                         contacts.FirstOrDefault(contact => contact.UserName == removeUsername);
+
+                                     if (toRemove != null && contacts.Remove(toRemove))
+                                     {
+                                         _listViewContacts.ItemsSource = contacts;
+                                         await
+                                             DisplayAlert("Info",
+                                                 string.Format("'{0}' Removed.", removeUsername), "Ok");
+                                     }
+                                 }
+                             }
+                         };
         }
 
         #endregion

@@ -13,8 +13,7 @@ namespace BeginMobile.Pages.Profile
 {
     public class CustomViewCell : ViewCell
     {
-        private Button _buttonAddFriend;
-        private Button _buttonCancelRequestFriend;
+        private Button _buttonRemoveFriend;
         private readonly LoginUser _loginUser;
         public CustomViewCell(LoginUser loginUser)
         {
@@ -45,26 +44,19 @@ namespace BeginMobile.Pages.Profile
         }
         private Grid CreateOptionLayout()
         {
-            _buttonAddFriend = new Button
-            {
-                Text = AppResources.ButtonAddFriend
-            };
+            _buttonRemoveFriend = new Button
+                                  {
+                                      Text = AppResources.ButtonRemoveFriend
+                                  };
 
-            _buttonAddFriend.Clicked += AddFriendEventHandler;
-
-            _buttonCancelRequestFriend = new Button
-                                        {
-                                            Text = AppResources.ButtonCancelRequestFriend
-                                        };
-
-            _buttonCancelRequestFriend.Clicked += CancelFriendEventHandler;
+            _buttonRemoveFriend.Clicked += RemoveFriendEventHandler;
 
             var labelNameSurname = new Label
-                             {
-                                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                                 YAlign = TextAlignment.Center,
-                                 Style = App.Styles.ListItemTextStyle
-                             };
+                                   {
+                                       HorizontalOptions = LayoutOptions.FillAndExpand,
+                                       YAlign = TextAlignment.Center,
+                                       Style = App.Styles.ListItemTextStyle
+                                   };
 
             var labelUserName = new Label
             {
@@ -107,14 +99,43 @@ namespace BeginMobile.Pages.Profile
             grid.Children.Add(labelNameSurname, 0, 0);
             grid.Children.Add(labelUserName, 0, 1);
             grid.Children.Add(labelEmail, 0, 2);
-            //Keep button at the end
-            grid.Children.Add(_buttonAddFriend, 1, 0);
-
+            grid.Children.Add(_buttonRemoveFriend, 1, 0);
             return grid;
         }
 
         #region Events
-        private void AddFriendEventHandler(object sender, EventArgs eventArgs)
+        //private void AddFriendEventHandler(object sender, EventArgs eventArgs)
+        //{
+        //    var objectSender = sender as Button;
+
+        //    if (objectSender == null) return;
+
+        //    var parentGrid = objectSender.Parent as Grid;
+
+        //    if (parentGrid == null) return;
+        //    var itemGridUserName = parentGrid.Children[1] as Label;
+
+        //    if (itemGridUserName != null)
+        //    {
+        //        var username = itemGridUserName.Text;
+        //        var responseErrors = FriendshipActions.Request(FriendshipOption.Send, _loginUser.AuthToken, username);
+
+        //        if (responseErrors.Any())
+        //        {
+        //            SubscribeAlert(responseErrors);
+        //        }
+
+        //        else
+        //        {
+        //            objectSender.IsVisible = false;
+        //            parentGrid.Children.Remove(objectSender);
+        //            parentGrid.Children.Add(_buttonRemoveFriend, 1, 0);
+        //            _buttonRemoveFriend.IsVisible = true;
+        //        }
+        //    }
+        //}
+
+        private void RemoveFriendEventHandler(object sender, EventArgs eventArgs)
         {
             var objectSender = sender as Button;
 
@@ -128,7 +149,7 @@ namespace BeginMobile.Pages.Profile
             if (itemGridUserName != null)
             {
                 var username = itemGridUserName.Text;
-                var responseErrors = FriendshipActions.Request(FriendshipOption.Send, _loginUser.AuthToken, username);
+                var responseErrors = FriendshipActions.Request(FriendshipOption.Remove, _loginUser.AuthToken, username);
 
                 if (responseErrors.Any())
                 {
@@ -137,41 +158,7 @@ namespace BeginMobile.Pages.Profile
 
                 else
                 {
-                    objectSender.IsVisible = false;
-                    parentGrid.Children.Remove(objectSender);
-                    parentGrid.Children.Add(_buttonCancelRequestFriend, 1, 0);
-                    _buttonCancelRequestFriend.IsVisible = true;
-                }
-            }
-        }
-
-        private void CancelFriendEventHandler(object sender, EventArgs eventArgs)
-        {
-            var objectSender = sender as Button;
-
-            if (objectSender == null) return;
-
-            var parentGrid = objectSender.Parent as Grid;
-
-            if (parentGrid == null) return;
-            var itemGridUserName = parentGrid.Children[1] as Label;
-
-            if (itemGridUserName != null)
-            {
-                var username = itemGridUserName.Text;
-                var responseErrors = FriendshipActions.Request(FriendshipOption.Reject, _loginUser.AuthToken, username);
-
-                if (responseErrors.Any())
-                {
-                    SubscribeAlert(responseErrors);
-                }
-
-                else
-                {
-                    objectSender.IsVisible = false;
-                    parentGrid.Children.Remove(objectSender);
-                    parentGrid.Children.Add(_buttonAddFriend, 1, 0);
-                    _buttonAddFriend.IsVisible = true;
+                    SubscribeRemoveContact(username);
                 }
             }
         }
@@ -182,6 +169,14 @@ namespace BeginMobile.Pages.Profile
                 (current, contactServiceError) => current + (contactServiceError.Message + "\n"));
 
             MessagingCenter.Send(this, FriendshipMessages.DisplayAlert, message);
+            MessagingCenter.Unsubscribe<CustomViewCell, string>(this, FriendshipMessages.DisplayAlert);
+
+        }
+
+        private void SubscribeRemoveContact(string username)
+        {
+            MessagingCenter.Send(this, FriendshipMessages.RemoveContact, username);
+            MessagingCenter.Unsubscribe<CustomViewCell, string>(this, FriendshipMessages.RemoveContact);
         }
 
         #endregion
