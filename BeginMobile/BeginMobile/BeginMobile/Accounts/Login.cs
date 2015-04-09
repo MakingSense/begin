@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using BeginMobile.Interfaces;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.ManagerServices;
@@ -71,18 +72,25 @@ namespace BeginMobile.Accounts
                     var loginUserManager = new LoginUserManager();
                     var loginUser = await loginUserManager.Login(_entryEmail.Text, _entryPassword.Text);
 
-
-
                     if (loginUser != null)
                     {
-                        App.Current.Properties["IsLoggedIn"] = true;
-                        App.Current.Properties["LoginUser"] = loginUser;
+                        if (loginUser.Errors != null)
+                        {
+                            var errorMessage = loginUser.Errors.Aggregate("", (current, error) => current + (error.Label + "\n"));
+                            await DisplayAlert("Error login validation", errorMessage, "Re - Try");
+                        }
+                        else
+                        {
+                            App.Current.Properties["IsLoggedIn"] = true;
+                            App.Current.Properties["LoginUser"] = loginUser;
 
-                        iLoginManager.ShowMainPage(loginUser);
+                            iLoginManager.ShowMainPage(loginUser);
+                        }
+                        
                     }
                     else
                     {
-                        await DisplayAlert("Authentification Error", "Invalid username or password ",
+                        await DisplayAlert("Connection Failed", "Server not found.",
                                "Re - Try");
                     }
 
