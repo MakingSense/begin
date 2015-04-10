@@ -123,31 +123,31 @@ namespace BeginMobile.Pages.Profile
             var buttonAddFriend = new Button
                                   {
                                       Text = AppResources.ButtonAddFriend,
-                                      Style = App.Styles.DefaultButton
+                                      Style = App.Styles.ListViewItemButton
                                   };
 
             var buttonCancelFriend = new Button
                                      {
                                          Text = AppResources.ButtonCancelRequestFriend,
-                                         Style = App.Styles.DefaultButton
+                                         Style = App.Styles.ListViewItemButton
                                      };
 
             var buttonAcceptFriend = new Button
                                      {
                                          Text = AppResources.ButtonAcceptFriend,
-                                         Style = App.Styles.DefaultButton
+                                         Style = App.Styles.ListViewItemButton
                                      };
 
             var buttonRemoveFriend = new Button
                                      {
                                          Text = AppResources.ButtonRemoveFriend,
-                                         Style = App.Styles.DefaultButton
+                                         Style = App.Styles.ListViewItemButton
                                      };
 
             var buttonRejectFriend = new Button
                                      {
                                          Text = AppResources.ButtonRejectFriend,
-                                         Style = App.Styles.DefaultButton
+                                         Style = App.Styles.ListViewItemButton
                                      };
 
             buttonAddFriend.IsVisible = false; // TODO: should be in the wall of every contact not here

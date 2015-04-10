@@ -150,7 +150,7 @@ namespace BeginMobile.Pages.Profile
 
             var gridMainContent = new Grid
             {
-
+                Padding = App.Styles.GridPadding,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 RowDefinitions =
@@ -207,7 +207,7 @@ namespace BeginMobile.Pages.Profile
                 Children = { labelTextContent,labelEventDescription, gridBooking }
             };
 
-            gridMainContent.Children.Add(gridImage, 0, 0);
+           // gridMainContent.Children.Add(gridImage, 0, 0);
             gridMainContent.Children.Add(labelEventName, 0, 1);
             gridMainContent.Children.Add(labelTextDateAndHour, 0, 2);
             gridMainContent.Children.Add(labelDates, 0, 3);
@@ -217,7 +217,17 @@ namespace BeginMobile.Pages.Profile
             gridMainContent.Children.Add(labelAvailableSpaces, 0, 7);
             gridMainContent.Children.Add(stackLayoutDescriptionAndBooking, 0, 8);
 
-            Content = gridMainContent;
+            Content = Content = new StackLayout
+            {
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                Orientation = StackOrientation.Vertical,
+                Children =
+                          {
+                              gridImage,
+                              gridMainContent
+                              //gridButtons
+                          }
+            };
         }
 
         private static EventViewModel GetEvenViewModel(ProfileEvent profileEvent)

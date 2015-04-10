@@ -7,25 +7,21 @@ namespace BeginMobile.Pages.MessagePages
     {
         private static string GroupImage
         {
-            get
-            {
-                return "userdefault3.png";
-            }
+            get { return "userdefault3.png"; }
         }
 
         public ProfileMessagesItem()
         {
-
             var circleShopImage = new CircleImage
-                            {
-                                BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
-                                BorderThickness = Device.OnPlatform(2, 3, 3),
-                                HeightRequest = Device.OnPlatform(50, 100, 100),
-                                WidthRequest = Device.OnPlatform(50, 100, 100),
-                                Aspect = Aspect.AspectFill,
-                                HorizontalOptions = LayoutOptions.Start,
-                                Source = GroupImage
-                            };
+                                  {
+                                      BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
+                                      BorderThickness = Device.OnPlatform(2, 3, 3),
+                                      HeightRequest = Device.OnPlatform(50, 100, 100),
+                                      WidthRequest = Device.OnPlatform(50, 100, 100),
+                                      Aspect = Aspect.AspectFill,
+                                      HorizontalOptions = LayoutOptions.Start,
+                                      Source = GroupImage
+                                  };
 
             var labelTitle = new Label
                              {
@@ -38,20 +34,20 @@ namespace BeginMobile.Pages.MessagePages
             labelTitle.SetBinding(Label.TextProperty, "Title");
 
             var labelCreate = new Label
-                            {
-                                YAlign = TextAlignment.Center,
-                                Style = App.Styles.ListItemDetailTextStyle,
-                                HorizontalOptions = LayoutOptions.End
-                            };
+                              {
+                                  YAlign = TextAlignment.Center,
+                                  Style = App.Styles.ListItemDetailTextStyle,
+                                  HorizontalOptions = LayoutOptions.End
+                              };
 
             labelCreate.SetBinding(Label.TextProperty, "CreateDate", stringFormat: "Date: {0}");
 
             var labelContent = new Label
-                             {
-                                 YAlign = TextAlignment.Center,
-                                 Style = App.Styles.ListItemDetailTextStyle,
-                                 HorizontalOptions = LayoutOptions.StartAndExpand
-                             };
+                               {
+                                   YAlign = TextAlignment.Center,
+                                   Style = App.Styles.ListItemDetailTextStyle,
+                                   HorizontalOptions = LayoutOptions.StartAndExpand
+                               };
 
             labelContent.SetBinding(Label.TextProperty, "Content");
 
@@ -63,7 +59,8 @@ namespace BeginMobile.Pages.MessagePages
                                   RowDefinitions =
                                   {
                                       new RowDefinition {Height = GridLength.Auto},
-                                      new RowDefinition {Height = GridLength.Auto}
+                                      new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto},
                                   },
                                   ColumnDefinitions =
                                   {
@@ -75,20 +72,20 @@ namespace BeginMobile.Pages.MessagePages
             gridDetails.Children.Add(labelTitle, 0, 0);
             gridDetails.Children.Add(labelContent, 0, 1);
 
-            gridDetails.Children.Add(labelCreate, 1, 0);
+            gridDetails.Children.Add(labelCreate, 0, 2);
 
             var stackLayoutView = new StackLayout
-                          {
-                              Spacing = 2,
-                              Padding = App.Styles.LayoutThickness,
-                              Orientation = StackOrientation.Horizontal,
-                              HorizontalOptions = LayoutOptions.FillAndExpand,
-                              Children =
-                              {
-                                  circleShopImage,
-                                  gridDetails
-                              }
-                          };
+                                  {
+                                      Spacing = 2,
+                                      Padding = App.Styles.LayoutThickness,
+                                      Orientation = StackOrientation.Horizontal,
+                                      HorizontalOptions = LayoutOptions.FillAndExpand,
+                                      Children =
+                                      {
+                                          circleShopImage,
+                                          gridDetails
+                                      }
+                                  };
 
             View = stackLayoutView;
         }
