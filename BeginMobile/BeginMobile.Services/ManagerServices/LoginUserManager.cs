@@ -4,6 +4,8 @@ using System.Net.Http;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
 using System.Threading.Tasks;
+using BeginMobile.Services.Utils;
+using Xamarin.Forms;
 
 namespace BeginMobile.Services.ManagerServices
 {
@@ -24,7 +26,6 @@ namespace BeginMobile.Services.ManagerServices
         private readonly GenericBaseClient<string> _stringResultClient =
             new GenericBaseClient<string>(BaseAddress, SubAddress);
 
-
         public async Task<LoginUser> Login(string username, string password)
         {
             try
@@ -37,8 +38,10 @@ namespace BeginMobile.Services.ManagerServices
                 const string addressSuffix = "login";
                 return await _loginManagerClient.PostAsync(content, addressSuffix);
             }
+
             catch (Exception ex)
             {
+                AppContextError.Send(ex, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -60,6 +63,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception ex)
             {
+                AppContextError.Send(ex, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -106,6 +110,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
+                AppContextError.Send(exception, ExceptionLevel.Application);
                 return null;
             }
         }

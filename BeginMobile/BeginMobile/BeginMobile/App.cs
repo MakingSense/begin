@@ -1,9 +1,11 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using BeginMobile.Accounts;
 using BeginMobile.Interfaces;
 using BeginMobile.Menu;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services;
+using BeginMobile.Services.Utils;
 using BeginMobile.Utils;
 using BeginMobile.LocalizeResources.Resources;
 
@@ -11,6 +13,7 @@ namespace BeginMobile
 {
     public class App : Application, ILoginManager
     {
+
         private static ILoginManager _loginManager;
         public static App Current;
 
@@ -24,12 +27,16 @@ namespace BeginMobile
                 AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
             }
 
-            
+            AppDomain.CurrentDomain.UnhandledException += AppExceptionEventHander;
+
             MainPage = new LoginModalPage(this);
         }
 
-
-
+        void AppExceptionEventHander(object sender, UnhandledExceptionEventArgs eventArgs)
+        {
+            MessagingCenter.Send(this, "UnhandledException", eventArgs);
+            MessagingCenter.Unsubscribe<App, UnhandledExceptionEventArgs>(this, "UnhandledException");
+        }
         public void ShowMainPage(LoginUser loginUser)
         {
             MainPage = new NavigationPage(new HomePage(loginUser));
@@ -84,5 +91,7 @@ namespace BeginMobile
         }
 
         #endregion
+
+       
     }
 }

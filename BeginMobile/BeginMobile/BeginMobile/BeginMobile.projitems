@@ -28,6 +28,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Menu\HomePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Menu\Menu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AboutUs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\ContactPages\ContactListItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\ContactPages\ContactPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\GroupPages\GroupItemCell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\GroupPages\GroupItemPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\GroupPages\GroupListPage.cs" />

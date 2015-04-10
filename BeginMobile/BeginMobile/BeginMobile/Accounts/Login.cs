@@ -4,6 +4,7 @@ using BeginMobile.Interfaces;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.ManagerServices;
 using Xamarin.Forms;
+using BeginMobile.Services.Utils;
 
 namespace BeginMobile.Accounts
 {
@@ -11,7 +12,6 @@ namespace BeginMobile.Accounts
     {
         private readonly Entry _entryEmail;
         private readonly Entry _entryPassword;
-
         public Login(ILoginManager iLoginManager)
         {
             var logo = new Image
@@ -21,6 +21,7 @@ namespace BeginMobile.Accounts
             };
 
             Title = AppResources.LoginFormTitle;
+
             _entryEmail = new Entry
             {
                 Placeholder = AppResources.UsernamePlaceholder,
@@ -61,9 +62,9 @@ namespace BeginMobile.Accounts
             {
                 if (String.IsNullOrEmpty(_entryEmail.Text) || String.IsNullOrEmpty(_entryPassword.Text))
                 {
-                    await DisplayAlert("Validation Error", "Username and Password are required",
-                                 "Re - Try");
+                    await DisplayAlert("Validation Error", "Username and Password are required", "Re - Try");
                 }
+
                 else
                 {
                     ActivityIndicatorLoading.IsVisible = true;
@@ -79,6 +80,7 @@ namespace BeginMobile.Accounts
                             var errorMessage = loginUser.Errors.Aggregate("", (current, error) => current + (error.Label + "\n"));
                             await DisplayAlert("Error login validation", errorMessage, "Re - Try");
                         }
+
                         else
                         {
                             App.Current.Properties["IsLoggedIn"] = true;
@@ -86,12 +88,11 @@ namespace BeginMobile.Accounts
 
                             iLoginManager.ShowMainPage(loginUser);
                         }
-                        
                     }
+
                     else
                     {
-                        await DisplayAlert("Connection Failed", "Server not found.",
-                               "Re - Try");
+                        await DisplayAlert("Connection Failed", "Server not found.", "Re - Try");
                     }
 
                     ActivityIndicatorLoading.IsVisible = false;
@@ -122,6 +123,14 @@ namespace BeginMobile.Accounts
                               buttonRegister
                           }
                       };
+
+            MessagingCenter.Subscribe<AppContextError>(this, "AppContextError", OnAppContextErrorOccurred);
+        }
+        private async void OnAppContextErrorOccurred(AppContextError appContextError)
+        {
+            await DisplayAlert(appContextError.Title, appContextError.Message, appContextError.Accept);
+            ActivityIndicatorLoading.IsVisible = false;
+            ActivityIndicatorLoading.IsRunning = false;
         }
     }
 }
