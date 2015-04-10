@@ -286,17 +286,13 @@ namespace BeginMobile.Services.Interfaces
         {
             using (var httpClient = new HttpClient())
             {
-                T result = null;
                 httpClient.BaseAddress = new Uri(_serviceBaseAddress);
 
                 var response = await httpClient.PostAsync(_subAddress + addressSuffix, content).ConfigureAwait(false);
                 var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    result = await Task.Run(() => 
+                var result = await Task.Run(() => 
                         JsonConvert.DeserializeObject<T>(userJson)).ConfigureAwait(false);
-                }
 
                 return result;
             }
