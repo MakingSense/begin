@@ -57,16 +57,32 @@ namespace BeginMobile.Pages.MessagePages
             var buttonInbox = new Button
                               {
                                   Text = "Inbox",
-                                  TextColor = Color.White,
-                                  Style = App.Styles.LinkButton
+                                  TextColor = App.Styles.ColorWhiteDroidBlueIos,
+                                  Style = App.Styles.LinkButton,
+                                  FontSize = App.Styles.TextFontSizeMedium
                               };
+            var buttonSend = new Button
+                             {
+                                 Text = "Send",
+                                 TextColor = App.Styles.ColorWhiteDroidBlueIos,
+                                 Style = App.Styles.LinkButton,
+                                 FontSize = App.Styles.TextFontSizeMedium
+                             };
+            var buttonSendBox = new Button
+                                {
+                                    Text = "SendBox",
+                                    TextColor = App.Styles.ColorWhiteDroidBlueIos,
+                                    Style = App.Styles.LinkButton,
+                                    FontSize = App.Styles.TextFontSizeMedium
+                                };
 
             buttonInbox.Clicked +=
                 (sender, e) =>
                 {
                     var thisButton = (Button) sender;
-                    thisButton.TextColor = Color.Green;
-
+                    thisButton.TextColor = App.Styles.ColorGreenDroidBlueSapphireIos;
+                    buttonSend.TextColor = App.Styles.ColorWhiteDroidBlueIos;
+                    buttonSendBox.TextColor = App.Styles.ColorWhiteDroidBlueIos;
                     MessagingCenter.Subscribe<MessageListPage, IEnumerable<Message>>(this, "messages", (page, args) =>
                                                                                                        {
                                                                                                            if (args ==
@@ -82,17 +98,12 @@ namespace BeginMobile.Pages.MessagePages
                     MessagingCenter.Send(this, "messages", _listData);
                     MessagingCenter.Unsubscribe<MessageListPage, IEnumerable<Message>>(this, "messages");
                 };
-
-            var buttonSendBox = new Button
-                                {
-                                    Text = "SendBox",
-                                    Style = App.Styles.LinkButton
-                                };
-
             buttonSendBox.Clicked += (sender, e) =>
                                      {
                                          var thisButton = (Button) sender;
-                                         thisButton.TextColor = Color.Green;
+                                         thisButton.TextColor = App.Styles.ColorGreenDroidBlueSapphireIos;
+                                         buttonInbox.TextColor = App.Styles.ColorWhiteDroidBlueIos;
+                                         buttonSend.TextColor = App.Styles.ColorWhiteDroidBlueIos;
 
                                          MessagingCenter.Subscribe<MessageListPage, IEnumerable<Message>>(this,
                                              "messages",
@@ -112,17 +123,12 @@ namespace BeginMobile.Pages.MessagePages
                                          MessagingCenter.Unsubscribe<MessageListPage, IEnumerable<Message>>(this,
                                              "messages");
                                      };
-
-            var buttonSend = new Button
-                             {
-                                 Text = "Send",
-                                 Style = App.Styles.LinkButton
-                             };
-
             buttonSend.Clicked += (sender, e) =>
                                   {
                                       var thisButton = (Button) sender;
-                                      thisButton.TextColor = Color.Green;
+                                      thisButton.TextColor = App.Styles.ColorGreenDroidBlueSapphireIos;
+                                      buttonInbox.TextColor = App.Styles.ColorWhiteDroidBlueIos;
+                                      buttonSendBox.TextColor = App.Styles.ColorWhiteDroidBlueIos;
                                       MessagingCenter.Subscribe<MessageListPage, IEnumerable<Message>>(this,
                                           "messages", (page, args) =>
                                                       {
@@ -146,7 +152,7 @@ namespace BeginMobile.Pages.MessagePages
                                          Spacing = 20,
                                          Padding = 20,
                                          Orientation = StackOrientation.Horizontal,
-                                         Children = { buttonInbox, buttonSend, buttonSendBox },
+                                         Children = {buttonInbox, buttonSend, buttonSendBox},
                                          HorizontalOptions = LayoutOptions.StartAndExpand
                                      };
 

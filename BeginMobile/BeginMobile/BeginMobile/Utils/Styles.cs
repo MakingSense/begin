@@ -6,6 +6,8 @@ namespace BeginMobile.Utils
     {
         private readonly double _fontSizeButtonSmall;
         private readonly double _textfontSizeMedium;
+        private readonly double _textfontSizeLarge;
+        private readonly double _textFontSizeSmall;
         private readonly Setter _buttonFontSize;
         private readonly Setter _titleFontSize;
 
@@ -33,12 +35,12 @@ namespace BeginMobile.Utils
                 Device.GetNamedSize(NamedSize.Medium, typeof (Label)),
                 Device.GetNamedSize(NamedSize.Medium, typeof (Label)));
 
-            var textfontSizeLarge = Device.OnPlatform(
+            _textfontSizeLarge = Device.OnPlatform(
                 Device.GetNamedSize(NamedSize.Large, typeof (Label)),
                 Device.GetNamedSize(NamedSize.Large, typeof (Label)),
                 Device.GetNamedSize(NamedSize.Large, typeof (Label)));
 
-            var textFontSizeSmall = Device.OnPlatform(
+            _textFontSizeSmall = Device.OnPlatform(
                 Device.GetNamedSize(NamedSize.Small, typeof (Label)),
                 Device.GetNamedSize(NamedSize.Small, typeof (Label)),
                 Device.GetNamedSize(NamedSize.Small, typeof (Label)));
@@ -54,11 +56,11 @@ namespace BeginMobile.Utils
                 _buttonFontSize.Property = Button.FontSizeProperty;
                 _buttonFontSize.Value = fontSizeButtonLarge;
                 _titleFontSize.Property = Label.FontSizeProperty;
-                _titleFontSize.Value = textfontSizeLarge;
+                _titleFontSize.Value = _textfontSizeLarge;
                 subTitleFontSize.Property = Label.FontSizeProperty;
                 subTitleFontSize.Value = _textfontSizeMedium;
                 textBodyFontSize.Property = Label.FontSizeProperty;
-                textBodyFontSize.Value = textFontSizeSmall;
+                textBodyFontSize.Value = _textFontSizeSmall;
             }
             if (Device.Idiom == TargetIdiom.Phone)
             {
@@ -67,9 +69,9 @@ namespace BeginMobile.Utils
                 _titleFontSize.Property = Label.FontSizeProperty;
                 _titleFontSize.Value = _textfontSizeMedium;
                 subTitleFontSize.Property = Label.FontSizeProperty;
-                subTitleFontSize.Value = textFontSizeSmall;
+                subTitleFontSize.Value = _textFontSizeSmall;
                 textBodyFontSize.Property = Label.FontSizeProperty;
-                textBodyFontSize.Value = textFontSizeSmall;
+                textBodyFontSize.Value = _textFontSizeSmall;
             }
         }
 
@@ -391,6 +393,49 @@ namespace BeginMobile.Utils
             {
                 return Device.OnPlatform(new Thickness(10, 5, 10, 5), new Thickness(10, 5, 10, 5),
                     new Thickness(10, 5, 10, 5));
+            }
+        }
+
+        public double TextFontSizeMedium
+        {
+            get
+            {
+                return _textfontSizeMedium;
+                
+            }
+        }
+
+        public double TextFontSizeSmall
+        {
+            get
+            {
+                return _textFontSizeSmall;
+
+            }
+        }
+
+        public double TextFontSizeLarge
+        {
+            get
+            {
+                return _textfontSizeLarge;
+
+            }
+        }
+        public Color ColorGreenDroidBlueSapphireIos
+        {
+            get
+            {
+                return Device.OnPlatform
+                    (Color.FromHex("126180"), Color.FromHex("77D065"), Color.FromHex("77D065"));
+            }
+        }
+        public Color ColorWhiteDroidBlueIos
+        {
+            get
+            {
+                return Device.OnPlatform
+                    (Color.FromHex("354B60"), Color.FromHex("FFFFFF"), Color.FromHex("77D065"));
             }
         }
     }
