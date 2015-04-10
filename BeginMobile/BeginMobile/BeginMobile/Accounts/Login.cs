@@ -77,7 +77,7 @@ namespace BeginMobile.Accounts
                     {
                         if (loginUser.Errors != null)
                         {
-                            var errorMessage = loginUser.Errors.Aggregate("", (current, error) => current + (error.Label + "\n"));
+                            var errorMessage = loginUser.Errors.Aggregate("", (current, error) => current + (error.ErrorMessage + "\n"));
                             await DisplayAlert("Error login validation", errorMessage, "Re - Try");
                         }
 

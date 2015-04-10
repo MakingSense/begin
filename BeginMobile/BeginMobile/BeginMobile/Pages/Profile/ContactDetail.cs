@@ -293,10 +293,10 @@ namespace BeginMobile.Pages.Profile
 
         #region Private methods
 
-        private void DisplayResponseErrors(IEnumerable<ContactServiceError> addResponseErrors)
+        private void DisplayResponseErrors(IEnumerable<ServiceError> addResponseErrors)
         {
             var message = addResponseErrors.Aggregate(String.Empty,
-                (current, contactServiceError) => current + (contactServiceError.Message + "\n"));
+                (current, contactServiceError) => current + (contactServiceError.ErrorMessage + "\n"));
 
             DisplayAlert("Error", message, "Ok");
         }

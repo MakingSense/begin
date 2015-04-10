@@ -22,9 +22,9 @@ namespace BeginMobile.Utils
         /// <param name="friendship"></param>
         /// <param name="authToken"></param>
         /// <param name="username"></param>
-        public static List<ContactServiceError> Request(FriendshipOption friendship, string authToken, string username)
+        public static List<ServiceError> Request(FriendshipOption friendship, string authToken, string username)
         {
-            var responseErrors = new List<ContactServiceError>();
+            var responseErrors = new List<ServiceError>();
 
 #if FriendshipEnable
             switch (friendship)

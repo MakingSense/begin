@@ -2,7 +2,7 @@
 
 namespace BeginMobile.Services.DTO
 {
-    public class LoginUser
+    public class LoginUser: BaseServiceError
     {
         [JsonProperty("authtoken")]
         public string AuthToken { set; get; }
@@ -13,7 +13,5 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("avatar")]
         public string Avatar { set; get; }
 
-        [JsonProperty("errors")]
-        public ErrorRetrieved[] Errors { set; get; }
     }
 }

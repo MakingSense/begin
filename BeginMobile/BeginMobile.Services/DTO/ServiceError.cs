@@ -7,12 +7,12 @@ using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
 {
-    public class ContactServiceError
+    public class ServiceError
     {
         [JsonProperty("code")]
         public string ErrorCode { set; get; }
 
         [JsonProperty("label")]
-        public string Message { set; get; }
+        public string ErrorMessage { set; get; }
     }
 }

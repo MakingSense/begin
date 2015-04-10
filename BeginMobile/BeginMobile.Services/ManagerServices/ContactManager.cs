@@ -18,8 +18,8 @@ namespace BeginMobile.Services.ManagerServices
         private readonly GenericBaseClient<User> _contactClient =
             new GenericBaseClient<User>(BaseAddress, SubAddress);
 
-        private readonly GenericBaseClient<ContactServiceError> _contactServiceClient =
-            new GenericBaseClient<ContactServiceError>(BaseAddress, SubAddress);
+        private readonly GenericBaseClient<ServiceError> _contactServiceClient =
+            new GenericBaseClient<ServiceError>(BaseAddress, SubAddress);
 
 
         public async  Task<List<User>> GetContacts(
@@ -53,7 +53,7 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public List<ContactServiceError> SendRequest(string authToken, string userName)
+        public List<ServiceError> SendRequest(string authToken, string userName)
         {
             try
             {
@@ -62,18 +62,18 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                var listError = new List<ContactServiceError>()
+                var listError = new List<ServiceError>()
                 {
-                    new ContactServiceError
+                    new ServiceError
                     {
-                        Message = exception.Message
+                        ErrorMessage = exception.Message
                     }
                 };
                 return listError;
             }
         }
 
-        public List<ContactServiceError> AcceptRequest(string authToken, string userName)
+        public List<ServiceError> AcceptRequest(string authToken, string userName)
         {
             try
             {
@@ -82,18 +82,18 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                var listError = new List<ContactServiceError>()
+                var listError = new List<ServiceError>()
                 {
-                    new ContactServiceError
+                    new ServiceError
                     {
-                        Message = exception.Message
+                        ErrorMessage = exception.Message
                     }
                 };
                 return listError;
             }
         }
 
-        public List<ContactServiceError> RejectRequest(string authToken, string userName)
+        public List<ServiceError> RejectRequest(string authToken, string userName)
         {
             try
             {
@@ -102,18 +102,18 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                var listError = new List<ContactServiceError>()
+                var listError = new List<ServiceError>()
                 {
-                    new ContactServiceError
+                    new ServiceError
                     {
-                        Message = exception.Message
+                        ErrorMessage = exception.Message
                     }
                 };
                 return listError;
             }
         }
 
-        public List<ContactServiceError> RemoveFriendship(string authToken, string userName)
+        public List<ServiceError> RemoveFriendship(string authToken, string userName)
         {
             try
             {
@@ -122,11 +122,11 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                var listError = new List<ContactServiceError>()
+                var listError = new List<ServiceError>()
                 {
-                    new ContactServiceError
+                    new ServiceError
                     {
-                        Message = exception.Message
+                        ErrorMessage = exception.Message
                     }
                 };
                 return listError;

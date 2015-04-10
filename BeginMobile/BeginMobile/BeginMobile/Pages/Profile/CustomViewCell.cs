@@ -164,10 +164,10 @@ namespace BeginMobile.Pages.Profile
             }
         }
 
-        private void SubscribeAlert(IEnumerable<ContactServiceError> responseErrors)
+        private void SubscribeAlert(IEnumerable<ServiceError> responseErrors)
         {
             var message = responseErrors.Aggregate(string.Empty,
-                (current, contactServiceError) => current + (contactServiceError.Message + "\n"));
+                (current, contactServiceError) => current + (contactServiceError.ErrorMessage + "\n"));
 
             MessagingCenter.Send(this, FriendshipMessages.DisplayAlert, message);
             MessagingCenter.Unsubscribe<CustomViewCell, string>(this, FriendshipMessages.DisplayAlert);

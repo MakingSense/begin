@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace BeginMobile.Accounts
 {
-    public class Register : ContentPage
+    public class Register : BaseContentPage
     {
         private const string EmailRegex =
             @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
@@ -115,6 +115,9 @@ namespace BeginMobile.Accounts
                         {
                             if (_switchStatus)
                             {
+                                ActivityIndicatorLoading.IsVisible = true;
+                                ActivityIndicatorLoading.IsRunning = true;
+
                                 var loginUserManager = new LoginUserManager();
                                 var registerUser = await loginUserManager.Register(_entryUsername.Text, _entryEmail.Text,
                                     _entryPassword.Text, _entryFullName.Text);
@@ -125,7 +128,7 @@ namespace BeginMobile.Accounts
                                     if (registerUser.Errors != null)
                                     {
                                         var errorMessages = registerUser.Errors.Aggregate("",
-                                            (current, error) => current + (error.Label + "\n"));
+                                            (current, error) => current + (error.ErrorMessage + "\n"));
 
                                         await DisplayAlert("Error", errorMessages, "OK");
 
@@ -150,6 +153,9 @@ namespace BeginMobile.Accounts
                                 {
                                     await DisplayAlert("Error", "There was a problem to connect to service.", "OK");
                                 }
+
+                                ActivityIndicatorLoading.IsVisible = false;
+                                ActivityIndicatorLoading.IsRunning = false;
                             }
 
                             else
@@ -182,6 +188,8 @@ namespace BeginMobile.Accounts
                 Children = { buttonTermsAndConditions, switchTermsAndConditions }
             };
 
+            var stackLayoutLoading = CreateStackLayoutWithLoadingIndicator();
+
 
             Content = new ScrollView
             {
@@ -191,7 +199,8 @@ namespace BeginMobile.Accounts
                 Padding = 10,
                 VerticalOptions = LayoutOptions.Center,
                 Children =
-                                  {    imageLogo,                                  
+                                  {   stackLayoutLoading, 
+                                      imageLogo,                                  
                                       _entryUsername,
                                       _entryFullName,
                                       _entryEmail,

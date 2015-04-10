@@ -2,15 +2,12 @@
 
 namespace BeginMobile.Services.DTO
 {
-    public class RegisterUser
+    public class RegisterUser: BaseServiceError
     {
         [JsonProperty("authtoken")]
         public string AuthToken { set; get; }
 
         [JsonProperty("me")]
         public User User { set; get; }
-
-        [JsonProperty("errors")]
-        public ErrorRetrieved[] Errors { set; get; }
     }
 }

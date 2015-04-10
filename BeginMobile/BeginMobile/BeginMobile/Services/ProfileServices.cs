@@ -99,22 +99,22 @@ namespace BeginMobile.Services
         }
 
         //Contact options 
-        public List<ContactServiceError> SendRequest(string authToken, string userName)
+        public List<ServiceError> SendRequest(string authToken, string userName)
         {
             return _contactManager.SendRequest(authToken, userName);
         }
 
-        public List<ContactServiceError> AcceptRequest(string authToken, string userName)
+        public List<ServiceError> AcceptRequest(string authToken, string userName)
         {
             return _contactManager.AcceptRequest(authToken, userName);
         }
 
-        public List<ContactServiceError> RejectRequest(string authToken, string userName)
+        public List<ServiceError> RejectRequest(string authToken, string userName)
         {
             return _contactManager.RejectRequest(authToken, userName);
         }
 
-        public List<ContactServiceError> RemoveFriendship(string authToken, string userName)
+        public List<ServiceError> RemoveFriendship(string authToken, string userName)
         {
             return _contactManager.RemoveFriendship(authToken, userName);
         }
