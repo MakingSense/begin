@@ -198,9 +198,7 @@ namespace BeginMobile.Pages.Profile
                                                                 {
                                                                     Icon = UserDefault,
                                                                     NameSurname = contact.NameSurname,
-                                                                    Email =
-                                                                        string.Format("e-mail: {0}",
-                                                                            contact.Email),
+                                                                    Email =contact.Email,
                                                                     Url = contact.Url,
                                                                     UserName = contact.UserName,
                                                                     Registered = contact.Registered,
