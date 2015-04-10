@@ -1,4 +1,5 @@
-﻿using BeginMobile.Pages.GroupPages;
+﻿using BeginMobile.Pages.ContactPages;
+using BeginMobile.Pages.GroupPages;
 using BeginMobile.Pages.MessagePages;
 using BeginMobile.Pages.Notifications;
 using BeginMobile.Pages.Wall;
@@ -35,8 +36,13 @@ namespace BeginMobile.Pages
                 new GroupListPage(new Label { Text = "Groups", Style = App.Styles.StyleNavigationTitle }.Text,
                     Device.OnPlatform("Users_three_2.png", "padlock.png", "padlock.png")));
 
+            Children.Add(
+               new ContactPage(new Label { Text = "Contacts", Style = App.Styles.StyleNavigationTitle }.Text,
+                   Device.OnPlatform("Users_three_switch.png", "padlock.png", "padlock.png")));
+
             Children.Add(new TabContent(new Label { Text = "Opt", Style = App.Styles.StyleNavigationTitle }.Text,
                 Device.OnPlatform("More.png", "padlock.png", "padlock.png")));
+
         }
     }
 }

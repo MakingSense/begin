@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using BeginMobile.Services.DTO;
 using Xamarin.Forms;
 
 namespace BeginMobile.Services.Utils
@@ -39,6 +41,17 @@ namespace BeginMobile.Services.Utils
             else
             {
                 throw new AppContextException(exception.Message);
+            }
+        }
+
+        public static void Send(Exception exception, BaseServiceError serviceError, ExceptionLevel exceptionLevel)
+        {
+            if (serviceError != null)
+            {
+                if (serviceError.HasError)
+                {
+                    //TODO: Send ServiceError logic here
+                }
             }
         }
     }

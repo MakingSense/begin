@@ -12,7 +12,7 @@ using Xamarin.Forms;
 
 namespace BeginMobile.Pages.ContactPages
 {
-    public class ContactPage : ContentPage
+    public class ContactPage : TabContent
     {
         private const string UserDefault = "userdefault3.png";
         private ListView _listViewContacts;
@@ -32,9 +32,11 @@ namespace BeginMobile.Pages.ContactPages
 
         private Picker _sortPicker;
 
-        public ContactPage()
+        public ContactPage(string title, string icon)
+            :base(title,icon)
         {
-            Title = "Contacts";
+            Title = title;
+           
             _searchView = new SearchView();
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
 
@@ -51,7 +53,7 @@ namespace BeginMobile.Pages.ContactPages
             LoadSortOptionsPicker();
             contactsList.AddRange(RetrieveContacts(_profileInformationContacts));
 
-            var contactListViewTemplate = new DataTemplate(() => new CustomViewCell(_currentUser));
+            var contactListViewTemplate = new DataTemplate(() => new ContactListItem(_currentUser));
             MessagingSubscriptions();
 
             _listViewContacts = new ListView
@@ -210,12 +212,43 @@ namespace BeginMobile.Pages.ContactPages
         private void MessagingSubscriptions()
         {
             MessagingCenter.Subscribe(this, FriendshipMessages.DisplayAlert, DisplayAlertCallBack());
-            MessagingCenter.Subscribe(this, FriendshipMessages.RemoveContact, RemoveContactCallback());
+            //MessagingCenter.Subscribe(this, FriendshipMessages.RemoveContact, RemoveContactCallback());
+            MessagingCenter.Subscribe(this, FriendshipMessages.AddContact, AddContactCallback());
         }
 
         private Action<CustomViewCell, string> DisplayAlertCallBack()
         {
             return async (sender, arg) => { await DisplayAlert("Error", arg, "Ok"); };
+        }
+        private Action<ContactListItem, string> AddContactCallback()
+        {
+            return async (sender, arg) =>
+            {
+                var removeUsername = arg;
+
+                if (!string.IsNullOrEmpty(removeUsername))
+                {
+
+                    var confirm = await DisplayAlert("Confirm",
+                        string.Format("Are you sure you want to send a request to '{0}'?",
+                            removeUsername), "Yes", "No");
+
+                    if (confirm)
+                    {
+                        var contacts = ((ObservableCollection<Contact>)_listViewContacts.ItemsSource);
+                        var toAdd =
+                            contacts.FirstOrDefault(contact => contact.UserName == removeUsername);
+
+                        if (toAdd != null && contacts.Remove(toAdd))
+                        {
+                            _listViewContacts.ItemsSource = contacts;
+                            await
+                                DisplayAlert("Info",
+                                    string.Format("'{0}' friedship Added.", removeUsername), "Ok");
+                        }
+                    }
+                }
+            };
         }
 
         private Action<CustomViewCell, string> RemoveContactCallback()
@@ -248,6 +281,8 @@ namespace BeginMobile.Pages.ContactPages
                              }
                          };
         }
+
+       
 
         #endregion
     }
