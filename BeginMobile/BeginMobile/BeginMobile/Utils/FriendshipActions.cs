@@ -60,5 +60,6 @@ namespace BeginMobile.Utils
     {
         public const string DisplayAlert = "DisplayAlert";
         public const string RemoveContact = "RemoveContact";
+        public const string AddContact = "AddContact";
     }
 }

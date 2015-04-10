@@ -228,6 +228,12 @@
   <ItemGroup>
     <BundleResource Include="Resources\logotype.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Users_three_switch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Users_three_switch%402x.png" />
+  </ItemGroup>
   <Import Project="..\BeginMobile\BeginMobile.projitems" Label="Shared" Condition="Exists('..\BeginMobile\BeginMobile.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.1.4.0.6341\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.1.4.0.6341\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

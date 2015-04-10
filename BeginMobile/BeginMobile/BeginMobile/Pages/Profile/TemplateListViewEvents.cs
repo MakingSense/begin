@@ -13,7 +13,9 @@ namespace BeginMobile.Pages.Profile
                                  HorizontalOptions = LayoutOptions.Start,
                                  HeightRequest = 50,
                                  WidthRequest = 200,
-                                 TextColor = App.Styles.LabelTextColor
+                                 FontAttributes = FontAttributes.Bold,
+                                 Style = App.Styles.ListItemTextStyle
+                                 //TextColor = App.Styles.LabelTextColor
                              };
 
             labelEventTitle.SetBinding(Label.TextProperty, "EventName");

@@ -47,7 +47,10 @@ namespace BeginMobile.Pages.Profile
             _buttonRemoveFriend = new Button
                                   {
                                       Text = AppResources.ButtonRemoveFriend,
-                                      Style = App.Styles.DefaultButton
+                                      Style = App.Styles.ListViewItemButton,
+                                      HorizontalOptions = LayoutOptions.Start,
+                                      HeightRequest = 35,
+                                      WidthRequest = 70
                                   };
 
             _buttonRemoveFriend.Clicked += RemoveFriendEventHandler;
@@ -87,6 +90,7 @@ namespace BeginMobile.Pages.Profile
                                   {
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto}
                                   },
                                   ColumnDefinitions =
@@ -100,7 +104,7 @@ namespace BeginMobile.Pages.Profile
             grid.Children.Add(labelNameSurname, 0, 0);
             grid.Children.Add(labelUserName, 0, 1);
             grid.Children.Add(labelEmail, 0, 2);
-            grid.Children.Add(_buttonRemoveFriend, 1, 0);
+            grid.Children.Add(_buttonRemoveFriend, 0, 3);
             return grid;
         }
 

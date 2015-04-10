@@ -438,5 +438,23 @@ namespace BeginMobile.Utils
                     (Color.FromHex("354B60"), Color.FromHex("FFFFFF"), Color.FromHex("77D065"));
             }
         }
+        public Style ListViewItemButton
+        {
+            get
+            {
+                var style = new Style(typeof(Button))
+                {
+                    Setters =
+                                {
+                                    new Setter{ Property = VisualElement.BackgroundColorProperty, Value = Color.FromHex("425d78")},
+                                    new Setter {Property = Button.TextColorProperty, Value = Color.White},
+                                    new Setter {Property = Button.BorderRadiusProperty, Value = 2},
+                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamily}
+                                }
+                };
+                style.Setters.Add(new Setter { Property = Button.FontSizeProperty, Value = Device.OnPlatform<double>(7, 12, 12) });
+                return style;
+            }
+        }
     }
 }
