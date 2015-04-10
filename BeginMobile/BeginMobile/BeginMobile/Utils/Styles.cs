@@ -435,7 +435,7 @@ namespace BeginMobile.Utils
             get
             {
                 return Device.OnPlatform
-                    (Color.FromHex("354B60"), Color.FromHex("FFFFFF"), Color.FromHex("77D065"));
+                    (Color.FromHex("354B60"), Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"));
             }
         }
         public Style ListViewItemButton
@@ -454,6 +454,15 @@ namespace BeginMobile.Utils
                 };
                 style.Setters.Add(new Setter { Property = Button.FontSizeProperty, Value = Device.OnPlatform<double>(7, 12, 12) });
                 return style;
+            }
+        }
+
+        public Color ColorLine
+        {
+            get
+            {
+                return Device.OnPlatform
+                    (Color.FromHex("354B60"), Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"));
             }
         }
     }

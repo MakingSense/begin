@@ -10,7 +10,7 @@ namespace BeginMobile.Utils
         {
             Limit = new Picker
                     {
-                        Title = "Filter by Limit",
+                        Title = "Max number rows",
                     };
 
             SearchBar = new SearchBar

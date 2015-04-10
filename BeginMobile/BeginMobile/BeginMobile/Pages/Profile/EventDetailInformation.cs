@@ -249,7 +249,7 @@ namespace BeginMobile.Pages.Profile
         }
         private static BoxView BoxViewLine()
         {
-            return new BoxView { Color = Color.White, WidthRequest = 100, HeightRequest = 2 };
+            return new BoxView { Color = App.Styles.ColorLine, WidthRequest = 100, HeightRequest = 2 };
         }
     }
 }
