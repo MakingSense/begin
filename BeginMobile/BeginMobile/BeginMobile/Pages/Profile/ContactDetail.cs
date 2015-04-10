@@ -4,6 +4,7 @@ using System.Linq;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
+using BeginMobile.Services.Utils;
 using BeginMobile.Utils;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
@@ -12,73 +13,144 @@ namespace BeginMobile.Pages.Profile
 {
     public class ContactDetail : ContentPage
     {
-        private const string UserDefault = "userdefault3.png";
         private readonly Contact _contact;
         private readonly LoginUser _loginUser;
 
         public ContactDetail(Contact contact)
         {
-
             _contact = contact;
-            _loginUser = (LoginUser)App.Current.Properties["LoginUser"]; ;
+            _loginUser = (LoginUser) App.Current.Properties["LoginUser"];
 
-            if (_contact == null) throw new ArgumentNullException("contact1");
+            if (_contact == null) throw new ArgumentNullException("contact");
 
-            var circleImageIcon = new CircleImage
-            {
-                HeightRequest = Device.OnPlatform(50, 100, 100),
-                WidthRequest = Device.OnPlatform(50, 100, 100),
-                Aspect = Aspect.AspectFill,
-                HorizontalOptions = LayoutOptions.Start,
-                BorderThickness = Device.OnPlatform(2, 3, 3),
-                Source = UserDefault
-            };
+
+            var imageContact = new CircleImage
+                               {
+                                   BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
+                                   BorderThickness = Device.OnPlatform(2, 3, 3),
+                                   HeightRequest = Device.OnPlatform(50, 100, 100),
+                                   WidthRequest = Device.OnPlatform(50, 200, 100),
+                                   Aspect = Aspect.AspectFit,
+                                   HorizontalOptions = LayoutOptions.CenterAndExpand,
+                                   Source = Device.OS == TargetPlatform.iOS
+                                       ? ImageSource.FromFile("userdefault3.png")
+                                       : ImageSource.FromFile("userdefault3.png"),
+                               };
+
+            var gridImage = new Grid
+                            {
+                                HorizontalOptions = LayoutOptions.FillAndExpand,
+                                VerticalOptions = LayoutOptions.FillAndExpand
+                            };
+            var stackLayoutLinesRight = new StackLayout
+                                        {
+                                            VerticalOptions = LayoutOptions.CenterAndExpand,
+                                            HorizontalOptions = LayoutOptions.FillAndExpand,
+                                            Children =
+                                            {
+                                                BoxViewLine(),
+                                                BoxViewLine()
+                                            }
+                                        };
+            var stackLayoutLinesLeft = new StackLayout
+                                       {
+                                           VerticalOptions = LayoutOptions.CenterAndExpand,
+                                           HorizontalOptions = LayoutOptions.FillAndExpand,
+                                           Children =
+                                           {
+                                               BoxViewLine(),
+                                               BoxViewLine()
+                                           }
+                                       };
+            gridImage.Children.Add(stackLayoutLinesLeft, 0, 0);
+            gridImage.Children.Add(imageContact, 1, 0);
+            gridImage.Children.Add(stackLayoutLinesRight, 2, 0);
+
+            var labelTextNameAndSurname = new Label
+                                          {
+                                              YAlign = TextAlignment.End,
+                                              XAlign = TextAlignment.End,
+                                              FontAttributes = FontAttributes.Bold,
+                                              Style = App.Styles.ListItemTextStyle,
+                                              //Text = AppResources.LabelNameSurname
+                                              Text = "Name Surname:"
+                                          };
+            var labelTextEmail = new Label
+                                 {
+                                     YAlign = TextAlignment.End,
+                                     XAlign = TextAlignment.End,
+                                     FontAttributes = FontAttributes.Bold,
+                                     Style = App.Styles.ListItemTextStyle,
+                                     Text = "Email:"
+                                 };
+            var labelTextUsername = new Label
+                                    {
+                                        YAlign = TextAlignment.End,
+                                        XAlign = TextAlignment.End,
+                                        FontAttributes = FontAttributes.Bold,
+                                        Style = App.Styles.ListItemTextStyle,
+                                        Text = "User Name:"
+                                    };
+            var labelTextRegistered = new Label
+                                      {
+                                          YAlign = TextAlignment.End,
+                                          XAlign = TextAlignment.End,
+                                          FontAttributes = FontAttributes.Bold,
+                                          Style = App.Styles.ListItemTextStyle,
+                                          Text = "Registered:"
+                                      };
 
             var labelCompleteName = new Label
-            {
-                Text = _contact.NameSurname
-            };
+                                    {
+                                        Text = _contact.NameSurname
+                                    };
 
             var labelEmail = new Label
-            {
-                Text = _contact.Email
-            };
+                             {
+                                 Text = _contact.Email
+                             };
 
             var labelUsername = new Label
-            {
-                Text = _contact.UserName
-            };
+                                {
+                                    Text = _contact.UserName
+                                };
 
             var labelRegistered = new Label
-            {
-                Text = _contact.Registered
-            };
+                                  {
+                                      Text = DateConverter.GetTimeSpan(Convert.ToDateTime(_contact.Registered))
+                                  };
 
             var buttonAddFriend = new Button
                                   {
-                                      Text = AppResources.ButtonAddFriend
+                                      Text = AppResources.ButtonAddFriend,
+                                      Style = App.Styles.DefaultButton
                                   };
 
             var buttonCancelFriend = new Button
                                      {
-                                         Text = AppResources.ButtonCancelRequestFriend
+                                         Text = AppResources.ButtonCancelRequestFriend,
+                                         Style = App.Styles.DefaultButton
                                      };
 
             var buttonAcceptFriend = new Button
                                      {
-                                         Text = AppResources.ButtonAcceptFriend
+                                         Text = AppResources.ButtonAcceptFriend,
+                                         Style = App.Styles.DefaultButton
                                      };
 
             var buttonRemoveFriend = new Button
                                      {
-                                         Text = AppResources.ButtonRemoveFriend
+                                         Text = AppResources.ButtonRemoveFriend,
+                                         Style = App.Styles.DefaultButton
                                      };
 
             var buttonRejectFriend = new Button
                                      {
-                                         Text = AppResources.ButtonRejectFriend
+                                         Text = AppResources.ButtonRejectFriend,
+                                         Style = App.Styles.DefaultButton
                                      };
 
+            buttonAddFriend.IsVisible = false; // TODO: should be in the wall of every contact not here
             buttonAddFriend.Clicked += AddFriendEventHandler;
             buttonCancelFriend.Clicked += CancelFriendEventHandler;
             buttonAcceptFriend.Clicked += AcceptFriendEventHandler;
@@ -87,7 +159,7 @@ namespace BeginMobile.Pages.Profile
 
             var gridButtons = new Grid
                               {
-                                  VerticalOptions = LayoutOptions.FillAndExpand,
+                                  VerticalOptions = LayoutOptions.Start,
                                   HorizontalOptions = LayoutOptions.CenterAndExpand,
                                   RowDefinitions =
                                   {
@@ -103,37 +175,70 @@ namespace BeginMobile.Pages.Profile
             gridButtons.Children.Add(buttonAddFriend, 0, 0);
             gridButtons.Children.Add(buttonRemoveFriend, 1, 0);
 
+
+            var gridComponents = new Grid
+                                 {
+                                     Padding = App.Styles.GridPadding,
+                                     VerticalOptions = LayoutOptions.FillAndExpand,
+                                     HorizontalOptions = LayoutOptions.Center,
+                                     RowDefinitions =
+                                     {
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto}
+                                  
+                                     },
+                                     ColumnDefinitions =
+                                     {
+                                         new ColumnDefinition {Width = GridLength.Auto},
+                                         new ColumnDefinition {Width = GridLength.Auto}
+                                     }
+                                 };
+            gridComponents.Children.Add(labelTextNameAndSurname, 0, 0);
+            gridComponents.Children.Add(labelCompleteName, 1, 0);
+            gridComponents.Children.Add(labelTextUsername, 0, 1);
+            gridComponents.Children.Add(labelUsername, 1, 1);
+            gridComponents.Children.Add(labelTextEmail, 0, 2);
+            gridComponents.Children.Add(labelEmail, 1, 2);
+            gridComponents.Children.Add(labelTextRegistered, 0, 3);
+            gridComponents.Children.Add(labelRegistered, 1, 3);
+            gridComponents.Children.Add(gridButtons, 1, 4);
+
+
             Content = new StackLayout
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Orientation = StackOrientation.Vertical,
-                Children =
+                      {
+                          HorizontalOptions = LayoutOptions.CenterAndExpand,
+                          Orientation = StackOrientation.Vertical,
+                          Children =
                           {
-                              labelCompleteName,
-                              circleImageIcon,
-                              labelUsername,
-                              labelEmail,
-                              labelRegistered,
-                              gridButtons
+                              gridImage,
+                              gridComponents
+                              //gridButtons
                           }
-            };
+                      };
         }
 
         #region Events
+
         private void AddFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var responseErrors = FriendshipActions.Request(FriendshipOption.Send, _loginUser.AuthToken, _contact.UserName);
+            var responseErrors = FriendshipActions.Request(FriendshipOption.Send, _loginUser.AuthToken,
+                _contact.UserName);
             if (!responseErrors.Any())
             {
                 //TODO: Logic here
                 return;
             }
 
-           DisplayResponseErrors(responseErrors);
+            DisplayResponseErrors(responseErrors);
         }
+
         private void AcceptFriendEventHandler(object senser, EventArgs eventArgs)
         {
-            var responseErrors = FriendshipActions.Request(FriendshipOption.Accept, _loginUser.AuthToken, _contact.UserName);
+            var responseErrors = FriendshipActions.Request(FriendshipOption.Accept, _loginUser.AuthToken,
+                _contact.UserName);
             if (!responseErrors.Any())
             {
                 //TODO: Logic here
@@ -142,9 +247,11 @@ namespace BeginMobile.Pages.Profile
 
             DisplayResponseErrors(responseErrors);
         }
+
         private void RejectFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var responseErrors = FriendshipActions.Request(FriendshipOption.Reject, _loginUser.AuthToken, _contact.UserName);
+            var responseErrors = FriendshipActions.Request(FriendshipOption.Reject, _loginUser.AuthToken,
+                _contact.UserName);
             if (!responseErrors.Any())
             {
                 //TODO: Logic here
@@ -153,9 +260,11 @@ namespace BeginMobile.Pages.Profile
 
             DisplayResponseErrors(responseErrors);
         }
+
         private void CancelFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var responseErrors = FriendshipActions.Request(FriendshipOption.Remove, _loginUser.AuthToken, _contact.UserName);
+            var responseErrors = FriendshipActions.Request(FriendshipOption.Remove, _loginUser.AuthToken,
+                _contact.UserName);
 
             if (!responseErrors.Any())
             {
@@ -163,11 +272,13 @@ namespace BeginMobile.Pages.Profile
                 return;
             }
 
-           DisplayResponseErrors(responseErrors);
+            DisplayResponseErrors(responseErrors);
         }
+
         private void RemoveEventHandler(object sender, EventArgs eventArgs)
         {
-            var responseErrors = FriendshipActions.Request(FriendshipOption.Remove, _loginUser.AuthToken, _contact.UserName);
+            var responseErrors = FriendshipActions.Request(FriendshipOption.Remove, _loginUser.AuthToken,
+                _contact.UserName);
 
             if (!responseErrors.Any())
             {
@@ -175,7 +286,7 @@ namespace BeginMobile.Pages.Profile
                 return;
             }
 
-           DisplayResponseErrors(responseErrors);
+            DisplayResponseErrors(responseErrors);
         }
 
         #endregion
@@ -184,10 +295,15 @@ namespace BeginMobile.Pages.Profile
 
         private void DisplayResponseErrors(IEnumerable<ContactServiceError> addResponseErrors)
         {
-            var message = addResponseErrors.Aggregate(string.Empty,
+            var message = addResponseErrors.Aggregate(String.Empty,
                 (current, contactServiceError) => current + (contactServiceError.Message + "\n"));
 
             DisplayAlert("Error", message, "Ok");
+        }
+
+        private static BoxView BoxViewLine()
+        {
+            return new BoxView {Color = Color.White, WidthRequest = 100, HeightRequest = 2};
         }
 
         #endregion

@@ -46,7 +46,8 @@ namespace BeginMobile.Pages.Profile
         {
             _buttonRemoveFriend = new Button
                                   {
-                                      Text = AppResources.ButtonRemoveFriend
+                                      Text = AppResources.ButtonRemoveFriend,
+                                      Style = App.Styles.DefaultButton
                                   };
 
             _buttonRemoveFriend.Clicked += RemoveFriendEventHandler;

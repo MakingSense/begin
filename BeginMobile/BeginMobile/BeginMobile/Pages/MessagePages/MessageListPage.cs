@@ -57,7 +57,7 @@ namespace BeginMobile.Pages.MessagePages
             var buttonInbox = new Button
                               {
                                   Text = "Inbox",
-                                  TextColor = App.Styles.ColorWhiteDroidBlueIos,
+                                  TextColor = App.Styles.ColorGreenDroidBlueSapphireIos,
                                   Style = App.Styles.LinkButton,
                                   FontSize = App.Styles.TextFontSizeMedium
                               };

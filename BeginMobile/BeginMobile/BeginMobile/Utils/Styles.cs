@@ -387,7 +387,7 @@ namespace BeginMobile.Utils
                     (Color.FromHex("DDDDDD"), Color.FromHex("292929"), Color.FromHex("77D065"));
             }
         }
-        public Thickness GridImagePadding
+        public Thickness GridPadding
         {
             get
             {
