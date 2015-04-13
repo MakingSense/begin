@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using BeginMobile.LocalizeResources.Resources;
@@ -19,14 +20,12 @@ namespace BeginMobile.Pages.Notifications
         
         private readonly SearchView _searchView;
         private Picker _statusPicker;
-
-
+        private readonly List<NotificationViewModel> _defaulList = new List<NotificationViewModel>();
         private Dictionary<string, string> _statusOptionsDictionary = new Dictionary<string, string>
                                                                       {
                                                                           {"unread", "Unread"},
                                                                           {"read", "Read"}
                                                                       };
-
         private const string DefaultLimit = "10";
 
         public Notification(string title, string iconImg)
@@ -45,11 +44,39 @@ namespace BeginMobile.Pages.Notifications
                               }
                           };
 
+         
+
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
 
             Init();
         }
 
+        #region Events
+
+        /// <summary>
+        /// Common handler when an searchBar item has changed 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        private async void SearchItemEventHandler(object sender, EventArgs eventArgs)
+        {
+            string limit;
+            string status;
+
+            RetrieveLimitSelected(out limit);
+            RetrieveStatusOptionSelected(out status);
+
+            var profileNotification =
+                await App.ProfileServices.GetProfileNotification(_currentUser.AuthToken, limit, status);
+
+            _listViewNotifications.ItemsSource = profileNotification.Notifications.Any()
+                ? new ObservableCollection<NotificationViewModel>(RetrieveNotifications(profileNotification))
+                : new ObservableCollection<NotificationViewModel>(_defaulList);
+
+        }
+
+        #endregion
+        
         #region Private Methods
 
         private async Task Init()
@@ -62,12 +89,15 @@ namespace BeginMobile.Pages.Notifications
 
             LoadStatusOptionsPicker();
 
+            _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
+            _statusPicker.SelectedIndexChanged += SearchItemEventHandler;
+
             var listViewDataTemplate = new DataTemplate(typeof(TemplateListViewNotification));
             
             _listViewNotifications = new ListView
                                      {
                                          ItemTemplate = listViewDataTemplate,
-                                         ItemsSource = RetrieveNotifications(profileNotification),
+                                         ItemsSource = new ObservableCollection<NotificationViewModel>(RetrieveNotifications(profileNotification)),
                                          HasUnevenRows = true
                                      };
 
@@ -121,7 +151,6 @@ namespace BeginMobile.Pages.Notifications
 
             Content = mainLayout;
         }
-
         private void LoadStatusOptionsPicker()
         {
             _statusPicker = new Picker
@@ -155,16 +184,34 @@ namespace BeginMobile.Pages.Notifications
                     RetrieveDescription(model)
             });
         }
-
         private static string RetrieveTimeSpan(Services.DTO.Notification model)
         {
             return DateConverter.GetTimeSpan(DateTime.Parse(model.DateNotified));
         }
-
         private static string RetrieveDescription(Services.DTO.Notification model)
         {
-            return string.Format("You have a '{0}' from '{1}'", model.Action,
-                model.User == null ? string.Empty : model.User.DisplayName);
+            return model.User == null
+                ? string.Format("You have a '{0}'", model.Action)
+                : string.Format("You have a '{0}' from '{1}'", model.Action, model.User.DisplayName);
+        }
+        private void RetrieveLimitSelected(out string limit)
+        {
+            var limitSelectedIndex = _searchView.Limit.SelectedIndex;
+            var limitLastIndex = _searchView.Limit.Items.Count - 1;
+
+            limit = limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex
+                ? null
+                : _searchView.Limit.Items[limitSelectedIndex];
+        }
+        private void RetrieveStatusOptionSelected(out string status)
+        {
+            var catSelectedIndex = _statusPicker.SelectedIndex;
+            
+            var selected = catSelectedIndex == -1
+                ? null
+                : _statusPicker.Items[catSelectedIndex];
+
+            status = selected == null ? null : _statusOptionsDictionary.FirstOrDefault(s => s.Value == selected).Key;
         }
 
         #endregion

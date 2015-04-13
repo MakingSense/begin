@@ -173,7 +173,7 @@ namespace BeginMobile.Pages.Profile
             var sectionSelectedIndex = _sectionsPicker.SelectedIndex;
             var sectionLastIndex = _sectionsPicker.Items.Count - 1;
 
-            sections = sectionSelectedIndex == -1 || sectionSelectedIndex == sectionLastIndex
+            sections = sectionSelectedIndex == -1
                 ? null
                 : _sectionsPicker.Items[sectionSelectedIndex];
         }
