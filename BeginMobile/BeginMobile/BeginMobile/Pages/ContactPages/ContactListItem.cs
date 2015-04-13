@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.Profile;
 using BeginMobile.Services.DTO;
@@ -11,22 +10,23 @@ using Xamarin.Forms;
 
 namespace BeginMobile.Pages.ContactPages
 {
-    class ContactListItem: ViewCell
+    internal class ContactListItem : ViewCell
     {
         private Button _buttonAddFriend;
         private readonly LoginUser _loginUser;
+
         public ContactListItem(LoginUser loginUser)
         {
             _loginUser = loginUser;
 
             var circleIconImage = new CircleImage
-            {
-                HeightRequest = Device.OnPlatform(50, 100, 100),
-                WidthRequest = Device.OnPlatform(50, 100, 100),
-                Aspect = Aspect.AspectFill,
-                HorizontalOptions = LayoutOptions.Start,
-                BorderThickness = Device.OnPlatform(2, 3, 3)
-            };
+                                  {
+                                      HeightRequest = Device.OnPlatform(50, 100, 100),
+                                      WidthRequest = Device.OnPlatform(50, 100, 100),
+                                      Aspect = Aspect.AspectFill,
+                                      HorizontalOptions = LayoutOptions.Start,
+                                      BorderThickness = Device.OnPlatform(2, 3, 3)
+                                  };
 
             circleIconImage.SetBinding(Image.SourceProperty, new Binding("Icon"));
 
@@ -42,13 +42,17 @@ namespace BeginMobile.Pages.ContactPages
                        }
                    };
         }
+
         private Grid CreateOptionLayout()
         {
             _buttonAddFriend = new Button
-                                  {
-                                      Text = AppResources.ButtonAddFriend,
-                                      Style = App.Styles.DefaultButton
-                                  };
+                               {
+                                   Text = AppResources.ButtonRemoveFriend,
+                                   Style = App.Styles.ListViewItemButton,
+                                   HorizontalOptions = LayoutOptions.Start,
+                                   HeightRequest = 35,
+                                   WidthRequest = 70,
+                               };
 
             _buttonAddFriend.Clicked += AddFriendEventHandler;
 
@@ -60,18 +64,18 @@ namespace BeginMobile.Pages.ContactPages
                                    };
 
             var labelUserName = new Label
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                YAlign = TextAlignment.Center,
-                Style = App.Styles.ListItemDetailTextStyle
-            };
+                                {
+                                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                                    YAlign = TextAlignment.Center,
+                                    Style = App.Styles.ListItemDetailTextStyle
+                                };
 
             var labelEmail = new Label
-                               {
-                                   HorizontalOptions = LayoutOptions.FillAndExpand,
-                                   YAlign = TextAlignment.Center,
-                                   Style = App.Styles.ListItemDetailTextStyle
-                               };
+                             {
+                                 HorizontalOptions = LayoutOptions.FillAndExpand,
+                                 YAlign = TextAlignment.Center,
+                                 Style = App.Styles.ListItemDetailTextStyle
+                             };
 
 
             labelNameSurname.SetBinding(Label.TextProperty, "NameSurname");
@@ -79,32 +83,34 @@ namespace BeginMobile.Pages.ContactPages
             labelEmail.SetBinding(Label.TextProperty, "Email");
 
             var grid = new Grid
-                              {
-                                  Padding = App.Styles.ListDetailThickness,
-                                  HorizontalOptions = LayoutOptions.FillAndExpand,
-                                  VerticalOptions = LayoutOptions.FillAndExpand,
-                                  RowDefinitions =
-                                  {
-                                      new RowDefinition {Height = GridLength.Auto},
-                                      new RowDefinition {Height = GridLength.Auto},
-                                      new RowDefinition {Height = GridLength.Auto}
-                                  },
-                                  ColumnDefinitions =
-                                  {
-                                      new ColumnDefinition {Width = GridLength.Auto},
-                                      new ColumnDefinition {Width = GridLength.Auto}
-                                  }
-                              };
+                       {
+                           Padding = App.Styles.ListDetailThickness,
+                           HorizontalOptions = LayoutOptions.FillAndExpand,
+                           VerticalOptions = LayoutOptions.FillAndExpand,
+                           RowDefinitions =
+                           {
+                               new RowDefinition {Height = GridLength.Auto},
+                               new RowDefinition {Height = GridLength.Auto},
+                               new RowDefinition {Height = GridLength.Auto},
+                               new RowDefinition {Height = GridLength.Auto}
+                           },
+                           ColumnDefinitions =
+                           {
+                               new ColumnDefinition {Width = GridLength.Auto},
+                               new ColumnDefinition {Width = GridLength.Auto}
+                           }
+                       };
 
 
             grid.Children.Add(labelNameSurname, 0, 0);
             grid.Children.Add(labelUserName, 0, 1);
             grid.Children.Add(labelEmail, 0, 2);
-            grid.Children.Add(_buttonAddFriend, 1, 0);
+            grid.Children.Add(_buttonAddFriend, 0, 3);
             return grid;
         }
 
         #region Events
+
         private void AddFriendEventHandler(object sender, EventArgs eventArgs)
         {
             var objectSender = sender as Button;
@@ -168,7 +174,6 @@ namespace BeginMobile.Pages.ContactPages
 
             MessagingCenter.Send(this, FriendshipMessages.DisplayAlert, message);
             MessagingCenter.Unsubscribe<CustomViewCell, string>(this, FriendshipMessages.DisplayAlert);
-
         }
 
         private void SubscribeRemoveContact(string username)
