@@ -2,22 +2,33 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
 {
     public class Message
     {
+        [JsonProperty("id")]
         public string Id { set; get; }
 
-        public string Title { set; get; }
+        [JsonProperty("thread_id")]
+        public string ThreadId { set; get; }
 
-        public string Content { set; get; }
+        [JsonProperty("subject")]
+        public string Subject { set; get; }
 
+        [JsonProperty("message")]
+        public string MessageContent { set; get; }
+
+        [JsonProperty("date_sent")]
+        public string DateSent { set; get; }
+
+        [JsonProperty("sender")]
+        public User Sender { set; get; }
+
+
+        //TODO remove from here to down
         public string Type { set; get; }
-
-        public string Thumbnail { set; get; }
-
-        public string CreateDate { set; get; }
 
         public string IsRead { set; get; }
 
@@ -37,10 +48,10 @@ namespace BeginMobile.Services.DTO
                         var message = new Message()
                                       {
                                           Id = i.ToString(),
-                                          Title = "Re: Contact " + i,
-                                          Content = "Content of message " + i,
+                                          Subject = "Re: Contact " + i,
+                                          MessageContent = "Content of message " + i,
                                           Type = type[new Random().Next(0, 2)],
-                                          CreateDate = DateTime.Now.ToString(),
+                                          DateSent = DateTime.Now.ToString(),
                                           IsRead = isRead[new Random().Next(0, 2)],
                                       };
 

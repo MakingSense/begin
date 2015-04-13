@@ -259,6 +259,27 @@ namespace BeginMobile.Services.Interfaces
             }
         }
 
+        public async Task<T> GetAsync(string authToken, string addressSuffix)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+
+                T profileInformationGroups = null;
+                var response = await httpClient.GetAsync(_subAddress + addressSuffix).ConfigureAwait(false);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    profileInformationGroups = await Task.Run(() =>
+                        JsonConvert.DeserializeObject<T>(userJson)).ConfigureAwait(false);
+                }
+
+                return profileInformationGroups;
+            }
+        }
+
         public async Task<T> GetAsync(string authToken, string identifier, string urlParams)
         {
             using (var httpClient = new HttpClient())

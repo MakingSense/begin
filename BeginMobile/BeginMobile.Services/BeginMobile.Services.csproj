@@ -40,6 +40,7 @@
     <Compile Include="DTO\ChangePassword.cs" />
     <Compile Include="DTO\Notification.cs" />
     <Compile Include="DTO\ProfileNotification.cs" />
+    <Compile Include="DTO\ProfileThreadMessages.cs" />
     <Compile Include="DTO\ServiceError.cs" />
     <Compile Include="DTO\ErrorRetrieved.cs" />
     <Compile Include="DTO\GroupOptions.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="DTO\ProfileInformationMessages.cs" />
     <Compile Include="DTO\ProfileInformationShop.cs" />
     <Compile Include="DTO\ProfileMeWall.cs" />
+    <Compile Include="DTO\ThreadMessages.cs" />
     <Compile Include="DTO\UserDetails.cs" />
     <Compile Include="DTO\Wall.cs" />
     <Compile Include="DTO\ProfileShop.cs" />

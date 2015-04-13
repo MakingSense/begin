@@ -12,6 +12,7 @@ namespace BeginMobile.Services
         private readonly EventManager _eventManager;
         private readonly ContactManager _contactManager;
         private readonly NotificationManager _notificationManager;
+        private readonly MessageManager _messageManager;
 
         public ProfileServices()
         {
@@ -20,6 +21,7 @@ namespace BeginMobile.Services
             _groupManager = new GroupManager();
             _contactManager = new ContactManager();
             _notificationManager = new NotificationManager();
+            _messageManager = new MessageManager();
         }
 
         public async Task<ProfileInformationGroups> GetGroups(string userName, string authToken)
@@ -121,6 +123,7 @@ namespace BeginMobile.Services
             return _contactManager.RemoveFriendship(authToken, userName);
         }
 
+        //Notifications
         public async Task<ProfileNotification> GetProfileNotification(string authToken, string limit = null, string status = null)
         {
             return await _notificationManager.GetProfileNotificationByParams(authToken, limit, status);
@@ -135,5 +138,17 @@ namespace BeginMobile.Services
         {
             return await _notificationManager.MarkAsUnread(authToken, notificationId);
         }
+
+        //Messages
+        public async Task<ProfileThreadMessages> GetProfileThreadMessagesInbox(string authToken)
+        {
+            return await _messageManager.GetProfileThreadMessagesInbox(authToken);
+        }
+
+        public async Task<ProfileThreadMessages> GetProfileThreadMessagesSent(string authToken)
+        {
+            return await _messageManager.GetProfileThreadMessagesSent(authToken);
+        }
+        
     }
 }
