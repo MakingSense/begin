@@ -47,7 +47,7 @@ namespace BeginMobile.Pages.ContactPages
         {
             _buttonAddFriend = new Button
                                {
-                                   Text = AppResources.ButtonRemoveFriend,
+                                   Text = AppResources.ButtonAddFriend,
                                    Style = App.Styles.ListViewItemButton,
                                    HorizontalOptions = LayoutOptions.Start,
                                    HeightRequest = 35,
