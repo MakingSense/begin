@@ -197,6 +197,24 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date Received.
+        /// </summary>
+        public static string LabelDateReceived {
+            get {
+                return ResourceManager.GetString("LabelDateReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification.
+        /// </summary>
+        public static string LabelNotification {
+            get {
+                return ResourceManager.GetString("LabelNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login Form.
         /// </summary>
         public static string LoginFormTitle {

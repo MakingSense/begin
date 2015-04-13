@@ -2,6 +2,7 @@
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
 using Xamarin.Forms;
+using BeginMobile.Services.Utils;
 
 namespace BeginMobile.Accounts
 {
@@ -87,6 +88,14 @@ namespace BeginMobile.Accounts
             {
                 Content = mainLayout
             };
+
+            MessagingCenter.Subscribe<AppContextError>(this, AppContextError.NamedMessage, OnAppContextErrorOccurred);
+        }
+
+        private async void OnAppContextErrorOccurred(AppContextError appContextError)
+        {
+            await DisplayAlert(appContextError.Title, appContextError.Message, appContextError.Accept);
+            await Navigation.PopToRootAsync();
         }
     }
 }

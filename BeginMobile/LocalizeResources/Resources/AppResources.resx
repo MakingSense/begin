@@ -162,6 +162,12 @@
   <data name="HomePageTitle" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="LabelDateReceived" xml:space="preserve">
+    <value>Date Received</value>
+  </data>
+  <data name="LabelNotification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
   <data name="LoginFormTitle" xml:space="preserve">
     <value>Login Form</value>
   </data>

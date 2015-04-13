@@ -1,5 +1,6 @@
 ﻿using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
+using BeginMobile.Services.Utils;
 using Xamarin.Forms;
 
 namespace BeginMobile.Accounts
@@ -10,7 +11,7 @@ namespace BeginMobile.Accounts
 
         public UpdateProfilePage()
         {
-            var currentUser = (LoginUser) App.Current.Properties["LoginUser"];
+            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             var loginUserManager = new LoginUserManager();
 
             Title = "Update profile";
@@ -57,6 +58,15 @@ namespace BeginMobile.Accounts
                       {
                           Content = mainLayout
                       };
+
+            MessagingCenter.Subscribe<AppContextError>(this, AppContextError.NamedMessage, OnAppContextErrorOccurred);
+
+        }
+
+        private async void OnAppContextErrorOccurred(AppContextError appContextError)
+        {
+            await DisplayAlert(appContextError.Title, appContextError.Message, appContextError.Accept);
+            await Navigation.PopToRootAsync();
         }
     }
 }

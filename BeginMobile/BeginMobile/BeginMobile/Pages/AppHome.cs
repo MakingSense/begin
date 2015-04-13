@@ -37,7 +37,7 @@ namespace BeginMobile.Pages
                     Device.OnPlatform("Users_three_2.png", "padlock.png", "padlock.png")));
 
             Children.Add(
-               new ContactPage(new Label { Text = "Contacts", Style = App.Styles.StyleNavigationTitle }.Text,
+               new ContactPage(new Label { Text = "Find Contacts", Style = App.Styles.StyleNavigationTitle }.Text,
                    Device.OnPlatform("Users_three_switch.png", "padlock.png", "padlock.png")));
 
             Children.Add(new TabContent(new Label { Text = "Opt", Style = App.Styles.StyleNavigationTitle }.Text,

@@ -76,7 +76,6 @@ namespace BeginMobile.Services.ManagerServices
                 return null;
             }
         }
-
         public string RetrievePassword(string email)
         {
             var content = new FormUrlEncodedContent(new[]
@@ -87,8 +86,6 @@ namespace BeginMobile.Services.ManagerServices
             const string addressSuffix = "retrieve_password";
             return _stringResultClient.PostContentResultAsync(content, addressSuffix);
         }
-
-
         public async Task<ChangePassword> ChangeYourPassword(string currentPassword, string newPassword, string repeatNewPassword,
             string authToken)
         {
@@ -102,7 +99,17 @@ namespace BeginMobile.Services.ManagerServices
                                                     });
 
             const string addressSuffix = "me/change_password";
-            return await _changePasswordClient.PostAsync(authToken, content, addressSuffix);
+
+            try
+            {
+                return await _changePasswordClient.PostAsync(authToken, content, addressSuffix);
+            }
+
+            catch (Exception exception)
+            {
+                AppContextError.Send(exception, ExceptionLevel.Application);
+                return null;
+            }
         }
 
         public async Task<string> UpdateProfile(string nameSurname, string authToken)
@@ -117,6 +124,7 @@ namespace BeginMobile.Services.ManagerServices
                 const string addressSuffix = "me/update_profile";
                 return await _stringResultClient.PostContentResultAsync(authToken, content, addressSuffix);
             }
+
             catch (Exception exception)
             {
                 AppContextError.Send(exception, ExceptionLevel.Application);

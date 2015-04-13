@@ -6,6 +6,7 @@ using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
 using Xamarin.Forms;
+using BeginMobile.Services.Utils;
 
 namespace BeginMobile.Accounts
 {
@@ -192,27 +193,35 @@ namespace BeginMobile.Accounts
 
 
             Content = new ScrollView
-            {
-                Content = new StackLayout
-            {
-                Spacing = 10,
-                Padding = 10,
-                VerticalOptions = LayoutOptions.Center,
-                Children =
-                                  {   stackLayoutLoading, 
-                                      imageLogo,                                  
-                                      _entryUsername,
-                                      _entryFullName,
-                                      _entryEmail,
-                                      _entryPassword,
-                                      _entryConfirmPassword,
-                                      _entryConfirmPassword,
-                                      stackLayoutSwitch,
-                                      buttonRegister,
-                                      buttonCancel
-                                  }
-            }
-            };
+                      {
+                          Content = new StackLayout
+                                    {
+                                        Spacing = 10,
+                                        Padding = 10,
+                                        VerticalOptions = LayoutOptions.Center,
+                                        Children =
+                                        {
+                                            stackLayoutLoading,
+                                            imageLogo,
+                                            _entryUsername,
+                                            _entryFullName,
+                                            _entryEmail,
+                                            _entryPassword,
+                                            _entryConfirmPassword,
+                                            _entryConfirmPassword,
+                                            stackLayoutSwitch,
+                                            buttonRegister,
+                                            buttonCancel
+                                        }
+                                    }
+                      };
+
+            MessagingCenter.Subscribe<AppContextError>(this, AppContextError.NamedMessage, OnAppContextErrorOccurred);
+        }
+
+        private async void OnAppContextErrorOccurred(AppContextError appContextError)
+        {
+            await DisplayAlert(appContextError.Title, appContextError.Message, appContextError.Accept);
         }
     }
 }
