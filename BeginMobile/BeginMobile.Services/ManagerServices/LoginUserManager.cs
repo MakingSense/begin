@@ -28,26 +28,32 @@ namespace BeginMobile.Services.ManagerServices
 
         public async Task<LoginUser> Login(string username, string password)
         {
+            var loginUser = new LoginUser();
+
             try
             {
                 var content = new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("username", username),
-                    new KeyValuePair<string, string>("password", password)
-                });
+                                                        {
+                                                            new KeyValuePair<string, string>("username", username),
+                                                            new KeyValuePair<string, string>("password", password)
+                                                        });
+
                 const string addressSuffix = "login";
-                return await _loginManagerClient.PostAsync(content, addressSuffix);
+                loginUser = await _loginManagerClient.PostAsync(content, addressSuffix);
+                return  loginUser;
             }
 
             catch (Exception ex)
             {
-                AppContextError.Send(ex, ExceptionLevel.Application);
+                AppContextError.Send(ex, loginUser, ExceptionLevel.Application);
                 return null;
             }
         }
 
         public async Task<RegisterUser> Register(string username, string email, string password, string nameSurname)
         {
+            var registeredUser = new RegisterUser();
+
             try
             {
                 var content = new FormUrlEncodedContent(new[]
@@ -59,11 +65,14 @@ namespace BeginMobile.Services.ManagerServices
                 });
 
                 const string addressSuffix = "signup";
-                return await _registerUserClient.PostAsync(content, addressSuffix);
+                registeredUser = await _registerUserClient.PostAsync(content, addressSuffix);
+                return registeredUser;
+
             }
+
             catch (Exception ex)
             {
-                AppContextError.Send(ex, ExceptionLevel.Application);
+                AppContextError.Send(ex, registeredUser, ExceptionLevel.Application);
                 return null;
             }
         }

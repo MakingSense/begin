@@ -20,6 +20,9 @@ namespace BeginMobile.Services.Utils
 
     public class AppContextError
     {
+        private const string DefaultTitle = "Error";
+
+        public const string NamedMessage = "AppContextError";
         public string Message { get; private set; }
         public string Title { get; private set; }
         public string Accept { get; private set; }
@@ -30,12 +33,11 @@ namespace BeginMobile.Services.Utils
             Message = message;
             Accept = accept;
         }
-
         public static void Send(Exception exception, ExceptionLevel exceptionLevel)
         {
             if (exceptionLevel == ExceptionLevel.Application || exceptionLevel == ExceptionLevel.PageView)
             {
-                MessagingCenter.Send(new AppContextError("Error", exception.Message, "Ok"), "AppContextError");
+                MessagingCenter.Send(new AppContextError(DefaultTitle, exception.Message, "Ok"), NamedMessage);
             }
 
             else
@@ -43,15 +45,47 @@ namespace BeginMobile.Services.Utils
                 throw new AppContextException(exception.Message);
             }
         }
-
         public static void Send(Exception exception, BaseServiceError serviceError, ExceptionLevel exceptionLevel)
+        {
+            if (exceptionLevel == ExceptionLevel.Application || exceptionLevel == ExceptionLevel.PageView)
+            {
+                MessageSendConfigure(exception, serviceError);
+            }
+
+            else
+            {
+                throw new AppContextException(exception.Message);
+            }
+        }
+        private static void MessageSendConfigure(Exception exception, BaseServiceError serviceError)
         {
             if (serviceError != null)
             {
                 if (serviceError.HasError)
                 {
-                    //TODO: Send ServiceError logic here
+                    if (serviceError.Errors.Any())
+                    {
+                        MessagingCenter.Send(new AppContextError(DefaultTitle,
+                            serviceError.Errors.Aggregate(string.Empty,
+                                (current, error) => current + (error.ErrorMessage + "\n")),
+                            "Ok"), NamedMessage);
+                    }
+
+                    else if (!string.IsNullOrEmpty(serviceError.Error))
+                    {
+                        MessagingCenter.Send(new AppContextError(DefaultTitle, serviceError.Error, "Ok"), NamedMessage);
+                    }
                 }
+
+                else
+                {
+                    MessagingCenter.Send(new AppContextError(DefaultTitle, exception.Message, "Ok"), NamedMessage);
+                }
+            }
+
+            else
+            {
+                MessagingCenter.Send(new AppContextError(DefaultTitle, exception.Message, "Ok"), NamedMessage);
             }
         }
     }

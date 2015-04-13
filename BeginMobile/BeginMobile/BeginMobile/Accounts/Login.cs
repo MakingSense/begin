@@ -124,8 +124,10 @@ namespace BeginMobile.Accounts
                           }
                       };
 
-            MessagingCenter.Subscribe<AppContextError>(this, "AppContextError", OnAppContextErrorOccurred);
+            MessagingCenter.Subscribe<AppContextError>(this, AppContextError.NamedMessage, OnAppContextErrorOccurred);
+
         }
+
         private async void OnAppContextErrorOccurred(AppContextError appContextError)
         {
             await DisplayAlert(appContextError.Title, appContextError.Message, appContextError.Accept);
