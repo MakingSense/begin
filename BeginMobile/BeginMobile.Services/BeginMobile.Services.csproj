@@ -38,6 +38,8 @@
   <ItemGroup>
     <Compile Include="DTO\BaseServiceError.cs" />
     <Compile Include="DTO\ChangePassword.cs" />
+    <Compile Include="DTO\Notification.cs" />
+    <Compile Include="DTO\ProfileNotification.cs" />
     <Compile Include="DTO\ServiceError.cs" />
     <Compile Include="DTO\ErrorRetrieved.cs" />
     <Compile Include="DTO\GroupOptions.cs" />
@@ -70,6 +72,8 @@
     <Compile Include="ManagerServices\GlobalManager.cs" />
     <Compile Include="ManagerServices\GroupManager.cs" />
     <Compile Include="ManagerServices\LoginUserManager.cs" />
+    <Compile Include="ManagerServices\MessageManager.cs" />
+    <Compile Include="ManagerServices\NotificationManager.cs" />
     <Compile Include="ManagerServices\ProfileManager.cs" />
     <Compile Include="Models\BeginWallViewModel.cs" />
     <Compile Include="Models\Contact.cs" />

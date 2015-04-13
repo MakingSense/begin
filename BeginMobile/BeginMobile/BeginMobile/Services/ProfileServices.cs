@@ -11,6 +11,7 @@ namespace BeginMobile.Services
         private readonly GroupManager _groupManager;
         private readonly EventManager _eventManager;
         private readonly ContactManager _contactManager;
+        private readonly NotificationManager _notificationManager;
 
         public ProfileServices()
         {
@@ -18,6 +19,7 @@ namespace BeginMobile.Services
             _eventManager = new EventManager();
             _groupManager = new GroupManager();
             _contactManager = new ContactManager();
+            _notificationManager = new NotificationManager();
         }
 
         public async Task<ProfileInformationGroups> GetGroups(string userName, string authToken)
@@ -117,6 +119,21 @@ namespace BeginMobile.Services
         public List<ServiceError> RemoveFriendship(string authToken, string userName)
         {
             return _contactManager.RemoveFriendship(authToken, userName);
+        }
+
+        public async Task<ProfileNotification> GetProfileNotification(string authToken, string limit = null, string status = null)
+        {
+            return await _notificationManager.GetProfileNotificationByParams(authToken, limit, status);
+        }
+
+        public async Task<ProfileNotification> MarkAsRead(string authToken, string notificationId = null)
+        {
+            return await _notificationManager.MarkAsRead(authToken, notificationId);
+        }
+
+        public async Task<ProfileNotification> MarkAsUnread(string authToken, string notificationId = null)
+        {
+            return await _notificationManager.MarkAsUnread(authToken, notificationId);
         }
     }
 }
