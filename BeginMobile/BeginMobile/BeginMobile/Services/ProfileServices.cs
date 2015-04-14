@@ -44,7 +44,7 @@ namespace BeginMobile.Services
             return _profileManager.GetEventsInformation(userName, authToken);
         }
 
-        public ProfileInformationContacts GetContacts(string userName, string authToken)
+        public ProfileContacts GetContacts(string userName, string authToken)
         {
             return _profileManager.GetContactsInformation(userName, authToken);
         }
@@ -121,6 +121,11 @@ namespace BeginMobile.Services
         public List<ServiceError> RemoveFriendship(string authToken, string userName)
         {
             return _contactManager.RemoveFriendship(authToken, userName);
+        }
+
+        public async Task<ProfileContacts> CancelRequest(string authToken, string userName)
+        {
+            return await _contactManager.CancelRequest(authToken, userName);
         }
 
         //Notifications

@@ -12,7 +12,8 @@ namespace BeginMobile.Services.ManagerServices
     {
         private const string BaseAddress = "http://186.109.86.251:5432/";
         private const string SubAddress = "begin/api/v1/";
-        private const string Identifier = "users";
+        private const string Identifier = "contacts";
+        private const string IdentifierAux = "users";
 
 
         private readonly GenericBaseClient<User> _contactClient =
@@ -20,6 +21,9 @@ namespace BeginMobile.Services.ManagerServices
 
         private readonly GenericBaseClient<ServiceError> _contactServiceClient =
             new GenericBaseClient<ServiceError>(BaseAddress, SubAddress);
+
+        private readonly GenericBaseClient<ProfileContacts> _profileContactsClient =
+            new GenericBaseClient<ProfileContacts>(BaseAddress, SubAddress);
 
 
         public async  Task<List<User>> GetContacts(
@@ -32,7 +36,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var urlGetParams = "?q=" + name + "&sort=" + sort + "&limit=" + limit;
-                return await _contactClient.GetListAsync(authToken, Identifier, urlGetParams);
+                return await _contactClient.GetListAsync(authToken, IdentifierAux, urlGetParams);
             }
             catch (Exception exeption)
             {
@@ -130,6 +134,35 @@ namespace BeginMobile.Services.ManagerServices
                     }
                 };
                 return listError;
+            }
+        }
+
+        public async Task<ProfileContacts> CancelRequest(string authToken, string userName)
+        {
+            try
+            {
+                ProfileContacts profileContacts = null;
+                string addressSuffix = Identifier + "/cancel_request/" + userName;
+
+                var listResult = await _contactServiceClient.PostListAsync(authToken, null, addressSuffix);
+
+                if (listResult != null)
+                {
+                    profileContacts = new ProfileContacts()
+                    {
+                        Errors = listResult
+                    };
+                }
+
+                return profileContacts;
+            } 
+            catch (Exception exception)
+            {
+                var error = new ProfileContacts()
+                {
+                    Error = exception.Message,
+                };
+                return error;
             }
         }
     }

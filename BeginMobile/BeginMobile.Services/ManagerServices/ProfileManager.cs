@@ -19,7 +19,7 @@ namespace BeginMobile.Services.ManagerServices
         private readonly GenericBaseClient<ProfileInformationActivities> _profileActivityClient;
         private readonly GenericBaseClient<ProfileInformationEvents> _profileEventClient;
         private readonly GenericBaseClient<ProfileInformationGroups> _profileGroupClient;
-        private readonly GenericBaseClient<ProfileInformationContacts> _profileContactClient;
+        private readonly GenericBaseClient<ProfileContacts> _profileContactClient;
         private readonly GenericBaseClient<ProfileInformationShop> _profileShopClient;
 
 
@@ -30,7 +30,7 @@ namespace BeginMobile.Services.ManagerServices
             _profileEventClient = new GenericBaseClient<ProfileInformationEvents>(BaseAddress, SubAddress);
             _profileActivityClient = new GenericBaseClient<ProfileInformationActivities>(BaseAddress, SubAddress);
             _profileGroupClient =  new GenericBaseClient<ProfileInformationGroups>(BaseAddress, SubAddress);
-            _profileContactClient = new GenericBaseClient<ProfileInformationContacts>(BaseAddress, SubAddress);
+            _profileContactClient = new GenericBaseClient<ProfileContacts>(BaseAddress, SubAddress);
             _profileShopClient = new GenericBaseClient<ProfileInformationShop>(BaseAddress, SubAddress);
         }
 
@@ -103,7 +103,7 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public ProfileInformationContacts GetContactsInformation(string username, string authToken)
+        public ProfileContacts GetContactsInformation(string username, string authToken)
         {
             try
             {

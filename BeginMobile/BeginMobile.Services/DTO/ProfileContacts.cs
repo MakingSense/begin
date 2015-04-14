@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
 {
-    public class ProfileInformationContacts
+    public class ProfileContacts: BaseServiceError
     {
         [JsonProperty("id")]
         public int Id { set; get; }
@@ -26,7 +27,7 @@ namespace BeginMobile.Services.DTO
         public string DisplayName { set; get; }
 
         [JsonProperty("contacts")]
-        public User[] Contacts { set; get; }
+        public List<User> Contacts { set; get; }
 
     }
 }
