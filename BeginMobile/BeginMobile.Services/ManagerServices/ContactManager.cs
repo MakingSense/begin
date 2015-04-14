@@ -12,7 +12,7 @@ namespace BeginMobile.Services.ManagerServices
     {
         private const string BaseAddress = "http://186.109.86.251:5432/";
         private const string SubAddress = "begin/api/v1/";
-        private const string Identifier = "contacts";
+        private const string Identifier = "users";
 
 
         private readonly GenericBaseClient<User> _contactClient =

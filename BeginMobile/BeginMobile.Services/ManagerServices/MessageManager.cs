@@ -18,9 +18,8 @@ namespace BeginMobile.Services.ManagerServices
         private readonly GenericBaseClient<ProfileThreadMessages> _profileThreadMessagesClient =
             new GenericBaseClient<ProfileThreadMessages>(BaseAddress, SubAddress);
 
-
-        private readonly GenericBaseClient<BaseServiceError> _updateThreadMessagesClient =
-            new GenericBaseClient<BaseServiceError>(BaseAddress, SubAddress);
+        private readonly GenericBaseClient<Message> _threadMessagesClient =
+            new GenericBaseClient<Message>(BaseAddress, SubAddress);
 
         public async Task<ProfileThreadMessages> GetProfileThreadMessagesInbox(string authToken)
         {
@@ -58,7 +57,7 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public async Task<BaseServiceError> SendMessage(string authToken, string to, string subject, string message, string threadId = null)
+        public async Task<ProfileThreadMessages> SendMessage(string authToken, string to, string subject, string message, string threadId = null)
         {
             try
             {
@@ -77,11 +76,11 @@ namespace BeginMobile.Services.ManagerServices
                 var content = new FormUrlEncodedContent(contentValues.ToArray());
 
                 const string addressSuffix = Identifier + "/send";
-                return await _updateThreadMessagesClient.PostAsync(authToken, content, addressSuffix);
+                return await _profileThreadMessagesClient.PostAsync(authToken, content, addressSuffix);
             }
             catch (Exception exception)
             {
-                var error = new BaseServiceError()
+                var error = new ProfileThreadMessages()
                 {
                     Error = exception.Message,
                 };
@@ -89,6 +88,69 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
+        public async Task<List<Message>> GetThreadMessages(string authToken, string threadId)
+        {
+            try
+            {
+                string addressSuffix = "/thread/" + threadId;
+                return await _threadMessagesClient.GetListAsync(authToken, Identifier, addressSuffix);
 
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<ProfileThreadMessages> MarkAsReadThreadMessages(string authToken, string threadId)
+        {
+            try
+            {
+                string addressSuffix = Identifier + "/mark_as_read/" + threadId;
+                return await _profileThreadMessagesClient.PostAsync(authToken, null, addressSuffix);
+            }
+            catch (Exception exception)
+            {
+                var error = new ProfileThreadMessages
+                {
+                    Error =  exception.Message
+                };
+                return error;
+            }
+        }
+
+        public async Task<ProfileThreadMessages> MarkAsUnreadThreadMessages(string authToken, string threadId)
+        {
+            try
+            {
+                string addressSuffix = Identifier + "/mark_as_unread/" + threadId;
+                return await _profileThreadMessagesClient.PostAsync(authToken, null, addressSuffix);
+            }
+            catch (Exception exception)
+            {
+                var error = new ProfileThreadMessages
+                {
+                    Error = exception.Message
+                };
+                return error;
+            }
+        }
+
+        public async Task<ProfileThreadMessages> DeleteThreadMessages(string authToken, string threadId)
+        {
+            try
+            {
+                string addressSuffix = Identifier + "/delete/" + threadId;
+                return await _profileThreadMessagesClient.PostAsync(authToken, null, addressSuffix);
+            }
+            catch (Exception exception)
+            {
+                var error = new ProfileThreadMessages
+                {
+                    Error = exception.Message
+                };
+                return error;
+            }
+        }
     }
 }

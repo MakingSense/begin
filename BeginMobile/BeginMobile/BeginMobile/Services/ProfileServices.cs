@@ -150,10 +150,29 @@ namespace BeginMobile.Services
             return await _messageManager.GetProfileThreadMessagesSent(authToken);
         }
 
-        public async Task<BaseServiceError> SendMessage(string authToken, string to, string subject, string message, string threadId = null)
+        public async Task<ProfileThreadMessages> SendMessage(string authToken, string to, string subject, string message, string threadId = null)
         {
             return await _messageManager.SendMessage(authToken, to, subject, message, threadId);
         }
-        
+
+        public async Task<List<Message>> GetMessagesByThread(string authToken, string threadId)
+        {
+            return await _messageManager.GetThreadMessages(authToken, threadId);
+        }
+
+        public async Task<ProfileThreadMessages> MarkAsReadByThread(string authToken, string threadId)
+        {
+            return await _messageManager.MarkAsReadThreadMessages(authToken, threadId);
+        }
+
+        public async Task<ProfileThreadMessages> MarkAsUnreadByThread(string authToken, string threadId)
+        {
+            return await _messageManager.MarkAsUnreadThreadMessages(authToken, threadId);
+        }
+
+        public async Task<ProfileThreadMessages> DeleteByThread(string authToken, string threadId)
+        {
+            return await _messageManager.DeleteThreadMessages(authToken, threadId);
+        }
     }
 }
