@@ -153,7 +153,7 @@ namespace BeginMobile.Utils
                                                             Property = Label.TextColorProperty,
                                                             Value =
                                                                 Device.OnPlatform(Color.FromHex("354B60"),
-                                                                    Color.FromHex("77D065"), Color.FromHex("77D065"))
+                                                                    Color.FromHex("EDEEF2"), Color.FromHex("77D065"))
                                                         });
 
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter
@@ -165,6 +165,11 @@ namespace BeginMobile.Utils
                                                         {
                                                             Property = Label.FontSizeProperty,
                                                             Value = _textfontSizeMedium
+                                                        });
+                Device.Styles.SubtitleStyle.Setters.Add(new Setter
+                                                        {
+                                                            Property = Label.FontAttributesProperty,
+                                                            Value = FontAttributes.Bold
                                                         });
                 return Device.Styles.SubtitleStyle;
             }
@@ -387,6 +392,7 @@ namespace BeginMobile.Utils
                     (Color.FromHex("DDDDDD"), Color.FromHex("292929"), Color.FromHex("77D065"));
             }
         }
+
         public Thickness GridPadding
         {
             get
@@ -398,30 +404,19 @@ namespace BeginMobile.Utils
 
         public double TextFontSizeMedium
         {
-            get
-            {
-                return _textfontSizeMedium;
-                
-            }
+            get { return _textfontSizeMedium; }
         }
 
         public double TextFontSizeSmall
         {
-            get
-            {
-                return _textFontSizeSmall;
-
-            }
+            get { return _textFontSizeSmall; }
         }
 
         public double TextFontSizeLarge
         {
-            get
-            {
-                return _textfontSizeLarge;
-
-            }
+            get { return _textfontSizeLarge; }
         }
+
         public Color ColorGreenDroidBlueSapphireIos
         {
             get
@@ -430,6 +425,7 @@ namespace BeginMobile.Utils
                     (Color.FromHex("126180"), Color.FromHex("77D065"), Color.FromHex("77D065"));
             }
         }
+
         public Color ColorWhiteDroidBlueIos
         {
             get
@@ -438,21 +434,30 @@ namespace BeginMobile.Utils
                     (Color.FromHex("354B60"), Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"));
             }
         }
+
         public Style ListViewItemButton
         {
             get
             {
-                var style = new Style(typeof(Button))
-                {
-                    Setters =
+                var style = new Style(typeof (Button))
+                            {
+                                Setters =
                                 {
-                                    new Setter{ Property = VisualElement.BackgroundColorProperty, Value = Color.FromHex("425d78")},
+                                    new Setter
+                                    {
+                                        Property = VisualElement.BackgroundColorProperty,
+                                        Value = Color.FromHex("425d78")
+                                    },
                                     new Setter {Property = Button.TextColorProperty, Value = Color.White},
                                     new Setter {Property = Button.BorderRadiusProperty, Value = 2},
                                     new Setter {Property = Button.FontFamilyProperty, Value = FontFamily}
                                 }
-                };
-                style.Setters.Add(new Setter { Property = Button.FontSizeProperty, Value = Device.OnPlatform<double>(7, 12, 12) });
+                            };
+                style.Setters.Add(new Setter
+                                  {
+                                      Property = Button.FontSizeProperty,
+                                      Value = Device.OnPlatform<double>(7, 12, 12)
+                                  });
                 return style;
             }
         }
@@ -463,6 +468,75 @@ namespace BeginMobile.Utils
             {
                 return Device.OnPlatform
                     (Color.FromHex("354B60"), Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"));
+            }
+        }
+
+        public Color ColorGrayDroidDSkyIos
+        {
+            get
+            {
+                return Device.OnPlatform
+                    (Color.FromHex("DBE1ED"), Color.FromHex("6D7075"), Color.FromHex("6D7075"));
+            }
+        }
+
+        public Color ColorWhiteBackground
+        {
+            get
+            {
+                return Device.OnPlatform
+                    (Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"));
+            }
+        }
+
+        public Style MessageContentStyle
+        {
+            get
+            {
+                var style = new Style(typeof (InputView))
+                            {
+                                Setters =
+                                {
+                                    new Setter
+                                    {
+                                        Property = VisualElement.BackgroundColorProperty,
+                                        Value =
+                                            Device.OnPlatform(Color.FromHex("DBE1ED"), Color.FromHex("333333"),
+                                                Color.FromHex("333333")),
+                                    }
+                                }
+                            };
+                return style;
+            }
+        }
+
+
+        public Style MessageNavigationButton
+        {
+            get
+            {
+                var style = new Style(typeof(Button))
+                {
+                    Setters =
+                                {
+                                    new Setter
+                                    {
+                                        Property = VisualElement.BackgroundColorProperty,
+                                        Value = Color.Transparent
+                                    },
+                                    new Setter {Property = Button.BorderRadiusProperty, Value = 0},
+                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamily},
+                                    new Setter {Property = Button.FontSizeProperty, Value = _fontSizeButtonSmall},
+                                    new Setter
+                                    {
+                                        Property = Button.TextColorProperty,
+                                        Value = Device.OnPlatform
+                                            (Color.FromHex("354B60"), Color.White, Color.White)
+                                    },
+                                }
+                };
+
+                return style;
             }
         }
     }
