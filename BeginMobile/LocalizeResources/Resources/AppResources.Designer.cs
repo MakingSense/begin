@@ -143,6 +143,24 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send Message.
+        /// </summary>
+        public static string ButtonSendMessage {
+            get {
+                return ResourceManager.GetString("ButtonSendMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string EditorMessagePlaceholder {
+            get {
+                return ResourceManager.GetString("EditorMessagePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm Password.
         /// </summary>
         public static string EntryConfirmPasswordPlaceholder {
@@ -179,11 +197,29 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subject.
+        /// </summary>
+        public static string EntrySubjectPlaceholder {
+            get {
+                return ResourceManager.GetString("EntrySubjectPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string EntryUsernamePlaceholder {
             get {
                 return ResourceManager.GetString("EntryUsernamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send To (Username or Friend&apos;s Name).
+        /// </summary>
+        public static string EntryUsernamePlaceholderMessage {
+            get {
+                return ResourceManager.GetString("EntryUsernamePlaceholderMessage", resourceCulture);
             }
         }
         

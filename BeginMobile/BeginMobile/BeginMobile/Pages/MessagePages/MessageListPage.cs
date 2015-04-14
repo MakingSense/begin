@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BeginMobile.Services.DTO;
 using Xamarin.Forms;
 
@@ -98,30 +99,31 @@ namespace BeginMobile.Pages.MessagePages
                     MessagingCenter.Send(this, "messages", _listData);
                     MessagingCenter.Unsubscribe<MessageListPage, IEnumerable<Message>>(this, "messages");
                 };
-            buttonSendBox.Clicked += (sender, e) =>
+            buttonSendBox.Clicked += async (sender, e) =>
                                      {
                                          var thisButton = (Button) sender;
                                          thisButton.TextColor = App.Styles.ColorGreenDroidBlueSapphireIos;
                                          buttonInbox.TextColor = App.Styles.ColorWhiteDroidBlueIos;
                                          buttonSend.TextColor = App.Styles.ColorWhiteDroidBlueIos;
 
-                                         MessagingCenter.Subscribe<MessageListPage, IEnumerable<Message>>(this,
-                                             "messages",
-                                             (page, args) =>
-                                             {
-                                                 if (args ==
-                                                     null)
-                                                     return;
+                                         //MessagingCenter.Subscribe<MessageListPage, IEnumerable<Message>>(this,
+                                         //    "messages",
+                                         //    (page, args) =>
+                                         //    {
+                                         //        if (args ==
+                                         //            null)
+                                         //            return;
 
-                                                 UpdateList(args);
-                                             });
-                                         _listData = from inboxMessage in profileMessage.Messages
-                                             where (inboxMessage.Type.Equals("Sent"))
-                                             select inboxMessage; // TODO: replace the api for inbox list 
-                                         MessagingCenter.Send(this, "messages", _listData);
+                                         //        UpdateList(args);
+                                         //    });
+                                         //_listData = from inboxMessage in profileMessage.Messages
+                                         //    where (inboxMessage.Type.Equals("Sent"))
+                                         //    select inboxMessage; // TODO: replace the api for inbox list 
+                                         //MessagingCenter.Send(this, "messages", _listData);
 
-                                         MessagingCenter.Unsubscribe<MessageListPage, IEnumerable<Message>>(this,
-                                             "messages");
+                                         //MessagingCenter.Unsubscribe<MessageListPage, IEnumerable<Message>>(this,
+                                         //    "messages");
+                                         await Navigation.PushAsync(new SendMessage());
                                      };
             buttonSend.Clicked += (sender, e) =>
                                   {

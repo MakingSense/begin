@@ -144,6 +144,12 @@
   <data name="ButtonRemoveFriend" xml:space="preserve">
     <value>Remove</value>
   </data>
+  <data name="ButtonSendMessage" xml:space="preserve">
+    <value>Send Message</value>
+  </data>
+  <data name="EditorMessagePlaceholder" xml:space="preserve">
+    <value>Message</value>
+  </data>
   <data name="EntryConfirmPasswordPlaceholder" xml:space="preserve">
     <value>Conferma Contrassegno</value>
   </data>
@@ -156,8 +162,14 @@
   <data name="EntryPasswordPlaceholder" xml:space="preserve">
     <value>Contrassegno</value>
   </data>
+  <data name="EntrySubjectPlaceholder" xml:space="preserve">
+    <value>Subject</value>
+  </data>
   <data name="EntryUsernamePlaceholder" xml:space="preserve">
     <value>Nome Utente</value>
+  </data>
+  <data name="EntryUsernamePlaceholderMessage" xml:space="preserve">
+    <value>Send To (Username or Friend's Name)</value>
   </data>
   <data name="HomePageTitle" xml:space="preserve">
     <value>Home</value>

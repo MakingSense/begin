@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MessagePages\MessageListPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MessagePages\ProfileMessageHeader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MessagePages\ProfileMessagesItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\MessagePages\SendMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\Notification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\NotificationDetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\TemplateListViewNotification.cs" />
