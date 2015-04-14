@@ -9,6 +9,7 @@ namespace BeginMobile.Menu
     public class HomePage : MasterDetailPage
     {
         private readonly LoginUser _loginUser;
+        private Services.GlobalService _globalService;
 
         public HomePage(LoginUser loginUser)
         {
@@ -24,7 +25,7 @@ namespace BeginMobile.Menu
 
         private async Task LoadInitialServices()
         {
-            var loadSections = App.GlobalService;
+            _globalService = App.GlobalService;
         }
 
         private void OnToggleRequest()

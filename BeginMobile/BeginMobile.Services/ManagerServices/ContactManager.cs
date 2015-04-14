@@ -38,8 +38,9 @@ namespace BeginMobile.Services.ManagerServices
                 var urlGetParams = "?q=" + name + "&sort=" + sort + "&limit=" + limit;
                 return await _contactClient.GetListAsync(authToken, IdentifierAux, urlGetParams);
             }
-            catch (Exception exeption)
+            catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }
@@ -53,6 +54,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }

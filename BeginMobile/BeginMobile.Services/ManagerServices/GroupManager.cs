@@ -34,8 +34,9 @@ namespace BeginMobile.Services.ManagerServices
                 var urlGetParams = "?q=" + name + "&cat=" + cat + "&limit=" + limit + "&sections=" + sections;
                 return await _groupClient.GetListAsync(authToken, Identifier, urlGetParams);
             }
-            catch (Exception exeption)
+            catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }
@@ -55,6 +56,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }

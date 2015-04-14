@@ -15,11 +15,11 @@ namespace BeginMobile
     {
 
         private static ILoginManager _loginManager;
-        public static App Current;
+        public static App CurrentApp;
 
         public App()
         {
-            Current = this;
+            CurrentApp = this;
             _loginManager = this;
 
             if (Device.OS != TargetPlatform.WinPhone)

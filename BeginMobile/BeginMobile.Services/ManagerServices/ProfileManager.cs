@@ -43,6 +43,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }
@@ -57,6 +58,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }
@@ -71,6 +73,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }
@@ -85,6 +88,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }
@@ -99,6 +103,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }
@@ -113,6 +118,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }
@@ -127,6 +133,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }
@@ -166,8 +173,9 @@ namespace BeginMobile.Services.ManagerServices
 
                 return profileMeWall;
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }

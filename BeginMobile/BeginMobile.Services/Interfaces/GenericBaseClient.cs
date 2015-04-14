@@ -303,10 +303,12 @@ namespace BeginMobile.Services.Interfaces
             }
         }
 
+        //use PostAsync with FormUrlEncodedContent object
         public async  Task<T> PostAsync(FormUrlEncodedContent content, string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {
+                httpClient.Timeout = new TimeSpan(0,2,0);
                 httpClient.BaseAddress = new Uri(_serviceBaseAddress);
 
                 var response = await httpClient.PostAsync(_subAddress + addressSuffix, content).ConfigureAwait(false);

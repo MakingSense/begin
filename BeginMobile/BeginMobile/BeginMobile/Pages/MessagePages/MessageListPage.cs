@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using BeginMobile.Services.DTO;
 using Xamarin.Forms;
 
@@ -10,18 +9,16 @@ namespace BeginMobile.Pages.MessagePages
     public class MessageListPage : TabContent
     {
         private readonly ListView _listViewMessages;
-        private readonly RelativeLayout _relativeLayoutMain;
+        //private readonly RelativeLayout _relativeLayoutMain;
 
         public readonly Label LabelCounter;
 
-
-        private IEnumerable<Message> _listData;
 
         //"Inbox", "Sent", "Compose"
         public MessageListPage(string title, string iconImg)
             : base(title, iconImg)
         {
-            var currentUser = (LoginUser) App.Current.Properties["LoginUser"];
+            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             ProfileInformationMessages profileMessage = App.ProfileServices.GetMessagesInfo(currentUser.User.UserName,
                 currentUser.AuthToken); // TODO: Update 
 
@@ -33,11 +30,11 @@ namespace BeginMobile.Pages.MessagePages
 
             _listViewMessages = new ListView
                                 {
-                                    ItemTemplate = new DataTemplate(typeof (ProfileMessagesItem)),
+                                    ItemTemplate = new DataTemplate(typeof(ProfileMessagesItem)),
                                     HasUnevenRows = true
                                 };
 
-            _listViewMessages.ItemSelected += (sender, e) => { ((ListView) sender).SelectedItem = null; };
+            _listViewMessages.ItemSelected += (sender, e) => { ((ListView)sender).SelectedItem = null; };
 
 
             MessagingCenter.Subscribe<MessageListPage, IEnumerable<Message>>(this, "messages", (page, args) =>
@@ -49,11 +46,11 @@ namespace BeginMobile.Pages.MessagePages
                                                                                                    UpdateList(args);
                                                                                                });
 
-            _listData = from inboxMessage in profileMessage.Messages
-                where (inboxMessage.Type.Equals("Inbox"))
-                select inboxMessage; // TODO: get inbox list from services for inbox
+            IEnumerable<Message> listData = from inboxMessage in profileMessage.Messages
+                                            where (inboxMessage.Type.Equals("Inbox"))
+                                            select inboxMessage;
 
-            MessagingCenter.Send(this, "messages", _listData);
+            MessagingCenter.Send(this, "messages", listData);
             MessagingCenter.Unsubscribe<MessageListPage, IEnumerable<Message>>(this, "messages");
             var buttonInbox = new Button
                               {
@@ -80,7 +77,7 @@ namespace BeginMobile.Pages.MessagePages
             buttonInbox.Clicked +=
                 (sender, e) =>
                 {
-                    var thisButton = (Button) sender;
+                    var thisButton = (Button)sender;
                     thisButton.TextColor = App.Styles.ColorGreenDroidBlueSapphireIos;
                     buttonSend.TextColor = App.Styles.ColorWhiteDroidBlueIos;
                     buttonSendBox.TextColor = App.Styles.ColorWhiteDroidBlueIos;
@@ -93,15 +90,15 @@ namespace BeginMobile.Pages.MessagePages
                                                                                                            UpdateList(
                                                                                                                args);
                                                                                                        });
-                    _listData = from inboxMessage in profileMessage.Messages
-                        where (inboxMessage.Type.Equals("Inbox"))
-                        select inboxMessage; // TODO: replace the api for inbox list 
-                    MessagingCenter.Send(this, "messages", _listData);
+                    listData = from inboxMessage in profileMessage.Messages
+                               where (inboxMessage.Type.Equals("Inbox"))
+                               select inboxMessage; // TODO: replace the api for inbox list 
+                    MessagingCenter.Send(this, "messages", listData);
                     MessagingCenter.Unsubscribe<MessageListPage, IEnumerable<Message>>(this, "messages");
                 };
             buttonSendBox.Clicked += async (sender, e) =>
                                      {
-                                         var thisButton = (Button) sender;
+                                         var thisButton = (Button)sender;
                                          thisButton.TextColor = App.Styles.ColorGreenDroidBlueSapphireIos;
                                          buttonInbox.TextColor = App.Styles.ColorWhiteDroidBlueIos;
                                          buttonSend.TextColor = App.Styles.ColorWhiteDroidBlueIos;
@@ -127,7 +124,7 @@ namespace BeginMobile.Pages.MessagePages
                                      };
             buttonSend.Clicked += (sender, e) =>
                                   {
-                                      var thisButton = (Button) sender;
+                                      var thisButton = (Button)sender;
                                       thisButton.TextColor = App.Styles.ColorGreenDroidBlueSapphireIos;
                                       buttonInbox.TextColor = App.Styles.ColorWhiteDroidBlueIos;
                                       buttonSendBox.TextColor = App.Styles.ColorWhiteDroidBlueIos;
@@ -140,10 +137,10 @@ namespace BeginMobile.Pages.MessagePages
 
                                                           UpdateList(args);
                                                       });
-                                      _listData = from inboxMessage in profileMessage.Messages
-                                          where (inboxMessage.Type.Equals("Compose"))
-                                          select inboxMessage; // TODO: replace the api for inbox list 
-                                      MessagingCenter.Send(this, "messages", _listData);
+                                      listData = from inboxMessage in profileMessage.Messages
+                                                 where (inboxMessage.Type.Equals("Compose"))
+                                                 select inboxMessage; // TODO: replace the api for inbox list 
+                                      MessagingCenter.Send(this, "messages", listData);
                                       MessagingCenter.Unsubscribe<MessageListPage, IEnumerable<Message>>(this,
                                           "messages");
                                   };
@@ -154,7 +151,7 @@ namespace BeginMobile.Pages.MessagePages
                                          Spacing = 20,
                                          Padding = 20,
                                          Orientation = StackOrientation.Horizontal,
-                                         Children = {buttonInbox, buttonSend, buttonSendBox},
+                                         Children = { buttonInbox, buttonSend, buttonSendBox },
                                          HorizontalOptions = LayoutOptions.StartAndExpand
                                      };
 
@@ -162,13 +159,13 @@ namespace BeginMobile.Pages.MessagePages
                                               {
                                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                                   Orientation = StackOrientation.Vertical,
-                                                  Children = {_listViewMessages}
+                                                  Children = { _listViewMessages }
                                               };
 
 
             var mainStackLayout = new StackLayout
                                   {
-                                      Children = {stackLayoutButtons, stackLayoutMessagesListView},
+                                      Children = { stackLayoutButtons, stackLayoutMessagesListView },
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       VerticalOptions = LayoutOptions.FillAndExpand
                                   };

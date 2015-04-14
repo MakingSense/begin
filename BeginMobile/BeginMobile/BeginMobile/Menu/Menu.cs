@@ -154,7 +154,7 @@ namespace BeginMobile.Menu
                         _onToggleRequest();
                         break;
                     case MenuItemsNames.Logout:
-                        App.Current.Logout();
+                        App.CurrentApp.Logout();
                         break;
                     case MenuItemsNames.ChangePassword:
                         await Navigation.PushAsync(new ChangePasswordPage());

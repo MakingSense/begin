@@ -43,7 +43,7 @@ namespace BeginMobile.Services
         {
             private set
             {
-                _wallType = value == null ? new List<string>() : value;
+                _wallType = value ?? new List<string>();
             }
             get
             {
@@ -56,7 +56,7 @@ namespace BeginMobile.Services
         {
             private set
             {
-                _wallFilter = value == null ? new List<string>() : value;
+                _wallFilter = value ?? new List<string>();
             }
             get
             {
@@ -68,9 +68,8 @@ namespace BeginMobile.Services
         public GlobalService()
         {
             _globalManager = new GlobalManager();
-            LoadMeOptions();
-            LoadGroupSections();
-
+            var taskOptions = LoadMeOptions();
+            var taskSections = LoadGroupSections();
         }
 
         private async Task LoadMeOptions()

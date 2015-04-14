@@ -98,6 +98,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }

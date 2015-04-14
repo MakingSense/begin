@@ -28,8 +28,9 @@ namespace BeginMobile.Services.ManagerServices
                 var urlGetParams = "?limit=" + limit + "&status=" + status;
                 return await _notificationClient.GetAsync(authToken, Identifier, urlGetParams);
             }
-            catch (Exception exeption)
+            catch (Exception exception)
             {
+                //TODO log exception
                 return null;
             }
         }
@@ -44,6 +45,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
+                //TODO log exception
                 var error = new ProfileNotification()
                 {
                     Error = exception.Message
