@@ -116,6 +116,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Read.
+        /// </summary>
+        public static string ButtonReadNotification {
+            get {
+                return ResourceManager.GetString("ButtonReadNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string ButtonRegister {
@@ -148,6 +157,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string ButtonSendMessage {
             get {
                 return ResourceManager.GetString("ButtonSendMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unread.
+        /// </summary>
+        public static string ButtonUnReadNotification {
+            get {
+                return ResourceManager.GetString("ButtonUnReadNotification", resourceCulture);
             }
         }
         

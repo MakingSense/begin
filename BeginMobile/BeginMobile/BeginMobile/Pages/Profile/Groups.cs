@@ -171,7 +171,6 @@ namespace BeginMobile.Pages.Profile
         private void RetrieveSectionSelected(out string sections)
         {
             var sectionSelectedIndex = _sectionsPicker.SelectedIndex;
-            var sectionLastIndex = _sectionsPicker.Items.Count - 1;
 
             sections = sectionSelectedIndex == -1
                 ? null

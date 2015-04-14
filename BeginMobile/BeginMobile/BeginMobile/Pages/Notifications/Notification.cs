@@ -21,11 +21,14 @@ namespace BeginMobile.Pages.Notifications
         private readonly SearchView _searchView;
         private Picker _statusPicker;
         private readonly List<NotificationViewModel> _defaulList = new List<NotificationViewModel>();
+
         private Dictionary<string, string> _statusOptionsDictionary = new Dictionary<string, string>
                                                                       {
-                                                                          {"unread", "Unread"},
-                                                                          {"read", "Read"}
+                                                                          {NotificationActions.Unread, "Unread"},
+                                                                          {NotificationActions.Read, "Read"}
                                                                       };
+
+        private bool _isUnread = true;
         private const string DefaultLimit = "10";
 
         public Notification(string title, string iconImg)
@@ -43,9 +46,7 @@ namespace BeginMobile.Pages.Notifications
                                   IsVisible = false
                               }
                           };
-
-         
-
+            
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
 
             Init();
@@ -73,6 +74,7 @@ namespace BeginMobile.Pages.Notifications
                 ? new ObservableCollection<NotificationViewModel>(RetrieveNotifications(profileNotification))
                 : new ObservableCollection<NotificationViewModel>(_defaulList);
 
+            _listViewNotifications.ItemTemplate = new DataTemplate(() => new TemplateListViewNotification(_isUnread));
         }
 
         #endregion
@@ -91,8 +93,10 @@ namespace BeginMobile.Pages.Notifications
 
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
             _statusPicker.SelectedIndexChanged += SearchItemEventHandler;
+            
+            var listViewDataTemplate = new DataTemplate(() => new TemplateListViewNotification(_isUnread));
 
-            var listViewDataTemplate = new DataTemplate(typeof(TemplateListViewNotification));
+            MessagingSubscriptions();
             
             _listViewNotifications = new ListView
                                      {
@@ -177,12 +181,15 @@ namespace BeginMobile.Pages.Notifications
         private static IEnumerable<NotificationViewModel> RetrieveNotifications(ProfileNotification profileNotification)
         {
             return profileNotification.Notifications.Select(model => new NotificationViewModel
-            {
-                Id = model.ItemId,
-                IntervalDate = RetrieveTimeSpan(model),
-                NotificationDescription =
-                    RetrieveDescription(model)
-            });
+                                                                     {
+                                                                         Id = model.NotificationId,
+                                                                         ItemId = model.ItemId,
+                                                                         Action = model.Action,
+                                                                         Component = model.Component,
+                                                                         IntervalDate = RetrieveTimeSpan(model),
+                                                                         NotificationDescription =
+                                                                             RetrieveDescription(model)
+                                                                     });
         }
         private static string RetrieveTimeSpan(Services.DTO.Notification model)
         {
@@ -212,6 +219,68 @@ namespace BeginMobile.Pages.Notifications
                 : _statusPicker.Items[catSelectedIndex];
 
             status = selected == null ? null : _statusOptionsDictionary.FirstOrDefault(s => s.Value == selected).Key;
+            _isUnread = status == NotificationActions.Unread;
+        }
+        private void MessagingSubscriptions()
+        {
+            MessagingCenter.Subscribe(this, NotificationMessages.DisplayAlert, DisplayAlertCallBack());
+            MessagingCenter.Subscribe(this, NotificationMessages.MarkAsRead, MarkAsReadCallback());
+            MessagingCenter.Subscribe(this, NotificationMessages.MarkAsUnread, MarkAsUnreadCallback());
+        }
+
+        private Action<TemplateListViewNotification, string> DisplayAlertCallBack()
+        {
+            return async (sender, arg) => { await DisplayAlert("Error", arg, "Ok"); };
+        }
+
+        private Action<TemplateListViewNotification, string> MarkAsUnreadCallback()
+        {
+            return async (sender, arg) =>
+            {
+                var notificationId = arg;
+
+                if (!string.IsNullOrEmpty(notificationId))
+                {
+                    var notifications =
+                        (ObservableCollection<NotificationViewModel>)_listViewNotifications.ItemsSource;
+
+                    var toMark = notifications.FirstOrDefault(n => n.Id == notificationId);
+
+                    if (toMark != null && notifications.Remove(toMark))
+                    {
+                        NotificationActions
+                            .Request(NotificationOption.MarkAsUnread, _currentUser.AuthToken, notificationId);
+
+                        await DisplayAlert("Info", "Marked as Unread.", "Ok");
+                    }
+                }
+            };
+        }
+
+        private Action<TemplateListViewNotification, string> MarkAsReadCallback()
+        {
+            return async (sender, arg) =>
+                         {
+
+                             var notificationId = arg;
+
+                             if (!string.IsNullOrEmpty(notificationId))
+                             {
+                                 var notifications =
+                                     (ObservableCollection<NotificationViewModel>) _listViewNotifications.ItemsSource;
+
+                                 var toMark = notifications.FirstOrDefault(n => n.Id == notificationId);
+
+                                 if (toMark != null && notifications.Remove(toMark))
+                                 {
+                                     NotificationActions
+                                         .Request(NotificationOption.MarkAsRead, _currentUser.AuthToken, notificationId);
+
+                                     await DisplayAlert("Info", "Marked as Read.", "Ok");
+
+                                 }
+                             }
+                         };
         }
 
         #endregion
@@ -219,7 +288,6 @@ namespace BeginMobile.Pages.Notifications
 }
 
 #region TODO
-
 
 //_listViewNotifications.ItemSelected += async (sender, eventArgs) =>
 //{

@@ -135,6 +135,9 @@
   <data name="ButtonLogin" xml:space="preserve">
     <value>Accesso</value>
   </data>
+  <data name="ButtonReadNotification" xml:space="preserve">
+    <value>Read</value>
+  </data>
   <data name="ButtonRegister" xml:space="preserve">
     <value>Registratore</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="ButtonSendMessage" xml:space="preserve">
     <value>Send Message</value>
+  </data>
+  <data name="ButtonUnReadNotification" xml:space="preserve">
+    <value>Unread</value>
   </data>
   <data name="EditorMessagePlaceholder" xml:space="preserve">
     <value>Message</value>

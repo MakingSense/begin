@@ -212,7 +212,6 @@ namespace BeginMobile.Pages.ContactPages
         private void MessagingSubscriptions()
         {
             MessagingCenter.Subscribe(this, FriendshipMessages.DisplayAlert, DisplayAlertCallBack());
-            //MessagingCenter.Subscribe(this, FriendshipMessages.RemoveContact, RemoveContactCallback());
             MessagingCenter.Subscribe(this, FriendshipMessages.AddContact, AddContactCallback());
         }
 
@@ -244,7 +243,7 @@ namespace BeginMobile.Pages.ContactPages
                             _listViewContacts.ItemsSource = contacts;
                             await
                                 DisplayAlert("Info",
-                                    string.Format("'{0}' friedship Added.", removeUsername), "Ok");
+                                    string.Format("'{0}' friendship Added.", removeUsername), "Ok");
                         }
                     }
                 }
@@ -281,9 +280,7 @@ namespace BeginMobile.Pages.ContactPages
                              }
                          };
         }
-
-       
-
+        
         #endregion
     }
 }
