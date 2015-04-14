@@ -73,8 +73,6 @@ namespace BeginMobile.Pages.Notifications
             _listViewNotifications.ItemsSource = profileNotification.Notifications.Any()
                 ? new ObservableCollection<NotificationViewModel>(RetrieveNotifications(profileNotification))
                 : new ObservableCollection<NotificationViewModel>(_defaulList);
-
-            _listViewNotifications.ItemTemplate = new DataTemplate(() => new TemplateListViewNotification(_isUnread));
         }
 
         #endregion
