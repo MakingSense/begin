@@ -149,6 +149,11 @@ namespace BeginMobile.Services
         {
             return await _messageManager.GetProfileThreadMessagesSent(authToken);
         }
+
+        public async Task<BaseServiceError> SendMessage(string authToken, string to, string subject, string message, string threadId = null)
+        {
+            return await _messageManager.SendMessage(authToken, to, subject, message, threadId);
+        }
         
     }
 }

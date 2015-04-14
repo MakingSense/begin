@@ -48,5 +48,8 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("is_admin")]
         public string IsAdmin { set; get; }
+
+        [JsonProperty("relationship")]
+        public string Relationship { set; get; }
     }
 }
