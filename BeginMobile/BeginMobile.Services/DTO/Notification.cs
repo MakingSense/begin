@@ -26,5 +26,8 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("user")]
         public SubUser User { set; get; }
+
+        [JsonProperty("group")]
+        public Group Group { get; set; }
     }
 }

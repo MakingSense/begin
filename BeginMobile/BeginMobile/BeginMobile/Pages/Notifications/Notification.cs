@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Pages.GroupPages;
+using BeginMobile.Pages.MessagePages;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
 using BeginMobile.Services.Utils;
@@ -17,7 +18,7 @@ namespace BeginMobile.Pages.Notifications
         private ListView _listViewNotifications;
         public readonly Label LabelCounter;
         private readonly LoginUser _currentUser;
-        
+
         private readonly SearchView _searchView;
         private Picker _statusPicker;
         private readonly List<NotificationViewModel> _defaulList = new List<NotificationViewModel>();
@@ -35,7 +36,6 @@ namespace BeginMobile.Pages.Notifications
             : base(title, iconImg)
         {
             Title = title;
-           
             LabelCounter = new Label();
 
             _searchView = new SearchView
@@ -46,7 +46,7 @@ namespace BeginMobile.Pages.Notifications
                                   IsVisible = false
                               }
                           };
-            
+
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
 
             Init();
@@ -68,40 +68,107 @@ namespace BeginMobile.Pages.Notifications
             RetrieveStatusOptionSelected(out status);
 
             var profileNotification =
-                await App.ProfileServices.GetProfileNotification(_currentUser.AuthToken, limit, status);
+                await
+                    App.ProfileServices.GetProfileNotification(_currentUser.AuthToken, limit, status);
+
+            LabelCounter.Text = profileNotification.UnreadCount;
 
             _listViewNotifications.ItemsSource = profileNotification.Notifications.Any()
                 ? new ObservableCollection<NotificationViewModel>(RetrieveNotifications(profileNotification))
                 : new ObservableCollection<NotificationViewModel>(_defaulList);
         }
 
+        /// <summary>
+        /// When item was selected redirect component Page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        private async void NotificationRedirectEventHandler(object sender, EventArgs eventArgs)
+        {
+            var listView = sender as ListView;
+            if (listView == null) return;
+            if ((NotificationViewModel)listView.SelectedItem == null) return;
+
+            var item = (NotificationViewModel)listView.SelectedItem;
+            var target = NotificationActions.RetrieveComponent(item.Action);
+
+            switch (target)
+            {
+                case NotificationComponent.Contact:
+                    await DisplayAlert("Info", "Goes to Friendship (Contact) Details", "Ok");
+                    break;
+
+                case NotificationComponent.Group:
+
+                    MessagingCenter.Subscribe<ContentPage, Group>(this,
+                        "group", async (s, arg) =>
+                                       {
+                                           if (arg == null) return;
+                                           var groupDetail = new GroupItemPage(arg);
+                                           await Navigation.PushAsync(groupDetail);
+                                           ((ListView)sender).SelectedItem = null;
+                                       });
+
+                    MessagingCenter.Send<ContentPage, Group>(this, "group", item.GroupViewModel);
+                    MessagingCenter.Unsubscribe<ContentPage, Group>(this, "group");
+
+                    break;
+
+                case NotificationComponent.Message:
+                    MessagingCenter.Subscribe<ContentPage, MessageViewModel>(this,
+                        "message", async (s, arg) =>
+                                         {
+                                             if (arg == null) return;
+                                             var groupDetail = new MessageDetail(arg);
+                                             await Navigation.PushAsync(groupDetail);
+                                             ((ListView) sender).SelectedItem = null;
+                                         });
+
+                   //TODO: Load Message
+                     MessagingCenter.Send<ContentPage, MessageViewModel>(this, "message", new MessageViewModel());
+                     MessagingCenter.Unsubscribe<ContentPage, MessageViewModel>(this, "message");
+                    break;
+            }
+
+            ((ListView)sender).SelectedItem = null;
+
+            //Update notification status (Maybe put it for each messaging subscribe)
+            var notificationId = item.Id;
+            NotificationActions.Request(_isUnread
+                ? NotificationOption.MarkAsRead
+                : NotificationOption.MarkAsUnread,
+                _currentUser.AuthToken, notificationId);
+        }
+
         #endregion
-        
+
         #region Private Methods
 
-        private async Task Init()
+        private async void Init()
         {
             var profileNotification =
-                await
-                    App.ProfileServices.GetProfileNotification(_currentUser.AuthToken, DefaultLimit);
-           
+                await App.ProfileServices.GetProfileNotification(_currentUser.AuthToken, DefaultLimit);
+
             LabelCounter.Text = profileNotification.UnreadCount;
+            LabelCounter.BindingContext = profileNotification.UnreadCount;
 
             LoadStatusOptionsPicker();
 
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
             _statusPicker.SelectedIndexChanged += SearchItemEventHandler;
-            
+
             var listViewDataTemplate = new DataTemplate(() => new TemplateListViewNotification(_isUnread));
 
             MessagingSubscriptions();
-            
+
             _listViewNotifications = new ListView
                                      {
                                          ItemTemplate = listViewDataTemplate,
                                          ItemsSource = new ObservableCollection<NotificationViewModel>(RetrieveNotifications(profileNotification)),
                                          HasUnevenRows = true
                                      };
+
+            _listViewNotifications.ItemSelected += NotificationRedirectEventHandler;
 
             var gridHeaderTitle = new Grid
                                   {
@@ -171,7 +238,7 @@ namespace BeginMobile.Pages.Notifications
 
             else
             {
-                _statusOptionsDictionary = new Dictionary<string, string> { { "unread", "Unread" } };
+                _statusOptionsDictionary = new Dictionary<string, string> { { NotificationActions.Unread, "Unread" } };
             }
 
             _searchView.Container.Children.Add(_statusPicker);
@@ -186,7 +253,8 @@ namespace BeginMobile.Pages.Notifications
                                                                          Component = model.Component,
                                                                          IntervalDate = RetrieveTimeSpan(model),
                                                                          NotificationDescription =
-                                                                             RetrieveDescription(model)
+                                                                             RetrieveDescription(model),
+                                                                         GroupViewModel = model.Group
                                                                      });
         }
         private static string RetrieveTimeSpan(Services.DTO.Notification model)
@@ -196,8 +264,9 @@ namespace BeginMobile.Pages.Notifications
         private static string RetrieveDescription(Services.DTO.Notification model)
         {
             return model.User == null
-                ? string.Format("You have a '{0}'", model.Action)
-                : string.Format("You have a '{0}' from '{1}'", model.Action, model.User.DisplayName);
+                ? string.Format("You have a {0}", NotificationActions.RetrieveFriendlyAction(model.Action))
+                : string.Format("You have a {0} from {1}", NotificationActions.RetrieveFriendlyAction(model.Action),
+                    model.User.DisplayName);
         }
         private void RetrieveLimitSelected(out string limit)
         {
@@ -211,7 +280,7 @@ namespace BeginMobile.Pages.Notifications
         private void RetrieveStatusOptionSelected(out string status)
         {
             var catSelectedIndex = _statusPicker.SelectedIndex;
-            
+
             var selected = catSelectedIndex == -1
                 ? null
                 : _statusPicker.Items[catSelectedIndex];
@@ -225,12 +294,10 @@ namespace BeginMobile.Pages.Notifications
             MessagingCenter.Subscribe(this, NotificationMessages.MarkAsRead, MarkAsReadCallback());
             MessagingCenter.Subscribe(this, NotificationMessages.MarkAsUnread, MarkAsUnreadCallback());
         }
-
         private Action<TemplateListViewNotification, string> DisplayAlertCallBack()
         {
             return async (sender, arg) => { await DisplayAlert("Error", arg, "Ok"); };
         }
-
         private Action<TemplateListViewNotification, string> MarkAsUnreadCallback()
         {
             return async (sender, arg) =>
@@ -254,7 +321,6 @@ namespace BeginMobile.Pages.Notifications
                 }
             };
         }
-
         private Action<TemplateListViewNotification, string> MarkAsReadCallback()
         {
             return async (sender, arg) =>
@@ -265,7 +331,7 @@ namespace BeginMobile.Pages.Notifications
                              if (!string.IsNullOrEmpty(notificationId))
                              {
                                  var notifications =
-                                     (ObservableCollection<NotificationViewModel>) _listViewNotifications.ItemsSource;
+                                     (ObservableCollection<NotificationViewModel>)_listViewNotifications.ItemsSource;
 
                                  var toMark = notifications.FirstOrDefault(n => n.Id == notificationId);
 
@@ -284,47 +350,3 @@ namespace BeginMobile.Pages.Notifications
         #endregion
     }
 }
-
-#region TODO
-
-//_listViewNotifications.ItemSelected += async (sender, eventArgs) =>
-//{
-//    //if (eventArgs.SelectedItem == null)
-//    //{
-//    //    return;
-//    //}
-
-//    //MessagingCenter.Subscribe<ContentPage, Contact>(this,
-//    //    "friend", (s, arg) =>
-//    //    {
-//    //        if (arg == null) return;
-//    //        var contactDetail =
-//    //            new ContactDetail(arg);
-//    //        Navigation.PushAsync(contactDetail);
-//    //    });
-
-//    //var item = (NotificationViewModel)eventArgs.SelectedItem;
-
-//    //var currentUser =
-//    //    (LoginUser)App.Current.Properties["LoginUser"];
-
-//    //var contactList =
-//    //    await
-//    //        App.ProfileServices.GetContacts(
-//    //            _currentUser.AuthToken) ?? new List<User>();
-
-//    //var friend = (from contact in RetrieveContacts(contactList)
-//    //              where contact.Id.Equals(item.Id)
-//    //              select contact).FirstOrDefault();
-
-//    //MessagingCenter.Send<ContentPage, Contact>(this, "friend",
-//    //    friend);
-
-//    //MessagingCenter.Unsubscribe<ContentPage, Contact>(this,
-//    //    "friend");
-
-//    ((ListView)sender).SelectedItem = null;
-//};
-
-
-#endregion

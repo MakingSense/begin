@@ -69,7 +69,7 @@ namespace BeginMobile.Pages.Profile
                                                             return;
                                                         }
 
-                                                        var contactItem = (Contact)eventArgs.SelectedItem;
+                                                        var contactItem = (Contact) eventArgs.SelectedItem;
 
                                                         var contentPageContactDetail = new ContactDetail(contactItem)
                                                                                        {
@@ -77,7 +77,7 @@ namespace BeginMobile.Pages.Profile
                                                                                        };
 
                                                         await Navigation.PushAsync(contentPageContactDetail);
-                                                        ((ListView)sender).SelectedItem = null;
+                                                        ((ListView) sender).SelectedItem = null;
                                                     };
 
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
