@@ -186,5 +186,10 @@ namespace BeginMobile.Services
         {
             return await _messageManager.DeleteThreadMessages(authToken, threadId);
         }
+
+        public User GetUser(string authToken, string userId)
+        {
+            return _contactManager.GetUserById(authToken, userId);
+        }
     }
 }

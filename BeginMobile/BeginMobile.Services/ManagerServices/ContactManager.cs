@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
+using BeginMobile.Services.Utils;
 
 namespace BeginMobile.Services.ManagerServices
 {
@@ -165,6 +166,23 @@ namespace BeginMobile.Services.ManagerServices
                     Error = exception.Message,
                 };
                 return error;
+            }
+        }
+
+        //TODO: (Temporal) move to UserManager
+        public User GetUserById(string authToken, string userId)
+        {
+            try
+            {
+               return 
+                    _contactClient.GetList(authToken, IdentifierAux, string.Empty)
+                        .FirstOrDefault(u => u.Id == int.Parse(userId));
+            }
+
+            catch (Exception exception)
+            {
+                AppContextError.Send(exception, ExceptionLevel.Application);
+                return null;
             }
         }
     }

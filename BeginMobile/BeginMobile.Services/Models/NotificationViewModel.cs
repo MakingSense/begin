@@ -12,5 +12,6 @@ namespace BeginMobile.Services.Models
         public string Component { get; set; }
         public string Action { get; set; }
         public Group GroupViewModel { get; set; }
+        public SubUser UserViewModel { get; set; }
     }
 }
