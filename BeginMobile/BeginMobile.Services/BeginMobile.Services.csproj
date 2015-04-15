@@ -81,6 +81,7 @@
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\GroupViewModel.cs" />
+    <Compile Include="Models\MessageViewModel.cs" />
     <Compile Include="Models\NotificationViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

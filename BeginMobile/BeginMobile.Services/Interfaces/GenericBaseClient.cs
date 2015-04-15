@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -232,7 +233,7 @@ namespace BeginMobile.Services.Interfaces
 
                 var response = await httpClient.PostAsync(_subAddress + addressSuffix, content).ConfigureAwait(false);
                 var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var resultList = await Task.Run(() => 
+                var resultList = await Task.Run(() =>
                     JsonConvert.DeserializeObject<List<T>>(userJson)).ConfigureAwait(false);
 
                 return resultList;
@@ -251,7 +252,7 @@ namespace BeginMobile.Services.Interfaces
                 if (response.IsSuccessStatusCode)
                 {
                     var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    profileInformationGroups = await Task.Run(() => 
+                    profileInformationGroups = await Task.Run(() =>
                         JsonConvert.DeserializeObject<T>(userJson)).ConfigureAwait(false);
                 }
 
@@ -304,17 +305,17 @@ namespace BeginMobile.Services.Interfaces
         }
 
         //use PostAsync with FormUrlEncodedContent object
-        public async  Task<T> PostAsync(FormUrlEncodedContent content, string addressSuffix)
+        public async Task<T> PostAsync(FormUrlEncodedContent content, string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {
-                httpClient.Timeout = new TimeSpan(0,2,0);
+                httpClient.Timeout = new TimeSpan(0, 2, 0);
                 httpClient.BaseAddress = new Uri(_serviceBaseAddress);
 
                 var response = await httpClient.PostAsync(_subAddress + addressSuffix, content).ConfigureAwait(false);
                 var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                var result = await Task.Run(() => 
+                var result = await Task.Run(() =>
                         JsonConvert.DeserializeObject<T>(userJson)).ConfigureAwait(false);
 
                 return result;
@@ -330,11 +331,25 @@ namespace BeginMobile.Services.Interfaces
 
                 var response = await httpClient.PostAsync(_subAddress + addressSuffix, content).ConfigureAwait(false);
                 var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var result = await Task.Run(() => 
+                var result = await Task.Run(() =>
                     JsonConvert.DeserializeObject<T>(userJson)).ConfigureAwait(false);
 
                 return result;
             }
+        }
+
+        public ObservableCollection<T> ListToObservableCollection(List<T> groups)
+        {
+            ObservableCollection<T> resultCollection = null;
+            if (groups != null && groups.Any())
+            {
+                resultCollection = new ObservableCollection<T>();
+                foreach (var group in groups)
+                {
+                    resultCollection.Add(group);
+                }
+            }
+            return resultCollection;
         }
     }
 }

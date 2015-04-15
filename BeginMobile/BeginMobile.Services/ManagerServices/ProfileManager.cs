@@ -159,11 +159,17 @@ namespace BeginMobile.Services.ManagerServices
             return profileMessages;
         }
 
-        public async Task<ProfileMeWall> GetWall(string authToken, string filter = null, string type = null)
+        public async Task<ProfileMeWall> GetWall(
+            string authToken, 
+            string filter = null, 
+            string type = null, 
+            string limit = null, 
+            string offset = null
+            )
         {
             try
             {
-                var urlGetParams = "?filter=" + filter + "&type=" + type;
+                var urlGetParams = "?filter=" + filter + "&type=" + type + "&limit=" + limit + "&offset=" + offset;
                 const string addressSuffix = "me/wall";
 
                 var profileMeWall = new ProfileMeWall()

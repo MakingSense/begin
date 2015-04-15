@@ -14,28 +14,13 @@ namespace BeginMobile.Pages.Wall
         public WallItemCell()
         {
             //Do something
-            var labelName = new Label()
+            var labelTitle = new Label()
                           {
                               YAlign = TextAlignment.End,
                               FontAttributes = FontAttributes.Bold,
                               Style = App.Styles.ListItemTextStyle
                           };
-            labelName.SetBinding(Label.TextProperty, "DisplayName");
-
-            var labelExtraText = new Label()
-                               {
-                                   YAlign = TextAlignment.End,
-                                   Style = App.Styles.ListItemDetailTextStyle,
-                               };
-            labelExtraText.SetBinding(Label.TextProperty, "ExtraText");
-
-            var labelNameTwo = new Label()
-            {
-                YAlign = TextAlignment.End,
-                Style = App.Styles.ListItemTextStyle,
-                FontAttributes = FontAttributes.Bold,
-            };
-            labelNameTwo.SetBinding(Label.TextProperty, "DisplayNameTwo");
+            labelTitle.SetBinding(Label.TextProperty, "Title");
 
             var labelReason = new Label()
                             {
@@ -60,17 +45,6 @@ namespace BeginMobile.Pages.Wall
 
             labelDate.SetBinding(Label.TextProperty, "Date");
 
-
-            var stackLayoutTopTitle = new StackLayout()
-            {
-                Orientation = StackOrientation.Horizontal,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Children =
-                {
-                    labelName, labelExtraText, labelNameTwo, labelReason
-                }
-            };
-
             var gridDetails = new Grid()
             {
                 Padding = new Thickness(10, 5, 10, 5),
@@ -79,18 +53,19 @@ namespace BeginMobile.Pages.Wall
                 {
                     new RowDefinition { Height = GridLength.Auto },
                     new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto },
                     new RowDefinition { Height = GridLength.Auto }
                 },
                 ColumnDefinitions =
                 {
                     new ColumnDefinition { Width = GridLength.Auto },
-                    new ColumnDefinition { Width = GridLength.Auto },
                 }
             };
 
-            gridDetails.Children.Add(stackLayoutTopTitle, 0, 0);
-            gridDetails.Children.Add(labelDescription, 0, 1);
-            gridDetails.Children.Add(labelDate, 0, 2);
+            gridDetails.Children.Add(labelTitle, 0, 0);
+            gridDetails.Children.Add(labelReason, 0, 2);
+            gridDetails.Children.Add(labelDescription, 0, 3);
+            gridDetails.Children.Add(labelDate, 0, 4);
 
             var circleImageShop = new CircleImage()
             {

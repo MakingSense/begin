@@ -2,6 +2,7 @@
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace BeginMobile.Services
 {
@@ -59,9 +60,15 @@ namespace BeginMobile.Services
             return _profileManager.GetMessagesInformation(userName, authToken);
         }
 
-        public async Task<ProfileMeWall> GetWall(string authToken, string filter = null, string type = null)
+        public async Task<ProfileMeWall> GetWall(
+            string authToken, 
+            string filter = null, 
+            string type = null,
+            string limit = null,
+            string offset= null
+            )
         {
-            return await _profileManager.GetWall(authToken, filter, type);
+            return await _profileManager.GetWall(authToken, filter, type, limit, offset);
         }
 
         public async Task<ProfileInfo> GetInformationDetail(string userName, string authToken)
@@ -70,7 +77,7 @@ namespace BeginMobile.Services
         }
 
         //Groups, events and contacts
-        public async Task<List<Group>> GetGroupsByParams(string authToken, string name = null, string cat = null,
+        public async Task<ObservableCollection<Group>> GetGroupsByParams(string authToken, string name = null, string cat = null,
             string limit = null, string sections = null)
         {
             return await _groupManager.GetGroupsByParams(authToken, name, cat, limit, sections);
@@ -81,7 +88,7 @@ namespace BeginMobile.Services
             return await _groupManager.GetGroupById(authToken, groupId, sections);
         }
 
-        public async Task<List<ProfileEvent>> GetEventsByParams(string authToken, string name = null,
+        public async Task<ObservableCollection<ProfileEvent>> GetEventsByParams(string authToken, string name = null,
             string cat = null, string limit = null)
         {
             return await _eventManager.GetEventsByParams(authToken, name, cat, limit);

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using BeginMobile.Services.DTO;
+using Xamarin.Forms;
 
 namespace BeginMobile.Services.Models
 {
@@ -10,5 +11,6 @@ namespace BeginMobile.Services.Models
         public string ItemId { get; set; }
         public string Component { get; set; }
         public string Action { get; set; }
+        public Group GroupViewModel { get; set; }
     }
 }

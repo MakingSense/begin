@@ -1,7 +1,4 @@
-﻿
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using BeginMobile.Services.DTO;
+﻿using System.Collections.Generic;
 
 namespace BeginMobile.Utils
 {
@@ -11,10 +8,28 @@ namespace BeginMobile.Utils
         MarkAsUnread = 1,
         Remove = 2
     }
+
+    public enum NotificationComponent
+    {
+        Message = 0,
+        Group = 1,
+        Contact = 2
+    }
     public static class NotificationActions
     {
         public const string Read = "read";
         public const string Unread = "unread";
+
+        private static readonly Dictionary<string, NotificationComponent> ComponentsDictionary =
+            new Dictionary<string, NotificationComponent>
+            {
+                {"new_message", NotificationComponent.Message},
+                {"group_invite", NotificationComponent.Group},
+                {"friendship_request", NotificationComponent.Contact},
+                {"friendship_accepted", NotificationComponent.Contact},
+                {"friendship_rejected", NotificationComponent.Contact},
+                {"friendship_removed", NotificationComponent.Contact}
+            };
 
         public async static void Request(NotificationOption notificationOption, string authToken,
             string notificationId)
@@ -29,6 +44,15 @@ namespace BeginMobile.Utils
                     await App.ProfileServices.MarkAsUnread(authToken, notificationId);
                     break;
             }
+        }
+        public static NotificationComponent RetrieveComponent(string actionKey)
+        {
+            return ComponentsDictionary[actionKey];
+        }
+
+        public static string RetrieveFriendlyAction(string actionKey)
+        {
+            return actionKey.Replace("_", " ");
         }
     }
     public static class NotificationMessages

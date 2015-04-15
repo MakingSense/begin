@@ -25,7 +25,7 @@ namespace BeginMobile.Pages
                 Device.OnPlatform("RSS.png", "padlock.png", "padlock.png")));
 
             Children.Add(
-                new MessageListPage(new Label { Text = "Message", Style = App.Styles.StyleNavigationTitle }.Text,
+                new MessageListPage(new Label { Text = "Messages", Style = App.Styles.StyleNavigationTitle }.Text,
                     Device.OnPlatform("Messages.png", "padlock.png", "padlock.png")));
 
             Children.Add(

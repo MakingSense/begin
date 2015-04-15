@@ -18,20 +18,28 @@ namespace BeginMobile.Pages.MessagePages
                                       BorderThickness = Device.OnPlatform(2, 3, 3),
                                       HeightRequest = Device.OnPlatform(50, 100, 100),
                                       WidthRequest = Device.OnPlatform(50, 100, 100),
-                                      Aspect = Aspect.AspectFill,
+                                      Aspect = Aspect.AspectFit,
                                       HorizontalOptions = LayoutOptions.Start,
                                       Source = GroupImage
                                   };
 
-            var labelTitle = new Label
+            var labelSender = new Label
+            {
+                YAlign = TextAlignment.Center,
+                Style = App.Styles.ListItemDetailTextStyle,
+                HorizontalOptions = LayoutOptions.StartAndExpand
+            };
+
+            labelSender.SetBinding(Label.TextProperty, "Sender", stringFormat: "From: {0}");
+
+            var labelSubject = new Label
                              {
                                  YAlign = TextAlignment.Center,
                                  Style = App.Styles.ListItemTextStyle,
                                  FontAttributes = FontAttributes.Bold,
                                  HorizontalOptions = LayoutOptions.Start
                              };
-
-            labelTitle.SetBinding(Label.TextProperty, "Title");
+            labelSubject.SetBinding(Label.TextProperty, "Subject");
 
             var labelCreate = new Label
                               {
@@ -40,7 +48,7 @@ namespace BeginMobile.Pages.MessagePages
                                   HorizontalOptions = LayoutOptions.End
                               };
 
-            labelCreate.SetBinding(Label.TextProperty, "CreateDate", stringFormat: "Date: {0}");
+            labelCreate.SetBinding(Label.TextProperty, "DateSent", stringFormat: "Date: {0}");
 
             var labelContent = new Label
                                {
@@ -48,8 +56,10 @@ namespace BeginMobile.Pages.MessagePages
                                    Style = App.Styles.ListItemDetailTextStyle,
                                    HorizontalOptions = LayoutOptions.StartAndExpand
                                };
+            labelContent.SetBinding(Label.TextProperty, "MessageContent");
 
-            labelContent.SetBinding(Label.TextProperty, "Content");
+
+         
 
             var gridDetails = new Grid
                               {
@@ -61,19 +71,13 @@ namespace BeginMobile.Pages.MessagePages
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
-                                  },
-                                  ColumnDefinitions =
-                                  {
-                                      new ColumnDefinition {Width = GridLength.Auto},
-                                      new ColumnDefinition {Width = GridLength.Auto}
-                                  }
+                                      new RowDefinition {Height = GridLength.Auto}
+                                  }                                 
                               };
-
-            gridDetails.Children.Add(labelTitle, 0, 0);
-            gridDetails.Children.Add(labelContent, 0, 1);
-
-            gridDetails.Children.Add(labelCreate, 0, 2);
-
+            gridDetails.Children.Add(labelSender, 0, 0);
+            gridDetails.Children.Add(labelSubject, 0, 1);
+            gridDetails.Children.Add(labelContent, 0, 2);
+            gridDetails.Children.Add(labelCreate, 0, 3);
             var stackLayoutView = new StackLayout
                                   {
                                       Spacing = 2,

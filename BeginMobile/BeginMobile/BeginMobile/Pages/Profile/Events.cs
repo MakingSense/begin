@@ -5,6 +5,7 @@ using BeginMobile.Services.DTO;
 using BeginMobile.Utils;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace BeginMobile.Pages.Profile
 {
@@ -21,7 +22,7 @@ namespace BeginMobile.Pages.Profile
         private readonly LoginUser _currentUser;
         private const string DefaultLimit = "10";
 
-        private List<ProfileEvent> _profileEvents;
+        private ObservableCollection<ProfileEvent> _profileEvents;
 
         public Events()
         {
@@ -180,7 +181,7 @@ namespace BeginMobile.Pages.Profile
             RetrieveLimitSelected(out limit);
             RetrieveCategorySelected(out cat);
 
-            List<ProfileEvent> profileEventList =
+            ObservableCollection<ProfileEvent> profileEventList =
                 await App.ProfileServices.GetEventsByParams(_currentUser.AuthToken, q, cat, limit);
 
             if (profileEventList.Any())
