@@ -3,6 +3,7 @@ using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -15,36 +16,43 @@ namespace BeginMobile.Pages.Wall
         private ProfileMeWall _profileShop;
         private LoginUser _currentUser;
         private StackLayout _stackLayoutMain;
-        private List<BeginWallViewModel> _listWall;
+        private ObservableCollection<BeginWallViewModel> _listWall;
         private bool _isLoading;
+        private int _offset = 0;
+        private int _limit = 10;
+        private Button _buttonAddMore;
+        private Grid _gridMain;
+
 
         public WallPage(string title, string iconImage)
             : base(title, iconImage)
         {
             _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
 
-            _stackLayoutMain = new StackLayout()
+            _gridMain = new Grid()
             {
-                Spacing = 2,
-                Padding = App.Styles.LayoutThickness,
+                Padding = new Thickness(10, 0, 10, 0),
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions =LayoutOptions.FillAndExpand
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
+                {
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = 50 }
+                }
             };
 
-            _stackLayoutMain.Children.Add(CreateStackLayoutWithLoadingIndicator());
-    
-            Content = _stackLayoutMain;
-
+            _gridMain.Children.Add(CreateStackLayoutWithLoadingIndicator(), 0, 1);
+            Content = _gridMain;
             Init();
         }
 
-        private List<BeginWallViewModel> ListBeginWallViewModel(List<BeginMobile.Services.DTO.Wall> oldListWall)
+        private ObservableCollection<BeginWallViewModel> ListBeginWallViewModel(List<BeginMobile.Services.DTO.Wall> oldListWall)
         {
-            List<BeginWallViewModel> resultList = null; 
+            ObservableCollection<BeginWallViewModel> resultList = null; 
 
             if (oldListWall != null)
             {
-                resultList = new List<BeginWallViewModel>();
+                resultList = new ObservableCollection<BeginWallViewModel>();
 
                 foreach (var wall in oldListWall)
                 {
@@ -61,9 +69,10 @@ namespace BeginMobile.Pages.Wall
             ActivityIndicatorLoading.IsRunning = true;
             ActivityIndicatorLoading.IsVisible = true;
 
-            _profileShop = await App.ProfileServices.GetWall(_currentUser.AuthToken);
+            _profileShop = await App.ProfileServices.GetWall(_currentUser.AuthToken, limit: _limit.ToString(), offset: _offset.ToString());
             _listWall = ListBeginWallViewModel(_profileShop.ListOfWall);
-            //_listWall = new List<BeginWallViewModel>();
+
+            
 
             _listViewWall = new ListView
             {
@@ -79,16 +88,20 @@ namespace BeginMobile.Pages.Wall
                 ((ListView)sender).SelectedItem = null;
             };
 
-            /*_listViewWall.ItemAppearing += async (sender, e) =>
+            _listViewWall.ItemAppearing += async (sender, e) =>
             {
                 if (_isLoading || _listWall.Count == 0)
                     return;
 
-                if (e.Item.ToString() == _listWall[_listWall.Count - 1].ToString())
+                var appearingItem = (BeginWallViewModel) e.Item;
+                var lastItem = _listWall[_listWall.Count - 1];
+
+                if ((appearingItem.ItemId == lastItem.ItemId) &&
+                    (appearingItem.Type == lastItem.Type))
                 {
-                    LoadItems();
+                    await LoadItems();
                 }
-            };*/
+            };
 
             var relativeLayoutMain = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand };
             relativeLayoutMain.Children.Add(_listViewWall,
@@ -97,37 +110,70 @@ namespace BeginMobile.Pages.Wall
                 widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
                 heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
-            _stackLayoutMain.Children.Add(relativeLayoutMain);
-            Content = _stackLayoutMain;
-
-            //LoadItems();
-
             ActivityIndicatorLoading.IsRunning = false;
             ActivityIndicatorLoading.IsVisible = false;
+
+            _gridMain.Children.Add(relativeLayoutMain, 0, 0);
+
+            Content = _gridMain;
+
         }
 
-        /*private async Task LoadItems()
+        private async Task LoadItems()
         {
+            _offset +=_limit;
+
             _isLoading = true;
 
-            Device.StartTimer(TimeSpan.FromSeconds(2), () =>
+            ActivityIndicatorLoading.IsRunning = true;
+            ActivityIndicatorLoading.IsVisible = true;
+
+            _profileShop = await App.ProfileServices.GetWall(_currentUser.AuthToken, limit: _limit.ToString(), offset: _offset.ToString());
+
+            if (_profileShop != null && _profileShop.ListOfWall.Count > 0)
             {
-                _listWall.AddRange(ListBeginWallViewModel(_profileShop.ListOfWall));
+                Device.StartTimer(TimeSpan.FromSeconds(2), () =>
+                {
+                    foreach (var beginWallViewModel in ListBeginWallViewModel(_profileShop.ListOfWall))
+                    {
+                        _listWall.Add(beginWallViewModel);
+                    }
+
+
+                    ActivityIndicatorLoading.IsRunning = false;
+                    ActivityIndicatorLoading.IsVisible = false;
+
+                    _isLoading = false;
+                    return false;
+                });
+                
+            }
+            else
+            {
+                ActivityIndicatorLoading.IsRunning = false;
+                ActivityIndicatorLoading.IsVisible = false;
                 _isLoading = false;
-                return false;
-            });
-        }*/
+            }
+        }
 
         private BeginWallViewModel GetBeginWallViewModel(BeginMobile.Services.DTO.Wall wallItem)
         {
-            var beginWall = new BeginWallViewModel();
+            var beginWall = new BeginWallViewModel()
+            {
+                ItemId = wallItem.ItemId,
+                Component = wallItem.Component,
+                Type = wallItem.Type
+            };
 
             switch (wallItem.Type)
             {
                 case WallParameters.CreatedGroup:
+                    
                     beginWall.DisplayName = wallItem.User.DisplayName;
                     beginWall.ExtraText = "";
                     beginWall.DisplayNameTwo = "";
+                    beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                     beginWall.Reason = WallParameters.DescCreatedGroup;
                     beginWall.Description = wallItem.Group.Name;
                     beginWall.Date = wallItem.Date;
@@ -136,6 +182,8 @@ namespace BeginMobile.Pages.Wall
                     beginWall.DisplayName = wallItem.User.DisplayName;
                     beginWall.ExtraText = "";
                     beginWall.DisplayNameTwo = "";
+                    beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                     beginWall.Reason = WallParameters.DescJoinedGroup;
                     beginWall.Description = wallItem.Group.Name;
                     beginWall.Date = wallItem.Date;
@@ -144,6 +192,8 @@ namespace BeginMobile.Pages.Wall
                     beginWall.DisplayName = wallItem.User.DisplayName;
                     beginWall.ExtraText = "";
                     beginWall.DisplayNameTwo = "";
+                    beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                     beginWall.Reason = WallParameters.DescRtmediaUpdate;
                     beginWall.Description = wallItem.Group.Name;
                     beginWall.Date = wallItem.Date;
@@ -154,6 +204,8 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayName = wallItem.User.DisplayName;
                         beginWall.ExtraText = "";
                         beginWall.DisplayNameTwo = "";
+                        beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                         beginWall.Reason = WallParameters.DescActivityUpdate + " group";
                         beginWall.Description = wallItem.Group.Name;
                         beginWall.Date = wallItem.Date;
@@ -163,6 +215,8 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayName = wallItem.User.DisplayName;
                         beginWall.ExtraText = "";
                         beginWall.DisplayNameTwo = "";
+                        beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                         beginWall.Reason = WallParameters.DescActivityUpdate + " activity";
                         beginWall.Description = wallItem.Content;
                         beginWall.Date = wallItem.Date;
@@ -172,18 +226,22 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayName = wallItem.User.DisplayName;
                         beginWall.ExtraText = "";
                         beginWall.DisplayNameTwo = "";
+                        beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                         beginWall.Reason = WallParameters.DescActivityUpdate;
-                        beginWall.Description = "";
+                        beginWall.Description = null;
                         beginWall.Date = wallItem.Date;
                     }
                     break;
                 case WallParameters.FriendshipCreated:
                 case WallParameters.FriendshipAccepted:
                     beginWall.DisplayName = wallItem.User1.DisplayName;
-                    beginWall.ExtraText = "and";
+                    beginWall.ExtraText = "And";
                     beginWall.DisplayNameTwo = wallItem.User2.DisplayName;
-                    beginWall.Reason = "";
-                    beginWall.Description = WallParameters.DescFriendshipAccepted;
+                    beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
+                    beginWall.Reason = WallParameters.DescFriendshipAccepted;
+                    beginWall.Description = null;
                     beginWall.Date = wallItem.Date;
                     break;
                 case WallParameters.NewBooking:
@@ -192,6 +250,8 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayName = wallItem.User.DisplayName;
                         beginWall.ExtraText = "";
                         beginWall.DisplayNameTwo = "";
+                        beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                         beginWall.Reason = WallParameters.DescNewBooking + " group";
                         beginWall.Description = wallItem.Group.Name;
                         beginWall.Date = wallItem.Date;
@@ -201,6 +261,8 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayName = wallItem.Event.Owner.NameSurname;
                         beginWall.ExtraText = "";
                         beginWall.DisplayNameTwo = "";
+                        beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                         beginWall.Reason = WallParameters.DescNewBooking;
                         beginWall.Description = wallItem.Event.Name;
                         beginWall.Date = wallItem.Event.StartDate + " - " + wallItem.Event.EndDate;
@@ -212,6 +274,8 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayName = wallItem.User.DisplayName;
                         beginWall.ExtraText = "";
                         beginWall.DisplayNameTwo = "";
+                        beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                         beginWall.Reason = WallParameters.DescNewEvent +" group";
                         beginWall.Description = wallItem.Group.Name;
                         beginWall.Date = wallItem.Date;
@@ -220,6 +284,8 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayName = wallItem.Event.Owner.NameSurname;
                         beginWall.ExtraText = "";
                         beginWall.DisplayNameTwo = "";
+                        beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                         beginWall.Reason = WallParameters.DescNewEvent;
                         beginWall.Description = wallItem.Event.Name;
                         beginWall.Date = wallItem.Event.StartDate + " -" +
@@ -231,8 +297,10 @@ namespace BeginMobile.Pages.Wall
                     beginWall.DisplayName = wallItem.User.DisplayName;
                     beginWall.ExtraText = "";
                     beginWall.DisplayNameTwo = "";
+                    beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                     beginWall.Reason = WallParameters.DescNewMember;
-                    beginWall.Description = "";
+                    beginWall.Description = null;
                     beginWall.Date = wallItem.Date;
                     break;
                 case WallParameters.UpdatedProfile:
@@ -241,8 +309,10 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayName = wallItem.User.DisplayName;
                         beginWall.ExtraText = "";
                         beginWall.DisplayNameTwo = "";
+                        beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                         beginWall.Reason = WallParameters.DescUpdatedProfile;
-                        beginWall.Description = "";
+                        beginWall.Description = null;
                         beginWall.Date = wallItem.Date;
                     }
                     break;
@@ -250,6 +320,8 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayName = wallItem.User.DisplayName;
                         beginWall.ExtraText = "";
                         beginWall.DisplayNameTwo = "";
+                        beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                         beginWall.Reason = WallParameters.DescActivityComment;
                         beginWall.Description = wallItem.Content;
                         beginWall.Date = wallItem.Date;
@@ -260,6 +332,8 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayName = wallItem.User.DisplayName;
                         beginWall.ExtraText = "";
                         beginWall.DisplayNameTwo = "";
+                        beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                         beginWall.Reason = WallParameters.DescBbpTopicCreate + " group topic";
                         beginWall.Description = wallItem.Group.Name;
                         beginWall.Date = wallItem.Date;
@@ -273,8 +347,10 @@ namespace BeginMobile.Pages.Wall
                     beginWall.DisplayName = "";
                     beginWall.ExtraText = "";
                     beginWall.DisplayNameTwo = "";
+                    beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
+
                     beginWall.Reason = "";
-                    beginWall.Description = "";
+                    beginWall.Description = null;
                     beginWall.Date = "";
                     break;
             }
@@ -303,27 +379,29 @@ namespace BeginMobile.Pages.Wall
         public const string Everything = "-1";
         
 
-        public const string DescCreatedGroup = "created the group";
-        public const string DescActivityUpdate = "update";
-        public const string DescNewBlogPost = "created the group";
-        public const string DescNewBlogComment = "created the group";
-        public const string DescJoinedGroup = "joined to the group";
-        public const string DescFriendshipAccepted = "now are friends";
-        public const string DescFriendshipCreated = "now are friends";
-        public const string DescNewMember = "new member";
-        public const string DescBbpTopicCreate = "created";
-        public const string DescCbpReplyCreate = "created the group";
+        public const string DescCreatedGroup = "Created the group";
+        public const string DescActivityUpdate = "Update";
+        public const string DescNewBlogPost = "Created the group";
+        public const string DescNewBlogComment = "Created the group";
+        public const string DescJoinedGroup = "Joined to the group";
+        public const string DescFriendshipAccepted = "Now are friends";
+        public const string DescFriendshipCreated = "Now are friends";
+        public const string DescNewMember = "New member";
+        public const string DescBbpTopicCreate = "Created";
+        public const string DescCbpReplyCreate = "Created the group";
         public const string DescEverything = "";
-        public const string DescNewBooking = "create new booking";
-        public const string DescNewEvent = "create new event";
-        public const string DescRtmediaUpdate = "update";
-        public const string DescUpdatedProfile = "update profile";
-        public const string DescActivityComment = "comment to";
+        public const string DescNewBooking = "Create new booking";
+        public const string DescNewEvent = "Create new event";
+        public const string DescRtmediaUpdate = "Update";
+        public const string DescUpdatedProfile = "Update profile";
+        public const string DescActivityComment = "Comment to";
 
         public const string Activity = "activity";
         public const string Profile = "profile";
         public const string Groups = "groups";
         public const string Friends = "friends";
         public const string Event = "event";
+
+        public const string And = "And";
     }
 }
