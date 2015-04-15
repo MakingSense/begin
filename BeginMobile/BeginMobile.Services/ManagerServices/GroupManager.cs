@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
@@ -21,7 +22,7 @@ namespace BeginMobile.Services.ManagerServices
         {
         }
 
-        public async Task<List<Group>> GetGroupsByParams(
+        public async Task<ObservableCollection<Group>> GetGroupsByParams(
             string authToken,
             string name = null,
             string cat = null,
@@ -32,7 +33,11 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var urlGetParams = "?q=" + name + "&cat=" + cat + "&limit=" + limit + "&sections=" + sections;
-                return await _groupClient.GetListAsync(authToken, Identifier, urlGetParams);
+
+                var resultGroups = await _groupClient.GetListAsync(authToken, Identifier, urlGetParams);
+                var groups = Task.Run(() => _groupClient.ListToObservableCollection(resultGroups));
+
+                return await groups;
             }
             catch (Exception exeption)
             {

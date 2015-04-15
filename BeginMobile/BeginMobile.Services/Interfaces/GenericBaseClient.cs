@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -333,6 +334,20 @@ namespace BeginMobile.Services.Interfaces
 
                 return result;
             }
+        }
+
+        public ObservableCollection<T> ListToObservableCollection(List<T> groups)
+        {
+            ObservableCollection<T> resultCollection = null;
+            if (groups != null && groups.Any())
+            {
+                resultCollection = new ObservableCollection<T>();
+                foreach (var group in groups)
+                {
+                    resultCollection.Add(group);
+                }
+            }
+            return resultCollection;
         }
     }
 }

@@ -6,6 +6,7 @@ using BeginMobile.Services.DTO;
 using BeginMobile.Utils;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace BeginMobile.Pages.Profile
 {
@@ -23,7 +24,7 @@ namespace BeginMobile.Pages.Profile
         private List<string> _categoriesList = new List<string> { "All Categories" };
         private const string DefaultLimit = "10";
 
-        private List<Group> _groupInformation;
+        private ObservableCollection<Group> _groupInformation;
 
         private readonly LoginUser _currentUser;
         public Groups()
@@ -154,7 +155,7 @@ namespace BeginMobile.Pages.Profile
             RetrieveCategorySelected(out cat);
             RetrieveSectionSelected(out sections);
 
-            List<Group> groupsList =
+            ObservableCollection<Group> groupsList =
                 await App.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, q, cat, limit, sections);
 
             if (groupsList.Any())
