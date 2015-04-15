@@ -13,7 +13,9 @@ namespace BeginMobile.Utils
     {
         Message = 0,
         Group = 1,
-        Contact = 2
+        Contact = 2,
+        Activity = 3,
+        Unknown = 4
     }
     public static class NotificationActions
     {
@@ -28,7 +30,8 @@ namespace BeginMobile.Utils
                 {"friendship_request", NotificationComponent.Contact},
                 {"friendship_accepted", NotificationComponent.Contact},
                 {"friendship_rejected", NotificationComponent.Contact},
-                {"friendship_removed", NotificationComponent.Contact}
+                {"friendship_removed", NotificationComponent.Contact},
+                {"new_at_mention", NotificationComponent.Activity }
             };
 
         public async static void Request(NotificationOption notificationOption, string authToken,

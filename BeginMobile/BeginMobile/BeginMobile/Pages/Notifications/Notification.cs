@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.GroupPages;
 using BeginMobile.Pages.MessagePages;
+using BeginMobile.Pages.Profile;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
 using BeginMobile.Services.Utils;
@@ -92,10 +94,54 @@ namespace BeginMobile.Pages.Notifications
             var item = (NotificationViewModel)listView.SelectedItem;
             var target = NotificationActions.RetrieveComponent(item.Action);
 
+            await RedirectNotificationComponent(sender, target, item);
+
+            ((ListView)sender).SelectedItem = null;
+
+            //Update notification status (Maybe put it for each messaging subscribe)
+            if (_isUnread)
+            {
+                var notificationId = item.Id;
+                NotificationActions.Request(NotificationOption.MarkAsRead, _currentUser.AuthToken, notificationId);
+            }
+        }
+
+        private async Task RedirectNotificationComponent(object sender, NotificationComponent target, NotificationViewModel item)
+        {
             switch (target)
             {
                 case NotificationComponent.Contact:
-                    await DisplayAlert("Info", "Goes to Friendship (Contact) Details", "Ok");
+
+                    MessagingCenter.Subscribe<ContentPage, Contact>(this,
+                        "contact", async (s, arg) =>
+                                         {
+                                             if (arg == null) return;
+                                             var contactDetails = new ContactDetail(arg);
+                                             await Navigation.PushAsync(contactDetails);
+                                             ((ListView) sender).SelectedItem = null;
+                                         });
+
+                    var user = App.ProfileServices.GetUser(_currentUser.AuthToken, item.UserViewModel.UserId);
+
+                    var contact = new Contact
+                                  {
+                                      Icon = "userdefault3.png",
+                                      NameSurname =
+                                          user.NameSurname,
+                                      Email = user.Email,
+                                      Url = user.Url,
+                                      UserName =
+                                          user.UserName,
+                                      Registered =
+                                          user.Registered,
+                                      Id =
+                                          user.Id.ToString()
+                                  };
+
+                    MessagingCenter.Send<ContentPage, Contact>(this, "contact", contact);
+                    MessagingCenter.Unsubscribe<ContentPage, Contact>(this, "contact");
+
+
                     break;
 
                 case NotificationComponent.Group:
@@ -106,7 +152,7 @@ namespace BeginMobile.Pages.Notifications
                                            if (arg == null) return;
                                            var groupDetail = new GroupItemPage(arg);
                                            await Navigation.PushAsync(groupDetail);
-                                           ((ListView)sender).SelectedItem = null;
+                                           ((ListView) sender).SelectedItem = null;
                                        });
 
                     MessagingCenter.Send<ContentPage, Group>(this, "group", item.GroupViewModel);
@@ -115,29 +161,25 @@ namespace BeginMobile.Pages.Notifications
                     break;
 
                 case NotificationComponent.Message:
+
                     MessagingCenter.Subscribe<ContentPage, MessageViewModel>(this,
                         "message", async (s, arg) =>
                                          {
                                              if (arg == null) return;
-                                             var groupDetail = new MessageDetail(arg);
-                                             await Navigation.PushAsync(groupDetail);
+                                             var messageDetails = new MessageDetail(arg);
+                                             await Navigation.PushAsync(messageDetails);
                                              ((ListView) sender).SelectedItem = null;
                                          });
 
-                   //TODO: Load Message
-                     MessagingCenter.Send<ContentPage, MessageViewModel>(this, "message", new MessageViewModel());
-                     MessagingCenter.Unsubscribe<ContentPage, MessageViewModel>(this, "message");
+                    //TODO: Load Message
+                    MessagingCenter.Send<ContentPage, MessageViewModel>(this, "message", new MessageViewModel());
+                    MessagingCenter.Unsubscribe<ContentPage, MessageViewModel>(this, "message");
+                    break;
+
+                default:
+                    await DisplayAlert("Info", string.Format("Goes to {0}", target), "Ok");
                     break;
             }
-
-            ((ListView)sender).SelectedItem = null;
-
-            //Update notification status (Maybe put it for each messaging subscribe)
-            var notificationId = item.Id;
-            NotificationActions.Request(_isUnread
-                ? NotificationOption.MarkAsRead
-                : NotificationOption.MarkAsUnread,
-                _currentUser.AuthToken, notificationId);
         }
 
         #endregion
@@ -254,7 +296,9 @@ namespace BeginMobile.Pages.Notifications
                                                                          IntervalDate = RetrieveTimeSpan(model),
                                                                          NotificationDescription =
                                                                              RetrieveDescription(model),
-                                                                         GroupViewModel = model.Group
+                                                                         GroupViewModel = model.Group,
+                                                                         UserViewModel = model.User
+                                                                         
                                                                      });
         }
         private static string RetrieveTimeSpan(Services.DTO.Notification model)
