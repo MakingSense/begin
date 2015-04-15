@@ -77,12 +77,12 @@ namespace BeginMobile.Pages.MessagePages
         private async void SendMessageEventHandler(object sender, EventArgs e)
         {
             _currentUser = (LoginUser) App.Current.Properties["LoginUser"];
-            var sendMessageManager = App.ProfileServices.SendMessage(_currentUser.AuthToken, _entryUserName.Text,
+            var sendMessageManager = await App.ProfileServices.SendMessage(_currentUser.AuthToken, _entryUserName.Text,
                 _entrySubject.Text, _editorMessageContent.Text);
 
-            if (sendMessageManager.Result != null)
+            if (sendMessageManager != null)
             {
-                var errorMessage = sendMessageManager.Result.Errors.Aggregate("",
+                var errorMessage = sendMessageManager.Errors.Aggregate("",
                     (current, serviceError) => current + (serviceError.ErrorMessage + "\n"));
                 await DisplayAlert("Validation Error", errorMessage, "Ok");
             }
