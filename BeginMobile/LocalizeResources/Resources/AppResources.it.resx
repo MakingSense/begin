@@ -183,17 +183,35 @@
   <data name="LabelDateReceived" xml:space="preserve">
     <value>Date Received</value>
   </data>
+  <data name="LabelEventDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="LabelEventName" xml:space="preserve">
+    <value>Event name</value>
+  </data>
+  <data name="LabelEventTitle" xml:space="preserve">
+    <value>Events</value>
+  </data>
   <data name="LabelNotification" xml:space="preserve">
     <value>Notification</value>
   </data>
   <data name="LoginFormTitle" xml:space="preserve">
     <value>Modulo Di Accesso</value>
   </data>
+  <data name="OptionAllCategories" xml:space="preserve">
+    <value>All Categories</value>
+  </data>
   <data name="PasswordPlaceholder" xml:space="preserve">
     <value>Contrassegno</value>
   </data>
+  <data name="PickerEventFilterBycategory" xml:space="preserve">
+    <value>Filter by Category</value>
+  </data>
   <data name="RegisterFormTitle" xml:space="preserve">
     <value>Registratore</value>
+  </data>
+  <data name="SearchViewEventSearchByName" xml:space="preserve">
+    <value>Search by event name</value>
   </data>
   <data name="UsernamePlaceholder" xml:space="preserve">
     <value>Nome Utente</value>

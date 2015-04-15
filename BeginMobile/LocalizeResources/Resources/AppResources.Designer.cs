@@ -260,6 +260,33 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string LabelEventDate {
+            get {
+                return ResourceManager.GetString("LabelEventDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event name.
+        /// </summary>
+        public static string LabelEventName {
+            get {
+                return ResourceManager.GetString("LabelEventName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Events.
+        /// </summary>
+        public static string LabelEventTitle {
+            get {
+                return ResourceManager.GetString("LabelEventTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notification.
         /// </summary>
         public static string LabelNotification {
@@ -278,6 +305,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Categories.
+        /// </summary>
+        public static string OptionAllCategories {
+            get {
+                return ResourceManager.GetString("OptionAllCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string PasswordPlaceholder {
@@ -287,11 +323,29 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter by Category.
+        /// </summary>
+        public static string PickerEventFilterBycategory {
+            get {
+                return ResourceManager.GetString("PickerEventFilterBycategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string RegisterFormTitle {
             get {
                 return ResourceManager.GetString("RegisterFormTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search by event name.
+        /// </summary>
+        public static string SearchViewEventSearchByName {
+            get {
+                return ResourceManager.GetString("SearchViewEventSearchByName", resourceCulture);
             }
         }
         

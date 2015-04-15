@@ -6,6 +6,7 @@ using BeginMobile.Utils;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.Pages.Profile
 {
@@ -17,7 +18,7 @@ namespace BeginMobile.Pages.Profile
         private readonly List<EventInfoObject> _defaultList = new List<EventInfoObject>();
         private readonly SearchView _searchView;
         private Picker _categoriesPicker;
-        private List<string> _categoriesList = new List<string> { "All Categories" };
+        private List<string> _categoriesList = new List<string> { AppResources.OptionAllCategories };
 
         private readonly LoginUser _currentUser;
         private const string DefaultLimit = "10";
@@ -26,10 +27,10 @@ namespace BeginMobile.Pages.Profile
 
         public Events()
         {
-            Title = "Events";
+            Title = AppResources.LabelEventTitle;
 
             _searchView = new SearchView();
-            _searchView.SetPlaceholder("Search by event name");
+            _searchView.SetPlaceholder(AppResources.SearchViewEventSearchByName);
 
             LoadCategoriesPicker();
 
@@ -67,14 +68,14 @@ namespace BeginMobile.Pages.Profile
             {
                 WidthRequest = 200,
                 HeightRequest = 80,
-                Text = "Event Name",
+                Text = AppResources.LabelEventName,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Style = App.Styles.SubtitleStyle
             }, 0, 1, 0, 1);
 
             gridEventHeaderTitle.Children.Add(new Label
             {
-                Text = "Date",
+                Text = AppResources.LabelEventDate,
                 HeightRequest = 50,
                 HorizontalOptions = LayoutOptions.Start,
                 Style = App.Styles.SubtitleStyle
@@ -144,7 +145,7 @@ namespace BeginMobile.Pages.Profile
         {
             _categoriesPicker = new Picker
             {
-                Title = "Filter by Category",
+                Title = AppResources.PickerEventFilterBycategory,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
@@ -158,7 +159,7 @@ namespace BeginMobile.Pages.Profile
 
             else
             {
-                _categoriesList = new List<string> { "All Categories" };
+                _categoriesList = new List<string> { AppResources.OptionAllCategories };
             }
 
             _searchView.Container.Children.Add(_categoriesPicker);

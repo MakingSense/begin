@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 
 namespace BeginMobile.Services.DTO
@@ -24,6 +25,6 @@ namespace BeginMobile.Services.DTO
         public string NameSurname { set; get; }
 
         [JsonProperty("activities")]
-        public List<ProfileActivity> Activities { set; get; }
+        public ObservableCollection<ProfileActivity> Activities { set; get; }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using BeginMobile.Services.DTO;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace BeginMobile.Pages.Profile
 {
@@ -23,20 +24,25 @@ namespace BeginMobile.Pages.Profile
         private async Task Init()
         {
             _profileActivity = await App.ProfileServices.GetActivities(_currentUser.User.UserName, _currentUser.AuthToken);
-            var listDataSource = new List<ActivityViewModel>();
+            var listDataSource = new ObservableCollection<ActivityViewModel>();
 
             if (_profileActivity != null)
             {
-                listDataSource.AddRange(from activity in _profileActivity.Activities
-                                        where activity.Component.Equals("activity", StringComparison.InvariantCultureIgnoreCase)
-                                        select new ActivityViewModel
-                                        {
-                                            Icon = UserDefault,
-                                            NameSurname = _profileActivity.NameSurname,
-                                            ActivityDescription = activity.Content,
-                                            ActivityType = activity.Type,
-                                            DateAndTime = activity.Date
-                                        });
+                var listActivityViewModel = from activity in _profileActivity.Activities
+                    where activity.Component.Equals("activity", StringComparison.InvariantCultureIgnoreCase)
+                    select new ActivityViewModel
+                    {
+                        Icon = UserDefault,
+                        NameSurname = _profileActivity.NameSurname,
+                        ActivityDescription = activity.Content,
+                        ActivityType = activity.Type,
+                        DateAndTime = activity.Date
+                    };
+
+                foreach (var activityViewModel in listActivityViewModel)
+                {
+                    listDataSource.Add(activityViewModel);
+                }
             }
 
             var listViewTemplate = new DataTemplate(typeof(Activities));
