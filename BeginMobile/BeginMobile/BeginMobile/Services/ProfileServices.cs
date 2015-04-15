@@ -59,9 +59,15 @@ namespace BeginMobile.Services
             return _profileManager.GetMessagesInformation(userName, authToken);
         }
 
-        public async Task<ProfileMeWall> GetWall(string authToken, string filter = null, string type = null)
+        public async Task<ProfileMeWall> GetWall(
+            string authToken, 
+            string filter = null, 
+            string type = null,
+            string limit = null,
+            string offset= null
+            )
         {
-            return await _profileManager.GetWall(authToken, filter, type);
+            return await _profileManager.GetWall(authToken, filter, type, limit, offset);
         }
 
         public async Task<ProfileInfo> GetInformationDetail(string userName, string authToken)
