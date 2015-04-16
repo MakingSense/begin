@@ -16,12 +16,13 @@ namespace BeginMobile.Pages.MessagePages
         private readonly Button _buttonInbox;
         private readonly Button _buttonSend;
         private readonly Button _buttonSent;
-        private bool isInbox;
+        private bool _isInbox;
+
         public MessageListPage(string title, string iconImg)
             : base(title, iconImg)
         {
-            _currentUser = (LoginUser) App.Current.Properties["LoginUser"];
-           
+            _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
+
             Init();
 
             LabelCounter = new Label
@@ -32,7 +33,7 @@ namespace BeginMobile.Pages.MessagePages
             _listViewMessages = new ListView
                                 {
                                     ItemTemplate = new DataTemplate(typeof (ProfileMessagesItem)),
-                                    HasUnevenRows = true
+                                    HasUnevenRows = true,
                                 };
 
             _listViewMessages.ItemSelected += ListViewItemSelectedEventHandler;
@@ -45,7 +46,7 @@ namespace BeginMobile.Pages.MessagePages
                                Style = App.Styles.MessageNavigationButton,
                                FontSize = App.Styles.TextFontSizeMedium
                            };
-           
+
             _buttonSent = new Button
                           {
                               Text = "Sent",
@@ -54,12 +55,12 @@ namespace BeginMobile.Pages.MessagePages
                               FontSize = App.Styles.TextFontSizeMedium
                           };
             _buttonSend = new Button
-            {
-                Text = "Send",
-                TextColor = App.Styles.ColorWhiteDroidBlueIos,
-                Style = App.Styles.MessageNavigationButton,
-                FontSize = App.Styles.TextFontSizeMedium
-            };
+                          {
+                              Text = "Send",
+                              TextColor = App.Styles.ColorWhiteDroidBlueIos,
+                              Style = App.Styles.MessageNavigationButton,
+                              FontSize = App.Styles.TextFontSizeMedium
+                          };
 
             _buttonInbox.Clicked += InboxEventHandler;
             _buttonSent.Clicked += SentEventHandler;
@@ -70,7 +71,7 @@ namespace BeginMobile.Pages.MessagePages
                                          Spacing = 20,
                                          Padding = 20,
                                          Orientation = StackOrientation.Horizontal,
-                                         Children = { _buttonInbox, _buttonSent, _buttonSend },
+                                         Children = {_buttonInbox, _buttonSent, _buttonSend},
                                          HorizontalOptions = LayoutOptions.StartAndExpand
                                      };
 
@@ -90,7 +91,7 @@ namespace BeginMobile.Pages.MessagePages
         }
 
         private async Task Init()
-        {            
+        {
             SuscribeMessages(await ListDataWithInboxMessages());
         }
 
@@ -100,12 +101,12 @@ namespace BeginMobile.Pages.MessagePages
             {
                 return;
             }
-            if (isInbox)
+            if (_isInbox)
             {
-                var item = (MessageViewModel)eventArgs.SelectedItem;
+                var item = (MessageViewModel) eventArgs.SelectedItem;
                 var messageDetail = new MessageDetail(item);
                 await Navigation.PushAsync(messageDetail);
-            }            
+            }
             ((ListView) sender).SelectedItem = null;
         }
 
@@ -163,14 +164,14 @@ namespace BeginMobile.Pages.MessagePages
         private void SuscribeMessages(List<MessageViewModel> listDataMessageViewModels)
         {
             MessagingCenter.Subscribe<MessageListPage, List<MessageViewModel>>(this, "messages", (page, args) =>
-                                                                                               {
-                                                                                                   if (args ==
-                                                                                                       null)
-                                                                                                       return;
+                                                                                                 {
+                                                                                                     if (args ==
+                                                                                                         null)
+                                                                                                         return;
 
-                                                                                                   UpdateList(
-                                                                                                       args);
-                                                                                               });
+                                                                                                     UpdateList(
+                                                                                                         args);
+                                                                                                 });
             MessagingCenter.Send(this, "messages", listDataMessageViewModels);
             MessagingCenter.Unsubscribe<MessageListPage, List<MessageViewModel>>(this, "messages");
         }
@@ -181,28 +182,26 @@ namespace BeginMobile.Pages.MessagePages
 
         private async Task<List<MessageViewModel>> ListDataWithInboxMessages()
         {
-            isInbox = true;
-            var inboxMessageData = new List<MessageViewModel>();                        
-            var inboxThreads = await App.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken);            
+            _isInbox = true;
+            var inboxMessageData = new List<MessageViewModel>();
+            var inboxThreads = await App.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken);
             ThreadCount = inboxThreads.ThreadCount;
             if (!inboxThreads.Threads.Any()) return inboxMessageData;
             var threadMessages = inboxThreads.Threads;
-            foreach (var threadMessage in threadMessages)
-            {
-                var message = threadMessage.Messages.FirstOrDefault();
-                if (message == null) continue;
-                var messageViewModel= new MessageViewModel
-                                      {
-                                          Id = message.Id,
-                                          ThreadId = message.ThreadId,
-                                          DateSent = message.DateSent,
-                                          MessageContent = message.MessageContent,
-                                          Sender = message.Sender.NameSurname,
-                                          Subject = message.Subject,
-                                          Messages = threadMessage.Messages
-                                      };
-                inboxMessageData.Add(messageViewModel);
-            }
+            inboxMessageData.AddRange((from threadMessage in threadMessages
+                let message = threadMessage.Messages.FirstOrDefault()
+                where message != null
+                select new MessageViewModel
+                       {
+                           Id = message.Id,
+                           ThreadId = message.ThreadId,
+                           DateSent = message.DateSent,
+                           MessageContent = message.MessageContent,
+                           SenderName = message.Sender.NameSurname,
+                           Subject = message.Subject,
+                           Sender = message.Sender,
+                           Messages = threadMessage.Messages
+                       }).OrderByDescending(c => c.DateSent));
             return inboxMessageData;
         }
 
@@ -212,7 +211,7 @@ namespace BeginMobile.Pages.MessagePages
 
         private async Task<List<MessageViewModel>> ListDataWithSentMessages()
         {
-            isInbox = false;
+            _isInbox = false;
             var listDataForSentMessage = new List<MessageViewModel>();
             var profileThreadMessagesSent =
                 await App.ProfileServices.GetProfileThreadMessagesSent(_currentUser.AuthToken);
@@ -220,7 +219,7 @@ namespace BeginMobile.Pages.MessagePages
 
             if (sentThreads.Any())
             {
-                listDataForSentMessage.AddRange(from inboxThread in sentThreads
+                listDataForSentMessage.AddRange((from inboxThread in sentThreads
                     select inboxThread.Messages.FirstOrDefault()
                     into message
                     where message != null
@@ -230,9 +229,9 @@ namespace BeginMobile.Pages.MessagePages
                                ThreadId = message.ThreadId,
                                DateSent = message.DateSent,
                                MessageContent = message.MessageContent,
-                               Sender = message.Sender.NameSurname,
+                               SenderName = message.Sender.NameSurname,
                                Subject = message.Subject
-                           });
+                           }).OrderByDescending(c => c.DateSent));
             }
             return listDataForSentMessage;
         }

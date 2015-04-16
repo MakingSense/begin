@@ -8,68 +8,73 @@ using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.MessagePages
-{
+{ 
     public class MessageDetail : ContentPage
     {
-        private const string DefaultImageUser ="userdefault3.png";
+        private readonly Editor _editorReplyContent;
+        private const string DefaultImageUser = "userdefault3.png";
+        private LoginUser _currentUser;
         public MessageDetail(MessageViewModel messageViewModel)
         {
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             if (messageViewModel != null) MessageViewModel = messageViewModel;
             Title = "Message Detail";
-
-            var listDataMessages = new List<MessageViewModel>();
-            foreach (var message in MessageViewModel.Messages)
-                listDataMessages.Add(new MessageViewModel
-                                     {
-                                         Sender = message.Sender.NameSurname, DateSent = message.DateSent, MessageContent = message.MessageContent
-                                     });
-
-
+            _currentUser = (LoginUser)Application.Current.Properties["LoginUser"];
+            var listDataMessages = MessageViewModel.Messages.Select(message => new MessageViewModel
+                                                                               {
+                                                                                   SenderName = message.Sender.NameSurname,
+                                                                                   DateSent = message.DateSent,
+                                                                                   MessageContent =
+                                                                                       message.MessageContent
+                                                                               }).ToList();
             var listViewMessages = new ListView
                                    {
-                                       //BackgroundColor = Color.Aqua,
                                        VerticalOptions = LayoutOptions.Start,
                                        ItemsSource = listDataMessages,
                                        ItemTemplate = new DataTemplate(typeof (MessageTemplate)),
-                                       HasUnevenRows = true
+                                       RowHeight = 120,
                                    };
-            listViewMessages.ItemSelected += ItemSelectedEventHandler;           
+            listViewMessages.ItemSelected += ItemSelectedEventHandler;
 
             var image = new CircleImage
-            {
-                BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
-                BorderThickness = Device.OnPlatform(2, 3, 3),
-                HeightRequest = Device.OnPlatform(20, 70, 70),
-                WidthRequest = Device.OnPlatform(20, 70, 70),
-                Aspect = Aspect.AspectFit,
-                HorizontalOptions = LayoutOptions.Start,
-                Source = DefaultImageUser
-            };
+                        {
+                            BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
+                            BorderThickness = Device.OnPlatform(2, 3, 3),
+                            HeightRequest = Device.OnPlatform(30, 50, 70),
+                            WidthRequest = Device.OnPlatform(30, 50, 70),
+                            Aspect = Aspect.AspectFit,
+                            HorizontalOptions = LayoutOptions.Start,
+                            Source = DefaultImageUser
+                        };
             var labelThisUserNameSurname = new Label
                                            {
-                                               Text = currentUser.User.NameSurname,
-                                               Style = App.Styles.ListItemTextStyle
+                                               Text = _currentUser.User.DisplayName,
+                                               Style = App.Styles.ListItemTextStyle,
+                                               YAlign = TextAlignment.Center
                                            };
             var gridReply = new Grid
-            {
-                Padding = new Thickness(10, 5, 10, 5),
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                RowDefinitions =
-                              {
-                                  new RowDefinition {Height = GridLength.Auto},
-                                  new RowDefinition {Height = GridLength.Auto}
-                              }
-            };
+                            {
+                                Padding = new Thickness(10, 5, 10, 5),
+                                HorizontalOptions = LayoutOptions.FillAndExpand,
+                                VerticalOptions = LayoutOptions.FillAndExpand,
+                                RowDefinitions =
+                                {
+                                    new RowDefinition {Height = GridLength.Auto},
+                                    new RowDefinition {Height = GridLength.Auto}
+                                },
+                                ColumnDefinitions =
+                                {
+                                    new ColumnDefinition {Width = GridLength.Auto},
+                                    new ColumnDefinition {Width = GridLength.Auto},
+                                }
+                            };
             gridReply.Children.Add(image, 0, 0);
             gridReply.Children.Add(labelThisUserNameSurname, 1, 0);
 
-            var editorReplyContent = new Editor
-            {
-                HeightRequest = 100,
-                Style = App.Styles.MessageContentStyle
-            };
+            _editorReplyContent = new Editor
+                                     {
+                                         HeightRequest = 100,
+                                         Style = App.Styles.MessageContentStyle
+                                     };
             var buttonReply = new Button
                               {
                                   Text = "Send Reply",
@@ -78,23 +83,36 @@ namespace BeginMobile.Pages.MessagePages
             buttonReply.Clicked += ButtonReplyEventHandler;
 
             var stackLayoutList = new StackLayout
-            {
-                VerticalOptions = LayoutOptions.StartAndExpand,
-                Children = { listViewMessages, gridReply, editorReplyContent, buttonReply }
-            };
+                                  {
+                                      VerticalOptions = LayoutOptions.StartAndExpand,
+                                      Children = {listViewMessages, gridReply, _editorReplyContent, buttonReply}
+                                  };
             Content = new StackLayout
                       {
                           Padding = App.Styles.LayoutThickness,
                           Children =
                           {
-                              stackLayoutList//stackLayoutEditorReply
+                              stackLayoutList //stackLayoutEditorReply
                           }
                       };
         }
 
-        public void ButtonReplyEventHandler(object sender, EventArgs e)
+        public async void ButtonReplyEventHandler(object sender, EventArgs e)
         {
-            
+            var sendMessageManager = await App.ProfileServices.SendMessage(_currentUser.AuthToken, MessageViewModel.Sender.UserName,
+                MessageViewModel.Subject, _editorReplyContent.Text,MessageViewModel.ThreadId);
+
+            if (sendMessageManager != null)
+            {
+                var errorMessage = sendMessageManager.Errors.Aggregate("",
+                    (current, serviceError) => current + (serviceError.ErrorMessage + "\n"));
+                await DisplayAlert("Validation Error", errorMessage, "Ok");
+            }
+            else
+            {
+                await DisplayAlert("Successfull!", "Your message has successfully sent!", "ok");
+                await Navigation.PopAsync();
+            }           
         }
 
         public void ItemSelectedEventHandler(object sender, SelectedItemChangedEventArgs e)
@@ -137,7 +155,7 @@ public class MessageTemplate : ViewCell
                               HorizontalOptions = LayoutOptions.StartAndExpand
                           };
 
-        labelSender.SetBinding(Label.TextProperty, "Sender", stringFormat: "From: {0}");
+        labelSender.SetBinding(Label.TextProperty, "SenderName", stringFormat: "Re: {0}");
 
         var labelCreate = new Label
                           {

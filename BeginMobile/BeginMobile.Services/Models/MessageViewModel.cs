@@ -10,7 +10,8 @@ namespace BeginMobile.Services.Models
         public string Subject { set; get; }
         public string MessageContent { set; get; }
         public string DateSent { set; get; }
-        public string Sender { set; get; }
+        public string SenderName { set; get; }
+        public User Sender { set; get; }
         public List<Message> Messages { get; set; } 
     }
 }

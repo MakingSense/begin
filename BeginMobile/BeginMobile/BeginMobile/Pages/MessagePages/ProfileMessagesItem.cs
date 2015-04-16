@@ -30,7 +30,7 @@ namespace BeginMobile.Pages.MessagePages
                 HorizontalOptions = LayoutOptions.StartAndExpand
             };
 
-            labelSender.SetBinding(Label.TextProperty, "Sender", stringFormat: "From: {0}");
+            labelSender.SetBinding(Label.TextProperty, "SenderName", stringFormat: "From: {0}");
 
             var labelSubject = new Label
                              {
