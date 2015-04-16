@@ -5,6 +5,7 @@ using BeginMobile.Services.DTO;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.Pages.Profile
 {
@@ -15,8 +16,8 @@ namespace BeginMobile.Pages.Profile
         private ProfileInformationActivities _profileActivity;
         public MyActivity()
         {
-            Title = "My activity";
-            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+            Title = AppResources.LabelActivityTitle;
+            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
 
             Init();
         }
