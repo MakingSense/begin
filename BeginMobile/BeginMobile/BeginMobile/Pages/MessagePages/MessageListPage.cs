@@ -16,6 +16,7 @@ namespace BeginMobile.Pages.MessagePages
         private readonly Button _buttonInbox;
         private readonly Button _buttonSend;
         private readonly Button _buttonSent;
+        private bool isInbox;
         public MessageListPage(string title, string iconImg)
             : base(title, iconImg)
         {
@@ -93,13 +94,18 @@ namespace BeginMobile.Pages.MessagePages
             SuscribeMessages(await ListDataWithInboxMessages());
         }
 
-        public void ListViewItemSelectedEventHandler(object sender, SelectedItemChangedEventArgs eventArgs)
+        public async void ListViewItemSelectedEventHandler(object sender, SelectedItemChangedEventArgs eventArgs)
         {
             if (eventArgs.SelectedItem == null)
             {
                 return;
             }
-            //TODO message details here
+            if (isInbox)
+            {
+                var item = (MessageViewModel)eventArgs.SelectedItem;
+                var messageDetail = new MessageDetail(item);
+                await Navigation.PushAsync(messageDetail);
+            }            
             ((ListView) sender).SelectedItem = null;
         }
 
@@ -175,6 +181,7 @@ namespace BeginMobile.Pages.MessagePages
 
         private async Task<List<MessageViewModel>> ListDataWithInboxMessages()
         {
+            isInbox = true;
             var inboxMessageData = new List<MessageViewModel>();                        
             var inboxThreads = await App.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken);            
             ThreadCount = inboxThreads.ThreadCount;
@@ -205,6 +212,7 @@ namespace BeginMobile.Pages.MessagePages
 
         private async Task<List<MessageViewModel>> ListDataWithSentMessages()
         {
+            isInbox = false;
             var listDataForSentMessage = new List<MessageViewModel>();
             var profileThreadMessagesSent =
                 await App.ProfileServices.GetProfileThreadMessagesSent(_currentUser.AuthToken);
