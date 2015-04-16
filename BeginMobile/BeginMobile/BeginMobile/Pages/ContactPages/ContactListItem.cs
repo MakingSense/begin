@@ -71,7 +71,7 @@ namespace BeginMobile.Pages.ContactPages
             _buttonRemoveFriend = new Button
                                   {
                                       Text = AppResources.ButtonRemoveFriend,
-                                      Style = App.Styles.ListViewItemButton,
+                                      Style = BeginApplication.Styles.ListViewItemButton,
                                       HorizontalOptions = LayoutOptions.Start,
                                       HeightRequest = 35,
                                       WidthRequest = 70
@@ -80,7 +80,7 @@ namespace BeginMobile.Pages.ContactPages
             _buttonCancelFriend = new Button
                                   {
                                       Text = "Cancel", //AppResources.ButtonCancelFriend,
-                                      Style = App.Styles.ListViewItemButton,
+                                      Style = BeginApplication.Styles.ListViewItemButton,
                                       HorizontalOptions = LayoutOptions.Start,
                                       HeightRequest = 35,
                                       WidthRequest = 70
@@ -89,7 +89,7 @@ namespace BeginMobile.Pages.ContactPages
             _buttonAcceptFriend = new Button
                                   {
                                       Text = "Accept", //AppResources.ButtonAcceptFriend,
-                                      Style = App.Styles.ListViewItemButton,
+                                      Style = BeginApplication.Styles.ListViewItemButton,
                                       HorizontalOptions = LayoutOptions.Start,
                                       HeightRequest = 35,
                                       WidthRequest = 70
@@ -98,7 +98,7 @@ namespace BeginMobile.Pages.ContactPages
             _buttonRejectFriend = new Button
                                   {
                                       Text = "Reject", //AppResources.ButtonRejectFriend,
-                                      Style = App.Styles.ListViewItemButton,
+                                      Style = BeginApplication.Styles.ListViewItemButton,
                                       HorizontalOptions = LayoutOptions.Start,
                                       HeightRequest = 35,
                                       WidthRequest = 70
