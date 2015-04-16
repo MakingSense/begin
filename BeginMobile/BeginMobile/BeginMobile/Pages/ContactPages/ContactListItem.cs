@@ -10,10 +10,25 @@ using Xamarin.Forms;
 
 namespace BeginMobile.Pages.ContactPages
 {
-    internal class ContactListItem : ViewCell
+    public class ContactListItem : ViewCell
     {
         private Button _buttonAddFriend;
+        private Button _buttonRemoveFriend;
+        private Button _buttonCancelFriend;
+        private Button _buttonAcceptFriend;
+        private Button _buttonRejectFriend;
+
         private readonly LoginUser _loginUser;
+
+        private static string Relationship { get; set; }
+
+        private static readonly BindableProperty RelationshipProperty =
+            BindableProperty.Create<ContactListItem, string>
+                (getter => Relationship, string.Empty, BindingMode.TwoWay,
+                    propertyChanging: (bindable, oldValue, newValue) =>
+                                      {
+                                          Relationship = newValue;
+                                      });
 
         public ContactListItem(LoginUser loginUser)
         {
@@ -29,7 +44,6 @@ namespace BeginMobile.Pages.ContactPages
                                   };
 
             circleIconImage.SetBinding(Image.SourceProperty, new Binding("Icon"));
-
             var optionLayout = CreateOptionLayout();
 
             View = new StackLayout
@@ -51,10 +65,50 @@ namespace BeginMobile.Pages.ContactPages
                                    Style = App.Styles.ListViewItemButton,
                                    HorizontalOptions = LayoutOptions.Start,
                                    HeightRequest = 35,
-                                   WidthRequest = 70,
+                                   WidthRequest = 70
                                };
 
+            _buttonRemoveFriend = new Button
+                                  {
+                                      Text = AppResources.ButtonRemoveFriend,
+                                      Style = App.Styles.ListViewItemButton,
+                                      HorizontalOptions = LayoutOptions.Start,
+                                      HeightRequest = 35,
+                                      WidthRequest = 70
+                                  };
+
+            _buttonCancelFriend = new Button
+                                  {
+                                      Text = "Cancel", //AppResources.ButtonCancelFriend,
+                                      Style = App.Styles.ListViewItemButton,
+                                      HorizontalOptions = LayoutOptions.Start,
+                                      HeightRequest = 35,
+                                      WidthRequest = 70
+                                  };
+
+            _buttonAcceptFriend = new Button
+                                  {
+                                      Text = "Accept", //AppResources.ButtonAcceptFriend,
+                                      Style = App.Styles.ListViewItemButton,
+                                      HorizontalOptions = LayoutOptions.Start,
+                                      HeightRequest = 35,
+                                      WidthRequest = 70
+                                  };
+
+            _buttonRejectFriend = new Button
+                                  {
+                                      Text = "Reject", //AppResources.ButtonRejectFriend,
+                                      Style = App.Styles.ListViewItemButton,
+                                      HorizontalOptions = LayoutOptions.Start,
+                                      HeightRequest = 35,
+                                      WidthRequest = 70
+                                  };
+
             _buttonAddFriend.Clicked += AddFriendEventHandler;
+            _buttonRemoveFriend.Clicked += RemoveFriendEventHandler;
+            _buttonCancelFriend.Clicked += CancelFriendEventHandler;
+            _buttonAcceptFriend.Clicked += AcceptFriendEventHandler;
+            _buttonRejectFriend.Clicked += RejectFriendEventHandler;
 
             var labelNameSurname = new Label
                                    {
@@ -101,26 +155,32 @@ namespace BeginMobile.Pages.ContactPages
                            }
                        };
 
+            SetBinding(RelationshipProperty, new Binding("Relationship", BindingMode.TwoWay));
 
             grid.Children.Add(labelNameSurname, 0, 0);
             grid.Children.Add(labelUserName, 0, 1);
             grid.Children.Add(labelEmail, 0, 2);
-            grid.Children.Add(_buttonAddFriend, 0, 3);
+
+            if (Relationship != "request_received")
+            {
+                grid.Children.Add(RelationshipButton(), 0, 3);
+            }
+
+            else
+            {
+                grid.Children.Add(_buttonAcceptFriend, 0, 3);
+                grid.Children.Add(_buttonRejectFriend, 1, 3);
+            }
+
             return grid;
         }
-
+       
         #region Events
 
         private void AddFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var objectSender = sender as Button;
-
-            if (objectSender == null) return;
-
-            var parentGrid = objectSender.Parent as Grid;
-
-            if (parentGrid == null) return;
-            var itemGridUserName = parentGrid.Children[1] as Label;
+            Label itemGridUserName;
+            if (GetListItem(sender, out itemGridUserName)) return;
 
             if (itemGridUserName != null)
             {
@@ -138,17 +198,10 @@ namespace BeginMobile.Pages.ContactPages
                 }
             }
         }
-
         private void RemoveFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var objectSender = sender as Button;
-
-            if (objectSender == null) return;
-
-            var parentGrid = objectSender.Parent as Grid;
-
-            if (parentGrid == null) return;
-            var itemGridUserName = parentGrid.Children[1] as Label;
+            Label itemGridUserName;
+            if (GetListItem(sender, out itemGridUserName)) return;
 
             if (itemGridUserName != null)
             {
@@ -166,7 +219,69 @@ namespace BeginMobile.Pages.ContactPages
                 }
             }
         }
+        private void CancelFriendEventHandler(object sender, EventArgs eventArgs)
+        {
+            Label itemGridUserName;
+            if (GetListItem(sender, out itemGridUserName)) return;
 
+            if (itemGridUserName != null)
+            {
+                var username = itemGridUserName.Text;
+                var responseErrors = FriendshipActions.Request(FriendshipOption.Cancel, _loginUser.AuthToken, username);
+
+                if (responseErrors.Any())
+                {
+                    SubscribeAlert(responseErrors);
+                }
+
+                else
+                {
+                    SubscribeRemoveContact(username);
+                }
+            }
+        }
+        private void AcceptFriendEventHandler(object sender, EventArgs eventArgs)
+        {
+            Label itemGridUserName;
+            if (GetListItem(sender, out itemGridUserName)) return;
+
+            if (itemGridUserName != null)
+            {
+                var username = itemGridUserName.Text;
+                var responseErrors = FriendshipActions.Request(FriendshipOption.Accept, _loginUser.AuthToken, username);
+
+                if (responseErrors.Any())
+                {
+                    SubscribeAlert(responseErrors);
+                }
+
+                else
+                {
+                    SubscribeRemoveContact(username);
+                }
+            }
+        }
+        private void RejectFriendEventHandler(object sender, EventArgs eventArgs)
+        {
+            Label itemGridUserName;
+            if (GetListItem(sender, out itemGridUserName)) return;
+
+            if (itemGridUserName != null)
+            {
+                var username = itemGridUserName.Text;
+                var responseErrors = FriendshipActions.Request(FriendshipOption.Reject, _loginUser.AuthToken, username);
+
+                if (responseErrors.Any())
+                {
+                    SubscribeAlert(responseErrors);
+                }
+
+                else
+                {
+                    SubscribeRemoveContact(username);
+                }
+            }
+        }
         private void SubscribeAlert(IEnumerable<ServiceError> responseErrors)
         {
             var message = responseErrors.Aggregate(string.Empty,
@@ -175,17 +290,46 @@ namespace BeginMobile.Pages.ContactPages
             MessagingCenter.Send(this, FriendshipMessages.DisplayAlert, message);
             MessagingCenter.Unsubscribe<CustomViewCell, string>(this, FriendshipMessages.DisplayAlert);
         }
-
         private void SubscribeRemoveContact(string username)
         {
             MessagingCenter.Send(this, FriendshipMessages.RemoveContact, username);
             MessagingCenter.Unsubscribe<CustomViewCell, string>(this, FriendshipMessages.RemoveContact);
         }
-
         private void SubscribeAddContact(string username)
         {
             MessagingCenter.Send(this, FriendshipMessages.AddContact, username);
             MessagingCenter.Unsubscribe<CustomViewCell, string>(this, FriendshipMessages.AddContact);
+        }
+        private static bool GetListItem(object sender, out Label itemGridUserName)
+        {
+            itemGridUserName = null;
+
+            var objectSender = sender as Button;
+            if (objectSender == null) return true;
+            var parentGrid = objectSender.Parent as Grid;
+
+            if (parentGrid == null) return true;
+            itemGridUserName = parentGrid.Children[1] as Label;
+            return false;
+        }
+        private Button RelationshipButton()
+        {
+            if (string.IsNullOrEmpty(Relationship))
+            {
+                return _buttonAddFriend;
+            }
+
+            if (Relationship == "contacts")
+            {
+                return _buttonRemoveFriend;
+            }
+
+            if (Relationship == "request_sent")
+            {
+                return _buttonCancelFriend;
+            }
+
+            return _buttonAddFriend;
         }
 
         #endregion

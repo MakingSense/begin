@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using BeginMobile.Pages.Profile;
 using BeginMobile.Services.DTO;
@@ -45,9 +44,7 @@ namespace BeginMobile.Pages.ContactPages
 
         private async Task Init()
         {
-            //TODO: Call All members
-            _profileInformationContacts =
-                await App.ProfileServices.GetContacts(_currentUser.AuthToken);
+            _profileInformationContacts = await App.ProfileServices.GetContacts(_currentUser.AuthToken);
 
             var contactsList = new List<Contact>();
             LoadSortOptionsPicker();
@@ -129,8 +126,7 @@ namespace BeginMobile.Pages.ContactPages
             RetrieveSortOptionSelected(out sort);
 
             var list = await App.ProfileServices.GetContacts(_currentUser.AuthToken, q, sort, limit) ?? new List<User>();
-
-
+            
             if (list.Any())
             {
                 _listViewContacts.ItemsSource = new ObservableCollection<Contact>(RetrieveContacts(list));
@@ -205,7 +201,8 @@ namespace BeginMobile.Pages.ContactPages
                                                                     Url = contact.Url,
                                                                     UserName = contact.UserName,
                                                                     Registered = contact.Registered,
-                                                                    Id = contact.Id.ToString()
+                                                                    Id = contact.Id.ToString(),
+                                                                    Relationship = contact.Relationship
                                                                 });
         }
 
