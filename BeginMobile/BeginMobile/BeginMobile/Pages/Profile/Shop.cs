@@ -1,4 +1,5 @@
-﻿using BeginMobile.Pages.ShopPages;
+﻿using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Pages.ShopPages;
 using BeginMobile.Services.DTO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -13,7 +14,7 @@ namespace BeginMobile.Pages.Profile
         private LoginUser currentUser;
         public Shop()
         {
-            Title = "Shop";
+            Title = AppResources.LabelShopTitle;
             
             currentUser = (LoginUser)App.Current.Properties["LoginUser"];
             Init();
