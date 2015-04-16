@@ -1,13 +1,12 @@
-﻿using System;
-using Xamarin.Forms;
-using BeginMobile.Accounts;
+﻿using BeginMobile.Accounts;
 using BeginMobile.Interfaces;
-using BeginMobile.Menu;
-using BeginMobile.Services.DTO;
-using BeginMobile.Services;
-using BeginMobile.Services.Utils;
-using BeginMobile.Utils;
 using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Menu;
+using BeginMobile.Services;
+using BeginMobile.Services.DTO;
+using BeginMobile.Utils;
+using System;
+using Xamarin.Forms;
 
 namespace BeginMobile
 {
@@ -92,6 +91,6 @@ namespace BeginMobile
 
         #endregion
 
-       
+
     }
 }

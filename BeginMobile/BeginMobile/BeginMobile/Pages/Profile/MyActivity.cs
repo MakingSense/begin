@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
-using Xamarin.Forms;
-using System.Threading.Tasks;
+using System;
 using System.Collections.ObjectModel;
-using BeginMobile.LocalizeResources.Resources;
+using System.Linq;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
 {
