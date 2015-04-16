@@ -25,7 +25,7 @@ namespace BeginMobile.Menu
 
         private async Task LoadInitialServices()
         {
-            _globalService = App.GlobalService;
+            _globalService = BeginApplication.GlobalService;
         }
 
         private void OnToggleRequest()

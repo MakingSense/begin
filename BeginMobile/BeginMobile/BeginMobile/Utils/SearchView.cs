@@ -34,7 +34,7 @@ namespace BeginMobile.Utils
                             HorizontalOptions = LayoutOptions.FillAndExpand,
                             Orientation = StackOrientation.Vertical,
                             Padding = new Thickness(20, 10, 20, 10),
-                            BackgroundColor = App.Styles.SearchBackground,
+                            BackgroundColor = BeginApplication.Styles.SearchBackground,
                             Opacity = 5.0
                         };
 

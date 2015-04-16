@@ -21,26 +21,26 @@ namespace BeginMobile.Pages
             Padding = new Thickness(0, topPadding, 0, 0);
 
             Children.Add(new WallPage(
-                new Label { Text = "News Feed", Style = App.Styles.StyleNavigationTitle }.Text,
+                new Label { Text = "News Feed", Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
                 Device.OnPlatform("RSS.png", "padlock.png", "padlock.png")));
 
             Children.Add(
-                new MessageListPage(new Label { Text = "Messages", Style = App.Styles.StyleNavigationTitle }.Text,
+                new MessageListPage(new Label { Text = "Messages", Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
                     Device.OnPlatform("Messages.png", "padlock.png", "padlock.png")));
 
             Children.Add(
-                new Notification(new Label { Text = "Notifications", Style = App.Styles.StyleNavigationTitle }.Text,
+                new Notification(new Label { Text = "Notifications", Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
                     Device.OnPlatform("Chat.png", "padlock.png", "padlock.png")));
 
             Children.Add(
-                new GroupListPage(new Label { Text = "Groups", Style = App.Styles.StyleNavigationTitle }.Text,
+                new GroupListPage(new Label { Text = "Groups", Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
                     Device.OnPlatform("Users_three_2.png", "padlock.png", "padlock.png")));
 
             Children.Add(
-               new ContactPage(new Label { Text = "Find Contacts", Style = App.Styles.StyleNavigationTitle }.Text,
+               new ContactPage(new Label { Text = "Find Contacts", Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
                    Device.OnPlatform("Users_three_switch.png", "padlock.png", "padlock.png")));
 
-            Children.Add(new TabContent(new Label { Text = "Opt", Style = App.Styles.StyleNavigationTitle }.Text,
+            Children.Add(new TabContent(new Label { Text = "Opt", Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
                 Device.OnPlatform("More.png", "padlock.png", "padlock.png")));
 
         }

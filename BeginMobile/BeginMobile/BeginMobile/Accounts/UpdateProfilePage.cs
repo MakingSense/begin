@@ -11,7 +11,7 @@ namespace BeginMobile.Accounts
 
         public UpdateProfilePage()
         {
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             var loginUserManager = new LoginUserManager();
 
             Title = "Update profile";
@@ -26,7 +26,7 @@ namespace BeginMobile.Accounts
                                       {
                                           Text = "Update",
                                           HorizontalOptions = LayoutOptions.FillAndExpand,
-                                          Style = App.Styles.DefaultButton
+                                          Style = BeginApplication.Styles.DefaultButton
                                       };
 
 

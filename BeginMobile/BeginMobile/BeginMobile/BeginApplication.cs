@@ -11,15 +11,15 @@ using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile
 {
-    public class App : Application, ILoginManager
+    public class BeginApplication : Application, ILoginManager
     {
 
         private static ILoginManager _loginManager;
-        public static App CurrentApp;
+        public static BeginApplication CurrentBeginApplication;
 
-        public App()
+        public BeginApplication()
         {
-            CurrentApp = this;
+            CurrentBeginApplication = this;
             _loginManager = this;
 
             if (Device.OS != TargetPlatform.WinPhone)
@@ -35,7 +35,7 @@ namespace BeginMobile
         void AppExceptionEventHander(object sender, UnhandledExceptionEventArgs eventArgs)
         {
             MessagingCenter.Send(this, "UnhandledException", eventArgs);
-            MessagingCenter.Unsubscribe<App, UnhandledExceptionEventArgs>(this, "UnhandledException");
+            MessagingCenter.Unsubscribe<BeginApplication, UnhandledExceptionEventArgs>(this, "UnhandledException");
         }
         public void ShowMainPage(LoginUser loginUser)
         {

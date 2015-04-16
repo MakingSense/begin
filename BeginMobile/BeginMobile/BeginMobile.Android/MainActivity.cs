@@ -21,7 +21,7 @@ namespace BeginMobile.Android
             ImageCircleRenderer.Init();
             
 
-            LoadApplication(new BeginMobile.App());
+            LoadApplication(new BeginMobile.BeginApplication());
         }
     }
 }

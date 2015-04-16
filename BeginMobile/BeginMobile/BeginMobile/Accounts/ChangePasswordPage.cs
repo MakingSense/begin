@@ -14,7 +14,7 @@ namespace BeginMobile.Accounts
 
         public ChangePasswordPage()
         {
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             var loginUserManager = new LoginUserManager();
 
             Title = "Change your Password";
@@ -41,7 +41,7 @@ namespace BeginMobile.Accounts
                                            {
                                                Text = "Send",
                                                HorizontalOptions = LayoutOptions.FillAndExpand,
-                                               Style = App.Styles.DefaultButton
+                                               Style = BeginApplication.Styles.DefaultButton
                                            };
 
             buttonChangePassword.Clicked += async (sender, eventArgs) =>
@@ -75,7 +75,7 @@ namespace BeginMobile.Accounts
             var mainLayout = new StackLayout
             {
                 Spacing = 20,
-                Padding = App.Styles.LayoutThickness,
+                Padding = BeginApplication.Styles.LayoutThickness,
                 VerticalOptions = LayoutOptions.Start,
                 Orientation = StackOrientation.Vertical,
                 Children =

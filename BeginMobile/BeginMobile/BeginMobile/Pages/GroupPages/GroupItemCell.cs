@@ -27,7 +27,7 @@ namespace BeginMobile.Pages.GroupPages
                 StyleId = "CellGroupName",
                 YAlign = TextAlignment.Center,
                 FontAttributes = FontAttributes.Bold,
-                Style = App.Styles.ListItemTextStyle
+                Style = BeginApplication.Styles.ListItemTextStyle
             };
 
             labelGroupName.SetBinding(Label.TextProperty, "Name");
@@ -36,7 +36,7 @@ namespace BeginMobile.Pages.GroupPages
             {
                 StyleId = "CellGroupCategory",
                 YAlign = TextAlignment.Center,
-                Style = App.Styles.ListItemDetailTextStyle
+                Style = BeginApplication.Styles.ListItemDetailTextStyle
             };
 
             labelGroupCategory.SetBinding(Label.TextProperty, "Category");
@@ -56,7 +56,7 @@ namespace BeginMobile.Pages.GroupPages
             {
                 StyleId = "CellGroupType",
                 YAlign = TextAlignment.Center,
-                Style = App.Styles.ListItemDetailTextStyle
+                Style = BeginApplication.Styles.ListItemDetailTextStyle
             };
 
             labelType.SetBinding(Label.TextProperty, "Type");
@@ -65,7 +65,7 @@ namespace BeginMobile.Pages.GroupPages
             {
                 StyleId = "CellGroupMembers",
                 YAlign = TextAlignment.Center,
-                Style = App.Styles.ListItemDetailTextStyle
+                Style = BeginApplication.Styles.ListItemDetailTextStyle
             };
 
             labelMemebers.SetBinding(Label.TextProperty, "Members");
@@ -101,7 +101,7 @@ namespace BeginMobile.Pages.GroupPages
             var layoutView = new StackLayout
                          {
                              Spacing = 2,
-                             Padding = App.Styles.LayoutThickness,
+                             Padding = BeginApplication.Styles.LayoutThickness,
                              Orientation = StackOrientation.Horizontal,
                              HorizontalOptions = LayoutOptions.FillAndExpand,
                              Children = { circleGroupImage, stackLayoutCenter, imageArrow }

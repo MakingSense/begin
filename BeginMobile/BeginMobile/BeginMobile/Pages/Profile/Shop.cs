@@ -15,13 +15,13 @@ namespace BeginMobile.Pages.Profile
         {
             Title = "Shop";
             
-            currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             Init();
         }
 
         private async Task Init()
         {
-            _profileShop = await App.ProfileServices.GetShopInfo(currentUser.User.UserName, currentUser.AuthToken);
+            _profileShop = await BeginApplication.ProfileServices.GetShopInfo(currentUser.User.UserName, currentUser.AuthToken);
 
             _listViewShops = new ListView
             {

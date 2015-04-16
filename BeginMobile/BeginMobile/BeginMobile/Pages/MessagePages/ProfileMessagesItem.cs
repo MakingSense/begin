@@ -26,7 +26,7 @@ namespace BeginMobile.Pages.MessagePages
             var labelSender = new Label
             {
                 YAlign = TextAlignment.Center,
-                Style = App.Styles.ListItemDetailTextStyle,
+                Style = BeginApplication.Styles.ListItemDetailTextStyle,
                 HorizontalOptions = LayoutOptions.StartAndExpand
             };
 
@@ -35,7 +35,7 @@ namespace BeginMobile.Pages.MessagePages
             var labelSubject = new Label
                              {
                                  YAlign = TextAlignment.Center,
-                                 Style = App.Styles.ListItemTextStyle,
+                                 Style = BeginApplication.Styles.ListItemTextStyle,
                                  FontAttributes = FontAttributes.Bold,
                                  HorizontalOptions = LayoutOptions.Start
                              };
@@ -44,7 +44,7 @@ namespace BeginMobile.Pages.MessagePages
             var labelCreate = new Label
                               {
                                   YAlign = TextAlignment.Center,
-                                  Style = App.Styles.ListItemDetailTextStyle,
+                                  Style = BeginApplication.Styles.ListItemDetailTextStyle,
                                   HorizontalOptions = LayoutOptions.End
                               };
 
@@ -53,7 +53,7 @@ namespace BeginMobile.Pages.MessagePages
             var labelContent = new Label
                                {
                                    YAlign = TextAlignment.Center,
-                                   Style = App.Styles.ListItemDetailTextStyle,
+                                   Style = BeginApplication.Styles.ListItemDetailTextStyle,
                                    HorizontalOptions = LayoutOptions.StartAndExpand
                                };
             labelContent.SetBinding(Label.TextProperty, "MessageContent");
@@ -81,7 +81,7 @@ namespace BeginMobile.Pages.MessagePages
             var stackLayoutView = new StackLayout
                                   {
                                       Spacing = 2,
-                                      Padding = App.Styles.LayoutThickness,
+                                      Padding = BeginApplication.Styles.LayoutThickness,
                                       Orientation = StackOrientation.Horizontal,
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       Children =

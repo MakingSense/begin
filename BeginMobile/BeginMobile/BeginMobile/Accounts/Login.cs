@@ -37,19 +37,19 @@ namespace BeginMobile.Accounts
             var buttonForgotPassword = new Button
             {
                 Text = AppResources.ButtonForgotPassword,
-                Style = App.Styles.LinkButton,
+                Style = BeginApplication.Styles.LinkButton,
             };
 
             var buttonLogin = new Button
             {
                 Text = AppResources.ButtonLogin,
-                Style = App.Styles.DefaultButton,
+                Style = BeginApplication.Styles.DefaultButton,
             };
 
             var buttonRegister = new Button
             {
                 Text = AppResources.ButtonRegister,
-                Style = App.Styles.DefaultButton,
+                Style = BeginApplication.Styles.DefaultButton,
             };
 
             buttonForgotPassword.Clicked += (sender, eventArgs) =>
@@ -83,8 +83,8 @@ namespace BeginMobile.Accounts
 
                         else
                         {
-                            App.Current.Properties["IsLoggedIn"] = true;
-                            App.Current.Properties["LoginUser"] = loginUser;
+                            BeginApplication.Current.Properties["IsLoggedIn"] = true;
+                            BeginApplication.Current.Properties["LoginUser"] = loginUser;
 
                             iLoginManager.ShowMainPage(loginUser);
                         }
@@ -110,7 +110,7 @@ namespace BeginMobile.Accounts
             Content = new StackLayout
                       {
                           Spacing = 20,
-                          Padding = App.Styles.LayoutThickness,
+                          Padding = BeginApplication.Styles.LayoutThickness,
                           VerticalOptions = LayoutOptions.Center,
                           Children =
                           {

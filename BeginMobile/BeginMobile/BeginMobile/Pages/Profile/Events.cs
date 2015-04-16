@@ -35,7 +35,7 @@ namespace BeginMobile.Pages.Profile
             LoadCategoriesPicker();
 
             #region Call api
-            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             Init();
         }
@@ -43,7 +43,7 @@ namespace BeginMobile.Pages.Profile
         private async Task Init()
         {
             _profileEvents =
-                await App.ProfileServices.GetEventsByParams(_currentUser.AuthToken, limit: DefaultLimit);
+                await BeginApplication.ProfileServices.GetEventsByParams(_currentUser.AuthToken, limit: DefaultLimit);
 
             #endregion
 
@@ -70,7 +70,7 @@ namespace BeginMobile.Pages.Profile
                 HeightRequest = 80,
                 Text = AppResources.LabelEventName,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = App.Styles.SubtitleStyle
+                Style = BeginApplication.Styles.SubtitleStyle
             }, 0, 1, 0, 1);
 
             gridEventHeaderTitle.Children.Add(new Label
@@ -78,7 +78,7 @@ namespace BeginMobile.Pages.Profile
                 Text = AppResources.LabelEventDate,
                 HeightRequest = 50,
                 HorizontalOptions = LayoutOptions.Start,
-                Style = App.Styles.SubtitleStyle
+                Style = BeginApplication.Styles.SubtitleStyle
             }, 1, 2, 0, 1);
 
             #endregion
@@ -183,7 +183,7 @@ namespace BeginMobile.Pages.Profile
             RetrieveCategorySelected(out cat);
 
             ObservableCollection<ProfileEvent> profileEventList =
-                await App.ProfileServices.GetEventsByParams(_currentUser.AuthToken, q, cat, limit);
+                await BeginApplication.ProfileServices.GetEventsByParams(_currentUser.AuthToken, q, cat, limit);
 
             if (profileEventList.Any())
             {

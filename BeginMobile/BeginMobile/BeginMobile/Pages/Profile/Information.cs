@@ -12,13 +12,13 @@ namespace BeginMobile.Pages.Profile
         public Information()
         {
             Title = "Information";
-            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             Init();
         }
 
         private async Task Init()
         {
-            _profileInfo = await App.ProfileServices.GetInformationDetail(_currentUser.User.UserName, _currentUser.AuthToken) ??
+            _profileInfo = await BeginApplication.ProfileServices.GetInformationDetail(_currentUser.User.UserName, _currentUser.AuthToken) ??
                            new ProfileInfo { Details = new UserDetails() };
 
             //Name and surname

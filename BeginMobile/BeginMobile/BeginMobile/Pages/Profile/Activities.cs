@@ -37,28 +37,28 @@ namespace BeginMobile.Pages.Profile
                                 {
                                     HorizontalOptions = LayoutOptions.FillAndExpand,
                                     YAlign = TextAlignment.Center,
-                                    Style = App.Styles.ListItemTextStyle
+                                    Style = BeginApplication.Styles.ListItemTextStyle
                                 };
 
             var labelActivityDescription = new Label
                                            {
                                                HorizontalOptions = LayoutOptions.FillAndExpand,
                                                YAlign = TextAlignment.Center,
-                                               Style = App.Styles.ListItemDetailTextStyle
+                                               Style = BeginApplication.Styles.ListItemDetailTextStyle
                                            };
 
             var labelActivityType = new Label
                                     {
                                         HorizontalOptions = LayoutOptions.FillAndExpand,
                                         YAlign = TextAlignment.Center,
-                                        Style = App.Styles.ListItemDetailTextStyle
+                                        Style = BeginApplication.Styles.ListItemDetailTextStyle
                                     };
 
             var labelDateTime = new Label
                               {
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   YAlign = TextAlignment.Center,
-                                  Style = App.Styles.ListItemDetailTextStyle
+                                  Style = BeginApplication.Styles.ListItemDetailTextStyle
                               };
 
             labelUserName.SetBinding(Label.TextProperty, "NameSurname");
@@ -68,7 +68,7 @@ namespace BeginMobile.Pages.Profile
 
             var gridDetails = new Grid
                               {
-                                  Padding = App.Styles.ListDetailThickness,
+                                  Padding = BeginApplication.Styles.ListDetailThickness,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =

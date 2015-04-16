@@ -40,11 +40,11 @@ namespace BeginMobile.Utils
             switch (notificationOption)
             {
                 case NotificationOption.MarkAsRead:
-                    await App.ProfileServices.MarkAsRead(authToken, notificationId);
+                    await BeginApplication.ProfileServices.MarkAsRead(authToken, notificationId);
                     break;
 
                 case NotificationOption.MarkAsUnread:
-                    await App.ProfileServices.MarkAsUnread(authToken, notificationId);
+                    await BeginApplication.ProfileServices.MarkAsUnread(authToken, notificationId);
                     break;
             }
         }

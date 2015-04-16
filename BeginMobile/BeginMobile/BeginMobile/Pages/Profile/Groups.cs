@@ -36,14 +36,14 @@ namespace BeginMobile.Pages.Profile
             LoadSectionsPicker();
             LoadCategoriesPicker();
 
-            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             Init();
         }
 
         private async Task Init()
         {
 
-            _groupInformation = await App.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, limit: DefaultLimit);
+            _groupInformation = await BeginApplication.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, limit: DefaultLimit);
 
             #region Search components
 
@@ -97,7 +97,7 @@ namespace BeginMobile.Pages.Profile
 
         private void LoadSectionsPicker()
         {
-            _sectionsList = App.GlobalService.GroupSections;
+            _sectionsList = BeginApplication.GlobalService.GroupSections;
 
             _sectionsPicker = new Picker
                               {
@@ -156,7 +156,7 @@ namespace BeginMobile.Pages.Profile
             RetrieveSectionSelected(out sections);
 
             ObservableCollection<Group> groupsList =
-                await App.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, q, cat, limit, sections);
+                await BeginApplication.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, q, cat, limit, sections);
 
             if (groupsList.Any())
             {

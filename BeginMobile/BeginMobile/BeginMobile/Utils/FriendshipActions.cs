@@ -30,24 +30,24 @@ namespace BeginMobile.Utils
             switch (friendship)
             {
                 case FriendshipOption.Send:
-                    responseErrors = App.ProfileServices.SendRequest(authToken, username);
+                    responseErrors = BeginApplication.ProfileServices.SendRequest(authToken, username);
                     break;
 
                 case FriendshipOption.Cancel:
                     //TODO: Cancel request here
-                    //responseErrors = App.ProfileServices.CancelFriendship(authToken, username);
+                    //responseErrors = BeginApplication.ProfileServices.CancelFriendship(authToken, username);
                     break;
 
                 case FriendshipOption.Accept:
-                    responseErrors = App.ProfileServices.AcceptRequest(authToken, username);
+                    responseErrors = BeginApplication.ProfileServices.AcceptRequest(authToken, username);
                     break;
 
                 case FriendshipOption.Reject:
-                    responseErrors = App.ProfileServices.RejectRequest(authToken, username);
+                    responseErrors = BeginApplication.ProfileServices.RejectRequest(authToken, username);
                     break;
 
                 case FriendshipOption.Remove:
-                    responseErrors = App.ProfileServices.RemoveFriendship(authToken, username);
+                    responseErrors = BeginApplication.ProfileServices.RemoveFriendship(authToken, username);
                     break;
             }
 #endif

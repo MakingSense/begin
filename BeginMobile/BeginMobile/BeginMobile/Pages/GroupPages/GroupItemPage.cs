@@ -18,14 +18,14 @@ namespace BeginMobile.Pages.GroupPages
         {
             this.SetBinding(TitleProperty, "Name", stringFormat: "Group - {0}");
             _groupItem = group;
-            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             Init();
         }
 
         private async Task Init()
         {
-            _groupInformation = await App.ProfileServices.GetGroup(_currentUser.AuthToken, _groupItem.Id, Sections);
+            _groupInformation = await BeginApplication.ProfileServices.GetGroup(_currentUser.AuthToken, _groupItem.Id, Sections);
 
             if (_groupInformation == null)
             {
@@ -95,7 +95,7 @@ namespace BeginMobile.Pages.GroupPages
             var labelStatusGroup = new Label
             {
                 YAlign = TextAlignment.End,
-                Style = App.Styles.ListItemTextStyle,
+                Style = BeginApplication.Styles.ListItemTextStyle,
                 FontAttributes = FontAttributes.Bold,
                 Text = groupDetail.StatusGroup,
                 HorizontalOptions = LayoutOptions.FillAndExpand
@@ -104,7 +104,7 @@ namespace BeginMobile.Pages.GroupPages
             var labelDateText = new Label
             {
                 YAlign = TextAlignment.End,
-                Style = App.Styles.LabelTextDate,
+                Style = BeginApplication.Styles.LabelTextDate,
                 Text = groupDetail.TextActiveDate,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
@@ -113,7 +113,7 @@ namespace BeginMobile.Pages.GroupPages
             {
                 YAlign = TextAlignment.Center,
                 XAlign = TextAlignment.Center,
-                Style = App.Styles.ListItemDetailTextStyle,
+                Style = BeginApplication.Styles.ListItemDetailTextStyle,
                 Text = groupDetail.Description,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
@@ -139,7 +139,7 @@ namespace BeginMobile.Pages.GroupPages
                 var labelTitleMember = new Label
                 {
                     YAlign = TextAlignment.End,
-                    Style = App.Styles.LabelLargeTextTitle,
+                    Style = BeginApplication.Styles.LabelLargeTextTitle,
                     FontAttributes = FontAttributes.Bold,
                     HorizontalOptions = LayoutOptions.Start,
                     Text = "Members:"
@@ -148,7 +148,7 @@ namespace BeginMobile.Pages.GroupPages
                 var stackLayoutMembers = new StackLayout
                 {
                     Spacing = 2,
-                    Padding = App.Styles.LayoutThickness,
+                    Padding = BeginApplication.Styles.LayoutThickness,
                     Children =
                                              {
                                                  labelTitleMember,
@@ -181,7 +181,7 @@ namespace BeginMobile.Pages.GroupPages
 
         private static BoxView BoxViewLine()
         {
-            return new BoxView { Color = App.Styles.ColorLine, WidthRequest = 100, HeightRequest = 2 };
+            return new BoxView { Color = BeginApplication.Styles.ColorLine, WidthRequest = 100, HeightRequest = 2 };
         }
 
         private static ListView GetListViewMembers(IEnumerable<User> members)

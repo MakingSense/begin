@@ -12,8 +12,8 @@ namespace BeginMobile.Pages.Profile
         {
             Title = "Messages";
 
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
-            ProfileInformationMessages profileMessage = App.ProfileServices.GetMessagesInfo(currentUser.User.UserName, currentUser.AuthToken);
+            var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+            ProfileInformationMessages profileMessage = BeginApplication.ProfileServices.GetMessagesInfo(currentUser.User.UserName, currentUser.AuthToken);
 
             _listViewMessages = new ListView
                              {

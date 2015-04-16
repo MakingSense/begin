@@ -49,7 +49,7 @@ namespace BeginMobile.Pages.Notifications
                               }
                           };
 
-            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             Init();
         }
@@ -71,7 +71,7 @@ namespace BeginMobile.Pages.Notifications
 
             var profileNotification =
                 await
-                    App.ProfileServices.GetProfileNotification(_currentUser.AuthToken, limit, status);
+                    BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken, limit, status);
 
             LabelCounter.Text = profileNotification.UnreadCount;
 
@@ -121,7 +121,7 @@ namespace BeginMobile.Pages.Notifications
                                              ((ListView) sender).SelectedItem = null;
                                          });
 
-                    var user = App.ProfileServices.GetUser(_currentUser.AuthToken, item.UserViewModel.UserId);
+                    var user = BeginApplication.ProfileServices.GetUser(_currentUser.AuthToken, item.UserViewModel.UserId);
 
                     var contact = new Contact
                                   {
@@ -189,7 +189,7 @@ namespace BeginMobile.Pages.Notifications
         private async void Init()
         {
             var profileNotification =
-                await App.ProfileServices.GetProfileNotification(_currentUser.AuthToken, DefaultLimit);
+                await BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken, DefaultLimit);
 
             LabelCounter.Text = profileNotification.UnreadCount;
             LabelCounter.BindingContext = profileNotification.UnreadCount;
@@ -230,20 +230,20 @@ namespace BeginMobile.Pages.Notifications
             gridHeaderTitle.Children.Add(new Label
                                          {
                                              Text = AppResources.LabelNotification,
-                                             Style = App.Styles.SubtitleStyle
+                                             Style = BeginApplication.Styles.SubtitleStyle
                                          }, 0, 0);
 
             gridHeaderTitle.Children.Add(new Label
                                          {
                                              HeightRequest = 50,
                                              Text = AppResources.LabelDateReceived,
-                                             Style = App.Styles.SubtitleStyle
+                                             Style = BeginApplication.Styles.SubtitleStyle
                                          }, 1, 0);
 
             var mainLayout = new StackLayout
                              {
                                  Spacing = 2,
-                                 Padding = App.Styles.LayoutThickness,
+                                 Padding = BeginApplication.Styles.LayoutThickness,
                                  VerticalOptions = LayoutOptions.Start,
                                  Orientation = StackOrientation.Vertical
                              };

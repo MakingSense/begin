@@ -13,7 +13,7 @@ namespace BeginMobile.Pages.Notifications
                 VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.Start,
                 WidthRequest = 350,
-                Style = App.Styles.ListItemTextStyle
+                Style = BeginApplication.Styles.ListItemTextStyle
             };
 
             labelnotificationDesc.SetBinding(Label.TextProperty, "NotificationDescription");
@@ -22,7 +22,7 @@ namespace BeginMobile.Pages.Notifications
             var buttonMarkAsRead = new Button
                                        {
                                            Text = AppResources.ButtonReadNotification,
-                                           Style = App.Styles.ListViewItemButton,
+                                           Style = BeginApplication.Styles.ListViewItemButton,
                                            HorizontalOptions = LayoutOptions.Start,
                                            HeightRequest = Device.OnPlatform(15, 35, 35),
                                            WidthRequest = Device.OnPlatform(70, 70, 70),
@@ -34,7 +34,7 @@ namespace BeginMobile.Pages.Notifications
             var buttonMarkAsUnread = new Button
                                          {
                                              Text = AppResources.ButtonUnReadNotification,
-                                             Style = App.Styles.ListViewItemButton,
+                                             Style = BeginApplication.Styles.ListViewItemButton,
                                              HorizontalOptions = LayoutOptions.Start,
                                              HeightRequest = Device.OnPlatform(15, 35, 35),
                                              WidthRequest = Device.OnPlatform(70, 70, 70)
@@ -62,7 +62,7 @@ namespace BeginMobile.Pages.Notifications
             var labelintervalDate = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = App.Styles.ListItemDetailTextStyle
+                Style = BeginApplication.Styles.ListItemDetailTextStyle
             };
 
             labelintervalDate.SetBinding(Label.TextProperty, "IntervalDate");

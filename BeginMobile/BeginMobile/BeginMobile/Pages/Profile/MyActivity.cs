@@ -16,14 +16,14 @@ namespace BeginMobile.Pages.Profile
         public MyActivity()
         {
             Title = "My activity";
-            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             Init();
         }
 
         private async Task Init()
         {
-            _profileActivity = await App.ProfileServices.GetActivities(_currentUser.User.UserName, _currentUser.AuthToken);
+            _profileActivity = await BeginApplication.ProfileServices.GetActivities(_currentUser.User.UserName, _currentUser.AuthToken);
             var listDataSource = new ObservableCollection<ActivityViewModel>();
 
             if (_profileActivity != null)
@@ -76,7 +76,7 @@ namespace BeginMobile.Pages.Profile
             var mainStackLayout = new StackLayout
             {
                 Spacing = 2,
-                Padding = App.Styles.LayoutThickness
+                Padding = BeginApplication.Styles.LayoutThickness
             };
 
             mainStackLayout.Children.Add(stackLayout);

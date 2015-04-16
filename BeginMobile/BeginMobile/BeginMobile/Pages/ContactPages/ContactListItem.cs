@@ -48,7 +48,7 @@ namespace BeginMobile.Pages.ContactPages
             _buttonAddFriend = new Button
                                {
                                    Text = AppResources.ButtonAddFriend,
-                                   Style = App.Styles.ListViewItemButton,
+                                   Style = BeginApplication.Styles.ListViewItemButton,
                                    HorizontalOptions = LayoutOptions.Start,
                                    HeightRequest = 35,
                                    WidthRequest = 70,
@@ -60,21 +60,21 @@ namespace BeginMobile.Pages.ContactPages
                                    {
                                        HorizontalOptions = LayoutOptions.FillAndExpand,
                                        YAlign = TextAlignment.Center,
-                                       Style = App.Styles.ListItemTextStyle
+                                       Style = BeginApplication.Styles.ListItemTextStyle
                                    };
 
             var labelUserName = new Label
                                 {
                                     HorizontalOptions = LayoutOptions.FillAndExpand,
                                     YAlign = TextAlignment.Center,
-                                    Style = App.Styles.ListItemDetailTextStyle
+                                    Style = BeginApplication.Styles.ListItemDetailTextStyle
                                 };
 
             var labelEmail = new Label
                              {
                                  HorizontalOptions = LayoutOptions.FillAndExpand,
                                  YAlign = TextAlignment.Center,
-                                 Style = App.Styles.ListItemDetailTextStyle
+                                 Style = BeginApplication.Styles.ListItemDetailTextStyle
                              };
 
 
@@ -84,7 +84,7 @@ namespace BeginMobile.Pages.ContactPages
 
             var grid = new Grid
                        {
-                           Padding = App.Styles.ListDetailThickness,
+                           Padding = BeginApplication.Styles.ListDetailThickness,
                            HorizontalOptions = LayoutOptions.FillAndExpand,
                            VerticalOptions = LayoutOptions.FillAndExpand,
                            RowDefinitions =

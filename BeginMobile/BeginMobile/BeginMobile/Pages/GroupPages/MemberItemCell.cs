@@ -33,7 +33,7 @@ namespace BeginMobile.Pages.GroupPages
             var labelName = new Label
                           {
                               YAlign = TextAlignment.End,
-                              Style = App.Styles.ListItemTextStyle,
+                              Style = BeginApplication.Styles.ListItemTextStyle,
                               FontAttributes = FontAttributes.Bold,
                               HorizontalOptions = LayoutOptions.Start
                           };
@@ -43,7 +43,7 @@ namespace BeginMobile.Pages.GroupPages
             var labelEmail = new Label
                            {
                                YAlign = TextAlignment.End,
-                               Style = App.Styles.ListItemTextStyle,
+                               Style = BeginApplication.Styles.ListItemTextStyle,
                                HorizontalOptions = LayoutOptions.Start
                            };
 
