@@ -219,7 +219,6 @@ namespace BeginMobile.Services.Interfaces
                             JsonConvert.DeserializeObject<List<T>>(userJson)
                         ).ConfigureAwait(false);
 
-                //return resultList.Take(20).ToList();
                 return resultList;
             }
         }

@@ -45,7 +45,7 @@
     <Compile Include="DTO\ErrorRetrieved.cs" />
     <Compile Include="DTO\GroupOptions.cs" />
     <Compile Include="DTO\Message.cs" />
-    <Compile Include="DTO\Options.cs" />
+    <Compile Include="DTO\GlobalOptions.cs" />
     <Compile Include="DTO\ProfileActivity.cs" />
     <Compile Include="DTO\Capability.cs" />
     <Compile Include="DTO\Group.cs" />
@@ -59,6 +59,7 @@
     <Compile Include="DTO\ProfileInformationMessages.cs" />
     <Compile Include="DTO\ProfileInformationShop.cs" />
     <Compile Include="DTO\ProfileMeWall.cs" />
+    <Compile Include="DTO\ShopCategory.cs" />
     <Compile Include="DTO\ThreadMessages.cs" />
     <Compile Include="DTO\UserDetails.cs" />
     <Compile Include="DTO\Wall.cs" />

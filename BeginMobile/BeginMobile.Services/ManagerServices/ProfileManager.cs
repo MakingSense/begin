@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +22,10 @@ namespace BeginMobile.Services.ManagerServices
         private readonly GenericBaseClient<ProfileInformationGroups> _profileGroupClient;
         private readonly GenericBaseClient<ProfileContacts> _profileContactClient;
         private readonly GenericBaseClient<ProfileInformationShop> _profileShopClient;
+
+        private readonly GenericBaseClient<ShopCategory> _shopCategoryClient =
+    new GenericBaseClient<ShopCategory>(BaseAddress, SubAddress);
+        
 
 
         public ProfileManager()
@@ -185,5 +190,27 @@ namespace BeginMobile.Services.ManagerServices
                 return null;
             }
         }
+
+        public async Task<List<ShopCategory>> GetCategories(
+            string authToken,
+            string limit = null,
+            string offset = null,
+            string catId = null
+            )
+        {
+            try
+            {
+                var urlGetParams = "?limit=" + limit + "&offset=" + offset + "&offset=" + catId;
+                const string addressSuffix = "shop/categories";
+                return await _shopCategoryClient.GetListAsync(authToken, addressSuffix, urlGetParams);
+
+            }
+            catch (Exception exception)
+            {
+                //TODO log exception
+                return null;
+            }
+        }
+
     }
 }

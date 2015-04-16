@@ -14,14 +14,13 @@ namespace BeginMobile.Services.ManagerServices
         private const string BaseAddress = "http://186.109.86.251:5432/";
         private const string SubAddress = "begin/api/v1/";
 
-        private readonly GenericBaseClient<Options> _loginGlobalClient =
-            new GenericBaseClient<Options>(BaseAddress, SubAddress);
+        private readonly GenericBaseClient<GlobalOptions> _loginGlobalClient =
+            new GenericBaseClient<GlobalOptions>(BaseAddress, SubAddress);
 
         private readonly GenericBaseClient<GroupOptions> _loginGroupClient =
             new GenericBaseClient<GroupOptions>(BaseAddress, SubAddress);
 
-
-        public async Task<Options> GetMeOptions()
+        public async Task<GlobalOptions> GetMeOptions()
         {
             try
             {
@@ -48,5 +47,6 @@ namespace BeginMobile.Services.ManagerServices
                 return null;
             }
         }
+
     }
 }

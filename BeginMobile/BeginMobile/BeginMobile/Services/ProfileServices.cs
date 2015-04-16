@@ -196,5 +196,14 @@ namespace BeginMobile.Services
         {
             return _contactManager.GetUserById(authToken, userId);
         }
+
+        public async Task<List<ShopCategory>> GetShopCategories(
+            string authToken,
+            string limit = null,
+            string offset = null,
+            string catId = null)
+        {
+            return await _profileManager.GetCategories(authToken, limit, offset, catId);
+        }
     }
 }
