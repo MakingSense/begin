@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace BeginMobile.Pages.MessagePages
 {
-    public class SendMessage : ContentPage
+    public class SendMessage : ContentPage, IDisposable
     {
         private LoginUser _currentUser;
         private readonly Entry _entryUserName;
@@ -15,6 +15,8 @@ namespace BeginMobile.Pages.MessagePages
 
         public SendMessage()
         {
+            Title = "Send Message";
+
             var labelTextUserName = new Label
                                     {
                                         Text = AppResources.EntryUsernamePlaceholderMessage,
@@ -76,9 +78,10 @@ namespace BeginMobile.Pages.MessagePages
 
         private async void SendMessageEventHandler(object sender, EventArgs e)
         {
-            _currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
-            var sendMessageManager = await BeginApplication.ProfileServices.SendMessage(_currentUser.AuthToken, _entryUserName.Text,
-                _entrySubject.Text, _editorMessageContent.Text);
+            _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
+            var sendMessageManager =
+                await BeginApplication.ProfileServices.SendMessage(_currentUser.AuthToken, _entryUserName.Text,
+                    _entrySubject.Text, _editorMessageContent.Text);
 
             if (sendMessageManager != null)
             {
@@ -90,6 +93,7 @@ namespace BeginMobile.Pages.MessagePages
             {
                 await DisplayAlert("Successfull!", "Your message has successfully sent!", "ok");
                 ToEmptyFields();
+                await Navigation.PopAsync();
             }
         }
 
@@ -98,6 +102,10 @@ namespace BeginMobile.Pages.MessagePages
             _entryUserName.Text = "";
             _entrySubject.Text = "";
             _editorMessageContent.Text = "";
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ImageCircle.Forms.Plugin.Abstractions;
+﻿using BeginMobile.LocalizeResources.Resources;
+using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.MessagePages
@@ -24,21 +25,21 @@ namespace BeginMobile.Pages.MessagePages
                                   };
 
             var labelSender = new Label
-            {
-                YAlign = TextAlignment.Center,
-                Style = BeginApplication.Styles.ListItemDetailTextStyle,
-                HorizontalOptions = LayoutOptions.StartAndExpand
-            };
+                              {
+                                  YAlign = TextAlignment.Center,
+                                  Style = BeginApplication.Styles.ListItemDetailTextStyle,
+                                  HorizontalOptions = LayoutOptions.StartAndExpand
+                              };
 
             labelSender.SetBinding(Label.TextProperty, "SenderName", stringFormat: "From: {0}");
 
             var labelSubject = new Label
-                             {
-                                 YAlign = TextAlignment.Center,
-                                 Style = BeginApplication.Styles.ListItemTextStyle,
-                                 FontAttributes = FontAttributes.Bold,
-                                 HorizontalOptions = LayoutOptions.Start
-                             };
+                               {
+                                   YAlign = TextAlignment.Center,
+                                   Style = BeginApplication.Styles.ListItemTextStyle,
+                                   FontAttributes = FontAttributes.Bold,
+                                   HorizontalOptions = LayoutOptions.Start
+                               };
             labelSubject.SetBinding(Label.TextProperty, "Subject");
 
             var labelCreate = new Label
@@ -58,8 +59,12 @@ namespace BeginMobile.Pages.MessagePages
                                };
             labelContent.SetBinding(Label.TextProperty, "MessageContent");
 
-
-         
+            //var buttonRemove = new Label
+            //                   {
+            //                       Text = AppResources.ButtonRemoveFriend,
+            //                       YAlign = TextAlignment.Center,
+            //                       Style = BeginApplication.Styles.ListViewItemButton,
+            //                   };
 
             var gridDetails = new Grid
                               {
@@ -71,13 +76,15 @@ namespace BeginMobile.Pages.MessagePages
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto}
-                                  }                                 
+                                  }
                               };
             gridDetails.Children.Add(labelSender, 0, 0);
             gridDetails.Children.Add(labelSubject, 0, 1);
             gridDetails.Children.Add(labelContent, 0, 2);
             gridDetails.Children.Add(labelCreate, 0, 3);
+            //gridDetails.Children.Add(buttonRemove, 0, 4);
             var stackLayoutView = new StackLayout
                                   {
                                       Spacing = 2,

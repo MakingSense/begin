@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using BeginMobile;
 using BeginMobile.Services.DTO;
@@ -8,20 +7,22 @@ using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.MessagePages
-{ 
+{
     public class MessageDetail : ContentPage
     {
         private readonly Editor _editorReplyContent;
         private const string DefaultImageUser = "userdefault3.png";
         private LoginUser _currentUser;
+
         public MessageDetail(MessageViewModel messageViewModel)
         {
             if (messageViewModel != null) MessageViewModel = messageViewModel;
             Title = "Message Detail";
-            _currentUser = (LoginUser)Application.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
             var listDataMessages = MessageViewModel.Messages.Select(message => new MessageViewModel
                                                                                {
-                                                                                   SenderName = message.Sender.NameSurname,
+                                                                                   SenderName =
+                                                                                       message.Sender.NameSurname,
                                                                                    DateSent = message.DateSent,
                                                                                    MessageContent =
                                                                                        message.MessageContent
@@ -71,10 +72,10 @@ namespace BeginMobile.Pages.MessagePages
             gridReply.Children.Add(labelThisUserNameSurname, 1, 0);
 
             _editorReplyContent = new Editor
-                                     {
-                                         HeightRequest = 100,
-                                         Style = BeginApplication.Styles.MessageContentStyle
-                                     };
+                                  {
+                                      HeightRequest = 100,
+                                      Style = BeginApplication.Styles.MessageContentStyle
+                                  };
             var buttonReply = new Button
                               {
                                   Text = "Send Reply",
@@ -99,8 +100,11 @@ namespace BeginMobile.Pages.MessagePages
 
         public async void ButtonReplyEventHandler(object sender, EventArgs e)
         {
-            var sendMessageManager = await BeginApplication.ProfileServices.SendMessage(_currentUser.AuthToken, MessageViewModel.Sender.UserName,
-                MessageViewModel.Subject, _editorReplyContent.Text,MessageViewModel.ThreadId);
+            var sendMessageManager =
+                await
+                    BeginApplication.ProfileServices.SendMessage(_currentUser.AuthToken,
+                        MessageViewModel.Sender.UserName,
+                        MessageViewModel.Subject, _editorReplyContent.Text, MessageViewModel.ThreadId);
 
             if (sendMessageManager != null)
             {
@@ -111,8 +115,16 @@ namespace BeginMobile.Pages.MessagePages
             else
             {
                 await DisplayAlert("Successfull!", "Your message has successfully sent!", "ok");
+                if (InboxMessage.IsInbox)
+                {
+                    await InboxMessage.Init();
+                }
+                else
+                {
+                    await SentMessage.Init();
+                }
                 await Navigation.PopAsync();
-            }           
+            }
         }
 
         public void ItemSelectedEventHandler(object sender, SelectedItemChangedEventArgs e)
