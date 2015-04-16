@@ -12,12 +12,12 @@ namespace BeginMobile.Pages.Profile
     public class MyActivity : ContentPage
     {
         private const string UserDefault = "userdefault3.png";
-        private LoginUser _currentUser;
+        private readonly LoginUser _currentUser;
         private ProfileInformationActivities _profileActivity;
         public MyActivity()
         {
             Title = AppResources.LabelActivityTitle;
-            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             Init();
         }
