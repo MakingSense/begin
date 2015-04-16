@@ -5,6 +5,7 @@ using BeginMobile.Pages;
 using BeginMobile.Pages.Profile;
 using BeginMobile.Services.DTO;
 using Xamarin.Forms;
+using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.Menu
 {
@@ -32,7 +33,7 @@ namespace BeginMobile.Menu
             const bool isLoadByLogin = false;
             _onToggleRequest = onToggleRequest;
 
-            Title = "Menu";
+            Title = AppResources.LabelMenuTitle;
             Icon = Device.OS == TargetPlatform.iOS ? "More.png" : null;
             var listMenuData = new List<MenuItemViewModel>
             {              
@@ -141,7 +142,7 @@ namespace BeginMobile.Menu
                 }
                 var selectedItemOptionName = ((MenuItemViewModel)eventArgs.SelectedItem).OptionName;
                 var profileMe = new ProfileMe(currentUser.User);
-                var contentPageKnocks = new ContentPage { Title = "Knocks" };
+                var contentPageKnocks = new ContentPage { Title = AppResources.LabelMenuKnocks };
 
                 switch (selectedItemOptionName)
                 {

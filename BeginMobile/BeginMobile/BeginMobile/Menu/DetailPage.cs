@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using BeginMobile.LocalizeResources.Resources;
+using Xamarin.Forms;
 
 namespace BeginMobile.Menu
 {
@@ -6,7 +7,7 @@ namespace BeginMobile.Menu
         {
             public DetailPage()
             {
-                Title = "HOME";
+                Title = AppResources.LabelDetailPageHome.ToUpper();
                 Icon = null;
 
                 BackgroundColor = Color.FromHex("8A8A8A");

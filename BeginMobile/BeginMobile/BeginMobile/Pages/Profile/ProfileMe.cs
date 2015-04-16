@@ -1,4 +1,5 @@
-﻿using BeginMobile.Services.DTO;
+﻿using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Services.DTO;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
@@ -9,13 +10,13 @@ namespace BeginMobile.Pages.Profile
         private const string UserDefault = "userdefault3.png";
         public ProfileMe(User user)
         {
-            Title = "Profile";
+            Title = AppResources.LabelProfileMeTitle;
 
             //Toolbar menu item
             var toolBarItemMyActivity = new ToolbarItem
                                  {
                                      Icon = "",
-                                     Text = "MyAct",
+                                     Text = AppResources.ToolBarProfileMeMyAct,
                                      Order = ToolbarItemOrder.Primary,
                                      Command = new Command(() => Navigation.PushAsync(new MyActivity()))
                                  };
@@ -23,7 +24,7 @@ namespace BeginMobile.Pages.Profile
             var toolBarItemInformation = new ToolbarItem
                                   {
                                       Icon = "",
-                                      Text = "Info",
+                                      Text = AppResources.ToolBarProfileMeInfo,
                                       Order = ToolbarItemOrder.Primary,
                                       Command = new Command(() => Navigation.PushAsync(new Information()))
                                   };
@@ -31,7 +32,7 @@ namespace BeginMobile.Pages.Profile
             var toolBarItemMessages = new ToolbarItem
                                {
                                    Icon = "",
-                                   Text = "Messages",
+                                   Text = AppResources.ToolBarProfileMeMessages,
                                    Order = ToolbarItemOrder.Secondary,
                                    Command = new Command(() => Navigation.PushAsync(new Messages()))
                                };
@@ -39,7 +40,7 @@ namespace BeginMobile.Pages.Profile
             var toolBarItemContacts = new ToolbarItem
                                {
                                    Icon = "",
-                                   Text = "Contacts",
+                                   Text = AppResources.ToolBarProfileMeContacts,
                                    Order = ToolbarItemOrder.Secondary,
                                    Command = new Command(() => Navigation.PushAsync(new Contacts()))
                                };
@@ -47,7 +48,7 @@ namespace BeginMobile.Pages.Profile
             var toolBarItemGroups = new ToolbarItem
                              {
                                  Icon = "",
-                                 Text = "Groups",
+                                 Text = AppResources.ToolBarProfileMeGroups,
                                  Order = ToolbarItemOrder.Secondary,
                                  Command = new Command(() => Navigation.PushAsync(new Groups()))
                              };
@@ -55,7 +56,7 @@ namespace BeginMobile.Pages.Profile
             var toolBarItemShop = new ToolbarItem
                            {
                                Icon = "",
-                               Text = "Shop",
+                               Text = AppResources.ToolBarProfileMeShop,
                                Order = ToolbarItemOrder.Primary,
                                Command = new Command(() => Navigation.PushAsync(new Shop()))
                            };
@@ -63,7 +64,7 @@ namespace BeginMobile.Pages.Profile
             var toolBarItemEvents = new ToolbarItem
                              {
                                  Icon = "",
-                                 Text = "Events",
+                                 Text = AppResources.ToolBarProfileMeEvents,
                                  Order = ToolbarItemOrder.Secondary,
                                  Command = new Command(() => Navigation.PushAsync(new Events()))
                              };
@@ -90,7 +91,7 @@ namespace BeginMobile.Pages.Profile
 
             var labelTitle = new Label
                            {
-                               Text = "Profile",
+                               Text = AppResources.LabelTitleProfile,
                                FontSize = 20,
                                FontAttributes = FontAttributes.Bold,
                                HorizontalOptions = LayoutOptions.Center

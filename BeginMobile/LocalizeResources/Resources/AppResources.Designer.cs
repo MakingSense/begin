@@ -269,6 +269,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string LabelDetailPageHome {
+            get {
+                return ResourceManager.GetString("LabelDetailPageHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string LabelEventDate {
@@ -296,6 +305,24 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Knocks.
+        /// </summary>
+        public static string LabelMenuKnocks {
+            get {
+                return ResourceManager.GetString("LabelMenuKnocks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menu.
+        /// </summary>
+        public static string LabelMenuTitle {
+            get {
+                return ResourceManager.GetString("LabelMenuTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notification.
         /// </summary>
         public static string LabelNotification {
@@ -314,11 +341,38 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date:.
+        /// </summary>
+        public static string LabelShopDate {
+            get {
+                return ResourceManager.GetString("LabelShopDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price:.
+        /// </summary>
+        public static string LabelShopPrice {
+            get {
+                return ResourceManager.GetString("LabelShopPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shop.
         /// </summary>
         public static string LabelShopTitle {
             get {
                 return ResourceManager.GetString("LabelShopTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string LabelTitleProfile {
+            get {
+                return ResourceManager.GetString("LabelTitleProfile", resourceCulture);
             }
         }
         
@@ -373,6 +427,69 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string SearchViewEventSearchByName {
             get {
                 return ResourceManager.GetString("SearchViewEventSearchByName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contacts.
+        /// </summary>
+        public static string ToolBarProfileMeContacts {
+            get {
+                return ResourceManager.GetString("ToolBarProfileMeContacts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Events.
+        /// </summary>
+        public static string ToolBarProfileMeEvents {
+            get {
+                return ResourceManager.GetString("ToolBarProfileMeEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Groups.
+        /// </summary>
+        public static string ToolBarProfileMeGroups {
+            get {
+                return ResourceManager.GetString("ToolBarProfileMeGroups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string ToolBarProfileMeInfo {
+            get {
+                return ResourceManager.GetString("ToolBarProfileMeInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Messages.
+        /// </summary>
+        public static string ToolBarProfileMeMessages {
+            get {
+                return ResourceManager.GetString("ToolBarProfileMeMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MyActv.
+        /// </summary>
+        public static string ToolBarProfileMeMyAct {
+            get {
+                return ResourceManager.GetString("ToolBarProfileMeMyAct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shop.
+        /// </summary>
+        public static string ToolBarProfileMeShop {
+            get {
+                return ResourceManager.GetString("ToolBarProfileMeShop", resourceCulture);
             }
         }
         

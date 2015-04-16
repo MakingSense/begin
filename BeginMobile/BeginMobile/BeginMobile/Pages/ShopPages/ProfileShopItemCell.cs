@@ -1,4 +1,5 @@
-﻿using ImageCircle.Forms.Plugin.Abstractions;
+﻿using BeginMobile.LocalizeResources.Resources;
+using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.ShopPages
@@ -22,10 +23,9 @@ namespace BeginMobile.Pages.ShopPages
                                       BorderThickness = Device.OnPlatform(2, 3, 3),
                                       HeightRequest = Device.OnPlatform(50, 100, 100),
                                       WidthRequest = Device.OnPlatform(50, 100, 100),
-
                                       Aspect = Aspect.AspectFill,
                                       HorizontalOptions = LayoutOptions.Start,
-                                      Source = GroupImage
+                                      //Source = GroupImage
                                   };
 
             circleShopImage.SetBinding(CircleImage.SourceProperty, "Thumbnail");
@@ -44,7 +44,7 @@ namespace BeginMobile.Pages.ShopPages
             var labelCreateDateTitle = new Label
                                        {
                                            YAlign = TextAlignment.Center,
-                                           Text = "Date:",
+                                           Text = AppResources.LabelShopDate,
                                            FontAttributes = FontAttributes.Bold,
                                            Style = BeginApplication.Styles.ListItemTextStyle,
                                            HorizontalOptions = LayoutOptions.Start
@@ -63,7 +63,7 @@ namespace BeginMobile.Pages.ShopPages
             var labelPriceTitle = new Label
                                   {
                                       YAlign = TextAlignment.Center,
-                                      Text = "Price:",
+                                      Text = AppResources.LabelShopPrice,
                                       FontAttributes = FontAttributes.Bold,
                                       Style = BeginApplication.Styles.ListItemTextStyle,
                                       HorizontalOptions = LayoutOptions.Start
