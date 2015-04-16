@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BeginMobile.LocalizeResources.Resources;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 
@@ -10,7 +11,7 @@ namespace BeginMobile.MenuProfile
         public MenuPage()
         {
             //Icon = "settings.png";
-            Title = "Menu";
+            Title = AppResources.LabelMenuTitle;
             BackgroundColor = Color.FromHex("333333");
 
             ListViewMenu = new MenuListView();
@@ -21,7 +22,7 @@ namespace BeginMobile.MenuProfile
                 Content = new Label
                 {
                     TextColor = Color.FromHex("AAAAAA"),
-                    Text = "MENU",
+                    Text = AppResources.LabelMenuTitle.ToUpper(),
                 }
             };
 

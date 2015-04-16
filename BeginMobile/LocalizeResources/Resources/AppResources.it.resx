@@ -186,6 +186,9 @@
   <data name="LabelDateReceived" xml:space="preserve">
     <value>Date Received</value>
   </data>
+  <data name="LabelDetailPageHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
   <data name="LabelEventDate" xml:space="preserve">
     <value>Date</value>
   </data>
@@ -195,14 +198,29 @@
   <data name="LabelEventTitle" xml:space="preserve">
     <value>Events</value>
   </data>
+  <data name="LabelMenuKnocks" xml:space="preserve">
+    <value>Knocks</value>
+  </data>
+  <data name="LabelMenuTitle" xml:space="preserve">
+    <value>Menu</value>
+  </data>
   <data name="LabelNotification" xml:space="preserve">
     <value>Notification</value>
   </data>
   <data name="LabelProfileMeTitle" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="LabelShopDate" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="LabelShopPrice" xml:space="preserve">
+    <value>Price:</value>
+  </data>
   <data name="LabelShopTitle" xml:space="preserve">
     <value>Shop</value>
+  </data>
+  <data name="LabelTitleProfile" xml:space="preserve">
+    <value>Profile</value>
   </data>
   <data name="LoginFormTitle" xml:space="preserve">
     <value>Modulo Di Accesso</value>
@@ -221,6 +239,27 @@
   </data>
   <data name="SearchViewEventSearchByName" xml:space="preserve">
     <value>Search by event name</value>
+  </data>
+  <data name="ToolBarProfileMeContacts" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="ToolBarProfileMeEvents" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="ToolBarProfileMeGroups" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="ToolBarProfileMeInfo" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="ToolBarProfileMeMessages" xml:space="preserve">
+    <value>Messages</value>
+  </data>
+  <data name="ToolBarProfileMeMyAct" xml:space="preserve">
+    <value>MyActv</value>
+  </data>
+  <data name="ToolBarProfileMeShop" xml:space="preserve">
+    <value>Shop</value>
   </data>
   <data name="UsernamePlaceholder" xml:space="preserve">
     <value>Nome Utente</value>

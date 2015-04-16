@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BeginMobile.Pages.Profile;
+using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.MenuProfile
 {
@@ -9,56 +10,56 @@ namespace BeginMobile.MenuProfile
         {
             this.Add(new MenuItem()
             {
-                Title = "Profile",
+                Title = AppResources.LabelTitleProfile,
                 //IconSource = "contacts.png"
                 TargetType = typeof(ProfileMe)
             });
 
             this.Add(new MenuItem()
             {
-                Title = "My activity",
+                Title = AppResources.ToolBarProfileMeMyAct,
                 //IconSource = "contacts.png"
                 TargetType = typeof(MyActivity)
             });
 
             this.Add(new MenuItem()
             {
-                Title = "Information",
+                Title = AppResources.ToolBarProfileMeInfo,
                 //IconSource = "contacts.png"
                 TargetType = typeof(Information)
             });
 
             this.Add(new MenuItem()
             {
-                Title = "Messages",
+                Title = AppResources.ToolBarProfileMeMessages,
                 //IconSource = "contacts.png"
                 TargetType = typeof(Messages)
             });
 
             this.Add(new MenuItem()
             {
-                Title = "Contacts",
+                Title = AppResources.ToolBarProfileMeContacts,
                 //IconSource = "contacts.png"
                 TargetType = typeof(Contacts)
             });
 
             this.Add(new MenuItem()
             {
-                Title = "Groups",
+                Title = AppResources.ToolBarProfileMeGroups,
                 //IconSource = "contacts.png"
                 TargetType = typeof(Groups)
             });
 
             this.Add(new MenuItem()
             {
-                Title = "Shop",
+                Title = AppResources.ToolBarProfileMeShop,
                 //IconSource = "contacts.png"
                 TargetType = typeof(Shop)
             });
 
             this.Add(new MenuItem()
             {
-                Title = "Events",
+                Title = AppResources.ToolBarProfileMeEvents,
                 //IconSource = "contacts.png"
                 TargetType = typeof(Events)
             });
