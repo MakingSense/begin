@@ -19,7 +19,7 @@ namespace BeginMobile.Pages.Profile
         public ContactDetail(Contact contact)
         {
             _contact = contact;
-            _loginUser = (LoginUser) App.Current.Properties["LoginUser"];
+            _loginUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
 
             if (_contact == null) throw new ArgumentNullException("contact");
 
@@ -71,7 +71,7 @@ namespace BeginMobile.Pages.Profile
                                               YAlign = TextAlignment.End,
                                               XAlign = TextAlignment.End,
                                               FontAttributes = FontAttributes.Bold,
-                                              Style = App.Styles.ListItemTextStyle,
+                                              Style = BeginApplication.Styles.ListItemTextStyle,
                                               //Text = AppResources.LabelNameSurname
                                               Text = "Name Surname:"
                                           };
@@ -80,7 +80,7 @@ namespace BeginMobile.Pages.Profile
                                      YAlign = TextAlignment.End,
                                      XAlign = TextAlignment.End,
                                      FontAttributes = FontAttributes.Bold,
-                                     Style = App.Styles.ListItemTextStyle,
+                                     Style = BeginApplication.Styles.ListItemTextStyle,
                                      Text = "Email:"
                                  };
             var labelTextUsername = new Label
@@ -88,7 +88,7 @@ namespace BeginMobile.Pages.Profile
                                         YAlign = TextAlignment.End,
                                         XAlign = TextAlignment.End,
                                         FontAttributes = FontAttributes.Bold,
-                                        Style = App.Styles.ListItemTextStyle,
+                                        Style = BeginApplication.Styles.ListItemTextStyle,
                                         Text = "User Name:"
                                     };
             var labelTextRegistered = new Label
@@ -96,7 +96,7 @@ namespace BeginMobile.Pages.Profile
                                           YAlign = TextAlignment.End,
                                           XAlign = TextAlignment.End,
                                           FontAttributes = FontAttributes.Bold,
-                                          Style = App.Styles.ListItemTextStyle,
+                                          Style = BeginApplication.Styles.ListItemTextStyle,
                                           Text = "Registered:"
                                       };
 
@@ -123,31 +123,31 @@ namespace BeginMobile.Pages.Profile
             var buttonAddFriend = new Button
                                   {
                                       Text = AppResources.ButtonAddFriend,
-                                      Style = App.Styles.ListViewItemButton
+                                      Style = BeginApplication.Styles.ListViewItemButton
                                   };
 
             var buttonCancelFriend = new Button
                                      {
                                          Text = AppResources.ButtonCancelRequestFriend,
-                                         Style = App.Styles.ListViewItemButton
+                                         Style = BeginApplication.Styles.ListViewItemButton
                                      };
 
             var buttonAcceptFriend = new Button
                                      {
                                          Text = AppResources.ButtonAcceptFriend,
-                                         Style = App.Styles.ListViewItemButton
+                                         Style = BeginApplication.Styles.ListViewItemButton
                                      };
 
             var buttonRemoveFriend = new Button
                                      {
                                          Text = AppResources.ButtonRemoveFriend,
-                                         Style = App.Styles.ListViewItemButton
+                                         Style = BeginApplication.Styles.ListViewItemButton
                                      };
 
             var buttonRejectFriend = new Button
                                      {
                                          Text = AppResources.ButtonRejectFriend,
-                                         Style = App.Styles.ListViewItemButton
+                                         Style = BeginApplication.Styles.ListViewItemButton
                                      };
 
             buttonAddFriend.IsVisible = false; // TODO: should be in the wall of every contact not here
@@ -178,7 +178,7 @@ namespace BeginMobile.Pages.Profile
 
             var gridComponents = new Grid
                                  {
-                                     Padding = App.Styles.GridPadding,
+                                     Padding = BeginApplication.Styles.GridPadding,
                                      VerticalOptions = LayoutOptions.FillAndExpand,
                                      HorizontalOptions = LayoutOptions.Center,
                                      RowDefinitions =
@@ -303,7 +303,7 @@ namespace BeginMobile.Pages.Profile
 
         private static BoxView BoxViewLine()
         {
-            return new BoxView {Color = App.Styles.ColorLine, WidthRequest = 100, HeightRequest = 2};
+            return new BoxView {Color = BeginApplication.Styles.ColorLine, WidthRequest = 100, HeightRequest = 2};
         }
 
         #endregion

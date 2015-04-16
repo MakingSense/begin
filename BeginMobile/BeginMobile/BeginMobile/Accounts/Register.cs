@@ -65,7 +65,7 @@ namespace BeginMobile.Accounts
             {
                 Text = "I agree the Terms & Conditions",
                 FontSize = 10,
-                Style = App.Styles.LinkButton,
+                Style = BeginApplication.Styles.LinkButton,
                 TextColor = Color.FromHex("77D065")
             };
 
@@ -75,14 +75,14 @@ namespace BeginMobile.Accounts
             var buttonRegister = new Button
             {
                 Text = AppResources.ButtonRegister,
-                Style = App.Styles.DefaultButton
+                Style = BeginApplication.Styles.DefaultButton
 
             };
 
             var buttonCancel = new Button
             {
                 Text = AppResources.ButtonCancel,
-                Style = App.Styles.DefaultButton
+                Style = BeginApplication.Styles.DefaultButton
             };
 
             buttonCancel.Clicked += (sender, eventArgs) =>
@@ -144,8 +144,8 @@ namespace BeginMobile.Accounts
                                             User = registerUser.User
                                         };
 
-                                        App.Current.Properties["IsLoggedIn"] = true;
-                                        App.Current.Properties["LoginUser"] = loginUser;
+                                        BeginApplication.Current.Properties["IsLoggedIn"] = true;
+                                        BeginApplication.Current.Properties["LoginUser"] = loginUser;
 
                                         iLoginManager.ShowMainPage(loginUser);
                                     }

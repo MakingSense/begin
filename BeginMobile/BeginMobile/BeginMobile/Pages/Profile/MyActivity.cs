@@ -1,29 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
-using Xamarin.Forms;
-using System.Threading.Tasks;
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
 {
     public class MyActivity : ContentPage
     {
         private const string UserDefault = "userdefault3.png";
-        private LoginUser _currentUser;
+        private readonly LoginUser _currentUser;
         private ProfileInformationActivities _profileActivity;
         public MyActivity()
         {
-            Title = "My activity";
-            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            Title = AppResources.LabelActivityTitle;
+            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             Init();
         }
 
         private async Task Init()
         {
-            _profileActivity = await App.ProfileServices.GetActivities(_currentUser.User.UserName, _currentUser.AuthToken);
+            _profileActivity = await BeginApplication.ProfileServices.GetActivities(_currentUser.User.UserName, _currentUser.AuthToken);
             var listDataSource = new ObservableCollection<ActivityViewModel>();
 
             if (_profileActivity != null)
@@ -76,7 +76,7 @@ namespace BeginMobile.Pages.Profile
             var mainStackLayout = new StackLayout
             {
                 Spacing = 2,
-                Padding = App.Styles.LayoutThickness
+                Padding = BeginApplication.Styles.LayoutThickness
             };
 
             mainStackLayout.Children.Add(stackLayout);

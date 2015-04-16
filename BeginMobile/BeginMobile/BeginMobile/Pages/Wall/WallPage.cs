@@ -27,7 +27,7 @@ namespace BeginMobile.Pages.Wall
         public WallPage(string title, string iconImage)
             : base(title, iconImage)
         {
-            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             _gridMain = new Grid()
             {
@@ -69,7 +69,7 @@ namespace BeginMobile.Pages.Wall
             ActivityIndicatorLoading.IsRunning = true;
             ActivityIndicatorLoading.IsVisible = true;
 
-            _profileShop = await App.ProfileServices.GetWall(_currentUser.AuthToken, limit: _limit.ToString(), offset: _offset.ToString());
+            _profileShop = await BeginApplication.ProfileServices.GetWall(_currentUser.AuthToken, limit: _limit.ToString(), offset: _offset.ToString());
             _listWall = ListBeginWallViewModel(_profileShop.ListOfWall);
 
             
@@ -128,7 +128,7 @@ namespace BeginMobile.Pages.Wall
             ActivityIndicatorLoading.IsRunning = true;
             ActivityIndicatorLoading.IsVisible = true;
 
-            _profileShop = await App.ProfileServices.GetWall(_currentUser.AuthToken, limit: _limit.ToString(), offset: _offset.ToString());
+            _profileShop = await BeginApplication.ProfileServices.GetWall(_currentUser.AuthToken, limit: _limit.ToString(), offset: _offset.ToString());
 
             if (_profileShop != null && _profileShop.ListOfWall.Count > 0)
             {

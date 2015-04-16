@@ -34,7 +34,7 @@ namespace BeginMobile.Pages.ShopPages
                              {
                                  YAlign = TextAlignment.Center,
                                  FontAttributes = FontAttributes.Bold,
-                                 Style = App.Styles.ListItemTextStyle
+                                 Style = BeginApplication.Styles.ListItemTextStyle
 
                              };
 
@@ -46,14 +46,14 @@ namespace BeginMobile.Pages.ShopPages
                                            YAlign = TextAlignment.Center,
                                            Text = "Date:",
                                            FontAttributes = FontAttributes.Bold,
-                                           Style = App.Styles.ListItemTextStyle,
+                                           Style = BeginApplication.Styles.ListItemTextStyle,
                                            HorizontalOptions = LayoutOptions.Start
                                        };
 
             var labelCreate = new Label
             {
                 YAlign = TextAlignment.Center,
-                Style = App.Styles.ListItemDetailTextStyle,
+                Style = BeginApplication.Styles.ListItemDetailTextStyle,
                 HorizontalOptions = LayoutOptions.Center
             };
 
@@ -65,7 +65,7 @@ namespace BeginMobile.Pages.ShopPages
                                       YAlign = TextAlignment.Center,
                                       Text = "Price:",
                                       FontAttributes = FontAttributes.Bold,
-                                      Style = App.Styles.ListItemTextStyle,
+                                      Style = BeginApplication.Styles.ListItemTextStyle,
                                       HorizontalOptions = LayoutOptions.Start
                                   };
 
@@ -73,7 +73,7 @@ namespace BeginMobile.Pages.ShopPages
                              {
                                  YAlign = TextAlignment.Center,
                                  XAlign = TextAlignment.Center,
-                                 Style = App.Styles.ListItemDetailTextStyle,
+                                 Style = BeginApplication.Styles.ListItemDetailTextStyle,
                                  HorizontalOptions = LayoutOptions.End
                              };
 

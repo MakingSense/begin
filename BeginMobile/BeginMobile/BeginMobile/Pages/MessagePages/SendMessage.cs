@@ -18,29 +18,29 @@ namespace BeginMobile.Pages.MessagePages
             var labelTextUserName = new Label
                                     {
                                         Text = AppResources.EntryUsernamePlaceholderMessage,
-                                        Style = App.Styles.SubtitleStyle
+                                        Style = BeginApplication.Styles.SubtitleStyle
                                     };
             var labelTextSubject = new Label
                                    {
                                        Text = AppResources.EntrySubjectPlaceholder,
-                                       Style = App.Styles.SubtitleStyle
+                                       Style = BeginApplication.Styles.SubtitleStyle
                                    };
             var labelTextMessage = new Label
                                    {
                                        Text = AppResources.EditorMessagePlaceholder,
-                                       Style = App.Styles.SubtitleStyle
+                                       Style = BeginApplication.Styles.SubtitleStyle
                                    };
             _entryUserName = new Entry();
             _entrySubject = new Entry();
             _editorMessageContent = new Editor
                                     {
                                         HeightRequest = 100,
-                                        Style = App.Styles.MessageContentStyle
+                                        Style = BeginApplication.Styles.MessageContentStyle
                                     };
             var buttonSend = new Button
                              {
                                  Text = AppResources.ButtonSendMessage,
-                                 Style = App.Styles.DefaultButton
+                                 Style = BeginApplication.Styles.DefaultButton
                              };
             buttonSend.Clicked += SendMessageEventHandler;
 
@@ -69,15 +69,15 @@ namespace BeginMobile.Pages.MessagePages
             Content = new StackLayout
                       {
                           VerticalOptions = LayoutOptions.StartAndExpand,
-                          Padding = App.Styles.LayoutThickness,
+                          Padding = BeginApplication.Styles.LayoutThickness,
                           Children = {gridComponents, buttonSend}
                       };
         }
 
         private async void SendMessageEventHandler(object sender, EventArgs e)
         {
-            _currentUser = (LoginUser) App.Current.Properties["LoginUser"];
-            var sendMessageManager = await App.ProfileServices.SendMessage(_currentUser.AuthToken, _entryUserName.Text,
+            _currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
+            var sendMessageManager = await BeginApplication.ProfileServices.SendMessage(_currentUser.AuthToken, _entryUserName.Text,
                 _entrySubject.Text, _editorMessageContent.Text);
 
             if (sendMessageManager != null)

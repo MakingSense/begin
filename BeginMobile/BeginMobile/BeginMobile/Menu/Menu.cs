@@ -26,8 +26,8 @@ namespace BeginMobile.Menu
         public Menu(Action onToggleRequest)
         {
 
-            BackgroundColor = App.Styles.MenuBackground;
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            BackgroundColor = BeginApplication.Styles.MenuBackground;
+            var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             const bool isLoadByLogin = false;
             _onToggleRequest = onToggleRequest;
@@ -44,7 +44,7 @@ namespace BeginMobile.Menu
                                         VerticalOptions = LayoutOptions.Start,
                                         ItemsSource = listMenuData,
                                         ItemTemplate = dataTemplateListViewMenuIcon,
-                                        BackgroundColor = App.Styles.MenuBackground,
+                                        BackgroundColor = BeginApplication.Styles.MenuBackground,
                                         HeightRequest = 180,
                                         HasUnevenRows = true
                                     };
@@ -130,7 +130,7 @@ namespace BeginMobile.Menu
                 VerticalOptions = LayoutOptions.Start,
                 ItemsSource = listOptionsData,
                 ItemTemplate = dataTemplateMenuOptions,
-                BackgroundColor = App.Styles.MenuBackground,
+                BackgroundColor = BeginApplication.Styles.MenuBackground,
             };
 
             listViewMenuOptions.ItemSelected += async (sender, eventArgs) =>
@@ -154,7 +154,7 @@ namespace BeginMobile.Menu
                         _onToggleRequest();
                         break;
                     case MenuItemsNames.Logout:
-                        App.CurrentApp.Logout();
+                        BeginApplication.CurrentBeginApplication.Logout();
                         break;
                     case MenuItemsNames.ChangePassword:
                         await Navigation.PushAsync(new ChangePasswordPage());
@@ -200,7 +200,7 @@ namespace BeginMobile.Menu
             StackLayout mainStackLayout = new StackLayout
             {
                 Spacing = 2,
-                Padding = App.Styles.LayoutThickness,
+                Padding = BeginApplication.Styles.LayoutThickness,
                 Children =
                                   {        
                                       listViewMenuIcon,
@@ -240,8 +240,8 @@ namespace BeginMobile.Menu
             var labelOptionName = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = App.Styles.ListItemTextStyle,
-                TextColor = App.Styles.MenuOptionsColor
+                Style = BeginApplication.Styles.ListItemTextStyle,
+                TextColor = BeginApplication.Styles.MenuOptionsColor
             };
 
             labelOptionName.SetBinding(Label.TextProperty, "OptionName");
@@ -290,13 +290,13 @@ namespace BeginMobile.Menu
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 YAlign = TextAlignment.Center,
-                Style = App.Styles.ListItemTextStyle,
+                Style = BeginApplication.Styles.ListItemTextStyle,
             };
             var labelDescription = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 YAlign = TextAlignment.Center,
-                Style = App.Styles.ListItemDetailTextStyle
+                Style = BeginApplication.Styles.ListItemDetailTextStyle
             };
             labelDescription.SetBinding(Label.TextProperty, "OptionDetail");
             labelOptionName.SetBinding(Label.TextProperty, "OptionName");

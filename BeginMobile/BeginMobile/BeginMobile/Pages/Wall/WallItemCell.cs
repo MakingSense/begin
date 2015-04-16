@@ -18,21 +18,21 @@ namespace BeginMobile.Pages.Wall
                           {
                               YAlign = TextAlignment.End,
                               FontAttributes = FontAttributes.Bold,
-                              Style = App.Styles.ListItemTextStyle
+                              Style = BeginApplication.Styles.ListItemTextStyle
                           };
             labelTitle.SetBinding(Label.TextProperty, "Title");
 
             var labelReason = new Label()
                             {
                                 YAlign = TextAlignment.End,
-                                Style = App.Styles.ListItemTextStyle,
+                                Style = BeginApplication.Styles.ListItemTextStyle,
                             };
             labelReason.SetBinding(Label.TextProperty, "Reason");
 
             var labelDescription = new Label()
                                  {
                                      YAlign = TextAlignment.End,
-                                     Style = App.Styles.ListItemDetailTextStyle
+                                     Style = BeginApplication.Styles.ListItemDetailTextStyle
                                  };
 
             labelDescription.SetBinding(Label.TextProperty, "Description");
@@ -40,7 +40,7 @@ namespace BeginMobile.Pages.Wall
             var labelDate = new Label()
                           {
                               YAlign = TextAlignment.End,
-                              Style = App.Styles.ListItemDetailTextStyle
+                              Style = BeginApplication.Styles.ListItemDetailTextStyle
                           };
 
             labelDate.SetBinding(Label.TextProperty, "Date");

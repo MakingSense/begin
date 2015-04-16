@@ -36,7 +36,7 @@ namespace BeginMobile.Pages.Profile
         {
             Title = "Contacts";
             _searchView = new SearchView();
-            _currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             Init();
         }
@@ -44,7 +44,7 @@ namespace BeginMobile.Pages.Profile
         private async Task Init()
         {
             _profileInformationContacts =
-                await App.ProfileServices.GetContacts(_currentUser.AuthToken, limit: DefaultLimit);
+                await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, limit: DefaultLimit);
 
             var contactsList = new List<Contact>();
 
@@ -88,7 +88,7 @@ namespace BeginMobile.Pages.Profile
 
             var stackLayoutContactsList = new StackLayout
                                           {
-                                              Padding = App.Styles.LayoutThickness,
+                                              Padding = BeginApplication.Styles.LayoutThickness,
                                               VerticalOptions = LayoutOptions.FillAndExpand,
                                               Orientation = StackOrientation.Vertical,
                                               Children =
@@ -127,7 +127,7 @@ namespace BeginMobile.Pages.Profile
             RetrieveLimitSelected(out limit);
             RetrieveSortOptionSelected(out sort);
 
-            var list = await App.ProfileServices.GetContacts(_currentUser.AuthToken, q, sort, limit) ?? new List<User>();
+            var list = await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, q, sort, limit) ?? new List<User>();
 
 
             if (list.Any())

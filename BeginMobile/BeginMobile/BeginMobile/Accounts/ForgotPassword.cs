@@ -24,19 +24,19 @@ namespace BeginMobile.Accounts
             var labelTitle = new Label
                                {
                                    Text = "Password Recovery",
-                                   Style = App.Styles.TitleStyle
+                                   Style = BeginApplication.Styles.TitleStyle
                                };
 
             var labelSubTitle = new Label{
                                                Text = "Enter the e-mail address you registered with the Application. Instructions to reset your password will be sent to this address.", 
-                                               Style = App.Styles.BodyStyle
+                                               Style = BeginApplication.Styles.BodyStyle
                                            };
 
             _entryEmail = new Entry { Placeholder = "Enter your e-mail address"};
 
             var buttonReset = new Button { 
                                                 Text= "Send", 
-                                                Style = App.Styles.DefaultButton
+                                                Style = BeginApplication.Styles.DefaultButton
                                             };
             
             buttonReset.Clicked += async (sender, eventArgs) =>
@@ -69,7 +69,7 @@ namespace BeginMobile.Accounts
                                              }
                                          };
 
-            var buttonBack = new Button { Text = "Cancel", Style = App.Styles.DefaultButton };
+            var buttonBack = new Button { Text = "Cancel", Style = BeginApplication.Styles.DefaultButton };
             buttonBack.Clicked += (sender, eventArgs) =>
             {
                 MessagingCenter.Send<ContentPage>(this, "Login");
@@ -78,7 +78,7 @@ namespace BeginMobile.Accounts
              
 			Content = new StackLayout {
                 Spacing = 10,
-                Padding = App.Styles.LayoutThickness,
+                Padding = BeginApplication.Styles.LayoutThickness,
                 VerticalOptions = LayoutOptions.Center,
                 Children = { 
                     logo,

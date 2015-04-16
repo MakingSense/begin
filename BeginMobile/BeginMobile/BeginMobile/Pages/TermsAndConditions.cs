@@ -11,7 +11,7 @@ namespace BeginMobile.Pages
             var labelBody = new Label
                             {
                                 Text = "Terms And Conditions",
-                                Style = App.Styles.BodyStyle
+                                Style = BeginApplication.Styles.BodyStyle
                             };
 
             if (isLoadByLogin)
@@ -19,7 +19,7 @@ namespace BeginMobile.Pages
                 var buttonBack = new Button
                              {
                                  Text = "Go back",
-                                 Style = App.Styles.DefaultButton
+                                 Style = BeginApplication.Styles.DefaultButton
                              };
 
                 buttonBack.Clicked += (sender, e) =>

@@ -99,9 +99,14 @@ namespace BeginMobile.Services
             return _eventManager.GetEventById(authToken, eventId);
         }
 
-        public async Task<List<User>> GetContacts(string authToken, string name = null, string sort = null, string limit = null)
+        public async Task<List<User>> GetContacts(
+            string authToken, 
+            string name = null, 
+            string sort = null, 
+            string limit = null,
+            string offset = null)
         {
-            return await _contactManager.GetContacts(authToken,name, sort, limit);
+            return await _contactManager.GetContacts(authToken,name, sort, limit, offset);
         }
 
         public User GetContact(string authToken, string contactId)

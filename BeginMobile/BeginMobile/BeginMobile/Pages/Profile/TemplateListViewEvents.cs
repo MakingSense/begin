@@ -14,8 +14,8 @@ namespace BeginMobile.Pages.Profile
                                  HeightRequest = 50,
                                  WidthRequest = 200,
                                  FontAttributes = FontAttributes.Bold,
-                                 Style = App.Styles.ListItemTextStyle
-                                 //TextColor = App.Styles.LabelTextColor
+                                 Style = BeginApplication.Styles.ListItemTextStyle
+                                 //TextColor = BeginApplication.Styles.LabelTextColor
                              };
 
             labelEventTitle.SetBinding(Label.TextProperty, "EventName");
@@ -38,12 +38,12 @@ namespace BeginMobile.Pages.Profile
             var labelEventIntervalDate = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = App.Styles.ListItemTextStyle
+                Style = BeginApplication.Styles.ListItemTextStyle
             };
             var labelEventTime = new Label
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = App.Styles.ListItemDetailTextStyle
+                Style = BeginApplication.Styles.ListItemDetailTextStyle
             };
 
             labelEventIntervalDate.SetBinding(Label.TextProperty, "EventIntervalDate");

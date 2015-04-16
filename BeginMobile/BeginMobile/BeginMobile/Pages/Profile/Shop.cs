@@ -1,4 +1,5 @@
-﻿using BeginMobile.Pages.ShopPages;
+﻿using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Pages.ShopPages;
 using BeginMobile.Services.DTO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -13,15 +14,15 @@ namespace BeginMobile.Pages.Profile
         private LoginUser currentUser;
         public Shop()
         {
-            Title = "Shop";
+            Title = AppResources.LabelShopTitle;
             
-            currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             Init();
         }
 
         private async Task Init()
         {
-            _profileShop = await App.ProfileServices.GetShopInfo(currentUser.User.UserName, currentUser.AuthToken);
+            _profileShop = await BeginApplication.ProfileServices.GetShopInfo(currentUser.User.UserName, currentUser.AuthToken);
 
             _listViewShops = new ListView
             {

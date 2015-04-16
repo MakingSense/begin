@@ -42,24 +42,24 @@ namespace BeginMobile.Pages.MessagePages
             _buttonInbox = new Button
                            {
                                Text = "Inbox",
-                               TextColor = App.Styles.ColorGreenDroidBlueSapphireIos,
-                               Style = App.Styles.MessageNavigationButton,
-                               FontSize = App.Styles.TextFontSizeMedium
+                               TextColor = BeginApplication.Styles.ColorGreenDroidBlueSapphireIos,
+                               Style = BeginApplication.Styles.MessageNavigationButton,
+                               FontSize = BeginApplication.Styles.TextFontSizeMedium
                            };
 
             _buttonSent = new Button
                           {
                               Text = "Sent",
-                              TextColor = App.Styles.ColorWhiteDroidBlueIos,
-                              Style = App.Styles.MessageNavigationButton,
-                              FontSize = App.Styles.TextFontSizeMedium
+                              TextColor = BeginApplication.Styles.ColorWhiteDroidBlueIos,
+                              Style = BeginApplication.Styles.MessageNavigationButton,
+                              FontSize = BeginApplication.Styles.TextFontSizeMedium
                           };
             _buttonSend = new Button
                           {
                               Text = "Send",
-                              TextColor = App.Styles.ColorWhiteDroidBlueIos,
-                              Style = App.Styles.MessageNavigationButton,
-                              FontSize = App.Styles.TextFontSizeMedium
+                              TextColor = BeginApplication.Styles.ColorWhiteDroidBlueIos,
+                              Style = BeginApplication.Styles.MessageNavigationButton,
+                              FontSize = BeginApplication.Styles.TextFontSizeMedium
                           };
 
             _buttonInbox.Clicked += InboxEventHandler;
@@ -123,9 +123,9 @@ namespace BeginMobile.Pages.MessagePages
         public async void InboxEventHandler(object sender, EventArgs e)
         {
             var thisButton = (Button) sender;
-            thisButton.TextColor = App.Styles.ColorGreenDroidBlueSapphireIos;
-            _buttonSend.TextColor = App.Styles.ColorWhiteDroidBlueIos;
-            _buttonSent.TextColor = App.Styles.ColorWhiteDroidBlueIos;
+            thisButton.TextColor = BeginApplication.Styles.ColorGreenDroidBlueSapphireIos;
+            _buttonSend.TextColor = BeginApplication.Styles.ColorWhiteDroidBlueIos;
+            _buttonSent.TextColor = BeginApplication.Styles.ColorWhiteDroidBlueIos;
             SuscribeMessages(await ListDataWithInboxMessages());
         }
 
@@ -137,9 +137,9 @@ namespace BeginMobile.Pages.MessagePages
         public async void SentEventHandler(object sender, EventArgs e)
         {
             var thisButton = (Button) sender;
-            thisButton.TextColor = App.Styles.ColorGreenDroidBlueSapphireIos;
-            _buttonInbox.TextColor = App.Styles.ColorWhiteDroidBlueIos;
-            _buttonSend.TextColor = App.Styles.ColorWhiteDroidBlueIos;
+            thisButton.TextColor = BeginApplication.Styles.ColorGreenDroidBlueSapphireIos;
+            _buttonInbox.TextColor = BeginApplication.Styles.ColorWhiteDroidBlueIos;
+            _buttonSend.TextColor = BeginApplication.Styles.ColorWhiteDroidBlueIos;
             SuscribeMessages(await ListDataWithSentMessages());
         }
 
@@ -151,9 +151,9 @@ namespace BeginMobile.Pages.MessagePages
         public async void SendEventHandler(object sender, EventArgs e)
         {
             var thisButton = (Button) sender;
-            thisButton.TextColor = App.Styles.ColorGreenDroidBlueSapphireIos;
-            _buttonInbox.TextColor = App.Styles.ColorWhiteDroidBlueIos;
-            _buttonSent.TextColor = App.Styles.ColorWhiteDroidBlueIos;
+            thisButton.TextColor = BeginApplication.Styles.ColorGreenDroidBlueSapphireIos;
+            _buttonInbox.TextColor = BeginApplication.Styles.ColorWhiteDroidBlueIos;
+            _buttonSent.TextColor = BeginApplication.Styles.ColorWhiteDroidBlueIos;
             await Navigation.PushAsync(new SendMessage());
         }
 
@@ -184,7 +184,7 @@ namespace BeginMobile.Pages.MessagePages
         {
             _isInbox = true;
             var inboxMessageData = new List<MessageViewModel>();
-            var inboxThreads = await App.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken);
+            var inboxThreads = await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken);
             ThreadCount = inboxThreads.ThreadCount;
             if (!inboxThreads.Threads.Any()) return inboxMessageData;
             var threadMessages = inboxThreads.Threads;
@@ -214,7 +214,7 @@ namespace BeginMobile.Pages.MessagePages
             _isInbox = false;
             var listDataForSentMessage = new List<MessageViewModel>();
             var profileThreadMessagesSent =
-                await App.ProfileServices.GetProfileThreadMessagesSent(_currentUser.AuthToken);
+                await BeginApplication.ProfileServices.GetProfileThreadMessagesSent(_currentUser.AuthToken);
             var sentThreads = profileThreadMessagesSent.Threads;
 
             if (sentThreads.Any())

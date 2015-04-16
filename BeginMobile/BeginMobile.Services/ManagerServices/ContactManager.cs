@@ -31,12 +31,13 @@ namespace BeginMobile.Services.ManagerServices
             string authToken,
             string name = null,
             string sort = null,
-            string limit = null
+            string limit = null,
+            string offset = null
             )
         {
             try
             {
-                var urlGetParams = "?q=" + name + "&sort=" + sort + "&limit=" + limit;
+                var urlGetParams = "?q=" + name + "&sort=" + sort + "&limit=" + limit + "&offset=" + offset;
                 return await _contactClient.GetListAsync(authToken, IdentifierAux, urlGetParams);
             }
             catch (Exception exception)

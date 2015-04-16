@@ -48,7 +48,7 @@ namespace BeginMobile.Pages.MessagePages
             var labelThisUserNameSurname = new Label
                                            {
                                                Text = _currentUser.User.DisplayName,
-                                               Style = App.Styles.ListItemTextStyle,
+                                               Style = BeginApplication.Styles.ListItemTextStyle,
                                                YAlign = TextAlignment.Center
                                            };
             var gridReply = new Grid
@@ -73,12 +73,12 @@ namespace BeginMobile.Pages.MessagePages
             _editorReplyContent = new Editor
                                      {
                                          HeightRequest = 100,
-                                         Style = App.Styles.MessageContentStyle
+                                         Style = BeginApplication.Styles.MessageContentStyle
                                      };
             var buttonReply = new Button
                               {
                                   Text = "Send Reply",
-                                  Style = App.Styles.DefaultButton
+                                  Style = BeginApplication.Styles.DefaultButton
                               };
             buttonReply.Clicked += ButtonReplyEventHandler;
 
@@ -89,7 +89,7 @@ namespace BeginMobile.Pages.MessagePages
                                   };
             Content = new StackLayout
                       {
-                          Padding = App.Styles.LayoutThickness,
+                          Padding = BeginApplication.Styles.LayoutThickness,
                           Children =
                           {
                               stackLayoutList //stackLayoutEditorReply
@@ -99,7 +99,7 @@ namespace BeginMobile.Pages.MessagePages
 
         public async void ButtonReplyEventHandler(object sender, EventArgs e)
         {
-            var sendMessageManager = await App.ProfileServices.SendMessage(_currentUser.AuthToken, MessageViewModel.Sender.UserName,
+            var sendMessageManager = await BeginApplication.ProfileServices.SendMessage(_currentUser.AuthToken, MessageViewModel.Sender.UserName,
                 MessageViewModel.Subject, _editorReplyContent.Text,MessageViewModel.ThreadId);
 
             if (sendMessageManager != null)
@@ -151,7 +151,7 @@ public class MessageTemplate : ViewCell
         var labelSender = new Label
                           {
                               YAlign = TextAlignment.Center,
-                              Style = App.Styles.ListItemDetailTextStyle,
+                              Style = BeginApplication.Styles.ListItemDetailTextStyle,
                               HorizontalOptions = LayoutOptions.StartAndExpand
                           };
 
@@ -160,7 +160,7 @@ public class MessageTemplate : ViewCell
         var labelCreate = new Label
                           {
                               YAlign = TextAlignment.Center,
-                              Style = App.Styles.ListItemDetailTextStyle,
+                              Style = BeginApplication.Styles.ListItemDetailTextStyle,
                               HorizontalOptions = LayoutOptions.End
                           };
 
@@ -169,7 +169,7 @@ public class MessageTemplate : ViewCell
         var labelContent = new Label
                            {
                                YAlign = TextAlignment.Center,
-                               Style = App.Styles.ListItemDetailTextStyle,
+                               Style = BeginApplication.Styles.ListItemDetailTextStyle,
                                HorizontalOptions = LayoutOptions.StartAndExpand
                            };
         labelContent.SetBinding(Label.TextProperty, "MessageContent");
@@ -193,7 +193,7 @@ public class MessageTemplate : ViewCell
         var stackLayoutView = new StackLayout
                               {
                                   Spacing = 2,
-                                  Padding = App.Styles.LayoutThickness,
+                                  Padding = BeginApplication.Styles.LayoutThickness,
                                   Orientation = StackOrientation.Horizontal,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   Children =

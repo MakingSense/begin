@@ -74,7 +74,7 @@ namespace BeginMobile.Pages.Profile
             var labelEventName = new Label
             {
                 Text = profileEventViewModel.Name,
-                Style = App.Styles.SubtitleStyle,
+                Style = BeginApplication.Styles.SubtitleStyle,
                 HorizontalOptions = LayoutOptions.CenterAndExpand
             };
 
@@ -82,21 +82,21 @@ namespace BeginMobile.Pages.Profile
             {
                 YAlign = TextAlignment.End,
                 FontAttributes = FontAttributes.Bold,
-                Style = App.Styles.ListItemTextStyle,
+                Style = BeginApplication.Styles.ListItemTextStyle,
                 Text = TextDateAndHour
             };
 
             var labelDates = new Label
             {
                 YAlign = TextAlignment.End,
-                Style = App.Styles.ListItemDetailTextStyle,
+                Style = BeginApplication.Styles.ListItemDetailTextStyle,
                 Text = profileEventViewModel.TextDates
             };
 
             var labelTimes = new Label
             {
                 YAlign = TextAlignment.End,
-                Style = App.Styles.ListItemDetailTextStyle,
+                Style = BeginApplication.Styles.ListItemDetailTextStyle,
                 Text = profileEventViewModel.TextTimes
             };
 
@@ -104,21 +104,21 @@ namespace BeginMobile.Pages.Profile
             {
                 YAlign = TextAlignment.End,
                 FontAttributes = FontAttributes.Bold,
-                Style = App.Styles.ListItemTextStyle,
+                Style = BeginApplication.Styles.ListItemTextStyle,
                 Text = TextCategories
             };
 
             var labelCategories = new Label
             {
                 YAlign = TextAlignment.End,
-                Style = App.Styles.ListItemDetailTextStyle,
+                Style = BeginApplication.Styles.ListItemDetailTextStyle,
                 Text = AllCategories
             };
 
             var labelTextContent = new Label
             {
                 YAlign = TextAlignment.End,
-                Style = App.Styles.LabelLargeTextTitle,
+                Style = BeginApplication.Styles.LabelLargeTextTitle,
                 FontAttributes = FontAttributes.Bold,
                 HorizontalOptions = LayoutOptions.Start,
                 Text = TextContent
@@ -127,7 +127,7 @@ namespace BeginMobile.Pages.Profile
             var labelTextAvailableSpaces = new Label
             {
                 YAlign = TextAlignment.End,
-                Style = App.Styles.LabelLargeTextTitle,
+                Style = BeginApplication.Styles.LabelLargeTextTitle,
                 FontAttributes = FontAttributes.Bold,
                 HorizontalOptions = LayoutOptions.Start,
                 Text = TextAvailableSpaces
@@ -136,21 +136,21 @@ namespace BeginMobile.Pages.Profile
             var labelAvailableSpaces = new Label
             {
                 YAlign = TextAlignment.End,
-                Style = App.Styles.ListItemDetailTextStyle,
+                Style = BeginApplication.Styles.ListItemDetailTextStyle,
                 Text = profileEventViewModel.EventAvailableSpaces
             };
 
             var labelEventDescription = new Label
             {
                 YAlign = TextAlignment.End,
-                Style = App.Styles.ListItemDetailTextStyle,
+                Style = BeginApplication.Styles.ListItemDetailTextStyle,
                 Text = profileEventViewModel.EventDescription
             };
 
 
             var gridMainContent = new Grid
             {
-                Padding = App.Styles.GridPadding,
+                Padding = BeginApplication.Styles.GridPadding,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 RowDefinitions =
@@ -193,7 +193,7 @@ namespace BeginMobile.Pages.Profile
             var labelBookingTitle = new Label
             {
                 Text = "Bookings",//TODO Add to resources
-                Style = App.Styles.TitleStyle,
+                Style = BeginApplication.Styles.TitleStyle,
                 FontAttributes = FontAttributes.Bold
 
             };
@@ -249,7 +249,7 @@ namespace BeginMobile.Pages.Profile
         }
         private static BoxView BoxViewLine()
         {
-            return new BoxView { Color = App.Styles.ColorLine, WidthRequest = 100, HeightRequest = 2 };
+            return new BoxView { Color = BeginApplication.Styles.ColorLine, WidthRequest = 100, HeightRequest = 2 };
         }
     }
 }

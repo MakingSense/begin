@@ -26,7 +26,7 @@ namespace BeginMobile.Pages.GroupPages
                              {
                                  YAlign = TextAlignment.Center,
                                  FontAttributes = FontAttributes.Bold,
-                                 Style = App.Styles.ListItemTextStyle
+                                 Style = BeginApplication.Styles.ListItemTextStyle
                              };
 
             labelTitle.SetBinding(Label.TextProperty, "Name");
@@ -34,7 +34,7 @@ namespace BeginMobile.Pages.GroupPages
             var labelDesc = new Label
                             {
                                 YAlign = TextAlignment.Center,
-                                Style = App.Styles.ListItemDetailTextStyle
+                                Style = BeginApplication.Styles.ListItemDetailTextStyle
                             };
 
             labelDesc.SetBinding(Label.TextProperty, "Description");
@@ -44,7 +44,7 @@ namespace BeginMobile.Pages.GroupPages
                             {
                                 YAlign = TextAlignment.Center,
                                 HorizontalOptions = LayoutOptions.Start,
-                                Style = App.Styles.ListItemDetailTextStyle
+                                Style = BeginApplication.Styles.ListItemDetailTextStyle
                             };
 
             labelStatus.SetBinding(Label.TextProperty, "Status");
@@ -54,7 +54,7 @@ namespace BeginMobile.Pages.GroupPages
                                 YAlign = TextAlignment.Center,
                                 HorizontalOptions = LayoutOptions.End,
                                 FontAttributes = FontAttributes.Bold,
-                                Style = App.Styles.ListItemTextStyle
+                                Style = BeginApplication.Styles.ListItemTextStyle
                             };
 
             labelCreate.SetBinding(Label.TextProperty, "DateCreated");
@@ -62,7 +62,7 @@ namespace BeginMobile.Pages.GroupPages
             var stackLayoutPie = new StackLayout
                                  {
                                      Spacing = 2,
-                                     Padding = App.Styles.LayoutThickness,
+                                     Padding = BeginApplication.Styles.LayoutThickness,
                                      Orientation = StackOrientation.Horizontal,
                                      HorizontalOptions = LayoutOptions.FillAndExpand,
                                      Children =
@@ -75,7 +75,7 @@ namespace BeginMobile.Pages.GroupPages
             var stackLayoutCenter = new StackLayout
                                  {
                                      Spacing = 2,
-                                     Padding = App.Styles.LayoutThickness,
+                                     Padding = BeginApplication.Styles.LayoutThickness,
                                      Children =
                                      {
                                          labelTitle,
@@ -87,7 +87,7 @@ namespace BeginMobile.Pages.GroupPages
             var stackLayoutItem = new StackLayout
                            {
                                Spacing = 2,
-                               Padding = App.Styles.LayoutThickness,
+                               Padding = BeginApplication.Styles.LayoutThickness,
                                Orientation = StackOrientation.Horizontal,
                                HorizontalOptions = LayoutOptions.FillAndExpand,
                                Children =

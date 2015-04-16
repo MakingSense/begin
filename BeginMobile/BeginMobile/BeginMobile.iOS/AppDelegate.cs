@@ -1,9 +1,8 @@
 ﻿using BeginMobile.iOS.Renderers;
 using Foundation;
 using UIKit;
-
-using Xamarin.Forms.Platform.iOS;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 namespace BeginMobile.iOS
 {
@@ -21,15 +20,15 @@ namespace BeginMobile.iOS
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
 
-        private UIWindow window;
+        private UIWindow _window;
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-           window = new UIWindow(UIScreen.MainScreen.Bounds);
+            _window = new UIWindow(UIScreen.MainScreen.Bounds);
 
             Forms.Init();
             ImageCircleRenderer.Init();
-            LoadApplication(new App());
+            LoadApplication(new BeginApplication());
             return base.FinishedLaunching(app, options);
         }
     }

@@ -251,6 +251,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to My activity.
+        /// </summary>
+        public static string LabelActivityTitle {
+            get {
+                return ResourceManager.GetString("LabelActivityTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date Received.
         /// </summary>
         public static string LabelDateReceived {
@@ -292,6 +301,24 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string LabelNotification {
             get {
                 return ResourceManager.GetString("LabelNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string LabelProfileMeTitle {
+            get {
+                return ResourceManager.GetString("LabelProfileMeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shop.
+        /// </summary>
+        public static string LabelShopTitle {
+            get {
+                return ResourceManager.GetString("LabelShopTitle", resourceCulture);
             }
         }
         

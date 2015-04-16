@@ -13,7 +13,7 @@ namespace BeginMobile.Pages.GroupPages
         public GroupListPage(string title, string iconImg)
             : base(title, iconImg)
         {
-            var currentUser = (LoginUser)App.Current.Properties["LoginUser"];
+            var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             _stackLayoutMain = new StackLayout()
             {
@@ -28,7 +28,7 @@ namespace BeginMobile.Pages.GroupPages
 
         private async Task Init(LoginUser currentUser)
         {
-            _groupInformation = await App.ProfileServices.GetGroups(currentUser.User.UserName,
+            _groupInformation = await BeginApplication.ProfileServices.GetGroups(currentUser.User.UserName,
                 currentUser.AuthToken);
 
             _listViewGroup = new ListView
