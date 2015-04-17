@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BeginMobile.Menu;
 using BeginMobile.Services.DTO;
 using Xamarin.Forms;
+using System.Collections.ObjectModel;
 
 namespace BeginMobile.Pages.MessagePages
 {
@@ -22,7 +23,7 @@ namespace BeginMobile.Pages.MessagePages
                                Text = ThreadCount
                            };
 
-            var listMessageMenuItems = new List<MenuItemViewModel>
+            var listMessageMenuItems = new ObservableCollection<MenuItemViewModel>
                                        {
                                            new MenuItemViewModel
                                            {

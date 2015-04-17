@@ -118,19 +118,18 @@ namespace BeginMobile.Services.Interfaces
         /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
         /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
         /// <returns></returns>
-        public string PostContentResultAsync(FormUrlEncodedContent content, string addressSuffix)
+        public async Task<string> PostContentResultAsync(FormUrlEncodedContent content, string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {
                 string result = "";
                 httpClient.BaseAddress = new Uri(_serviceBaseAddress);
 
-                var response = httpClient.PostAsync(_subAddress + addressSuffix, content).Result;
-
+                var response = await httpClient.PostAsync(_subAddress + addressSuffix, content).ConfigureAwait(false);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var userJson = response.Content.ReadAsStringAsync().Result;
+                    var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = userJson;
                 }
 

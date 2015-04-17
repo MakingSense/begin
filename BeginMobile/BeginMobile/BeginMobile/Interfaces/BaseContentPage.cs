@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeginMobile.Services.Utils;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
@@ -8,6 +9,7 @@ namespace BeginMobile.Interfaces
     public abstract class BaseContentPage: ContentPage
     {
         public ActivityIndicator ActivityIndicatorLoading { private set; get; }
+
         protected ActivityIndicator CreateLoadingIndicator()
         {
             var loadingIndicator = new ActivityIndicator
@@ -18,8 +20,6 @@ namespace BeginMobile.Interfaces
                 IsVisible = false,
             };
 
-            //loadingIndicator.SetBinding(IsVisibleProperty, "IsLoading");
-            //loadingIndicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
             return loadingIndicator;
         }
 
@@ -62,5 +62,6 @@ namespace BeginMobile.Interfaces
             overlay.Children.Add(ActivityIndicatorLoading);
             return overlay;
         }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BeginMobile.Interfaces;
 using BeginMobile.Pages;
+using BeginMobile.Services.Utils;
 using System;
 using Xamarin.Forms;
 
@@ -43,7 +44,15 @@ namespace BeginMobile.Accounts
             {
                 SelectedItem = _contentPageForgotPassword;
             });
+
+
+            MessagingCenter.Subscribe<AppContextError>(this, AppContextError.NamedMessage, OnAppContextErrorOccurred);
  
+        }
+
+        private async void OnAppContextErrorOccurred(AppContextError appContextError)
+        {
+            await DisplayAlert(appContextError.Title, appContextError.Message, appContextError.Accept);
         }
     }
 }

@@ -76,15 +76,24 @@ namespace BeginMobile.Services.ManagerServices
                 return null;
             }
         }
-        public string RetrievePassword(string email)
+        public async Task<string> RetrievePassword(string email)
         {
-            var content = new FormUrlEncodedContent(new[]
+            try
+            {
+                var content = new FormUrlEncodedContent(new[]
                                                     {
                                                         new KeyValuePair<string, string>("email", email),
                                                     });
 
-            const string addressSuffix = "retrieve_password";
-            return _stringResultClient.PostContentResultAsync(content, addressSuffix);
+                const string addressSuffix = "retrieve_password";
+                return await _stringResultClient.PostContentResultAsync(content, addressSuffix);
+            }
+            catch (Exception ex)
+            {
+                AppContextError.Send(ex, null, ExceptionLevel.Application);
+                return null;
+            }
+            
         }
         public async Task<ChangePassword> ChangeYourPassword(string currentPassword, string newPassword, string repeatNewPassword,
             string authToken)

@@ -150,10 +150,6 @@ namespace BeginMobile.Accounts
                                         iLoginManager.ShowMainPage(loginUser);
                                     }
                                 }
-                                else
-                                {
-                                    await DisplayAlert("Error", "There was a problem to connect to service.", "OK");
-                                }
 
                                 ActivityIndicatorLoading.IsVisible = false;
                                 ActivityIndicatorLoading.IsRunning = false;
@@ -215,15 +211,6 @@ namespace BeginMobile.Accounts
                                         }
                                     }
                       };
-
-            MessagingCenter.Subscribe<AppContextError>(this, AppContextError.NamedMessage, OnAppContextErrorOccurred);
-        }
-
-        private async void OnAppContextErrorOccurred(AppContextError appContextError)
-        {
-            await DisplayAlert(appContextError.Title, appContextError.Message, appContextError.Accept);
-            ActivityIndicatorLoading.IsVisible = false;
-            ActivityIndicatorLoading.IsRunning = false;
         }
     }
 }

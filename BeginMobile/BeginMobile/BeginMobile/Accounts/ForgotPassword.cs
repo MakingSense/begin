@@ -45,20 +45,24 @@ namespace BeginMobile.Accounts
                                              if (isEmailValid)
                                              {
                                                  var loginUserManager = new LoginUserManager();
-                                                 string webPage = loginUserManager.RetrievePassword(_entryEmail.Text);
-                                                 if (webPage.Equals(""))
+                                                 string webPage = await loginUserManager.RetrievePassword(_entryEmail.Text);
+
+                                                 if (webPage != null)
                                                  {
-                                                     await
-                                                         DisplayAlert("Information",
-                                                             "Please check your email address for reset your password",
-                                                             "ok");
-                                                     MessagingCenter.Send<ContentPage>(this, "Login");
-                                                 }
-                                                 else
-                                                 {
-                                                     await DisplayAlert("Error",
-                                                    "An error happened on the server",
-                                                    "Re - Try");
+                                                     if (webPage.Equals(""))
+                                                     {
+                                                         await
+                                                             DisplayAlert("Information",
+                                                                 "Please check your email address for reset your password",
+                                                                 "ok");
+                                                         MessagingCenter.Send<ContentPage>(this, "Login");
+                                                     }
+                                                     else
+                                                     {
+                                                         await DisplayAlert("Error",
+                                                             "An error happened on the server",
+                                                             "Re - Try");
+                                                     }
                                                  }
                                              }
                                              else

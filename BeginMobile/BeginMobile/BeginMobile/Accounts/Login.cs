@@ -90,11 +90,6 @@ namespace BeginMobile.Accounts
                         }
                     }
 
-                    else
-                    {
-                        await DisplayAlert("Connection Failed", "Server not found.", "Re - Try");
-                    }
-
                     ActivityIndicatorLoading.IsVisible = false;
                     ActivityIndicatorLoading.IsRunning = false;
                 }
@@ -123,16 +118,7 @@ namespace BeginMobile.Accounts
                               buttonRegister
                           }
                       };
-
-            MessagingCenter.Subscribe<AppContextError>(this, AppContextError.NamedMessage, OnAppContextErrorOccurred);
-
         }
 
-        private async void OnAppContextErrorOccurred(AppContextError appContextError)
-        {
-            await DisplayAlert(appContextError.Title, appContextError.Message, appContextError.Accept);
-            ActivityIndicatorLoading.IsVisible = false;
-            ActivityIndicatorLoading.IsRunning = false;
-        }
     }
 }
