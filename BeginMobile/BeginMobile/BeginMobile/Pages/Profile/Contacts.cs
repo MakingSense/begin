@@ -128,8 +128,7 @@ namespace BeginMobile.Pages.Profile
             RetrieveSortOptionSelected(out sort);
 
             var list = await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, q, sort, limit) ?? new List<User>();
-
-
+            
             if (list.Any())
             {
                 _listViewContacts.ItemsSource = new ObservableCollection<Contact>(RetrieveContacts(list));
@@ -231,16 +230,31 @@ namespace BeginMobile.Pages.Profile
                                  
                                  if (confirm)
                                  {
-                                     var contacts = ((ObservableCollection<Contact>)_listViewContacts.ItemsSource);
-                                     var toRemove =
-                                         contacts.FirstOrDefault(contact => contact.UserName == removeUsername);
+                                     var responseErrors = FriendshipActions.Request(FriendshipOption.Send,
+                                         _currentUser.AuthToken, removeUsername);
 
-                                     if (toRemove != null && contacts.Remove(toRemove))
+                                     if (responseErrors.Any())
                                      {
-                                         _listViewContacts.ItemsSource = contacts;
+                                         var message = responseErrors.Aggregate(string.Empty,
+                                             (current, contactServiceError) =>
+                                                 current + (contactServiceError.ErrorMessage + "\n"));
                                          await
-                                             DisplayAlert("Info",
-                                                 string.Format("'{0}' Removed.", removeUsername), "Ok");
+                                             DisplayAlert("Error", message, "Ok");
+                                     }
+
+                                     else
+                                     {
+                                         var contacts = ((ObservableCollection<Contact>)_listViewContacts.ItemsSource);
+                                         var toRemove =
+                                             contacts.FirstOrDefault(contact => contact.UserName == removeUsername);
+
+                                         if (toRemove != null && contacts.Remove(toRemove))
+                                         {
+                                             _listViewContacts.ItemsSource = contacts;
+                                             await
+                                                 DisplayAlert("Info",
+                                                     string.Format("'{0}' Removed.", removeUsername), "Ok");
+                                         } 
                                      }
                                  }
                              }

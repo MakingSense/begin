@@ -24,7 +24,7 @@ namespace BeginMobile.Pages.ContactPages
 
         private static readonly BindableProperty RelationshipProperty =
             BindableProperty.Create<ContactListItem, string>
-                (getter => Relationship, string.Empty, BindingMode.TwoWay,
+                (getter => Relationship, string.Empty, BindingMode.Default,
                     propertyChanging: (bindable, oldValue, newValue) =>
                                       {
                                           Relationship = newValue;
@@ -59,6 +59,8 @@ namespace BeginMobile.Pages.ContactPages
 
         private Grid CreateOptionLayout()
         {
+            
+
             _buttonAddFriend = new Button
                                {
                                    Text = AppResources.ButtonAddFriend,
@@ -155,22 +157,39 @@ namespace BeginMobile.Pages.ContactPages
                            }
                        };
 
-            SetBinding(RelationshipProperty, new Binding("Relationship", BindingMode.TwoWay));
+            SetBinding(RelationshipProperty, new Binding("Relationship"));
+            
+            try
+            {
 
             grid.Children.Add(labelNameSurname, 0, 0);
             grid.Children.Add(labelUserName, 0, 1);
             grid.Children.Add(labelEmail, 0, 2);
+            
+                if (Relationship != "request_received")
+                {
+                    grid.Children.Add(RelationshipButton(), 0, 3);
+                }
 
-            if (Relationship != "request_received")
-            {
-                grid.Children.Add(RelationshipButton(), 0, 3);
+                else
+                {
+                    grid.Children.Add(_buttonAcceptFriend, 0, 3);
+                    grid.Children.Add(_buttonRejectFriend, 1, 3);
+                }
             }
 
-            else
+            catch (Exception exception)
             {
-                grid.Children.Add(_buttonAcceptFriend, 0, 3);
-                grid.Children.Add(_buttonRejectFriend, 1, 3);
+                SubscribeAlert(new List<ServiceError>
+                               {
+                                   new ServiceError
+                                   {
+                                       ErrorCode = "Error",
+                                       ErrorMessage = exception.Message
+                                   }
+                               });
             }
+           
 
             return grid;
         }
@@ -179,8 +198,13 @@ namespace BeginMobile.Pages.ContactPages
 
         private void AddFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            Label itemGridUserName;
-            if (GetListItem(sender, out itemGridUserName)) return;
+            var objectSender = sender as Button;
+            if (objectSender == null) return;
+            var parentGrid = objectSender.Parent as Grid;
+
+            if (parentGrid == null) return;
+            var itemGridUserName = parentGrid.Children[1] as Label;
+
 
             if (itemGridUserName != null)
             {
@@ -194,14 +218,22 @@ namespace BeginMobile.Pages.ContactPages
 
                 else
                 {
-                    SubscribeAddContact(username);
+                    //SubscribeAddContact(username);
+                    if (parentGrid.Children.Remove(_buttonAddFriend))
+                    {
+                        parentGrid.Children.Add(_buttonCancelFriend, 0, 3);
+                    }
                 }
             }
         }
         private void RemoveFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            Label itemGridUserName;
-            if (GetListItem(sender, out itemGridUserName)) return;
+            var objectSender = sender as Button;
+            if (objectSender == null) return;
+            var parentGrid = objectSender.Parent as Grid;
+
+            if (parentGrid == null) return;
+            var itemGridUserName = parentGrid.Children[1] as Label;
 
             if (itemGridUserName != null)
             {
@@ -215,14 +247,23 @@ namespace BeginMobile.Pages.ContactPages
 
                 else
                 {
-                    SubscribeRemoveContact(username);
+                    //SubscribeRemoveContact(username);
+                    if (parentGrid.Children.Remove(_buttonRemoveFriend))
+                    {
+                        parentGrid.Children.Add(_buttonAddFriend, 0, 3);
+                    }
+
                 }
             }
         }
         private void CancelFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            Label itemGridUserName;
-            if (GetListItem(sender, out itemGridUserName)) return;
+            var objectSender = sender as Button;
+            if (objectSender == null) return;
+            var parentGrid = objectSender.Parent as Grid;
+
+            if (parentGrid == null) return;
+            var itemGridUserName = parentGrid.Children[1] as Label;
 
             if (itemGridUserName != null)
             {
@@ -236,14 +277,23 @@ namespace BeginMobile.Pages.ContactPages
 
                 else
                 {
-                    SubscribeRemoveContact(username);
+                    //SubscribeRemoveContact(username);
+
+                    if (parentGrid.Children.Remove(_buttonCancelFriend))
+                    {
+                        parentGrid.Children.Add(_buttonAddFriend, 0, 3);
+                    }
                 }
             }
         }
         private void AcceptFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            Label itemGridUserName;
-            if (GetListItem(sender, out itemGridUserName)) return;
+            var objectSender = sender as Button;
+            if (objectSender == null) return;
+            var parentGrid = objectSender.Parent as Grid;
+
+            if (parentGrid == null) return;
+            var itemGridUserName = parentGrid.Children[1] as Label;
 
             if (itemGridUserName != null)
             {
@@ -257,14 +307,23 @@ namespace BeginMobile.Pages.ContactPages
 
                 else
                 {
-                    SubscribeRemoveContact(username);
+                    //SubscribeRemoveContact(username);
+
+                    if ( parentGrid.Children.Remove(_buttonRejectFriend) && parentGrid.Children.Remove(_buttonAcceptFriend))
+                    {
+                        parentGrid.Children.Add(_buttonRemoveFriend, 0, 3);
+                    }
                 }
             }
         }
         private void RejectFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            Label itemGridUserName;
-            if (GetListItem(sender, out itemGridUserName)) return;
+            var objectSender = sender as Button;
+            if (objectSender == null) return;
+            var parentGrid = objectSender.Parent as Grid;
+
+            if (parentGrid == null) return;
+            var itemGridUserName = parentGrid.Children[1] as Label;
 
             if (itemGridUserName != null)
             {
@@ -278,7 +337,11 @@ namespace BeginMobile.Pages.ContactPages
 
                 else
                 {
-                    SubscribeRemoveContact(username);
+                    //SubscribeRemoveContact(username);
+                    if (parentGrid.Children.Remove(_buttonRejectFriend) && parentGrid.Children.Remove(_buttonAcceptFriend))
+                    {
+                        parentGrid.Children.Add(_buttonAddFriend, 0, 3);
+                    }
                 }
             }
         }
@@ -299,18 +362,6 @@ namespace BeginMobile.Pages.ContactPages
         {
             MessagingCenter.Send(this, FriendshipMessages.AddContact, username);
             MessagingCenter.Unsubscribe<CustomViewCell, string>(this, FriendshipMessages.AddContact);
-        }
-        private static bool GetListItem(object sender, out Label itemGridUserName)
-        {
-            itemGridUserName = null;
-
-            var objectSender = sender as Button;
-            if (objectSender == null) return true;
-            var parentGrid = objectSender.Parent as Grid;
-
-            if (parentGrid == null) return true;
-            itemGridUserName = parentGrid.Children[1] as Label;
-            return false;
         }
         private Button RelationshipButton()
         {

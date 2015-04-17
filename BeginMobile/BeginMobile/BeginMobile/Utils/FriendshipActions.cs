@@ -1,4 +1,4 @@
-﻿//#define FriendshipEnable
+﻿#define FriendshipEnable
 
 using System.Collections.Generic;
 using BeginMobile.Services.DTO;
@@ -34,8 +34,7 @@ namespace BeginMobile.Utils
                     break;
 
                 case FriendshipOption.Cancel:
-                    //TODO: Cancel request here
-                    //responseErrors = BeginApplication.ProfileServices.CancelFriendship(authToken, username);
+                    responseErrors = BeginApplication.ProfileServices.CancelRequest(authToken, username).Result.Errors;
                     break;
 
                 case FriendshipOption.Accept:
