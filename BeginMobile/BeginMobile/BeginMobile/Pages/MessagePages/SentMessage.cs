@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
@@ -71,7 +72,8 @@ namespace BeginMobile.Pages.MessagePages
                            Sender = message.Sender,
                            Messages = sentThread.Messages
                        }).ToList();
-            _listViewMessages.ItemsSource = listDataSentMessage;
+            var listCollection = new ObservableCollection<MessageViewModel>(listDataSentMessage);
+            _listViewMessages.ItemsSource = listCollection;
         }
 
         public async void ListViewItemSelectedEventHandler(object sender, SelectedItemChangedEventArgs eventArgs)

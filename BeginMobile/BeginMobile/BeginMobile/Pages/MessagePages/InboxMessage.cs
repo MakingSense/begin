@@ -83,7 +83,8 @@ namespace BeginMobile.Pages.MessagePages
                            Sender = message.Sender,
                            Messages = threadMessage.Messages
                        }).OrderByDescending(c => c.DateSent));
-            _listViewMessages.ItemsSource = inboxMessageData;
+            var listCollection = new ObservableCollection<MessageViewModel>(inboxMessageData);
+            _listViewMessages.ItemsSource = listCollection;
         }
 
         public async void ListViewItemSelectedEventHandler(object sender, SelectedItemChangedEventArgs eventArgs)
