@@ -15,7 +15,7 @@ namespace BeginMobile.Pages.MessagePages
             : base(title, iconImg)
         {
             Title = title;
-            Init();
+            CalServiceApi();
 
             LabelCounter = new Label
                            {
@@ -111,7 +111,7 @@ namespace BeginMobile.Pages.MessagePages
             Content = mainStackLayout;
         }
 
-        private async void Init()
+        private async void CalServiceApi()
         {
             var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             var inboxThreads = await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(currentUser.AuthToken);
