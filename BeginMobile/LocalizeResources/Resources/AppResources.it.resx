@@ -129,6 +129,9 @@
   <data name="ButtonCancelRequestFriend" xml:space="preserve">
     <value>Cancel Friend Request</value>
   </data>
+  <data name="ButtonChangePasswordSend" xml:space="preserve">
+    <value>Send</value>
+  </data>
   <data name="ButtonForgotPassword" xml:space="preserve">
     <value>Dimenticato Contrassegno?</value>
   </data>
@@ -153,6 +156,9 @@
   <data name="ButtonUnReadNotification" xml:space="preserve">
     <value>Unread</value>
   </data>
+  <data name="ChangePasswordTitle" xml:space="preserve">
+    <value>Change your Password</value>
+  </data>
   <data name="EditorMessagePlaceholder" xml:space="preserve">
     <value>Message</value>
   </data>
@@ -176,6 +182,9 @@
   </data>
   <data name="EntryUsernamePlaceholderMessage" xml:space="preserve">
     <value>Send To (Username or Friend's Name)</value>
+  </data>
+  <data name="ErrorMessageTitle" xml:space="preserve">
+    <value>Error</value>
   </data>
   <data name="HomePageTitle" xml:space="preserve">
     <value>Home</value>
@@ -234,11 +243,29 @@
   <data name="PickerEventFilterBycategory" xml:space="preserve">
     <value>Filter by Category</value>
   </data>
+  <data name="PlaceholderChangePasswordConfirmNewPass" xml:space="preserve">
+    <value>Confirm New Password</value>
+  </data>
+  <data name="PlaceholderChangePasswordNewPass" xml:space="preserve">
+    <value>New Password</value>
+  </data>
   <data name="RegisterFormTitle" xml:space="preserve">
     <value>Registratore</value>
   </data>
   <data name="SearchViewEventSearchByName" xml:space="preserve">
     <value>Search by event name</value>
+  </data>
+  <data name="ServerErrorMessage" xml:space="preserve">
+    <value>An error happened on the server</value>
+  </data>
+  <data name="ServerErrorMessageName" xml:space="preserve">
+    <value>Server Error</value>
+  </data>
+  <data name="ServerMessageChangePassword" xml:space="preserve">
+    <value>Your password has been changed successfuly</value>
+  </data>
+  <data name="ServerMessageSuccess" xml:space="preserve">
+    <value>Successfuly</value>
   </data>
   <data name="ToolBarProfileMeContacts" xml:space="preserve">
     <value>Contacts</value>

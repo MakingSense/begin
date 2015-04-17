@@ -98,6 +98,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string ButtonChangePasswordSend {
+            get {
+                return ResourceManager.GetString("ButtonChangePasswordSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forgot Password?.
         /// </summary>
         public static string ButtonForgotPassword {
@@ -170,6 +179,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change your Password.
+        /// </summary>
+        public static string ChangePasswordTitle {
+            get {
+                return ResourceManager.GetString("ChangePasswordTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Message.
         /// </summary>
         public static string EditorMessagePlaceholder {
@@ -238,6 +256,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string EntryUsernamePlaceholderMessage {
             get {
                 return ResourceManager.GetString("EntryUsernamePlaceholderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string ErrorMessageTitle {
+            get {
+                return ResourceManager.GetString("ErrorMessageTitle", resourceCulture);
             }
         }
         
@@ -413,6 +440,24 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm New Password.
+        /// </summary>
+        public static string PlaceholderChangePasswordConfirmNewPass {
+            get {
+                return ResourceManager.GetString("PlaceholderChangePasswordConfirmNewPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Password.
+        /// </summary>
+        public static string PlaceholderChangePasswordNewPass {
+            get {
+                return ResourceManager.GetString("PlaceholderChangePasswordNewPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string RegisterFormTitle {
@@ -427,6 +472,42 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string SearchViewEventSearchByName {
             get {
                 return ResourceManager.GetString("SearchViewEventSearchByName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error happened on the server.
+        /// </summary>
+        public static string ServerErrorMessage {
+            get {
+                return ResourceManager.GetString("ServerErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server Error.
+        /// </summary>
+        public static string ServerErrorMessageName {
+            get {
+                return ResourceManager.GetString("ServerErrorMessageName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password has been changed successfuly.
+        /// </summary>
+        public static string ServerMessageChangePassword {
+            get {
+                return ResourceManager.GetString("ServerMessageChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfuly.
+        /// </summary>
+        public static string ServerMessageSuccess {
+            get {
+                return ResourceManager.GetString("ServerMessageSuccess", resourceCulture);
             }
         }
         

@@ -3,6 +3,7 @@ using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
 using Xamarin.Forms;
 using BeginMobile.Services.Utils;
+using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.Accounts
 {
@@ -17,29 +18,29 @@ namespace BeginMobile.Accounts
             var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             var loginUserManager = new LoginUserManager();
 
-            Title = "Change your Password";
+            Title = AppResources.ChangePasswordTitle;
 
             _entryCurrentPassword = new Entry
             {
-                Placeholder = "Password",
+                Placeholder = AppResources.PasswordPlaceholder,
                 IsPassword = true,
             };
 
             _entryNewPassword = new Entry
             {
-                Placeholder = "New Password",
+                Placeholder = AppResources.PlaceholderChangePasswordNewPass,
                 IsPassword = true,
             };
 
             _entryRepeatNewPassword = new Entry
             {
-                Placeholder = "Confirm New Password",
+                Placeholder = AppResources.PlaceholderChangePasswordConfirmNewPass,
                 IsPassword = true,
             };
 
             var buttonChangePassword = new Button
                                            {
-                                               Text = "Send",
+                                               Text = AppResources.ButtonChangePasswordSend,
                                                HorizontalOptions = LayoutOptions.FillAndExpand,
                                                Style = BeginApplication.Styles.DefaultButton
                                            };
@@ -54,20 +55,20 @@ namespace BeginMobile.Accounts
                     if (changePasswordResponse.Errors != null)
                     {
                         var messageErrors = changePasswordResponse.Errors.Aggregate("", (current, error) => current + "\n");
-                        await DisplayAlert("Error", messageErrors, "Re-try");
+                        await DisplayAlert(AppResources.ErrorMessageTitle, messageErrors, "Re-try");
                         _entryCurrentPassword.Text = "";
                         _entryNewPassword.Text = "";
                         _entryRepeatNewPassword.Text = "";
                     }
                     else
                     {
-                        await DisplayAlert("Server Error", "An error happened on the server", "Ok");
+                        await DisplayAlert(AppResources.ServerErrorMessageName, AppResources.ServerErrorMessage, "Ok");
                         await Navigation.PopToRootAsync();
                     }
                 }
                 else
                 {
-                    await DisplayAlert("Successfuly changed!", "Your password has been changed successfuly", "Ok");
+                    await DisplayAlert(AppResources.ServerMessageSuccess, AppResources.ServerMessageChangePassword, "Ok");
                     await Navigation.PopToRootAsync();
                 }
             };
