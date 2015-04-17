@@ -157,14 +157,14 @@ namespace BeginMobile.Services
         }
 
         //Messages
-        public async Task<ProfileThreadMessages> GetProfileThreadMessagesInbox(string authToken)
+        public async Task<ProfileThreadMessages> GetProfileThreadMessagesInbox(string authToken, string q = null, string limit = null)
         {
-            return await _messageManager.GetProfileThreadMessagesInbox(authToken);
+            return await _messageManager.GetProfileThreadMessagesInbox(authToken, q, limit);
         }
 
-        public async Task<ProfileThreadMessages> GetProfileThreadMessagesSent(string authToken)
+        public async Task<ProfileThreadMessages> GetProfileThreadMessagesSent(string authToken, string q = null, string limit = null)
         {
-            return await _messageManager.GetProfileThreadMessagesSent(authToken);
+            return await _messageManager.GetProfileThreadMessagesSent(authToken, q, limit);
         }
 
         public async Task<ProfileThreadMessages> SendMessage(string authToken, string to, string subject, string message, string threadId = null)

@@ -21,12 +21,17 @@ namespace BeginMobile.Services.ManagerServices
         private readonly GenericBaseClient<Message> _threadMessagesClient =
             new GenericBaseClient<Message>(BaseAddress, SubAddress);
 
-        public async Task<ProfileThreadMessages> GetProfileThreadMessagesInbox(string authToken)
+        public async Task<ProfileThreadMessages> GetProfileThreadMessagesInbox(
+            string authToken,
+            string q = null,
+            string limit = null)
         {
             try
             {
                 const string addressSuffix = Identifier + "/inbox";
-                return await _profileThreadMessagesClient.GetAsync(authToken, addressSuffix);
+                var urlGetParams = "?q=" + q + "&limit=" + limit;
+
+                return await _profileThreadMessagesClient.GetAsync(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
             {
@@ -39,12 +44,17 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public async Task<ProfileThreadMessages> GetProfileThreadMessagesSent(string authToken)
+        public async Task<ProfileThreadMessages> GetProfileThreadMessagesSent(
+            string authToken,
+            string q = null,
+            string limit = null)
         {
             try
             {
                 const string addressSuffix = Identifier + "/sentbox";
-                return await _profileThreadMessagesClient.GetAsync(authToken, addressSuffix);
+                var urlGetParams = "?q=" + q + "&limit=" + limit;
+
+                return await _profileThreadMessagesClient.GetAsync(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
             {
