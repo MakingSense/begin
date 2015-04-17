@@ -117,6 +117,8 @@
     <AndroidResource Include="Resources\Drawable\ratingon.png" />
     <AndroidResource Include="Resources\Drawable\ratingoff.png" />
     <AndroidResource Include="Resources\Drawable\logotype.png" />
+    <AndroidResource Include="Resources\Drawable\online_icon.png" />
+    <AndroidResource Include="Resources\Drawable\offline_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.Services\BeginMobile.Services.csproj">

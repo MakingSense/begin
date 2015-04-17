@@ -201,7 +201,9 @@ namespace BeginMobile.Pages.Profile
                                                                     Url = contact.Url,
                                                                     UserName = contact.UserName,
                                                                     Registered = contact.Registered,
-                                                                    Id = contact.Id.ToString()
+                                                                    Id = contact.Id.ToString(),
+                                                                    Relationship = contact.Relationship,
+                                                                    IsOnline = contact.IsOnline
                                                                 });
         }
 

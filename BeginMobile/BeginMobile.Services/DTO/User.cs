@@ -53,6 +53,6 @@ namespace BeginMobile.Services.DTO
         public string Relationship { set; get; }
 
         [JsonProperty("is_online")]
-        public string IsOnline { set; get; }
+        public bool IsOnline { set; get; }
     }
 }

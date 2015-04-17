@@ -16,6 +16,7 @@ namespace BeginMobile.Pages.Profile
         private readonly Contact _contact;
         private readonly LoginUser _loginUser;
 
+        
         public ContactDetail(Contact contact)
         {
             _contact = contact;
@@ -64,6 +65,18 @@ namespace BeginMobile.Pages.Profile
                                        };
             gridImage.Children.Add(stackLayoutLinesLeft, 0, 0);
             gridImage.Children.Add(imageContact, 1, 0);
+            gridImage.Children.Add(new Image
+                                   {
+                                       HeightRequest = 15,
+                                       WidthRequest = 15,
+                                       
+                                       VerticalOptions = LayoutOptions.Start,
+                                       Source =
+                                           _contact.IsOnline
+                                               ? ImageSource.FromFile("online_icon.png")
+                                               : ImageSource.FromFile("offline_icon.png")
+                                   }, 1, 1);
+
             gridImage.Children.Add(stackLayoutLinesRight, 2, 0);
 
             var labelTextNameAndSurname = new Label
@@ -120,12 +133,6 @@ namespace BeginMobile.Pages.Profile
                                       Text = DateConverter.GetTimeSpan(Convert.ToDateTime(_contact.Registered))
                                   };
 
-            var buttonAddFriend = new Button
-                                  {
-                                      Text = AppResources.ButtonAddFriend,
-                                      Style = BeginApplication.Styles.ListViewItemButton
-                                  };
-
             var buttonCancelFriend = new Button
                                      {
                                          Text = AppResources.ButtonCancelRequestFriend,
@@ -150,8 +157,6 @@ namespace BeginMobile.Pages.Profile
                                          Style = BeginApplication.Styles.ListViewItemButton
                                      };
 
-            buttonAddFriend.IsVisible = false; // TODO: should be in the wall of every contact not here
-            buttonAddFriend.Clicked += AddFriendEventHandler;
             buttonCancelFriend.Clicked += CancelFriendEventHandler;
             buttonAcceptFriend.Clicked += AcceptFriendEventHandler;
             buttonRejectFriend.Clicked += RejectFriendEventHandler;
@@ -171,9 +176,8 @@ namespace BeginMobile.Pages.Profile
                                       new ColumnDefinition {Width = GridLength.Auto},
                                   }
                               };
-
-            gridButtons.Children.Add(buttonAddFriend, 0, 0);
-            gridButtons.Children.Add(buttonRemoveFriend, 1, 0);
+          
+            gridButtons.Children.Add(buttonRemoveFriend, 0, 0);
 
 
             var gridComponents = new Grid
@@ -215,7 +219,6 @@ namespace BeginMobile.Pages.Profile
                           {
                               gridImage,
                               gridComponents
-                              //gridButtons
                           }
                       };
         }

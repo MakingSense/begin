@@ -15,20 +15,23 @@ namespace BeginMobile.Pages.Profile
     {
         private Button _buttonRemoveFriend;
         private readonly LoginUser _loginUser;
+       
+
         public CustomViewCell(LoginUser loginUser)
         {
             _loginUser = loginUser;
 
             var circleIconImage = new CircleImage
-            {
-                HeightRequest = Device.OnPlatform(50, 100, 100),
-                WidthRequest = Device.OnPlatform(50, 100, 100),
-                Aspect = Aspect.AspectFill,
-                HorizontalOptions = LayoutOptions.Start,
-                BorderThickness = Device.OnPlatform(2, 3, 3)
-            };
+                                  {
+                                      HeightRequest = Device.OnPlatform(50, 100, 100),
+                                      WidthRequest = Device.OnPlatform(50, 100, 100),
+                                      Aspect = Aspect.AspectFill,
+                                      HorizontalOptions = LayoutOptions.Start,
+                                      BorderThickness = Device.OnPlatform(2, 3, 3),
+                                  };
 
             circleIconImage.SetBinding(Image.SourceProperty, new Binding("Icon"));
+        
 
             var optionLayout = CreateOptionLayout();
 

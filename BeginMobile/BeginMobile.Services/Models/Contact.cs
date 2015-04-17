@@ -18,7 +18,7 @@
             }
         }
         public string References { get; set; }
-
         public string Relationship { get; set; }
+        public bool IsOnline { get; set; }
     }
 }
