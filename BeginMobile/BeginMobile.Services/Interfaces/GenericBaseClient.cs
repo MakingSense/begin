@@ -337,16 +337,12 @@ namespace BeginMobile.Services.Interfaces
             }
         }
 
-        public ObservableCollection<T> ListToObservableCollection(List<T> groups)
+        public ObservableCollection<T> ListToObservableCollection(List<T> listItems)
         {
             ObservableCollection<T> resultCollection = null;
-            if (groups != null && groups.Any())
+            if (listItems != null && listItems.Any())
             {
-                resultCollection = new ObservableCollection<T>();
-                foreach (var group in groups)
-                {
-                    resultCollection.Add(group);
-                }
+                resultCollection = new ObservableCollection<T>(listItems);
             }
             return resultCollection;
         }

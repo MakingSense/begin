@@ -34,7 +34,6 @@ namespace BeginMobile.Pages.Profile
 
             LoadCategoriesPicker();
 
-            #region Call api
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             Init();
@@ -44,8 +43,6 @@ namespace BeginMobile.Pages.Profile
         {
             _profileEvents =
                 await BeginApplication.ProfileServices.GetEventsByParams(_currentUser.AuthToken, limit: DefaultLimit);
-
-            #endregion
 
             #region Search components
 
