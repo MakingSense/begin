@@ -59,33 +59,45 @@ namespace BeginMobile.Services.Utils
         }
         private static void MessageSendConfigure(Exception exception, BaseServiceError serviceError)
         {
+            const string oldValue = "Error: ";
             if (serviceError != null)
             {
                 if (serviceError.HasError)
                 {
                     if (serviceError.Errors.Any())
                     {
-                        MessagingCenter.Send(new AppContextError(DefaultTitle,
+                        var errorFormat = new AppContextError(DefaultTitle,
                             serviceError.Errors.Aggregate(string.Empty,
-                                (current, error) => current + (error.ErrorMessage + "\n")),
-                            "Ok"), NamedMessage);
+                                (current, error) => current + (error.ErrorMessage + "\n"))
+                                .Replace(oldValue, string.Empty), "Ok");
+
+                        MessagingCenter.Send(errorFormat, NamedMessage);
+                        MessagingCenter.Unsubscribe<AppContextError>(errorFormat, NamedMessage);
                     }
 
                     else if (!string.IsNullOrEmpty(serviceError.Error))
                     {
-                        MessagingCenter.Send(new AppContextError(DefaultTitle, serviceError.Error, "Ok"), NamedMessage);
+                        var appContextError = new AppContextError(DefaultTitle,
+                            serviceError.Error.Replace(oldValue, string.Empty), "Ok");
+
+                        MessagingCenter.Send(appContextError, NamedMessage);
+                        MessagingCenter.Unsubscribe<AppContextError>(appContextError, NamedMessage);
                     }
                 }
 
                 else
                 {
-                    MessagingCenter.Send(new AppContextError(DefaultTitle, exception.Message, "Ok"), NamedMessage);
+                    var error = new AppContextError(DefaultTitle, exception.Message.Replace(oldValue, string.Empty), "Ok");
+                    MessagingCenter.Send(error, NamedMessage);
+                    MessagingCenter.Unsubscribe<AppContextError>(error, NamedMessage);
                 }
             }
 
             else
             {
-                MessagingCenter.Send(new AppContextError(DefaultTitle, exception.Message, "Ok"), NamedMessage);
+                var error = new AppContextError(DefaultTitle, exception.Message.Replace(oldValue,string.Empty), "Ok");
+                MessagingCenter.Send(error, NamedMessage);
+                MessagingCenter.Unsubscribe<AppContextError>(error, NamedMessage);
             }
         }
     }

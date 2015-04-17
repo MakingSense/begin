@@ -222,6 +222,8 @@ namespace BeginMobile.Accounts
         private async void OnAppContextErrorOccurred(AppContextError appContextError)
         {
             await DisplayAlert(appContextError.Title, appContextError.Message, appContextError.Accept);
+            ActivityIndicatorLoading.IsVisible = false;
+            ActivityIndicatorLoading.IsRunning = false;
         }
     }
 }
