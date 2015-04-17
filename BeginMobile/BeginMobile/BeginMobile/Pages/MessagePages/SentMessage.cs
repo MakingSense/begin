@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
@@ -18,8 +19,8 @@ namespace BeginMobile.Pages.MessagePages
 
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
-            Init();
-
+            CallServiceApi();
+            MessagingSubscriptions();
             _listViewMessages = new ListView
                                 {
                                     ItemTemplate = new DataTemplate(typeof (ProfileMessagesItem)),
@@ -48,7 +49,7 @@ namespace BeginMobile.Pages.MessagePages
          * Get the Sent Messages from SentBox Service API, parse the Message to MessageViewModel for add into list and return this list
          */
 
-        public static async Task Init()
+        public static async Task CallServiceApi()
         {
             var profileThreadMessagesSent =
                 await BeginApplication.ProfileServices.GetProfileThreadMessagesSent(_currentUser.AuthToken);
@@ -84,6 +85,72 @@ namespace BeginMobile.Pages.MessagePages
             await Navigation.PushAsync(messageDetail);
 
             ((ListView) sender).SelectedItem = null;
+        }
+
+        private void MessagingSubscriptions()
+        {
+            MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsReadSentMessage, MarkAsReadSentMessageCallback());
+            MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsUnreadSentMessage, MarkAsUnreadSentMessageCallback());
+            MessagingCenter.Subscribe(this, MessageSuscriptionNames.RemoveSentMessage, RemoveSentMessageCallback());
+        }
+        private Action<ProfileMessagesItem, string> RemoveSentMessageCallback()
+        {
+            return async (sender, arg) =>
+            {
+                var threadId = arg;
+
+                if (!string.IsNullOrEmpty(threadId))
+                {
+                    var messagesListView =
+                        (List<MessageViewModel>)_listViewMessages.ItemsSource;
+
+                    var toRemove = messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
+
+                    if (toRemove == null || !messagesListView.Remove(toRemove)) return;
+                    MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
+                    await DisplayAlert("Successfull!", "Removed.", "Ok");
+                }
+            };
+        }
+
+        private Action<ProfileMessagesItem, string> MarkAsReadSentMessageCallback()
+        {
+            return async (sender, arg) =>
+            {
+                var threadId = arg;
+
+                if (!string.IsNullOrEmpty(threadId))
+                {
+                    var messagesListView =
+                        (List<MessageViewModel>)_listViewMessages.ItemsSource;
+
+                    var toRemove = messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
+
+                    if (toRemove == null || !messagesListView.Remove(toRemove)) return;
+                    MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
+                    await DisplayAlert("Successfull!", "Removed.", "Ok");
+                }
+            };
+        }
+
+        private Action<ProfileMessagesItem, string> MarkAsUnreadSentMessageCallback()
+        {
+            return async (sender, arg) =>
+            {
+                var threadId = arg;
+
+                if (!string.IsNullOrEmpty(threadId))
+                {
+                    var messagesListView =
+                        (List<MessageViewModel>)_listViewMessages.ItemsSource;
+
+                    var toRemove = messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
+
+                    if (toRemove == null || !messagesListView.Remove(toRemove)) return;
+                    MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
+                    await DisplayAlert("Successfull!", "Removed.", "Ok");
+                }
+            };
         }
 
         public void Dispose()

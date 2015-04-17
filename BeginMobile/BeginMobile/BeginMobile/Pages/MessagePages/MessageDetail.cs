@@ -12,7 +12,7 @@ namespace BeginMobile.Pages.MessagePages
     {
         private readonly Editor _editorReplyContent;
         private const string DefaultImageUser = "userdefault3.png";
-        private LoginUser _currentUser;
+        private readonly LoginUser _currentUser;
 
         public MessageDetail(MessageViewModel messageViewModel)
         {
@@ -117,11 +117,11 @@ namespace BeginMobile.Pages.MessagePages
                 await DisplayAlert("Successfull!", "Your message has successfully sent!", "ok");
                 if (InboxMessage.IsInbox)
                 {
-                    await InboxMessage.Init();
+                    await InboxMessage.CallServiceApi();
                 }
                 else
                 {
-                    await SentMessage.Init();
+                    await SentMessage.CallServiceApi();
                 }
                 await Navigation.PopAsync();
             }

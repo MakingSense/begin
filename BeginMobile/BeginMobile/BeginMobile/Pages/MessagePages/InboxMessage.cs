@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
+using BeginMobile.Utils;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.MessagePages
@@ -20,7 +22,9 @@ namespace BeginMobile.Pages.MessagePages
             IsInbox = true;
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
-            Init();
+            CallServiceApi();
+
+            MessagingSubscriptions();
 
             _listViewMessages = new ListView
                                 {
@@ -46,11 +50,18 @@ namespace BeginMobile.Pages.MessagePages
             Content = mainStackLayout;
         }
 
+        private void MessagingSubscriptions()
+        {
+            MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsReadInboxMessage, MarkAsReadCallback());
+            MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsUnreadInboxMessage, MarkAsUnreadCallback());
+            MessagingCenter.Subscribe(this, MessageSuscriptionNames.RemoveInboxMessage, RemoveMessageCallback());
+        }
+
         /*
         * Get the Inbox Messages from Inbox Service API, parse the Message to MessageViewModel for add into list and return this list
         */
 
-        public static async Task Init()
+        public static async Task CallServiceApi()
         {
             var inboxMessageData = new List<MessageViewModel>();
             var inboxThreads =
@@ -92,8 +103,129 @@ namespace BeginMobile.Pages.MessagePages
         /// </summary>
         public string ThreadCount { get; set; }
 
+        private Action<ProfileMessagesItem, string> RemoveMessageCallback()
+        {
+            return async (sender, arg) =>
+            {
+                var threadId = arg;
+
+                if (!string.IsNullOrEmpty(threadId))
+                {
+                    var messagesListView =
+                        (List<MessageViewModel>)_listViewMessages.ItemsSource;
+
+                    var toRemove = messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
+
+                    if (toRemove == null || !messagesListView.Remove(toRemove)) return;
+                    MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
+                    await DisplayAlert("Successfull!", "Removed.", "Ok");
+                }
+            };
+        }
+
+        private Action<ProfileMessagesItem, string> MarkAsReadCallback()
+        {
+            return async (sender, arg) =>
+            {
+                var threadId = arg;
+
+                if (!string.IsNullOrEmpty(threadId))
+                {
+                    var messagesListView =
+                        (List<MessageViewModel>)_listViewMessages.ItemsSource;
+
+                    var toRemove = messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
+
+                    if (toRemove == null || !messagesListView.Remove(toRemove)) return;
+                    MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
+                    await DisplayAlert("Successfull!", "Removed.", "Ok");
+                }
+            };
+        }
+
+        private Action<ProfileMessagesItem, string> MarkAsUnreadCallback()
+        {
+            return async (sender, arg) =>
+            {
+                var threadId = arg;
+
+                if (!string.IsNullOrEmpty(threadId))
+                {
+                    var messagesListView =
+                        (List<MessageViewModel>)_listViewMessages.ItemsSource;
+
+                    var toRemove = messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
+
+                    if (toRemove == null || !messagesListView.Remove(toRemove)) return;
+                    MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
+                    await DisplayAlert("Successfull!", "Removed.", "Ok");
+                }
+            };
+        }
+
         public void Dispose()
         {
+        }
+    }
+
+    public static class MessageSuscriptionNames
+    {
+        public const string MarkAsReadInboxMessage = "MarkAsReadInboxMessage";
+        public const string MarkAsUnreadInboxMessage = "MarkAsUnreadInboxMessage";
+        public const string RemoveInboxMessage = "RemoveInboxMessage";
+        public const string MarkAsReadSentMessage = "MarkAsReadSentMessage";
+        public const string MarkAsUnreadSentMessage = "MarkAsUnreadSentMessage";
+        public const string RemoveSentMessage = "RemoveSentMessage";
+    }
+    public enum MessageOption
+    {
+        MarkAsRead = 0,
+        MarkAsUnread = 1,
+        Remove = 2
+    }
+
+    public static class MessageActions
+    {
+        public const string Read = "read";
+        public const string Remove = "read";
+        public const string Unread = "unread";
+
+        //private static readonly Dictionary<string, NotificationComponent> ComponentsDictionary =
+        //    new Dictionary<string, NotificationComponent>
+        //    {
+        //        {"new_message", NotificationComponent.Message},
+        //        {"group_invite", NotificationComponent.Group},
+        //        {"friendship_request", NotificationComponent.Contact},
+        //        {"friendship_accepted", NotificationComponent.Contact},
+        //        {"friendship_rejected", NotificationComponent.Contact},
+        //        {"friendship_removed", NotificationComponent.Contact},
+        //        {"new_at_mention", NotificationComponent.Activity }
+        //    };
+
+        public async static void Request(MessageOption notificationOption, string authToken,
+            string threadId)
+        {
+            switch (notificationOption)
+            {
+                case MessageOption.MarkAsRead:
+                    await BeginApplication.ProfileServices.MarkAsReadByThread(authToken, threadId);
+                    break;
+                case MessageOption.MarkAsUnread:
+                    await BeginApplication.ProfileServices.MarkAsUnreadByThread(authToken, threadId);
+                    break;
+                case MessageOption.Remove:
+                    await BeginApplication.ProfileServices.DeleteByThread(authToken, threadId);
+                    break;
+            }
+        }
+        //public static NotificationComponent RetrieveComponent(string actionKey)
+        //{
+        //    return ComponentsDictionary[actionKey];
+        //}
+
+        public static string RetrieveFriendlyAction(string actionKey)
+        {
+            return actionKey.Replace("_", " ");
         }
     }
 }

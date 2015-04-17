@@ -1,4 +1,5 @@
-﻿using BeginMobile.LocalizeResources.Resources;
+﻿using System;
+using BeginMobile.LocalizeResources.Resources;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
@@ -59,12 +60,12 @@ namespace BeginMobile.Pages.MessagePages
                                };
             labelContent.SetBinding(Label.TextProperty, "MessageContent");
 
-            //var buttonRemove = new Label
-            //                   {
-            //                       Text = AppResources.ButtonRemoveFriend,
-            //                       YAlign = TextAlignment.Center,
-            //                       Style = BeginApplication.Styles.ListViewItemButton,
-            //                   };
+            var buttonRemove = new Button()
+                               {
+                                   Text = AppResources.ButtonRemoveFriend,
+                                   Style = BeginApplication.Styles.ListViewItemButton,
+                               };
+            buttonRemove.Clicked += RemoveEventHandler;
 
             var gridDetails = new Grid
                               {
@@ -77,6 +78,7 @@ namespace BeginMobile.Pages.MessagePages
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto}
                                   }
                               };
@@ -84,7 +86,7 @@ namespace BeginMobile.Pages.MessagePages
             gridDetails.Children.Add(labelSubject, 0, 1);
             gridDetails.Children.Add(labelContent, 0, 2);
             gridDetails.Children.Add(labelCreate, 0, 3);
-            //gridDetails.Children.Add(buttonRemove, 0, 4);
+            gridDetails.Children.Add(buttonRemove, 0, 4);
             var stackLayoutView = new StackLayout
                                   {
                                       Spacing = 2,
@@ -99,6 +101,27 @@ namespace BeginMobile.Pages.MessagePages
                                   };
 
             View = stackLayoutView;
+            View.SetBinding(ClassIdProperty, "ThreadId");
         }
+
+        public void RemoveEventHandler(object sender, EventArgs e)
+        {
+            var current = sender as Button;
+            if (current == null) return;
+
+            var threadId = current.Parent.Parent.ClassId;
+            if (InboxMessage.IsInbox)
+            {
+                MessagingCenter.Send(this, MessageSuscriptionNames.RemoveInboxMessage, threadId);
+                MessagingCenter.Unsubscribe<ProfileMessagesItem, string>(this, MessageSuscriptionNames.RemoveInboxMessage);
+            }
+            else
+            {
+                MessagingCenter.Send(this, MessageSuscriptionNames.RemoveSentMessage, threadId);
+                MessagingCenter.Unsubscribe<ProfileMessagesItem, string>(this, MessageSuscriptionNames.RemoveSentMessage);
+            }
+          
+        }
+       
     }
 }
