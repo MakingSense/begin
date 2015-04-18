@@ -12,6 +12,7 @@ namespace BeginMobile.Pages.MessagePages
 {
     public class InboxMessage : ContentPage, IDisposable
     {
+        private bool _isUnread = true;
         public static bool IsInbox { get; set; }
         private static ListView _listViewMessages;
         private static LoginUser _currentUser;
@@ -27,10 +28,10 @@ namespace BeginMobile.Pages.MessagePages
             MessagingSubscriptions();
 
             _listViewMessages = new ListView
-                                {
-                                    ItemTemplate = new DataTemplate(typeof (ProfileMessagesItem)),
-                                    HasUnevenRows = true
-                                };
+            {
+                ItemTemplate = new DataTemplate(() => new ProfileMessagesItem(_isUnread)),
+                HasUnevenRows = true
+            };
 
 
             _listViewMessages.ItemSelected += ListViewItemSelectedEventHandler;
@@ -52,8 +53,8 @@ namespace BeginMobile.Pages.MessagePages
 
         private void MessagingSubscriptions()
         {
-            MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsReadInboxMessage, MarkAsReadCallback());
-            MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsUnreadInboxMessage, MarkAsUnreadCallback());
+            MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsReadInboxMessage, MarkAsCallback(MessageOption.MarkAsRead, "Marked as Read."));
+            MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsUnreadInboxMessage, MarkAsUnReadCallback());
             MessagingCenter.Subscribe(this, MessageSuscriptionNames.RemoveInboxMessage, RemoveMessageCallback());
         }
 
@@ -70,19 +71,21 @@ namespace BeginMobile.Pages.MessagePages
             if (!threads.Threads.Any()) return;
             var threadMessages = threads.Threads;
             inboxMessageData.AddRange((from threadMessage in threadMessages
-                let message = threadMessage.Messages.FirstOrDefault()
-                where message != null
-                select new MessageViewModel
-                       {
-                           Id = message.Id,
-                           ThreadId = message.ThreadId,
-                           DateSent = message.DateSent,
-                           MessageContent = message.MessageContent,
-                           SenderName = message.Sender.NameSurname,
-                           Subject = message.Subject,
-                           Sender = message.Sender,
-                           Messages = threadMessage.Messages
-                       }).OrderByDescending(c => c.DateSent));
+                                       let message = threadMessage.Messages.FirstOrDefault()
+                                       where message != null
+                                       select new MessageViewModel
+                                       {
+                                           Id = message.Id,
+                                           ThreadId = message.ThreadId,
+                                           DateSent = message.DateSent,
+                                           MessageContent = message.MessageContent,
+                                           SenderName = message.Sender.NameSurname,
+                                           Subject = message.Subject,
+                                           Sender = message.Sender,
+                                           Messages = threadMessage.Messages,
+                                           ThreadUnRead = threadMessage.Unread.Equals("1")?"UnRead":"Readed",
+                                       }).OrderByDescending(c => c.DateSent));
+
             var listCollection = new ObservableCollection<MessageViewModel>(inboxMessageData);
             _listViewMessages.ItemsSource = listCollection;
         }
@@ -92,8 +95,12 @@ namespace BeginMobile.Pages.MessagePages
             if (eventArgs.SelectedItem == null)
             {
                 return;
-            }
-            var item = (MessageViewModel) eventArgs.SelectedItem;
+            }               
+            var item = (MessageViewModel)eventArgs.SelectedItem;
+            if (item.ThreadUnRead.Equals("UnRead"))
+            {
+                MessageActions.Request(MessageOption.MarkAsRead, _currentUser.AuthToken, item.ThreadId); //TODO: Mark as read 
+            }            
             var messageDetail = new MessageDetail(item);
             await Navigation.PushAsync(messageDetail);
             ((ListView) sender).SelectedItem = null;
@@ -113,18 +120,18 @@ namespace BeginMobile.Pages.MessagePages
                 if (!string.IsNullOrEmpty(threadId))
                 {
                     var messagesListView =
-                        (List<MessageViewModel>)_listViewMessages.ItemsSource;
+                        (ObservableCollection<MessageViewModel>)_listViewMessages.ItemsSource;
 
                     var toRemove = messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
 
                     if (toRemove == null || !messagesListView.Remove(toRemove)) return;
                     MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
-                    await DisplayAlert("Successfull!", "Removed.", "Ok");
+                    await DisplayAlert("Info", "Removed.", "Ok");
                 }
             };
         }
 
-        private Action<ProfileMessagesItem, string> MarkAsReadCallback()
+        private Action<ProfileMessagesItem, string> MarkAsCallback(MessageOption messageOption, string message)
         {
             return async (sender, arg) =>
             {
@@ -132,19 +139,20 @@ namespace BeginMobile.Pages.MessagePages
 
                 if (!string.IsNullOrEmpty(threadId))
                 {
-                    var messagesListView =
-                        (List<MessageViewModel>)_listViewMessages.ItemsSource;
+                    var listMessagesViewModels =
+                        (ObservableCollection<MessageViewModel>)_listViewMessages.ItemsSource;
 
-                    var toRemove = messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
+                    var toMark = listMessagesViewModels.FirstOrDefault(messageViewModel => messageViewModel.ThreadId == threadId);
 
-                    if (toRemove == null || !messagesListView.Remove(toRemove)) return;
-                    MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
-                    await DisplayAlert("Successfull!", "Removed.", "Ok");
+                    if (toMark != null && listMessagesViewModels.Remove(toMark))
+                    {
+                        MessageActions.Request(messageOption, _currentUser.AuthToken, threadId);
+                        await DisplayAlert("Info", message, "Ok");
+                    }
                 }
             };
         }
-
-        private Action<ProfileMessagesItem, string> MarkAsUnreadCallback()
+        private Action<ProfileMessagesItem, string> MarkAsUnReadCallback()
         {
             return async (sender, arg) =>
             {
@@ -152,14 +160,17 @@ namespace BeginMobile.Pages.MessagePages
 
                 if (!string.IsNullOrEmpty(threadId))
                 {
-                    var messagesListView =
-                        (List<MessageViewModel>)_listViewMessages.ItemsSource;
+                    var listMessagesViewModels =
+                        (ObservableCollection<MessageViewModel>)_listViewMessages.ItemsSource;
 
-                    var toRemove = messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
+                    var toMark = listMessagesViewModels.FirstOrDefault(messageViewModel => messageViewModel.ThreadId == threadId);
 
-                    if (toRemove == null || !messagesListView.Remove(toRemove)) return;
-                    MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
-                    await DisplayAlert("Successfull!", "Removed.", "Ok");
+                    if (toMark != null && listMessagesViewModels.Remove(toMark))
+                    {
+                        MessageActions.Request(MessageOption.MarkAsUnread, _currentUser.AuthToken, threadId);
+
+                        await DisplayAlert("Info", "Marked as UnRead.", "Ok");
+                    }
                 }
             };
         }

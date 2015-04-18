@@ -70,6 +70,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Wall\WallPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\GlobalService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ProfileServices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\CheckBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions\StringExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FriendshipActions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\LinkButton.cs" />

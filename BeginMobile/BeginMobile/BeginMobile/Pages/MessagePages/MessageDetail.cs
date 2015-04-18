@@ -93,7 +93,7 @@ namespace BeginMobile.Pages.MessagePages
                           Padding = BeginApplication.Styles.LayoutThickness,
                           Children =
                           {
-                              stackLayoutList //stackLayoutEditorReply
+                              stackLayoutList
                           }
                       };
         }
