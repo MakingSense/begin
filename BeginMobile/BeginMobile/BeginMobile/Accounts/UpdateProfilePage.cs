@@ -32,12 +32,18 @@ namespace BeginMobile.Accounts
 
             buttonUpdateProfile.Clicked += async (s, e) =>
                                                  {
-                                                     await loginUserManager.UpdateProfile(_entryNameSurname.Text,
+                                                     
+                                                     var result = await loginUserManager.UpdateProfile(_entryNameSurname.Text,
                                                          currentUser.AuthToken);
 
-                                                     await
+                                                     if (result == "")
+                                                     {
+                                                         await
                                                          DisplayAlert("Successfuly updated!",
                                                              "Your profile has been updated successfuly", "Ok");
+                                                     }
+
+                                                     
                                                      await Navigation.PopToRootAsync();
                                                  };
 
@@ -59,14 +65,6 @@ namespace BeginMobile.Accounts
                           Content = mainLayout
                       };
 
-            MessagingCenter.Subscribe<AppContextError>(this, AppContextError.NamedMessage, OnAppContextErrorOccurred);
-
-        }
-
-        private async void OnAppContextErrorOccurred(AppContextError appContextError)
-        {
-            await DisplayAlert(appContextError.Title, appContextError.Message, appContextError.Accept);
-            await Navigation.PopToRootAsync();
         }
     }
 }

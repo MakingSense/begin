@@ -52,9 +52,9 @@ namespace BeginMobile.Accounts
 
                 if (changePasswordResponse != null)
                 {
-                    if (changePasswordResponse.Errors != null)
+                    if (changePasswordResponse.HasError)
                     {
-                        var messageErrors = changePasswordResponse.Errors.Aggregate("", (current, error) => current + "\n");
+                        var messageErrors = changePasswordResponse.Errors.Aggregate("", (current, error) => current + (error.ErrorMessage) + "\n");
                         await DisplayAlert(AppResources.ErrorMessageTitle, messageErrors, "Re-try");
                         _entryCurrentPassword.Text = "";
                         _entryNewPassword.Text = "";
@@ -68,7 +68,6 @@ namespace BeginMobile.Accounts
                 }
                 else
                 {
-                    await DisplayAlert(AppResources.ServerMessageSuccess, AppResources.ServerMessageChangePassword, "Ok");
                     await Navigation.PopToRootAsync();
                 }
             };
@@ -89,14 +88,7 @@ namespace BeginMobile.Accounts
             {
                 Content = mainLayout
             };
-
-            MessagingCenter.Subscribe<AppContextError>(this, AppContextError.NamedMessage, OnAppContextErrorOccurred);
         }
 
-        private async void OnAppContextErrorOccurred(AppContextError appContextError)
-        {
-            await DisplayAlert(appContextError.Title, appContextError.Message, appContextError.Accept);
-            await Navigation.PopToRootAsync();
-        }
     }
 }

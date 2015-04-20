@@ -2,9 +2,8 @@
 
 namespace BeginMobile.Services.DTO
 {
-    public class ChangePassword
+    public class ChangePassword : BaseServiceError
     {
-        [JsonProperty("errors")]
-        public ErrorRetrieved[] Errors { set; get; }
+        public string Id { set; get; }
     }
 }

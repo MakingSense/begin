@@ -1,10 +1,11 @@
 ﻿using System.Text.RegularExpressions;
 using BeginMobile.Services.ManagerServices;
 using Xamarin.Forms;
+using BeginMobile.Interfaces;
 
 namespace BeginMobile.Accounts
 {
-	public class ForgotPassword : ContentPage
+    public class ForgotPassword : BaseContentPage
     {
         private const string EmailRegex =
               @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
@@ -40,38 +41,45 @@ namespace BeginMobile.Accounts
                                             };
             
             buttonReset.Clicked += async (sender, eventArgs) =>
-                                         {                                            
-                    var isEmailValid = Regex.IsMatch(_entryEmail.Text, EmailRegex);
-                                             if (isEmailValid)
-                                             {
-                                                 var loginUserManager = new LoginUserManager();
-                                                 string webPage = await loginUserManager.RetrievePassword(_entryEmail.Text);
+            {
 
-                                                 if (webPage != null)
-                                                 {
-                                                     if (webPage.Equals(""))
-                                                     {
-                                                         await
-                                                             DisplayAlert("Information",
-                                                                 "Please check your email address for reset your password",
-                                                                 "ok");
-                                                         MessagingCenter.Send<ContentPage>(this, "Login");
-                                                     }
-                                                     else
-                                                     {
-                                                         await DisplayAlert("Error",
-                                                             "An error happened on the server",
-                                                             "Re - Try");
-                                                     }
-                                                 }
-                                             }
-                                             else
-                                             {
-                                                 await DisplayAlert("Validation Error",
-                                                     "Email has wrong format",
-                                                     "Re - Try");
-                                             }
-                                         };
+                var isEmailValid = Regex.IsMatch(_entryEmail.Text, EmailRegex);
+                if (isEmailValid)
+                {
+                    ActivityIndicatorLoading.IsVisible = true;
+                    ActivityIndicatorLoading.IsRunning = true;
+
+                    var loginUserManager = new LoginUserManager();
+                    string webPage = await loginUserManager.RetrievePassword(_entryEmail.Text);
+
+                    if (webPage != null)
+                    {
+                        if (webPage.Equals(""))
+                        {
+                            await
+                                DisplayAlert("Information",
+                                    "Please check your email address for reset your password",
+                                    "ok");
+                            MessagingCenter.Send<ContentPage>(this, "Login");
+                        }
+                        else
+                        {
+                            await DisplayAlert("Error",
+                                "An error happened on the server",
+                                "Re - Try");
+                        }
+                    }
+
+                    ActivityIndicatorLoading.IsVisible = false;
+                    ActivityIndicatorLoading.IsRunning = false;
+                }
+                else
+                {
+                    await DisplayAlert("Validation Error",
+                        "Email has wrong format",
+                        "Re - Try");
+                }
+            };
 
             var buttonBack = new Button { Text = "Cancel", Style = BeginApplication.Styles.DefaultButton };
             buttonBack.Clicked += (sender, eventArgs) =>
@@ -79,12 +87,14 @@ namespace BeginMobile.Accounts
                 MessagingCenter.Send<ContentPage>(this, "Login");
             };
 
+            var stackLayoutLoading = CreateStackLayoutWithLoadingIndicator();
              
 			Content = new StackLayout {
                 Spacing = 10,
                 Padding = BeginApplication.Styles.LayoutThickness,
                 VerticalOptions = LayoutOptions.Center,
                 Children = { 
+                    stackLayoutLoading,
                     logo,
                     labelTitle,
                     labelSubTitle,
