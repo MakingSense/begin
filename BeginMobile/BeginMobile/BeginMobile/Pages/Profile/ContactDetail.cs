@@ -15,7 +15,7 @@ namespace BeginMobile.Pages.Profile
     {
         private readonly Contact _contact;
         private readonly LoginUser _loginUser;
-
+        private readonly string Relationship;
         
         public ContactDetail(Contact contact)
         {
@@ -24,6 +24,7 @@ namespace BeginMobile.Pages.Profile
 
             if (_contact == null) throw new ArgumentNullException("contact");
 
+            Relationship = _contact.Relationship;
 
             var imageContact = new CircleImage
                                {
@@ -43,6 +44,7 @@ namespace BeginMobile.Pages.Profile
                                 HorizontalOptions = LayoutOptions.FillAndExpand,
                                 VerticalOptions = LayoutOptions.FillAndExpand
                             };
+
             var stackLayoutLinesRight = new StackLayout
                                         {
                                             VerticalOptions = LayoutOptions.CenterAndExpand,
@@ -133,28 +135,49 @@ namespace BeginMobile.Pages.Profile
                                       Text = DateConverter.GetTimeSpan(Convert.ToDateTime(_contact.Registered))
                                   };
 
+            var buttonAddFriend = new Button()
+                                  {
+                                      Text = AppResources.ButtonAddFriend,
+                                      Style = BeginApplication.Styles.ListViewItemButton,
+                                      HorizontalOptions = LayoutOptions.Start,
+                                      HeightRequest = 35,
+                                      WidthRequest = 70
+                                  };
+
             var buttonCancelFriend = new Button
                                      {
-                                         Text = AppResources.ButtonCancelRequestFriend,
-                                         Style = BeginApplication.Styles.ListViewItemButton
+                                         Text = AppResources.ButtonCancel,
+                                         Style = BeginApplication.Styles.ListViewItemButton,
+                                         HorizontalOptions = LayoutOptions.Start,
+                                         HeightRequest = 35,
+                                         WidthRequest = 70
                                      };
 
             var buttonAcceptFriend = new Button
                                      {
                                          Text = AppResources.ButtonAcceptFriend,
-                                         Style = BeginApplication.Styles.ListViewItemButton
+                                         Style = BeginApplication.Styles.ListViewItemButton,
+                                         HorizontalOptions = LayoutOptions.Start,
+                                         HeightRequest = 35,
+                                         WidthRequest = 70
                                      };
 
             var buttonRemoveFriend = new Button
                                      {
                                          Text = AppResources.ButtonRemoveFriend,
-                                         Style = BeginApplication.Styles.ListViewItemButton
+                                         Style = BeginApplication.Styles.ListViewItemButton,
+                                         HorizontalOptions = LayoutOptions.Start,
+                                         HeightRequest = 35,
+                                         WidthRequest = 70
                                      };
 
             var buttonRejectFriend = new Button
                                      {
                                          Text = AppResources.ButtonRejectFriend,
-                                         Style = BeginApplication.Styles.ListViewItemButton
+                                         Style = BeginApplication.Styles.ListViewItemButton,
+                                         HorizontalOptions = LayoutOptions.Start,
+                                         HeightRequest = 35,
+                                         WidthRequest = 70
                                      };
 
             buttonCancelFriend.Clicked += CancelFriendEventHandler;
@@ -166,20 +189,40 @@ namespace BeginMobile.Pages.Profile
                               {
                                   VerticalOptions = LayoutOptions.Start,
                                   HorizontalOptions = LayoutOptions.CenterAndExpand,
+                                  
                                   RowDefinitions =
                                   {
                                       new RowDefinition {Height = GridLength.Auto}
                                   },
+
                                   ColumnDefinitions =
                                   {
                                       new ColumnDefinition {Width = GridLength.Auto},
                                       new ColumnDefinition {Width = GridLength.Auto},
                                   }
                               };
-          
-            gridButtons.Children.Add(buttonRemoveFriend, 0, 0);
 
+            if (string.IsNullOrEmpty(Relationship))
+            {
+                gridButtons.Children.Add(buttonAddFriend, 0, 0);
+            }
 
+            if (Relationship == "contacts")
+            {
+                gridButtons.Children.Add(buttonRemoveFriend, 0, 0);
+            }
+
+            if (Relationship == "request_sent")
+            {
+                gridButtons.Children.Add(buttonCancelFriend, 0, 0);
+            }
+
+            if (Relationship == "request_received")
+            {
+                gridButtons.Children.Add(buttonAcceptFriend, 0, 0);
+                gridButtons.Children.Add(buttonRejectFriend, 0, 1);
+            }
+            
             var gridComponents = new Grid
                                  {
                                      Padding = BeginApplication.Styles.GridPadding,
@@ -200,6 +243,7 @@ namespace BeginMobile.Pages.Profile
                                          new ColumnDefinition {Width = GridLength.Auto}
                                      }
                                  };
+
             gridComponents.Children.Add(labelTextNameAndSurname, 0, 0);
             gridComponents.Children.Add(labelCompleteName, 1, 0);
             gridComponents.Children.Add(labelTextUsername, 0, 1);

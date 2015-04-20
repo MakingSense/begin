@@ -106,7 +106,8 @@ namespace BeginMobile.Pages.Notifications
             }
         }
 
-        private async Task RedirectNotificationComponent(object sender, NotificationComponent target, NotificationViewModel item)
+        private async Task RedirectNotificationComponent(object sender, NotificationComponent target,
+            NotificationViewModel item)
         {
             switch (target)
             {
@@ -121,7 +122,8 @@ namespace BeginMobile.Pages.Notifications
                                              ((ListView) sender).SelectedItem = null;
                                          });
 
-                    var user = BeginApplication.ProfileServices.GetUser(_currentUser.AuthToken, item.UserViewModel.UserId);
+                    var user = BeginApplication.ProfileServices.GetUser(_currentUser.AuthToken,
+                        item.UserViewModel.UserId);
 
                     var contact = new Contact
                                   {
@@ -171,9 +173,35 @@ namespace BeginMobile.Pages.Notifications
                                              ((ListView) sender).SelectedItem = null;
                                          });
 
-                    //TODO: Load Message
-                    MessagingCenter.Send<ContentPage, MessageViewModel>(this, "message", new MessageViewModel());
-                    MessagingCenter.Unsubscribe<ContentPage, MessageViewModel>(this, "message");
+                    var threadMessages =
+                        await BeginApplication.ProfileServices.GetMessagesByThread(_currentUser.User.UserName, item.ItemId);
+
+                    if (threadMessages != null && threadMessages.Any())
+                    {
+                        var first = threadMessages.FirstOrDefault();
+
+                        var message = new MessageViewModel
+                                      {
+                                          Id = first.Id,
+                                          ThreadId = item.ItemId,
+                                          DateSent = first.DateSent,
+                                          MessageContent = first.MessageContent,
+                                          SenderName = first.Sender.NameSurname,
+                                          Subject = first.Subject,
+                                          Sender = first.Sender,
+                                          Messages = threadMessages
+                                      };
+
+                        MessagingCenter.Send<ContentPage, MessageViewModel>(this, "message", message);
+                        MessagingCenter.Unsubscribe<ContentPage, MessageViewModel>(this, "message");    
+                    }
+
+                    else
+                    {
+                        await DisplayAlert("Info", "The messages does not exist. ", "Ok");
+                    }
+
+                    
                     break;
 
                 default:
