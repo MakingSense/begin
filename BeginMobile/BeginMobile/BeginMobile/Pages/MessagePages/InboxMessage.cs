@@ -100,6 +100,7 @@ namespace BeginMobile.Pages.MessagePages
             if (item.ThreadUnRead.Equals("UnRead"))
             {
                 MessageActions.Request(MessageOption.MarkAsRead, _currentUser.AuthToken, item.ThreadId); //TODO: Mark as read 
+                await InboxMessage.CallServiceApi();
             }            
             var messageDetail = new MessageDetail(item);
             await Navigation.PushAsync(messageDetail);
