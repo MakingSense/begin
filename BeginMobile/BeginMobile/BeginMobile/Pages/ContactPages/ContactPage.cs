@@ -204,7 +204,8 @@ namespace BeginMobile.Pages.ContactPages
                                                                     UserName = contact.UserName,
                                                                     Registered = contact.Registered,
                                                                     Id = contact.Id.ToString(),
-                                                                    Relationship = contact.Relationship
+                                                                    Relationship = contact.Relationship,
+                                                                    IsOnline = contact.IsOnline
                                                                 });
         }
 
