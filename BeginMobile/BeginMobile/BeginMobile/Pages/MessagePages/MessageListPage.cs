@@ -132,5 +132,13 @@ namespace BeginMobile.Pages.MessagePages
         /// Returns the quantity unreaded Messages
         /// </summary>
         public string ThreadCount { get; set; }
+
+        //protected async override void OnAppearing()
+        //{
+        //    base.OnAppearing();
+
+        //    if (this.BindingContext == null)
+        //        this.BindingContext = await (Application.Current)();
+        //}
     }
 }

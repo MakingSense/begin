@@ -24,7 +24,7 @@ namespace BeginMobile.Pages.MessagePages
             MessagingSubscriptions();
             _listViewMessages = new ListView
             {
-                ItemTemplate = new DataTemplate(() => new ProfileMessagesItem(_isUnread)),
+                ItemTemplate = new DataTemplate(typeof(ProfileMessagesItem)),
                 HasUnevenRows = true
             };
 

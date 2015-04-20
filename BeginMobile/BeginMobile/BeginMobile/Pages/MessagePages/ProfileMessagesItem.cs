@@ -12,7 +12,7 @@ namespace BeginMobile.Pages.MessagePages
             get { return "userdefault3.png"; }
         }
 
-        public ProfileMessagesItem(bool isUnread)
+        public ProfileMessagesItem()
         {
             var circleShopImage = new CircleImage
             {
