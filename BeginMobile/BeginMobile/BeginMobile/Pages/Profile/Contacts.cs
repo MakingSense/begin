@@ -44,7 +44,8 @@ namespace BeginMobile.Pages.Profile
         private async Task Init()
         {
             _profileInformationContacts =
-                await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, limit: DefaultLimit);
+                BeginApplication.ProfileServices.GetContacts(_currentUser.User.UserName, _currentUser.AuthToken)
+                    .Contacts;
 
             var contactsList = new List<Contact>();
 

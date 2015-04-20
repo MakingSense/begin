@@ -62,7 +62,7 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Friendship Requested.
+        ///   Looks up a localized string similar to Accept.
         /// </summary>
         public static string ButtonAcceptFriend {
             get {
