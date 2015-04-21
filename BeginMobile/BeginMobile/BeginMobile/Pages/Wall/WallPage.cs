@@ -97,8 +97,8 @@ namespace BeginMobile.Pages.Wall
                 var lastItem = _listWall[_listWall.Count - 1];
 
                 if ((appearingItem.ItemId == lastItem.ItemId) &&
-                    (appearingItem.Type == lastItem.Type) &&
-                    appearingItem.PublicDate == lastItem.PublicDate)
+                    (appearingItem.Type == lastItem.Type))//&&
+                   // appearingItem.PublicDate == lastItem.PublicDate)
                 {
                     await LoadItems();
                 }
@@ -164,7 +164,7 @@ namespace BeginMobile.Pages.Wall
                 ItemId = wallItem.ItemId,
                 Component = wallItem.Component,
                 Type = wallItem.Type,
-                PublicDate = wallItem.Date
+                //PublicDate = wallItem.Date
             };
 
             switch (wallItem.Type)
