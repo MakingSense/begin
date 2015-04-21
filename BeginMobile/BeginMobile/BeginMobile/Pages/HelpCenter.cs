@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using BeginMobile.LocalizeResources.Resources;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages
 {
@@ -6,7 +7,7 @@ namespace BeginMobile.Pages
     {
         public HelpCenter()
         {
-            Title = "Help Center";
+            Title = AppResources.HelpCenterTitle;
 
             Content = new StackLayout
                       {

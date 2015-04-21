@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using BeginMobile.LocalizeResources.Resources;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages
 {
@@ -6,11 +7,11 @@ namespace BeginMobile.Pages
     {
         public TermsAndConditions(bool isLoadByLogin)
         {
-            Title = "Terms And Conditions";
+            Title = AppResources.TermsAndConditionsTitle;
 
             var labelBody = new Label
                             {
-                                Text = "Terms And Conditions",
+                                Text = AppResources.TermsAndConditionsLabelTermsAndConditions,
                                 Style = BeginApplication.Styles.BodyStyle
                             };
 
@@ -18,7 +19,7 @@ namespace BeginMobile.Pages
             {
                 var buttonBack = new Button
                              {
-                                 Text = "Go back",
+                                 Text = AppResources.TermsAndConditionsButtonGoBack,
                                  Style = BeginApplication.Styles.DefaultButton
                              };
 

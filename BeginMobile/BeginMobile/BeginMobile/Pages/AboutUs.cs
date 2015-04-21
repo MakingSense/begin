@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using BeginMobile.LocalizeResources.Resources;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages
 {
@@ -6,7 +7,7 @@ namespace BeginMobile.Pages
     {
         public AboutUs()
         {
-            Title = "About Us";
+            Title = AppResources.AboutUsTitle;
             Content = new StackLayout
                       {
                           Spacing = 20,

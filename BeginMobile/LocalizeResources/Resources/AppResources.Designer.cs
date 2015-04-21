@@ -62,6 +62,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About us.
+        /// </summary>
+        public static string AboutUsTitle {
+            get {
+                return ResourceManager.GetString("AboutUsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string AlertOk {
@@ -76,6 +85,60 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string AlertReTry {
             get {
                 return ResourceManager.GetString("AlertReTry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Contacts.
+        /// </summary>
+        public static string AppHomeChildFindContacts {
+            get {
+                return ResourceManager.GetString("AppHomeChildFindContacts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Groups.
+        /// </summary>
+        public static string AppHomeChildGroups {
+            get {
+                return ResourceManager.GetString("AppHomeChildGroups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Messages.
+        /// </summary>
+        public static string AppHomeChildMessages {
+            get {
+                return ResourceManager.GetString("AppHomeChildMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to News Feed.
+        /// </summary>
+        public static string AppHomeChildNewsFeed {
+            get {
+                return ResourceManager.GetString("AppHomeChildNewsFeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string AppHomeChildNotifications {
+            get {
+                return ResourceManager.GetString("AppHomeChildNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string AppHomeTitle {
+            get {
+                return ResourceManager.GetString("AppHomeTitle", resourceCulture);
             }
         }
         
@@ -377,6 +440,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Help Center.
+        /// </summary>
+        public static string HelpCenterTitle {
+            get {
+                return ResourceManager.GetString("HelpCenterTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string HomePageTitle {
@@ -584,6 +656,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Privacy.
+        /// </summary>
+        public static string PrivacyTitle {
+            get {
+                return ResourceManager.GetString("PrivacyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All fields are required.
         /// </summary>
         public static string RegisterAlertFieldsAreRequired {
@@ -688,6 +769,33 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string ServerMessageSuccess {
             get {
                 return ResourceManager.GetString("ServerMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go Back.
+        /// </summary>
+        public static string TermsAndConditionsButtonGoBack {
+            get {
+                return ResourceManager.GetString("TermsAndConditionsButtonGoBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms And Conditions.
+        /// </summary>
+        public static string TermsAndConditionsLabelTermsAndConditions {
+            get {
+                return ResourceManager.GetString("TermsAndConditionsLabelTermsAndConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms and Conditions.
+        /// </summary>
+        public static string TermsAndConditionsTitle {
+            get {
+                return ResourceManager.GetString("TermsAndConditionsTitle", resourceCulture);
             }
         }
         
