@@ -122,6 +122,7 @@ namespace BeginMobile.Pages.MessagePages
                 else
                 {
                     await SentMessage.CallServiceApi();
+                    InboxMessage.IsInbox = false;
                 }
                 await Navigation.PopAsync();
             }

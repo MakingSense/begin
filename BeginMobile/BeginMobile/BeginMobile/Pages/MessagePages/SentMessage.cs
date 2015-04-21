@@ -13,12 +13,11 @@ namespace BeginMobile.Pages.MessagePages
     {
         private static LoginUser _currentUser;
         private static ListView _listViewMessages;
-        private bool _isUnread = true;
         public SentMessage()
         {
             Title = "Sent";
-
-            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+            InboxMessage.IsInbox = false;
+            _currentUser = (LoginUser)Application.Current.Properties["LoginUser"];
 
             CallServiceApi();
             MessagingSubscriptions();
@@ -83,7 +82,10 @@ namespace BeginMobile.Pages.MessagePages
                 return;
             }
             var item = (MessageViewModel) eventArgs.SelectedItem;
-            var messageDetail = new MessageDetail(item);
+            var messageDetail = new MessageDetail(item)
+                                {
+                                    BindingContext = item
+                                };
             await Navigation.PushAsync(messageDetail);
 
             ((ListView) sender).SelectedItem = null;
