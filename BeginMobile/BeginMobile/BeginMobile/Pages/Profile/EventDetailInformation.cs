@@ -37,7 +37,7 @@ namespace BeginMobile.Pages.Profile
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 Source = Device.OS == TargetPlatform.iOS
                                   ? ImageSource.FromFile("userdefault3.png")
-                                  : ImageSource.FromFile("userdefault3.png"),
+                                  : ImageSource.FromFile("userdefault3.png")
             };
 
 
@@ -67,8 +67,14 @@ namespace BeginMobile.Pages.Profile
                    BoxViewLine()
                 }
             };
+
+            var image = new Image
+                        {
+                            Source = ImageSource.FromFile("userdefault3.png")
+                        };
+
             gridImage.Children.Add(stackLayoutLinesLeft, 0, 0);
-            gridImage.Children.Add(imageEvent, 1, 0);
+            gridImage.Children.Add(Device.OS != TargetPlatform.iOS ? imageEvent : image, 1, 0);
             gridImage.Children.Add(stackLayoutLinesRight, 2, 0);
 
             var labelEventName = new Label

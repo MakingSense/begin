@@ -136,8 +136,7 @@ namespace BeginMobile.Pages.Profile
 
             #endregion
         }
-
-
+        
         private void LoadCategoriesPicker()
         {
             _categoriesPicker = new Picker
@@ -179,10 +178,10 @@ namespace BeginMobile.Pages.Profile
             RetrieveLimitSelected(out limit);
             RetrieveCategorySelected(out cat);
 
-            ObservableCollection<ProfileEvent> profileEventList =
+            var profileEventList =
                 await BeginApplication.ProfileServices.GetEventsByParams(_currentUser.AuthToken, q, cat, limit);
 
-            if (profileEventList.Any())
+            if (profileEventList != null && profileEventList.Any())
             {
                 _eventsListView.ItemsSource = RetrieveEventInfoObjectList(profileEventList);
                 _labelNoEventsMessage.Text = string.Empty;

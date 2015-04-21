@@ -65,8 +65,12 @@ namespace BeginMobile.Pages.Profile
                                                BoxViewLine()
                                            }
                                        };
+
+            var image = new Image();
+            image.SetBinding(Image.SourceProperty, new Binding("Icon"));
+
             gridImage.Children.Add(stackLayoutLinesLeft, 0, 0);
-            gridImage.Children.Add(imageContact, 1, 0);
+            gridImage.Children.Add(Device.OS != TargetPlatform.iOS ? imageContact : image, 1, 0);
             gridImage.Children.Add(new Image
                                    {
                                        HeightRequest = 15,

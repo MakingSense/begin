@@ -158,7 +158,7 @@ namespace BeginMobile.Pages.Profile
             ObservableCollection<Group> groupsList =
                 await BeginApplication.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, q, cat, limit, sections);
 
-            if (groupsList.Any())
+            if (groupsList != null && groupsList.Any())
             {
                 _listViewGroup.ItemsSource = groupsList;
                 _labelNoGroupsMessage.Text = string.Empty;
