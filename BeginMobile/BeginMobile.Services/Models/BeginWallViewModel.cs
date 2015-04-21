@@ -25,5 +25,7 @@
         public string Component { set; get; }
 
         public string Type { set; get; }
+
+        public string PublicDate { set; get; }
     }
 }
