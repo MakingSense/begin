@@ -2,6 +2,7 @@
 using BeginMobile.Services.ManagerServices;
 using Xamarin.Forms;
 using BeginMobile.Interfaces;
+using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.Accounts
 {
@@ -24,19 +25,19 @@ namespace BeginMobile.Accounts
 
             var labelTitle = new Label
                                {
-                                   Text = "Password Recovery",
+                                   Text = AppResources.ForgotPassLabelPasswordRecovery,
                                    Style = BeginApplication.Styles.TitleStyle
                                };
 
             var labelSubTitle = new Label{
-                                               Text = "Enter the e-mail address you registered with the Application. Instructions to reset your password will be sent to this address.", 
+                Text = AppResources.ForgotPassLabelEnterEmail, 
                                                Style = BeginApplication.Styles.BodyStyle
                                            };
 
-            _entryEmail = new Entry { Placeholder = "Enter your e-mail address"};
+            _entryEmail = new Entry { Placeholder = AppResources.ForgotPassPlaceHolderEmail };
 
-            var buttonReset = new Button { 
-                                                Text= "Send", 
+            var buttonReset = new Button {
+                Text = AppResources.ButtonSend, 
                                                 Style = BeginApplication.Styles.DefaultButton
                                             };
             
@@ -57,16 +58,16 @@ namespace BeginMobile.Accounts
                         if (webPage.Equals(""))
                         {
                             await
-                                DisplayAlert("Information",
-                                    "Please check your email address for reset your password",
-                                    "ok");
+                                DisplayAlert(AppResources.ForgotPassAlertInformation,
+                                    AppResources.ForgotPassAlertCheckEmail,
+                                    AppResources.AlertOk);
                             MessagingCenter.Send<ContentPage>(this, "Login");
                         }
                         else
                         {
-                            await DisplayAlert("Error",
-                                "An error happened on the server",
-                                "Re - Try");
+                            await DisplayAlert(AppResources.ApplicationError,
+                                AppResources.ForgotPassAlertErrorServer,
+                                AppResources.AlertReTry);
                         }
                     }
 
@@ -75,13 +76,13 @@ namespace BeginMobile.Accounts
                 }
                 else
                 {
-                    await DisplayAlert("Validation Error",
-                        "Email has wrong format",
-                        "Re - Try");
+                    await DisplayAlert(AppResources.ApplicationValidationError,
+                        AppResources.ForgotPassValidationEmail,
+                        AppResources.AlertReTry);
                 }
             };
 
-            var buttonBack = new Button { Text = "Cancel", Style = BeginApplication.Styles.DefaultButton };
+            var buttonBack = new Button { Text = AppResources.ButtonCancel, Style = BeginApplication.Styles.DefaultButton };
             buttonBack.Clicked += (sender, eventArgs) =>
             {
                 MessagingCenter.Send<ContentPage>(this, "Login");

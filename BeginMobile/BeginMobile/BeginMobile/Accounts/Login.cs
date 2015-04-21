@@ -62,7 +62,7 @@ namespace BeginMobile.Accounts
             {
                 if (String.IsNullOrEmpty(_entryEmail.Text) || String.IsNullOrEmpty(_entryPassword.Text))
                 {
-                    await DisplayAlert("Validation Error", "Username and Password are required", "Re - Try");
+                    await DisplayAlert(AppResources.ApplicationValidationError, AppResources.LoginAlertValidationUsernameAndPass, AppResources.AlertReTry);
                 }
 
                 else
@@ -78,7 +78,7 @@ namespace BeginMobile.Accounts
                         if (loginUser.Errors != null)
                         {
                             var errorMessage = loginUser.Errors.Aggregate("", (current, error) => current + (error.ErrorMessage + "\n"));
-                            await DisplayAlert("Error login validation", errorMessage, "Re - Try");
+                            await DisplayAlert(AppResources.LoginAlertValidationError, errorMessage, AppResources.AlertReTry);
                         }
 
                         else

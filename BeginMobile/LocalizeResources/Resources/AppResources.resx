@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlertOk" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="AlertReTry" xml:space="preserve">
+    <value>Re - Try</value>
+  </data>
+  <data name="ApplicationError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ApplicationValidationError" xml:space="preserve">
+    <value>Validation Error</value>
+  </data>
   <data name="ButtonAcceptFriend" xml:space="preserve">
     <value>Accept</value>
   </data>
@@ -149,6 +161,9 @@
   </data>
   <data name="ButtonRemoveFriend" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="ButtonSend" xml:space="preserve">
+    <value>Send</value>
   </data>
   <data name="ButtonSendMessage" xml:space="preserve">
     <value>Send Message</value>
@@ -185,6 +200,27 @@
   </data>
   <data name="ErrorMessageTitle" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="ForgotPassAlertCheckEmail" xml:space="preserve">
+    <value>Please check your email address for reset your password</value>
+  </data>
+  <data name="ForgotPassAlertErrorServer" xml:space="preserve">
+    <value>An error happened on the server</value>
+  </data>
+  <data name="ForgotPassAlertInformation" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="ForgotPassLabelEnterEmail" xml:space="preserve">
+    <value>Enter the e-mail address you registered with the Application. Instructions to reset your password will be sent to this address.</value>
+  </data>
+  <data name="ForgotPassLabelPasswordRecovery" xml:space="preserve">
+    <value>Password Recovery</value>
+  </data>
+  <data name="ForgotPassPlaceHolderEmail" xml:space="preserve">
+    <value>Enter your e-mail address</value>
+  </data>
+  <data name="ForgotPassValidationEmail" xml:space="preserve">
+    <value>Email has wrong format</value>
   </data>
   <data name="HomePageTitle" xml:space="preserve">
     <value>Home</value>
@@ -231,6 +267,12 @@
   <data name="LabelTitleProfile" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="LoginAlertValidationError" xml:space="preserve">
+    <value>Error login validation</value>
+  </data>
+  <data name="LoginAlertValidationUsernameAndPass" xml:space="preserve">
+    <value>Username and Password are required</value>
+  </data>
   <data name="LoginFormTitle" xml:space="preserve">
     <value>Login Form</value>
   </data>
@@ -249,6 +291,24 @@
   <data name="PlaceholderChangePasswordNewPass" xml:space="preserve">
     <value>New Password</value>
   </data>
+  <data name="RegisterAlertFieldsAreRequired" xml:space="preserve">
+    <value>All fields are required</value>
+  </data>
+  <data name="RegisterAlertSuccessMessage" xml:space="preserve">
+    <value>You've successfully registered.</value>
+  </data>
+  <data name="RegisterAlertValidationEmail" xml:space="preserve">
+    <value>Email has wrong format</value>
+  </data>
+  <data name="RegisterAlertValidationPassAndConfirm" xml:space="preserve">
+    <value>Password and Confirm password are not match!</value>
+  </data>
+  <data name="RegisterAlertValidationTermsAndConditions" xml:space="preserve">
+    <value>Please agree the Terms and Conditions!</value>
+  </data>
+  <data name="RegisterButtonTermsAndConditions" xml:space="preserve">
+    <value>I agree the Terms &amp; Conditions</value>
+  </data>
   <data name="RegisterFormTitle" xml:space="preserve">
     <value>Register</value>
   </data>
@@ -265,7 +325,7 @@
     <value>Your password has been changed successfuly</value>
   </data>
   <data name="ServerMessageSuccess" xml:space="preserve">
-    <value>Successfuly</value>
+    <value>Successfull!</value>
   </data>
   <data name="ToolBarProfileMeContacts" xml:space="preserve">
     <value>Contacts</value>
@@ -287,6 +347,21 @@
   </data>
   <data name="ToolBarProfileMeShop" xml:space="preserve">
     <value>Shop</value>
+  </data>
+  <data name="UpdateProfileAlertMessage" xml:space="preserve">
+    <value>Your profile has been updated successfuly</value>
+  </data>
+  <data name="UpdateProfileAlertSuccess" xml:space="preserve">
+    <value>Successfuly updated!</value>
+  </data>
+  <data name="UpdateProfileButtonUpdate" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdateProfileEntryNameSurname" xml:space="preserve">
+    <value>Name and Surname</value>
+  </data>
+  <data name="UpdateProfileTitle" xml:space="preserve">
+    <value>Update profile</value>
   </data>
   <data name="UsernamePlaceholder" xml:space="preserve">
     <value>Username</value>

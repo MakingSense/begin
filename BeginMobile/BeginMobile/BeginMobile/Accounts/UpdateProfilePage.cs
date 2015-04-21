@@ -1,4 +1,5 @@
-﻿using BeginMobile.Services.DTO;
+﻿using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
 using BeginMobile.Services.Utils;
 using Xamarin.Forms;
@@ -14,17 +15,17 @@ namespace BeginMobile.Accounts
             var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             var loginUserManager = new LoginUserManager();
 
-            Title = "Update profile";
+            Title = AppResources.UpdateProfileTitle;
 
             _entryNameSurname = new Entry
                            {
-                               Placeholder = "Name and Surname",
+                               Placeholder = AppResources.UpdateProfileEntryNameSurname,
                                IsPassword = false,
                            };
 
             var buttonUpdateProfile = new Button
                                       {
-                                          Text = "Update",
+                                          Text = AppResources.UpdateProfileButtonUpdate,
                                           HorizontalOptions = LayoutOptions.FillAndExpand,
                                           Style = BeginApplication.Styles.DefaultButton
                                       };
@@ -39,8 +40,8 @@ namespace BeginMobile.Accounts
                                                      if (result == "")
                                                      {
                                                          await
-                                                         DisplayAlert("Successfuly updated!",
-                                                             "Your profile has been updated successfuly", "Ok");
+                                                         DisplayAlert(AppResources.UpdateProfileAlertSuccess,
+                                                             AppResources.UpdateProfileAlertMessage, AppResources.AlertOk);
                                                      }
 
                                                      

@@ -55,14 +55,14 @@ namespace BeginMobile.Accounts
                     if (changePasswordResponse.HasError)
                     {
                         var messageErrors = changePasswordResponse.Errors.Aggregate("", (current, error) => current + (error.ErrorMessage) + "\n");
-                        await DisplayAlert(AppResources.ErrorMessageTitle, messageErrors, "Re-try");
+                        await DisplayAlert(AppResources.ErrorMessageTitle, messageErrors, AppResources.AlertReTry);
                         _entryCurrentPassword.Text = "";
                         _entryNewPassword.Text = "";
                         _entryRepeatNewPassword.Text = "";
                     }
                     else
                     {
-                        await DisplayAlert(AppResources.ServerErrorMessageName, AppResources.ServerErrorMessage, "Ok");
+                        await DisplayAlert(AppResources.ServerErrorMessageName, AppResources.ServerErrorMessage, AppResources.AlertOk);
                         await Navigation.PopToRootAsync();
                     }
                 }

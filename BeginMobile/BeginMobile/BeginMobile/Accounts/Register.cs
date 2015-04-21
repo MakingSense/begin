@@ -63,7 +63,7 @@ namespace BeginMobile.Accounts
 
             var buttonTermsAndConditions = new Button()
             {
-                Text = "I agree the Terms & Conditions",
+                Text = AppResources.RegisterButtonTermsAndConditions,
                 FontSize = 10,
                 Style = BeginApplication.Styles.LinkButton,
                 TextColor = Color.FromHex("77D065")
@@ -103,9 +103,9 @@ namespace BeginMobile.Accounts
                     || String.IsNullOrEmpty(_entryConfirmPassword.Text)
                     )
                 {
-                    await DisplayAlert("Validation Error",
-                                 "All fields are required",
-                                 "Re - Try");
+                    await DisplayAlert(AppResources.ApplicationValidationError,
+                                 AppResources.RegisterAlertFieldsAreRequired,
+                                 AppResources.AlertReTry);
                 }
                 else
                 {
@@ -131,12 +131,12 @@ namespace BeginMobile.Accounts
                                         var errorMessages = registerUser.Errors.Aggregate("",
                                             (current, error) => current + (error.ErrorMessage + "\n"));
 
-                                        await DisplayAlert("Error", errorMessages, "OK");
+                                        await DisplayAlert(AppResources.ApplicationError, errorMessages, AppResources.AlertOk);
 
                                     }
                                     else
                                     {
-                                        await DisplayAlert("Successfull!", "You've successfully registered.", "OK");
+                                        await DisplayAlert(AppResources.ServerMessageSuccess, AppResources.RegisterAlertSuccessMessage, AppResources.AlertOk);
 
                                         var loginUser = new LoginUser
                                         {
@@ -157,23 +157,23 @@ namespace BeginMobile.Accounts
 
                             else
                             {
-                                await DisplayAlert("Validation Error",
-                                             "Please agree the Terms and Conditions!",
-                                             "Re - Try");
+                                await DisplayAlert(AppResources.ApplicationValidationError,
+                                             AppResources.RegisterAlertValidationTermsAndConditions,
+                                             AppResources.AlertReTry);
                             }
                         }
                         else
                         {
-                            await DisplayAlert("Validation Error",
-                                         "Password and Confirm password are not match!",
-                                         "Re - Try");
+                            await DisplayAlert(AppResources.ApplicationValidationError,
+                                         AppResources.RegisterAlertValidationPassAndConfirm,
+                                         AppResources.AlertReTry);
                         }
                     }
                     else
                     {
-                        await DisplayAlert("Validation Error",
-                                     "Email has wrong format",
-                                     "Re - Try");
+                        await DisplayAlert(AppResources.ApplicationValidationError,
+                                     AppResources.RegisterAlertValidationEmail,
+                                     AppResources.AlertReTry);
                     }
                 }
             };

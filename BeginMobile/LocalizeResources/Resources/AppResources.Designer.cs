@@ -62,6 +62,42 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string AlertOk {
+            get {
+                return ResourceManager.GetString("AlertOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re - Try.
+        /// </summary>
+        public static string AlertReTry {
+            get {
+                return ResourceManager.GetString("AlertReTry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string ApplicationError {
+            get {
+                return ResourceManager.GetString("ApplicationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation Error.
+        /// </summary>
+        public static string ApplicationValidationError {
+            get {
+                return ResourceManager.GetString("ApplicationValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accept.
         /// </summary>
         public static string ButtonAcceptFriend {
@@ -157,6 +193,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string ButtonRemoveFriend {
             get {
                 return ResourceManager.GetString("ButtonRemoveFriend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string ButtonSend {
+            get {
+                return ResourceManager.GetString("ButtonSend", resourceCulture);
             }
         }
         
@@ -265,6 +310,69 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string ErrorMessageTitle {
             get {
                 return ResourceManager.GetString("ErrorMessageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please check your email address for reset your password.
+        /// </summary>
+        public static string ForgotPassAlertCheckEmail {
+            get {
+                return ResourceManager.GetString("ForgotPassAlertCheckEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error happened on the server.
+        /// </summary>
+        public static string ForgotPassAlertErrorServer {
+            get {
+                return ResourceManager.GetString("ForgotPassAlertErrorServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string ForgotPassAlertInformation {
+            get {
+                return ResourceManager.GetString("ForgotPassAlertInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the e-mail address you registered with the Application. Instructions to reset your password will be sent to this address..
+        /// </summary>
+        public static string ForgotPassLabelEnterEmail {
+            get {
+                return ResourceManager.GetString("ForgotPassLabelEnterEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password Recovery.
+        /// </summary>
+        public static string ForgotPassLabelPasswordRecovery {
+            get {
+                return ResourceManager.GetString("ForgotPassLabelPasswordRecovery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your e-mail address.
+        /// </summary>
+        public static string ForgotPassPlaceHolderEmail {
+            get {
+                return ResourceManager.GetString("ForgotPassPlaceHolderEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email has wrong format.
+        /// </summary>
+        public static string ForgotPassValidationEmail {
+            get {
+                return ResourceManager.GetString("ForgotPassValidationEmail", resourceCulture);
             }
         }
         
@@ -404,6 +512,24 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error login validation.
+        /// </summary>
+        public static string LoginAlertValidationError {
+            get {
+                return ResourceManager.GetString("LoginAlertValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username and Password are required.
+        /// </summary>
+        public static string LoginAlertValidationUsernameAndPass {
+            get {
+                return ResourceManager.GetString("LoginAlertValidationUsernameAndPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login Form.
         /// </summary>
         public static string LoginFormTitle {
@@ -458,6 +584,60 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All fields are required.
+        /// </summary>
+        public static string RegisterAlertFieldsAreRequired {
+            get {
+                return ResourceManager.GetString("RegisterAlertFieldsAreRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;ve successfully registered..
+        /// </summary>
+        public static string RegisterAlertSuccessMessage {
+            get {
+                return ResourceManager.GetString("RegisterAlertSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email has wrong format.
+        /// </summary>
+        public static string RegisterAlertValidationEmail {
+            get {
+                return ResourceManager.GetString("RegisterAlertValidationEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password and Confirm password are not match!.
+        /// </summary>
+        public static string RegisterAlertValidationPassAndConfirm {
+            get {
+                return ResourceManager.GetString("RegisterAlertValidationPassAndConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please agree the Terms and Conditions!.
+        /// </summary>
+        public static string RegisterAlertValidationTermsAndConditions {
+            get {
+                return ResourceManager.GetString("RegisterAlertValidationTermsAndConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I agree the Terms &amp; Conditions.
+        /// </summary>
+        public static string RegisterButtonTermsAndConditions {
+            get {
+                return ResourceManager.GetString("RegisterButtonTermsAndConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string RegisterFormTitle {
@@ -503,7 +683,7 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Successfuly.
+        ///   Looks up a localized string similar to Successfull!.
         /// </summary>
         public static string ServerMessageSuccess {
             get {
@@ -571,6 +751,51 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string ToolBarProfileMeShop {
             get {
                 return ResourceManager.GetString("ToolBarProfileMeShop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your profile has been updated successfuly.
+        /// </summary>
+        public static string UpdateProfileAlertMessage {
+            get {
+                return ResourceManager.GetString("UpdateProfileAlertMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfuly updated!.
+        /// </summary>
+        public static string UpdateProfileAlertSuccess {
+            get {
+                return ResourceManager.GetString("UpdateProfileAlertSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string UpdateProfileButtonUpdate {
+            get {
+                return ResourceManager.GetString("UpdateProfileButtonUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name and Surname.
+        /// </summary>
+        public static string UpdateProfileEntryNameSurname {
+            get {
+                return ResourceManager.GetString("UpdateProfileEntryNameSurname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update profile.
+        /// </summary>
+        public static string UpdateProfileTitle {
+            get {
+                return ResourceManager.GetString("UpdateProfileTitle", resourceCulture);
             }
         }
         
