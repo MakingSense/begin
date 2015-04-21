@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
 using Xamarin.Forms;
+using BeginMobile.Utils;
 
 namespace BeginMobile.Pages.MessagePages
 {
@@ -16,6 +17,8 @@ namespace BeginMobile.Pages.MessagePages
         private static ListView _listViewMessages;
         private static LoginUser _currentUser;
 
+        private readonly SearchView _searchView;
+        private const string DefaultLimit = "10";
         public InboxMessage()
         {
             Title = "Inbox";
@@ -23,7 +26,9 @@ namespace BeginMobile.Pages.MessagePages
             _currentUser = (LoginUser)Application.Current.Properties["LoginUser"];
 
             CallServiceApi();
-
+            _searchView = new SearchView {SearchBar = {Placeholder = "Filter by subject or content"}};
+            _searchView.SearchBar.TextChanged += SearchItemEventHandler;
+            _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
             MessagingSubscriptions();
 
             _listViewMessages = new ListView
@@ -45,7 +50,7 @@ namespace BeginMobile.Pages.MessagePages
             var mainStackLayout = new StackLayout
                                   {
                                       Padding = BeginApplication.Styles.LayoutThickness,
-                                      Children = {stackLayoutMessagesListView},
+                                      Children = { _searchView.Container, stackLayoutMessagesListView },
                                   };
             Content = mainStackLayout;
         }
@@ -63,11 +68,16 @@ namespace BeginMobile.Pages.MessagePages
 
         public static async Task CallServiceApi()
         {
-            var inboxMessageData = new List<MessageViewModel>();
             var inboxThreads =
-                await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken);
+                await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, null, DefaultLimit);
+            _listViewMessages.ItemsSource = RetrieveThreadMessages(inboxThreads);
+        }
+
+        private static IEnumerable<MessageViewModel> RetrieveThreadMessages(ProfileThreadMessages inboxThreads)
+        {
+            var inboxMessageData = new List<MessageViewModel>();
             var threads = inboxThreads;
-            if (!threads.Threads.Any()) return;
+            if (!threads.Threads.Any()) return new ObservableCollection<MessageViewModel>();
             var threadMessages = threads.Threads;
             inboxMessageData.AddRange((from threadMessage in threadMessages
                                        let message = threadMessage.Messages.FirstOrDefault()
@@ -82,13 +92,11 @@ namespace BeginMobile.Pages.MessagePages
                                            Subject = message.Subject,
                                            Sender = message.Sender,
                                            Messages = threadMessage.Messages,
-                                           ThreadUnRead = threadMessage.Unread.Equals("1")?EnumMessageStates.Unread.ToString():EnumMessageStates.Read.ToString()
+                                           ThreadUnRead = threadMessage.Unread.Equals("1") ? EnumMessageStates.Unread.ToString() : EnumMessageStates.Read.ToString()
                                        }).OrderByDescending(c => c.DateSent));
 
-            var listCollection = new ObservableCollection<MessageViewModel>(inboxMessageData);
-            _listViewMessages.ItemsSource = listCollection;
-        }
-
+            return new ObservableCollection<MessageViewModel>(inboxMessageData);
+        } 
         public async void ListViewItemSelectedEventHandler(object sender, SelectedItemChangedEventArgs eventArgs)
         {
             if (eventArgs.SelectedItem == null)
@@ -107,6 +115,33 @@ namespace BeginMobile.Pages.MessagePages
                                 };
             await Navigation.PushAsync(messageDetail);
             ((ListView) sender).SelectedItem = null;
+        }
+        /// <summary>
+        /// Common handler when an searchBar item has changed 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        private async void SearchItemEventHandler(object sender, EventArgs eventArgs)
+        {
+            string limit;
+            var q = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
+            RetrieveLimitSelected(out limit);
+          
+
+            var profileThreadMessages = await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, q, limit);
+            if (profileThreadMessages!=null)
+            {
+                _listViewMessages.ItemsSource = profileThreadMessages.Threads != null &&
+                                                profileThreadMessages.Threads.Any()
+                    ? new ObservableCollection<MessageViewModel>(RetrieveThreadMessages(profileThreadMessages))
+                    : new ObservableCollection<MessageViewModel>(new List<MessageViewModel>());
+            }
+
+            else
+            {
+                _listViewMessages.ItemsSource = new ObservableCollection<MessageViewModel>(new List<MessageViewModel>());
+            }
+           
         }
 
         /// <summary>
@@ -179,7 +214,15 @@ namespace BeginMobile.Pages.MessagePages
                              }
                          };
         }
+        private void RetrieveLimitSelected(out string limit)
+        {
+            var limitSelectedIndex = _searchView.Limit.SelectedIndex;
+            var limitLastIndex = _searchView.Limit.Items.Count - 1;
 
+            limit = limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex
+                ? null
+                : _searchView.Limit.Items[limitSelectedIndex];
+        }
         public void Dispose()
         {
         }
