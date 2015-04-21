@@ -22,7 +22,7 @@ namespace BeginMobile.Pages.Wall
         private int _limit = 10;
         private Button _buttonAddMore;
         private Grid _gridMain;
-
+        private StackLayout _stackLayoutLoadingIndicator;
 
         public WallPage(string title, string iconImage)
             : base(title, iconImage)
@@ -37,11 +37,13 @@ namespace BeginMobile.Pages.Wall
                 RowDefinitions =
                 {
                     new RowDefinition { Height = GridLength.Auto },
-                    new RowDefinition { Height = 50 }
+                    new RowDefinition { Height = GridLength.Auto }
                 }
             };
 
-            _gridMain.Children.Add(CreateStackLayoutWithLoadingIndicator(), 0, 1);
+            _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator();
+
+            _gridMain.Children.Add(_stackLayoutLoadingIndicator, 0, 1);
             Content = _gridMain;
             Init();
         }
@@ -100,6 +102,7 @@ namespace BeginMobile.Pages.Wall
                     (appearingItem.Type == lastItem.Type) &&
                     appearingItem.PublicDate == lastItem.PublicDate)
                 {
+                    addLoadingIndicator(_stackLayoutLoadingIndicator);
                     await LoadItems();
                 }
             };
@@ -118,12 +121,31 @@ namespace BeginMobile.Pages.Wall
 
             Content = _gridMain;
 
+            removeLoadingIndicator(_stackLayoutLoadingIndicator);
+
+        }
+
+        private void removeLoadingIndicator(View loadingIndicator)
+        {
+            if (_gridMain.Children.Contains(loadingIndicator))
+            {
+                _gridMain.Children.Remove(loadingIndicator);
+                _gridMain.RowDefinitions[1].Height = GridLength.Auto;
+            }
+        }
+
+        private void addLoadingIndicator(View loadingIndicator)
+        {
+            if (!_gridMain.Children.Contains(loadingIndicator))
+            {
+                _gridMain.RowDefinitions[1].Height = 50;
+                _gridMain.Children.Add(loadingIndicator, 0, 1);
+            }
         }
 
         private async Task LoadItems()
         {
             _offset +=_limit;
-
             _isLoading = true;
 
             ActivityIndicatorLoading.IsRunning = true;
@@ -140,9 +162,9 @@ namespace BeginMobile.Pages.Wall
                         _listWall.Add(beginWallViewModel);
                     }
 
-
                     ActivityIndicatorLoading.IsRunning = false;
                     ActivityIndicatorLoading.IsVisible = false;
+                    removeLoadingIndicator(_stackLayoutLoadingIndicator);
 
                     _isLoading = false;
                     return false;
@@ -153,6 +175,8 @@ namespace BeginMobile.Pages.Wall
             {
                 ActivityIndicatorLoading.IsRunning = false;
                 ActivityIndicatorLoading.IsVisible = false;
+                removeLoadingIndicator(_stackLayoutLoadingIndicator);
+
                 _isLoading = false;
             }
         }

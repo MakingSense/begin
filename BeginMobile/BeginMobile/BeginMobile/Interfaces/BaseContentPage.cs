@@ -27,12 +27,25 @@ namespace BeginMobile.Interfaces
         {
             var stackLayoutMain = new StackLayout()
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand,
             };
             ActivityIndicatorLoading = CreateLoadingIndicator();
             stackLayoutMain.Children.Add(ActivityIndicatorLoading);
 
             return stackLayoutMain;
+        }
+
+        protected RelativeLayout CreateRLayoutLoadingIndicator()
+        {
+            ActivityIndicatorLoading = CreateLoadingIndicator();
+            var relativeLayoutMain = new RelativeLayout();
+            relativeLayoutMain.Children.Add(ActivityIndicatorLoading,
+                xConstraint: Constraint.Constant(0),
+                yConstraint: Constraint.Constant(0),
+                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
+            return relativeLayoutMain;
         }
 
         protected RelativeLayout CreateLoadingIndicatorRelativeLayout(View content)
