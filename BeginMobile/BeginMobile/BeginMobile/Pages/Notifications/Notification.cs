@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using BeginMobile.LocalizeResources.Resources;
@@ -33,7 +34,6 @@ namespace BeginMobile.Pages.Notifications
 
         private bool _isUnread = true;
         private const string DefaultLimit = "10";
-
         public Notification(string title, string iconImg)
             : base(title, iconImg)
         {
@@ -219,8 +219,7 @@ namespace BeginMobile.Pages.Notifications
             var profileNotification =
                 await BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken, DefaultLimit);
 
-            LabelCounter.Text = profileNotification.UnreadCount;
-            LabelCounter.BindingContext = profileNotification.UnreadCount;
+            LabelCounter.Text = profileNotification.UnreadCount;        
 
             LoadStatusOptionsPicker();
 
@@ -386,9 +385,12 @@ namespace BeginMobile.Pages.Notifications
                     if (toMark != null && notifications.Remove(toMark))
                     {
                         NotificationActions
-                            .Request(NotificationOption.MarkAsUnread, _currentUser.AuthToken, notificationId);
+                           .Request(NotificationOption.MarkAsUnread, _currentUser.AuthToken, notificationId);
 
                         await DisplayAlert("Info", "Marked as Unread.", "Ok");
+
+                        var updatedNotifications = await BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken);
+                        LabelCounter.Text = updatedNotifications.UnreadCount;
                     }
                 }
             };
@@ -411,9 +413,12 @@ namespace BeginMobile.Pages.Notifications
                                  {
                                      NotificationActions
                                          .Request(NotificationOption.MarkAsRead, _currentUser.AuthToken, notificationId);
-
+                                     
                                      await DisplayAlert("Info", "Marked as Read.", "Ok");
-
+                                     
+                                     var updatedNotifications = await
+                                       BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken);
+                                     LabelCounter.Text = updatedNotifications.UnreadCount;
                                  }
                              }
                          };
