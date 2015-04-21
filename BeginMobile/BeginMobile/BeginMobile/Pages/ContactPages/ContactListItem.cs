@@ -7,6 +7,7 @@ using BeginMobile.Services.DTO;
 using BeginMobile.Utils;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
+using BeginMobile.Services.Models;
 
 namespace BeginMobile.Pages.ContactPages
 {
@@ -22,13 +23,13 @@ namespace BeginMobile.Pages.ContactPages
 
         private static string Relationship { get; set; }
 
-        private static readonly BindableProperty RelationshipProperty =
-            BindableProperty.Create<ContactListItem, string>
-                (getter => Relationship, string.Empty, BindingMode.Default,
-                    propertyChanging: (bindable, oldValue, newValue) =>
-                                      {
-                                          Relationship = newValue;
-                                      });
+        //private static readonly BindableProperty RelationshipProperty =
+        //    BindableProperty.Create<ContactListItem, string>
+        //        (getter => Relationship, string.Empty, BindingMode.Default,
+        //            propertyChanging: (bindable, oldValue, newValue) =>
+        //                              {
+        //                                  Relationship = newValue;
+        //                              });
 
         public ContactListItem(LoginUser loginUser)
         {
@@ -157,7 +158,7 @@ namespace BeginMobile.Pages.ContactPages
                            }
                        };
 
-            SetBinding(RelationshipProperty, new Binding("Relationship"));
+            //SetBinding(RelationshipProperty, new Binding("Relationship"));
             
             try
             {
@@ -384,5 +385,12 @@ namespace BeginMobile.Pages.ContactPages
         }
 
         #endregion
+
+        protected override void OnBindingContextChanged()
+        {
+            var data = ((Contact)BindingContext);
+            Relationship = data.Relationship;
+            base.OnBindingContextChanged();
+        }
     }
 }
