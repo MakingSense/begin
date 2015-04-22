@@ -26,9 +26,7 @@ namespace BeginMobile.Pages.MessagePages
                                       });        
 
         public ProfileMessagesItem()
-        {
-            SetBinding(MessageStateProperty, new Binding("ThreadUnRead"));
-
+        {            
             var circleShopImage = new CircleImage
                                   {
                                       BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
@@ -62,7 +60,7 @@ namespace BeginMobile.Pages.MessagePages
                               {
                                   YAlign = TextAlignment.Center,
                                   Style = BeginApplication.Styles.ListItemDetailTextStyle,
-                                  HorizontalOptions = LayoutOptions.End
+                                  HorizontalOptions = LayoutOptions.StartAndExpand
                               };
 
             labelCreate.SetBinding(Label.TextProperty, "DateSent", stringFormat: "Date: {0}");
@@ -82,7 +80,7 @@ namespace BeginMobile.Pages.MessagePages
                                     HorizontalOptions = LayoutOptions.StartAndExpand
                                 };
 
-            labelMarkedAs.SetBinding(Label.TextProperty, "ThreadUnRead", stringFormat: "Status: {0}");
+            labelMarkedAs.SetBinding(Label.TextProperty, "ThreadUnRead", stringFormat: "Current Status: {0}");
             
 
             var buttonRemove = new Button
@@ -99,9 +97,10 @@ namespace BeginMobile.Pages.MessagePages
                                 {
                                     Text = AppResources.ButtonReadNotification,
                                     Style = BeginApplication.Styles.ListViewItemButton,
-                                    HorizontalOptions = LayoutOptions.Start,
+                                    HorizontalOptions = LayoutOptions.End,
                                     HeightRequest = Device.OnPlatform(15, 35, 35),
-                                    WidthRequest = Device.OnPlatform(70, 70, 70)
+                                    WidthRequest = Device.OnPlatform(70, 70, 70),
+                                    //BackgroundColor = Device.OnPlatform(Color.Teal,Color.Green,Color.Green),
                                 };
 
 
@@ -111,13 +110,14 @@ namespace BeginMobile.Pages.MessagePages
                                   {
                                       Text = AppResources.ButtonUnReadNotification,
                                       Style = BeginApplication.Styles.ListViewItemButton,
-                                      HorizontalOptions = LayoutOptions.Start,
+                                      HorizontalOptions = LayoutOptions.End,
                                       HeightRequest = Device.OnPlatform(15, 35, 35),
-                                      WidthRequest = Device.OnPlatform(70, 70, 70)
+                                      WidthRequest = Device.OnPlatform(70, 70, 70),
                                   };
 
             _buttonMarkAsUnread.Clicked += OnMarkAsUnreadEventHandler;
 
+            SetBinding(MessageStateProperty, new Binding("ThreadUnRead"));
             var gridDetails = new Grid
                               {
                                   Padding = new Thickness(10, 5, 10, 5),

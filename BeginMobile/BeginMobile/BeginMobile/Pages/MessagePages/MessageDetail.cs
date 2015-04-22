@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using BeginMobile;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
@@ -138,6 +139,21 @@ namespace BeginMobile.Pages.MessagePages
         }
 
         public MessageViewModel MessageViewModel { get; set; }
+
+        //protected override bool OnBackButtonPressed()
+        //{
+        //    if(InboxMessage.IsInbox)
+        //    {
+        //        var callServiceApi = InboxMessage.CallServiceApi();
+        //    }
+        //    else
+        //    {
+        //        var callServiceApi = SentMessage.CallServiceApi();
+        //    }
+            
+        //    return base.OnBackButtonPressed();
+            
+        //}
     }
 }
 

@@ -5,37 +5,37 @@ using System.Linq;
 using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
-using Xamarin.Forms;
 using BeginMobile.Utils;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages.MessagePages
 {
     public class InboxMessage : ContentPage, IDisposable
     {
-        private bool _isUnread = true;
         public static bool IsInbox { get; set; }
         private static ListView _listViewMessages;
         private static LoginUser _currentUser;
-
         private readonly SearchView _searchView;
         private const string DefaultLimit = "10";
+
         public InboxMessage()
         {
+            _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
+            CallServiceApi();
             Title = "Inbox";
             IsInbox = true;
-            _currentUser = (LoginUser)Application.Current.Properties["LoginUser"];
 
-            CallServiceApi();
+
             _searchView = new SearchView {SearchBar = {Placeholder = "Filter by subject or content"}};
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
             MessagingSubscriptions();
 
             _listViewMessages = new ListView
-            {
-                ItemTemplate = new DataTemplate(typeof(ProfileMessagesItem)),
-                HasUnevenRows = true
-            };
+                                {
+                                    ItemTemplate = new DataTemplate(typeof (ProfileMessagesItem)),
+                                    HasUnevenRows = true
+                                };
 
 
             _listViewMessages.ItemSelected += ListViewItemSelectedEventHandler;
@@ -50,7 +50,7 @@ namespace BeginMobile.Pages.MessagePages
             var mainStackLayout = new StackLayout
                                   {
                                       Padding = BeginApplication.Styles.LayoutThickness,
-                                      Children = { _searchView.Container, stackLayoutMessagesListView },
+                                      Children = {_searchView.Container, stackLayoutMessagesListView},
                                   };
             Content = mainStackLayout;
         }
@@ -69,7 +69,9 @@ namespace BeginMobile.Pages.MessagePages
         public static async Task CallServiceApi()
         {
             var inboxThreads =
-                await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, null, DefaultLimit);
+                await
+                    BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, null,
+                        DefaultLimit);
             _listViewMessages.ItemsSource = RetrieveThreadMessages(inboxThreads);
         }
 
@@ -80,35 +82,40 @@ namespace BeginMobile.Pages.MessagePages
             if (!threads.Threads.Any()) return new ObservableCollection<MessageViewModel>();
             var threadMessages = threads.Threads;
             inboxMessageData.AddRange((from threadMessage in threadMessages
-                                       let message = threadMessage.Messages.FirstOrDefault()
-                                       where message != null
-                                       select new MessageViewModel
-                                       {
-                                           Id = message.Id,
-                                           ThreadId = message.ThreadId,
-                                           DateSent = message.DateSent,
-                                           MessageContent = message.MessageContent,
-                                           SenderName = message.Sender.NameSurname,
-                                           Subject = message.Subject,
-                                           Sender = message.Sender,
-                                           Messages = threadMessage.Messages,
-                                           ThreadUnRead = threadMessage.Unread.Equals("1") ? EnumMessageStates.Unread.ToString() : EnumMessageStates.Read.ToString()
-                                       }).OrderByDescending(c => c.DateSent));
+                let message = threadMessage.Messages.FirstOrDefault()
+                where message != null
+                select new MessageViewModel
+                       {
+                           Id = message.Id,
+                           ThreadId = message.ThreadId,
+                           DateSent = message.DateSent,
+                           MessageContent = message.MessageContent,
+                           SenderName = message.Sender.NameSurname,
+                           Subject = message.Subject,
+                           Sender = message.Sender,
+                           Messages = threadMessage.Messages,
+                           ThreadUnRead =
+                               threadMessage.Unread.Equals("1")
+                                   ? EnumMessageStates.Unread.ToString()
+                                   : EnumMessageStates.Read.ToString()
+                       }).OrderByDescending(c => c.DateSent));
 
             return new ObservableCollection<MessageViewModel>(inboxMessageData);
-        } 
+        }
+
         public async void ListViewItemSelectedEventHandler(object sender, SelectedItemChangedEventArgs eventArgs)
         {
             if (eventArgs.SelectedItem == null)
             {
                 return;
-            }               
-            var item = (MessageViewModel)eventArgs.SelectedItem;
+            }
+            var item = (MessageViewModel) eventArgs.SelectedItem;
             if (item.ThreadUnRead.Equals(EnumMessageStates.Unread.ToString()))
             {
-                MessageActions.Request(MessageOption.MarkAsRead, _currentUser.AuthToken, item.ThreadId); //TODO: Mark as read 
+                MessageActions.Request(MessageOption.MarkAsRead, _currentUser.AuthToken, item.ThreadId);
+                    //TODO: Mark as read 
                 await CallServiceApi();
-            }            
+            }
             var messageDetail = new MessageDetail(item)
                                 {
                                     BindingContext = item
@@ -116,6 +123,7 @@ namespace BeginMobile.Pages.MessagePages
             await Navigation.PushAsync(messageDetail);
             ((ListView) sender).SelectedItem = null;
         }
+
         /// <summary>
         /// Common handler when an searchBar item has changed 
         /// </summary>
@@ -124,12 +132,13 @@ namespace BeginMobile.Pages.MessagePages
         private async void SearchItemEventHandler(object sender, EventArgs eventArgs)
         {
             string limit;
-            var q = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
+            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
             RetrieveLimitSelected(out limit);
-          
 
-            var profileThreadMessages = await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, q, limit);
-            if (profileThreadMessages!=null)
+
+            var profileThreadMessages =
+                await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, q, limit);
+            if (profileThreadMessages != null)
             {
                 _listViewMessages.ItemsSource = profileThreadMessages.Threads != null &&
                                                 profileThreadMessages.Threads.Any()
@@ -141,7 +150,6 @@ namespace BeginMobile.Pages.MessagePages
             {
                 _listViewMessages.ItemsSource = new ObservableCollection<MessageViewModel>(new List<MessageViewModel>());
             }
-           
         }
 
         /// <summary>
@@ -152,68 +160,47 @@ namespace BeginMobile.Pages.MessagePages
         private Action<ProfileMessagesItem, string> RemoveMessageCallback()
         {
             return async (sender, arg) =>
-            {
-                var threadId = arg;
+                         {
+                             var threadId = arg;
 
-                if (!string.IsNullOrEmpty(threadId))
-                {
-                    var messagesListView =
-                        (ObservableCollection<MessageViewModel>)_listViewMessages.ItemsSource;
+                             if (!string.IsNullOrEmpty(threadId))
+                             {
+                                 var messagesListView =
+                                     (ObservableCollection<MessageViewModel>) _listViewMessages.ItemsSource;
 
-                    var toRemove = messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
+                                 var toRemove =
+                                     messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
 
-                    if (toRemove == null || !messagesListView.Remove(toRemove)) return;
-                    MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
-                    await DisplayAlert("Info", "Removed.", "Ok");
-                }
-            };
+                                 if (toRemove == null || !messagesListView.Remove(toRemove)) return;
+                                 MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
+                                 await DisplayAlert("Info", "Removed.", "Ok");
+                             }
+                         };
         }
 
-        private Action<ProfileMessagesItem, string> MarkAsReadCallback()
-        {
-            return async (sender, arg) =>
-            {
-                var threadId = arg;
-
-                if (!string.IsNullOrEmpty(threadId))
-                {
-                    var listMessagesViewModels =
-                        (ObservableCollection<MessageViewModel>)_listViewMessages.ItemsSource;
-
-                    var toMark = listMessagesViewModels.FirstOrDefault(messageViewModel => messageViewModel.ThreadId == threadId);
-
-                    //if (toMark != null && listMessagesViewModels.Remove(toMark))
-                    if (toMark != null)
-                    {
-                        MessageActions.Request(MessageOption.MarkAsRead, _currentUser.AuthToken, threadId);
-                        await DisplayAlert("Info", "Marked as Read.", "Ok");
-                        await CallServiceApi();
-                    }
-                }
-            };
-        }
-        private Action<ProfileMessagesItem, string> MarkAsUnReadCallback()
+        private static Action<ProfileMessagesItem, string> MarkAsReadCallback()
         {
             return async (sender, arg) =>
                          {
                              var threadId = arg;
-                             if (!string.IsNullOrEmpty(threadId))
-                             {
-                                 var listMessagesViewModels =
-                                     (ObservableCollection<MessageViewModel>) _listViewMessages.ItemsSource;
-
-                                 var toMark =
-                                     listMessagesViewModels.FirstOrDefault(
-                                         messageViewModel => messageViewModel.ThreadId == threadId);
-                                 if (toMark != null)
-                                 {
-                                     MessageActions.Request(MessageOption.MarkAsUnread, _currentUser.AuthToken, threadId);
-                                     await DisplayAlert("Info", "Marked as Unread.", "Ok");
-                                     await CallServiceApi();
-                                 }
-                             }
+                             if (string.IsNullOrEmpty(threadId)) return;
+                             await BeginApplication.ProfileServices.MarkAsReadByThread(_currentUser.AuthToken, threadId);
+                             await CallServiceApi();
                          };
         }
+
+        private static Action<ProfileMessagesItem, string> MarkAsUnReadCallback()
+        {
+            return async (sender, arg) =>
+                         {
+                             var threadId = arg;
+                             if (string.IsNullOrEmpty(threadId)) return;
+                             await
+                                 BeginApplication.ProfileServices.MarkAsUnreadByThread(_currentUser.AuthToken, threadId);
+                             await CallServiceApi();
+                         };
+        }
+
         private void RetrieveLimitSelected(out string limit)
         {
             var limitSelectedIndex = _searchView.Limit.SelectedIndex;
@@ -223,15 +210,18 @@ namespace BeginMobile.Pages.MessagePages
                 ? null
                 : _searchView.Limit.Items[limitSelectedIndex];
         }
+
         public void Dispose()
         {
         }
     }
+
     public enum EnumMessageStates
     {
         Read,
         Unread
     }
+
     public static class MessageSuscriptionNames
     {
         public const string MarkAsReadInboxMessage = "MarkAsReadInboxMessage";
@@ -241,6 +231,7 @@ namespace BeginMobile.Pages.MessagePages
         public const string MarkAsUnreadSentMessage = "MarkAsUnreadSentMessage";
         public const string RemoveSentMessage = "RemoveSentMessage";
     }
+
     public enum MessageOption
     {
         MarkAsRead = 0,
@@ -254,7 +245,7 @@ namespace BeginMobile.Pages.MessagePages
         public const string Remove = "read";
         public const string Unread = "unread";
 
-        public async static void Request(MessageOption messageOption, string authToken,
+        public static async void Request(MessageOption messageOption, string authToken,
             string threadId)
         {
             switch (messageOption)
@@ -270,6 +261,7 @@ namespace BeginMobile.Pages.MessagePages
                     break;
             }
         }
+
         public static string RetrieveFriendlyAction(string actionKey)
         {
             return actionKey.Replace("_", " ");
