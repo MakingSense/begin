@@ -29,6 +29,8 @@ namespace BeginMobile.Pages.Wall
         public const string TextGroupTopic = " group topic";
         public const string TextActivity = " activity";
 
+        private ActivityIndicator _activityIndicatorLoading;
+
         public WallPage(string title, string iconImage)
             : base(title, iconImage)
         {
@@ -46,7 +48,7 @@ namespace BeginMobile.Pages.Wall
                 }
             };
 
-            _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator();
+            _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator(ref _activityIndicatorLoading);
 
             _gridMain.Children.Add(_stackLayoutLoadingIndicator, 0, 1);
             Content = _gridMain;
@@ -55,7 +57,7 @@ namespace BeginMobile.Pages.Wall
 
         private ObservableCollection<BeginWallViewModel> ListBeginWallViewModel(List<BeginMobile.Services.DTO.Wall> oldListWall)
         {
-            ObservableCollection<BeginWallViewModel> resultList = null; 
+            ObservableCollection<BeginWallViewModel> resultList = null;
 
             if (oldListWall != null)
             {
@@ -67,14 +69,18 @@ namespace BeginMobile.Pages.Wall
                     resultList.Add(modelItem);
                 }
             }
+            else
+            {
+                resultList = new ObservableCollection<BeginWallViewModel>(new List<BeginWallViewModel>());
+            }
 
             return resultList;
         }
 
         private async Task Init()
         {
-            ActivityIndicatorLoading.IsRunning = true;
-            ActivityIndicatorLoading.IsVisible = true;
+            _activityIndicatorLoading.IsRunning = true;
+            _activityIndicatorLoading.IsVisible = true;
 
             _profileShop = await BeginApplication.ProfileServices.GetWall(_currentUser.AuthToken, limit: _limit.ToString(), offset: _offset.ToString());
             _listWall = ListBeginWallViewModel(_profileShop.ListOfWall);
@@ -119,8 +125,8 @@ namespace BeginMobile.Pages.Wall
                 widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
                 heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
-            ActivityIndicatorLoading.IsRunning = false;
-            ActivityIndicatorLoading.IsVisible = false;
+            _activityIndicatorLoading.IsRunning = false;
+            _activityIndicatorLoading.IsVisible = false;
 
             _gridMain.Children.Add(relativeLayoutMain, 0, 0);
 
@@ -153,8 +159,8 @@ namespace BeginMobile.Pages.Wall
             _offset +=_limit;
             _isLoading = true;
 
-            ActivityIndicatorLoading.IsRunning = true;
-            ActivityIndicatorLoading.IsVisible = true;
+            _activityIndicatorLoading.IsRunning = true;
+            _activityIndicatorLoading.IsVisible = true;
 
             _profileShop = await BeginApplication.ProfileServices.GetWall(_currentUser.AuthToken, limit: _limit.ToString(), offset: _offset.ToString());
 
@@ -167,8 +173,8 @@ namespace BeginMobile.Pages.Wall
                         _listWall.Add(beginWallViewModel);
                     }
 
-                    ActivityIndicatorLoading.IsRunning = false;
-                    ActivityIndicatorLoading.IsVisible = false;
+                    _activityIndicatorLoading.IsRunning = false;
+                    _activityIndicatorLoading.IsVisible = false;
                     removeLoadingIndicator(_stackLayoutLoadingIndicator);
 
                     _isLoading = false;
@@ -178,8 +184,8 @@ namespace BeginMobile.Pages.Wall
             }
             else
             {
-                ActivityIndicatorLoading.IsRunning = false;
-                ActivityIndicatorLoading.IsVisible = false;
+                _activityIndicatorLoading.IsRunning = false;
+                _activityIndicatorLoading.IsVisible = false;
                 removeLoadingIndicator(_stackLayoutLoadingIndicator);
 
                 _isLoading = false;

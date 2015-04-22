@@ -19,7 +19,21 @@ namespace BeginMobile.Pages.ContactPages
         private readonly List<Contact> _defaultList = new List<Contact>();
         private readonly SearchView _searchView;
         private readonly LoginUser _currentUser;
-        private List<User> _profileInformationContacts;
+        private ObservableCollection<Contact> _contactsList;
+
+        //Paginator
+        private ActivityIndicator _activityIndicatorLoading;
+        private Grid _gridLayoutMain;
+        private StackLayout _stackLayoutLoadingIndicator;
+        private bool _isLoading;
+        private int _offset = 0;
+        private int _limit = 10;
+        private string _name;
+        private string _sort;
+        private const int DefaultLimit = 10;
+        private bool status;
+        private readonly object Lock = new object();
+
 
         private Dictionary<string, string> _sortOptionsDictionary = new Dictionary<string, string>
                                                                     {
@@ -39,27 +53,50 @@ namespace BeginMobile.Pages.ContactPages
             _searchView = new SearchView();
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
+
+            _gridLayoutMain = new Grid()
+            {
+                Padding = new Thickness(10, 0, 10, 0),
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
+                {
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto }
+                }
+            };
+
+
+            _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator(ref _activityIndicatorLoading); 
+            _gridLayoutMain.Children.Add(_stackLayoutLoadingIndicator, 0, 3);
+
+            Content = _gridLayoutMain;
+
             Init();
         }
 
         private async Task Init()
         {
          
-            _profileInformationContacts =
-                await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken);
+            var profileInformationContacts =
+                await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, _name, _sort, _limit.ToString(), _offset.ToString()); 
 
-            var contactsList = new List<Contact>();
+            _contactsList = new ObservableCollection<Contact>(RetrieveContacts(profileInformationContacts));
+
             LoadSortOptionsPicker();
-            contactsList.AddRange(RetrieveContacts(_profileInformationContacts));
 
             var contactListViewTemplate = new DataTemplate(() => new ContactListItem(_currentUser));
             MessagingSubscriptions();
 
+
+
             _listViewContacts = new ListView
                                 {
-                                    ItemsSource = new ObservableCollection<Contact>(contactsList),
+                                    ItemsSource = _contactsList,
                                     ItemTemplate = contactListViewTemplate,
-                                    HasUnevenRows = true
+                                    HasUnevenRows = true,
                                 };
 
             _listViewContacts.ItemSelected += async (sender, eventArgs) =>
@@ -80,6 +117,24 @@ namespace BeginMobile.Pages.ContactPages
                                                         ((ListView)sender).SelectedItem = null;
                                                     };
 
+
+            _listViewContacts.ItemAppearing += async (sender, e) =>
+            {
+                if (_isLoading || _contactsList.Count == 0)
+                {
+                    return;
+                }
+                var appearingItem = (Contact) e.Item;
+                var lastItem = _contactsList[_contactsList.Count - 1];
+
+                if ((appearingItem.Id == lastItem.Id) &&
+                    (appearingItem.Registered == lastItem.Registered))
+                {
+                    addLoadingIndicator(_stackLayoutLoadingIndicator);
+                    LoadItems();
+                }
+            };
+
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
             _sortPicker.SelectedIndexChanged += SearchItemEventHandler;
@@ -97,20 +152,75 @@ namespace BeginMobile.Pages.ContactPages
                                               }
                                           };
 
-            Content = new StackLayout
-                      {
-                          Spacing = 2,
-                          VerticalOptions = LayoutOptions.Start,
-                          Children =
-                          {
-                              _searchView.Container,
-                              _labelNoContactsMessage,
-                              stackLayoutContactsList
-                          }
-                      };
+            _gridLayoutMain.Children.Add(_searchView.Container, 0, 0);
+            _gridLayoutMain.Children.Add(_labelNoContactsMessage, 0, 1);
+            _gridLayoutMain.Children.Add(stackLayoutContactsList, 0, 2);
+            
+
+            Content = _gridLayoutMain;
+
+            removeLoadingIndicator(_stackLayoutLoadingIndicator);
         }
 
         #region Events
+
+        #region Method of the Paginator
+        private void removeLoadingIndicator(View loadingIndicator)
+        {
+            _gridLayoutMain.RowDefinitions[3].Height = 43;
+            if (_gridLayoutMain.Children.Contains(loadingIndicator))
+            {
+                _gridLayoutMain.Children.Remove(loadingIndicator);
+            }
+        }
+
+        private void addLoadingIndicator(View loadingIndicator)
+        {
+            _gridLayoutMain.RowDefinitions[3].Height = 43;
+            if (!_gridLayoutMain.Children.Contains(loadingIndicator))
+            {
+                _gridLayoutMain.Children.Add(loadingIndicator, 0, 3);
+            }
+        }
+
+        private async void LoadItems()
+        {
+            _offset += _limit;
+            _isLoading = true;
+
+            _activityIndicatorLoading.IsRunning = true;
+            _activityIndicatorLoading.IsVisible = true;
+
+            var resultList = await BeginApplication
+                .ProfileServices.GetContacts(_currentUser.AuthToken, _name, _sort, _limit.ToString(), _offset.ToString());
+
+            if (resultList != null)
+            {
+                Device.StartTimer(TimeSpan.FromSeconds(2), () =>
+                {
+                    foreach (var contact in RetrieveContacts(resultList))
+                    {
+                        _contactsList.Add(contact);
+                    }
+
+                    _activityIndicatorLoading.IsRunning = false;
+                    _activityIndicatorLoading.IsVisible = false;
+                    removeLoadingIndicator(_stackLayoutLoadingIndicator);
+
+                    _isLoading = false;
+                    return false;
+                });
+            }
+            else
+            {
+                _activityIndicatorLoading.IsRunning = false;
+                _activityIndicatorLoading.IsVisible = false;
+                removeLoadingIndicator(_stackLayoutLoadingIndicator);
+
+                _isLoading = false;
+            }
+        }
+        #endregion
 
         /// <summary>
         /// Common handler when an searchBar item has changed 
@@ -120,23 +230,29 @@ namespace BeginMobile.Pages.ContactPages
         private async void SearchItemEventHandler(object sender, EventArgs args)
         {
             string limit;
-            string sort;
+            _offset = 0;
 
-            var q = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
+            _name = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
 
             RetrieveLimitSelected(out limit);
-            RetrieveSortOptionSelected(out sort);
+            _limit = string.IsNullOrEmpty(limit) ? DefaultLimit : int.Parse(limit);
 
-            var list = await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, q, sort, limit) ?? new List<User>();
+            RetrieveSortOptionSelected(out _sort);
+
+            var list = await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, _name, _sort, limit, _offset.ToString()) ?? new List<User>();
+
+            var test = "";
 
             if (list.Any())
             {
-                _listViewContacts.ItemsSource = new ObservableCollection<Contact>(RetrieveContacts(list));
+                _contactsList = new ObservableCollection<Contact>(RetrieveContacts(list));
+                _listViewContacts.ItemsSource = _contactsList;
                 _labelNoContactsMessage.Text = string.Empty;
             }
 
             else
             {
+                _contactsList = new ObservableCollection<Contact>(_defaultList);
                 _listViewContacts.ItemsSource = new ObservableCollection<Contact>(_defaultList);
             }
         }
@@ -193,20 +309,32 @@ namespace BeginMobile.Pages.ContactPages
 
         private static IEnumerable<Contact> RetrieveContacts(IEnumerable<User> profileInformationContacts)
         {
-            return profileInformationContacts.Select(contact => new Contact
-                                                                {
-                                                                    Icon = UserDefault,
-                                                                    NameSurname = contact.NameSurname,
-                                                                    Email =
-                                                                        string.Format("e-mail: {0}",
-                                                                            contact.Email),
-                                                                    Url = contact.Url,
-                                                                    UserName = contact.UserName,
-                                                                    Registered = contact.Registered,
-                                                                    Id = contact.Id.ToString(),
-                                                                    Relationship = contact.Relationship,
-                                                                    IsOnline = contact.IsOnline
-                                                                });
+            IEnumerable<Contact> resultList = null;
+
+            if (profileInformationContacts != null)
+            {
+                resultList = profileInformationContacts.Select(contact => new Contact
+                {
+                    Icon = UserDefault,
+                    NameSurname = contact.NameSurname,
+                    Email =
+                        string.Format("e-mail: {0}",
+                            contact.Email),
+                    Url = contact.Url,
+                    UserName = contact.UserName,
+                    Registered = contact.Registered,
+                    Id = contact.Id.ToString(),
+                    Relationship = contact.Relationship,
+                    IsOnline = contact.IsOnline
+                });
+
+            }
+            else
+            {
+                resultList = new List<Contact>();
+            }
+
+            return resultList;
         }
 
         private void MessagingSubscriptions()

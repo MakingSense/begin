@@ -35,6 +35,18 @@ namespace BeginMobile.Interfaces
             return stackLayoutMain;
         }
 
+        protected StackLayout CreateStackLayoutWithLoadingIndicator(ref ActivityIndicator loading)
+        {
+            var stackLayoutMain = new StackLayout()
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+            };
+            loading = CreateLoadingIndicator();
+            stackLayoutMain.Children.Add(loading);
+
+            return stackLayoutMain;
+        }
+
         protected RelativeLayout CreateRLayoutLoadingIndicator()
         {
             ActivityIndicatorLoading = CreateLoadingIndicator();
