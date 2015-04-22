@@ -1,6 +1,7 @@
 ﻿using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages;
 using BeginMobile.Services.DTO;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 

@@ -54,5 +54,8 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("is_online")]
         public bool IsOnline { set; get; }
+
+        [JsonProperty("profession")]
+        public string Profession { set; get; }
     }
 }
