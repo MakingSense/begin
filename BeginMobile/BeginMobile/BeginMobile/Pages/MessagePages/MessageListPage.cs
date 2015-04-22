@@ -59,41 +59,44 @@ namespace BeginMobile.Pages.MessagePages
                                        };
 
             listViewMainControls.ItemSelected += async (sender, eventArgs) =>
-                                                 {
-                                                     if (eventArgs.SelectedItem == null)
-                                                     {
-                                                         return;
-                                                     }
-                                                     var selectedItemOptionName =
-                                                         ((MenuItemViewModel) eventArgs.SelectedItem).OptionName;
+                                                       {
+                                                           if (eventArgs.SelectedItem == null)
+                                                           {
+                                                               return;
+                                                           }
+                                                           var selectedItemOptionName =
+                                                               ((MenuItemViewModel) eventArgs.SelectedItem).OptionName;
 
-                                                     switch (selectedItemOptionName)
-                                                     {
-                                                         case MenuItemsNames.Inbox:
-                                                             using (
-                                                                 var contentPageInboxMessage = new InboxMessage())
-                                                             {
-                                                                 await InboxMessage.CallServiceApi();
-                                                                 await Navigation.PushAsync(contentPageInboxMessage);                                                                 
-                                                                 break;
-                                                             }
-                                                         case MenuItemsNames.Sent:
-                                                             using (var contentPageSentMessage = new SentMessage()
-                                                                 )
-                                                             {
-                                                                 await Navigation.PushAsync(contentPageSentMessage);
-                                                                 break;
-                                                             }
-                                                         case MenuItemsNames.Send:
-                                                             using (var contentPageSentMessage = new SendMessage()
-                                                                 )
-                                                             {
-                                                                 await Navigation.PushAsync(contentPageSentMessage);
-                                                                 break;
-                                                             }
-                                                     }
-                                                     ((ListView) sender).SelectedItem = null;
-                                                 };
+                                                           switch (selectedItemOptionName)
+                                                           {
+                                                               case MenuItemsNames.Inbox:
+                                                                   using (
+                                                                       var contentPageInboxMessage = new InboxMessage())
+                                                                   {
+                                                                       //await InboxMessage.CallServiceApi();
+                                                                       await
+                                                                           Navigation.PushAsync(contentPageInboxMessage);
+                                                                       break;
+                                                                   }
+                                                               case MenuItemsNames.Sent:
+                                                                   using (var contentPageSentMessage = new SentMessage()
+                                                                       )
+                                                                   {
+                                                                       await
+                                                                           Navigation.PushAsync(contentPageSentMessage);
+                                                                       break;
+                                                                   }
+                                                               case MenuItemsNames.Send:
+                                                                   using (var contentPageSentMessage = new SendMessage()
+                                                                       )
+                                                                   {
+                                                                       await
+                                                                           Navigation.PushAsync(contentPageSentMessage);
+                                                                       break;
+                                                                   }
+                                                           }
+                                                           ((ListView) sender).SelectedItem = null;
+                                                       };
 
             var stackLayoutMessagesListView = new StackLayout
                                               {
@@ -115,9 +118,12 @@ namespace BeginMobile.Pages.MessagePages
             var currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
             var inboxThreads =
                 await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(currentUser.AuthToken);
-            var threads = inboxThreads;
-            ThreadCount = threads.ThreadCount;
-            LabelCounter.Text = ThreadCount;
+            if (inboxThreads != null)
+            {
+                var threads = inboxThreads;
+                ThreadCount = threads.ThreadCount;
+                LabelCounter.Text = ThreadCount;
+            }
         }
 
         public static class MenuItemsNames

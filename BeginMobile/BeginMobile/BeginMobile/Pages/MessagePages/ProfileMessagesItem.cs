@@ -15,18 +15,9 @@ namespace BeginMobile.Pages.MessagePages
         {
             get { return "userdefault3.png"; }
         }
-        private static string MessageState { get; set; }
-
-        private static readonly BindableProperty MessageStateProperty =
-            BindableProperty.Create<ProfileMessagesItem, string>
-                (getter => MessageState, string.Empty, BindingMode.TwoWay,
-                    propertyChanging: (bindable, oldValue, newValue) =>
-                                      {
-                                          MessageState = newValue;
-                                      });        
 
         public ProfileMessagesItem()
-        {            
+        {
             var circleShopImage = new CircleImage
                                   {
                                       BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
@@ -80,8 +71,8 @@ namespace BeginMobile.Pages.MessagePages
                                     HorizontalOptions = LayoutOptions.StartAndExpand
                                 };
 
-            labelMarkedAs.SetBinding(Label.TextProperty, "ThreadUnRead", stringFormat: "Current Status: {0}");
-            
+            labelMarkedAs.SetBinding(Label.TextProperty, "ThreadUnRead");
+
 
             var buttonRemove = new Button
                                {
@@ -93,31 +84,6 @@ namespace BeginMobile.Pages.MessagePages
                                };
             buttonRemove.Clicked += RemoveEventHandler;
 
-            _buttonMarkAsRead = new Button
-                                {
-                                    Text = AppResources.ButtonReadNotification,
-                                    Style = BeginApplication.Styles.ListViewItemButton,
-                                    HorizontalOptions = LayoutOptions.End,
-                                    HeightRequest = Device.OnPlatform(15, 35, 35),
-                                    WidthRequest = Device.OnPlatform(70, 70, 70),
-                                    //BackgroundColor = Device.OnPlatform(Color.Teal,Color.Green,Color.Green),
-                                };
-
-
-            _buttonMarkAsRead.Clicked += OnMarkAsReadEventHandler;
-
-            _buttonMarkAsUnread = new Button
-                                  {
-                                      Text = AppResources.ButtonUnReadNotification,
-                                      Style = BeginApplication.Styles.ListViewItemButton,
-                                      HorizontalOptions = LayoutOptions.End,
-                                      HeightRequest = Device.OnPlatform(15, 35, 35),
-                                      WidthRequest = Device.OnPlatform(70, 70, 70),
-                                  };
-
-            _buttonMarkAsUnread.Clicked += OnMarkAsUnreadEventHandler;
-
-            SetBinding(MessageStateProperty, new Binding("ThreadUnRead"));
             var gridDetails = new Grid
                               {
                                   Padding = new Thickness(10, 5, 10, 5),
@@ -134,27 +100,11 @@ namespace BeginMobile.Pages.MessagePages
                                   }
                               };
 
-                gridDetails.Children.Add(labelSender, 0, 0);
-                gridDetails.Children.Add(labelSubject, 0, 1);
-                gridDetails.Children.Add(labelContent, 0, 2);
-                gridDetails.Children.Add(labelCreate, 0, 3);
-
-    
-
-                if (InboxMessage.IsInbox)
-                {
-                    gridDetails.Children.Add(labelMarkedAs, 0, 4);
-                    gridDetails.Children.Add(buttonRemove, 1, 5);
-
-                    if (MessageState != null)
-                    {
-                        gridDetails.Children.Add(MessageStateButton, 0, 5);
-                    }
-                }
-                else
-                {
-                    gridDetails.Children.Add(buttonRemove, 0, 4);
-                }
+            gridDetails.Children.Add(labelSender, 0, 0);
+            gridDetails.Children.Add(labelSubject, 0, 1);
+            gridDetails.Children.Add(labelContent, 0, 2);
+            gridDetails.Children.Add(labelCreate, 0, 3);
+            gridDetails.Children.Add(buttonRemove, 0, 4);
 
             var stackLayoutView = new StackLayout
                                   {
@@ -173,7 +123,7 @@ namespace BeginMobile.Pages.MessagePages
             View = stackLayoutView;
             View.SetBinding(ClassIdProperty, "ThreadId");
         }
-       
+
 
         public void RemoveEventHandler(object sender, EventArgs e)
         {
@@ -192,64 +142,6 @@ namespace BeginMobile.Pages.MessagePages
                 MessagingCenter.Send(this, MessageSuscriptionNames.RemoveSentMessage, threadId);
                 MessagingCenter.Unsubscribe<ProfileMessagesItem, string>(this, MessageSuscriptionNames.RemoveSentMessage);
             }
-        }
-
-        private void OnMarkAsUnreadEventHandler(object sender, EventArgs e)
-        {
-            var current = sender as Button;
-            if (current == null) return;
-
-            var threadId = current.Parent.Parent.ClassId;
-            if (InboxMessage.IsInbox)
-            {
-                MessagingCenter.Send(this, MessageSuscriptionNames.MarkAsUnreadInboxMessage, threadId);
-                MessagingCenter.Unsubscribe<ProfileMessagesItem, string>(this,
-                    MessageSuscriptionNames.MarkAsUnreadInboxMessage);
-            }
-            else
-            {
-                MessagingCenter.Send(this, MessageSuscriptionNames.MarkAsUnreadSentMessage, threadId);
-                MessagingCenter.Unsubscribe<ProfileMessagesItem, string>(this,
-                    MessageSuscriptionNames.MarkAsUnreadSentMessage);
-            }
-        }
-
-        private void OnMarkAsReadEventHandler(object sender, EventArgs e)
-        {
-            var current = sender as Button;
-            if (current == null) return;
-
-            var threadId = current.Parent.Parent.ClassId;
-            if (InboxMessage.IsInbox)
-            {
-                MessagingCenter.Send(this, MessageSuscriptionNames.MarkAsReadInboxMessage, threadId);
-                MessagingCenter.Unsubscribe<ProfileMessagesItem, string>(this,MessageSuscriptionNames.MarkAsReadInboxMessage);
-            }
-            else
-            {
-                MessagingCenter.Send(this, MessageSuscriptionNames.MarkAsReadSentMessage, threadId);
-                MessagingCenter.Unsubscribe<ProfileMessagesItem, string>(this,
-                    MessageSuscriptionNames.MarkAsReadSentMessage);
-            }
-        }
-
-        private Button MessageStateButton
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(MessageState))
-                {
-                    return new Button();
-                }
-                return MessageState.Equals(EnumMessageStates.Read.ToString()) ? _buttonMarkAsUnread : _buttonMarkAsRead;
-            }
-        }
-
-        protected override void OnBindingContextChanged()
-        {
-            var data = ((MessageViewModel)BindingContext);
-            MessageState = data.ThreadUnRead;
-            base.OnBindingContextChanged();
         }
     }
 }

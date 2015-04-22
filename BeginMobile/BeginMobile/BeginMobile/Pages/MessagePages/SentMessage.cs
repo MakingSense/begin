@@ -21,33 +21,33 @@ namespace BeginMobile.Pages.MessagePages
         {
             Title = "Sent";
             InboxMessage.IsInbox = false;
-            _currentUser = (LoginUser)Application.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
 
             CallServiceApi();
-            _searchView = new SearchView { SearchBar = { Placeholder = "Filter by subject or content" } };
+            _searchView = new SearchView {SearchBar = {Placeholder = "Filter by subject or content"}};
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
             MessagingSubscriptions();
             _listViewMessages = new ListView
-            {
-                ItemTemplate = new DataTemplate(typeof(ProfileMessagesItem)),
-                HasUnevenRows = true
-            };
+                                {
+                                    ItemTemplate = new DataTemplate(typeof (ProfileMessagesItem)),
+                                    HasUnevenRows = true
+                                };
 
 
             _listViewMessages.ItemSelected += ListViewItemSelectedEventHandler;
 
             var stackLayoutMessagesListView = new StackLayout
-            {
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                Orientation = StackOrientation.Vertical,
-                Children = { _listViewMessages }
-            };
+                                              {
+                                                  VerticalOptions = LayoutOptions.FillAndExpand,
+                                                  Orientation = StackOrientation.Vertical,
+                                                  Children = {_listViewMessages}
+                                              };
             var mainStackLayout = new StackLayout
-            {
-                Padding = BeginApplication.Styles.LayoutThickness,
-                Children = { _searchView.Container, stackLayoutMessagesListView }
-            };
+                                  {
+                                      Padding = BeginApplication.Styles.LayoutThickness,
+                                      Children = {_searchView.Container, stackLayoutMessagesListView}
+                                  };
 
             Content = mainStackLayout;
         }
@@ -61,7 +61,7 @@ namespace BeginMobile.Pages.MessagePages
             var profileThreadMessagesSent =
                 await
                     BeginApplication.ProfileServices.GetProfileThreadMessagesSent(_currentUser.AuthToken, null,
-                        DefaultLimit);
+                        DefaultLimit);            
             _listViewMessages.ItemsSource = RetrieveThreadMessages(profileThreadMessagesSent);
         }
 
@@ -74,19 +74,19 @@ namespace BeginMobile.Pages.MessagePages
             var threadMessages = threads.Threads;
 
             var listDataSentMessage = (from sentThread in threadMessages
-                                       let message = sentThread.Messages.FirstOrDefault()
-                                       where message != null
-                                       select new MessageViewModel
-                                       {
-                                           Id = message.Id,
-                                           ThreadId = message.ThreadId,
-                                           DateSent = message.DateSent,
-                                           MessageContent = message.MessageContent,
-                                           SenderName = message.Sender.NameSurname,
-                                           Subject = message.Subject,
-                                           Sender = message.Sender,
-                                           Messages = sentThread.Messages
-                                       }).ToList();
+                let message = sentThread.Messages.FirstOrDefault()
+                where message != null
+                select new MessageViewModel
+                       {
+                           Id = message.Id,
+                           ThreadId = message.ThreadId,
+                           DateSent = message.DateSent,
+                           MessageContent = message.MessageContent,
+                           SenderName = message.Sender.NameSurname,
+                           Subject = message.Subject,
+                           Sender = message.Sender,
+                           Messages = sentThread.Messages
+                       }).ToList();
             return new ObservableCollection<MessageViewModel>(listDataSentMessage);
         }
 
@@ -98,7 +98,7 @@ namespace BeginMobile.Pages.MessagePages
         private async void SearchItemEventHandler(object sender, EventArgs eventArgs)
         {
             string limit;
-            var q = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
+            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
             RetrieveLimitSelected(out limit);
 
 
@@ -124,68 +124,40 @@ namespace BeginMobile.Pages.MessagePages
             {
                 return;
             }
-            var item = (MessageViewModel)eventArgs.SelectedItem;
+            var item = (MessageViewModel) eventArgs.SelectedItem;
             var messageDetail = new MessageDetail(item)
-            {
-                BindingContext = item
-            };
+                                {
+                                    BindingContext = item
+                                };
             await Navigation.PushAsync(messageDetail);
 
-            ((ListView)sender).SelectedItem = null;
+            ((ListView) sender).SelectedItem = null;
         }
 
         private void MessagingSubscriptions()
         {
-            MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsReadSentMessage,
-                MarkAsCallback(MessageOption.MarkAsRead, "Marked as Read."));
-            MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsUnreadSentMessage,
-                MarkAsCallback(MessageOption.MarkAsUnread, "Marked as Unread."));
             MessagingCenter.Subscribe(this, MessageSuscriptionNames.RemoveSentMessage, RemoveSentMessageCallback());
         }
 
         private Action<ProfileMessagesItem, string> RemoveSentMessageCallback()
         {
             return async (sender, arg) =>
-            {
-                var threadId = arg;
+                         {
+                             var threadId = arg;
 
-                if (!string.IsNullOrEmpty(threadId))
-                {
-                    var messagesListView =
-                        (List<MessageViewModel>)_listViewMessages.ItemsSource;
+                             if (!string.IsNullOrEmpty(threadId))
+                             {
+                                 var messagesListView =
+                                     (ObservableCollection<MessageViewModel>) _listViewMessages.ItemsSource;
 
-                    var toRemove =
-                        messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
+                                 var toRemove =
+                                     messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
 
-                    if (toRemove == null || !messagesListView.Remove(toRemove)) return;
-                    MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
-                    await DisplayAlert("Successfull!", "Removed.", "Ok");
-                }
-            };
-        }
-
-        private Action<ProfileMessagesItem, string> MarkAsCallback(MessageOption messageOption, string message)
-        {
-            return async (sender, arg) =>
-            {
-                var threadId = arg;
-
-                if (!string.IsNullOrEmpty(threadId))
-                {
-                    var listMessagesViewModels =
-                        (ObservableCollection<MessageViewModel>)_listViewMessages.ItemsSource;
-
-                    var toMark =
-                        listMessagesViewModels.FirstOrDefault(
-                            messageViewModel => messageViewModel.ThreadId == threadId);
-
-                    if (toMark != null && listMessagesViewModels.Remove(toMark))
-                    {
-                        MessageActions.Request(messageOption, _currentUser.AuthToken, threadId);
-                        await DisplayAlert("Info", message, "Ok");
-                    }
-                }
-            };
+                                 if (toRemove == null || !messagesListView.Remove(toRemove)) return;
+                                 MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
+                                 await DisplayAlert("Info", "Removed.", "Ok");
+                             }
+                         };
         }
 
         private void RetrieveLimitSelected(out string limit)

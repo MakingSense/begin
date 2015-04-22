@@ -72,10 +72,11 @@ namespace BeginMobile.Pages.Notifications
             var profileNotification =
                 await
                     BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken, limit, status);
-
-            LabelCounter.Text = profileNotification.UnreadCount;
-
-            _listViewNotifications.ItemsSource = profileNotification.Notifications.Any()
+            if (profileNotification!=null)
+            {
+                LabelCounter.Text = profileNotification.UnreadCount;
+            }           
+            _listViewNotifications.ItemsSource = profileNotification != null && profileNotification.Notifications.Any()
                 ? new ObservableCollection<NotificationViewModel>(RetrieveNotifications(profileNotification))
                 : new ObservableCollection<NotificationViewModel>(_defaulList);
         }
@@ -124,25 +125,26 @@ namespace BeginMobile.Pages.Notifications
 
                     var user = BeginApplication.ProfileServices.GetUser(_currentUser.AuthToken,
                         item.UserViewModel.UserId);
+                    if (user != null)
+                    {
+                        var contact = new Contact
+                                      {
+                                          Icon = "userdefault3.png",
+                                          NameSurname =
+                                              user.NameSurname,
+                                          Email = user.Email,
+                                          Url = user.Url,
+                                          UserName =
+                                              user.UserName,
+                                          Registered =
+                                              user.Registered,
+                                          Id =
+                                              user.Id.ToString()
+                                      };
 
-                    var contact = new Contact
-                                  {
-                                      Icon = "userdefault3.png",
-                                      NameSurname =
-                                          user.NameSurname,
-                                      Email = user.Email,
-                                      Url = user.Url,
-                                      UserName =
-                                          user.UserName,
-                                      Registered =
-                                          user.Registered,
-                                      Id =
-                                          user.Id.ToString()
-                                  };
-
-                    MessagingCenter.Send<ContentPage, Contact>(this, "contact", contact);
+                        MessagingCenter.Send<ContentPage, Contact>(this, "contact", contact);
+                    }
                     MessagingCenter.Unsubscribe<ContentPage, Contact>(this, "contact");
-
 
                     break;
 
@@ -180,19 +182,22 @@ namespace BeginMobile.Pages.Notifications
                     {
                         var first = threadMessages.FirstOrDefault();
 
-                        var message = new MessageViewModel
-                                      {
-                                          Id = first.Id,
-                                          ThreadId = item.ItemId,
-                                          DateSent = first.DateSent,
-                                          MessageContent = first.MessageContent,
-                                          SenderName = first.Sender.NameSurname,
-                                          Subject = first.Subject,
-                                          Sender = first.Sender,
-                                          Messages = threadMessages
-                                      };
+                        if (first != null)
+                        {
+                            var message = new MessageViewModel
+                                          {
+                                              Id = first.Id,
+                                              ThreadId = item.ItemId,
+                                              DateSent = first.DateSent,
+                                              MessageContent = first.MessageContent,
+                                              SenderName = first.Sender.NameSurname,
+                                              Subject = first.Subject,
+                                              Sender = first.Sender,
+                                              Messages = threadMessages
+                                          };
 
-                        MessagingCenter.Send<ContentPage, MessageViewModel>(this, "message", message);
+                            MessagingCenter.Send<ContentPage, MessageViewModel>(this, "message", message);
+                        }
                         MessagingCenter.Unsubscribe<ContentPage, MessageViewModel>(this, "message");    
                     }
 
@@ -219,8 +224,10 @@ namespace BeginMobile.Pages.Notifications
             var profileNotification =
                 await BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken, DefaultLimit);
 
-            LabelCounter.Text = profileNotification.UnreadCount;        
-
+            if (profileNotification!=null)
+            {
+                LabelCounter.Text = profileNotification.UnreadCount;   
+            }               
             LoadStatusOptionsPicker();
 
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
@@ -233,7 +240,9 @@ namespace BeginMobile.Pages.Notifications
             _listViewNotifications = new ListView
                                      {
                                          ItemTemplate = listViewDataTemplate,
-                                         ItemsSource = new ObservableCollection<NotificationViewModel>(RetrieveNotifications(profileNotification)),
+                                         ItemsSource = profileNotification!=null
+                                         ? new ObservableCollection<NotificationViewModel>(RetrieveNotifications(profileNotification))
+                                         : new ObservableCollection<NotificationViewModel>(),
                                          HasUnevenRows = true
                                      };
 
@@ -314,20 +323,21 @@ namespace BeginMobile.Pages.Notifications
         }
         private static IEnumerable<NotificationViewModel> RetrieveNotifications(ProfileNotification profileNotification)
         {
-            return profileNotification.Notifications.Select(model => new NotificationViewModel
-                                                                     {
-                                                                         Id = model.NotificationId,
-                                                                         ItemId = model.ItemId,
-                                                                         Action = model.Action,
-                                                                         Component = model.Component,
-                                                                         IntervalDate = RetrieveTimeSpan(model),
-                                                                         NotificationDescription =
-                                                                             RetrieveDescription(model),
-                                                                         GroupViewModel = model.Group,
-                                                                         UserViewModel = model.User
+                return profileNotification.Notifications.Select(model => new NotificationViewModel
+                                                                         {
+                                                                             Id = model.NotificationId,
+                                                                             ItemId = model.ItemId,
+                                                                             Action = model.Action,
+                                                                             Component = model.Component,
+                                                                             IntervalDate = RetrieveTimeSpan(model),
+                                                                             NotificationDescription =
+                                                                                 RetrieveDescription(model),
+                                                                             GroupViewModel = model.Group,
+                                                                             UserViewModel = model.User
                                                                          
-                                                                     });
+                                                                         });
         }
+
         private static string RetrieveTimeSpan(Services.DTO.Notification model)
         {
             return DateConverter.GetTimeSpan(DateTime.Parse(model.DateNotified));
@@ -390,7 +400,10 @@ namespace BeginMobile.Pages.Notifications
                         await DisplayAlert("Info", "Marked as Unread.", "Ok");
 
                         var updatedNotifications = await BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken);
-                        LabelCounter.Text = updatedNotifications.UnreadCount;
+                        if (updatedNotifications!=null)
+                        {
+                            LabelCounter.Text = updatedNotifications.UnreadCount;
+                        }                       
                     }
                 }
             };

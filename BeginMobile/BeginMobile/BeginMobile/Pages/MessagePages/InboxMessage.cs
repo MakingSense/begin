@@ -57,8 +57,8 @@ namespace BeginMobile.Pages.MessagePages
 
         private void MessagingSubscriptions()
         {
-            MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsReadInboxMessage, MarkAsReadCallback());
-            MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsUnreadInboxMessage, MarkAsUnReadCallback());
+            //MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsReadInboxMessage, MarkAsReadCallback());
+            //MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsUnreadInboxMessage, MarkAsUnReadCallback());
             MessagingCenter.Subscribe(this, MessageSuscriptionNames.RemoveInboxMessage, RemoveMessageCallback());
         }
 
@@ -72,7 +72,10 @@ namespace BeginMobile.Pages.MessagePages
                 await
                     BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, null,
                         DefaultLimit);
-            _listViewMessages.ItemsSource = RetrieveThreadMessages(inboxThreads);
+            if (inboxThreads != null)
+            {
+                _listViewMessages.ItemsSource = RetrieveThreadMessages(inboxThreads);
+            }
         }
 
         private static IEnumerable<MessageViewModel> RetrieveThreadMessages(ProfileThreadMessages inboxThreads)
@@ -96,8 +99,8 @@ namespace BeginMobile.Pages.MessagePages
                            Messages = threadMessage.Messages,
                            ThreadUnRead =
                                threadMessage.Unread.Equals("1")
-                                   ? EnumMessageStates.Unread.ToString()
-                                   : EnumMessageStates.Read.ToString()
+                                   ? EnumMessageStates.New.ToString()
+                                   : string.Empty
                        }).OrderByDescending(c => c.DateSent));
 
             return new ObservableCollection<MessageViewModel>(inboxMessageData);
@@ -110,10 +113,10 @@ namespace BeginMobile.Pages.MessagePages
                 return;
             }
             var item = (MessageViewModel) eventArgs.SelectedItem;
-            if (item.ThreadUnRead.Equals(EnumMessageStates.Unread.ToString()))
+            if (item.ThreadUnRead.Equals(EnumMessageStates.New.ToString()))
             {
                 MessageActions.Request(MessageOption.MarkAsRead, _currentUser.AuthToken, item.ThreadId);
-                    //TODO: Mark as read 
+                //TODO: Mark as read 
                 await CallServiceApi();
             }
             var messageDetail = new MessageDetail(item)
@@ -178,28 +181,28 @@ namespace BeginMobile.Pages.MessagePages
                          };
         }
 
-        private static Action<ProfileMessagesItem, string> MarkAsReadCallback()
-        {
-            return async (sender, arg) =>
-                         {
-                             var threadId = arg;
-                             if (string.IsNullOrEmpty(threadId)) return;
-                             await BeginApplication.ProfileServices.MarkAsReadByThread(_currentUser.AuthToken, threadId);
-                             await CallServiceApi();
-                         };
-        }
+        //private static Action<ProfileMessagesItem, string> MarkAsReadCallback()
+        //{
+        //    return async (sender, arg) =>
+        //                 {
+        //                     var threadId = arg;
+        //                     if (string.IsNullOrEmpty(threadId)) return;
+        //                     await BeginApplication.ProfileServices.MarkAsReadByThread(_currentUser.AuthToken, threadId);
+        //                     await CallServiceApi();
+        //                 };
+        //}
 
-        private static Action<ProfileMessagesItem, string> MarkAsUnReadCallback()
-        {
-            return async (sender, arg) =>
-                         {
-                             var threadId = arg;
-                             if (string.IsNullOrEmpty(threadId)) return;
-                             await
-                                 BeginApplication.ProfileServices.MarkAsUnreadByThread(_currentUser.AuthToken, threadId);
-                             await CallServiceApi();
-                         };
-        }
+        //private static Action<ProfileMessagesItem, string> MarkAsUnReadCallback()
+        //{
+        //    return async (sender, arg) =>
+        //                 {
+        //                     var threadId = arg;
+        //                     if (string.IsNullOrEmpty(threadId)) return;
+        //                     await
+        //                         BeginApplication.ProfileServices.MarkAsUnreadByThread(_currentUser.AuthToken, threadId);
+        //                     await CallServiceApi();
+        //                 };
+        //}
 
         private void RetrieveLimitSelected(out string limit)
         {
@@ -218,8 +221,7 @@ namespace BeginMobile.Pages.MessagePages
 
     public enum EnumMessageStates
     {
-        Read,
-        Unread
+        New
     }
 
     public static class MessageSuscriptionNames
