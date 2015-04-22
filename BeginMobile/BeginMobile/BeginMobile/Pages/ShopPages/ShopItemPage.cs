@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using BeginMobile.LocalizeResources.Resources;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages.ShopPages
 {
@@ -6,7 +7,7 @@ namespace BeginMobile.Pages.ShopPages
     {
         public ShopItemPage()
         {
-            Title = "Shop detail";
+            Title = AppResources.ShopItemPageTitle;
 
             var browser = new WebView();
             browser.SetBinding(WebView.SourceProperty, "Link");

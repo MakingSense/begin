@@ -354,6 +354,9 @@
   <data name="ServerMessageSuccess" xml:space="preserve">
     <value>Successfull!</value>
   </data>
+  <data name="ShopItemPageTitle" xml:space="preserve">
+    <value>Shop detail</value>
+  </data>
   <data name="TermsAndConditionsButtonGoBack" xml:space="preserve">
     <value>Go Back</value>
   </data>

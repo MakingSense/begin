@@ -773,6 +773,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shop detail.
+        /// </summary>
+        public static string ShopItemPageTitle {
+            get {
+                return ResourceManager.GetString("ShopItemPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Go Back.
         /// </summary>
         public static string TermsAndConditionsButtonGoBack {

@@ -24,6 +24,11 @@ namespace BeginMobile.Pages.Wall
         private Grid _gridMain;
         private StackLayout _stackLayoutLoadingIndicator;
 
+        public const string TextAnd = "And";
+        public const string TextGroup= " group";
+        public const string TextGroupTopic = " group topic";
+        public const string TextActivity = " activity";
+
         public WallPage(string title, string iconImage)
             : base(title, iconImage)
         {
@@ -232,7 +237,7 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayNameTwo = "";
                         beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
 
-                        beginWall.Reason = WallParameters.DescActivityUpdate + " group";
+                        beginWall.Reason = WallParameters.DescActivityUpdate + TextGroup;
                         beginWall.Description = wallItem.Group.Name;
                         beginWall.Date = wallItem.Date;
                     }
@@ -243,7 +248,7 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayNameTwo = "";
                         beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
 
-                        beginWall.Reason = WallParameters.DescActivityUpdate + " activity";
+                        beginWall.Reason = WallParameters.DescActivityUpdate + TextActivity;
                         beginWall.Description = wallItem.Content;
                         beginWall.Date = wallItem.Date;
                     }
@@ -262,7 +267,7 @@ namespace BeginMobile.Pages.Wall
                 case WallParameters.FriendshipCreated:
                 case WallParameters.FriendshipAccepted:
                     beginWall.DisplayName = wallItem.User1.DisplayName;
-                    beginWall.ExtraText = "And";
+                    beginWall.ExtraText = TextAnd;
                     beginWall.DisplayNameTwo = wallItem.User2.DisplayName;
                     beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
 
@@ -278,7 +283,7 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayNameTwo = "";
                         beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
 
-                        beginWall.Reason = WallParameters.DescNewBooking + " group";
+                        beginWall.Reason = WallParameters.DescNewBooking + TextGroup;
                         beginWall.Description = wallItem.Group.Name;
                         beginWall.Date = wallItem.Date;
                     }
@@ -302,7 +307,7 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayNameTwo = "";
                         beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
 
-                        beginWall.Reason = WallParameters.DescNewEvent +" group";
+                        beginWall.Reason = WallParameters.DescNewEvent + TextGroup;
                         beginWall.Description = wallItem.Group.Name;
                         beginWall.Date = wallItem.Date;
 
@@ -360,7 +365,7 @@ namespace BeginMobile.Pages.Wall
                         beginWall.DisplayNameTwo = "";
                         beginWall.Title = beginWall.DisplayName + " " + beginWall.ExtraText + " " + beginWall.DisplayNameTwo;
 
-                        beginWall.Reason = WallParameters.DescBbpTopicCreate + " group topic";
+                        beginWall.Reason = WallParameters.DescBbpTopicCreate + TextGroupTopic;
                         beginWall.Description = wallItem.Group.Name;
                         beginWall.Date = wallItem.Date;
                     }
@@ -428,6 +433,6 @@ namespace BeginMobile.Pages.Wall
         public const string Friends = "friends";
         public const string Event = "event";
 
-        public const string And = "And";
+        
     }
 }
