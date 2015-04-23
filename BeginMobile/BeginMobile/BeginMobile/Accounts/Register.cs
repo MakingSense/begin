@@ -22,8 +22,10 @@ namespace BeginMobile.Accounts
         private readonly Entry _entryPassword;
         private readonly Entry _entryConfirmPassword;
         private bool _switchStatus;
+        private ILoginManager _iLoginManager;
         public Register(ILoginManager iLoginManager)
         {
+            _iLoginManager = iLoginManager;
             if (AppResources.RegisterFormTitle != null) Title = AppResources.RegisterFormTitle;
 
             var imageLogo = new Image
@@ -95,88 +97,7 @@ namespace BeginMobile.Accounts
                 MessagingCenter.Send<ContentPage>(this, "TermsAndConditions");
             };
 
-            buttonRegister.Clicked += async (sender, eventArgs) =>
-            {
-                if (String.IsNullOrEmpty(_entryFullName.Text) ||
-                    String.IsNullOrEmpty(_entryEmail.Text)
-                    || String.IsNullOrEmpty(_entryPassword.Text)
-                    || String.IsNullOrEmpty(_entryConfirmPassword.Text)
-                    )
-                {
-                    await DisplayAlert(AppResources.ApplicationValidationError,
-                                 AppResources.RegisterAlertFieldsAreRequired,
-                                 AppResources.AlertReTry);
-                }
-                else
-                {
-                    var isEmailValid = Regex.IsMatch(_entryEmail.Text, EmailRegex);
-                    if (isEmailValid)
-                    {
-                        if (_entryPassword.Text.Equals(_entryConfirmPassword.Text))
-                        {
-                            if (_switchStatus)
-                            {
-                                ActivityIndicatorLoading.IsVisible = true;
-                                ActivityIndicatorLoading.IsRunning = true;
-
-                                var loginUserManager = new LoginUserManager();
-                                var registerUser = await loginUserManager.Register(_entryUsername.Text, _entryEmail.Text,
-                                    _entryPassword.Text, _entryFullName.Text);
-
-                                if (registerUser != null)
-                                {
-
-                                    if (registerUser.Errors != null)
-                                    {
-                                        var errorMessages = registerUser.Errors.Aggregate("",
-                                            (current, error) => current + (error.ErrorMessage + "\n"));
-
-                                        await DisplayAlert(AppResources.ApplicationError, errorMessages, AppResources.AlertOk);
-
-                                    }
-                                    else
-                                    {
-                                        await DisplayAlert(AppResources.ServerMessageSuccess, AppResources.RegisterAlertSuccessMessage, AppResources.AlertOk);
-
-                                        var loginUser = new LoginUser
-                                        {
-                                            AuthToken = registerUser.AuthToken,
-                                            User = registerUser.User
-                                        };
-
-                                        BeginApplication.Current.Properties["IsLoggedIn"] = true;
-                                        BeginApplication.Current.Properties["LoginUser"] = loginUser;
-
-                                        iLoginManager.ShowMainPage(loginUser);
-                                    }
-                                }
-
-                                ActivityIndicatorLoading.IsVisible = false;
-                                ActivityIndicatorLoading.IsRunning = false;
-                            }
-
-                            else
-                            {
-                                await DisplayAlert(AppResources.ApplicationValidationError,
-                                             AppResources.RegisterAlertValidationTermsAndConditions,
-                                             AppResources.AlertReTry);
-                            }
-                        }
-                        else
-                        {
-                            await DisplayAlert(AppResources.ApplicationValidationError,
-                                         AppResources.RegisterAlertValidationPassAndConfirm,
-                                         AppResources.AlertReTry);
-                        }
-                    }
-                    else
-                    {
-                        await DisplayAlert(AppResources.ApplicationValidationError,
-                                     AppResources.RegisterAlertValidationEmail,
-                                     AppResources.AlertReTry);
-                    }
-                }
-            };
+            buttonRegister.Clicked += RegisterClickEventHandler;
 
             var stackLayoutSwitch = new StackLayout
             {
@@ -211,6 +132,99 @@ namespace BeginMobile.Accounts
                                         }
                                     }
                       };
+        }
+
+        public async void RegisterClickEventHandler(object sender, EventArgs eventArgs)
+        {
+            var userName = _entryUsername.Text.Trim();
+            var fullName = _entryFullName.Text.Trim();
+            var email = _entryEmail.Text.Trim();
+            var password = _entryPassword.Text.Trim();
+            var confirmPassword = _entryConfirmPassword.Text.Trim();
+
+            if (String.IsNullOrEmpty(fullName) ||
+                String.IsNullOrEmpty(email)
+                || String.IsNullOrEmpty(password)
+                || String.IsNullOrEmpty(confirmPassword)
+                )
+            {
+                await DisplayAlert(AppResources.ApplicationValidationError,
+                    AppResources.RegisterAlertFieldsAreRequired,
+                    AppResources.AlertReTry);
+            }
+            else
+            {
+                var isEmailValid = Regex.IsMatch(email, EmailRegex);
+                if (isEmailValid)
+                {
+                    if (password.Equals(confirmPassword))
+                    {
+                        if (_switchStatus)
+                        {
+                            ActivityIndicatorLoading.IsVisible = true;
+                            ActivityIndicatorLoading.IsRunning = true;
+
+                            var loginUserManager = new LoginUserManager();
+                            var registerUser = await loginUserManager.Register(userName, email,
+                                password, fullName);
+
+                            if (registerUser != null)
+                            {
+
+                                if (registerUser.Errors != null)
+                                {
+                                    var errorMessages = registerUser.Errors.Aggregate("",
+                                        (current, error) => current + (error.ErrorMessage + "\n"));
+
+                                    await
+                                        DisplayAlert(AppResources.ApplicationError, errorMessages, AppResources.AlertOk);
+
+                                }
+                                else
+                                {
+                                    await
+                                        DisplayAlert(AppResources.ServerMessageSuccess,
+                                            AppResources.RegisterAlertSuccessMessage, AppResources.AlertOk);
+
+                                    var loginUser = new LoginUser
+                                                    {
+                                                        AuthToken = registerUser.AuthToken,
+                                                        User = registerUser.User
+                                                    };
+
+                                    BeginApplication.Current.Properties["IsLoggedIn"] = true;
+                                    BeginApplication.Current.Properties["LoginUser"] = loginUser;
+
+                                    _iLoginManager.ShowMainPage(loginUser);
+                                }
+                            }
+
+                            ActivityIndicatorLoading.IsVisible = false;
+                            ActivityIndicatorLoading.IsRunning = false;
+                        }
+
+                        else
+                        {
+                            await DisplayAlert(AppResources.ApplicationValidationError,
+                                AppResources.RegisterAlertValidationTermsAndConditions,
+                                AppResources.AlertReTry);
+                        }
+                    }
+                    else
+                    {
+                        await DisplayAlert(AppResources.ApplicationValidationError,
+                            AppResources.RegisterAlertValidationPassAndConfirm,
+                            AppResources.AlertReTry);
+                    }
+                }
+                else
+                {
+                    await DisplayAlert(AppResources.ApplicationValidationError,
+                        AppResources.RegisterAlertValidationEmail,
+                        AppResources.AlertReTry);
+                }
+            }
+
         }
     }
 }

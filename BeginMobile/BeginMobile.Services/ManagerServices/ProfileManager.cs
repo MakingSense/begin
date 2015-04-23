@@ -146,22 +146,31 @@ namespace BeginMobile.Services.ManagerServices
         public ProfileInformationMessages GetMessagesInformation(string username, string authToken)
         {
             //TODO For while this block code is static, change once that the api service is available
-            var profileMessages = new ProfileInformationMessages
-                                  {
-                                      Messages = Message.Messages,
-                                      GroupingMessage =
-                                          new GroupingMessage
-                                          {
-                                              CountByGroup =
-                                                  new Random().Next(0,
-                                                      12)
-                                          }
-                                  };
+            try
+            {
+                var profileMessages = new ProfileInformationMessages
+                                      {
+                                          Messages = Message.Messages,
+                                          GroupingMessage =
+                                              new GroupingMessage
+                                              {
+                                                  CountByGroup =
+                                                      new Random().Next(0,
+                                                          12)
+                                              }
+                                      };
 
-            var group = profileMessages.Messages.GroupBy(x => x.Type).OrderBy(x => x.Key);
-            profileMessages.GroupingMessage.MessagesGroup = new ObservableCollection<IGrouping<string, Message>>(group);
+                var group = profileMessages.Messages.GroupBy(x => x.Type).OrderBy(x => x.Key);
+                profileMessages.GroupingMessage.MessagesGroup =
+                    new ObservableCollection<IGrouping<string, Message>>(group);
 
-            return profileMessages;
+                return profileMessages;
+            }
+            catch (Exception e)
+            {
+                //TODO log exception
+                return null;
+            }
         }
 
         public async Task<ProfileMeWall> GetWall(
