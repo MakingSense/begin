@@ -277,5 +277,12 @@ namespace BeginMobile.Pages.Profile
         }
 
         #endregion
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            this.Content = null;
+            _contacts = null;
+        }
     }
 }

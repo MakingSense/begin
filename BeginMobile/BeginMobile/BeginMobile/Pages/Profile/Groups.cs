@@ -1,68 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BeginMobile.Interfaces;
 using BeginMobile.Pages.GroupPages;
 using BeginMobile.Services.DTO;
-using BeginMobile.Utils;
-using Xamarin.Forms;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
 {
-    public class Groups : ContentPage
+    public class Groups : BaseContentPage
     {
         private ListView _listViewGroup;
-        private Label _labelNoGroupsMessage;
-        private readonly List<Group> _defaultList = new List<Group>();
+        private StackLayout _stackLayoutMain;
+        private ProfileInformationGroups _groupInformation;
+        private Grid _gridMain;
+        private ObservableCollection<Group> _groups;
+        private List<Group> _defaultGroups = new List<Group>();
 
-        private Picker _sectionsPicker;
-        private Picker _categoriesPicker;
-
-        private readonly SearchView _searchView;
-        private List<string> _sectionsList;
-        private List<string> _categoriesList = new List<string> { "All Categories" };
-        private const string DefaultLimit = "10";
-
-        private ObservableCollection<Group> _groupInformation;
-
-        private readonly LoginUser _currentUser;
         public Groups()
         {
             Title = "Groups";
-            _searchView = new SearchView();
-            _searchView.SetPlaceholder("Search by group name");
+            var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
-            LoadSectionsPicker();
-            LoadCategoriesPicker();
+            _gridMain = new Grid()
+            {
+                RowSpacing = 2,
+                RowDefinitions =
+                {
+                    new RowDefinition(){Height = GridLength.Auto}
+                }
+            };
 
+            Content = _gridMain;
 
-            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
-            Init();
+            Init(currentUser);
         }
 
-        private async Task Init()
+        private async Task Init(LoginUser currentUser)
         {
+            _groupInformation = await BeginApplication.ProfileServices.GetGroups(currentUser.User.UserName,
+                currentUser.AuthToken);
 
-            _groupInformation = await BeginApplication
-                .ProfileServices.GetGroupsByParams(_currentUser.AuthToken, limit: DefaultLimit)
-                ?? new ObservableCollection<Group>(_defaultList);
-
-            #region Search components
-
-            _searchView.SearchBar.TextChanged += SearchItemEventHandler;
-            _categoriesPicker.SelectedIndexChanged += SearchItemEventHandler;
-            _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
-            _sectionsPicker.SelectedIndexChanged += SearchItemEventHandler;
-
-            _labelNoGroupsMessage = new Label();
-
-            #endregion
+            _groups = _groupInformation != null ? _groupInformation.Groups : 
+                new ObservableCollection<Group>(_defaultGroups);
 
             _listViewGroup = new ListView
             {
-                ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell)),
-                ItemsSource = _groupInformation,
+                ItemTemplate = new DataTemplate(() => new ProfileGroupItemCell()),
+                ItemsSource = _groups,
                 HasUnevenRows = true
             };
 
@@ -81,125 +66,26 @@ namespace BeginMobile.Pages.Profile
                 ((ListView)sender).SelectedItem = null;
             };
 
-            var mainLayout = new StackLayout
-            {
-                Padding = 10,
-                Spacing = 2,
-                VerticalOptions = LayoutOptions.Start,
-                Orientation = StackOrientation.Vertical
-            };
+            var relativeLayout = new RelativeLayout();
+            relativeLayout.Children.Add(_listViewGroup,
+                Constraint.Constant(0),
+                Constraint.Constant(0),
+                Constraint.RelativeToParent(parent => { return parent.Width; }),
+                Constraint.RelativeToParent(parent => { return parent.Height; }));
 
-            mainLayout.Children.Add(_searchView.Container);
-            mainLayout.Children.Add(new ScrollView
-            {
-                Content = _listViewGroup
-            });
+            //_stackLayoutMain.Children.Add(relativeLayout);
 
-            Content = mainLayout;
+            _gridMain.Children.Add(relativeLayout, 0, 0);
+
+            //Content = new ScrollView { Content = _stackLayoutMain };
+            Content = _gridMain;
         }
 
-        private void LoadSectionsPicker()
+        protected override void OnDisappearing()
         {
-            _sectionsList = BeginApplication.GlobalService.GroupSections;
-
-            _sectionsPicker = new Picker
-                              {
-                                  Title = "Sections",
-                                  VerticalOptions = LayoutOptions.CenterAndExpand
-                              };
-
-            foreach (var item in _sectionsList)
-            {
-                _sectionsPicker.Items.Add(item);
-            }
-
-            _searchView.Container.Children.Add(_sectionsPicker);
+            base.OnDisappearing();
+            this.Content = null;
+            _groups = null;
         }
-        private void LoadCategoriesPicker()
-        {
-            _categoriesPicker = new Picker
-                                {
-                                    Title = "Filter by Category",
-                                    VerticalOptions = LayoutOptions.CenterAndExpand
-                                };
-
-            if (_categoriesList != null)
-            {
-                foreach (string c in _categoriesList)
-                {
-                    _categoriesPicker.Items.Add(c);
-                }
-            }
-
-            else
-            {
-                _categoriesList = new List<string> { "All Categories" };
-            }
-
-            _searchView.Container.Children.Add(_categoriesPicker);
-        }
-
-        #region Events
-
-        /// <summary>
-        /// Common handler when an searchBar item has changed 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private async void SearchItemEventHandler(object sender, EventArgs args)
-        {
-            string limit;
-            string cat;
-            string sections;
-
-            var q = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
-
-            RetrieveLimitSelected(out limit);
-            RetrieveCategorySelected(out cat);
-            RetrieveSectionSelected(out sections);
-
-            _groupInformation =
-                await BeginApplication.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, q, cat, limit, sections);
-
-            if (_groupInformation != null && _groupInformation.Any())
-            {
-                _listViewGroup.ItemsSource = _groupInformation;
-                _labelNoGroupsMessage.Text = string.Empty;
-            }
-
-            else
-            {
-                _groupInformation = new ObservableCollection<Group>(_defaultList);
-                _listViewGroup.ItemsSource = _groupInformation;
-            }
-        }
-        private void RetrieveSectionSelected(out string sections)
-        {
-            var sectionSelectedIndex = _sectionsPicker.SelectedIndex;
-
-            sections = sectionSelectedIndex == -1
-                ? null
-                : _sectionsPicker.Items[sectionSelectedIndex];
-        }
-        private void RetrieveCategorySelected(out string cat)
-        {
-            var catSelectedIndex = _categoriesPicker.SelectedIndex;
-            var catLastIndex = _categoriesPicker.Items.Count - 1;
-
-            cat = catSelectedIndex == -1 || catSelectedIndex == catLastIndex
-                ? null
-                : _categoriesPicker.Items[catSelectedIndex];
-        }
-        private void RetrieveLimitSelected(out string limit)
-        {
-            var limitSelectedIndex = _searchView.Limit.SelectedIndex;
-            var limitLastIndex = _searchView.Limit.Items.Count - 1;
-
-            limit = limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex
-                ? null
-                : _searchView.Limit.Items[limitSelectedIndex];
-        }
-
-        #endregion
     }
 }
