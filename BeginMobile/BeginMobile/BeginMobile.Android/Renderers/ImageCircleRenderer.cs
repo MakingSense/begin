@@ -76,6 +76,7 @@ namespace BeginMobile.Android.Renderers
             }
             catch (Exception ex)
             {
+                //TODO log exception
                 System.Diagnostics.Debug.WriteLine("Unable to create circle image: " + ex);
             }
 

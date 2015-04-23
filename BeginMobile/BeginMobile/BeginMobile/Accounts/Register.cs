@@ -6,7 +6,6 @@ using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
 using Xamarin.Forms;
-using BeginMobile.Services.Utils;
 
 namespace BeginMobile.Accounts
 {
@@ -22,7 +21,7 @@ namespace BeginMobile.Accounts
         private readonly Entry _entryPassword;
         private readonly Entry _entryConfirmPassword;
         private bool _switchStatus;
-        private ILoginManager _iLoginManager;
+        private readonly ILoginManager _iLoginManager;
         public Register(ILoginManager iLoginManager)
         {
             _iLoginManager = iLoginManager;
@@ -87,15 +86,9 @@ namespace BeginMobile.Accounts
                 Style = BeginApplication.Styles.DefaultButton
             };
 
-            buttonCancel.Clicked += (sender, eventArgs) =>
-            {
-                MessagingCenter.Send<ContentPage>(this, "Login");
-            };
+            buttonCancel.Clicked += (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "Login");
 
-            buttonTermsAndConditions.Clicked += (senedr, eventArgs) =>
-            {
-                MessagingCenter.Send<ContentPage>(this, "TermsAndConditions");
-            };
+            buttonTermsAndConditions.Clicked += (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "TermsAndConditions");
 
             buttonRegister.Clicked += RegisterClickEventHandler;
 
@@ -192,8 +185,8 @@ namespace BeginMobile.Accounts
                                                         User = registerUser.User
                                                     };
 
-                                    BeginApplication.Current.Properties["IsLoggedIn"] = true;
-                                    BeginApplication.Current.Properties["LoginUser"] = loginUser;
+                                    Application.Current.Properties["IsLoggedIn"] = true;
+                                    Application.Current.Properties["LoginUser"] = loginUser;
 
                                     _iLoginManager.ShowMainPage(loginUser);
                                 }

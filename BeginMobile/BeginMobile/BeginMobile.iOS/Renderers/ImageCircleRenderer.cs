@@ -59,6 +59,7 @@ namespace BeginMobile.iOS.Renderers
 
             catch (Exception ex)
             {
+                //TODO log exception
                 Debug.WriteLine("Unable to create circle image: " + ex);
             }
         }

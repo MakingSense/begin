@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Runtime.InteropServices.WindowsRuntime;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
 using System.Threading.Tasks;
@@ -33,14 +34,14 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var content = new FormUrlEncodedContent(new[]
-                                                        {
-                                                            new KeyValuePair<string, string>("username", username),
-                                                            new KeyValuePair<string, string>("password", password)
-                                                        });
+                {
+                    new KeyValuePair<string, string>("username", username),
+                    new KeyValuePair<string, string>("password", password)
+                });
 
                 const string addressSuffix = "login";
                 loginUser = await _loginManagerClient.PostAsync(content, addressSuffix);
-                return  loginUser;
+                return loginUser;
             }
 
             catch (Exception ex)
@@ -49,6 +50,8 @@ namespace BeginMobile.Services.ManagerServices
                 return null;
             }
         }
+
+        private const int RegisterTimeout = 8500; //8.5 secs
 
         public async Task<RegisterUser> Register(string username, string email, string password, string nameSurname)
         {
@@ -65,25 +68,24 @@ namespace BeginMobile.Services.ManagerServices
                 });
 
                 const string addressSuffix = "signup";
-                registeredUser = await _registerUserClient.PostAsync(content, addressSuffix);
+                registeredUser = await _registerUserClient.PostAsync(content, addressSuffix, RegisterTimeout);
                 return registeredUser;
-
             }
-
             catch (Exception ex)
             {
                 AppContextError.Send(ex, registeredUser, ExceptionLevel.Application);
                 return null;
             }
         }
+
         public async Task<string> RetrievePassword(string email)
         {
             try
             {
                 var content = new FormUrlEncodedContent(new[]
-                                                    {
-                                                        new KeyValuePair<string, string>("email", email),
-                                                    });
+                {
+                    new KeyValuePair<string, string>("email", email),
+                });
 
                 const string addressSuffix = "retrieve_password";
                 return await _stringResultClient.PostContentResultAsync(content, addressSuffix);
@@ -93,19 +95,20 @@ namespace BeginMobile.Services.ManagerServices
                 AppContextError.Send(ex, null, ExceptionLevel.Application);
                 return null;
             }
-            
         }
-        public async Task<ChangePassword> ChangeYourPassword(string currentPassword, string newPassword, string repeatNewPassword,
+
+        public async Task<ChangePassword> ChangeYourPassword(string currentPassword, string newPassword,
+            string repeatNewPassword,
             string authToken)
         {
             var content = new FormUrlEncodedContent(new[]
-                                                    {
-                                                        new KeyValuePair<string, string>("current_password",
-                                                            currentPassword),
-                                                        new KeyValuePair<string, string>("new_password", newPassword),
-                                                        new KeyValuePair<string, string>("repeat_new_password",
-                                                            repeatNewPassword)
-                                                    });
+            {
+                new KeyValuePair<string, string>("current_password",
+                    currentPassword),
+                new KeyValuePair<string, string>("new_password", newPassword),
+                new KeyValuePair<string, string>("repeat_new_password",
+                    repeatNewPassword)
+            });
 
             const string addressSuffix = "me/change_password";
 
@@ -126,9 +129,9 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 var content = new FormUrlEncodedContent(new[]
-                                                        {
-                                                            new KeyValuePair<string, string>("name_surname", nameSurname),
-                                                        });
+                {
+                    new KeyValuePair<string, string>("name_surname", nameSurname),
+                });
 
                 const string addressSuffix = "me/update_profile";
                 return await _stringResultClient.PostContentResultAsync(authToken, content, addressSuffix);

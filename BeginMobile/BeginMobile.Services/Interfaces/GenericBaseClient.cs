@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ namespace BeginMobile.Services.Interfaces
     {
         private readonly string _serviceBaseAddress;
         private readonly string _subAddress;
+        private const int PostAsyncTimeout = 2000; //2 seconds for requests to web services
 
         public GenericBaseClient(string baseAddress, string subAddress)
         {
@@ -143,7 +145,8 @@ namespace BeginMobile.Services.Interfaces
         /// <param name="authToken">The authentication token.</param>
         /// <param name="content">The content example object of this type FormUrlEncodedContent.</param>
         /// <param name="addressSuffix">The address suffix is complement url example 'me/change_password'.</param>
-        public async Task<string> PostContentResultAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        public async Task<string> PostContentResultAsync(string authToken, FormUrlEncodedContent content,
+            string addressSuffix)
         {
             using (var httpClient = new HttpClient())
             {
@@ -205,6 +208,7 @@ namespace BeginMobile.Services.Interfaces
         /**
          * Methods async in services
          */
+
         public async Task<List<T>> GetListAsync(string authToken, string identifier, string urlParams)
         {
             using (var httpClient = new HttpClient())
@@ -215,8 +219,8 @@ namespace BeginMobile.Services.Interfaces
                 var response = await httpClient.GetAsync(_subAddress + identifier + urlParams).ConfigureAwait(false);
                 var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var resultList = await Task.Run(() =>
-                            JsonConvert.DeserializeObject<List<T>>(userJson)
-                        ).ConfigureAwait(false);
+                    JsonConvert.DeserializeObject<List<T>>(userJson)
+                    ).ConfigureAwait(false);
 
                 return resultList;
             }
@@ -294,7 +298,7 @@ namespace BeginMobile.Services.Interfaces
                     var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                     resultModel = await Task.Run(() =>
-                            JsonConvert.DeserializeObject<T>(userJson)
+                        JsonConvert.DeserializeObject<T>(userJson)
                         ).ConfigureAwait(false);
                 }
 
@@ -303,36 +307,58 @@ namespace BeginMobile.Services.Interfaces
         }
 
         //use PostAsync with FormUrlEncodedContent object
-        public async Task<T> PostAsync(FormUrlEncodedContent content, string addressSuffix)
+        public async Task<T> PostAsync(FormUrlEncodedContent content, string addressSuffix, int timeout = PostAsyncTimeout)
         {
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.Timeout = new TimeSpan(0, 2, 0);
-                httpClient.BaseAddress = new Uri(_serviceBaseAddress);
-
-                var response = await httpClient.PostAsync(_subAddress + addressSuffix, content).ConfigureAwait(false);
-                var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                var result = await Task.Run(() =>
-                        JsonConvert.DeserializeObject<T>(userJson)).ConfigureAwait(false);
-
-                return result;
-            }
+            return await PostAsync(null, content, addressSuffix, timeout);
         }
 
-        public async Task<T> PostAsync(string authToken, FormUrlEncodedContent content, string addressSuffix)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="authToken"></param>
+        /// <param name="content"></param>
+        /// <param name="addressSuffix"></param>
+        /// <param name="timeout">in milliseconds</param>
+        /// <returns></returns>
+        public async Task<T> PostAsync(string authToken, FormUrlEncodedContent content, string addressSuffix,
+            int timeout = PostAsyncTimeout)
         {
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress = new Uri(_serviceBaseAddress);
-                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+                httpClient.Timeout = new TimeSpan(0, 0, 0, timeout);
 
-                var response = await httpClient.PostAsync(_subAddress + addressSuffix, content).ConfigureAwait(false);
-                var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var result = await Task.Run(() =>
-                    JsonConvert.DeserializeObject<T>(userJson)).ConfigureAwait(false);
+                if (authToken != null)
+                {
+                    httpClient.DefaultRequestHeaders.TryAddWithoutValidation("authtoken", authToken);
+                }
 
-                return result;
+                var url = _subAddress + addressSuffix;
+
+                var response = await httpClient.PostAsync(url, content).ConfigureAwait(false);
+                if (response.IsSuccessStatusCode)
+                {
+                    var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var result = await Task.Run(() =>
+                    {
+                        try
+                        {
+                            return JsonConvert.DeserializeObject<T>(userJson);
+                        }
+                        catch (Exception exception)
+                        {
+                            //TODO log exception
+                            Debug.WriteLine("Exception at '{0}' message: '{1}'", url, exception);
+                            return null;
+                        }
+                    }).ConfigureAwait(false);
+
+                    return result;
+                }
+
+                //TODO log status code error
+                Debug.WriteLine("Url '{0}' not working: '{1}' : '{2}'", url, response.StatusCode, response.ReasonPhrase);
+                return null;
             }
         }
 
