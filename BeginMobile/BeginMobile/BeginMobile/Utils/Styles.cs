@@ -562,6 +562,13 @@ namespace BeginMobile.Utils
                 return "padlock.png";
             }
         }
+        public string MessageIcon
+        {
+            get
+            {
+                return "userdefault3.png";
+            }
+        }
 #endregion
     }
 }

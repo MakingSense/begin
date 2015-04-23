@@ -120,6 +120,9 @@
   <data name="AboutUsTitle" xml:space="preserve">
     <value>About us</value>
   </data>
+  <data name="AlertInfoTitle" xml:space="preserve">
+    <value>Info</value>
+  </data>
   <data name="AlertOk" xml:space="preserve">
     <value>Ok</value>
   </data>
@@ -188,6 +191,9 @@
   </data>
   <data name="ButtonSendMessage" xml:space="preserve">
     <value>Send Message</value>
+  </data>
+  <data name="ButtonSendReply" xml:space="preserve">
+    <value>Send Reply</value>
   </data>
   <data name="ButtonUnReadNotification" xml:space="preserve">
     <value>Unread</value>
@@ -300,6 +306,21 @@
   <data name="LoginFormTitle" xml:space="preserve">
     <value>Modulo Di Accesso</value>
   </data>
+  <data name="MarkAsUnread" xml:space="preserve">
+    <value>Mark as Unread</value>
+  </data>
+  <data name="MessageDetailTitle" xml:space="preserve">
+    <value>Message Detail</value>
+  </data>
+  <data name="MessageInboxTitle" xml:space="preserve">
+    <value>Inbox</value>
+  </data>
+  <data name="MessageSentTitle" xml:space="preserve">
+    <value>Sent</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>Nuovo</value>
+  </data>
   <data name="OptionAllCategories" xml:space="preserve">
     <value>All Categories</value>
   </data>
@@ -314,6 +335,9 @@
   </data>
   <data name="PlaceholderChangePasswordNewPass" xml:space="preserve">
     <value>New Password</value>
+  </data>
+  <data name="PlaceholderFilterBySubjectOrContent" xml:space="preserve">
+    <value>Filter by subject or content</value>
   </data>
   <data name="PrivacyTitle" xml:space="preserve">
     <value>Privacy</value>
@@ -351,8 +375,14 @@
   <data name="ServerMessageChangePassword" xml:space="preserve">
     <value>Your password has been changed successfuly</value>
   </data>
+  <data name="ServerMessageSendSuccess" xml:space="preserve">
+    <value>Your message has successfully sent!</value>
+  </data>
   <data name="ServerMessageSuccess" xml:space="preserve">
     <value>Successfuly</value>
+  </data>
+  <data name="ServerRemovedSuccess" xml:space="preserve">
+    <value>Removed!</value>
   </data>
   <data name="ShopItemPageTitle" xml:space="preserve">
     <value>Shop detail</value>
