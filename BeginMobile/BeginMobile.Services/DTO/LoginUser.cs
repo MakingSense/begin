@@ -10,8 +10,6 @@ namespace BeginMobile.Services.DTO
         [JsonProperty("me")]
         public User User { set; get; }
 
-        [JsonProperty("avatar")]
-        public string Avatar { set; get; }
 
     }
 }

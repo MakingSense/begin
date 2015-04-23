@@ -7,11 +7,20 @@ namespace BeginMobile.Pages.Profile
 {
     public class ProfileMe : ContentPage
     {
-        private const string UserDefault = "userdefault3.png";
         public ProfileMe(User user)
         {
             Title = AppResources.LabelProfileMeTitle;
+            var userAvatar = BeginApplication.Styles.DefaultProfileUserIconName;
 
+            if (user != null)
+            {
+                var userAvatarUrl = user.Avatar;
+
+                if (!string.IsNullOrEmpty(userAvatarUrl))
+                {
+                    userAvatar = userAvatarUrl;
+                }
+            }
             //Toolbar menu item
             var toolBarItemMyActivity = new ToolbarItem
                                  {
@@ -86,7 +95,7 @@ namespace BeginMobile.Pages.Profile
                 WidthRequest = 100,
                 Aspect = Aspect.AspectFill,
                 HorizontalOptions = LayoutOptions.Center,
-                Source = UserDefault
+                Source = userAvatar
             };
 
             var labelTitle = new Label

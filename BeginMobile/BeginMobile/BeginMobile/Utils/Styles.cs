@@ -539,5 +539,29 @@ namespace BeginMobile.Utils
                 return style;
             }
         }
+#region Images Icons
+        public string DefaultProfileUserIconName
+        {
+            get
+            {
+                return "userdefault3.png"; 
+            }            
+        }
+        public string ProfileMenuItemIcon
+        {
+            get
+            {
+                return Device.OS == TargetPlatform.iOS ? "Contact.png" : "userprofile.png";
+            }
+        }
+
+        public string KnocksMenuITemIcon
+        {
+            get
+            {
+                return "padlock.png";
+            }
+        }
+#endregion
     }
 }
