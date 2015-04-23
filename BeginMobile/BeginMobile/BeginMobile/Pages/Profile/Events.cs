@@ -227,8 +227,8 @@ namespace BeginMobile.Pages.Profile
                                                                 String.Format("{0} - {1}", eventInfo.StartTime,
                                                                     eventInfo.EndTime),
                                                             EventInfo = eventInfo
-                                                        }): new ObservableCollection<EventInfoObject>();
-            return (ObservableCollection<EventInfoObject>) listEvents;
+                                                        }): new List<EventInfoObject>();
+            return new ObservableCollection<EventInfoObject>(listEvents);
         }
 
         #endregion

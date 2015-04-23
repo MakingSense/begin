@@ -29,7 +29,7 @@ namespace BeginMobile.Pages.GroupPages
 
             if (_groupInformation == null)
             {
-                return;
+                _groupInformation = new Group();
             }
 
             var groupDetail = GetGroupModel();

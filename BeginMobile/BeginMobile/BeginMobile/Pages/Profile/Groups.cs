@@ -36,6 +36,7 @@ namespace BeginMobile.Pages.Profile
             LoadSectionsPicker();
             LoadCategoriesPicker();
 
+
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             Init();
         }
@@ -43,7 +44,9 @@ namespace BeginMobile.Pages.Profile
         private async Task Init()
         {
 
-            _groupInformation = await BeginApplication.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, limit: DefaultLimit);
+            _groupInformation = await BeginApplication
+                .ProfileServices.GetGroupsByParams(_currentUser.AuthToken, limit: DefaultLimit)
+                ?? new ObservableCollection<Group>(_defaultList);
 
             #region Search components
 
@@ -155,18 +158,19 @@ namespace BeginMobile.Pages.Profile
             RetrieveCategorySelected(out cat);
             RetrieveSectionSelected(out sections);
 
-            ObservableCollection<Group> groupsList =
+            _groupInformation =
                 await BeginApplication.ProfileServices.GetGroupsByParams(_currentUser.AuthToken, q, cat, limit, sections);
 
-            if (groupsList != null && groupsList.Any())
+            if (_groupInformation != null && _groupInformation.Any())
             {
-                _listViewGroup.ItemsSource = groupsList;
+                _listViewGroup.ItemsSource = _groupInformation;
                 _labelNoGroupsMessage.Text = string.Empty;
             }
 
             else
             {
-                _listViewGroup.ItemsSource = _defaultList;
+                _groupInformation = new ObservableCollection<Group>(_defaultList);
+                _listViewGroup.ItemsSource = _groupInformation;
             }
         }
         private void RetrieveSectionSelected(out string sections)
