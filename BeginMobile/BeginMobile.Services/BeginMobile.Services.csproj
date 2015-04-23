@@ -70,6 +70,9 @@
     <Compile Include="DTO\UserActivity.cs" />
     <Compile Include="DTO\WallOptions.cs" />
     <Compile Include="Interfaces\GenericBaseClient.cs" />
+    <Compile Include="Interfaces\ILoggingService.cs" />
+    <Compile Include="Interfaces\LogLevel.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="ManagerServices\ContactManager.cs" />
     <Compile Include="ManagerServices\EventManager.cs" />
     <Compile Include="ManagerServices\GlobalManager.cs" />

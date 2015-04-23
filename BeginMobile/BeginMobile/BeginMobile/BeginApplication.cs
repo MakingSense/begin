@@ -4,6 +4,8 @@ using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Menu;
 using BeginMobile.Services;
 using BeginMobile.Services.DTO;
+using BeginMobile.Services.Interfaces;
+using BeginMobile.Services.Logging;
 using BeginMobile.Utils;
 using System;
 using Xamarin.Forms;
@@ -12,13 +14,15 @@ namespace BeginMobile
 {
     public class BeginApplication : Application, ILoginManager
     {
-
         private static ILoginManager _loginManager;
         public static BeginApplication CurrentBeginApplication;
 
         public BeginApplication()
         {
             CurrentBeginApplication = this;
+
+            Logger.Current = DependencyService.Get<ILoggingService>();
+
             _loginManager = this;
 
             if (Device.OS != TargetPlatform.WinPhone)
@@ -28,14 +32,16 @@ namespace BeginMobile
 
             AppDomain.CurrentDomain.UnhandledException += AppExceptionEventHander;
 
+            Logger.Current.Info("Start Xamarin Application.");
             MainPage = new LoginModalPage(this);
         }
 
-        void AppExceptionEventHander(object sender, UnhandledExceptionEventArgs eventArgs)
+        private void AppExceptionEventHander(object sender, UnhandledExceptionEventArgs eventArgs)
         {
             MessagingCenter.Send(this, "UnhandledException", eventArgs);
             MessagingCenter.Unsubscribe<BeginApplication, UnhandledExceptionEventArgs>(this, "UnhandledException");
         }
+
         public void ShowMainPage(LoginUser loginUser)
         {
             MainPage = new NavigationPage(new HomePage(loginUser));
@@ -67,12 +73,14 @@ namespace BeginMobile
         #region "Services"
 
         private static ProfileServices _profileServices;
+
         public static ProfileServices ProfileServices
         {
             get { return _profileServices ?? (_profileServices = new ProfileServices()); }
         }
 
         private static GlobalService _globalService;
+
         public static GlobalService GlobalService
         {
             get { return _globalService ?? (_globalService = new GlobalService()); }
@@ -90,7 +98,5 @@ namespace BeginMobile
         }
 
         #endregion
-
-
     }
 }

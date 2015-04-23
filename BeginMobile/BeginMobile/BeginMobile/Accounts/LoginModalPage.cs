@@ -1,7 +1,6 @@
 ﻿using BeginMobile.Interfaces;
 using BeginMobile.Pages;
 using BeginMobile.Services.Utils;
-using System;
 using Xamarin.Forms;
 
 namespace BeginMobile.Accounts

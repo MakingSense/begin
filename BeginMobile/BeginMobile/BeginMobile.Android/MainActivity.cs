@@ -1,11 +1,14 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using BeginMobile.Android.DependencyService;
 using BeginMobile.Android.Renderers;
+using BeginMobile.Services.Interfaces;
 
 namespace BeginMobile.Android
 {
-    [Activity(Label = "BeginMobile", Icon = "@drawable/icon", MainLauncher = true, Theme = "@style/BeginMobileTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "BeginMobile", Icon = "@drawable/icon", MainLauncher = true, Theme = "@style/BeginMobileTheme",
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -14,9 +17,8 @@ namespace BeginMobile.Android
 
             Xamarin.Forms.Forms.Init(this, bundle);
             ImageCircleRenderer.Init();
-            
+
             LoadApplication(new BeginApplication());
         }
     }
 }
-
