@@ -45,9 +45,9 @@ namespace BeginMobile.Services
             return _profileManager.GetEventsInformation(userName, authToken);
         }
 
-        public ProfileContacts GetContacts(string userName, string authToken)
+        public async Task<ProfileContacts> GetContacts(string userName, string authToken)
         {
-            return _profileManager.GetContactsInformation(userName, authToken);
+            return await _profileManager.GetContactsInformation(userName, authToken);
         }
 
         public async Task<ProfileInformationShop> GetShopInfo(string userName, string authToken)

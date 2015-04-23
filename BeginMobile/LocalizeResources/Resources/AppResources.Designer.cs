@@ -350,7 +350,7 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username.
+        ///   Looks up a localized string similar to User Name.
         /// </summary>
         public static string EntryUsernamePlaceholder {
             get {
@@ -692,7 +692,7 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password and Confirm password are not match!.
+        ///   Looks up a localized string similar to The Password and Confirm Password do not match!.
         /// </summary>
         public static string RegisterAlertValidationPassAndConfirm {
             get {
@@ -917,7 +917,7 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username.
+        ///   Looks up a localized string similar to User Name.
         /// </summary>
         public static string UsernamePlaceholder {
             get {

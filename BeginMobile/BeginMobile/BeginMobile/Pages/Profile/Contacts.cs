@@ -18,7 +18,8 @@ namespace BeginMobile.Pages.Profile
         private readonly List<Contact> _defaultList = new List<Contact>();
         private readonly SearchView _searchView;
         private readonly LoginUser _currentUser;
-        private List<User> _profileInformationContacts;
+        private ProfileContacts _profileInformationContacts;
+        private List<Contact> _contacts;
 
         private const string DefaultLimit = "10";
 
@@ -44,21 +45,24 @@ namespace BeginMobile.Pages.Profile
         private async Task Init()
         {
             _profileInformationContacts =
-                BeginApplication.ProfileServices.GetContacts(_currentUser.User.UserName, _currentUser.AuthToken)
-                    .Contacts;
+                await BeginApplication.ProfileServices.GetContacts(_currentUser.User.UserName, _currentUser.AuthToken);
 
-            var contactsList = new List<Contact>();
+            _contacts = new List<Contact>();
 
             LoadSortOptionsPicker();
 
-            contactsList.AddRange(RetrieveContacts(_profileInformationContacts));
+            var profileContacts = _profileInformationContacts != null
+                ? _profileInformationContacts.Contacts
+                : new List<User>();
+
+            _contacts.AddRange(RetrieveContacts(profileContacts));
 
             var contactListViewTemplate = new DataTemplate(() => new CustomViewCell(_currentUser));
             MessagingSubscriptions();
 
             _listViewContacts = new ListView
                                 {
-                                    ItemsSource = new ObservableCollection<Contact>(contactsList),
+                                    ItemsSource = new ObservableCollection<Contact>(_contacts),
                                     ItemTemplate = contactListViewTemplate,
                                     HasUnevenRows = true
                                 };
@@ -194,18 +198,26 @@ namespace BeginMobile.Pages.Profile
 
         private static IEnumerable<Contact> RetrieveContacts(IEnumerable<User> profileInformationContacts)
         {
-            return profileInformationContacts.Select(contact => new Contact
-                                                                {
-                                                                    Icon = UserDefault,
-                                                                    NameSurname = contact.NameSurname,
-                                                                    Email =contact.Email,
-                                                                    Url = contact.Url,
-                                                                    UserName = contact.UserName,
-                                                                    Registered = contact.Registered,
-                                                                    Id = contact.Id.ToString(),
-                                                                    Relationship = contact.Relationship,
-                                                                    IsOnline = contact.IsOnline
-                                                                });
+
+            if (profileInformationContacts != null)
+            {
+                return profileInformationContacts.Select(contact => new Contact
+                {
+                    Icon = UserDefault,
+                    NameSurname = contact.NameSurname,
+                    Email = contact.Email,
+                    Url = contact.Url,
+                    UserName = contact.UserName,
+                    Registered = contact.Registered,
+                    Id = contact.Id.ToString(),
+                    Relationship = contact.Relationship,
+                    IsOnline = contact.IsOnline
+                });
+            }
+            else
+            {
+                return new List<Contact>();
+            }
         }
 
         private void MessagingSubscriptions()
@@ -265,5 +277,12 @@ namespace BeginMobile.Pages.Profile
         }
 
         #endregion
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            this.Content = null;
+            _contacts = null;
+        }
     }
 }

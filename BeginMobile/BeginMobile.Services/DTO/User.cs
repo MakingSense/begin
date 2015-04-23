@@ -57,5 +57,8 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("profession")]
         public string Profession { set; get; }
+
+        [JsonProperty("avatar")]
+        public string Avatar { set; get; }
     }
 }

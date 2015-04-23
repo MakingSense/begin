@@ -54,5 +54,12 @@ namespace BeginMobile.Pages.Profile
 
             Content = new ScrollView { Content = _relativeLayoutMain };
         }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            this.Content = null;
+            _profileShop = null;
+        }
     }
 }

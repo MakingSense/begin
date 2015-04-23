@@ -82,5 +82,12 @@ namespace BeginMobile.Pages.Profile
             mainStackLayout.Children.Add(stackLayout);
             Content = mainStackLayout;
         }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            this.Content = null;
+            _profileActivity = null;
+        }
     }
 }

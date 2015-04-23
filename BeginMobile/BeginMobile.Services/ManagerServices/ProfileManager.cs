@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
+using BeginMobile.Services.Utils;
 
 
 namespace BeginMobile.Services.ManagerServices
@@ -14,6 +15,7 @@ namespace BeginMobile.Services.ManagerServices
         private const string BaseAddress = "http://186.109.86.251:5432/";
         private const string SubAddress = "begin/api/v1/";
         private const string Identifier = "profile";
+        private const string IdentifierAux = "me";
 
         private readonly GenericBaseClient<Wall> _wallClient;
         private readonly GenericBaseClient<ProfileInfo> _profileInfoClient;
@@ -48,7 +50,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -63,7 +65,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -78,7 +80,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -93,7 +95,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -104,26 +106,26 @@ namespace BeginMobile.Services.ManagerServices
             {
                 const string urlGetParams = "?sections=groups";
                 var addressSuffix = Identifier + "/" + username;
-                return await _profileGroupClient.GetAsync(authToken, addressSuffix, urlGetParams);
+                return await _profileGroupClient.GetAsync(authToken, IdentifierAux, urlGetParams);
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
 
-        public ProfileContacts GetContactsInformation(string username, string authToken)
+        public async Task<ProfileContacts> GetContactsInformation(string username, string authToken)
         {
             try
             {
                 const string urlGetParams = "?sections=contacts";
                 var addressSuffix = Identifier + "/" + username;
-                return _profileContactClient.Get(authToken, addressSuffix, urlGetParams);
+                return await _profileContactClient.GetAsync(authToken, IdentifierAux, urlGetParams);
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -138,7 +140,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -166,9 +168,9 @@ namespace BeginMobile.Services.ManagerServices
 
                 return profileMessages;
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -195,7 +197,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -216,7 +218,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }

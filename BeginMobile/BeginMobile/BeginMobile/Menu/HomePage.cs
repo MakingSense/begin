@@ -24,7 +24,7 @@ namespace BeginMobile.Menu
             Detail = new AppHome();            
         }
 
-        private async Task LoadInitialServices()
+        private async void LoadInitialServices()
         {
             _globalService = BeginApplication.GlobalService;
         }

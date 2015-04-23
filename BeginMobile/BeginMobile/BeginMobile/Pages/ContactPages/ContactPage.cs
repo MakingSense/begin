@@ -68,7 +68,6 @@ namespace BeginMobile.Pages.ContactPages
                 }
             };
 
-
             _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator(ref _activityIndicatorLoading); 
             _gridLayoutMain.Children.Add(_stackLayoutLoadingIndicator, 0, 3);
 

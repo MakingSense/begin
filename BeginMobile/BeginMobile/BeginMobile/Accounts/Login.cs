@@ -4,7 +4,6 @@ using BeginMobile.Interfaces;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.ManagerServices;
 using Xamarin.Forms;
-using BeginMobile.Services.Utils;
 
 namespace BeginMobile.Accounts
 {

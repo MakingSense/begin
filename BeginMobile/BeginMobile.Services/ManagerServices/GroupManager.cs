@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
+using BeginMobile.Services.Utils;
 
 namespace BeginMobile.Services.ManagerServices
 {
@@ -41,7 +42,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -61,7 +62,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }

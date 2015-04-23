@@ -42,7 +42,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -56,7 +56,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                //TODO log exception
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -77,6 +77,8 @@ namespace BeginMobile.Services.ManagerServices
                         ErrorMessage = exception.Message
                     }
                 };
+
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return listError;
             }
         }
@@ -97,6 +99,8 @@ namespace BeginMobile.Services.ManagerServices
                         ErrorMessage = exception.Message
                     }
                 };
+
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return listError;
             }
         }
@@ -117,6 +121,8 @@ namespace BeginMobile.Services.ManagerServices
                         ErrorMessage = exception.Message
                     }
                 };
+
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return listError;
             }
         }
@@ -137,6 +143,8 @@ namespace BeginMobile.Services.ManagerServices
                         ErrorMessage = exception.Message
                     }
                 };
+
+                AppContextError.Send(exception, null, ExceptionLevel.Application);
                 return listError;
             }
         }
@@ -166,6 +174,8 @@ namespace BeginMobile.Services.ManagerServices
                 {
                     Error = exception.Message,
                 };
+
+                AppContextError.Send(exception, error, ExceptionLevel.Application);
                 return error;
             }
         }

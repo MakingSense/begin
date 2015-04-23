@@ -328,7 +328,7 @@
     <value>Email has wrong format</value>
   </data>
   <data name="RegisterAlertValidationPassAndConfirm" xml:space="preserve">
-    <value>Password and Confirm password are not match!</value>
+    <value>The Password and Confirm Password do not match!</value>
   </data>
   <data name="RegisterAlertValidationTermsAndConditions" xml:space="preserve">
     <value>Please agree the Terms and Conditions!</value>
