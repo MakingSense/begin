@@ -42,7 +42,7 @@ namespace BeginMobile.Pages.Profile
         private async Task Init()
         {
             _profileEvents =
-                await BeginApplication.ProfileServices.GetEventsByParams(_currentUser.AuthToken, limit: DefaultLimit);
+                await BeginApplication.ProfileServices.GetEventsByParams(_currentUser.AuthToken,limit: DefaultLimit);
 
             #region Search components
 
@@ -214,9 +214,10 @@ namespace BeginMobile.Pages.Profile
                 ? null
                 : _searchView.Limit.Items[limitSelectedIndex];
         }
-        private static IEnumerable<EventInfoObject> RetrieveEventInfoObjectList(IEnumerable<ProfileEvent> profileEventList)
+        private static ObservableCollection<EventInfoObject> RetrieveEventInfoObjectList(IEnumerable<ProfileEvent> profileEventList)
         {
-            return profileEventList.Select(eventInfo => new EventInfoObject
+            var listEvents = profileEventList!=null? 
+                            profileEventList.Select(eventInfo => new EventInfoObject
                                                         {
                                                             EventName = eventInfo.Name,
                                                             EventIntervalDate =
@@ -226,7 +227,8 @@ namespace BeginMobile.Pages.Profile
                                                                 String.Format("{0} - {1}", eventInfo.StartTime,
                                                                     eventInfo.EndTime),
                                                             EventInfo = eventInfo
-                                                        });
+                                                        }): new ObservableCollection<EventInfoObject>();
+            return (ObservableCollection<EventInfoObject>) listEvents;
         }
 
         #endregion
