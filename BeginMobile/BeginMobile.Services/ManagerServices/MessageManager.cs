@@ -25,12 +25,13 @@ namespace BeginMobile.Services.ManagerServices
         public async Task<ProfileThreadMessages> GetProfileThreadMessagesInbox(
             string authToken,
             string q = null,
-            string limit = null)
+            string limit = null,
+            string offset = null)
         {
             try
             {
                 const string addressSuffix = Identifier + "/inbox";
-                var urlGetParams = "?q=" + q + "&limit=" + limit;
+                var urlGetParams = "?q=" + q + "&limit=" + limit + "&offset=" + offset;
 
                 return await _profileThreadMessagesClient.GetAsync(authToken, addressSuffix, urlGetParams);
             }
@@ -49,12 +50,13 @@ namespace BeginMobile.Services.ManagerServices
         public async Task<ProfileThreadMessages> GetProfileThreadMessagesSent(
             string authToken,
             string q = null,
-            string limit = null)
+            string limit = null,
+            string offset = null)
         {
             try
             {
                 const string addressSuffix = Identifier + "/sentbox";
-                var urlGetParams = "?q=" + q + "&limit=" + limit;
+                var urlGetParams = "?q=" + q + "&limit=" + limit + "&offset=" + offset;
 
                 return await _profileThreadMessagesClient.GetAsync(authToken, addressSuffix, urlGetParams);
             }
