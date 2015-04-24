@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using BeginMobile.iOS.DependencyService;
 using BeginMobile.Services.Interfaces;
 using System;
@@ -5,7 +6,8 @@ using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(Logging))]
+[assembly: Dependency(typeof (Logging))]
+
 namespace BeginMobile.iOS.DependencyService
 {
     public class Logging : ILoggingService
@@ -15,14 +17,25 @@ namespace BeginMobile.iOS.DependencyService
 
         public Logging()
         {
-            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            var cache = Path.Combine(documents, "..", "Library", "Caches");
-            var logfile = Path.Combine(cache, @"log" + DateTime.Now.ToString("yyyymmdd") + ".log");
-            FileName = logfile;
-            const string str = "Xamarin App Logging Started\n";
+            try
+            {
+                var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                var cache = Path.Combine(documents, "..", "Library", "Caches");
+                var logfile = Path.Combine(cache, @"log" + DateTime.Now.ToString("yyyymmdd") + ".log");
+                FileName = logfile;
+                const string str = "Xamarin App Logging Started\n";
 
-            _sw = new StreamWriter(FileName, true);
-            Log(str);
+                Debug.WriteLine(string.Format("Log to FileName '{0}'", FileName));
+
+                _sw = new StreamWriter(FileName, true);
+                Log(str);
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine(exception.ToString());
+                throw;
+            }
+            Debug.WriteLine("Logging started.");
         }
 
         public void Pause()
@@ -38,7 +51,13 @@ namespace BeginMobile.iOS.DependencyService
             if (_sw == null)
                 return;
             msg = DateTime.Now.ToString("T") + " : " + msg + (comment != "" ? " [" + comment + "]" : "");
-            Task.Factory.StartNew(() => _sw.WriteLine(msg), TaskCreationOptions.LongRunning);
+            Task.Factory.StartNew(() =>
+            {
+                _sw.WriteLine(msg);
+                Debug.WriteLine(msg);
+            },
+                TaskCreationOptions.LongRunning
+                );
         }
 
         private void Dispose(Boolean disposing)
