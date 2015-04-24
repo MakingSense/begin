@@ -10,20 +10,21 @@ namespace BeginMobile.Pages.Profile
 {
     public class MyActivity : ContentPage
     {
-        private const string UserDefault = "userdefault3.png";
         private readonly LoginUser _currentUser;
         private ProfileInformationActivities _profileActivity;
+
         public MyActivity()
         {
             Title = AppResources.LabelActivityTitle;
-            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
 
             Init();
         }
 
         private async Task Init()
         {
-            _profileActivity = await BeginApplication.ProfileServices.GetActivities(_currentUser.User.UserName, _currentUser.AuthToken);
+            _profileActivity =
+                await BeginApplication.ProfileServices.GetActivities(_currentUser.User.UserName, _currentUser.AuthToken);
             var listDataSource = new ObservableCollection<ActivityViewModel>();
 
             if (_profileActivity != null)
@@ -31,13 +32,14 @@ namespace BeginMobile.Pages.Profile
                 var listActivityViewModel = from activity in _profileActivity.Activities
                     where activity.Component.Equals("activity", StringComparison.InvariantCultureIgnoreCase)
                     select new ActivityViewModel
-                    {
-                        Icon = UserDefault,
-                        NameSurname = _profileActivity.NameSurname,
-                        ActivityDescription = activity.Content,
-                        ActivityType = activity.Type,
-                        DateAndTime = activity.Date
-                    };
+                           {
+                               Icon = BeginApplication.Styles.DefaultActivityIcon,
+                               //TODO:change for activity avatar if this exist
+                               NameSurname = _profileActivity.NameSurname,
+                               ActivityDescription = activity.Content,
+                               ActivityType = activity.Type,
+                               DateAndTime = activity.Date
+                           };
 
                 foreach (var activityViewModel in listActivityViewModel)
                 {
@@ -45,39 +47,39 @@ namespace BeginMobile.Pages.Profile
                 }
             }
 
-            var listViewTemplate = new DataTemplate(typeof(Activities));
+            var listViewTemplate = new DataTemplate(typeof (Activities));
             var listViewActivities = new ListView
-            {
-                ItemsSource = listDataSource,
-                ItemTemplate = listViewTemplate
-            };
+                                     {
+                                         ItemsSource = listDataSource,
+                                         ItemTemplate = listViewTemplate
+                                     };
 
             listViewActivities.ItemSelected += (s, e) =>
-            {
-                if (e.SelectedItem == null)
-                {
-                    return;
-                }
+                                               {
+                                                   if (e.SelectedItem == null)
+                                                   {
+                                                       return;
+                                                   }
 
-                ((ListView)s).SelectedItem = null;
-            };
+                                                   ((ListView) s).SelectedItem = null;
+                                               };
 
             listViewActivities.HasUnevenRows = true;
 
             var stackLayout = new StackLayout
-            {
-                Spacing = 2,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                Orientation = StackOrientation.Vertical
-            };
+                              {
+                                  Spacing = 2,
+                                  VerticalOptions = LayoutOptions.FillAndExpand,
+                                  Orientation = StackOrientation.Vertical
+                              };
 
             stackLayout.Children.Add(listViewActivities);
 
             var mainStackLayout = new StackLayout
-            {
-                Spacing = 2,
-                Padding = BeginApplication.Styles.LayoutThickness
-            };
+                                  {
+                                      Spacing = 2,
+                                      Padding = BeginApplication.Styles.LayoutThickness
+                                  };
 
             mainStackLayout.Children.Add(stackLayout);
             Content = mainStackLayout;

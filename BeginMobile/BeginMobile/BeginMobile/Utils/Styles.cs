@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using ImageCircle.Forms.Plugin.Abstractions;
+using Xamarin.Forms;
 
 namespace BeginMobile.Utils
 {
@@ -540,6 +541,44 @@ namespace BeginMobile.Utils
             }
         }
 #region Images Icons
+        public Style CircleImageCommon
+        {
+            get
+            {
+                var style = new Style(typeof (CircleImage))
+                            {
+                                Setters =
+                                {
+                                    new Setter {Property = Image.AspectProperty, Value = Aspect.AspectFit},
+                                    new Setter {Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center},
+                                    new Setter {Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center},
+                                    new Setter
+                                    {
+                                        Property = VisualElement.HeightRequestProperty,
+                                        Value = Device.Idiom == TargetIdiom.Phone? Device.OnPlatform(40, 80, 70):Device.OnPlatform(100, 110, 70)
+                                    },
+                                    new Setter
+                                    {
+                                        Property = VisualElement.WidthRequestProperty,
+                                        Value = Device.Idiom == TargetIdiom.Phone? Device.OnPlatform(40, 80, 70):Device.OnPlatform(100, 110, 70)
+                                    },
+                                    new Setter
+                                    {
+                                        Property = CircleImage.BorderColorProperty,
+                                        Value = Device.OnPlatform( Color.Silver, Color.Silver,  Color.Silver)
+                                    },
+                                    new Setter
+                                    {
+                                        Property = CircleImage.BorderThicknessProperty,
+                                        Value = Device.OnPlatform(2, 3, 3)
+                                    }
+            
+                                }
+                            };
+
+                return style;
+            }
+        }
         public string DefaultProfileUserIconName
         {
             get
@@ -566,9 +605,69 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return "userdefault3.png";
+                return "userprofile.png";
             }
         }
+
+        public string DefaultGroupIcon
+        {
+            get
+            {
+                return "userprofile.png";
+            }
+        }
+        public string DefaultWallIcon
+        {
+            get
+            {
+                return "userprofile.png";
+            }
+        }
+        public string DefaultEventIcon
+        {
+            get
+            {
+                return "userprofile.png";
+            }
+        }
+        public string DefaultNotificationIcon
+        {
+            get
+            {
+                return "userprofile.png";
+            }
+        }
+        public string DefaultContactIcon
+        {
+            get
+            {
+                return "userprofile.png";
+            }
+        }
+        public string DefaultActivityIcon
+        {
+            get
+            {
+                return "userprofile.png";
+            }
+        }
+        public string DefaultShopIcon
+        {
+            get
+            {
+                return "userprofile.png";
+            }
+        }
+
+        public string RatinGoffIcon
+        {
+            get
+            {
+                return "ratingoff.png";
+            }
+        }
+
+
 #endregion
     }
 }

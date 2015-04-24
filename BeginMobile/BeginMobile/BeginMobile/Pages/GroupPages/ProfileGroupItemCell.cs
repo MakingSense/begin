@@ -5,22 +5,14 @@ namespace BeginMobile.Pages.GroupPages
 {
     public class ProfileGroupItemCell : ViewCell
     {
-        private const string GroupImage = "userdefault3.png";
-
         public ProfileGroupItemCell()
         {
             var circleGroupImage = new CircleImage
-                             {
-                                 BorderColor =
-                                     Device.OnPlatform(Color.Black, Color.White, Color.White),
-                                 BorderThickness = Device.OnPlatform(2, 3, 3),
-                                 HeightRequest = Device.OnPlatform(40, 80, 80),
-                                 WidthRequest = Device.OnPlatform(45, 80, 80),
-
-                                 Aspect = Aspect.AspectFill,
-                                 HorizontalOptions = LayoutOptions.Start,
-                                 Source = GroupImage
-                             };
+                                   {
+                                       Style = BeginApplication.Styles.CircleImageCommon,
+                                       Source = BeginApplication.Styles.DefaultGroupIcon
+                                       //TODO:change for group avatar if this exist
+                                   };
 
             var labelTitle = new Label
                              {
@@ -41,21 +33,21 @@ namespace BeginMobile.Pages.GroupPages
 
             //Other section
             var labelStatus = new Label
-                            {
-                                YAlign = TextAlignment.Center,
-                                HorizontalOptions = LayoutOptions.Start,
-                                Style = BeginApplication.Styles.ListItemDetailTextStyle
-                            };
+                              {
+                                  YAlign = TextAlignment.Center,
+                                  HorizontalOptions = LayoutOptions.Start,
+                                  Style = BeginApplication.Styles.ListItemDetailTextStyle
+                              };
 
             labelStatus.SetBinding(Label.TextProperty, "Status");
 
             var labelCreate = new Label
-                            {
-                                YAlign = TextAlignment.Center,
-                                HorizontalOptions = LayoutOptions.End,
-                                FontAttributes = FontAttributes.Bold,
-                                Style = BeginApplication.Styles.ListItemTextStyle
-                            };
+                              {
+                                  YAlign = TextAlignment.Center,
+                                  HorizontalOptions = LayoutOptions.End,
+                                  FontAttributes = FontAttributes.Bold,
+                                  Style = BeginApplication.Styles.ListItemTextStyle
+                              };
 
             labelCreate.SetBinding(Label.TextProperty, "DateCreated");
 
@@ -73,29 +65,29 @@ namespace BeginMobile.Pages.GroupPages
                                  };
 
             var stackLayoutCenter = new StackLayout
-                                 {
-                                     Spacing = 2,
-                                     Padding = BeginApplication.Styles.LayoutThickness,
-                                     Children =
-                                     {
-                                         labelTitle,
-                                         labelDesc,
-                                         stackLayoutPie
-                                     }
-                                 };
+                                    {
+                                        Spacing = 2,
+                                        Padding = BeginApplication.Styles.LayoutThickness,
+                                        Children =
+                                        {
+                                            labelTitle,
+                                            labelDesc,
+                                            stackLayoutPie
+                                        }
+                                    };
 
             var stackLayoutItem = new StackLayout
-                           {
-                               Spacing = 2,
-                               Padding = BeginApplication.Styles.LayoutThickness,
-                               Orientation = StackOrientation.Horizontal,
-                               HorizontalOptions = LayoutOptions.FillAndExpand,
-                               Children =
-                               {
-                                   circleGroupImage,
-                                   stackLayoutCenter
-                               }
-                           };
+                                  {
+                                      Spacing = 2,
+                                      Padding = BeginApplication.Styles.LayoutThickness,
+                                      Orientation = StackOrientation.Horizontal,
+                                      HorizontalOptions = LayoutOptions.FillAndExpand,
+                                      Children =
+                                      {
+                                          circleGroupImage,
+                                          stackLayoutCenter
+                                      }
+                                  };
 
             View = stackLayoutItem;
         }

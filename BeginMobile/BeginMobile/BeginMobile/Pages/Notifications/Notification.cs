@@ -129,7 +129,7 @@ namespace BeginMobile.Pages.Notifications
                     {
                         var contact = new Contact
                                       {
-                                          Icon = "userdefault3.png",
+                                          Icon = BeginApplication.Styles.DefaultContactIcon,//TODO:change for notification avatar if this exist
                                           NameSurname =
                                               user.NameSurname,
                                           Email = user.Email,

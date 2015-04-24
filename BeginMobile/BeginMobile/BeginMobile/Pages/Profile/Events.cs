@@ -6,6 +6,7 @@ using BeginMobile.Utils;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.Pages.Profile
@@ -22,7 +23,7 @@ namespace BeginMobile.Pages.Profile
 
         private readonly LoginUser _currentUser;
         private const string DefaultLimit = "10";
-
+        
         private ObservableCollection<ProfileEvent> _profileEvents;
 
         public Events()
@@ -237,7 +238,7 @@ namespace BeginMobile.Pages.Profile
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            this.Content = null;
+           // this.Content = null;
             _profileEvents = null;
         }
     }

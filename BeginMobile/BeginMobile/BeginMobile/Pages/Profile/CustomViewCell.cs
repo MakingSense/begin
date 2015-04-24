@@ -23,11 +23,7 @@ namespace BeginMobile.Pages.Profile
 
             var circleIconImage = new CircleImage
                                   {
-                                      HeightRequest = Device.OnPlatform(50, 100, 100),
-                                      WidthRequest = Device.OnPlatform(50, 100, 100),
-                                      Aspect = Aspect.AspectFill,
-                                      HorizontalOptions = LayoutOptions.Start,
-                                      BorderThickness = Device.OnPlatform(2, 3, 3),
+                                      Style = BeginApplication.Styles.CircleImageCommon
                                   };
 
             circleIconImage.SetBinding(Image.SourceProperty, new Binding("Icon"));

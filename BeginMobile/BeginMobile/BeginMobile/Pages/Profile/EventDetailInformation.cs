@@ -28,24 +28,16 @@ namespace BeginMobile.Pages.Profile
 
             var imageEvent = new CircleImage
             {
-                BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
-                BorderThickness = Device.OnPlatform(2, 3, 3),
-                HeightRequest = Device.OnPlatform(50, 100, 100),
-                WidthRequest = Device.OnPlatform(50, 200, 100),
-
-                Aspect = Aspect.AspectFit,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                Source = Device.OS == TargetPlatform.iOS
-                                  ? ImageSource.FromFile("userdefault3.png")
-                                  : ImageSource.FromFile("userdefault3.png")
+                Style = BeginApplication.Styles.CircleImageCommon,
+                Source = BeginApplication.Styles.DefaultEventIcon//TODO:change for event avatar if this exist
             };
 
 
 
             var gridImage = new Grid
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand
+                //HorizontalOptions = LayoutOptions.FillAndExpand,
+                //VerticalOptions = LayoutOptions.FillAndExpand
             };
             var stackLayoutLinesRight = new StackLayout
             {
@@ -68,13 +60,8 @@ namespace BeginMobile.Pages.Profile
                 }
             };
 
-            var image = new Image
-                        {
-                            Source = ImageSource.FromFile("userdefault3.png")
-                        };
-
             gridImage.Children.Add(stackLayoutLinesLeft, 0, 0);
-            gridImage.Children.Add(Device.OS != TargetPlatform.iOS ? imageEvent : image, 1, 0);
+            gridImage.Children.Add(imageEvent, 1, 0);
             gridImage.Children.Add(stackLayoutLinesRight, 2, 0);
 
             var labelEventName = new Label
@@ -157,8 +144,8 @@ namespace BeginMobile.Pages.Profile
             var gridMainContent = new Grid
             {
                 Padding = BeginApplication.Styles.GridPadding,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                //VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.Center,
                 RowDefinitions =
                                       {
                                           new RowDefinition {Height = GridLength.Auto},
@@ -187,8 +174,8 @@ namespace BeginMobile.Pages.Profile
 
             var gridBooking = new Grid
             {
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                //VerticalOptions = LayoutOptions.FillAndExpand,
+                //HorizontalOptions = LayoutOptions.CenterAndExpand,
                 RowDefinitions =
                                       {
                                           new RowDefinition {Height = GridLength.Auto},

@@ -4,27 +4,18 @@ using Xamarin.Forms;
 
 namespace BeginMobile.Pages.ShopPages
 {
-    public class ProfileShopItemCell: ViewCell
+    public class ProfileShopItemCell : ViewCell
     {
         private static string GroupImage
         {
-            get
-            {
-                return Device.OS == TargetPlatform.iOS ? "userdefault.png" : "userdefault3.png";
-            }
+            get { return BeginApplication.Styles.DefaultShopIcon; }
         }
 
         public ProfileShopItemCell()
         {
             var circleShopImage = new CircleImage
                                   {
-                                      BorderColor =
-                                          Device.OnPlatform(Color.Black, Color.White, Color.White),
-                                      BorderThickness = Device.OnPlatform(2, 3, 3),
-                                      HeightRequest = Device.OnPlatform(50, 100, 100),
-                                      WidthRequest = Device.OnPlatform(50, 100, 100),
-                                      Aspect = Aspect.AspectFill,
-                                      HorizontalOptions = LayoutOptions.Start,
+                                      Style = BeginApplication.Styles.CircleImageCommon,
                                       //Source = GroupImage
                                   };
 
@@ -35,7 +26,6 @@ namespace BeginMobile.Pages.ShopPages
                                  YAlign = TextAlignment.Center,
                                  FontAttributes = FontAttributes.Bold,
                                  Style = BeginApplication.Styles.ListItemTextStyle
-
                              };
 
             labelTitle.SetBinding(Label.TextProperty, "Name");
@@ -51,11 +41,11 @@ namespace BeginMobile.Pages.ShopPages
                                        };
 
             var labelCreate = new Label
-            {
-                YAlign = TextAlignment.Center,
-                Style = BeginApplication.Styles.ListItemDetailTextStyle,
-                HorizontalOptions = LayoutOptions.Center
-            };
+                              {
+                                  YAlign = TextAlignment.Center,
+                                  Style = BeginApplication.Styles.ListItemDetailTextStyle,
+                                  HorizontalOptions = LayoutOptions.Center
+                              };
 
             labelCreate.SetBinding(Label.TextProperty, "CreationDate");
 
@@ -102,25 +92,25 @@ namespace BeginMobile.Pages.ShopPages
             gridDetails.Children.Add(labelPrice, 1, 1);
 
             var stackLayoutCenter = new StackLayout
-                                 {
-                                     HorizontalOptions = LayoutOptions.FillAndExpand,
-                                     Children =
-                                     {
-                                         labelTitle,
-                                         gridDetails
-                                     }
-                                 };
+                                    {
+                                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                                        Children =
+                                        {
+                                            labelTitle,
+                                            gridDetails
+                                        }
+                                    };
 
             var stackLayoutItem = new StackLayout
-                           {
-                               Orientation = StackOrientation.Horizontal,
-                               HorizontalOptions = LayoutOptions.FillAndExpand,
-                               Children =
-                               {
-                                   circleShopImage,
-                                   stackLayoutCenter
-                               }
-                           };
+                                  {
+                                      Orientation = StackOrientation.Horizontal,
+                                      HorizontalOptions = LayoutOptions.FillAndExpand,
+                                      Children =
+                                      {
+                                          circleShopImage,
+                                          stackLayoutCenter
+                                      }
+                                  };
 
             View = stackLayoutItem;
         }

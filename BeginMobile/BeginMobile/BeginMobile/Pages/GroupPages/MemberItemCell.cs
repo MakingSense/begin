@@ -10,13 +10,7 @@ namespace BeginMobile.Pages.GroupPages
         {
             var circleMemberImage = new CircleImage
                               {
-                                  BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
-                                  BorderThickness = Device.OnPlatform(2, 3, 3),
-                                  HeightRequest = Device.OnPlatform(40, 80, 80),
-                                  WidthRequest = Device.OnPlatform(45, 80, 80),
-
-                                  Aspect = Aspect.AspectFill,
-                                  HorizontalOptions = LayoutOptions.Start,
+                                  Style = BeginApplication.Styles.CircleImageCommon,
                                   Source = GroupImage
                               };
 

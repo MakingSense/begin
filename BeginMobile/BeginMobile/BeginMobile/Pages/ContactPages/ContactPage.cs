@@ -13,7 +13,6 @@ namespace BeginMobile.Pages.ContactPages
 {
     public class ContactPage : TabContent
     {
-        private const string UserDefault = "userdefault3.png";
         private ListView _listViewContacts;
         private Label _labelNoContactsMessage;
         private readonly List<Contact> _defaultList = new List<Contact>();
@@ -49,7 +48,6 @@ namespace BeginMobile.Pages.ContactPages
             :base(title,icon)
         {
             Title = title;
-           
             _searchView = new SearchView();
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
@@ -312,7 +310,7 @@ namespace BeginMobile.Pages.ContactPages
             {
                 resultList = profileInformationContacts.Select(contact => new Contact
                 {
-                    Icon = UserDefault,
+                    Icon = BeginApplication.Styles.DefaultContactIcon,
                     NameSurname = contact.NameSurname,
                     Email =
                         string.Format("e-mail: {0}",

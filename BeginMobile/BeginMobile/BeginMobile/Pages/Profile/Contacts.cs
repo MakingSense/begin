@@ -12,7 +12,6 @@ namespace BeginMobile.Pages.Profile
 {
     public class Contacts : ContentPage
     {
-        private const string UserDefault = "userdefault3.png";
         private ListView _listViewContacts;
         private Label _labelNoContactsMessage;
         private readonly List<Contact> _defaultList = new List<Contact>();
@@ -37,7 +36,7 @@ namespace BeginMobile.Pages.Profile
         {
             Title = "Contacts";
             _searchView = new SearchView();
-            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
 
             Init();
         }
@@ -127,13 +126,14 @@ namespace BeginMobile.Pages.Profile
             string limit;
             string sort;
 
-            var q = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
+            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
 
             RetrieveLimitSelected(out limit);
             RetrieveSortOptionSelected(out sort);
 
-            var list = await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, q, sort, limit) ?? new List<User>();
-            
+            var list = await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, q, sort, limit) ??
+                       new List<User>();
+
             if (list.Any())
             {
                 _listViewContacts.ItemsSource = new ObservableCollection<Contact>(RetrieveContacts(list));
@@ -168,7 +168,7 @@ namespace BeginMobile.Pages.Profile
 
             else
             {
-                _sortOptionsDictionary = new Dictionary<string, string> { { "last_active", "Last Active" } };
+                _sortOptionsDictionary = new Dictionary<string, string> {{"last_active", "Last Active"}};
             }
 
             _searchView.Container.Children.Add(_sortPicker);
@@ -198,21 +198,21 @@ namespace BeginMobile.Pages.Profile
 
         private static IEnumerable<Contact> RetrieveContacts(IEnumerable<User> profileInformationContacts)
         {
-
             if (profileInformationContacts != null)
             {
                 return profileInformationContacts.Select(contact => new Contact
-                {
-                    Icon = UserDefault,
-                    NameSurname = contact.NameSurname,
-                    Email = contact.Email,
-                    Url = contact.Url,
-                    UserName = contact.UserName,
-                    Registered = contact.Registered,
-                    Id = contact.Id.ToString(),
-                    Relationship = contact.Relationship,
-                    IsOnline = contact.IsOnline
-                });
+                                                                    {
+                                                                        Icon = BeginApplication.Styles.DefaultContactIcon,
+                                                                        //TODO:change for contac avatar
+                                                                        NameSurname = contact.NameSurname,
+                                                                        Email = contact.Email,
+                                                                        Url = contact.Url,
+                                                                        UserName = contact.UserName,
+                                                                        Registered = contact.Registered,
+                                                                        Id = contact.Id.ToString(),
+                                                                        Relationship = contact.Relationship,
+                                                                        IsOnline = contact.IsOnline
+                                                                    });
             }
             else
             {
@@ -239,10 +239,10 @@ namespace BeginMobile.Pages.Profile
 
                              if (!string.IsNullOrEmpty(removeUsername))
                              {
-
                                  var confirm = await DisplayAlert("Confirm",
-                                     string.Format("Are you sure you want to remove '{0}' from contacts?", removeUsername), "Yes", "No");
-                                 
+                                     string.Format("Are you sure you want to remove '{0}' from contacts?",
+                                         removeUsername), "Yes", "No");
+
                                  if (confirm)
                                  {
                                      var responseErrors = FriendshipActions.Request(FriendshipOption.Send,
@@ -259,7 +259,7 @@ namespace BeginMobile.Pages.Profile
 
                                      else
                                      {
-                                         var contacts = ((ObservableCollection<Contact>)_listViewContacts.ItemsSource);
+                                         var contacts = ((ObservableCollection<Contact>) _listViewContacts.ItemsSource);
                                          var toRemove =
                                              contacts.FirstOrDefault(contact => contact.UserName == removeUsername);
 
@@ -268,8 +268,9 @@ namespace BeginMobile.Pages.Profile
                                              _listViewContacts.ItemsSource = contacts;
                                              await
                                                  DisplayAlert("Info",
-                                                     string.Format("'{0}' has been deleted successfully.", removeUsername), "Ok");
-                                         } 
+                                                     string.Format("'{0}' has been deleted successfully.",
+                                                         removeUsername), "Ok");
+                                         }
                                      }
                                  }
                              }
@@ -281,7 +282,7 @@ namespace BeginMobile.Pages.Profile
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            this.Content = null;
+            Content = null;
             _contacts = null;
         }
     }

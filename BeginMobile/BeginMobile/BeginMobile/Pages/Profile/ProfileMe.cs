@@ -89,12 +89,7 @@ namespace BeginMobile.Pages.Profile
             //Content
             var circleProfileImage = new CircleImage
             {
-                BorderColor = Color.White,
-                BorderThickness = 3,
-                HeightRequest = 100,
-                WidthRequest = 100,
-                Aspect = Aspect.AspectFill,
-                HorizontalOptions = LayoutOptions.Center,
+                Style = BeginApplication.Styles.CircleImageCommon,
                 Source = userAvatar
             };
 

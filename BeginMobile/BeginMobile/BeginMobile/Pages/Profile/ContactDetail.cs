@@ -20,7 +20,7 @@ namespace BeginMobile.Pages.Profile
         public ContactDetail(Contact contact)
         {
             _contact = contact;
-            _loginUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
+            _loginUser = (LoginUser) Application.Current.Properties["LoginUser"];
 
             if (_contact == null) throw new ArgumentNullException("contact");
 
@@ -28,21 +28,14 @@ namespace BeginMobile.Pages.Profile
 
             var imageContact = new CircleImage
                                {
-                                   BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
-                                   BorderThickness = Device.OnPlatform(2, 3, 3),
-                                   HeightRequest = Device.OnPlatform(50, 100, 100),
-                                   WidthRequest = Device.OnPlatform(50, 200, 100),
-                                   Aspect = Aspect.AspectFit,
-                                   HorizontalOptions = LayoutOptions.CenterAndExpand,
-                                   Source = Device.OS == TargetPlatform.iOS
-                                       ? ImageSource.FromFile("userdefault3.png")
-                                       : ImageSource.FromFile("userdefault3.png"),
+                                   Style = BeginApplication.Styles.CircleImageCommon,
+                                   Source = BeginApplication.Styles.DefaultContactIcon,
                                };
 
             var gridImage = new Grid
                             {
-                                HorizontalOptions = LayoutOptions.FillAndExpand,
-                                VerticalOptions = LayoutOptions.FillAndExpand
+                                //HorizontalOptions = LayoutOptions.FillAndExpand,
+                                //VerticalOptions = LayoutOptions.FillAndExpand
                             };
 
             var stackLayoutLinesRight = new StackLayout
@@ -66,11 +59,8 @@ namespace BeginMobile.Pages.Profile
                                            }
                                        };
 
-            var image = new Image();
-            image.SetBinding(Image.SourceProperty, new Binding("Icon"));
-
             gridImage.Children.Add(stackLayoutLinesLeft, 0, 0);
-            gridImage.Children.Add(Device.OS != TargetPlatform.iOS ? imageContact : image, 1, 0);
+            gridImage.Children.Add(imageContact, 1, 0);
             gridImage.Children.Add(new Image
                                    {
                                        HeightRequest = 15,
@@ -229,8 +219,7 @@ namespace BeginMobile.Pages.Profile
             
             var gridComponents = new Grid
                                  {
-                                     Padding = BeginApplication.Styles.GridPadding,
-                                     VerticalOptions = LayoutOptions.FillAndExpand,
+                                    // VerticalOptions = LayoutOptions.FillAndExpand,
                                      HorizontalOptions = LayoutOptions.Center,
                                      RowDefinitions =
                                      {
@@ -256,11 +245,12 @@ namespace BeginMobile.Pages.Profile
             gridComponents.Children.Add(labelEmail, 1, 2);
             gridComponents.Children.Add(labelTextRegistered, 0, 3);
             gridComponents.Children.Add(labelRegistered, 1, 3);
-            gridComponents.Children.Add(gridButtons, 1, 4);
+            gridComponents.Children.Add(gridButtons, 0, 4);
 
 
             Content = new StackLayout
                       {
+                          Padding = BeginApplication.Styles.GridPadding,
                           HorizontalOptions = LayoutOptions.CenterAndExpand,
                           Orientation = StackOrientation.Vertical,
                           Children =
