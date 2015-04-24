@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
 using BeginMobile.Utils;
@@ -19,12 +20,12 @@ namespace BeginMobile.Pages.MessagePages
 
         public SentMessage()
         {
-            Title = "Sent";
+            Title = AppResources.MessageSentTitle;
             InboxMessage.IsInbox = false;
             _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
 
             CallServiceApi();
-            _searchView = new SearchView {SearchBar = {Placeholder = "Filter by subject or content"}};
+            _searchView = new SearchView {SearchBar = {Placeholder = AppResources.PlaceholderFilterBySubjectOrContent}};
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
             MessagingSubscriptions();
@@ -70,7 +71,6 @@ namespace BeginMobile.Pages.MessagePages
         {
             var threads = profileThreadMessagesSent;
             if (!threads.Threads.Any()) return new ObservableCollection<MessageViewModel>();
-            ;
             var threadMessages = threads.Threads;
 
             var listDataSentMessage = (from sentThread in threadMessages
@@ -145,18 +145,16 @@ namespace BeginMobile.Pages.MessagePages
                          {
                              var threadId = arg;
 
-                             if (!string.IsNullOrEmpty(threadId))
-                             {
-                                 var messagesListView =
-                                     (ObservableCollection<MessageViewModel>) _listViewMessages.ItemsSource;
+                             if (string.IsNullOrEmpty(threadId)) return;
+                             var messagesListView =
+                                 (ObservableCollection<MessageViewModel>) _listViewMessages.ItemsSource;
 
-                                 var toRemove =
-                                     messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
+                             var toRemove =
+                                 messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
 
-                                 if (toRemove == null || !messagesListView.Remove(toRemove)) return;
-                                 MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
-                                 await DisplayAlert("Info", "Removed.", "Ok");
-                             }
+                             if (toRemove == null || !messagesListView.Remove(toRemove)) return;
+                             await BeginApplication.ProfileServices.DeleteByThread(_currentUser.AuthToken, threadId);
+                             await DisplayAlert(AppResources.AlertInfoTitle, AppResources.ServerRemovedSuccess, AppResources.AlertOk);
                          };
         }
 

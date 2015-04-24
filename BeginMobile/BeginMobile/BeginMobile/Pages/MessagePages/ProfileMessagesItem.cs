@@ -2,20 +2,11 @@
 using BeginMobile.LocalizeResources.Resources;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
-using BeginMobile.Services.Models;
 
 namespace BeginMobile.Pages.MessagePages
 {
     public class ProfileMessagesItem : ViewCell
     {
-        private readonly Button _buttonMarkAsUnread;
-        private readonly Button _buttonMarkAsRead;
-
-        private static string GroupImage
-        {
-            get { return "userdefault3.png"; }
-        }
-
         public ProfileMessagesItem()
         {
             var circleShopImage = new CircleImage
@@ -26,7 +17,7 @@ namespace BeginMobile.Pages.MessagePages
                                       WidthRequest = Device.OnPlatform(50, 100, 100),
                                       Aspect = Aspect.AspectFit,
                                       HorizontalOptions = LayoutOptions.Start,
-                                      Source = GroupImage
+                                      Source = BeginApplication.Styles.MessageIcon
                                   };
 
             var labelSender = new Label
@@ -65,10 +56,15 @@ namespace BeginMobile.Pages.MessagePages
             labelContent.SetBinding(Label.TextProperty, "MessageContent");
 
             var labelMarkedAs = new Label
-                                {
-                                    YAlign = TextAlignment.Center,
+                                {                                    
+                                    YAlign = TextAlignment.Center,                                                                        
                                     Style = BeginApplication.Styles.ListItemDetailTextStyle,
-                                    HorizontalOptions = LayoutOptions.StartAndExpand
+                                    TextColor = Color.FromHex("000000"),
+                                    BackgroundColor = Color.FromHex("F6B94D"),                                    
+                                    XAlign = TextAlignment.Center,
+                                    FontAttributes = FontAttributes.Bold,
+                                    //WidthRequest = 40,
+                                    HorizontalOptions = LayoutOptions.StartAndExpand                                 
                                 };
 
             labelMarkedAs.SetBinding(Label.TextProperty, "ThreadUnRead");
@@ -101,6 +97,7 @@ namespace BeginMobile.Pages.MessagePages
                               };
 
             gridDetails.Children.Add(labelSender, 0, 0);
+            gridDetails.Children.Add(labelMarkedAs, 1, 1);
             gridDetails.Children.Add(labelSubject, 0, 1);
             gridDetails.Children.Add(labelContent, 0, 2);
             gridDetails.Children.Add(labelCreate, 0, 3);

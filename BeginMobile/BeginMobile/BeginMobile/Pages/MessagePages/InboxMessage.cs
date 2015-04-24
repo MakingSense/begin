@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
 using BeginMobile.Utils;
@@ -22,11 +23,11 @@ namespace BeginMobile.Pages.MessagePages
         {
             _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
             CallServiceApi();
-            Title = "Inbox";
+            Title = AppResources.MessageInboxTitle;
             IsInbox = true;
 
 
-            _searchView = new SearchView {SearchBar = {Placeholder = "Filter by subject or content"}};
+            _searchView = new SearchView {SearchBar = {Placeholder = AppResources.PlaceholderFilterBySubjectOrContent}};
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
             MessagingSubscriptions();
@@ -40,25 +41,26 @@ namespace BeginMobile.Pages.MessagePages
 
             _listViewMessages.ItemSelected += ListViewItemSelectedEventHandler;
 
+            var gridComponents = new Grid
+            {
+                Padding = BeginApplication.Styles.LayoutThickness,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
+                                     {
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto}
+                                     }
+            };
 
-            var stackLayoutMessagesListView = new StackLayout
-                                              {
-                                                  VerticalOptions = LayoutOptions.FillAndExpand,
-                                                  Orientation = StackOrientation.Vertical,
-                                                  Children = {_listViewMessages}
-                                              };
-            var mainStackLayout = new StackLayout
-                                  {
-                                      Padding = BeginApplication.Styles.LayoutThickness,
-                                      Children = {_searchView.Container, stackLayoutMessagesListView},
-                                  };
-            Content = mainStackLayout;
+            gridComponents.Children.Add(_searchView.Container, 0, 0);
+            gridComponents.Children.Add(_listViewMessages, 0, 1);
+
+            Content = gridComponents;
         }
 
         private void MessagingSubscriptions()
         {
-            //MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsReadInboxMessage, MarkAsReadCallback());
-            //MessagingCenter.Subscribe(this, MessageSuscriptionNames.MarkAsUnreadInboxMessage, MarkAsUnReadCallback());
             MessagingCenter.Subscribe(this, MessageSuscriptionNames.RemoveInboxMessage, RemoveMessageCallback());
         }
 
@@ -99,7 +101,7 @@ namespace BeginMobile.Pages.MessagePages
                            Messages = threadMessage.Messages,
                            ThreadUnRead =
                                threadMessage.Unread.Equals("1")
-                                   ? EnumMessageStates.New.ToString()
+                                   ? AppResources.New
                                    : string.Empty
                        }).OrderByDescending(c => c.DateSent));
 
@@ -113,10 +115,9 @@ namespace BeginMobile.Pages.MessagePages
                 return;
             }
             var item = (MessageViewModel) eventArgs.SelectedItem;
-            if (item.ThreadUnRead.Equals(EnumMessageStates.New.ToString()))
+            if (item.ThreadUnRead.Equals(AppResources.New))
             {
-                MessageActions.Request(MessageOption.MarkAsRead, _currentUser.AuthToken, item.ThreadId);
-                //TODO: Mark as read 
+                await BeginApplication.ProfileServices.MarkAsReadByThread(_currentUser.AuthToken, item.ThreadId);//Marked as read 
                 await CallServiceApi();
             }
             var messageDetail = new MessageDetail(item)
@@ -175,34 +176,11 @@ namespace BeginMobile.Pages.MessagePages
                                      messagesListView.FirstOrDefault(threadMessage => threadMessage.ThreadId == threadId);
 
                                  if (toRemove == null || !messagesListView.Remove(toRemove)) return;
-                                 MessageActions.Request(MessageOption.Remove, _currentUser.AuthToken, threadId);
-                                 await DisplayAlert("Info", "Removed.", "Ok");
+                                 await BeginApplication.ProfileServices.DeleteByThread(_currentUser.AuthToken, threadId);
+                                 await DisplayAlert(AppResources.AlertInfoTitle,AppResources.ServerRemovedSuccess, AppResources.AlertOk);
                              }
                          };
         }
-
-        //private static Action<ProfileMessagesItem, string> MarkAsReadCallback()
-        //{
-        //    return async (sender, arg) =>
-        //                 {
-        //                     var threadId = arg;
-        //                     if (string.IsNullOrEmpty(threadId)) return;
-        //                     await BeginApplication.ProfileServices.MarkAsReadByThread(_currentUser.AuthToken, threadId);
-        //                     await CallServiceApi();
-        //                 };
-        //}
-
-        //private static Action<ProfileMessagesItem, string> MarkAsUnReadCallback()
-        //{
-        //    return async (sender, arg) =>
-        //                 {
-        //                     var threadId = arg;
-        //                     if (string.IsNullOrEmpty(threadId)) return;
-        //                     await
-        //                         BeginApplication.ProfileServices.MarkAsUnreadByThread(_currentUser.AuthToken, threadId);
-        //                     await CallServiceApi();
-        //                 };
-        //}
 
         private void RetrieveLimitSelected(out string limit)
         {
@@ -219,10 +197,6 @@ namespace BeginMobile.Pages.MessagePages
         }
     }
 
-    public enum EnumMessageStates
-    {
-        New
-    }
 
     public static class MessageSuscriptionNames
     {
@@ -239,34 +213,5 @@ namespace BeginMobile.Pages.MessagePages
         MarkAsRead = 0,
         MarkAsUnread = 1,
         Remove = 2
-    }
-
-    public static class MessageActions
-    {
-        public const string Read = "read";
-        public const string Remove = "read";
-        public const string Unread = "unread";
-
-        public static async void Request(MessageOption messageOption, string authToken,
-            string threadId)
-        {
-            switch (messageOption)
-            {
-                case MessageOption.MarkAsRead:
-                    await BeginApplication.ProfileServices.MarkAsReadByThread(authToken, threadId);
-                    break;
-                case MessageOption.MarkAsUnread:
-                    await BeginApplication.ProfileServices.MarkAsUnreadByThread(authToken, threadId);
-                    break;
-                case MessageOption.Remove:
-                    await BeginApplication.ProfileServices.DeleteByThread(authToken, threadId);
-                    break;
-            }
-        }
-
-        public static string RetrieveFriendlyAction(string actionKey)
-        {
-            return actionKey.Replace("_", " ");
-        }
     }
 }

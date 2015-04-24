@@ -71,6 +71,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string AlertInfoTitle {
+            get {
+                return ResourceManager.GetString("AlertInfoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string AlertOk {
@@ -274,6 +283,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string ButtonSendMessage {
             get {
                 return ResourceManager.GetString("ButtonSendMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Reply.
+        /// </summary>
+        public static string ButtonSendReply {
+            get {
+                return ResourceManager.GetString("ButtonSendReply", resourceCulture);
             }
         }
         
@@ -611,6 +629,51 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mark as Unread.
+        /// </summary>
+        public static string MarkAsUnread {
+            get {
+                return ResourceManager.GetString("MarkAsUnread", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message Detail.
+        /// </summary>
+        public static string MessageDetailTitle {
+            get {
+                return ResourceManager.GetString("MessageDetailTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inbox.
+        /// </summary>
+        public static string MessageInboxTitle {
+            get {
+                return ResourceManager.GetString("MessageInboxTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sent.
+        /// </summary>
+        public static string MessageSentTitle {
+            get {
+                return ResourceManager.GetString("MessageSentTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string New {
+            get {
+                return ResourceManager.GetString("New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Categories.
         /// </summary>
         public static string OptionAllCategories {
@@ -652,6 +715,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string PlaceholderChangePasswordNewPass {
             get {
                 return ResourceManager.GetString("PlaceholderChangePasswordNewPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter by subject or content.
+        /// </summary>
+        public static string PlaceholderFilterBySubjectOrContent {
+            get {
+                return ResourceManager.GetString("PlaceholderFilterBySubjectOrContent", resourceCulture);
             }
         }
         
@@ -764,11 +836,29 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your message has successfully sent!.
+        /// </summary>
+        public static string ServerMessageSendSuccess {
+            get {
+                return ResourceManager.GetString("ServerMessageSendSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Successfull!.
         /// </summary>
         public static string ServerMessageSuccess {
             get {
                 return ResourceManager.GetString("ServerMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed!.
+        /// </summary>
+        public static string ServerRemovedSuccess {
+            get {
+                return ResourceManager.GetString("ServerRemovedSuccess", resourceCulture);
             }
         }
         

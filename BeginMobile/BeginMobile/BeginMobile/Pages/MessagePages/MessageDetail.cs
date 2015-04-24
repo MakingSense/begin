@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using BeginMobile;
+using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
 using ImageCircle.Forms.Plugin.Abstractions;
@@ -12,13 +12,12 @@ namespace BeginMobile.Pages.MessagePages
     public class MessageDetail : ContentPage
     {
         private readonly Editor _editorReplyContent;
-        private const string DefaultImageUser = "userdefault3.png";
         private readonly LoginUser _currentUser;
 
         public MessageDetail(MessageViewModel messageViewModel)
         {
             if (messageViewModel != null) MessageViewModel = messageViewModel;
-            Title = "Message Detail";
+            Title = AppResources.MessageDetailTitle;
             _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
             var listDataMessages = MessageViewModel.Messages.Select(message => new MessageViewModel
                                                                                {
@@ -45,7 +44,7 @@ namespace BeginMobile.Pages.MessagePages
                             WidthRequest = Device.OnPlatform(30, 50, 70),
                             Aspect = Aspect.AspectFit,
                             HorizontalOptions = LayoutOptions.Start,
-                            Source = DefaultImageUser
+                            Source = MessageViewModel.Sender.Avatar ?? BeginApplication.Styles.MessageIcon
                         };
             var labelThisUserNameSurname = new Label
                                            {
@@ -79,24 +78,57 @@ namespace BeginMobile.Pages.MessagePages
                                   };
             var buttonReply = new Button
                               {
-                                  Text = "Send Reply",
+                                  Text = AppResources.ButtonSendReply,
                                   Style = BeginApplication.Styles.DefaultButton
                               };
             buttonReply.Clicked += ButtonReplyEventHandler;
+            var buttonMarkUsUnread = new Button
+                                     {
+                                         Text = AppResources.MarkAsUnread,
+                                         Style = BeginApplication.Styles.ListViewItemButton,
+                                         HorizontalOptions = LayoutOptions.End,
+                                         HeightRequest = Device.OnPlatform(15, 35, 35),
+                                         WidthRequest = Device.OnPlatform(150, 150, 150)
+                                     };
+            buttonMarkUsUnread.Clicked += ButtonMarkUsUnreadEventHandler;
 
-            var stackLayoutList = new StackLayout
-                                  {
-                                      VerticalOptions = LayoutOptions.StartAndExpand,
-                                      Children = {listViewMessages, gridReply, _editorReplyContent, buttonReply}
-                                  };
-            Content = new StackLayout
-                      {
-                          Padding = BeginApplication.Styles.LayoutThickness,
-                          Children =
-                          {
-                              stackLayoutList
-                          }
-                      };
+            var gridComponents = new Grid
+                                 {
+                                     Padding = BeginApplication.Styles.LayoutThickness,
+                                     HorizontalOptions = LayoutOptions.FillAndExpand,
+                                     VerticalOptions = LayoutOptions.FillAndExpand,
+                                     RowDefinitions =
+                                     {
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto}
+                                     }
+                                 };
+            
+            if (InboxMessage.IsInbox)
+            {
+                gridComponents.Children.Add(buttonMarkUsUnread, 0, 0);                               
+            }
+            gridComponents.Children.Add(listViewMessages, 0, 1);
+            gridComponents.Children.Add(gridReply, 0, 2);
+            gridComponents.Children.Add(_editorReplyContent, 0, 3);
+            gridComponents.Children.Add(buttonReply, 0, 4);
+
+            Content = gridComponents;
+        }
+
+        public async void ButtonMarkUsUnreadEventHandler(object sender, EventArgs e)
+        {
+            await
+                BeginApplication.ProfileServices.MarkAsUnreadByThread(_currentUser.AuthToken, MessageViewModel.ThreadId);
+            if (InboxMessage.IsInbox)
+            {
+                await Navigation.PopAsync();
+                await InboxMessage.CallServiceApi();
+               
+            } //TODO: Refactor this code to refresh the service call when user click on navigation back button 
         }
 
         public async void ButtonReplyEventHandler(object sender, EventArgs e)
@@ -111,11 +143,13 @@ namespace BeginMobile.Pages.MessagePages
             {
                 var errorMessage = sendMessageManager.Errors.Aggregate("",
                     (current, serviceError) => current + (serviceError.ErrorMessage + "\n"));
-                await DisplayAlert("Validation Error", errorMessage, "Ok");
+                await DisplayAlert(AppResources.ApplicationValidationError, errorMessage, AppResources.AlertOk);
             }
             else
             {
-                await DisplayAlert("Successfull!", "Your message has successfully sent!", "ok");
+                await
+                    DisplayAlert(AppResources.ServerMessageSuccess, AppResources.ServerMessageSendSuccess,
+                        AppResources.AlertOk);
                 if (InboxMessage.IsInbox)
                 {
                     await InboxMessage.CallServiceApi();
@@ -150,20 +184,15 @@ namespace BeginMobile.Pages.MessagePages
         //    {
         //        var callServiceApi = SentMessage.CallServiceApi();
         //    }
-            
+
         //    return base.OnBackButtonPressed();
-            
+
         //}
     }
 }
 
 public class MessageTemplate : ViewCell
 {
-    private static string DefaultImage
-    {
-        get { return "userdefault3.png"; }
-    }
-
     public MessageTemplate()
     {
         var circleShopImage = new CircleImage
@@ -174,7 +203,7 @@ public class MessageTemplate : ViewCell
                                   WidthRequest = Device.OnPlatform(50, 100, 100),
                                   Aspect = Aspect.AspectFit,
                                   HorizontalOptions = LayoutOptions.Start,
-                                  Source = DefaultImage
+                                  Source = BeginApplication.Styles.MessageIcon
                               };
 
         var labelSender = new Label

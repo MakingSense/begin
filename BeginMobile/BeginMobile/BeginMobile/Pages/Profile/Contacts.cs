@@ -268,7 +268,7 @@ namespace BeginMobile.Pages.Profile
                                              _listViewContacts.ItemsSource = contacts;
                                              await
                                                  DisplayAlert("Info",
-                                                     string.Format("'{0}' Removed.", removeUsername), "Ok");
+                                                     string.Format("'{0}' has been deleted successfully.", removeUsername), "Ok");
                                          } 
                                      }
                                  }
