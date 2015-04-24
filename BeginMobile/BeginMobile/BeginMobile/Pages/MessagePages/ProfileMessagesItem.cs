@@ -11,12 +11,7 @@ namespace BeginMobile.Pages.MessagePages
         {
             var circleShopImage = new CircleImage
                                   {
-                                      BorderColor = Device.OnPlatform(Color.Black, Color.White, Color.White),
-                                      BorderThickness = Device.OnPlatform(2, 3, 3),
-                                      HeightRequest = Device.OnPlatform(50, 100, 100),
-                                      WidthRequest = Device.OnPlatform(50, 100, 100),
-                                      Aspect = Aspect.AspectFit,
-                                      HorizontalOptions = LayoutOptions.Start,
+                                      Style = BeginApplication.Styles.CircleImageCommon,
                                       Source = BeginApplication.Styles.MessageIcon
                                   };
 
