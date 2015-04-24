@@ -19,7 +19,7 @@ namespace BeginMobile.iOS.DependencyService
             var cache = Path.Combine(documents, "..", "Library", "Caches");
             var logfile = Path.Combine(cache, @"log" + DateTime.Now.ToString("yyyymmdd") + ".log");
             FileName = logfile;
-            const string str = "Logging Started\n";
+            const string str = "Xamarin App Logging Started\n";
 
             _sw = new StreamWriter(FileName, true);
             Log(str);

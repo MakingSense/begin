@@ -28,6 +28,7 @@ namespace BeginMobile.iOS
 
             Forms.Init();
             ImageCircleRenderer.Init();
+
             LoadApplication(new BeginApplication());
             return base.FinishedLaunching(app, options);
         }

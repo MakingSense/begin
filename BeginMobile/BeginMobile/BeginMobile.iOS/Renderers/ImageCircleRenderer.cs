@@ -2,6 +2,8 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using BeginMobile.iOS.Renderers;
+using BeginMobile.Services.Interfaces;
+using BeginMobile.Services.Logging;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -9,8 +11,9 @@ using Xamarin.Forms.Platform.iOS;
 [assembly: ExportRenderer(typeof(CircleImage), typeof(ImageCircleRenderer))]
 namespace BeginMobile.iOS.Renderers
 {
-    public class ImageCircleRenderer: ImageRenderer
+    public class ImageCircleRenderer : ImageRenderer
     {
+        private readonly ILoggingService _log = Logger.Current;
         /// <summary>
         /// Used for registration with dependency service
         /// </summary>
@@ -56,11 +59,9 @@ namespace BeginMobile.iOS.Renderers
                 Control.Layer.BorderWidth = ((CircleImage)Element).BorderThickness;
                 Control.ClipsToBounds = true;
             }
-
             catch (Exception ex)
             {
-                //TODO log exception
-                Debug.WriteLine("Unable to create circle image: " + ex);
+                _log.ErrorFormat("Unable to create circle image: '{0}'", ex);
             }
         }
     }

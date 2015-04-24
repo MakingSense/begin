@@ -2,6 +2,9 @@
 using System.Linq;
 using BeginMobile.Interfaces;
 using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Services.Interfaces;
+//using BeginMobile.Services.Logging;
+using BeginMobile.Services.Logging;
 using BeginMobile.Services.ManagerServices;
 using Xamarin.Forms;
 
@@ -11,12 +14,14 @@ namespace BeginMobile.Accounts
     {
         private readonly Entry _entryEmail;
         private readonly Entry _entryPassword;
+        private readonly ILoggingService _log = Logger.Current;
+
         public Login(ILoginManager iLoginManager)
         {
             var logo = new Image
             {
                 Source = ImageSource.FromFile("logotype.png"),
-                Aspect = Aspect.AspectFit,
+                Aspect = Aspect.AspectFit
             };
 
             Title = AppResources.LoginFormTitle;
@@ -30,7 +35,7 @@ namespace BeginMobile.Accounts
             _entryPassword = new Entry
             {
                 Placeholder = AppResources.PasswordPlaceholder,
-                IsPassword = true,
+                IsPassword = true
             };
 
             var buttonForgotPassword = new Button
@@ -42,26 +47,26 @@ namespace BeginMobile.Accounts
             var buttonLogin = new Button
             {
                 Text = AppResources.ButtonLogin,
-                Style = BeginApplication.Styles.DefaultButton,
+                Style = BeginApplication.Styles.DefaultButton
             };
 
             var buttonRegister = new Button
             {
                 Text = AppResources.ButtonRegister,
-                Style = BeginApplication.Styles.DefaultButton,
+                Style = BeginApplication.Styles.DefaultButton
             };
 
-            buttonForgotPassword.Clicked += (sender, eventArgs) =>
-            {
-                MessagingCenter.Send<ContentPage>(this, "ForgotPassword");
-            };
+            buttonForgotPassword.Clicked +=
+                (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "ForgotPassword");
 
 
             buttonLogin.Clicked += async (sender, eventArgs) =>
             {
                 if (String.IsNullOrEmpty(_entryEmail.Text) || String.IsNullOrEmpty(_entryPassword.Text))
                 {
-                    await DisplayAlert(AppResources.ApplicationValidationError, AppResources.LoginAlertValidationUsernameAndPass, AppResources.AlertReTry);
+                    await
+                        DisplayAlert(AppResources.ApplicationValidationError,
+                            AppResources.LoginAlertValidationUsernameAndPass, AppResources.AlertReTry);
                 }
 
                 else
@@ -76,14 +81,17 @@ namespace BeginMobile.Accounts
                     {
                         if (loginUser.Errors != null)
                         {
-                            var errorMessage = loginUser.Errors.Aggregate("", (current, error) => current + (error.ErrorMessage + "\n"));
-                            await DisplayAlert(AppResources.LoginAlertValidationError, errorMessage, AppResources.AlertReTry);
+                            var errorMessage = loginUser.Errors.Aggregate("",
+                                (current, error) => current + (error.ErrorMessage + "\n"));
+                            await
+                                DisplayAlert(AppResources.LoginAlertValidationError, errorMessage,
+                                    AppResources.AlertReTry);
                         }
 
                         else
                         {
-                            BeginApplication.Current.Properties["IsLoggedIn"] = true;
-                            BeginApplication.Current.Properties["LoginUser"] = loginUser;
+                            Application.Current.Properties["IsLoggedIn"] = true;
+                            Application.Current.Properties["LoginUser"] = loginUser;
 
                             iLoginManager.ShowMainPage(loginUser);
                         }
@@ -94,30 +102,41 @@ namespace BeginMobile.Accounts
                 }
             };
 
-            buttonRegister.Clicked += (sender, eventArgs) =>
-            {
-                MessagingCenter.Send<ContentPage>(this, "Register");
-            };
+            buttonRegister.Clicked += (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "Register");
+
+            //var buttonLog = new Button()
+            //{
+            //    Text = "Log",
+            //    Style = BeginApplication.Styles.DefaultButton
+            //};
+
+            //buttonLog.Clicked += delegate(object sender, EventArgs args)
+            //{
+            //    _log.Info("Clicked Log Info");
+            //    _log.Warning("Clicked Log Warning");
+            //    _log.Error("Clicked Log Error");
+            //    _log.DebugFormat("Clicked Log Debug {0}", "hi");
+            //};
 
             var stackLayoutLoading = CreateStackLayoutWithLoadingIndicator();
 
             Content = new StackLayout
-                      {
-                          Spacing = 20,
-                          Padding = BeginApplication.Styles.LayoutThickness,
-                          VerticalOptions = LayoutOptions.Center,
-                          Children =
-                          {
-                              stackLayoutLoading,
-                              logo,
-                              _entryEmail,
-                              _entryPassword,
-                              buttonLogin,
-                              buttonForgotPassword,
-                              buttonRegister
-                          }
-                      };
+            {
+                Spacing = 20,
+                Padding = BeginApplication.Styles.LayoutThickness,
+                VerticalOptions = LayoutOptions.Center,
+                Children =
+                {
+                    stackLayoutLoading,
+                    logo,
+                    _entryEmail,
+                    _entryPassword,
+                    buttonLogin,
+                    buttonForgotPassword,
+                    buttonRegister
+                    //, buttonLog
+                }
+            };
         }
-
     }
 }

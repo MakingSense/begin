@@ -1,11 +1,12 @@
 ﻿using BeginMobile.Interfaces;
 using BeginMobile.Pages;
+using BeginMobile.Services.Interfaces;
 using BeginMobile.Services.Utils;
 using Xamarin.Forms;
 
 namespace BeginMobile.Accounts
 {
-    public class LoginModalPage: CarouselPage
+    public class LoginModalPage : CarouselPage
     {
         readonly ContentPage _contentPageLogin;
         readonly ContentPage _contentPageRegister;
@@ -44,9 +45,7 @@ namespace BeginMobile.Accounts
                 SelectedItem = _contentPageForgotPassword;
             });
 
-
             MessagingCenter.Subscribe<AppContextError>(this, AppContextError.NamedMessage, OnAppContextErrorOccurred);
- 
         }
 
         private async void OnAppContextErrorOccurred(AppContextError appContextError)

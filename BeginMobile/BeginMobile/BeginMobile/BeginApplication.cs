@@ -16,12 +16,13 @@ namespace BeginMobile
     {
         private static ILoginManager _loginManager;
         public static BeginApplication CurrentBeginApplication;
+        private readonly ILoggingService _log;
 
         public BeginApplication()
         {
             CurrentBeginApplication = this;
 
-            Logger.Current = DependencyService.Get<ILoggingService>();
+            _log = Logger.Current = DependencyService.Get<ILoggingService>();
 
             _loginManager = this;
 
@@ -32,7 +33,7 @@ namespace BeginMobile
 
             AppDomain.CurrentDomain.UnhandledException += AppExceptionEventHander;
 
-            Logger.Current.Info("Start Xamarin Application.");
+            _log.Info("Start Begin Xamarin Application.");
             MainPage = new LoginModalPage(this);
         }
 
@@ -40,6 +41,7 @@ namespace BeginMobile
         {
             MessagingCenter.Send(this, "UnhandledException", eventArgs);
             MessagingCenter.Unsubscribe<BeginApplication, UnhandledExceptionEventArgs>(this, "UnhandledException");
+            _log.Exception(eventArgs.ExceptionObject as Exception);
         }
 
         public void ShowMainPage(LoginUser loginUser)

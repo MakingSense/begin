@@ -240,8 +240,6 @@ namespace BeginMobile.Pages.ContactPages
 
             var list = await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, _name, _sort, limit, _offset.ToString()) ?? new List<User>();
 
-            var test = "";
-
             if (list.Any())
             {
                 _contactsList = new ObservableCollection<Contact>(RetrieveContacts(list));

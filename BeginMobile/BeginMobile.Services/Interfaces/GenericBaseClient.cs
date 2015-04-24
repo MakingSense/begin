@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
+using BeginMobile.Services.Logging;
 using Newtonsoft.Json;
 using System.Linq;
 
@@ -14,6 +15,7 @@ namespace BeginMobile.Services.Interfaces
         private readonly string _serviceBaseAddress;
         private readonly string _subAddress;
         private const int PostAsyncTimeout = 2000; //2 seconds for requests to web services
+        private readonly ILoggingService _log = Logger.Current;
 
         public GenericBaseClient(string baseAddress, string subAddress)
         {
@@ -347,7 +349,7 @@ namespace BeginMobile.Services.Interfaces
                         }
                         catch (Exception exception)
                         {
-                            //TODO log exception
+                            _log.ErrorFormat("Exception at '{0}' message: '{1}'", url, exception);
                             Debug.WriteLine("Exception at '{0}' message: '{1}'", url, exception);
                             return null;
                         }
@@ -356,7 +358,8 @@ namespace BeginMobile.Services.Interfaces
                     return result;
                 }
 
-                //TODO log status code error
+                //log status code error
+                _log.ErrorFormat("Url '{0}' not working: '{1}' : '{2}'", url, response.StatusCode, response.ReasonPhrase);
                 Debug.WriteLine("Url '{0}' not working: '{1}' : '{2}'", url, response.StatusCode, response.ReasonPhrase);
                 return null;
             }

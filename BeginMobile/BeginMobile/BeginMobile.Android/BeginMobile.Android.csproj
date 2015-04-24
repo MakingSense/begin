@@ -126,13 +126,13 @@
     <AndroidResource Include="Resources\Drawable\offline_icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">
+      <Project>{48226f83-3cbb-4234-9a72-4866e1939311}</Project>
+      <Name>BeginMobile.LocalizeResources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BeginMobile.Services\BeginMobile.Services.csproj">
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>BeginMobile.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\LocalizeResources\BeginMobile.LocalizeResources.csproj">
-      <Project>{48226F83-3CBB-4234-9A72-4866E1939311}</Project>
-      <Name>BeginMobile.LocalizeResources</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\BeginMobile\BeginMobile.projitems" Label="Shared" Condition="Exists('..\BeginMobile\BeginMobile.projitems')" />

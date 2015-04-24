@@ -2,6 +2,8 @@ using System;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
+using BeginMobile.Services.Interfaces;
+using BeginMobile.Services.Logging;
 using ImageCircle.Forms.Plugin.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -11,10 +13,13 @@ namespace BeginMobile.Android.Renderers
 {
     public class ImageCircleRenderer: ImageRenderer
     {
+        private readonly ILoggingService _log = Logger.Current;
+
         /// <summary>
         /// Used for registration with dependency service
         /// </summary>
         public static void Init() { }
+
         /// <summary>
         /// 
         /// </summary>
@@ -51,7 +56,7 @@ namespace BeginMobile.Android.Renderers
 
 
                 var path = new Path();
-                path.AddCircle(Width / 2, Height / 2, radius, Path.Direction.Ccw);
+                path.AddCircle(Width / (float)2.0, Height / (float)2.0, radius, Path.Direction.Ccw);
                 canvas.Save();
                 canvas.ClipPath(path);
 
@@ -60,11 +65,13 @@ namespace BeginMobile.Android.Renderers
                 canvas.Restore();
 
                 path = new Path();
-                path.AddCircle(Width / 2, Height / 2, radius, Path.Direction.Ccw);
+                path.AddCircle(Width / (float)2.0, Height / (float)2.0, radius, Path.Direction.Ccw);
 
-                var paint = new Paint();
-                paint.AntiAlias = true;
-                paint.StrokeWidth = ((ImageCircle.Forms.Plugin.Abstractions.CircleImage)Element).BorderThickness;
+                var paint = new Paint
+                {
+                    AntiAlias = true,
+                    StrokeWidth = ((ImageCircle.Forms.Plugin.Abstractions.CircleImage)Element).BorderThickness
+                };
                 paint.SetStyle(Paint.Style.Stroke);
                 paint.Color = ((ImageCircle.Forms.Plugin.Abstractions.CircleImage)Element).BorderColor.ToAndroid();
 
@@ -76,7 +83,7 @@ namespace BeginMobile.Android.Renderers
             }
             catch (Exception ex)
             {
-                //TODO log exception
+                _log.Exception(ex);
                 System.Diagnostics.Debug.WriteLine("Unable to create circle image: " + ex);
             }
 

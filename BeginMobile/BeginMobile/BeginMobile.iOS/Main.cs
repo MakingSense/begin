@@ -19,7 +19,6 @@ namespace BeginMobile.iOS
             }
             catch (Exception exception)
             {
-                //TODO log exception
                 Debug.Print("MonoTouch App error: {0}", exception.Message);
                 throw;
             }
