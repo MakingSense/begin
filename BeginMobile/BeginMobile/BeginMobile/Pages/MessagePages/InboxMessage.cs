@@ -25,7 +25,7 @@ namespace BeginMobile.Pages.MessagePages
         private StackLayout _stackLayoutLoadingIndicator;
         private static ObservableCollection<MessageViewModel> _inboxMessages;
         private static List<MessageViewModel> _defaultListModel;
-        private const int DefaultLimit = 5;
+        private const int DefaultLimit = 10;
         private bool _isLoading;
         private static int _offset = 0;
         private static string _name;
@@ -164,6 +164,7 @@ namespace BeginMobile.Pages.MessagePages
         public static async Task CallServiceApi()
         {
             _offset = 0;
+            _name = null;
 
             var inboxThreads =
                 await
@@ -247,12 +248,12 @@ namespace BeginMobile.Pages.MessagePages
             string limit;
             _offset = 0;
 
-            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
+            _name = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
             RetrieveLimitSelected(out limit);
             _limit = string.IsNullOrEmpty(limit) ? DefaultLimit : int.Parse(limit);
 
             var profileThreadMessages =
-                await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, q, limit, _offset.ToString());
+                await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, _name, limit, _offset.ToString());
             if (profileThreadMessages != null)
             {
                 _listViewMessages.ItemsSource = profileThreadMessages.Threads != null &&

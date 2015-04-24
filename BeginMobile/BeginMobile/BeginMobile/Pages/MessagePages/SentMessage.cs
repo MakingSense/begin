@@ -8,15 +8,27 @@ using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
 using BeginMobile.Utils;
 using Xamarin.Forms;
+using BeginMobile.Interfaces;
 
 namespace BeginMobile.Pages.MessagePages
 {
-    public class SentMessage : ContentPage, IDisposable
+    public class SentMessage : BaseContentPage, IDisposable
     {
         private static LoginUser _currentUser;
         private static ListView _listViewMessages;
         private readonly SearchView _searchView;
-        private const string DefaultLimit = "10";
+        private Grid _gridComponents;
+
+        //Paginator
+        private ActivityIndicator _activityIndicatorLoading;
+        private StackLayout _stackLayoutLoadingIndicator;
+        private static ObservableCollection<MessageViewModel> _sentboxMessages;
+        private static List<MessageViewModel> _defaultListModel;
+        private const int DefaultLimit = 5;
+        private bool _isLoading;
+        private static int _offset = 0;
+        private static string _name;
+        private static int _limit = DefaultLimit;
 
         public SentMessage()
         {
@@ -35,10 +47,28 @@ namespace BeginMobile.Pages.MessagePages
                                     HasUnevenRows = true
                                 };
 
-
+            _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator(ref _activityIndicatorLoading);
             _listViewMessages.ItemSelected += ListViewItemSelectedEventHandler;
+            _listViewMessages.ItemAppearing += ItemOnAppearing;
 
-            var stackLayoutMessagesListView = new StackLayout
+            _gridComponents = new Grid
+            {
+                Padding = BeginApplication.Styles.LayoutThickness,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
+                                     {
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto}
+                                     }
+            };
+
+            _gridComponents.Children.Add(_searchView.Container, 0, 0);
+            _gridComponents.Children.Add(_listViewMessages, 0, 1);
+            _gridComponents.Children.Add(_stackLayoutLoadingIndicator, 0, 2);
+
+            /*var stackLayoutMessagesListView = new StackLayout
                                               {
                                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                                   Orientation = StackOrientation.Vertical,
@@ -48,29 +78,124 @@ namespace BeginMobile.Pages.MessagePages
                                   {
                                       Padding = BeginApplication.Styles.LayoutThickness,
                                       Children = {_searchView.Container, stackLayoutMessagesListView}
-                                  };
+                                  };*/
 
-            Content = mainStackLayout;
+            Content = _gridComponents;
         }
 
         /*         
          * Get the Sent Messages from SentBox Service API, parse the Message to MessageViewModel for add into list and return this list
          */
 
-        public static async Task CallServiceApi()
+        #region Paginator Helper
+        private void RemoveLoadingIndicator(StackLayout stackLayoutLoading)
         {
-            var profileThreadMessagesSent =
-                await
-                    BeginApplication.ProfileServices.GetProfileThreadMessagesSent(_currentUser.AuthToken, null,
-                        DefaultLimit);            
-            _listViewMessages.ItemsSource = RetrieveThreadMessages(profileThreadMessagesSent);
+            _gridComponents.RowDefinitions[2].Height = 43;
+            if (_gridComponents.Children.Contains(stackLayoutLoading))
+            {
+                _gridComponents.Children.Remove(stackLayoutLoading);
+            }
         }
 
-        private static IEnumerable<MessageViewModel> RetrieveThreadMessages(
+        private void AddLoadingIndicator(StackLayout stackLayoutLoading)
+        {
+            _gridComponents.RowDefinitions[2].Height = 43;
+            if (!_gridComponents.Children.Contains(stackLayoutLoading))
+            {
+                _gridComponents.Children.Add(stackLayoutLoading, 0, 2);
+            }
+        }
+        private async void LoadItems()
+        {
+            _offset += _limit;
+            _isLoading = true;
+
+            _activityIndicatorLoading.IsRunning = true;
+            _activityIndicatorLoading.IsVisible = true;
+
+            var resultRequest = await
+                    BeginApplication.ProfileServices.GetProfileThreadMessagesSent(_currentUser.AuthToken, _name,
+                        _limit.ToString(), _offset.ToString());
+
+            if (resultRequest != null)
+            {
+                Device.StartTimer(TimeSpan.FromSeconds(2), () =>
+                {
+                    foreach (var message in RetrieveThreadMessages(resultRequest))
+                    {
+                        _sentboxMessages.Add(message);
+                    }
+
+                    _activityIndicatorLoading.IsRunning = false;
+                    _activityIndicatorLoading.IsVisible = false;
+                    RemoveLoadingIndicator(_stackLayoutLoadingIndicator);
+
+                    _isLoading = false;
+                    return false;
+                });
+            }
+            else
+            {
+                _activityIndicatorLoading.IsRunning = false;
+                _activityIndicatorLoading.IsVisible = false;
+                RemoveLoadingIndicator(_stackLayoutLoadingIndicator);
+
+                _isLoading = false;
+            }
+        }
+
+        private async void ItemOnAppearing(object sender, ItemVisibilityEventArgs e)
+        {
+            if (_isLoading || _sentboxMessages.Count == 0 || _sentboxMessages.Count < DefaultLimit) return;
+
+            var appearingItem = (MessageViewModel)e.Item;
+            var lastItem = _sentboxMessages[_sentboxMessages.Count - 1];
+
+            if ((appearingItem.ThreadId == lastItem.ThreadId) &&
+                (appearingItem.Id == lastItem.Id))
+            {
+                AddLoadingIndicator(_stackLayoutLoadingIndicator);
+                LoadItems();
+            }
+        }
+        #endregion
+
+        public static async Task CallServiceApi()
+        {
+            _offset = 0;
+            _name = null;
+
+            var profileThreadMessagesSent =
+                await
+                    BeginApplication.ProfileServices.GetProfileThreadMessagesSent(_currentUser.AuthToken, _name,
+                        _limit.ToString(), _offset.ToString());
+
+            if (profileThreadMessagesSent != null)
+            {
+                _sentboxMessages = RetrieveThreadMessages(profileThreadMessagesSent);
+                _listViewMessages.ItemsSource = _sentboxMessages;
+            }
+            else
+            {
+                _sentboxMessages = new ObservableCollection<MessageViewModel>(_defaultListModel);
+            }
+            
+        }
+
+        private static ObservableCollection<MessageViewModel> RetrieveThreadMessages(
             ProfileThreadMessages profileThreadMessagesSent)
         {
             var threads = profileThreadMessagesSent;
-            if (!threads.Threads.Any()) return new ObservableCollection<MessageViewModel>();
+
+            if (threads == null)
+            {
+                return new ObservableCollection<MessageViewModel>();
+            }
+            else if (threads.Threads == null)
+            {
+                return new ObservableCollection<MessageViewModel>();
+            }
+
             var threadMessages = threads.Threads;
 
             var listDataSentMessage = (from sentThread in threadMessages
@@ -98,12 +223,15 @@ namespace BeginMobile.Pages.MessagePages
         private async void SearchItemEventHandler(object sender, EventArgs eventArgs)
         {
             string limit;
-            var q = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
+            _offset = 0;
+
+            _name = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
             RetrieveLimitSelected(out limit);
+            _limit = string.IsNullOrEmpty(limit) ? DefaultLimit : int.Parse(limit);
 
 
             var profileThreadMessages =
-                await BeginApplication.ProfileServices.GetProfileThreadMessagesSent(_currentUser.AuthToken, q, limit);
+                await BeginApplication.ProfileServices.GetProfileThreadMessagesSent(_currentUser.AuthToken, _name, limit, _offset.ToString());
             if (profileThreadMessages != null)
             {
                 _listViewMessages.ItemsSource = profileThreadMessages.Threads != null &&
@@ -167,6 +295,7 @@ namespace BeginMobile.Pages.MessagePages
                 ? null
                 : _searchView.Limit.Items[limitSelectedIndex];
         }
+
 
         public void Dispose()
         {
