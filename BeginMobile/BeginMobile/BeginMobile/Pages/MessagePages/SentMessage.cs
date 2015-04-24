@@ -24,7 +24,7 @@ namespace BeginMobile.Pages.MessagePages
         private StackLayout _stackLayoutLoadingIndicator;
         private static ObservableCollection<MessageViewModel> _sentboxMessages;
         private static List<MessageViewModel> _defaultListModel;
-        private const int DefaultLimit = 5;
+        private const int DefaultLimit = 10;
         private bool _isLoading;
         private static int _offset = 0;
         private static string _name;
@@ -68,17 +68,6 @@ namespace BeginMobile.Pages.MessagePages
             _gridComponents.Children.Add(_listViewMessages, 0, 1);
             _gridComponents.Children.Add(_stackLayoutLoadingIndicator, 0, 2);
 
-            /*var stackLayoutMessagesListView = new StackLayout
-                                              {
-                                                  VerticalOptions = LayoutOptions.FillAndExpand,
-                                                  Orientation = StackOrientation.Vertical,
-                                                  Children = {_listViewMessages}
-                                              };
-            var mainStackLayout = new StackLayout
-                                  {
-                                      Padding = BeginApplication.Styles.LayoutThickness,
-                                      Children = {_searchView.Container, stackLayoutMessagesListView}
-                                  };*/
 
             Content = _gridComponents;
         }
