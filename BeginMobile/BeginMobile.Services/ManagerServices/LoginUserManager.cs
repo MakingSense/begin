@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
 using System.Threading.Tasks;
+using BeginMobile.Services.Logging;
 using BeginMobile.Services.Utils;
 using Xamarin.Forms;
 
@@ -27,6 +28,8 @@ namespace BeginMobile.Services.ManagerServices
         private readonly GenericBaseClient<string> _stringResultClient =
             new GenericBaseClient<string>(BaseAddress, SubAddress);
 
+        private readonly ILoggingService _log = Logger.Current;
+
         public async Task<LoginUser> Login(string username, string password)
         {
             var loginUser = new LoginUser();
@@ -46,12 +49,13 @@ namespace BeginMobile.Services.ManagerServices
 
             catch (Exception ex)
             {
+                _log.Exception(ex);
                 AppContextError.Send(ex, loginUser, ExceptionLevel.Application);
                 return null;
             }
         }
 
-        private const int RegisterTimeout = 8500; //8.5 secs
+        private const int RegisterTimeout = 170000; //17 secs
 
         public async Task<RegisterUser> Register(string username, string email, string password, string nameSurname)
         {
@@ -73,6 +77,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception ex)
             {
+                _log.Exception(ex);
                 AppContextError.Send(ex, registeredUser, ExceptionLevel.Application);
                 return null;
             }
@@ -92,6 +97,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception ex)
             {
+                _log.Exception(ex);
                 AppContextError.Send(ex, null, ExceptionLevel.Application);
                 return null;
             }
@@ -119,6 +125,7 @@ namespace BeginMobile.Services.ManagerServices
 
             catch (Exception exception)
             {
+                _log.Exception(exception);
                 AppContextError.Send(exception, ExceptionLevel.Application);
                 return null;
             }
@@ -139,6 +146,7 @@ namespace BeginMobile.Services.ManagerServices
 
             catch (Exception exception)
             {
+                _log.Exception(exception);
                 AppContextError.Send(exception, ExceptionLevel.Application);
                 return null;
             }

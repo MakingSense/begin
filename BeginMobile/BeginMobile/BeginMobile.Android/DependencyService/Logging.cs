@@ -1,3 +1,4 @@
+using Android.OS;
 using Android.Util;
 using BeginMobile.Android.DependencyService;
 using BeginMobile.Services.Interfaces;
@@ -12,21 +13,25 @@ namespace BeginMobile.Android.DependencyService
         public void Exception(Exception exception)
         {
             Log.Error("Exception", "{0}", exception);
+            System.Console.WriteLine(exception.ToString());
         }
 
         public void Error(string message)
         {
             Log.Error("Error", message);
+            System.Console.WriteLine(message);
         }
 
         public void Warning(string message)
         {
             Log.Warn("Warning", message);
+            System.Console.WriteLine(message);
         }
 
         public void Info(string message)
         {
             Log.Info("Info", message);
+            System.Console.WriteLine(message);
         }
 
         public void Message(string message, LogLevel level)
@@ -49,12 +54,14 @@ namespace BeginMobile.Android.DependencyService
 
         public void ErrorFormat(string errorFormat, params object[] parameters)
         {
-            Log.Error("Exception", errorFormat, parameters);
+            Log.Error("Error", errorFormat, parameters);
+            System.Console.WriteLine(errorFormat, parameters);
         }
 
         public void DebugFormat(string errorFormat, params object[] parameters)
         {
             Log.Debug("Debug", errorFormat, parameters);
+            System.Console.WriteLine(errorFormat, parameters);
         }
 
         public void Dispose()

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof (Logging))]
-
 namespace BeginMobile.iOS.DependencyService
 {
     public class Logging : ILoggingService
