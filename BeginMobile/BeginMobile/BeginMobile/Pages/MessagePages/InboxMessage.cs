@@ -30,6 +30,7 @@ namespace BeginMobile.Pages.MessagePages
         private static int _offset = 0;
         private static string _name;
         private static int _limit = DefaultLimit;
+        private static bool _areLastItems;
 
         public InboxMessage()
         {
@@ -37,6 +38,7 @@ namespace BeginMobile.Pages.MessagePages
             CallServiceApi();
             Title = AppResources.MessageInboxTitle;
             IsInbox = true;
+            _areLastItems = false;
 
             _defaultListModel = new List<MessageViewModel>();
 
@@ -50,8 +52,9 @@ namespace BeginMobile.Pages.MessagePages
 
             _listViewMessages = new ListView
                                 {
-                                    ItemTemplate = new DataTemplate(typeof (ProfileMessagesItem)),
-                                    HasUnevenRows = true
+                                    ItemTemplate = new DataTemplate(() => new ProfileMessagesItem()),
+                                    HasUnevenRows = true,
+                                    ClassId = "InboxMessageId",
                                 };
 
 
@@ -71,8 +74,15 @@ namespace BeginMobile.Pages.MessagePages
                                      }
             };
 
+            var relativeLayoutListView = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand };
+            relativeLayoutListView.Children.Add(_listViewMessages,
+                xConstraint: Constraint.Constant(0),
+                yConstraint: Constraint.Constant(0),
+                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
             _gridComponents.Children.Add(_searchView.Container, 0, 0);
-            _gridComponents.Children.Add(_listViewMessages, 0, 1);
+            _gridComponents.Children.Add(relativeLayoutListView, 0, 1);
             _gridComponents.Children.Add(_stackLayoutLoadingIndicator, 0, 2);
 
             Content = _gridComponents;
@@ -82,7 +92,7 @@ namespace BeginMobile.Pages.MessagePages
         #region Paginator Helper
         private void RemoveLoadingIndicator(StackLayout stackLayoutLoading)
         {
-            _gridComponents.RowDefinitions[2].Height = 43;
+            _gridComponents.RowDefinitions[2].Height = GridLength.Auto;
             if (_gridComponents.Children.Contains(stackLayoutLoading))
             {
                 _gridComponents.Children.Remove(stackLayoutLoading);
@@ -91,7 +101,7 @@ namespace BeginMobile.Pages.MessagePages
 
         private void AddLoadingIndicator(StackLayout stackLayoutLoading)
         {
-            _gridComponents.RowDefinitions[2].Height = 43;
+            _gridComponents.RowDefinitions[2].Height = Device.OnPlatform<double>(33, 43, 43);
             if (!_gridComponents.Children.Contains(stackLayoutLoading))
             {
                 _gridComponents.Children.Add(stackLayoutLoading, 0, 2);
@@ -111,20 +121,33 @@ namespace BeginMobile.Pages.MessagePages
 
             if (resultRequest != null)
             {
-                Device.StartTimer(TimeSpan.FromSeconds(2), () =>
+                if (resultRequest.Threads != null && resultRequest.Threads.Any())
                 {
-                    foreach (var message in RetrieveThreadMessages(resultRequest))
+                    Device.StartTimer(TimeSpan.FromSeconds(2), () =>
                     {
-                        _inboxMessages.Add(message);
-                    }
+                        foreach (var message in RetrieveThreadMessages(resultRequest))
+                        {
+                            _inboxMessages.Add(message);
+                        }
 
+                        _activityIndicatorLoading.IsRunning = false;
+                        _activityIndicatorLoading.IsVisible = false;
+                        RemoveLoadingIndicator(_stackLayoutLoadingIndicator);
+
+                        _isLoading = false;
+                        return false;
+                    });
+                }
+                else
+                {
                     _activityIndicatorLoading.IsRunning = false;
                     _activityIndicatorLoading.IsVisible = false;
                     RemoveLoadingIndicator(_stackLayoutLoadingIndicator);
 
                     _isLoading = false;
-                    return false;
-                });
+                    _areLastItems = true;
+                }
+                
             }
             else
             {
@@ -138,7 +161,9 @@ namespace BeginMobile.Pages.MessagePages
 
         private async void ItemOnAppearing(object sender, ItemVisibilityEventArgs e)
         {
-            if (_isLoading || _inboxMessages.Count == 0 || _inboxMessages.Count < DefaultLimit) return;
+            if (_isLoading == true || 
+                _inboxMessages.Count == 0 || 
+                _areLastItems == true) return;
 
             var appearingItem = (MessageViewModel)e.Item;
             var lastItem = _inboxMessages[_inboxMessages.Count - 1];
@@ -165,6 +190,7 @@ namespace BeginMobile.Pages.MessagePages
         {
             _offset = 0;
             _name = null;
+            _areLastItems = false;
 
             var inboxThreads =
                 await
@@ -247,6 +273,7 @@ namespace BeginMobile.Pages.MessagePages
         {
             string limit;
             _offset = 0;
+            _areLastItems = false;
 
             _name = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
             RetrieveLimitSelected(out limit);

@@ -26,12 +26,11 @@ namespace BeginMobile.Pages.ContactPages
         private StackLayout _stackLayoutLoadingIndicator;
         private bool _isLoading;
         private int _offset = 0;
-        private int _limit = 10;
+        private int _limit = DefaultLimit;
         private string _name;
         private string _sort;
         private const int DefaultLimit = 10;
-        private bool status;
-        private readonly object Lock = new object();
+        private bool _areLastItems;
 
 
         private Dictionary<string, string> _sortOptionsDictionary = new Dictionary<string, string>
@@ -50,6 +49,47 @@ namespace BeginMobile.Pages.ContactPages
             Title = title;
             _searchView = new SearchView();
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+
+            _areLastItems = false;
+            _listViewContacts = new ListView
+            {ClassId = "ContactPageId"};
+
+            _listViewContacts.ItemAppearing += async (sender, e) =>
+            {
+                if (_isLoading == true || 
+                    _contactsList.Count == 0 || 
+                    _areLastItems == true)
+                {
+                    return;
+                }
+                var appearingItem = (Contact)e.Item;
+                var lastItem = _contactsList[_contactsList.Count - 1];
+
+                if ((appearingItem.Id == lastItem.Id) &&
+                    (appearingItem.Registered == lastItem.Registered))
+                {
+                    addLoadingIndicator(_stackLayoutLoadingIndicator);
+                    LoadItems();
+                }
+            };
+
+            _listViewContacts.ItemTapped += async (sender, eventArgs) =>
+            {
+                if (eventArgs.Item == null)
+                {
+                    return;
+                }
+
+                var contactItem = (Contact)eventArgs.Item;
+
+                var contentPageContactDetail = new ContactDetail(contactItem)
+                {
+                    BindingContext = contactItem
+                };
+
+                await Navigation.PushAsync(contentPageContactDetail);
+                ((ListView)sender).SelectedItem = null;
+            };
 
 
             _gridLayoutMain = new Grid()
@@ -87,50 +127,10 @@ namespace BeginMobile.Pages.ContactPages
             var contactListViewTemplate = new DataTemplate(() => new ContactListItem(_currentUser));
             MessagingSubscriptions();
 
+            _listViewContacts.ItemsSource = _contactsList;
+            _listViewContacts.ItemTemplate = contactListViewTemplate;
+            _listViewContacts.HasUnevenRows = true;
 
-
-            _listViewContacts = new ListView
-                                {
-                                    ItemsSource = _contactsList,
-                                    ItemTemplate = contactListViewTemplate,
-                                    HasUnevenRows = true,
-                                };
-
-            _listViewContacts.ItemSelected += async (sender, eventArgs) =>
-                                                    {
-                                                        if (eventArgs.SelectedItem == null)
-                                                        {
-                                                            return;
-                                                        }
-
-                                                        var contactItem = (Contact)eventArgs.SelectedItem;
-
-                                                        var contentPageContactDetail = new ContactDetail(contactItem)
-                                                                                       {
-                                                                                           BindingContext = contactItem
-                                                                                       };
-
-                                                        await Navigation.PushAsync(contentPageContactDetail);
-                                                        ((ListView)sender).SelectedItem = null;
-                                                    };
-
-
-            _listViewContacts.ItemAppearing += async (sender, e) =>
-            {
-                if (_isLoading || _contactsList.Count == 0)
-                {
-                    return;
-                }
-                var appearingItem = (Contact) e.Item;
-                var lastItem = _contactsList[_contactsList.Count - 1];
-
-                if ((appearingItem.Id == lastItem.Id) &&
-                    (appearingItem.Registered == lastItem.Registered))
-                {
-                    addLoadingIndicator(_stackLayoutLoadingIndicator);
-                    LoadItems();
-                }
-            };
 
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
@@ -164,7 +164,7 @@ namespace BeginMobile.Pages.ContactPages
         #region Method of the Paginator
         private void removeLoadingIndicator(View loadingIndicator)
         {
-            _gridLayoutMain.RowDefinitions[3].Height = 43;
+            _gridLayoutMain.RowDefinitions[3].Height = GridLength.Auto;
             if (_gridLayoutMain.Children.Contains(loadingIndicator))
             {
                 _gridLayoutMain.Children.Remove(loadingIndicator);
@@ -173,7 +173,7 @@ namespace BeginMobile.Pages.ContactPages
 
         private void addLoadingIndicator(View loadingIndicator)
         {
-            _gridLayoutMain.RowDefinitions[3].Height = 43;
+            _gridLayoutMain.RowDefinitions[3].Height = Device.OnPlatform<double>(33, 43, 43);
             if (!_gridLayoutMain.Children.Contains(loadingIndicator))
             {
                 _gridLayoutMain.Children.Add(loadingIndicator, 0, 3);
@@ -193,20 +193,33 @@ namespace BeginMobile.Pages.ContactPages
 
             if (resultList != null)
             {
-                Device.StartTimer(TimeSpan.FromSeconds(2), () =>
+                if (resultList.Any())
                 {
-                    foreach (var contact in RetrieveContacts(resultList))
+                    Device.StartTimer(TimeSpan.FromSeconds(2), () =>
                     {
-                        _contactsList.Add(contact);
-                    }
+                        foreach (var contact in RetrieveContacts(resultList))
+                        {
+                            _contactsList.Add(contact);
+                        }
 
+                        _activityIndicatorLoading.IsRunning = false;
+                        _activityIndicatorLoading.IsVisible = false;
+                        removeLoadingIndicator(_stackLayoutLoadingIndicator);
+
+                        _isLoading = false;
+                        return false;
+                    });
+                }
+                else
+                {
                     _activityIndicatorLoading.IsRunning = false;
                     _activityIndicatorLoading.IsVisible = false;
                     removeLoadingIndicator(_stackLayoutLoadingIndicator);
 
                     _isLoading = false;
-                    return false;
-                });
+                    _areLastItems = true;
+                }
+                
             }
             else
             {
@@ -228,6 +241,7 @@ namespace BeginMobile.Pages.ContactPages
         {
             string limit;
             _offset = 0;
+            _areLastItems = false;
 
             _name = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
 

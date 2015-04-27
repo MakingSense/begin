@@ -17,8 +17,9 @@ namespace BeginMobile.Pages.Wall
         private LoginUser _currentUser;
         private StackLayout _stackLayoutMain;
         private ObservableCollection<BeginWallViewModel> _listWall;
+        private const int DefaultLimit = 10;
         private bool _isLoading;
-        private int _offset = 0;
+        private int _offset = DefaultLimit;
         private int _limit = 10;
         private Button _buttonAddMore;
         private Grid _gridMain;
@@ -28,6 +29,7 @@ namespace BeginMobile.Pages.Wall
         public const string TextGroup= " group";
         public const string TextGroupTopic = " group topic";
         public const string TextActivity = " activity";
+        private bool _areLastItems;
 
         private ActivityIndicator _activityIndicatorLoading;
 
@@ -35,6 +37,8 @@ namespace BeginMobile.Pages.Wall
             : base(title, iconImage)
         {
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+
+            _areLastItems = false;
 
             _gridMain = new Grid()
             {
@@ -103,7 +107,10 @@ namespace BeginMobile.Pages.Wall
 
             _listViewWall.ItemAppearing += async (sender, e) =>
             {
-                if (_isLoading || _listWall.Count == 0)
+                if (_isLoading == true || 
+                    _listWall.Count == 0 ||
+                    _listWall.Count < DefaultLimit ||
+                    _areLastItems == true)
                     return;
 
                 var appearingItem = (BeginWallViewModel) e.Item;
@@ -138,18 +145,19 @@ namespace BeginMobile.Pages.Wall
 
         private void removeLoadingIndicator(View loadingIndicator)
         {
+            _gridMain.RowDefinitions[1].Height = GridLength.Auto;
             if (_gridMain.Children.Contains(loadingIndicator))
             {
                 _gridMain.Children.Remove(loadingIndicator);
-                _gridMain.RowDefinitions[1].Height = GridLength.Auto;
             }
         }
 
+        
         private void addLoadingIndicator(View loadingIndicator)
         {
+            _gridMain.RowDefinitions[1].Height = Device.OnPlatform<double>(33, 43, 43);
             if (!_gridMain.Children.Contains(loadingIndicator))
             {
-                _gridMain.RowDefinitions[1].Height = 50;
                 _gridMain.Children.Add(loadingIndicator, 0, 1);
             }
         }
