@@ -124,6 +124,21 @@
     <AndroidResource Include="Resources\Drawable\logotype.png" />
     <AndroidResource Include="Resources\Drawable\online_icon.png" />
     <AndroidResource Include="Resources\Drawable\offline_icon.png" />
+    <AndroidResource Include="Resources\Drawable\a_event.png" />
+    <AndroidResource Include="Resources\Drawable\about_us.png" />
+    <AndroidResource Include="Resources\Drawable\activity.png" />
+    <AndroidResource Include="Resources\Drawable\call_center.png" />
+    <AndroidResource Include="Resources\Drawable\groups.png" />
+    <AndroidResource Include="Resources\Drawable\ievents.png" />
+    <AndroidResource Include="Resources\Drawable\ifeed.png" />
+    <AndroidResource Include="Resources\Drawable\ifeeds.png" />
+    <AndroidResource Include="Resources\Drawable\igroup.png" />
+    <AndroidResource Include="Resources\Drawable\iphone_message.png" />
+    <AndroidResource Include="Resources\Drawable\logout.png" />
+    <AndroidResource Include="Resources\Drawable\mail.png" />
+    <AndroidResource Include="Resources\Drawable\privacy.png" />
+    <AndroidResource Include="Resources\Drawable\shop.png" />
+    <AndroidResource Include="Resources\Drawable\terms_conditions.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">

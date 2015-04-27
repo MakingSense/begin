@@ -248,7 +248,51 @@
   <ItemGroup>
     <BundleResource Include="Resources\offline_icon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\a_event.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\about_us.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\activity.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\call_center.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\groups.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ievents.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ifeed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ifeeds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\igroup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\iphone_message.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\shop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\terms_conditions.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\privacy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\mail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\logout.png" />
+  </ItemGroup>
   <Import Project="..\BeginMobile\BeginMobile.projitems" Label="Shared" Condition="Exists('..\BeginMobile\BeginMobile.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
