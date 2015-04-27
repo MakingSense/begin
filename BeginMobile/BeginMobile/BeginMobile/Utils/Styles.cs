@@ -605,7 +605,7 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return "userprofile.png";
+                return "mail.png";
             }
         }
 
@@ -613,21 +613,21 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return "userprofile.png";
+                return "igroup.png";
             }
         }
         public string DefaultWallIcon
         {
             get
             {
-                return "userprofile.png";
+                return "ifeeds.png";
             }
         }
         public string DefaultEventIcon
         {
             get
             {
-                return "userprofile.png";
+                return "a_event.png";
             }
         }
         public string DefaultNotificationIcon
@@ -648,14 +648,14 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return "userprofile.png";
+                return "activity.png";
             }
         }
         public string DefaultShopIcon
         {
             get
             {
-                return "userprofile.png";
+                return "shop.png";
             }
         }
 
@@ -667,6 +667,44 @@ namespace BeginMobile.Utils
             }
         }
 
+
+        //icons
+        public string AboutUsIcon
+        {
+            get
+            {
+                return "about_us.png";
+            }
+        }
+        public string HelpCenterIcon
+        {
+            get
+            {
+                return "call_center.png";
+            }
+        }
+        public string LogoutIcon
+        {
+            get
+            {
+                return "logout.png";
+            }
+        }
+
+        public string PrivacyIcon
+        {
+            get
+            {
+                return "privacy.png";
+            }
+        }
+        public string TermsAndConditionsIcon
+        {
+            get
+            {
+                return "terms_conditions.png";
+            }
+        }
 
 #endregion
     }

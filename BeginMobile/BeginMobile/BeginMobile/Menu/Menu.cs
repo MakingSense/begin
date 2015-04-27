@@ -83,42 +83,42 @@ namespace BeginMobile.Menu
                                       },
                                       new MenuItemViewModel
                                       {
-                                          Icon = "",
+                                          Icon =  BeginApplication.Styles.LogoutIcon,
                                           OptionName =
                                               MenuItemsNames
                                               .Logout
                                       },
                                       new MenuItemViewModel
                                       {
-                                          Icon = "",
+                                          Icon =  BeginApplication.Styles.PrivacyIcon,
                                           OptionName =
                                               MenuItemsNames
                                               .ChangePassword
                                       },
                                       new MenuItemViewModel
                                       {
-                                          Icon = "",
+                                          Icon =  BeginApplication.Styles.AboutUsIcon,
                                           OptionName =
                                               MenuItemsNames
                                               .About
                                       },
                                       new MenuItemViewModel
                                       {
-                                          Icon = "",
+                                          Icon =  BeginApplication.Styles.PrivacyIcon,
                                           OptionName =
                                               MenuItemsNames
                                               .Privacy
                                       },
                                       new MenuItemViewModel
                                       {
-                                          Icon = "",
+                                          Icon = BeginApplication.Styles.HelpCenterIcon,
                                           OptionName =
                                               MenuItemsNames
                                               .HelpCenter
                                       },
                                       new MenuItemViewModel
                                       {
-                                          Icon = "",
+                                          Icon =  BeginApplication.Styles.TermsAndConditionsIcon,
                                           OptionName =
                                               MenuItemsNames
                                               .TermsAndConditions
