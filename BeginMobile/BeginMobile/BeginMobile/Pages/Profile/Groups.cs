@@ -84,7 +84,7 @@ namespace BeginMobile.Pages.Profile
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            this.Content = null;
+            //this.Content = null;
             _groups = null;
         }
     }

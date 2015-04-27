@@ -282,7 +282,7 @@ namespace BeginMobile.Pages.Profile
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            Content = null;
+            //Content = null;
             _contacts = null;
         }
     }
