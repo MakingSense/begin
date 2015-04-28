@@ -68,47 +68,32 @@ namespace BeginMobile.Pages.ContactPages
         {
             _buttonAddFriend = new Button
                                {
-                                   Text = "Add", //AppResources.ButtonAddFriend,
-                                   Style = BeginApplication.Styles.ListViewItemButton,
-                                   HorizontalOptions = LayoutOptions.Start,
-                                   HeightRequest = 35,
-                                   WidthRequest = 70
+                                   Text =  AppResources.ButtonAddFriend,
+                                   Style = BeginApplication.Styles.ListViewItemButton
                                };
 
             _buttonRemoveFriend = new Button
                                   {
-                                      Text = AppResources.ButtonRemoveFriend,
-                                      Style = BeginApplication.Styles.ListViewItemButton,
-                                      HorizontalOptions = LayoutOptions.Start,
-                                      HeightRequest = 35,
-                                      WidthRequest = 70
+                                      Text =  AppResources.ButtonRemoveFriend,
+                                      Style = BeginApplication.Styles.ListViewItemButton                                      
                                   };
 
             _buttonCancelFriend = new Button
                                   {
-                                      Text = "Cancel", //AppResources.ButtonCancelFriend,
-                                      Style = BeginApplication.Styles.ListViewItemButton,
-                                      HorizontalOptions = LayoutOptions.Start,
-                                      HeightRequest = 35,
-                                      WidthRequest = 70
+                                      Text = AppResources.ButtonCancelRequestFriend,
+                                      Style = BeginApplication.Styles.ListViewItemButton                                     
                                   };
 
             _buttonAcceptFriend = new Button
                                   {
-                                      Text = "Accept", //AppResources.ButtonAcceptFriend,
-                                      Style = BeginApplication.Styles.ListViewItemButton,
-                                      HorizontalOptions = LayoutOptions.Start,
-                                      HeightRequest = 35,
-                                      WidthRequest = 70
+                                      Text =  AppResources.ButtonAcceptFriend,
+                                      Style = BeginApplication.Styles.ListViewItemButton
                                   };
 
             _buttonRejectFriend = new Button
                                   {
-                                      Text = "Reject", //AppResources.ButtonRejectFriend,
-                                      Style = BeginApplication.Styles.ListViewItemButton,
-                                      HorizontalOptions = LayoutOptions.Start,
-                                      HeightRequest = 35,
-                                      WidthRequest = 70
+                                      Text =  AppResources.ButtonRejectFriend,
+                                      Style = BeginApplication.Styles.ListViewItemButton
                                   };
 
             _buttonAddFriend.Clicked += AddFriendEventHandler;

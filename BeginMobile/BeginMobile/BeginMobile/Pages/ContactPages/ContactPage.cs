@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.Profile;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
@@ -13,7 +14,7 @@ namespace BeginMobile.Pages.ContactPages
 {
     public class ContactPage : TabContent
     {
-        private ListView _listViewContacts;
+        private readonly ListView _listViewContacts;
         private Label _labelNoContactsMessage;
         private readonly List<Contact> _defaultList = new List<Contact>();
         private readonly SearchView _searchView;
@@ -21,9 +22,9 @@ namespace BeginMobile.Pages.ContactPages
         private ObservableCollection<Contact> _contactsList;
 
         //Paginator
-        private ActivityIndicator _activityIndicatorLoading;
-        private Grid _gridLayoutMain;
-        private StackLayout _stackLayoutLoadingIndicator;
+        private readonly ActivityIndicator _activityIndicatorLoading;
+        private readonly Grid _gridLayoutMain;
+        private readonly StackLayout _stackLayoutLoadingIndicator;
         private bool _isLoading;
         private int _offset = 0;
         private int _limit = DefaultLimit;
@@ -44,69 +45,69 @@ namespace BeginMobile.Pages.ContactPages
         private Picker _sortPicker;
 
         public ContactPage(string title, string icon)
-            :base(title,icon)
+            : base(title, icon)
         {
             Title = title;
             _searchView = new SearchView();
-            _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
 
             _areLastItems = false;
             _listViewContacts = new ListView
-            {ClassId = "ContactPageId"};
+                                {ClassId = "ContactPageId"};
 
             _listViewContacts.ItemAppearing += async (sender, e) =>
-            {
-                if (_isLoading == true || 
-                    _contactsList.Count == 0 || 
-                    _areLastItems == true)
-                {
-                    return;
-                }
-                var appearingItem = (Contact)e.Item;
-                var lastItem = _contactsList[_contactsList.Count - 1];
+                                                     {
+                                                         if (_isLoading == true ||
+                                                             _contactsList.Count == 0 ||
+                                                             _areLastItems == true)
+                                                         {
+                                                             return;
+                                                         }
+                                                         var appearingItem = (Contact) e.Item;
+                                                         var lastItem = _contactsList[_contactsList.Count - 1];
 
-                if ((appearingItem.Id == lastItem.Id) &&
-                    (appearingItem.Registered == lastItem.Registered))
-                {
-                    addLoadingIndicator(_stackLayoutLoadingIndicator);
-                    LoadItems();
-                }
-            };
+                                                         if ((appearingItem.Id == lastItem.Id) &&
+                                                             (appearingItem.Registered == lastItem.Registered))
+                                                         {
+                                                             addLoadingIndicator(_stackLayoutLoadingIndicator);
+                                                             LoadItems();
+                                                         }
+                                                     };
 
             _listViewContacts.ItemTapped += async (sender, eventArgs) =>
-            {
-                if (eventArgs.Item == null)
-                {
-                    return;
-                }
+                                                  {
+                                                      if (eventArgs.Item == null)
+                                                      {
+                                                          return;
+                                                      }
 
-                var contactItem = (Contact)eventArgs.Item;
+                                                      var contactItem = (Contact) eventArgs.Item;
 
-                var contentPageContactDetail = new ContactDetail(contactItem)
-                {
-                    BindingContext = contactItem
-                };
+                                                      var contentPageContactDetail = new ContactDetail(contactItem)
+                                                                                     {
+                                                                                         BindingContext = contactItem
+                                                                                     };
 
-                await Navigation.PushAsync(contentPageContactDetail);
-                ((ListView)sender).SelectedItem = null;
-            };
+                                                      await Navigation.PushAsync(contentPageContactDetail);
+                                                      ((ListView) sender).SelectedItem = null;
+                                                  };
 
 
             _gridLayoutMain = new Grid()
-            {
-                Padding = BeginApplication.Styles.LayoutThickness,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                RowDefinitions =
-                {
-                    new RowDefinition { Height = GridLength.Auto },
-                    new RowDefinition { Height = GridLength.Auto },
-                    new RowDefinition { Height = GridLength.Auto },
-                    new RowDefinition { Height = GridLength.Auto }
-                }
-            };
+                              {
+                                  Padding = BeginApplication.Styles.LayoutThickness,
+                                  HorizontalOptions = LayoutOptions.FillAndExpand,
+                                  VerticalOptions = LayoutOptions.FillAndExpand,
+                                  RowDefinitions =
+                                  {
+                                      new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto}
+                                  }
+                              };
 
-            _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator(ref _activityIndicatorLoading); 
+            _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator(ref _activityIndicatorLoading);
             _gridLayoutMain.Children.Add(_stackLayoutLoadingIndicator, 0, 3);
 
             Content = _gridLayoutMain;
@@ -116,9 +117,10 @@ namespace BeginMobile.Pages.ContactPages
 
         private async Task Init()
         {
-         
             var profileInformationContacts =
-                await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, _name, _sort, _limit.ToString(), _offset.ToString()); 
+                await
+                    BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, _name, _sort, _limit.ToString(),
+                        _offset.ToString());
 
             _contactsList = new ObservableCollection<Contact>(RetrieveContacts(profileInformationContacts));
 
@@ -152,7 +154,7 @@ namespace BeginMobile.Pages.ContactPages
             _gridLayoutMain.Children.Add(_searchView.Container, 0, 0);
             _gridLayoutMain.Children.Add(_labelNoContactsMessage, 0, 1);
             _gridLayoutMain.Children.Add(stackLayoutContactsList, 0, 2);
-            
+
 
             Content = _gridLayoutMain;
 
@@ -162,6 +164,7 @@ namespace BeginMobile.Pages.ContactPages
         #region Events
 
         #region Method of the Paginator
+
         private void removeLoadingIndicator(View loadingIndicator)
         {
             _gridLayoutMain.RowDefinitions[3].Height = GridLength.Auto;
@@ -196,19 +199,19 @@ namespace BeginMobile.Pages.ContactPages
                 if (resultList.Any())
                 {
                     Device.StartTimer(TimeSpan.FromSeconds(2), () =>
-                    {
-                        foreach (var contact in RetrieveContacts(resultList))
-                        {
-                            _contactsList.Add(contact);
-                        }
+                                                               {
+                                                                   foreach (var contact in RetrieveContacts(resultList))
+                                                                   {
+                                                                       _contactsList.Add(contact);
+                                                                   }
 
-                        _activityIndicatorLoading.IsRunning = false;
-                        _activityIndicatorLoading.IsVisible = false;
-                        removeLoadingIndicator(_stackLayoutLoadingIndicator);
+                                                                   _activityIndicatorLoading.IsRunning = false;
+                                                                   _activityIndicatorLoading.IsVisible = false;
+                                                                   removeLoadingIndicator(_stackLayoutLoadingIndicator);
 
-                        _isLoading = false;
-                        return false;
-                    });
+                                                                   _isLoading = false;
+                                                                   return false;
+                                                               });
                 }
                 else
                 {
@@ -219,7 +222,6 @@ namespace BeginMobile.Pages.ContactPages
                     _isLoading = false;
                     _areLastItems = true;
                 }
-                
             }
             else
             {
@@ -230,6 +232,7 @@ namespace BeginMobile.Pages.ContactPages
                 _isLoading = false;
             }
         }
+
         #endregion
 
         /// <summary>
@@ -243,14 +246,17 @@ namespace BeginMobile.Pages.ContactPages
             _offset = 0;
             _areLastItems = false;
 
-            _name = sender.GetType() == typeof(SearchBar) ? ((SearchBar)sender).Text : _searchView.SearchBar.Text;
+            _name = sender.GetType() == typeof (SearchBar) ? ((SearchBar) sender).Text : _searchView.SearchBar.Text;
 
             RetrieveLimitSelected(out limit);
             _limit = string.IsNullOrEmpty(limit) ? DefaultLimit : int.Parse(limit);
 
             RetrieveSortOptionSelected(out _sort);
 
-            var list = await BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, _name, _sort, limit, _offset.ToString()) ?? new List<User>();
+            var list =
+                await
+                    BeginApplication.ProfileServices.GetContacts(_currentUser.AuthToken, _name, _sort, limit,
+                        _offset.ToString()) ?? new List<User>();
 
             if (list.Any())
             {
@@ -288,7 +294,7 @@ namespace BeginMobile.Pages.ContactPages
 
             else
             {
-                _sortOptionsDictionary = new Dictionary<string, string> { { "last_active", "Last Active" } };
+                _sortOptionsDictionary = new Dictionary<string, string> {{"last_active", "Last Active"}};
             }
 
             _searchView.Container.Children.Add(_sortPicker);
@@ -323,20 +329,21 @@ namespace BeginMobile.Pages.ContactPages
             if (profileInformationContacts != null)
             {
                 resultList = profileInformationContacts.Select(contact => new Contact
-                {
-                    Icon = BeginApplication.Styles.DefaultContactIcon,
-                    NameSurname = contact.NameSurname,
-                    Email =
-                        string.Format("e-mail: {0}",
-                            contact.Email),
-                    Url = contact.Url,
-                    UserName = contact.UserName,
-                    Registered = contact.Registered,
-                    Id = contact.Id.ToString(),
-                    Relationship = contact.Relationship,
-                    IsOnline = contact.IsOnline
-                });
-
+                                                                          {
+                                                                              Icon =
+                                                                                  BeginApplication.Styles
+                                                                                  .DefaultContactIcon,
+                                                                              NameSurname = contact.NameSurname,
+                                                                              Email =
+                                                                                  string.Format("e-mail: {0}",
+                                                                                      contact.Email),
+                                                                              Url = contact.Url,
+                                                                              UserName = contact.UserName,
+                                                                              Registered = contact.Registered,
+                                                                              Id = contact.Id.ToString(),
+                                                                              Relationship = contact.Relationship,
+                                                                              IsOnline = contact.IsOnline
+                                                                          });
             }
             else
             {
@@ -354,37 +361,42 @@ namespace BeginMobile.Pages.ContactPages
 
         private Action<CustomViewCell, string> DisplayAlertCallBack()
         {
-            return async (sender, arg) => { await DisplayAlert("Error", arg, "Ok"); };
+            return
+                async (sender, arg) =>
+                      {
+                          await DisplayAlert(AppResources.ErrorMessageTitle, arg, AppResources.AlertOk);
+                      };
         }
+
         private Action<ContactListItem, string> AddContactCallback()
         {
             return async (sender, arg) =>
-            {
-                var removeUsername = arg;
+                         {
+                             var removeUsername = arg;
 
-                if (!string.IsNullOrEmpty(removeUsername))
-                {
+                             if (!string.IsNullOrEmpty(removeUsername))
+                             {
+                                 var confirm = await DisplayAlert(AppResources.AlertConfirmTitle,
+                                     string.Format(AppResources.AlertContactRequestConfirm,
+                                         removeUsername), AppResources.AlertYes, AppResources.AlertNo);
 
-                    var confirm = await DisplayAlert("Confirm",
-                        string.Format("Are you sure you want to send a request to '{0}'?",
-                            removeUsername), "Yes", "No");
+                                 if (confirm)
+                                 {
+                                     var contacts = ((ObservableCollection<Contact>) _listViewContacts.ItemsSource);
+                                     var toAdd =
+                                         contacts.FirstOrDefault(contact => contact.UserName == removeUsername);
 
-                    if (confirm)
-                    {
-                        var contacts = ((ObservableCollection<Contact>)_listViewContacts.ItemsSource);
-                        var toAdd =
-                            contacts.FirstOrDefault(contact => contact.UserName == removeUsername);
-
-                        if (toAdd != null && contacts.Remove(toAdd))
-                        {
-                            _listViewContacts.ItemsSource = contacts;
-                            await
-                                DisplayAlert("Info",
-                                    string.Format("'{0}' friendship Added.", removeUsername), "Ok");
-                        }
-                    }
-                }
-            };
+                                     if (toAdd != null && contacts.Remove(toAdd))
+                                     {
+                                         _listViewContacts.ItemsSource = contacts;
+                                         await
+                                             DisplayAlert(AppResources.AlertInfoTitle,
+                                                 string.Format(AppResources.AlertContactFriendAddedSuccessfull,
+                                                     removeUsername), AppResources.AlertOk);
+                                     }
+                                 }
+                             }
+                         };
         }
 
         private Action<CustomViewCell, string> RemoveContactCallback()
@@ -395,10 +407,9 @@ namespace BeginMobile.Pages.ContactPages
 
                              if (!string.IsNullOrEmpty(removeUsername))
                              {
-
-                                 var confirm = await DisplayAlert("Confirm",
-                                     string.Format("Are you sure you want to remove '{0}' from contacts?",
-                                         removeUsername), "Yes", "No");
+                                 var confirm = await DisplayAlert(AppResources.AlertConfirmTitle,
+                                     string.Format(AppResources.AlertContactRemoveConfirmMessage,
+                                         removeUsername), AppResources.AlertYes, AppResources.AlertNo);
 
                                  if (confirm)
                                  {
@@ -410,14 +421,15 @@ namespace BeginMobile.Pages.ContactPages
                                      {
                                          _listViewContacts.ItemsSource = contacts;
                                          await
-                                             DisplayAlert("Info",
-                                                 string.Format("'{0}' Removed.", removeUsername), "Ok");
+                                             DisplayAlert(AppResources.AlertInfoTitle,
+                                                 string.Format(AppResources.AlertContactRemoveMessage, removeUsername),
+                                                 AppResources.AlertOk);
                                      }
                                  }
                              }
                          };
         }
-        
+
         #endregion
     }
 }

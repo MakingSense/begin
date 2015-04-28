@@ -30,10 +30,7 @@ namespace BeginMobile.Pages.Notifications
             var buttonMarkAsRead = new Button
                                    {
                                        Text = AppResources.ButtonReadNotification,
-                                       Style = BeginApplication.Styles.ListViewItemButton,
-                                       HorizontalOptions = LayoutOptions.Start,
-                                       HeightRequest = Device.OnPlatform(15, 35, 35),
-                                       WidthRequest = Device.OnPlatform(70, 70, 70),
+                                       Style = BeginApplication.Styles.ListViewItemButton
                                    };
 
 
@@ -42,10 +39,7 @@ namespace BeginMobile.Pages.Notifications
             var buttonMarkAsUnread = new Button
                                      {
                                          Text = AppResources.ButtonUnReadNotification,
-                                         Style = BeginApplication.Styles.ListViewItemButton,
-                                         HorizontalOptions = LayoutOptions.Start,
-                                         HeightRequest = Device.OnPlatform(15, 35, 35),
-                                         WidthRequest = Device.OnPlatform(70, 70, 70)
+                                         Style = BeginApplication.Styles.ListViewItemButton
                                      };
 
             buttonMarkAsUnread.Clicked += OnMarkAsUnreadEventHandler;

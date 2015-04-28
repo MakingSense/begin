@@ -449,6 +449,8 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.BackgroundColorProperty,
                                         Value = Color.FromHex("425d78")
                                     },
+                                    new Setter {Property = VisualElement.HeightRequestProperty, Value = Device.OnPlatform<double>(35, 35, 35)},
+                                    new Setter {Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Start},
                                     new Setter {Property = Button.TextColorProperty, Value = Color.White},
                                     new Setter {Property = Button.BorderRadiusProperty, Value = 2},
                                     new Setter {Property = Button.FontFamilyProperty, Value = FontFamily}
@@ -457,7 +459,7 @@ namespace BeginMobile.Utils
                 style.Setters.Add(new Setter
                                   {
                                       Property = Button.FontSizeProperty,
-                                      Value = Device.OnPlatform<double>(7, 12, 12)
+                                      Value = Device.OnPlatform<double>(12, 12, 12)
                                   });
                 return style;
             }

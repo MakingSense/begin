@@ -82,10 +82,7 @@ namespace BeginMobile.Pages.MessagePages
             var buttonMarkUsUnread = new Button
                                      {
                                          Text = AppResources.MarkAsUnread,
-                                         Style = BeginApplication.Styles.ListViewItemButton,
-                                         HorizontalOptions = LayoutOptions.End,
-                                         HeightRequest = Device.OnPlatform(15, 35, 35),
-                                         WidthRequest = Device.OnPlatform(150, 150, 150)
+                                         Style = BeginApplication.Styles.ListViewItemButton
                                      };
             buttonMarkUsUnread.Clicked += ButtonMarkUsUnreadEventHandler;
 

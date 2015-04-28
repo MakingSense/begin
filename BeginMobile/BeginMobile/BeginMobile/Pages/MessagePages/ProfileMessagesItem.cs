@@ -68,10 +68,7 @@ namespace BeginMobile.Pages.MessagePages
             var buttonRemove = new Button
                                {
                                    Text = AppResources.ButtonRemoveFriend,
-                                   Style = BeginApplication.Styles.ListViewItemButton,
-                                   HorizontalOptions = LayoutOptions.Start,
-                                   HeightRequest = Device.OnPlatform(15, 35, 35),
-                                   WidthRequest = Device.OnPlatform(70, 70, 70)
+                                   Style = BeginApplication.Styles.ListViewItemButton
                                };
             buttonRemove.Clicked += RemoveEventHandler;
 
