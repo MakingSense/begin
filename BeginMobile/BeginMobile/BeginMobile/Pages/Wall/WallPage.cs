@@ -1,9 +1,11 @@
 ﻿using BeginMobile.Interfaces;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
+using BeginMobile.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -33,10 +35,14 @@ namespace BeginMobile.Pages.Wall
 
         private ActivityIndicator _activityIndicatorLoading;
 
+        private ImageSource _imageSourceWallByDefault;
+
         public WallPage(string title, string iconImage)
             : base(title, iconImage)
         {
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+
+            LoadDeafultImage();
 
             _areLastItems = false;
 
@@ -97,7 +103,7 @@ namespace BeginMobile.Pages.Wall
             };
 
             _listViewWall.HasUnevenRows = true;
-            _listViewWall.ItemTemplate = new DataTemplate(() => new WallItemCell());
+            _listViewWall.ItemTemplate = new DataTemplate(() => new WallItemCell(_imageSourceWallByDefault));
             _listViewWall.ItemsSource = _listWall;
             _listViewWall.ItemSelected += async (sender, e) =>
             {
@@ -198,6 +204,17 @@ namespace BeginMobile.Pages.Wall
 
                 _isLoading = false;
             }
+        }
+
+        public async void LoadDeafultImage()
+        {
+            #if __ANDROID__
+                        var imageArray = await ImageResizer.GetResizeImage(BeginApplication.Styles.DefaultWallIcon);
+                        this._imageSourceWallByDefault = ImageSource.FromStream(() => new MemoryStream(imageArray));
+            #endif
+            #if __IOS__
+            this._imageSourceWallByDefault = BeginApplication.Styles.DefaultWallIcon;
+            #endif
         }
 
         private BeginWallViewModel GetBeginWallViewModel(BeginMobile.Services.DTO.Wall wallItem)

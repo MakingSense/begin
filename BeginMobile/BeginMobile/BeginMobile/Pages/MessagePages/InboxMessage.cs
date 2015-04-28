@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,6 +10,7 @@ using BeginMobile.Services.Models;
 using BeginMobile.Utils;
 using Xamarin.Forms;
 using BeginMobile.Interfaces;
+using System.IO;
 
 namespace BeginMobile.Pages.MessagePages
 {
@@ -31,11 +33,16 @@ namespace BeginMobile.Pages.MessagePages
         private static string _name;
         private static int _limit = DefaultLimit;
         private static bool _areLastItems;
+        private ImageSource _imageSourceMailByDefault;
+
 
         public InboxMessage()
         {
             _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
+
+            LoadDeafultImage();
             CallServiceApi();
+
             Title = AppResources.MessageInboxTitle;
             IsInbox = true;
             _areLastItems = false;
@@ -52,7 +59,7 @@ namespace BeginMobile.Pages.MessagePages
 
             _listViewMessages = new ListView
                                 {
-                                    ItemTemplate = new DataTemplate(() => new ProfileMessagesItem()),
+                                    ItemTemplate = new DataTemplate(() => new ProfileMessagesItem(_imageSourceMailByDefault)),
                                     HasUnevenRows = true,
                                     ClassId = "InboxMessageId",
                                 };
@@ -330,6 +337,22 @@ namespace BeginMobile.Pages.MessagePages
             limit = limitSelectedIndex == -1 || limitSelectedIndex == limitLastIndex
                 ? null
                 : _searchView.Limit.Items[limitSelectedIndex];
+        }
+
+        public async void LoadDeafultImage()
+        {
+            #if __ANDROID__
+            var imageArray = await ImageResizer.GetResizeImage(BeginApplication.Styles.MessageIcon);
+            this._imageSourceMailByDefault = ImageSource.FromStream(() => new MemoryStream(imageArray));
+            #endif
+            #if __IOS__
+            this._imageSourceMailByDefault = BeginApplication.Styles.MessageIcon;
+            #endif
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
         }
 
         public void Dispose()

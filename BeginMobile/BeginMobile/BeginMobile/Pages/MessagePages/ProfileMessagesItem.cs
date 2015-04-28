@@ -2,17 +2,18 @@
 using BeginMobile.LocalizeResources.Resources;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
+using System.IO;
 
 namespace BeginMobile.Pages.MessagePages
 {
     public class ProfileMessagesItem : ViewCell
     {
-        public ProfileMessagesItem()
+        public ProfileMessagesItem(ImageSource imageSourceMail)
         {
             var circleShopImage = new CircleImage
                                   {
                                       Style = BeginApplication.Styles.CircleImageCommon,
-                                      Source = BeginApplication.Styles.MessageIcon
+                                      Source = imageSourceMail
                                   };
 
             var labelSender = new Label

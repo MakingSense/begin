@@ -1,8 +1,10 @@
 ﻿using BeginMobile.Interfaces;
 using BeginMobile.Pages.GroupPages;
 using BeginMobile.Services.DTO;
+using BeginMobile.Utils;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -16,11 +18,14 @@ namespace BeginMobile.Pages.Profile
         private Grid _gridMain;
         private ObservableCollection<Group> _groups;
         private List<Group> _defaultGroups = new List<Group>();
+        private ImageSource _imageSourceGroupByDefault;
 
         public Groups()
         {
             Title = "Groups";
             var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+
+            LoadDeafultImage();
 
             _gridMain = new Grid()
             {
@@ -48,7 +53,7 @@ namespace BeginMobile.Pages.Profile
 
             _listViewGroup = new ListView
             {
-                ItemTemplate = new DataTemplate(() => new ProfileGroupItemCell()),
+                ItemTemplate = new DataTemplate(() => new ProfileGroupItemCell(_imageSourceGroupByDefault)),
                 ItemsSource = _groups,
                 HasUnevenRows = true
             };
@@ -85,6 +90,17 @@ namespace BeginMobile.Pages.Profile
 
             //Content = new ScrollView { Content = _stackLayoutMain };
             Content = _gridMain;
+        }
+
+        public async void LoadDeafultImage()
+        {
+            #if __ANDROID__
+                        var imageArray = await ImageResizer.GetResizeImage(BeginApplication.Styles.DefaultGroupIcon);
+                        this._imageSourceGroupByDefault = ImageSource.FromStream(() => new MemoryStream(imageArray));
+            #endif
+            #if __IOS__
+                                    this._imageSourceGroupByDefault = BeginApplication.Styles.DefaultGroupIcon;
+            #endif
         }
 
         protected override void OnDisappearing()

@@ -9,6 +9,7 @@ using BeginMobile.Services.Models;
 using BeginMobile.Utils;
 using Xamarin.Forms;
 using BeginMobile.Interfaces;
+using System.IO;
 
 namespace BeginMobile.Pages.MessagePages
 {
@@ -32,6 +33,8 @@ namespace BeginMobile.Pages.MessagePages
         private static string _name;
         private static int _limit = DefaultLimit;
         private static bool _areLastItems;
+        private ImageSource _imageSourceMailByDefault;
+
 
         public SentMessage()
         {
@@ -40,6 +43,7 @@ namespace BeginMobile.Pages.MessagePages
             InboxMessage.IsInbox = false;
             _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
 
+            LoadDeafultImage();
             CallServiceApi();
             _searchView = new SearchView {SearchBar = {Placeholder = AppResources.PlaceholderFilterBySubjectOrContent}};
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
@@ -47,7 +51,7 @@ namespace BeginMobile.Pages.MessagePages
             MessagingSubscriptions();
             _listViewMessages = new ListView
                                 {
-                                    ItemTemplate = new DataTemplate(typeof (ProfileMessagesItem)),
+                                    ItemTemplate = new DataTemplate(() => new ProfileMessagesItem(_imageSourceMailByDefault)),
                                     HasUnevenRows = true
                                 };
 
@@ -313,6 +317,16 @@ namespace BeginMobile.Pages.MessagePages
                 : _searchView.Limit.Items[limitSelectedIndex];
         }
 
+        public async void LoadDeafultImage()
+        {
+            #if __ANDROID__
+                        var imageArray = await ImageResizer.GetResizeImage(BeginApplication.Styles.MessageIcon);
+                        this._imageSourceMailByDefault = ImageSource.FromStream(() => new MemoryStream(imageArray));
+            #endif
+            #if __IOS__
+                        this._imageSourceMailByDefault = BeginApplication.Styles.MessageIcon;
+            #endif
+        }
 
         public void Dispose()
         {

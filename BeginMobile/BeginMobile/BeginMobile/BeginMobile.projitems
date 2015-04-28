@@ -73,6 +73,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CheckBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions\StringExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FriendshipActions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\ImageResizer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\LinkButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\NotificationActions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SearchView.cs" />

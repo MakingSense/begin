@@ -5,12 +5,12 @@ namespace BeginMobile.Pages.GroupPages
 {
     public class ProfileGroupItemCell : ViewCell
     {
-        public ProfileGroupItemCell()
+        public ProfileGroupItemCell(ImageSource imageSourceDefault)
         {
             var circleGroupImage = new CircleImage
                                    {
                                        Style = BeginApplication.Styles.CircleImageCommon,
-                                       Source = BeginApplication.Styles.DefaultGroupIcon
+                                       Source = imageSourceDefault
                                        //TODO:change for group avatar if this exist
                                    };
 

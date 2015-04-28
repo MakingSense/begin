@@ -7,6 +7,7 @@ using BeginMobile.Utils;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace BeginMobile.Pages.GroupPages
 {
@@ -25,12 +26,14 @@ namespace BeginMobile.Pages.GroupPages
         private const string DefaultLimit = "10";
 
         private ObservableCollection<Group> _groupInformation;
+        private ImageSource _imageSourceGroupByDefault;
 
         private readonly LoginUser _currentUser;
         public GroupListPage(string title, string iconImg): base(title, iconImg)
         {
             _searchView = new SearchView();
             _searchView.SetPlaceholder("Search by group name");
+            LoadDeafultImage();
 
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             Init();
@@ -60,7 +63,7 @@ namespace BeginMobile.Pages.GroupPages
 
             _listViewGroup = new ListView
             {
-                ItemTemplate = new DataTemplate(typeof(ProfileGroupItemCell)),
+                ItemTemplate = new DataTemplate(() => new ProfileGroupItemCell(_imageSourceGroupByDefault)),
                 ItemsSource = _groupInformation,
                 HasUnevenRows = true
             };
@@ -199,5 +202,16 @@ namespace BeginMobile.Pages.GroupPages
         }
 
         #endregion
+
+        public async void LoadDeafultImage()
+        {
+            #if __ANDROID__
+            var imageArray = await ImageResizer.GetResizeImage(BeginApplication.Styles.DefaultGroupIcon);
+                        this._imageSourceGroupByDefault = ImageSource.FromStream(() => new MemoryStream(imageArray));
+            #endif
+            #if __IOS__
+                        this._imageSourceGroupByDefault = BeginApplication.Styles.DefaultGroupIcon;
+            #endif
+        }
     }
 }

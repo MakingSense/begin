@@ -131,14 +131,15 @@
     <AndroidResource Include="Resources\Drawable\groups.png" />
     <AndroidResource Include="Resources\Drawable\ievents.png" />
     <AndroidResource Include="Resources\Drawable\ifeed.png" />
-    <AndroidResource Include="Resources\Drawable\ifeeds.png" />
-    <AndroidResource Include="Resources\Drawable\igroup.png" />
+    <EmbeddedResource Include="Resources\Drawable\ifeeds.png" />
+    <EmbeddedResource Include="Resources\Drawable\igroup.png" />
     <AndroidResource Include="Resources\Drawable\iphone_message.png" />
     <AndroidResource Include="Resources\Drawable\logout.png" />
-    <AndroidResource Include="Resources\Drawable\mail.png" />
+    <EmbeddedResource Include="Resources\Drawable\mail.png" />
     <AndroidResource Include="Resources\Drawable\privacy.png" />
     <AndroidResource Include="Resources\Drawable\shop.png" />
     <AndroidResource Include="Resources\Drawable\terms_conditions.png" />
+    <EmbeddedResource Include="Resources\Drawable\netcomputers.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">

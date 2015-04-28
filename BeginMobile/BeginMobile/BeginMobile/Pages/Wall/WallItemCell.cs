@@ -6,9 +6,9 @@ namespace BeginMobile.Pages.Wall
     public class WallItemCell : ViewCell
     {
 
-        public WallItemCell()
+        public WallItemCell(ImageSource imageSourceDefault)
         {
-            var userImage = BeginApplication.Styles.DefaultWallIcon;
+            //var userImage = BeginApplication.Styles.DefaultWallIcon;
             var starImage = BeginApplication.Styles.RatinGoffIcon;
             var labelTitle = new Label
                              {
@@ -63,10 +63,10 @@ namespace BeginMobile.Pages.Wall
             gridDetails.Children.Add(labelDescription, 0, 3);
             gridDetails.Children.Add(labelDate, 0, 4);
 
-            var circleImageShop = new CircleImage
+            var circleImageWall = new CircleImage
                                   {
                                       Style = BeginApplication.Styles.CircleImageCommon,
-                                      Source = userImage
+                                      Source = imageSourceDefault
                                   };
 
             var imageStar = new Image
@@ -83,7 +83,7 @@ namespace BeginMobile.Pages.Wall
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       Children =
                                       {
-                                          circleImageShop,
+                                          circleImageWall,
                                           gridDetails,
                                           imageStar
                                       }
