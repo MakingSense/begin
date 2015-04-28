@@ -82,7 +82,7 @@ namespace BeginMobile.Pages.Profile
 
             var grid = new Grid
                               {
-                                  Padding = BeginApplication.Styles.ListDetailThickness,
+                                  Padding = BeginApplication.Styles.GridOfListView,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =

@@ -94,7 +94,7 @@ namespace BeginMobile.Pages.ContactPages
 
             _gridLayoutMain = new Grid()
             {
-                Padding = new Thickness(10, 0, 10, 0),
+                Padding = BeginApplication.Styles.LayoutThickness,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 RowDefinitions =

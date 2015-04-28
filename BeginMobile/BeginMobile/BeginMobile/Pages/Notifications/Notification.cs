@@ -277,25 +277,18 @@ namespace BeginMobile.Pages.Notifications
                                          }, 1, 0);
 
             var mainLayout = new StackLayout
-                             {
-                                 Spacing = 2,
+                             {                                 
                                  Padding = BeginApplication.Styles.LayoutThickness,
-                                 VerticalOptions = LayoutOptions.Start,
-                                 Orientation = StackOrientation.Vertical
-                             };
-
-            mainLayout.Children.Add(new StackLayout
-                                    {
-                                        VerticalOptions = LayoutOptions.FillAndExpand,
-                                        Orientation = StackOrientation.Vertical,
-                                        Children =
+                                 VerticalOptions = LayoutOptions.FillAndExpand,
+                                 HorizontalOptions = LayoutOptions.FillAndExpand,
+                                 Children =
                                         {
                                             _searchView.Container,
                                             gridHeaderTitle,
                                             _listViewNotifications
                                         }
-                                    });
-
+                             };
+          
             Content = mainLayout;
         }
         private void LoadStatusOptionsPicker()

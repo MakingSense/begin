@@ -12,15 +12,16 @@ namespace BeginMobile.Pages.Profile
             Title = AppResources.LabelProfileMeTitle;
             var userAvatar = BeginApplication.Styles.DefaultProfileUserIconName;
 
-            if (user != null)
-            {
-                var userAvatarUrl = user.Avatar;
+            //if (user != null)
+            //{
+            //    var userAvatarUrl = user.Avatar;
 
-                if (!string.IsNullOrEmpty(userAvatarUrl))
-                {
-                    userAvatar = userAvatarUrl;
-                }
-            }
+            //    if (!string.IsNullOrEmpty(userAvatarUrl))
+            //    {
+            //        userAvatar = userAvatarUrl;
+            //    }
+            //}
+            
             //Toolbar menu item
             var toolBarItemMyActivity = new ToolbarItem
                                  {
@@ -89,7 +90,7 @@ namespace BeginMobile.Pages.Profile
             //Content
             var circleProfileImage = new CircleImage
             {
-                Style = BeginApplication.Styles.CircleImageCommon,
+                Style = BeginApplication.Styles.CircleImageForDetails,
                 Source = userAvatar
             };
 

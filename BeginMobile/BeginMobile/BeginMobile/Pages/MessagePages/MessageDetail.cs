@@ -32,13 +32,15 @@ namespace BeginMobile.Pages.MessagePages
                                        VerticalOptions = LayoutOptions.Start,
                                        ItemsSource = listDataMessages,
                                        ItemTemplate = new DataTemplate(typeof (MessageTemplate)),
-                                       RowHeight = 120,
+                                       RowHeight = 120
                                    };
             listViewMessages.ItemSelected += ItemSelectedEventHandler;
 
             var image = new CircleImage
                         {
                             Style = BeginApplication.Styles.CircleImageCommon,
+                            HeightRequest = Device.Idiom == TargetIdiom.Phone ? Device.OnPlatform(50, 50, 50) : Device.OnPlatform(70, 70, 70),
+                            WidthRequest = Device.Idiom == TargetIdiom.Phone ? Device.OnPlatform(50, 50, 50) : Device.OnPlatform(70, 70, 70),
                             Source = MessageViewModel.Sender.Avatar ?? BeginApplication.Styles.MessageIcon
                         };
             var labelThisUserNameSurname = new Label
@@ -106,23 +108,27 @@ namespace BeginMobile.Pages.MessagePages
             {
                 gridComponents.Children.Add(buttonMarkUsUnread, 0, 0);                               
             }
-            gridComponents.Children.Add(listViewMessages, 0, 1);
-            gridComponents.Children.Add(gridReply, 0, 2);
-            gridComponents.Children.Add(_editorReplyContent, 0, 3);
-            gridComponents.Children.Add(buttonReply, 0, 4);
-
+            gridComponents.Children.Add(listViewMessages, 0, 1);            
+            if (!SentMessage.IsSent)
+            {
+                gridComponents.Children.Add(gridReply, 0, 2);
+                gridComponents.Children.Add(_editorReplyContent, 0, 3);
+                gridComponents.Children.Add(buttonReply, 0, 4);
+            }          
+      
             Content = gridComponents;
         }
 
         public async void ButtonMarkUsUnreadEventHandler(object sender, EventArgs e)
         {
+            var button = sender as Button;
+            if (button != null) button.IsVisible = false;
             await
                 BeginApplication.ProfileServices.MarkAsUnreadByThread(_currentUser.AuthToken, MessageViewModel.ThreadId);
             if (InboxMessage.IsInbox)
             {
-                await Navigation.PopAsync();
                 await InboxMessage.CallServiceApi();
-               
+
             } //TODO: Refactor this code to refresh the service call when user click on navigation back button 
         }
 

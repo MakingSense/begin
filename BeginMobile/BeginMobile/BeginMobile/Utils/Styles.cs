@@ -324,8 +324,8 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return Device.OnPlatform(new Thickness(20, 0, 20, 0), new Thickness(20, 0, 20, 0),
-                    new Thickness(20, 0, 20, 0));
+                return Device.OnPlatform(new Thickness(10, 0, 10, 0), new Thickness(10, 0, 10, 0),
+                    new Thickness(10, 0, 10, 0));
             }
         }
 
@@ -369,7 +369,7 @@ namespace BeginMobile.Utils
                                new Setter
                                {
                                    Property = Label.FontSizeProperty,
-                                   Value = Device.OnPlatform<double>(10, 16, 16)
+                                   Value = Device.OnPlatform<double>(16, 16, 16)
                                }
                            }
                        };
@@ -540,6 +540,17 @@ namespace BeginMobile.Utils
                 return style;
             }
         }
+
+
+        public Thickness GridOfListView
+        {
+            get
+            {
+                return Device.OnPlatform(new Thickness(10, 5, 0, 5), new Thickness(10, 5, 0, 5),
+                    new Thickness(10, 5, 0, 5));
+            }
+        }
+
 #region Images Icons
         public Style CircleImageCommon
         {
@@ -548,6 +559,44 @@ namespace BeginMobile.Utils
                 var style = new Style(typeof (CircleImage))
                             {
                                 Setters =
+                                {
+                                    new Setter {Property = Image.AspectProperty, Value = Aspect.AspectFit},
+                                    new Setter {Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Start},
+                                    new Setter {Property = View.VerticalOptionsProperty, Value = LayoutOptions.Start},
+                                    new Setter
+                                    {
+                                        Property = VisualElement.HeightRequestProperty,
+                                        Value = Device.Idiom == TargetIdiom.Phone? Device.OnPlatform(40, 80, 70):Device.OnPlatform(100, 110, 70)
+                                    },
+                                    new Setter
+                                    {
+                                        Property = VisualElement.WidthRequestProperty,
+                                        Value = Device.Idiom == TargetIdiom.Phone? Device.OnPlatform(40, 80, 70):Device.OnPlatform(100, 110, 70)
+                                    },
+                                    new Setter
+                                    {
+                                        Property = CircleImage.BorderColorProperty,
+                                        Value = Device.OnPlatform( Color.Silver, Color.Silver,  Color.Silver)
+                                    },
+                                    new Setter
+                                    {
+                                        Property = CircleImage.BorderThicknessProperty,
+                                        Value = Device.OnPlatform(2, 3, 3)
+                                    }
+            
+                                }
+                            };
+
+                return style;
+            }
+        }
+        public Style CircleImageForDetails
+        {
+            get
+            {
+                var style = new Style(typeof(CircleImage))
+                {
+                    Setters =
                                 {
                                     new Setter {Property = Image.AspectProperty, Value = Aspect.AspectFit},
                                     new Setter {Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center},
@@ -574,7 +623,7 @@ namespace BeginMobile.Utils
                                     }
             
                                 }
-                            };
+                };
 
                 return style;
             }

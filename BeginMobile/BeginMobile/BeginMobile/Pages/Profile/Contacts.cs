@@ -103,7 +103,6 @@ namespace BeginMobile.Pages.Profile
 
             Content = new StackLayout
                       {
-                          Spacing = 2,
                           VerticalOptions = LayoutOptions.Start,
                           Children =
                           {

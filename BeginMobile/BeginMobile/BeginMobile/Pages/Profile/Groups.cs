@@ -24,14 +24,16 @@ namespace BeginMobile.Pages.Profile
 
             _gridMain = new Grid()
             {
-                RowSpacing = 2,
+                Padding = BeginApplication.Styles.LayoutThickness,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+               HorizontalOptions = LayoutOptions.FillAndExpand,
                 RowDefinitions =
                 {
                     new RowDefinition(){Height = GridLength.Auto}
                 }
             };
 
-            Content = _gridMain;
+            //Content = _gridMain;
 
             Init(currentUser);
         }
@@ -66,7 +68,11 @@ namespace BeginMobile.Pages.Profile
                 ((ListView)sender).SelectedItem = null;
             };
 
-            var relativeLayout = new RelativeLayout();
+            var relativeLayout = new RelativeLayout
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+            };
             relativeLayout.Children.Add(_listViewGroup,
                 Constraint.Constant(0),
                 Constraint.Constant(0),

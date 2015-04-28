@@ -28,15 +28,11 @@ namespace BeginMobile.Pages.Profile
 
             var imageContact = new CircleImage
                                {
-                                   Style = BeginApplication.Styles.CircleImageCommon,
+                                   Style = BeginApplication.Styles.CircleImageForDetails,
                                    Source = BeginApplication.Styles.DefaultContactIcon,
                                };
 
-            var gridImage = new Grid
-                            {
-                                //HorizontalOptions = LayoutOptions.FillAndExpand,
-                                //VerticalOptions = LayoutOptions.FillAndExpand
-                            };
+            var gridImage = new Grid();
 
             var stackLayoutLinesRight = new StackLayout
                                         {
@@ -219,7 +215,7 @@ namespace BeginMobile.Pages.Profile
             
             var gridComponents = new Grid
                                  {
-                                    // VerticalOptions = LayoutOptions.FillAndExpand,
+                                     Padding = BeginApplication.Styles.GridOfListView,
                                      HorizontalOptions = LayoutOptions.Center,
                                      RowDefinitions =
                                      {
@@ -250,7 +246,6 @@ namespace BeginMobile.Pages.Profile
 
             Content = new StackLayout
                       {
-                          Padding = BeginApplication.Styles.GridPadding,
                           HorizontalOptions = LayoutOptions.CenterAndExpand,
                           Orientation = StackOrientation.Vertical,
                           Children =

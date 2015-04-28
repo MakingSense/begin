@@ -43,7 +43,7 @@ namespace BeginMobile.Pages.Wall
 
             var gridDetails = new Grid
                               {
-                                  Padding = new Thickness(10, 5, 10, 5),
+                                  Padding = BeginApplication.Styles.GridOfListView,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =
                                   {

@@ -14,6 +14,8 @@ namespace BeginMobile.Pages.MessagePages
 {
     public class SentMessage : BaseContentPage, IDisposable
     {
+
+        public static bool IsSent { get; set; }
         private static LoginUser _currentUser;
         private static ListView _listViewMessages;
         private readonly SearchView _searchView;
@@ -34,6 +36,7 @@ namespace BeginMobile.Pages.MessagePages
         public SentMessage()
         {
             Title = AppResources.MessageSentTitle;
+            IsSent = true;
             InboxMessage.IsInbox = false;
             _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
 

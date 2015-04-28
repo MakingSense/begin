@@ -82,17 +82,16 @@ namespace BeginMobile.Pages.GroupPages
 
             var mainLayout = new StackLayout
             {
-                Padding = 10,
-                Spacing = 2,
-                VerticalOptions = LayoutOptions.Start,
-                Orientation = StackOrientation.Vertical
+                Padding = BeginApplication.Styles.LayoutThickness,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Children =
+                {
+                    _searchView.Container,
+                    _listViewGroup
+                    
+                }
             };
-
-            mainLayout.Children.Add(_searchView.Container);
-            mainLayout.Children.Add(new ScrollView
-            {
-                Content = _listViewGroup
-            });
 
             Content = mainLayout;
         }

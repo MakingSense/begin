@@ -66,23 +66,23 @@ namespace BeginMobile.Pages.Profile
 
             listViewActivities.HasUnevenRows = true;
 
-            var stackLayout = new StackLayout
-                              {
-                                  Spacing = 2,
-                                  VerticalOptions = LayoutOptions.FillAndExpand,
-                                  Orientation = StackOrientation.Vertical
-                              };
 
-            stackLayout.Children.Add(listViewActivities);
-
-            var mainStackLayout = new StackLayout
+            var gridMainComponents = new Grid
+            {
+                Padding = BeginApplication.Styles.LayoutThickness,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
                                   {
-                                      Spacing = 2,
-                                      Padding = BeginApplication.Styles.LayoutThickness
-                                  };
+                                      new RowDefinition {Height = GridLength.Auto},
+                                      
+                                  }
+            };
 
-            mainStackLayout.Children.Add(stackLayout);
-            Content = mainStackLayout;
+            gridMainComponents.Children.Add(listViewActivities, 0, 0);
+
+
+            Content = gridMainComponents;
         }
 
         protected override void OnDisappearing()

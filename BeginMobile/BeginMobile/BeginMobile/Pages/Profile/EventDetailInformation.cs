@@ -28,7 +28,7 @@ namespace BeginMobile.Pages.Profile
 
             var imageEvent = new CircleImage
             {
-                Style = BeginApplication.Styles.CircleImageCommon,
+                Style = BeginApplication.Styles.CircleImageForDetails,
                 Source = BeginApplication.Styles.DefaultEventIcon//TODO:change for event avatar if this exist
             };
 

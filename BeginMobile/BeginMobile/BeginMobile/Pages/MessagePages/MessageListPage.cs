@@ -73,7 +73,8 @@ namespace BeginMobile.Pages.MessagePages
                                                                    using (
                                                                        var contentPageInboxMessage = new InboxMessage())
                                                                    {
-                                                                       //await InboxMessage.CallServiceApi();
+                                                                       InboxMessage.IsInbox = true;
+                                                                       SentMessage.IsSent = false;
                                                                        await
                                                                            Navigation.PushAsync(contentPageInboxMessage);
                                                                        break;
@@ -82,6 +83,8 @@ namespace BeginMobile.Pages.MessagePages
                                                                    using (var contentPageSentMessage = new SentMessage()
                                                                        )
                                                                    {
+                                                                       SentMessage.IsSent = true;
+                                                                       InboxMessage.IsInbox = false;
                                                                        await
                                                                            Navigation.PushAsync(contentPageSentMessage);
                                                                        break;

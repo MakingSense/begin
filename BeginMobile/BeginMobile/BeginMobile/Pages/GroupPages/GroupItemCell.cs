@@ -94,8 +94,7 @@ namespace BeginMobile.Pages.GroupPages
 
             var layoutView = new StackLayout
                          {
-                             Spacing = 2,
-                             Padding = BeginApplication.Styles.LayoutThickness,
+                             Padding = BeginApplication.Styles.GridOfListView,
                              Orientation = StackOrientation.Horizontal,
                              HorizontalOptions = LayoutOptions.FillAndExpand,
                              Children = { circleGroupImage, stackLayoutCenter, imageArrow }

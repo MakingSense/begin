@@ -77,7 +77,7 @@ namespace BeginMobile.Pages.MessagePages
 
             var gridDetails = new Grid
                               {
-                                  Padding = new Thickness(10, 5, 10, 5),
+                                  Padding = BeginApplication.Styles.GridOfListView,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =
@@ -91,17 +91,16 @@ namespace BeginMobile.Pages.MessagePages
                                   }
                               };
 
-            gridDetails.Children.Add(labelMarkedAs, 0, 0);
-            gridDetails.Children.Add(labelSender, 0, 1);
+            gridDetails.Children.Add(labelSender, 0, 0);
             //gridDetails.Children.Add(labelMarkedAs, 1, 1);
-            gridDetails.Children.Add(labelSubject, 0, 2);
-            gridDetails.Children.Add(labelContent, 0, 3);
-            gridDetails.Children.Add(labelCreate, 0, 4);
+            gridDetails.Children.Add(labelSubject, 0, 1);
+            gridDetails.Children.Add(labelContent, 0, 2);
+            gridDetails.Children.Add(labelCreate, 0, 3);
+            gridDetails.Children.Add(labelMarkedAs, 0, 4);
             gridDetails.Children.Add(buttonRemove, 0, 5);
 
             var stackLayoutView = new StackLayout
                                   {
-                                      Padding = BeginApplication.Styles.LayoutThickness,
                                       Orientation = StackOrientation.Horizontal,
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       VerticalOptions = LayoutOptions.FillAndExpand,
