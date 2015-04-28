@@ -251,16 +251,17 @@ namespace BeginMobile.Pages.MessagePages
                 return;
             }
             var item = (MessageViewModel) eventArgs.SelectedItem;
-            if (item.ThreadUnRead.Equals(AppResources.New))
-            {
-                await BeginApplication.ProfileServices.MarkAsReadByThread(_currentUser.AuthToken, item.ThreadId);//Marked as read 
-                await CallServiceApi();
-            }
+           
             var messageDetail = new MessageDetail(item)
                                 {
                                     BindingContext = item
                                 };
             await Navigation.PushAsync(messageDetail);
+            if (item.ThreadUnRead.Equals(AppResources.New))
+            {
+                await BeginApplication.ProfileServices.MarkAsReadByThread(_currentUser.AuthToken, item.ThreadId);//Marked as read 
+                await CallServiceApi();
+            }
             ((ListView) sender).SelectedItem = null;
         }
 
