@@ -355,8 +355,9 @@ namespace BeginMobile.Services.Interfaces
                     }
                 }).ConfigureAwait(false);
 
-                if (!response.IsSuccessStatusCode) return result;
-//log status code error
+                if (response.IsSuccessStatusCode) return result;
+
+                //log status code error
                 _log.ErrorFormat("Url '{0}' not working: '{1}' : '{2}'", url, response.StatusCode,
                     response.ReasonPhrase);
                 Debug.WriteLine("Url '{0}' not working: '{1}' : '{2}'", url, response.StatusCode,
