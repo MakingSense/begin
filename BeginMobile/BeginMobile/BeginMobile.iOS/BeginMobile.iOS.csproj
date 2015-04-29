@@ -106,6 +106,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="Resources\about_us.png" />
+    <BundleResource Include="Resources\activity.png" />
+    <BundleResource Include="Resources\call_center.png" />
     <BundleResource Include="Resources\Default-568h%402x.png" />
     <BundleResource Include="Resources\Default-Portrait.png" />
     <BundleResource Include="Resources\Default-Portrait%402x.png" />
@@ -165,9 +168,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="Resources\ievents.png" />
+    <BundleResource Include="Resources\igroup.png" />
+    <BundleResource Include="Resources\iphone_message.png" />
+    <BundleResource Include="Resources\logout.png" />
+    <BundleResource Include="Resources\mail.png" />
     <BundleResource Include="Resources\padlock.png" />
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="Resources\shop.png" />
+    <BundleResource Include="Resources\terms_conditions.png" />
     <BundleResource Include="Resources\userdefault.png" />
   </ItemGroup>
   <ItemGroup>
@@ -252,19 +262,7 @@
     <BundleResource Include="Resources\a_event.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\about_us.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\activity.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\call_center.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\groups.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\ievents.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ifeed.png" />
@@ -273,25 +271,7 @@
     <BundleResource Include="Resources\ifeeds.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\igroup.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\iphone_message.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\shop.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\terms_conditions.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\privacy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\mail.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\logout.png" />
   </ItemGroup>
   <Import Project="..\BeginMobile\BeginMobile.projitems" Label="Shared" Condition="Exists('..\BeginMobile\BeginMobile.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
