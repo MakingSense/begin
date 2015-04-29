@@ -309,7 +309,8 @@ namespace BeginMobile.Services.Interfaces
         }
 
         //use PostAsync with FormUrlEncodedContent object
-        public async Task<T> PostAsync(FormUrlEncodedContent content, string addressSuffix, int timeout = PostAsyncTimeout)
+        public async Task<T> PostAsync(FormUrlEncodedContent content, string addressSuffix,
+            int timeout = PostAsyncTimeout)
         {
             return await PostAsync(null, content, addressSuffix, timeout);
         }
@@ -338,30 +339,30 @@ namespace BeginMobile.Services.Interfaces
                 var url = _subAddress + addressSuffix;
 
                 var response = await httpClient.PostAsync(url, content).ConfigureAwait(false);
-                if (response.IsSuccessStatusCode)
+
+                var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var result = await Task.Run(() =>
                 {
-                    var userJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var result = await Task.Run(() =>
+                    try
                     {
-                        try
-                        {
-                            return JsonConvert.DeserializeObject<T>(userJson);
-                        }
-                        catch (Exception exception)
-                        {
-                            _log.ErrorFormat("Exception at '{0}' message: '{1}'", url, exception);
-                            Debug.WriteLine("Exception at '{0}' message: '{1}'", url, exception);
-                            return null;
-                        }
-                    }).ConfigureAwait(false);
+                        return JsonConvert.DeserializeObject<T>(userJson);
+                    }
+                    catch (Exception exception)
+                    {
+                        _log.ErrorFormat("Exception at '{0}' message: '{1}'", url, exception);
+                        Debug.WriteLine("Exception at '{0}' message: '{1}'", url, exception);
+                        return null;
+                    }
+                }).ConfigureAwait(false);
 
-                    return result;
-                }
+                if (!response.IsSuccessStatusCode) return result;
+//log status code error
+                _log.ErrorFormat("Url '{0}' not working: '{1}' : '{2}'", url, response.StatusCode,
+                    response.ReasonPhrase);
+                Debug.WriteLine("Url '{0}' not working: '{1}' : '{2}'", url, response.StatusCode,
+                    response.ReasonPhrase);
 
-                //log status code error
-                _log.ErrorFormat("Url '{0}' not working: '{1}' : '{2}'", url, response.StatusCode, response.ReasonPhrase);
-                Debug.WriteLine("Url '{0}' not working: '{1}' : '{2}'", url, response.StatusCode, response.ReasonPhrase);
-                return null;
+                return result;
             }
         }
 
