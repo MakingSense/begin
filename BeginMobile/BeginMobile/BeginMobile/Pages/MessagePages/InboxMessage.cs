@@ -342,8 +342,9 @@ namespace BeginMobile.Pages.MessagePages
         public async void LoadDeafultImage()
         {
             #if __ANDROID__
-            var imageArray = await ImageResizer.GetResizeImage(BeginApplication.Styles.MessageIcon);
-            this._imageSourceMailByDefault = ImageSource.FromStream(() => new MemoryStream(imageArray));
+            //var imageArray = await ImageResizer.GetResizeImage(BeginApplication.Styles.MessageIcon);
+            //this._imageSourceMailByDefault = ImageSource.FromStream(() => new MemoryStream(imageArray));
+            this._imageSourceMailByDefault = BeginApplication.Styles.MessageIcon;
             #endif
             #if __IOS__
             this._imageSourceMailByDefault = BeginApplication.Styles.MessageIcon;

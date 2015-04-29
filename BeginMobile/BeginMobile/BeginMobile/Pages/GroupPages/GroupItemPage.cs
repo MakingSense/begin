@@ -33,8 +33,7 @@ namespace BeginMobile.Pages.GroupPages
 
             ImageSource imageResourceGroup = Device.OS == TargetPlatform.iOS
                 ? BeginApplication.Styles.DefaultGroupIcon
-                : ImageSource.FromResource("BeginMobile.Android.Resources.Drawable." +
-                                           BeginApplication.Styles.DefaultGroupIcon);
+                : BeginApplication.Styles.DefaultGroupIcon;
 
                         var circleGroupImage = new CircleImage
                                    {

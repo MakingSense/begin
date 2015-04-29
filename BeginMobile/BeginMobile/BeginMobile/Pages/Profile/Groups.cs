@@ -95,8 +95,9 @@ namespace BeginMobile.Pages.Profile
         public async void LoadDeafultImage()
         {
             #if __ANDROID__
-                        var imageArray = await ImageResizer.GetResizeImage(BeginApplication.Styles.DefaultGroupIcon);
-                        this._imageSourceGroupByDefault = ImageSource.FromStream(() => new MemoryStream(imageArray));
+                        //var imageArray = await ImageResizer.GetResizeImage(BeginApplication.Styles.DefaultGroupIcon);
+                        //this._imageSourceGroupByDefault = ImageSource.FromStream(() => new MemoryStream(imageArray));
+            this._imageSourceGroupByDefault = BeginApplication.Styles.DefaultGroupIcon;
             #endif
             #if __IOS__
                                     this._imageSourceGroupByDefault = BeginApplication.Styles.DefaultGroupIcon;
