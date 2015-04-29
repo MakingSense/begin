@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.ServiceModel;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
@@ -72,11 +71,7 @@ namespace BeginMobile.Services.Utils
                 if (serviceError.HasError)
                 {
                     if (serviceError.Errors != null && serviceError.Errors.Any())
-                    {
-                        //var errorFormat = new AppContextError(DefaultTitle, 
-                        //    serviceError.Errors.Aggregate(string.Empty, (current, error) => current + (error.ErrorMessage + "\n")).Replace(oldValue,
-                        //    string.Empty), "Ok");
-
+                    {                        
                         var errorMessages = "";
                         foreach (var error in ErrorMessages.GetTranslatedErrors(serviceError.Errors))
                         {
@@ -92,11 +87,22 @@ namespace BeginMobile.Services.Utils
 
                     else if (!string.IsNullOrEmpty(serviceError.Error))
                     {
-                        var appContextError = new AppContextError(DefaultTitle,
-                            serviceError.Error.Replace(oldValue, string.Empty), "Ok");
-
-                        MessagingCenter.Send(appContextError, NamedMessage);
-                        MessagingCenter.Unsubscribe<AppContextError>(appContextError, NamedMessage);
+                        if (exception.GetType() == typeof (WebException))
+                        {
+                            var ex = exception as WebException;
+                            if (ex.Status.Equals(WebExceptionStatus.ConnectFailure))
+                            {
+                                var error = new AppContextError("Connection Error",
+                                    "Connect Failure (Connection timed out)".Replace(oldValue, string.Empty), "Ok");
+                                    //TODO:to resources
+                                MessagingCenter.Send(error, NamedMessage);
+                                MessagingCenter.Unsubscribe<AppContextError>(error, NamedMessage);
+                            }
+                        }
+                        else
+                        {
+                            _log.Error("Log Error in " + objectName + " - " + method + " - " + exception.Message);
+                        }                        
                     }
                 }
 
@@ -108,24 +114,18 @@ namespace BeginMobile.Services.Utils
                         var e = exception as WebException;
                         if (e.Status.Equals(WebExceptionStatus.ConnectFailure))
                         {
-                            var error = new AppContextError(DefaultTitle, "Connect Failure (Connection timed out)".Replace(oldValue, string.Empty), "Ok");//TODO:
+                            var error = new AppContextError("Connection Error", "Connect Failure (Connection timed out)".Replace(oldValue, string.Empty), "Ok");//TODO:
                             MessagingCenter.Send(error, NamedMessage);
                             MessagingCenter.Unsubscribe<AppContextError>(error, NamedMessage);
                         }
                     }
-                    
-                    //var error = new AppContextError(DefaultTitle, exception.Message.Replace(oldValue, string.Empty), "Ok");
-                    //MessagingCenter.Send(error, NamedMessage);
-                    //MessagingCenter.Unsubscribe<AppContextError>(error, NamedMessage);
+
                 }
             }
 
             else
             {
                 _log.Error("Log Error in "+objectName + " - " + method + " - " + exception.Message);
-                //var error = new AppContextError(DefaultTitle, "An Error has been happened in the Server".Replace(oldValue, string.Empty), "Ok");
-                //MessagingCenter.Send(error, NamedMessage);
-                //MessagingCenter.Unsubscribe<AppContextError>(error, NamedMessage);
             }
         }
     }
