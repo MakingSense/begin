@@ -15,7 +15,7 @@ namespace BeginMobile.Services.ManagerServices
         private const string SubAddress = "begin/api/v1/";
         private const string Identifier = "contacts";
         private const string IdentifierAux = "users";
-
+        private static readonly string ThisClassName = typeof(ContactManager).Name;
 
         private readonly GenericBaseClient<User> _contactClient =
             new GenericBaseClient<User>(BaseAddress, SubAddress);
@@ -42,7 +42,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetContacts", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -56,7 +56,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetContactById", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -78,7 +78,7 @@ namespace BeginMobile.Services.ManagerServices
                     }
                 };
 
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "SendRequest", exception, null, ExceptionLevel.Application);
                 return listError;
             }
         }
@@ -100,7 +100,7 @@ namespace BeginMobile.Services.ManagerServices
                     }
                 };
 
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "AcceptRequest", exception, null, ExceptionLevel.Application);
                 return listError;
             }
         }
@@ -122,7 +122,7 @@ namespace BeginMobile.Services.ManagerServices
                     }
                 };
 
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "RejectRequest", exception, null, ExceptionLevel.Application);
                 return listError;
             }
         }
@@ -144,7 +144,7 @@ namespace BeginMobile.Services.ManagerServices
                     }
                 };
 
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "RemoveFriendship", exception, null, ExceptionLevel.Application);
                 return listError;
             }
         }
@@ -175,7 +175,7 @@ namespace BeginMobile.Services.ManagerServices
                     Error = exception.Message,
                 };
 
-                AppContextError.Send(exception, error, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "CancelRequest", exception, error, ExceptionLevel.Application);
                 return error;
             }
         }
@@ -192,7 +192,7 @@ namespace BeginMobile.Services.ManagerServices
 
             catch (Exception exception)
             {
-                AppContextError.Send(exception, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetUserById", exception, ExceptionLevel.Application);
                 return null;
             }
         }

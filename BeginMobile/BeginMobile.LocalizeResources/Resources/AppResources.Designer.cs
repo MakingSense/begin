@@ -449,6 +449,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The notification doesnt exist.
+        /// </summary>
+        public static string ErrorCodeNotificationNoExists {
+            get {
+                return ResourceManager.GetString("ErrorCodeNotificationNoExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string ErrorMessageTitle {

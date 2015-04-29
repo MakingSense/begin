@@ -19,7 +19,7 @@ namespace BeginMobile.Services.ManagerServices
             new GenericBaseClient<ProfileEvent>(BaseAddress, SubAddress);
 
         private static Object _factLockEvent = new Object();
-
+        private static readonly string ThisClassName = typeof(EventManager).Name;
         public EventManager()
         {
         }
@@ -39,7 +39,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetEventsByParams", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -53,7 +53,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetEventById", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }

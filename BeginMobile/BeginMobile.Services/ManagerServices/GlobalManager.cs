@@ -20,6 +20,7 @@ namespace BeginMobile.Services.ManagerServices
 
         private readonly GenericBaseClient<GroupOptions> _loginGroupClient =
             new GenericBaseClient<GroupOptions>(BaseAddress, SubAddress);
+        private static readonly string ThisClassName = typeof(GroupManager).Name;
 
         public async Task<GlobalOptions> GetMeOptions()
         {
@@ -30,7 +31,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetMeOptions", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -44,7 +45,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetGroupOptions", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }

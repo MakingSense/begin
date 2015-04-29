@@ -246,6 +246,9 @@
   <data name="EntryUsernamePlaceholderMessage" xml:space="preserve">
     <value>Send To (Username or Friend's Name)</value>
   </data>
+  <data name="ErrorCodeNotificationNoExists" xml:space="preserve">
+    <value>The notification doesnt exist</value>
+  </data>
   <data name="ErrorMessageTitle" xml:space="preserve">
     <value>Error</value>
   </data>

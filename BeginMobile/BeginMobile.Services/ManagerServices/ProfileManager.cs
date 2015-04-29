@@ -27,9 +27,9 @@ namespace BeginMobile.Services.ManagerServices
 
         private readonly GenericBaseClient<ShopCategory> _shopCategoryClient =
     new GenericBaseClient<ShopCategory>(BaseAddress, SubAddress);
-        
 
 
+        private static readonly string ThisClassName = typeof(ProfileManager).Name;
         public ProfileManager()
         {
             _wallClient = new GenericBaseClient<Wall>(BaseAddress, SubAddress);
@@ -50,7 +50,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetProfileInformation", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -65,7 +65,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetProfileInformationDetail", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -80,7 +80,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetActivitiesInformation", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -95,7 +95,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetEventsInformation", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -110,7 +110,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetGroupsInformation", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -125,7 +125,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetContactsInformation", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -140,7 +140,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetShopInformation", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -170,7 +170,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetMessagesInformation", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -197,7 +197,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetWall", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -218,7 +218,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetCategories", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }

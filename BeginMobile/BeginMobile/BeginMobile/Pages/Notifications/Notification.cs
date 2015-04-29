@@ -203,7 +203,7 @@ namespace BeginMobile.Pages.Notifications
 
                     else
                     {
-                        await DisplayAlert("Info", "The messages does not exist. ", "Ok");
+                        await DisplayAlert("Error", "An Error has been happened in the Server.", "Ok");
                     }
 
                     

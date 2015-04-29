@@ -17,6 +17,7 @@ namespace BeginMobile.Services.ManagerServices
 
         private readonly GenericBaseClient<ProfileNotification> _notificationClient =
             new GenericBaseClient<ProfileNotification>(BaseAddress, SubAddress);
+        private static readonly string ThisClassName = typeof(NotificationManager).Name;
 
         public async Task<ProfileNotification> GetProfileNotificationByParams(
             string authToken,
@@ -31,7 +32,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetProfileNotificationByParams", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -51,7 +52,7 @@ namespace BeginMobile.Services.ManagerServices
                     Error = exception.Message
                 };
 
-                AppContextError.Send(exception, error, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "MarkAsRead", exception, error, ExceptionLevel.Application);
                 return error;
             }
         }
@@ -71,7 +72,7 @@ namespace BeginMobile.Services.ManagerServices
                     Error = exception.Message
                 };
 
-                AppContextError.Send(exception, error, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "MarkAsUnread", exception, error, ExceptionLevel.Application);
                 return error;
             }
         }
