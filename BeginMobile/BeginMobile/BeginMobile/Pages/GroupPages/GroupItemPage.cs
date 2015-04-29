@@ -31,10 +31,15 @@ namespace BeginMobile.Pages.GroupPages
 
             var groupDetail = GetGroupModel();
 
-            var circleGroupImage = new CircleImage
+            ImageSource imageResourceGroup = Device.OS == TargetPlatform.iOS
+                ? BeginApplication.Styles.DefaultGroupIcon
+                : ImageSource.FromResource("BeginMobile.Android.Resources.Drawable." +
+                                           BeginApplication.Styles.DefaultGroupIcon);
+
+                        var circleGroupImage = new CircleImage
                                    {
                                        Style = BeginApplication.Styles.CircleImageCommon,
-                                       Source = BeginApplication.Styles.DefaultGroupIcon//TODO:change for group avatar if this exist
+                                       Source = imageResourceGroup//TODO:change for group avatar if this exist
                                    };
 
             var gridMain = new Grid

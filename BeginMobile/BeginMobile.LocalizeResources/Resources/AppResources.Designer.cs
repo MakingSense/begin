@@ -71,11 +71,65 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string AlertConfirmTitle {
+            get {
+                return ResourceManager.GetString("AlertConfirmTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has been added at your contacts successfuly..
+        /// </summary>
+        public static string AlertContactFriendAddedSuccessfull {
+            get {
+                return ResourceManager.GetString("AlertContactFriendAddedSuccessfull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove {0} from contacts?.
+        /// </summary>
+        public static string AlertContactRemoveConfirmMessage {
+            get {
+                return ResourceManager.GetString("AlertContactRemoveConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has been removed from your contacts..
+        /// </summary>
+        public static string AlertContactRemoveMessage {
+            get {
+                return ResourceManager.GetString("AlertContactRemoveMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to send a request to {0} ?.
+        /// </summary>
+        public static string AlertContactRequestConfirm {
+            get {
+                return ResourceManager.GetString("AlertContactRequestConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Info.
         /// </summary>
         public static string AlertInfoTitle {
             get {
                 return ResourceManager.GetString("AlertInfoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string AlertNo {
+            get {
+                return ResourceManager.GetString("AlertNo", resourceCulture);
             }
         }
         
@@ -94,6 +148,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string AlertReTry {
             get {
                 return ResourceManager.GetString("AlertReTry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string AlertYes {
+            get {
+                return ResourceManager.GetString("AlertYes", resourceCulture);
             }
         }
         
@@ -382,6 +445,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         public static string EntryUsernamePlaceholderMessage {
             get {
                 return ResourceManager.GetString("EntryUsernamePlaceholderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The notification doesnt exist.
+        /// </summary>
+        public static string ErrorCodeNotificationNoExists {
+            get {
+                return ResourceManager.GetString("ErrorCodeNotificationNoExists", resourceCulture);
             }
         }
         

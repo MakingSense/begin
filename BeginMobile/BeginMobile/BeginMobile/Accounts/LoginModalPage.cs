@@ -2,6 +2,7 @@
 using BeginMobile.Pages;
 using BeginMobile.Services.Interfaces;
 using BeginMobile.Services.Utils;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BeginMobile.Accounts
@@ -16,6 +17,7 @@ namespace BeginMobile.Accounts
         public LoginModalPage(ILoginManager iloginManager)
         {
             const bool isLoadByLogin = true;
+            NavigationPage.SetHasNavigationBar(this, false);
 
             _contentPageLogin = new Login(iloginManager);
             _contentPageRegister = new Register(iloginManager);
@@ -29,20 +31,20 @@ namespace BeginMobile.Accounts
 
             MessagingCenter.Subscribe<ContentPage>(this, "Login", sender =>
             {
-                SelectedItem = _contentPageLogin;
+                CurrentPage = _contentPageLogin;
             });
             MessagingCenter.Subscribe<ContentPage>(this, "Register", sender =>
             {
-                SelectedItem = _contentPageRegister;
+                CurrentPage = _contentPageRegister;
             });
 
             MessagingCenter.Subscribe<ContentPage>(this, "TermsAndConditions", sender =>
             {
-                SelectedItem = _contentPageTermsAndConditions;
+                CurrentPage = _contentPageTermsAndConditions;
             });
             MessagingCenter.Subscribe<ContentPage>(this, "ForgotPassword", sender =>
             {
-                SelectedItem = _contentPageForgotPassword;
+                CurrentPage = _contentPageForgotPassword;
             });
 
             MessagingCenter.Subscribe<AppContextError>(this, AppContextError.NamedMessage, OnAppContextErrorOccurred);

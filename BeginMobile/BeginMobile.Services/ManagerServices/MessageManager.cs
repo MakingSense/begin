@@ -16,6 +16,8 @@ namespace BeginMobile.Services.ManagerServices
         private const string SubAddress = "begin/api/v1/";
         private const string Identifier = "messages";
 
+        private static readonly string ThisClassName = typeof(MessageManager).Name;
+
         private readonly GenericBaseClient<ProfileThreadMessages> _profileThreadMessagesClient =
             new GenericBaseClient<ProfileThreadMessages>(BaseAddress, SubAddress);
 
@@ -42,7 +44,7 @@ namespace BeginMobile.Services.ManagerServices
                     Error = exception.Message
                 };
 
-                AppContextError.Send(exception, profileThreadMessages, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetProfileThreadMessagesInbox", exception, profileThreadMessages, ExceptionLevel.Application);
                 return profileThreadMessages;
             }
         }
@@ -67,7 +69,7 @@ namespace BeginMobile.Services.ManagerServices
                     Error = exception.Message
                 };
 
-                AppContextError.Send(exception, profileThreadMessages, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetProfileThreadMessagesSent", exception, profileThreadMessages, ExceptionLevel.Application);
                 return profileThreadMessages;
             }
         }
@@ -100,7 +102,7 @@ namespace BeginMobile.Services.ManagerServices
                     Error = exception.Message,
                 };
 
-                AppContextError.Send(exception, error, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "SendMessage", exception, error, ExceptionLevel.Application);
                 return error;
             }
         }
@@ -115,7 +117,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetThreadMessages", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -134,7 +136,7 @@ namespace BeginMobile.Services.ManagerServices
                     Error =  exception.Message
                 };
 
-                AppContextError.Send(exception, error, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName,"MarkAsReadThreadMessages",exception, error, ExceptionLevel.Application);
                 return error;
             }
         }
@@ -153,7 +155,7 @@ namespace BeginMobile.Services.ManagerServices
                     Error = exception.Message
                 };
 
-                AppContextError.Send(exception, error, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "MarkAsUnreadThreadMessages", exception, error, ExceptionLevel.Application);
                 return error;
             }
         }
@@ -172,7 +174,7 @@ namespace BeginMobile.Services.ManagerServices
                     Error = exception.Message
                 };
 
-                AppContextError.Send(exception, error, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "DeleteThreadMessages", exception, error, ExceptionLevel.Application);
                 return error;
             }
         }

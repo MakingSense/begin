@@ -30,6 +30,7 @@ namespace BeginMobile.Services.ManagerServices
 
         private readonly ILoggingService _log = Logger.Current;
 
+        private static readonly string ThisClassName = typeof(LoginUserManager).Name;
         public async Task<LoginUser> Login(string username, string password)
         {
             var loginUser = new LoginUser();
@@ -50,7 +51,7 @@ namespace BeginMobile.Services.ManagerServices
             catch (Exception ex)
             {
                 _log.Exception(ex);
-                AppContextError.Send(ex, loginUser, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "Login", ex, loginUser, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -78,7 +79,7 @@ namespace BeginMobile.Services.ManagerServices
             catch (Exception ex)
             {
                 _log.Exception(ex);
-                AppContextError.Send(ex, registeredUser, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "Register", ex, registeredUser, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -98,7 +99,7 @@ namespace BeginMobile.Services.ManagerServices
             catch (Exception ex)
             {
                 _log.Exception(ex);
-                AppContextError.Send(ex, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "RetrievePassword", ex, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -126,7 +127,7 @@ namespace BeginMobile.Services.ManagerServices
             catch (Exception exception)
             {
                 _log.Exception(exception);
-                AppContextError.Send(exception, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "ChangeYourPassword", exception, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -147,7 +148,7 @@ namespace BeginMobile.Services.ManagerServices
             catch (Exception exception)
             {
                 _log.Exception(exception);
-                AppContextError.Send(exception, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "UpdateProfile", exception, ExceptionLevel.Application);
                 return null;
             }
         }

@@ -5,12 +5,12 @@ namespace BeginMobile.Pages.GroupPages
 {
     public class ProfileGroupItemCell : ViewCell
     {
-        public ProfileGroupItemCell()
+        public ProfileGroupItemCell(ImageSource imageSourceDefault)
         {
             var circleGroupImage = new CircleImage
                                    {
                                        Style = BeginApplication.Styles.CircleImageCommon,
-                                       Source = BeginApplication.Styles.DefaultGroupIcon
+                                       Source = imageSourceDefault
                                        //TODO:change for group avatar if this exist
                                    };
 
@@ -44,42 +44,41 @@ namespace BeginMobile.Pages.GroupPages
             var labelCreate = new Label
                               {
                                   YAlign = TextAlignment.Center,
-                                  HorizontalOptions = LayoutOptions.End,
+                                  HorizontalOptions = LayoutOptions.Start,
                                   FontAttributes = FontAttributes.Bold,
                                   Style = BeginApplication.Styles.ListItemTextStyle
                               };
 
             labelCreate.SetBinding(Label.TextProperty, "DateCreated");
 
-            var stackLayoutPie = new StackLayout
-                                 {
-                                     Spacing = 2,
-                                     Padding = BeginApplication.Styles.LayoutThickness,
-                                     Orientation = StackOrientation.Horizontal,
-                                     HorizontalOptions = LayoutOptions.FillAndExpand,
-                                     Children =
-                                     {
-                                         labelStatus,
-                                         labelCreate
-                                     }
-                                 };
+            //var stackLayoutPie = new StackLayout
+            //                     {
+            //                         Spacing = 2,
+            //                         Padding = BeginApplication.Styles.LayoutThickness,
+            //                         Orientation = StackOrientation.Horizontal,
+            //                         HorizontalOptions = LayoutOptions.FillAndExpand,
+            //                         Children =
+            //                         {
+            //                             labelStatus,
+            //                             labelCreate
+            //                         }
+            //                     };
 
             var stackLayoutCenter = new StackLayout
                                     {
-                                        Spacing = 2,
-                                        Padding = BeginApplication.Styles.LayoutThickness,
+                                        Orientation = StackOrientation.Vertical,
+                                        HorizontalOptions = LayoutOptions.FillAndExpand,
                                         Children =
                                         {
                                             labelTitle,
                                             labelDesc,
-                                            stackLayoutPie
+                                            labelStatus,
+                                            labelCreate
                                         }
                                     };
 
             var stackLayoutItem = new StackLayout
                                   {
-                                      Spacing = 2,
-                                      Padding = BeginApplication.Styles.LayoutThickness,
                                       Orientation = StackOrientation.Horizontal,
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       Children =

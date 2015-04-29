@@ -48,7 +48,7 @@ namespace BeginMobile.Pages.Profile
                                     boxViewEndNameSurname,
                                     GetNameAndSurname(),
                                     boxViewBegAboutMe,
-                                    new ProfileTitle("AboutMe"),
+                                    new ProfileTitle("About Me"),
                                     boxViewEndAboutMe,
                                     GetInformationDetail(),
                                     boxViewBegEduProf,

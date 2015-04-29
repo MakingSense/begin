@@ -120,14 +120,35 @@
   <data name="AboutUsTitle" xml:space="preserve">
     <value>About us</value>
   </data>
+  <data name="AlertConfirmTitle" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="AlertContactFriendAddedSuccessfull" xml:space="preserve">
+    <value>{0} has been added at your contacts successfuly.</value>
+  </data>
+  <data name="AlertContactRemoveConfirmMessage" xml:space="preserve">
+    <value>Are you sure you want to remove {0} from contacts?</value>
+  </data>
+  <data name="AlertContactRemoveMessage" xml:space="preserve">
+    <value>{0} has been removed from your contacts.</value>
+  </data>
+  <data name="AlertContactRequestConfirm" xml:space="preserve">
+    <value>Are you sure you want to send a request to {0} ?</value>
+  </data>
   <data name="AlertInfoTitle" xml:space="preserve">
     <value>Info</value>
+  </data>
+  <data name="AlertNo" xml:space="preserve">
+    <value>No</value>
   </data>
   <data name="AlertOk" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="AlertReTry" xml:space="preserve">
     <value>Re - Try</value>
+  </data>
+  <data name="AlertYes" xml:space="preserve">
+    <value>Yes</value>
   </data>
   <data name="AppHomeChildFindContacts" xml:space="preserve">
     <value>Find Contacts</value>
@@ -224,6 +245,9 @@
   </data>
   <data name="EntryUsernamePlaceholderMessage" xml:space="preserve">
     <value>Send To (Username or Friend's Name)</value>
+  </data>
+  <data name="ErrorCodeNotificationNoExists" xml:space="preserve">
+    <value>The notification doesnt exist</value>
   </data>
   <data name="ErrorMessageTitle" xml:space="preserve">
     <value>Error</value>

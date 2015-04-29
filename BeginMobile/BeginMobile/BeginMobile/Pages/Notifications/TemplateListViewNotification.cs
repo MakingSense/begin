@@ -9,74 +9,66 @@ namespace BeginMobile.Pages.Notifications
         public TemplateListViewNotification(bool isUnread)
         {
             var labelnotificationDesc = new Label
-            {
-                VerticalOptions = LayoutOptions.Start,
-                HorizontalOptions = LayoutOptions.Start,
-                WidthRequest = 350,
-                Style = BeginApplication.Styles.ListItemTextStyle
-            };
+                                        {
+                                            VerticalOptions = LayoutOptions.Start,
+                                            HorizontalOptions = LayoutOptions.Start,
+                                            WidthRequest = 350,
+                                            Style = BeginApplication.Styles.ListItemTextStyle
+                                        };
 
             labelnotificationDesc.SetBinding(Label.TextProperty, "NotificationDescription");
-            var detailsLayout = CreateLayoutDetail();
+
+
+            var labelintervalDate = new Label
+                                    {
+                                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                                        Style = BeginApplication.Styles.ListItemDetailTextStyle
+                                    };
+
+            labelintervalDate.SetBinding(Label.TextProperty, "IntervalDate");
 
             var buttonMarkAsRead = new Button
-                                       {
-                                           Text = AppResources.ButtonReadNotification,
-                                           Style = BeginApplication.Styles.ListViewItemButton,
-                                           HorizontalOptions = LayoutOptions.Start,
-                                           HeightRequest = Device.OnPlatform(15, 35, 35),
-                                           WidthRequest = Device.OnPlatform(70, 70, 70),
-                                       };
+                                   {
+                                       Text = AppResources.ButtonReadNotification,
+                                       Style = BeginApplication.Styles.ListViewItemButton
+                                   };
 
 
             buttonMarkAsRead.Clicked += OnMarkAsReadEventHandler;
 
             var buttonMarkAsUnread = new Button
-                                         {
-                                             Text = AppResources.ButtonUnReadNotification,
-                                             Style = BeginApplication.Styles.ListViewItemButton,
-                                             HorizontalOptions = LayoutOptions.Start,
-                                             HeightRequest = Device.OnPlatform(15, 35, 35),
-                                             WidthRequest = Device.OnPlatform(70, 70, 70)
-                                         };
+                                     {
+                                         Text = AppResources.ButtonUnReadNotification,
+                                         Style = BeginApplication.Styles.ListViewItemButton
+                                     };
 
             buttonMarkAsUnread.Clicked += OnMarkAsUnreadEventHandler;
 
-            View = new StackLayout
-                   {
-                       HeightRequest = 60,
-                       Orientation = StackOrientation.Horizontal,
 
-                       Children =
-                       {
-                           labelnotificationDesc,
-                           detailsLayout,
-                           isUnread ? buttonMarkAsRead :buttonMarkAsUnread
-                       }
-                   };
+            var gridDetails = new Grid
+                              {
+                                  Padding = BeginApplication.Styles.GridOfListView,
+                                  HorizontalOptions = LayoutOptions.FillAndExpand,
+                                  VerticalOptions = LayoutOptions.FillAndExpand,
+                                  RowDefinitions =
+                                  {
+                                      new RowDefinition {Height = GridLength.Auto},
+                                  },
+                                  ColumnDefinitions =
+                                  {
+                                      new ColumnDefinition {Width = GridLength.Auto}
+                                  }
+                              };
+            gridDetails.Children.Add(labelnotificationDesc, 0, 0);
+            gridDetails.Children.Add(labelintervalDate, 1, 0);
+            gridDetails.Children.Add(isUnread ? buttonMarkAsRead : buttonMarkAsUnread, 2, 0);
+            View = gridDetails;
 
             View.SetBinding(ClassIdProperty, "Id");
         }
-        private static StackLayout CreateLayoutDetail()
-        {
-            var labelintervalDate = new Label
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = BeginApplication.Styles.ListItemDetailTextStyle
-            };
-
-            labelintervalDate.SetBinding(Label.TextProperty, "IntervalDate");
-
-            return new StackLayout
-            {
-                HeightRequest = 50,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Orientation = StackOrientation.Horizontal,
-                Children = { labelintervalDate }
-            };
-        }
-
+      
         #region Events
+
         private void OnMarkAsUnreadEventHandler(object sender, System.EventArgs e)
         {
             var current = sender as Button;
@@ -89,7 +81,7 @@ namespace BeginMobile.Pages.Notifications
         private void OnMarkAsReadEventHandler(object sender, System.EventArgs e)
         {
             var current = sender as Button;
-            if(current == null) return;
+            if (current == null) return;
 
             var notificationId = current.Parent.ClassId;
             SubscribeMarkRead(notificationId);
@@ -100,6 +92,7 @@ namespace BeginMobile.Pages.Notifications
             MessagingCenter.Send(this, NotificationMessages.MarkAsRead, notificationId);
             MessagingCenter.Unsubscribe<TemplateListViewNotification, string>(this, NotificationMessages.MarkAsRead);
         }
+
         private void SubscribeMarkUnread(string notificationId)
         {
             MessagingCenter.Send(this, NotificationMessages.MarkAsUnread, notificationId);

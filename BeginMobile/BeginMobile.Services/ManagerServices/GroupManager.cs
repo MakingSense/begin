@@ -18,7 +18,7 @@ namespace BeginMobile.Services.ManagerServices
 
         private readonly GenericBaseClient<Group> _groupClient =
             new GenericBaseClient<Group>(BaseAddress, SubAddress);
-
+        private static readonly string ThisClassName = typeof(GroupManager).Name;
         public GroupManager()
         {
         }
@@ -42,7 +42,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetGroupsByParams", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }
@@ -62,7 +62,7 @@ namespace BeginMobile.Services.ManagerServices
             }
             catch (Exception exception)
             {
-                AppContextError.Send(exception, null, ExceptionLevel.Application);
+                AppContextError.Send(ThisClassName, "GetGroupById", exception, null, ExceptionLevel.Application);
                 return null;
             }
         }

@@ -46,10 +46,7 @@ namespace BeginMobile.Pages.Profile
             _buttonRemoveFriend = new Button
                                   {
                                       Text = AppResources.ButtonRemoveFriend,
-                                      Style = BeginApplication.Styles.ListViewItemButton,
-                                      HorizontalOptions = LayoutOptions.Start,
-                                      HeightRequest = 35,
-                                      WidthRequest = 70
+                                      Style = BeginApplication.Styles.ListViewItemButton
                                   };
 
             _buttonRemoveFriend.Clicked += RemoveFriendEventHandler;
@@ -82,7 +79,7 @@ namespace BeginMobile.Pages.Profile
 
             var grid = new Grid
                               {
-                                  Padding = BeginApplication.Styles.ListDetailThickness,
+                                  Padding = BeginApplication.Styles.GridOfListView,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =

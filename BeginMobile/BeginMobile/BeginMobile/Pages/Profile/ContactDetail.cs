@@ -28,15 +28,11 @@ namespace BeginMobile.Pages.Profile
 
             var imageContact = new CircleImage
                                {
-                                   Style = BeginApplication.Styles.CircleImageCommon,
+                                   Style = BeginApplication.Styles.CircleImageForDetails,
                                    Source = BeginApplication.Styles.DefaultContactIcon,
                                };
 
-            var gridImage = new Grid
-                            {
-                                //HorizontalOptions = LayoutOptions.FillAndExpand,
-                                //VerticalOptions = LayoutOptions.FillAndExpand
-                            };
+            var gridImage = new Grid();
 
             var stackLayoutLinesRight = new StackLayout
                                         {
@@ -132,46 +128,31 @@ namespace BeginMobile.Pages.Profile
             var buttonAddFriend = new Button()
                                   {
                                       Text = AppResources.ButtonAddFriend,
-                                      Style = BeginApplication.Styles.ListViewItemButton,
-                                      HorizontalOptions = LayoutOptions.Start,
-                                      HeightRequest = 35,
-                                      WidthRequest = 70
+                                      Style = BeginApplication.Styles.ListViewItemButton
                                   };
 
             var buttonCancelFriend = new Button
                                      {
                                          Text = AppResources.ButtonCancel,
-                                         Style = BeginApplication.Styles.ListViewItemButton,
-                                         HorizontalOptions = LayoutOptions.Start,
-                                         HeightRequest = 35,
-                                         WidthRequest = 70
+                                         Style = BeginApplication.Styles.ListViewItemButton
                                      };
 
             var buttonAcceptFriend = new Button
                                      {
                                          Text = AppResources.ButtonAcceptFriend,
-                                         Style = BeginApplication.Styles.ListViewItemButton,
-                                         HorizontalOptions = LayoutOptions.Start,
-                                         HeightRequest = 35,
-                                         WidthRequest = 70
+                                         Style = BeginApplication.Styles.ListViewItemButton
                                      };
 
             var buttonRemoveFriend = new Button
                                      {
                                          Text = AppResources.ButtonRemoveFriend,
-                                         Style = BeginApplication.Styles.ListViewItemButton,
-                                         HorizontalOptions = LayoutOptions.Start,
-                                         HeightRequest = 35,
-                                         WidthRequest = 70
+                                         Style = BeginApplication.Styles.ListViewItemButton
                                      };
 
             var buttonRejectFriend = new Button
                                      {
                                          Text = AppResources.ButtonRejectFriend,
-                                         Style = BeginApplication.Styles.ListViewItemButton,
-                                         HorizontalOptions = LayoutOptions.Start,
-                                         HeightRequest = 35,
-                                         WidthRequest = 70
+                                         Style = BeginApplication.Styles.ListViewItemButton
                                      };
 
             buttonCancelFriend.Clicked += CancelFriendEventHandler;
@@ -219,7 +200,7 @@ namespace BeginMobile.Pages.Profile
             
             var gridComponents = new Grid
                                  {
-                                    // VerticalOptions = LayoutOptions.FillAndExpand,
+                                     Padding = BeginApplication.Styles.GridOfListView,
                                      HorizontalOptions = LayoutOptions.Center,
                                      RowDefinitions =
                                      {
@@ -250,7 +231,6 @@ namespace BeginMobile.Pages.Profile
 
             Content = new StackLayout
                       {
-                          Padding = BeginApplication.Styles.GridPadding,
                           HorizontalOptions = LayoutOptions.CenterAndExpand,
                           Orientation = StackOrientation.Vertical,
                           Children =

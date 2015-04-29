@@ -2,17 +2,18 @@
 using BeginMobile.LocalizeResources.Resources;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
+using System.IO;
 
 namespace BeginMobile.Pages.MessagePages
 {
     public class ProfileMessagesItem : ViewCell
     {
-        public ProfileMessagesItem()
+        public ProfileMessagesItem(ImageSource imageSourceMail)
         {
             var circleShopImage = new CircleImage
                                   {
                                       Style = BeginApplication.Styles.CircleImageCommon,
-                                      Source = BeginApplication.Styles.MessageIcon
+                                      Source = imageSourceMail
                                   };
 
             var labelSender = new Label
@@ -68,16 +69,13 @@ namespace BeginMobile.Pages.MessagePages
             var buttonRemove = new Button
                                {
                                    Text = AppResources.ButtonRemoveFriend,
-                                   Style = BeginApplication.Styles.ListViewItemButton,
-                                   HorizontalOptions = LayoutOptions.Start,
-                                   HeightRequest = Device.OnPlatform(15, 35, 35),
-                                   WidthRequest = Device.OnPlatform(70, 70, 70)
+                                   Style = BeginApplication.Styles.ListViewItemButton
                                };
             buttonRemove.Clicked += RemoveEventHandler;
 
             var gridDetails = new Grid
                               {
-                                  Padding = new Thickness(10, 5, 10, 5),
+                                  Padding = BeginApplication.Styles.GridOfListView,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =
@@ -91,17 +89,16 @@ namespace BeginMobile.Pages.MessagePages
                                   }
                               };
 
-            gridDetails.Children.Add(labelMarkedAs, 0, 0);
-            gridDetails.Children.Add(labelSender, 0, 1);
+            gridDetails.Children.Add(labelSender, 0, 0);
             //gridDetails.Children.Add(labelMarkedAs, 1, 1);
-            gridDetails.Children.Add(labelSubject, 0, 2);
-            gridDetails.Children.Add(labelContent, 0, 3);
-            gridDetails.Children.Add(labelCreate, 0, 4);
+            gridDetails.Children.Add(labelSubject, 0, 1);
+            gridDetails.Children.Add(labelContent, 0, 2);
+            gridDetails.Children.Add(labelCreate, 0, 3);
+            gridDetails.Children.Add(labelMarkedAs, 0, 4);
             gridDetails.Children.Add(buttonRemove, 0, 5);
 
             var stackLayoutView = new StackLayout
                                   {
-                                      Padding = BeginApplication.Styles.LayoutThickness,
                                       Orientation = StackOrientation.Horizontal,
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       VerticalOptions = LayoutOptions.FillAndExpand,
