@@ -494,6 +494,15 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The email field is required.
+        /// </summary>
+        public static string ForgotPassEmptyValidationEmail {
+            get {
+                return ResourceManager.GetString("ForgotPassEmptyValidationEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter the e-mail address you registered with the Application. Instructions to reset your password will be sent to this address..
         /// </summary>
         public static string ForgotPassLabelEnterEmail {

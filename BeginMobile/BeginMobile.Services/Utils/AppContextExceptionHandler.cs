@@ -164,6 +164,13 @@ namespace BeginMobile.Services.Utils
                     case ErrorCode.ChangePasswordRepeatPasswordEmpty:
                         resultErrors.Add("Repeat password is empty.");//TODO:Add to Resources
                         break;
+                    case ErrorCode.RegisterEmailWrong:
+                        resultErrors.Add("Email has wrong format.");//TODO:Add to Resources
+                        break;
+                    case ErrorCode.RegisterNameSurname:
+                        resultErrors.Add("Name & surname is empty.");//TODO:Add to Resources
+                        break;
+                   
                 }
             }
             return resultErrors;
@@ -181,5 +188,10 @@ namespace BeginMobile.Services.Utils
         public const string ChangePasswordEmailEmpty = "password_empty";
         public const string ChangePasswordNewPasswordEmpty = "new_password_empty";
         public const string ChangePasswordRepeatPasswordEmpty = "repeat_password_empty";
+        //Register
+        public const string RegisterEmailWrong = "email_wrong";
+        public const string RegisterNameSurname = "name_surname";
+
+
     }
 }

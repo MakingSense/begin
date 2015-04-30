@@ -261,6 +261,9 @@
   <data name="ForgotPassAlertInformation" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="ForgotPassEmptyValidationEmail" xml:space="preserve">
+    <value>The email field is required</value>
+  </data>
   <data name="ForgotPassLabelEnterEmail" xml:space="preserve">
     <value>Enter the e-mail address you registered with the Application. Instructions to reset your password will be sent to this address.</value>
   </data>

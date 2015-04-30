@@ -40,47 +40,58 @@ namespace BeginMobile.Accounts
                 Text = AppResources.ButtonSend, 
                                                 Style = BeginApplication.Styles.DefaultButton
                                             };
-            
-            buttonReset.Clicked += async (sender, eventArgs) =>
-            {
 
-                var isEmailValid = Regex.IsMatch(_entryEmail.Text, EmailRegex);
-                if (isEmailValid)
-                {
-                    ActivityIndicatorLoading.IsVisible = true;
-                    ActivityIndicatorLoading.IsRunning = true;
+	        buttonReset.Clicked += async (sender, eventArgs) =>
+	                                     {
 
-                    var loginUserManager = new LoginUserManager();
-                    string webPage = await loginUserManager.RetrievePassword(_entryEmail.Text);
+	                                         var email = _entryEmail.Text.Trim();
+	                                         if (!string.IsNullOrEmpty(email))
+	                                         {
+	                                             var isEmailValid = Regex.IsMatch(email, EmailRegex);
 
-                    if (webPage != null)
-                    {
-                        if (webPage.Equals(""))
-                        {
-                            await
-                                DisplayAlert(AppResources.ForgotPassAlertInformation,
-                                    AppResources.ForgotPassAlertCheckEmail,
-                                    AppResources.AlertOk);
-                            MessagingCenter.Send<ContentPage>(this, "Login");
-                        }
-                        else
-                        {
-                            await DisplayAlert(AppResources.ApplicationError,
-                                AppResources.ForgotPassAlertErrorServer,
-                                AppResources.AlertReTry);
-                        }
-                    }
+	                                             if (isEmailValid)
+	                                             {
+	                                                 ActivityIndicatorLoading.IsVisible = true;
+	                                                 ActivityIndicatorLoading.IsRunning = true;
 
-                    ActivityIndicatorLoading.IsVisible = false;
-                    ActivityIndicatorLoading.IsRunning = false;
-                }
-                else
-                {
-                    await DisplayAlert(AppResources.ApplicationValidationError,
-                        AppResources.ForgotPassValidationEmail,
-                        AppResources.AlertReTry);
-                }
-            };
+	                                                 var loginUserManager = new LoginUserManager();
+	                                                 string webPage = await loginUserManager.RetrievePassword(email);
+
+	                                                 if (webPage != null)
+	                                                 {
+	                                                     if (webPage.Equals(""))
+	                                                     {
+	                                                         await
+	                                                             DisplayAlert(AppResources.ForgotPassAlertInformation,
+	                                                                 AppResources.ForgotPassAlertCheckEmail,
+	                                                                 AppResources.AlertOk);
+	                                                         MessagingCenter.Send<ContentPage>(this, "Login");
+	                                                     }
+	                                                     else
+	                                                     {
+	                                                         await DisplayAlert(AppResources.ApplicationError,
+	                                                             AppResources.ForgotPassAlertErrorServer,
+	                                                             AppResources.AlertReTry);
+	                                                     }
+	                                                 }
+
+	                                                 ActivityIndicatorLoading.IsVisible = false;
+	                                                 ActivityIndicatorLoading.IsRunning = false;
+	                                             }
+	                                             else
+	                                             {
+	                                                 await DisplayAlert(AppResources.ApplicationValidationError,
+	                                                     AppResources.ForgotPassValidationEmail,
+	                                                     AppResources.AlertReTry);
+	                                             }
+	                                         }
+	                                         else
+	                                         {
+	                                             await DisplayAlert(AppResources.ApplicationValidationError,
+	                                                 AppResources.ForgotPassEmptyValidationEmail,
+	                                                 AppResources.AlertReTry);
+	                                         }
+	                                     };
 
             var buttonBack = new Button { Text = AppResources.ButtonCancel, Style = BeginApplication.Styles.DefaultButton };
             buttonBack.Clicked += (sender, eventArgs) =>

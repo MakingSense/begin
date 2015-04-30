@@ -5,6 +5,7 @@ using BeginMobile.Interfaces;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
+using BeginMobile.Services.Utils;
 using Xamarin.Forms;
 
 namespace BeginMobile.Accounts
@@ -52,14 +53,16 @@ namespace BeginMobile.Accounts
 
             _entryPassword = new Entry
             {
+                IsPassword = true,
                 Placeholder = AppResources.EntryPasswordPlaceholder,
-                IsPassword = true
+                
             };
 
             _entryConfirmPassword = new Entry
             {
+                IsPassword = true,
                 Placeholder = AppResources.EntryConfirmPasswordPlaceholder,
-                IsPassword = true
+                
             };
 
             var buttonTermsAndConditions = new Button()
@@ -139,6 +142,7 @@ namespace BeginMobile.Accounts
                 String.IsNullOrEmpty(email)
                 || String.IsNullOrEmpty(password)
                 || String.IsNullOrEmpty(confirmPassword)
+                || String.IsNullOrEmpty(userName)
                 )
             {
                 await DisplayAlert(AppResources.ApplicationValidationError,
@@ -163,15 +167,14 @@ namespace BeginMobile.Accounts
 
                             if (registerUser != null)
                             {
-
                                 if (registerUser.Errors != null)
-                                {
-                                    var errorMessages = registerUser.Errors.Aggregate("",
-                                        (current, error) => current + (error.ErrorMessage + "\n"));
-
-                                    await
-                                        DisplayAlert(AppResources.ApplicationError, errorMessages, AppResources.AlertOk);
-
+                                {                                   
+                                    var errorMessages = "";
+                                    foreach (var error in ErrorMessages.GetTranslatedErrors(registerUser.Errors))
+                                    {
+                                        errorMessages = error + "\n";
+                                    }
+                                    await DisplayAlert(AppResources.ApplicationError, errorMessages, AppResources.AlertOk);
                                 }
                                 else
                                 {
