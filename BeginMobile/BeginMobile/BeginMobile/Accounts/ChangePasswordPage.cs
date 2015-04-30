@@ -55,11 +55,7 @@ namespace BeginMobile.Accounts
                     if (changePasswordResponse.HasError)
                     {
 
-                        var messageErrors = "";
-                        foreach (var error in ErrorMessages.GetTranslatedErrors(changePasswordResponse.Errors))
-                        {
-                            messageErrors = error + "\n";
-                        }
+                        var messageErrors = ErrorMessages.GetTranslatedErrors(changePasswordResponse.Errors).Aggregate("", (current, error) => current + (error + "\n"));
                         await DisplayAlert(AppResources.ErrorMessageTitle, messageErrors, AppResources.AlertReTry);
                         
                         _entryCurrentPassword.Text = "";

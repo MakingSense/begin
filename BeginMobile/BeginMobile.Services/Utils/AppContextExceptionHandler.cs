@@ -72,11 +72,7 @@ namespace BeginMobile.Services.Utils
                 {
                     if (serviceError.Errors != null && serviceError.Errors.Any())
                     {                        
-                        var errorMessages = "";
-                        foreach (var error in ErrorMessages.GetTranslatedErrors(serviceError.Errors))
-                        {
-                            errorMessages = error + "\n";
-                        }
+                        var errorMessages = ErrorMessages.GetTranslatedErrors(serviceError.Errors).Aggregate("", (current, error) => current + (error + "\n"));
 
                         var errorFormat = new AppContextError(DefaultTitle, errorMessages.Replace(oldValue,string.Empty),
                             "Ok");
@@ -164,6 +160,9 @@ namespace BeginMobile.Services.Utils
                     case ErrorCode.ChangePasswordRepeatPasswordEmpty:
                         resultErrors.Add("Repeat password is empty.");//TODO:Add to Resources
                         break;
+                    case ErrorCode.ChangePasswordNoMatch:
+                        resultErrors.Add("Both new passwords are not identical.");//TODO:Add to Resources
+                        break;
                     case ErrorCode.RegisterEmailWrong:
                         resultErrors.Add("Email has wrong format.");//TODO:Add to Resources
                         break;
@@ -188,10 +187,9 @@ namespace BeginMobile.Services.Utils
         public const string ChangePasswordEmailEmpty = "password_empty";
         public const string ChangePasswordNewPasswordEmpty = "new_password_empty";
         public const string ChangePasswordRepeatPasswordEmpty = "repeat_password_empty";
+        public const string ChangePasswordNoMatch = "new_password_no_match";
         //Register
         public const string RegisterEmailWrong = "email_wrong";
         public const string RegisterNameSurname = "name_surname";
-
-
     }
 }

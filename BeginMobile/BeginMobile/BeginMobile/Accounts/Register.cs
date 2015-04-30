@@ -169,11 +169,7 @@ namespace BeginMobile.Accounts
                             {
                                 if (registerUser.Errors != null)
                                 {                                   
-                                    var errorMessages = "";
-                                    foreach (var error in ErrorMessages.GetTranslatedErrors(registerUser.Errors))
-                                    {
-                                        errorMessages = error + "\n";
-                                    }
+                                    var errorMessages = ErrorMessages.GetTranslatedErrors(registerUser.Errors).Aggregate("", (current, error) => current + (error + "\n"));
                                     await DisplayAlert(AppResources.ApplicationError, errorMessages, AppResources.AlertOk);
                                 }
                                 else

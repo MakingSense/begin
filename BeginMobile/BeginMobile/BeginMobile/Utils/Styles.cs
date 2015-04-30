@@ -120,7 +120,7 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.BackgroundColorProperty,
                                         Value = Color.FromHex("77D065")
                                     },
-                                    new Setter {Property = Button.BorderRadiusProperty, Value = 8},
+                                    new Setter {Property = Button.BorderRadiusProperty, Value = 25},
                                     new Setter {Property = Button.TextColorProperty, Value = Color.White},
                                     new Setter {Property = Button.FontFamilyProperty, Value = FontFamily},
                                 }
@@ -274,8 +274,8 @@ namespace BeginMobile.Utils
             get
             {
                 return Device.OnPlatform
-                    (Color.FromHex("ECECEC"),
-                        Color.FromHex("1E2225"), Color.FromHex("323232"));
+                    (Color.FromHex("646567"),
+                        Color.FromHex("646567"), Color.FromHex("646567"));
             }
         }
 

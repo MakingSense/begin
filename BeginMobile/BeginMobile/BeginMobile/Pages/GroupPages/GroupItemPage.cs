@@ -37,7 +37,7 @@ namespace BeginMobile.Pages.GroupPages
 
                         var circleGroupImage = new CircleImage
                                    {
-                                       Style = BeginApplication.Styles.CircleImageCommon,
+                                       Style = BeginApplication.Styles.CircleImageForDetails,
                                        Source = imageResourceGroup//TODO:change for group avatar if this exist
                                    };
 
