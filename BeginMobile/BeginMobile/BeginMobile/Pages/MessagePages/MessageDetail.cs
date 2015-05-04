@@ -111,9 +111,9 @@ namespace BeginMobile.Pages.MessagePages
                 gridComponents.Children.Add(gridReply, 0, 2);
                 gridComponents.Children.Add(_editorReplyContent, 0, 3);
                 gridComponents.Children.Add(buttonReply, 0, 4);
-            }          
-      
-            Content = gridComponents;
+            }
+
+            Content = new ScrollView {Content = gridComponents};
         }
 
         public async void ButtonMarkUsUnreadEventHandler(object sender, EventArgs e)

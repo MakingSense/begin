@@ -15,9 +15,7 @@ namespace BeginMobile.Accounts
         private readonly Entry _entryEmail;
         private readonly Entry _entryPassword;
         private readonly ILoggingService _log = Logger.Current;
-        private StackLayout _landscapeStackLayout;
-        private StackLayout _portraitStackLayout;
-        private readonly StackLayout _componentsLayout;
+        private readonly ScrollView _mainScrollView;
 
         public Login(ILoginManager iLoginManager)
         {
@@ -130,63 +128,34 @@ namespace BeginMobile.Accounts
             //};
 
             var stackLayoutLoading = CreateStackLayoutWithLoadingIndicator();
-
-            _componentsLayout = new StackLayout
-                                {
-                                    VerticalOptions = LayoutOptions.FillAndExpand,
-                                    Spacing = 10,
-                                    Children =
-                                    {
-                                        stackLayoutLoading,
-                                        logo,
-                                        _entryEmail,
-                                        _entryPassword,
-                                       // buttonLoginWithFacebook,
-                                        buttonLogin,
-                                        buttonForgotPassword,
-                                        buttonRegister
-                                    }
-                                };
-
-
-            Content = new ScrollView
-            {
-                Content = _componentsLayout
-            };
-           // SizeChanged += (sender, e) => SetOrientation(this);
+            _mainScrollView = new ScrollView();
+            var componentsLayout = new StackLayout
+                                   {
+                                       VerticalOptions = LayoutOptions.FillAndExpand,
+                                       Spacing = 10,
+                                       Children =
+                                       {
+                                           stackLayoutLoading,
+                                           logo,
+                                           _entryEmail,
+                                           _entryPassword,
+                                           //buttonLoginWithFacebook,
+                                           buttonLogin,
+                                           buttonForgotPassword,
+                                           buttonRegister
+                                       }
+                                   };
+            _mainScrollView.Content = componentsLayout;
+            Content = _mainScrollView;
+            SizeChanged += (sender, e) => SetOrientation(this);
         }
 
         public void SetOrientation(Page page)
         {
-            _landscapeStackLayout = new StackLayout
-                                    {
-                                        VerticalOptions = LayoutOptions.FillAndExpand,
-                                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                                        Padding = new Thickness(page.Width*0.02, 0, page.Width*0.02, 0),
-                                    };
-
-            _portraitStackLayout = new StackLayout
-                                   {
-                                       VerticalOptions = LayoutOptions.FillAndExpand,
-                                       HorizontalOptions = LayoutOptions.FillAndExpand,
-                                       Padding = new Thickness(page.Width*0.02, page.Height*0.25, page.Width*0.02, 0),
-                                   };
-            if (page.Width > page.Height)
-            {
-                _landscapeStackLayout.Children.Add(_componentsLayout);
-                Content = new ScrollView
-                          {
-                              Content = _landscapeStackLayout
-                          };
-            }
-            else
-            {
-                _portraitStackLayout.Children.Add(_componentsLayout);
-                Content = new ScrollView
-                          {
-                              Content = _portraitStackLayout
-                          };
-            }
+            if (_mainScrollView != null)
+                _mainScrollView.Padding = page.Width > page.Height //width > Height landscape else portrait
+                    ? new Thickness(page.Width * 0.02, 0, page.Width * 0.02, 0)
+                    : new Thickness(page.Width*0.02, page.Height*0.20, page.Width*0.02, 0);
         }
     }
 }

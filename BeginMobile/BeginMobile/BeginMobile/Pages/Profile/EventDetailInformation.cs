@@ -210,17 +210,20 @@ namespace BeginMobile.Pages.Profile
             gridMainContent.Children.Add(labelAvailableSpaces, 0, 7);
             gridMainContent.Children.Add(stackLayoutDescriptionAndBooking, 0, 8);
 
-            Content = Content = new StackLayout
-            {
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                Orientation = StackOrientation.Vertical,
-                Children =
-                          {
-                              gridImage,
-                              gridMainContent
-                              //gridButtons
-                          }
-            };
+            Content = new ScrollView
+                      {
+                          Content = new StackLayout
+                                    {
+                                        HorizontalOptions = LayoutOptions.CenterAndExpand,
+                                        Orientation = StackOrientation.Vertical,
+                                        Children =
+                                        {
+                                            gridImage,
+                                            gridMainContent
+                                            //gridButtons
+                                        }
+                                    }
+                      };
         }
 
         private static EventViewModel GetEvenViewModel(ProfileEvent profileEvent)

@@ -112,8 +112,7 @@ namespace BeginMobile.Pages.Notifications
         {
             switch (target)
             {
-                case NotificationComponent.Contact:
-
+                case NotificationComponent.Contact:                   
                     MessagingCenter.Subscribe<ContentPage, Contact>(this,
                         "contact", async (s, arg) =>
                                          {
@@ -164,8 +163,7 @@ namespace BeginMobile.Pages.Notifications
 
                     break;
 
-                case NotificationComponent.Message:
-
+                case NotificationComponent.Message:                    
                     MessagingCenter.Subscribe<ContentPage, MessageViewModel>(this,
                         "message", async (s, arg) =>
                                          {
@@ -174,39 +172,49 @@ namespace BeginMobile.Pages.Notifications
                                              await Navigation.PushAsync(messageDetails);
                                              ((ListView) sender).SelectedItem = null;
                                          });
-
-                    var threadMessages =
-                        await BeginApplication.ProfileServices.GetMessagesByThread(_currentUser.User.UserName, item.ItemId);
-
-                    if (threadMessages != null && threadMessages.Any())
-                    {
-                        var first = threadMessages.FirstOrDefault();
-
-                        if (first != null)
-                        {
-                            var message = new MessageViewModel
-                                          {
-                                              Id = first.Id,
-                                              ThreadId = item.ItemId,
-                                              DateSent = first.DateSent,
-                                              MessageContent = first.MessageContent,
-                                              SenderName = first.Sender.NameSurname,
-                                              Subject = first.Subject,
-                                              Sender = first.Sender,
-                                              Messages = threadMessages
-                                          };
-
-                            MessagingCenter.Send<ContentPage, MessageViewModel>(this, "message", message);
-                        }
-                        MessagingCenter.Unsubscribe<ContentPage, MessageViewModel>(this, "message");    
-                    }
-
-                    else
-                    {
-                        await DisplayAlert("Error", "An Error has been happened in the Server.", "Ok");
-                    }
-
+                    // list all message inbox and search the message notification by message id
+                    var allInboxMessage = await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken);
                     
+                    var threadMessageId = "";
+                    foreach (var threadMessagese in allInboxMessage.Threads)
+                    {
+                        foreach (var message in threadMessagese.Messages.Where(message => message.Id.Equals(item.ItemId)))
+                        {
+                            threadMessageId = message.ThreadId;
+                            break;
+                        }
+                    }
+
+                    if (threadMessageId != null)
+                    {
+                        var threadMessages =
+                            await BeginApplication.ProfileServices.GetMessagesByThread(_currentUser.AuthToken, threadMessageId);
+
+                        if (threadMessages != null && threadMessages.Any())
+                        {
+                            foreach (var messageSearched in threadMessages)
+                            {
+                                if (!messageSearched.Id.Equals(item.ItemId)) continue;
+                                var message = new MessageViewModel
+                                              {
+                                                  Id = messageSearched.Id,
+                                                  ThreadId = messageSearched.ThreadId,
+                                                  DateSent = messageSearched.DateSent,
+                                                  MessageContent = messageSearched.MessageContent,
+                                                  SenderName = messageSearched.Sender.NameSurname,
+                                                  Subject = messageSearched.Subject,
+                                                  Sender = messageSearched.Sender,
+                                                  Messages = threadMessages
+                                              };
+                                MessagingCenter.Send<ContentPage, MessageViewModel>(this, "message", message);
+                                MessagingCenter.Unsubscribe<ContentPage, MessageViewModel>(this, "message");
+                            }                            
+                        }
+                        else
+                        {
+                            await DisplayAlert("Error", "An Error has been happened in the Server.", "Ok");
+                        }
+                    }
                     break;
 
                 default:

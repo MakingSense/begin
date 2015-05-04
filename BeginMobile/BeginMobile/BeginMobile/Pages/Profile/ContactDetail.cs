@@ -229,15 +229,18 @@ namespace BeginMobile.Pages.Profile
             gridComponents.Children.Add(gridButtons, 0, 4);
 
 
-            Content = new StackLayout
+            Content = new ScrollView
                       {
-                          HorizontalOptions = LayoutOptions.CenterAndExpand,
-                          Orientation = StackOrientation.Vertical,
-                          Children =
-                          {
-                              gridImage,
-                              gridComponents
-                          }
+                          Content = new StackLayout
+                                    {
+                                        HorizontalOptions = LayoutOptions.CenterAndExpand,
+                                        Orientation = StackOrientation.Vertical,
+                                        Children =
+                                        {
+                                            gridImage,
+                                            gridComponents
+                                        }
+                                    }
                       };
         }
 
