@@ -26,6 +26,50 @@ namespace BeginMobile.Android
 		
 		public static void UpdateIdValues()
 		{
+			global::Xamarin.Forms.Platform.Resource.String.ApplicationName = global::BeginMobile.Android.Resource.String.ApplicationName;
+			global::Xamarin.Forms.Platform.Resource.String.Hello = global::BeginMobile.Android.Resource.String.Hello;
+			global::XLabs.Forms.Resource.Color.calendar_active_month_bg = global::BeginMobile.Android.Resource.Color.calendar_active_month_bg;
+			global::XLabs.Forms.Resource.Color.calendar_bg = global::BeginMobile.Android.Resource.Color.calendar_bg;
+			global::XLabs.Forms.Resource.Color.calendar_divider = global::BeginMobile.Android.Resource.Color.calendar_divider;
+			global::XLabs.Forms.Resource.Color.calendar_highlighted_day_bg = global::BeginMobile.Android.Resource.Color.calendar_highlighted_day_bg;
+			global::XLabs.Forms.Resource.Color.calendar_inactive_month_bg = global::BeginMobile.Android.Resource.Color.calendar_inactive_month_bg;
+			global::XLabs.Forms.Resource.Color.calendar_selected_day_bg = global::BeginMobile.Android.Resource.Color.calendar_selected_day_bg;
+			global::XLabs.Forms.Resource.Color.calendar_selected_range_bg = global::BeginMobile.Android.Resource.Color.calendar_selected_range_bg;
+			global::XLabs.Forms.Resource.Color.calendar_text_active = global::BeginMobile.Android.Resource.Color.calendar_text_active;
+			global::XLabs.Forms.Resource.Color.calendar_text_inactive = global::BeginMobile.Android.Resource.Color.calendar_text_inactive;
+			global::XLabs.Forms.Resource.Color.calendar_text_selected = global::BeginMobile.Android.Resource.Color.calendar_text_selected;
+			global::XLabs.Forms.Resource.Color.calendar_text_selector = global::BeginMobile.Android.Resource.Color.calendar_text_selector;
+			global::XLabs.Forms.Resource.Color.calendar_text_unselectable = global::BeginMobile.Android.Resource.Color.calendar_text_unselectable;
+			global::XLabs.Forms.Resource.Dimension.calendar_day_headers_paddingbottom = global::BeginMobile.Android.Resource.Dimension.calendar_day_headers_paddingbottom;
+			global::XLabs.Forms.Resource.Dimension.calendar_month_title_bottommargin = global::BeginMobile.Android.Resource.Dimension.calendar_month_title_bottommargin;
+			global::XLabs.Forms.Resource.Dimension.calendar_month_topmargin = global::BeginMobile.Android.Resource.Dimension.calendar_month_topmargin;
+			global::XLabs.Forms.Resource.Dimension.calendar_text_medium = global::BeginMobile.Android.Resource.Dimension.calendar_text_medium;
+			global::XLabs.Forms.Resource.Dimension.calendar_text_small = global::BeginMobile.Android.Resource.Dimension.calendar_text_small;
+			global::XLabs.Forms.Resource.Drawable.ad16 = global::BeginMobile.Android.Resource.Drawable.ad16;
+			global::XLabs.Forms.Resource.Drawable.calendar_bg_selector = global::BeginMobile.Android.Resource.Drawable.calendar_bg_selector;
+			global::XLabs.Forms.Resource.Id.calendar_grid = global::BeginMobile.Android.Resource.Id.calendar_grid;
+			global::XLabs.Forms.Resource.Id.calendar_view = global::BeginMobile.Android.Resource.Id.calendar_view;
+			global::XLabs.Forms.Resource.Id.left_arrow = global::BeginMobile.Android.Resource.Id.left_arrow;
+			global::XLabs.Forms.Resource.Id.right_arrow = global::BeginMobile.Android.Resource.Id.right_arrow;
+			global::XLabs.Forms.Resource.Id.title = global::BeginMobile.Android.Resource.Id.title;
+			global::XLabs.Forms.Resource.Layout.calendar_pager_layout = global::BeginMobile.Android.Resource.Layout.calendar_pager_layout;
+			global::XLabs.Forms.Resource.Layout.calendar_picker = global::BeginMobile.Android.Resource.Layout.calendar_picker;
+			global::XLabs.Forms.Resource.Layout.dialog = global::BeginMobile.Android.Resource.Layout.dialog;
+			global::XLabs.Forms.Resource.Layout.month = global::BeginMobile.Android.Resource.Layout.month;
+			global::XLabs.Forms.Resource.Layout.week = global::BeginMobile.Android.Resource.Layout.week;
+			global::XLabs.Forms.Resource.String.ApplicationName = global::BeginMobile.Android.Resource.String.ApplicationName;
+			global::XLabs.Forms.Resource.String.Hello = global::BeginMobile.Android.Resource.String.Hello;
+			global::XLabs.Forms.Resource.String.day_name_format = global::BeginMobile.Android.Resource.String.day_name_format;
+			global::XLabs.Forms.Resource.String.full_date_format = global::BeginMobile.Android.Resource.String.full_date_format;
+			global::XLabs.Forms.Resource.String.invalid_date = global::BeginMobile.Android.Resource.String.invalid_date;
+			global::XLabs.Forms.Resource.String.library_name = global::BeginMobile.Android.Resource.String.library_name;
+			global::XLabs.Forms.Resource.String.month_name_format = global::BeginMobile.Android.Resource.String.month_name_format;
+			global::XLabs.Forms.Resource.Style.CalendarCell = global::BeginMobile.Android.Resource.Style.CalendarCell;
+			global::XLabs.Forms.Resource.Style.CalendarCell_CalendarDate = global::BeginMobile.Android.Resource.Style.CalendarCell_CalendarDate;
+			global::XLabs.Forms.Resource.Style.CalendarCell_DayHeader = global::BeginMobile.Android.Resource.Style.CalendarCell_DayHeader;
+			global::XLabs.Forms.Resource.Style.CalendarTitle = global::BeginMobile.Android.Resource.Style.CalendarTitle;
+			global::XLabs.Platform.Resource.String.ApplicationName = global::BeginMobile.Android.Resource.String.ApplicationName;
+			global::XLabs.Platform.Resource.String.Hello = global::BeginMobile.Android.Resource.String.Hello;
 		}
 		
 		public partial class Attribute
@@ -37,6 +81,83 @@ namespace BeginMobile.Android
 			}
 			
 			private Attribute()
+			{
+			}
+		}
+		
+		public partial class Color
+		{
+			
+			// aapt resource value: 0x7f050000
+			public const int calendar_active_month_bg = 2131034112;
+			
+			// aapt resource value: 0x7f050001
+			public const int calendar_bg = 2131034113;
+			
+			// aapt resource value: 0x7f050002
+			public const int calendar_divider = 2131034114;
+			
+			// aapt resource value: 0x7f050005
+			public const int calendar_highlighted_day_bg = 2131034117;
+			
+			// aapt resource value: 0x7f050003
+			public const int calendar_inactive_month_bg = 2131034115;
+			
+			// aapt resource value: 0x7f050004
+			public const int calendar_selected_day_bg = 2131034116;
+			
+			// aapt resource value: 0x7f050006
+			public const int calendar_selected_range_bg = 2131034118;
+			
+			// aapt resource value: 0x7f050008
+			public const int calendar_text_active = 2131034120;
+			
+			// aapt resource value: 0x7f050007
+			public const int calendar_text_inactive = 2131034119;
+			
+			// aapt resource value: 0x7f050009
+			public const int calendar_text_selected = 2131034121;
+			
+			// aapt resource value: 0x7f05000b
+			public const int calendar_text_selector = 2131034123;
+			
+			// aapt resource value: 0x7f05000a
+			public const int calendar_text_unselectable = 2131034122;
+			
+			static Color()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Color()
+			{
+			}
+		}
+		
+		public partial class Dimension
+		{
+			
+			// aapt resource value: 0x7f060000
+			public const int calendar_day_headers_paddingbottom = 2131099648;
+			
+			// aapt resource value: 0x7f060002
+			public const int calendar_month_title_bottommargin = 2131099650;
+			
+			// aapt resource value: 0x7f060001
+			public const int calendar_month_topmargin = 2131099649;
+			
+			// aapt resource value: 0x7f060003
+			public const int calendar_text_medium = 2131099651;
+			
+			// aapt resource value: 0x7f060004
+			public const int calendar_text_small = 2131099652;
+			
+			static Dimension()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Dimension()
 			{
 			}
 		}
@@ -54,82 +175,88 @@ namespace BeginMobile.Android
 			public const int activity = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int BadgeCircle = 2130837507;
+			public const int ad16 = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int badgedefault = 2130837508;
+			public const int BadgeCircle = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int call_center = 2130837509;
+			public const int badgedefault = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int groups = 2130837510;
+			public const int calendar_bg_selector = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int Icon = 2130837511;
+			public const int call_center = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int ievents = 2130837512;
+			public const int groups = 2130837512;
 			
 			// aapt resource value: 0x7f020009
-			public const int ifeed = 2130837513;
+			public const int Icon = 2130837513;
 			
 			// aapt resource value: 0x7f02000a
-			public const int igroup = 2130837514;
+			public const int ievents = 2130837514;
 			
 			// aapt resource value: 0x7f02000b
-			public const int iphone_message = 2130837515;
+			public const int ifeed = 2130837515;
 			
 			// aapt resource value: 0x7f02000c
-			public const int logotype = 2130837516;
+			public const int igroup = 2130837516;
 			
 			// aapt resource value: 0x7f02000d
-			public const int logout = 2130837517;
+			public const int iphone_message = 2130837517;
 			
 			// aapt resource value: 0x7f02000e
-			public const int mail = 2130837518;
+			public const int logotype = 2130837518;
 			
 			// aapt resource value: 0x7f02000f
-			public const int menunav = 2130837519;
+			public const int logout = 2130837519;
 			
 			// aapt resource value: 0x7f020010
-			public const int monoandroidsplash = 2130837520;
+			public const int mail = 2130837520;
 			
 			// aapt resource value: 0x7f020011
-			public const int netcomputers = 2130837521;
+			public const int menunav = 2130837521;
 			
 			// aapt resource value: 0x7f020012
-			public const int offline_icon = 2130837522;
+			public const int monoandroidsplash = 2130837522;
 			
 			// aapt resource value: 0x7f020013
-			public const int online_icon = 2130837523;
+			public const int netcomputers = 2130837523;
 			
 			// aapt resource value: 0x7f020014
-			public const int padlock = 2130837524;
+			public const int offline_icon = 2130837524;
 			
 			// aapt resource value: 0x7f020015
-			public const int privacy = 2130837525;
+			public const int online_icon = 2130837525;
 			
 			// aapt resource value: 0x7f020016
-			public const int ratingoff = 2130837526;
+			public const int padlock = 2130837526;
 			
 			// aapt resource value: 0x7f020017
-			public const int ratingon = 2130837527;
+			public const int privacy = 2130837527;
 			
 			// aapt resource value: 0x7f020018
-			public const int shop = 2130837528;
+			public const int ratingoff = 2130837528;
 			
 			// aapt resource value: 0x7f020019
-			public const int terms_conditions = 2130837529;
+			public const int ratingon = 2130837529;
 			
 			// aapt resource value: 0x7f02001a
-			public const int userdefault = 2130837530;
+			public const int shop = 2130837530;
 			
 			// aapt resource value: 0x7f02001b
-			public const int userdefault3 = 2130837531;
+			public const int terms_conditions = 2130837531;
 			
 			// aapt resource value: 0x7f02001c
-			public const int userprofile = 2130837532;
+			public const int userdefault = 2130837532;
+			
+			// aapt resource value: 0x7f02001d
+			public const int userdefault3 = 2130837533;
+			
+			// aapt resource value: 0x7f02001e
+			public const int userprofile = 2130837534;
 			
 			static Drawable()
 			{
@@ -144,14 +271,29 @@ namespace BeginMobile.Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050002
-			public const int tab_badge = 2131034114;
+			// aapt resource value: 0x7f080007
+			public const int calendar_grid = 2131230727;
 			
-			// aapt resource value: 0x7f050000
-			public const int tab_icon = 2131034112;
+			// aapt resource value: 0x7f080004
+			public const int calendar_view = 2131230724;
 			
-			// aapt resource value: 0x7f050001
-			public const int tab_title = 2131034113;
+			// aapt resource value: 0x7f080006
+			public const int left_arrow = 2131230726;
+			
+			// aapt resource value: 0x7f080005
+			public const int right_arrow = 2131230725;
+			
+			// aapt resource value: 0x7f080002
+			public const int tab_badge = 2131230722;
+			
+			// aapt resource value: 0x7f080000
+			public const int tab_icon = 2131230720;
+			
+			// aapt resource value: 0x7f080001
+			public const int tab_title = 2131230721;
+			
+			// aapt resource value: 0x7f080003
+			public const int title = 2131230723;
 			
 			static Id()
 			{
@@ -169,6 +311,21 @@ namespace BeginMobile.Android
 			// aapt resource value: 0x7f030000
 			public const int BarTabLayout = 2130903040;
 			
+			// aapt resource value: 0x7f030001
+			public const int calendar_pager_layout = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int calendar_picker = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int dialog = 2130903043;
+			
+			// aapt resource value: 0x7f030004
+			public const int month = 2130903044;
+			
+			// aapt resource value: 0x7f030005
+			public const int week = 2130903045;
+			
 			static Layout()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -179,23 +336,69 @@ namespace BeginMobile.Android
 			}
 		}
 		
+		public partial class String
+		{
+			
+			// aapt resource value: 0x7f040001
+			public const int ApplicationName = 2130968577;
+			
+			// aapt resource value: 0x7f040000
+			public const int Hello = 2130968576;
+			
+			// aapt resource value: 0x7f040003
+			public const int day_name_format = 2130968579;
+			
+			// aapt resource value: 0x7f040006
+			public const int full_date_format = 2130968582;
+			
+			// aapt resource value: 0x7f040004
+			public const int invalid_date = 2130968580;
+			
+			// aapt resource value: 0x7f040002
+			public const int library_name = 2130968578;
+			
+			// aapt resource value: 0x7f040005
+			public const int month_name_format = 2130968581;
+			
+			static String()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private String()
+			{
+			}
+		}
+		
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f040003
-			public const int ActionBarTab = 2130968579;
+			// aapt resource value: 0x7f070007
+			public const int ActionBarTab = 2131165191;
 			
-			// aapt resource value: 0x7f040002
-			public const int ActionBarTabBar = 2130968578;
+			// aapt resource value: 0x7f070006
+			public const int ActionBarTabBar = 2131165190;
 			
-			// aapt resource value: 0x7f040004
-			public const int ActionBarTabText = 2130968580;
+			// aapt resource value: 0x7f070008
+			public const int ActionBarTabText = 2131165192;
 			
-			// aapt resource value: 0x7f040001
-			public const int BeginMobileTheme = 2130968577;
+			// aapt resource value: 0x7f070005
+			public const int BeginMobileTheme = 2131165189;
 			
-			// aapt resource value: 0x7f040000
-			public const int Mono_Android_Theme_Splash = 2130968576;
+			// aapt resource value: 0x7f070001
+			public const int CalendarCell = 2131165185;
+			
+			// aapt resource value: 0x7f070003
+			public const int CalendarCell_CalendarDate = 2131165187;
+			
+			// aapt resource value: 0x7f070002
+			public const int CalendarCell_DayHeader = 2131165186;
+			
+			// aapt resource value: 0x7f070000
+			public const int CalendarTitle = 2131165184;
+			
+			// aapt resource value: 0x7f070004
+			public const int Mono_Android_Theme_Splash = 2131165188;
 			
 			static Style()
 			{
