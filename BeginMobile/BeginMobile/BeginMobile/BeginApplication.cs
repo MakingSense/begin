@@ -6,6 +6,7 @@ using BeginMobile.Services;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
 using BeginMobile.Services.Logging;
+using BeginMobile.UploadPages;
 using BeginMobile.Utils;
 using System;
 using Xamarin.Forms;
@@ -47,6 +48,11 @@ namespace BeginMobile
         public void ShowMainPage(LoginUser loginUser)
         {
             MainPage = new NavigationPage(new HomePage(loginUser));
+        }
+
+        public void ShowUploaderPage()
+        {
+            MainPage = new Uploader();
         }
 
         public void Logout()

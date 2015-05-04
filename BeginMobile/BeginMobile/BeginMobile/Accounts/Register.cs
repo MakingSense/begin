@@ -188,6 +188,7 @@ namespace BeginMobile.Accounts
                                     Application.Current.Properties["LoginUser"] = loginUser;
 
                                     _iLoginManager.ShowMainPage(loginUser);
+                                    //_iLoginManager.ShowUploaderPage(loginUser);
                                 }
                             }
 

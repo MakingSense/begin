@@ -74,6 +74,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\ProfileServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UploadPages\OfferYourServicesPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UploadPages\PhotoPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UploadPages\PictureUploader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UploadPages\Uploader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CheckBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions\StringExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FriendshipActions.cs" />
