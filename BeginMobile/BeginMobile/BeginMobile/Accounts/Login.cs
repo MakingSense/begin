@@ -148,7 +148,12 @@ namespace BeginMobile.Accounts
                                     }
                                 };
 
-            SizeChanged += (sender, e) => SetOrientation(this);
+
+            Content = new ScrollView
+            {
+                Content = _componentsLayout
+            };
+           // SizeChanged += (sender, e) => SetOrientation(this);
         }
 
         public void SetOrientation(Page page)
