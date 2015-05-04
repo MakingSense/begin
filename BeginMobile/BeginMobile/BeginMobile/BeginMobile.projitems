@@ -17,6 +17,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\UpdateProfilePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BeginApplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\BaseContentPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\FileUpload\FileAccess .cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\FileUpload\IFileAccess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILocalize.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILoginManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuProfile\MasterDetailProfile.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Wall\WallPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\GlobalService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ProfileServices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UploadPages\PhotoPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CheckBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions\StringExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FriendshipActions.cs" />
