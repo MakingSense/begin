@@ -255,7 +255,7 @@ namespace BeginMobile.Menu
                                   {
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       Style = BeginApplication.Styles.ListItemTextStyle,
-                                      TextColor = BeginApplication.Styles.MenuOptionsColor
+                                      TextColor = BeginApplication.Styles.MenuTextOptionsColor
                                   };
 
             labelOptionName.SetBinding(Label.TextProperty, "OptionName");

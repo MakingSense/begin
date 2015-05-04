@@ -17,34 +17,34 @@ namespace BeginMobile.Utils
             FontFamily = Device.OnPlatform("Helvetica", "Droid Sans Mono", "Comic Sans MS");
 
             var fontSizeForButtonMedium = Device.OnPlatform(
-                Device.GetNamedSize(NamedSize.Medium, typeof (Button)),
-                Device.GetNamedSize(NamedSize.Medium, typeof (Button)),
-                Device.GetNamedSize(NamedSize.Medium, typeof (Button)));
+                Device.GetNamedSize(NamedSize.Medium, typeof(Button)),
+                Device.GetNamedSize(NamedSize.Medium, typeof(Button)),
+                Device.GetNamedSize(NamedSize.Medium, typeof(Button)));
 
             var fontSizeButtonLarge = Device.OnPlatform(
-                Device.GetNamedSize(NamedSize.Large, typeof (Button)),
-                Device.GetNamedSize(NamedSize.Large, typeof (Button)),
-                Device.GetNamedSize(NamedSize.Large, typeof (Button)));
+                Device.GetNamedSize(NamedSize.Large, typeof(Button)),
+                Device.GetNamedSize(NamedSize.Large, typeof(Button)),
+                Device.GetNamedSize(NamedSize.Large, typeof(Button)));
 
             _fontSizeButtonSmall = Device.OnPlatform(
-                Device.GetNamedSize(NamedSize.Small, typeof (Button)),
-                Device.GetNamedSize(NamedSize.Small, typeof (Button)),
-                Device.GetNamedSize(NamedSize.Small, typeof (Button)));
+                Device.GetNamedSize(NamedSize.Small, typeof(Button)),
+                Device.GetNamedSize(NamedSize.Small, typeof(Button)),
+                Device.GetNamedSize(NamedSize.Small, typeof(Button)));
 
             _textfontSizeMedium = Device.OnPlatform(
-                Device.GetNamedSize(NamedSize.Medium, typeof (Label)),
-                Device.GetNamedSize(NamedSize.Medium, typeof (Label)),
-                Device.GetNamedSize(NamedSize.Medium, typeof (Label)));
+                Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                Device.GetNamedSize(NamedSize.Medium, typeof(Label)));
 
             _textfontSizeLarge = Device.OnPlatform(
-                Device.GetNamedSize(NamedSize.Large, typeof (Label)),
-                Device.GetNamedSize(NamedSize.Large, typeof (Label)),
-                Device.GetNamedSize(NamedSize.Large, typeof (Label)));
+                Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+                Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+                Device.GetNamedSize(NamedSize.Large, typeof(Label)));
 
             _textFontSizeSmall = Device.OnPlatform(
-                Device.GetNamedSize(NamedSize.Small, typeof (Label)),
-                Device.GetNamedSize(NamedSize.Small, typeof (Label)),
-                Device.GetNamedSize(NamedSize.Small, typeof (Label)));
+                Device.GetNamedSize(NamedSize.Small, typeof(Label)),
+                Device.GetNamedSize(NamedSize.Small, typeof(Label)),
+                Device.GetNamedSize(NamedSize.Small, typeof(Label)));
 
             _buttonFontSize = new Setter();
             _titleFontSize = new Setter();
@@ -82,9 +82,9 @@ namespace BeginMobile.Utils
         {
             get
             {
-                var style = new Style(typeof (Button))
-                            {
-                                Setters =
+                var style = new Style(typeof(Button))
+                {
+                    Setters =
                                 {
                                     new Setter
                                     {
@@ -101,7 +101,7 @@ namespace BeginMobile.Utils
                                             (Color.FromHex("354B60"), Color.White, Color.White)
                                     },
                                 }
-                            };
+                };
 
                 return style;
             }
@@ -111,9 +111,9 @@ namespace BeginMobile.Utils
         {
             get
             {
-                var style = new Style(typeof (Button))
-                            {
-                                Setters =
+                var style = new Style(typeof(Button))
+                {
+                    Setters =
                                 {
                                     new Setter
                                     {
@@ -124,7 +124,7 @@ namespace BeginMobile.Utils
                                     new Setter {Property = Button.TextColorProperty, Value = Color.White},
                                     new Setter {Property = Button.FontFamilyProperty, Value = FontFamily},
                                 }
-                            };
+                };
                 style.Setters.Add(_buttonFontSize);
 
                 return style;
@@ -137,10 +137,10 @@ namespace BeginMobile.Utils
             {
                 Device.Styles.TitleStyle.Setters.Add(_titleFontSize);
                 Device.Styles.TitleStyle.Setters.Add(new Setter
-                                                     {
-                                                         Property = Label.FontFamilyProperty,
-                                                         Value = FontFamily
-                                                     });
+                {
+                    Property = Label.FontFamilyProperty,
+                    Value = FontFamily
+                });
                 return Device.Styles.TitleStyle;
             }
         }
@@ -150,28 +150,28 @@ namespace BeginMobile.Utils
             get
             {
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter
-                                                        {
-                                                            Property = Label.TextColorProperty,
-                                                            Value =
-                                                                Device.OnPlatform(Color.FromHex("354B60"),
-                                                                    Color.FromHex("EDEEF2"), Color.FromHex("77D065"))
-                                                        });
+                {
+                    Property = Label.TextColorProperty,
+                    Value =
+                        Device.OnPlatform(Color.FromHex("354B60"),
+                            Color.FromHex("EDEEF2"), Color.FromHex("77D065"))
+                });
 
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter
-                                                        {
-                                                            Property = Label.FontFamilyProperty,
-                                                            Value = FontFamily
-                                                        });
+                {
+                    Property = Label.FontFamilyProperty,
+                    Value = FontFamily
+                });
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter
-                                                        {
-                                                            Property = Label.FontSizeProperty,
-                                                            Value = _textfontSizeMedium
-                                                        });
+                {
+                    Property = Label.FontSizeProperty,
+                    Value = _textfontSizeMedium
+                });
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter
-                                                        {
-                                                            Property = Label.FontAttributesProperty,
-                                                            Value = FontAttributes.Bold
-                                                        });
+                {
+                    Property = Label.FontAttributesProperty,
+                    Value = FontAttributes.Bold
+                });
                 return Device.Styles.SubtitleStyle;
             }
         }
@@ -180,13 +180,13 @@ namespace BeginMobile.Utils
         {
             get
             {
-                Device.Styles.BodyStyle.Setters.Add(new Setter {Property = Label.FontFamilyProperty, Value = FontFamily});
+                Device.Styles.BodyStyle.Setters.Add(new Setter { Property = Label.FontFamilyProperty, Value = FontFamily });
                 Device.Styles.BodyStyle.Setters.Add(new Setter
-                                                    {
-                                                        Property = Label.FontSizeProperty,
-                                                        Value =
-                                                            Device.OnPlatform<double>(7, 12, 12)
-                                                    });
+                {
+                    Property = Label.FontSizeProperty,
+                    Value =
+                        Device.OnPlatform<double>(7, 12, 12)
+                });
                 return Device.Styles.BodyStyle;
             }
         }
@@ -196,10 +196,10 @@ namespace BeginMobile.Utils
             get
             {
                 Device.Styles.CaptionStyle.Setters.Add(new Setter
-                                                       {
-                                                           Property = Label.FontFamilyProperty,
-                                                           Value = FontFamily
-                                                       });
+                {
+                    Property = Label.FontFamilyProperty,
+                    Value = FontFamily
+                });
                 return Device.Styles.CaptionStyle;
             }
         }
@@ -210,16 +210,16 @@ namespace BeginMobile.Utils
             get
             {
                 Device.Styles.ListItemDetailTextStyle.Setters.Add(new Setter
-                                                                  {
-                                                                      Property = Label.FontFamilyProperty,
-                                                                      Value = FontFamily
-                                                                  });
+                {
+                    Property = Label.FontFamilyProperty,
+                    Value = FontFamily
+                });
                 Device.Styles.ListItemDetailTextStyle.Setters.Add(new Setter
-                                                                  {
-                                                                      Property = Label.FontSizeProperty,
-                                                                      Value =
-                                                                          Device.OnPlatform<double>(7, 12, 12)
-                                                                  });
+                {
+                    Property = Label.FontSizeProperty,
+                    Value =
+                        Device.OnPlatform<double>(7, 12, 12)
+                });
                 return Device.Styles.ListItemDetailTextStyle;
             }
         }
@@ -229,23 +229,23 @@ namespace BeginMobile.Utils
             get
             {
                 Device.Styles.ListItemTextStyle.Setters.Add(new Setter
-                                                            {
-                                                                Property = Label.FontFamilyProperty,
-                                                                Value = FontFamily
-                                                            });
+                {
+                    Property = Label.FontFamilyProperty,
+                    Value = FontFamily
+                });
                 Device.Styles.ListItemTextStyle.Setters.Add(new Setter
-                                                            {
-                                                                Property = Label.FontSizeProperty,
-                                                                Value =
-                                                                    Device.OnPlatform<double>(8, 15, 15)
-                                                            });
+                {
+                    Property = Label.FontSizeProperty,
+                    Value =
+                        Device.OnPlatform<double>(8, 15, 15)
+                });
                 Device.Styles.ListItemTextStyle.Setters.Add(new Setter
-                                                            {
-                                                                Property = Label.TextColorProperty,
-                                                                Value =
-                                                                    Device.OnPlatform(Color.FromHex("354B60"),
-                                                                        Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"))
-                                                            });
+                {
+                    Property = Label.TextColorProperty,
+                    Value =
+                        Device.OnPlatform(Color.FromHex("354B60"),
+                            Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"))
+                });
                 return Device.Styles.ListItemTextStyle;
             }
         }
@@ -284,7 +284,7 @@ namespace BeginMobile.Utils
             get
             {
                 return Device.OnPlatform
-                    (Color.FromHex("C6C6CB"), Color.FromHex("1E2225"), Color.FromHex("425961"));
+                    (Color.FromHex("464748"), Color.FromHex("464748"), Color.FromHex("464748"));
             }
         }
 
@@ -293,9 +293,9 @@ namespace BeginMobile.Utils
             get
             {
                 return Device.Idiom == TargetIdiom.Tablet
-                    ? new Style(typeof (Label))
-                      {
-                          Setters =
+                    ? new Style(typeof(Label))
+                    {
+                        Setters =
                           {
                               new Setter
                               {
@@ -304,10 +304,10 @@ namespace BeginMobile.Utils
                                       Device.OnPlatform<double>(12, 12, 12)
                               }
                           }
-                      }
-                    : new Style(typeof (Label))
-                      {
-                          Setters =
+                    }
+                    : new Style(typeof(Label))
+                    {
+                        Setters =
                           {
                               new Setter
                               {
@@ -316,7 +316,7 @@ namespace BeginMobile.Utils
                                       Device.OnPlatform<double>(8, 10, 10)
                               }
                           }
-                      };
+                    };
             }
         }
 
@@ -342,9 +342,9 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return new Style(typeof (Label))
-                       {
-                           Setters =
+                return new Style(typeof(Label))
+                {
+                    Setters =
                            {
                                new Setter {Property = Label.FontFamilyProperty, Value = FontFamily},
                                new Setter
@@ -353,7 +353,7 @@ namespace BeginMobile.Utils
                                    Value = Device.OnPlatform<double>(7, 12, 12)
                                }
                            }
-                       };
+                };
             }
         }
 
@@ -361,9 +361,9 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return new Style(typeof (Label))
-                       {
-                           Setters =
+                return new Style(typeof(Label))
+                {
+                    Setters =
                            {
                                new Setter {Property = Label.FontFamilyProperty, Value = FontFamily},
                                new Setter
@@ -372,11 +372,12 @@ namespace BeginMobile.Utils
                                    Value = Device.OnPlatform<double>(16, 16, 16)
                                }
                            }
-                       };
+                };
             }
         }
 
-        public Color MenuOptionsColor
+
+        public Color MenuTextOptionsColor
         {
             get
             {
@@ -385,12 +386,33 @@ namespace BeginMobile.Utils
             }
         }
 
-        public Color PageBackgroundColor
+        //details page color
+        public Color DetailsBackgroundColor
         {
             get
             {
                 return Device.OnPlatform
-                    (Color.FromHex("DDDDDD"), Color.FromHex("292929"), Color.FromHex("77D065"));
+                    (Color.FromHex("E6E6E6"), Color.FromHex("E6E6E6"), Color.FromHex("E6E6E6"));
+            }
+        }
+
+        //Navigation Background color
+        public Color NavigationBackgroundColor
+        {
+            get
+            {
+                return Device.OnPlatform
+                    (Color.FromHex("E6E6E6"), Color.FromHex("E6E6E6"), Color.FromHex("E6E6E6"));
+            }
+        }
+
+        //main page color
+        public Color PageContentBackgroundColor
+        {
+            get
+            {
+                return Device.OnPlatform
+                    (Color.FromHex("E6E6E6"), Color.FromHex("E6E6E6"), Color.FromHex("E6E6E6"));
             }
         }
 
@@ -440,9 +462,9 @@ namespace BeginMobile.Utils
         {
             get
             {
-                var style = new Style(typeof (Button))
-                            {
-                                Setters =
+                var style = new Style(typeof(Button))
+                {
+                    Setters =
                                 {
                                     new Setter
                                     {
@@ -455,12 +477,12 @@ namespace BeginMobile.Utils
                                     new Setter {Property = Button.BorderRadiusProperty, Value = 2},
                                     new Setter {Property = Button.FontFamilyProperty, Value = FontFamily}
                                 }
-                            };
+                };
                 style.Setters.Add(new Setter
-                                  {
-                                      Property = Button.FontSizeProperty,
-                                      Value = Device.OnPlatform<double>(12, 12, 12)
-                                  });
+                {
+                    Property = Button.FontSizeProperty,
+                    Value = Device.OnPlatform<double>(12, 12, 12)
+                });
                 return style;
             }
         }
@@ -496,9 +518,9 @@ namespace BeginMobile.Utils
         {
             get
             {
-                var style = new Style(typeof (InputView))
-                            {
-                                Setters =
+                var style = new Style(typeof(InputView))
+                {
+                    Setters =
                                 {
                                     new Setter
                                     {
@@ -508,7 +530,7 @@ namespace BeginMobile.Utils
                                                 Color.FromHex("333333")),
                                     }
                                 }
-                            };
+                };
                 return style;
             }
         }
@@ -553,14 +575,14 @@ namespace BeginMobile.Utils
             }
         }
 
-#region Images Icons
+        #region Images Icons
         public Style CircleImageCommon
         {
             get
             {
-                var style = new Style(typeof (CircleImage))
-                            {
-                                Setters =
+                var style = new Style(typeof(CircleImage))
+                {
+                    Setters =
                                 {
                                     new Setter {Property = Image.AspectProperty, Value = Aspect.AspectFit},
                                     new Setter {Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Start},
@@ -587,7 +609,7 @@ namespace BeginMobile.Utils
                                     }
             
                                 }
-                            };
+                };
 
                 return style;
             }
@@ -634,8 +656,8 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return "userdefault3.png"; 
-            }            
+                return "userdefault3.png";
+            }
         }
         public string ProfileMenuItemIcon
         {
@@ -757,6 +779,6 @@ namespace BeginMobile.Utils
             }
         }
 
-#endregion
+        #endregion
     }
 }
