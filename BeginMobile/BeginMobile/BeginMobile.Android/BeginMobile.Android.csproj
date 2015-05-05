@@ -173,7 +173,6 @@
     <AndroidResource Include="Resources\Drawable\badgedefault.png" />
     <AndroidResource Include="Resources\Drawable\ratingon.png" />
     <AndroidResource Include="Resources\Drawable\ratingoff.png" />
-    <AndroidResource Include="Resources\Drawable\logotype.png" />
     <AndroidResource Include="Resources\Drawable\online_icon.png" />
     <AndroidResource Include="Resources\Drawable\offline_icon.png" />
     <AndroidResource Include="Resources\Drawable\a_event.png" />
@@ -181,6 +180,9 @@
     <AndroidResource Include="Resources\Drawable\ifeed.png" />
     <AndroidResource Include="Resources\Drawable\photo.jpg" />
     <AndroidResource Include="Resources\Drawable\takephoto.jpg" />
+    <AndroidResource Include="Resources\Drawable\splash_screen.PNG" />
+    <AndroidResource Include="Resources\Drawable\services.PNG" />
+    <AndroidResource Include="Resources\Drawable\logotype.png" />
     <EmbeddedResource Include="Resources\Drawable\ifeeds.png" />
     <AndroidResource Include="Resources\Drawable\privacy.png" />
     <AndroidResource Include="Resources\Drawable\igroup.png" />

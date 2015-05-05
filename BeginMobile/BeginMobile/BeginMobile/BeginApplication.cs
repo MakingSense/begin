@@ -9,6 +9,7 @@ using BeginMobile.Services.Logging;
 using BeginMobile.UploadPages;
 using BeginMobile.Utils;
 using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BeginMobile
@@ -18,7 +19,7 @@ namespace BeginMobile
         private static ILoginManager _loginManager;
         public static BeginApplication CurrentBeginApplication;
         private readonly ILoggingService _log;
-
+        private NavigationPage nav;
         public BeginApplication()
         {
             CurrentBeginApplication = this;
@@ -35,9 +36,17 @@ namespace BeginMobile
             AppDomain.CurrentDomain.UnhandledException += AppExceptionEventHander;
 
             _log.Info("Start Begin Xamarin Application.");
-            MainPage = new LoginModalPage(this);
-        }
 
+            nav = new NavigationPage(new SplashPage());    //load splash page      
+            MainPage = nav;
+            LoadData();                                                
+        }
+        
+        private async void LoadData()
+        {
+            await Task.Delay(3000);
+            MainPage = new NavigationPage(new LoginModalPage(this));
+        }
         private void AppExceptionEventHander(object sender, UnhandledExceptionEventArgs eventArgs)
         {
             MessagingCenter.Send(this, "UnhandledException", eventArgs);
@@ -106,5 +115,21 @@ namespace BeginMobile
         }
 
         #endregion
+    }
+
+    public class SplashPage : ContentPage
+    {
+        public SplashPage()
+        {
+            BackgroundColor = Color.FromHex("646567");
+            var image = new Image { Source = ImageSource.FromFile(BeginApplication.Styles.SplashImage), Aspect = Aspect.AspectFit };
+            Content = new StackLayout
+                      {
+                          
+                          HorizontalOptions = LayoutOptions.Center,
+                          VerticalOptions = LayoutOptions.Center,
+                          Children = { image}
+                      };
+        }
     }
 }

@@ -937,6 +937,18 @@ namespace BeginMobile.Utils
             get { return "terms_conditions.png"; }
         }
 
+        public string OfferServicesIcon
+        {
+            get { return "services.png"; }
+        }
+
+        public string SplashImage
+        {
+            get { return "splash_screen.PNG"; }
+        }
+
+
+
         #endregion
     }
 }

@@ -29,9 +29,9 @@ namespace BeginMobile.UploadPages
 
             var imageCarier = new CircleImage
                               {
-                                  Source = BeginApplication.Styles.DefaultWallIcon,
+                                  Source = BeginApplication.Styles.OfferServicesIcon,
                                   Style = BeginApplication.Styles.CircleImageUpload,
-                                  HorizontalOptions = LayoutOptions.CenterAndExpand,
+								  HorizontalOptions = LayoutOptions.CenterAndExpand,
                               };
 
             
@@ -40,13 +40,15 @@ namespace BeginMobile.UploadPages
                                {
                                    Items =
                                    {
-                                       "I'm  a Web Designer",
-                                       "I'm  a Software Developer",
+                                       "I'm  a Designer",
                                        "I'm  a Teacher",
                                        "I'm  a Painter",
                                        "I'm  a Student"
                                    },
-                                   Style = BeginApplication.Styles.PickerStyle
+                                   Title = "Select Your Profession",
+                                   
+                                   Style = BeginApplication.Styles.PickerStyle,
+                                   BackgroundColor = Color.FromHex("A6A6A6")
                                };
 
             var buttonOkReady = new Button
@@ -64,19 +66,23 @@ namespace BeginMobile.UploadPages
             };
 
             _mainStackLayout = new StackLayout
-                      {
-                          HorizontalOptions = LayoutOptions.Center,
-                          BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
-                          Children =
-                          {
-                              labelServicesTitle,
-                              labelWhatDoYouDo,
-                              imageCarier,
-                              pickerCarier,
-                              buttonOkReady
-                          }
-                      };
-            _mainStackLayout.Padding = new Thickness(10,30, 10, 10);
+                               {
+                                   HorizontalOptions = LayoutOptions.Center,
+                                   BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
+                                   Children =
+                                   {
+                                       labelServicesTitle,
+                                       labelWhatDoYouDo,
+                                       imageCarier,
+                                       pickerCarier,
+                                       buttonOkReady
+                                   },
+                                   Padding =
+                                       Device.Idiom == TargetIdiom.Phone
+                                           ? new Thickness(10, Device.OnPlatform(50, 50, 50), 10, 10)
+                                           : new Thickness(10, Device.OnPlatform(80, 80, 80), 10, 10)
+                               };
+
             Content = _mainStackLayout;
 
             //SizeChanged +=(sender,e)=> ChangePadding(this);

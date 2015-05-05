@@ -304,6 +304,12 @@
   <ItemGroup>
     <BundleResource Include="Resources\takephoto.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\splash_screen.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\services.PNG" />
+  </ItemGroup>
   <Import Project="..\BeginMobile\BeginMobile.projitems" Label="Shared" Condition="Exists('..\BeginMobile\BeginMobile.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
