@@ -15,6 +15,7 @@ namespace BeginMobile.Accounts
 
         public ChangePasswordPage()
         {
+            Style = BeginApplication.Styles.PageStyle;
             var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             var loginUserManager = new LoginUserManager();
 
@@ -24,6 +25,7 @@ namespace BeginMobile.Accounts
             {
                 Placeholder = AppResources.PasswordPlaceholder,
                 IsPassword = true,
+                Style = BeginApplication.Styles.PageStyle
             };
 
             _entryNewPassword = new Entry

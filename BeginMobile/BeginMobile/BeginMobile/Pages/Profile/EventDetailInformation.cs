@@ -15,6 +15,7 @@ namespace BeginMobile.Pages.Profile
 
         public EventDetailInformation(ProfileEvent eventInfo)
         {
+            Style = BeginApplication.Styles.PageStyle;
             this.SetBinding(TitleProperty, "Name", stringFormat: "Event - {0}");
 
             var profileEvent = eventInfo;

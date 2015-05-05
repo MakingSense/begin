@@ -10,6 +10,7 @@ namespace BeginMobile.Pages.Profile
             FontSize = Device.GetNamedSize(NamedSize.Large, typeof (Label));
             FontAttributes = FontAttributes.Bold;
             HorizontalOptions = LayoutOptions.Center;
+            Style = BeginApplication.Styles.TitleStyle;
         }
     }
 }

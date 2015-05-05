@@ -34,6 +34,7 @@ namespace BeginMobile.Pages.Profile
 
         public Contacts()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = "Contacts";
             _searchView = new SearchView();
             _currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];

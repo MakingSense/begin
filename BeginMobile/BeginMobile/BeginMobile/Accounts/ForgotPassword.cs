@@ -15,6 +15,7 @@ namespace BeginMobile.Accounts
 
 	    public ForgotPassword ()
 		{
+            Style = BeginApplication.Styles.PageStyle;
 		    var logo = new Image
             {
                 Source = Device.OS == TargetPlatform.iOS
@@ -31,7 +32,7 @@ namespace BeginMobile.Accounts
 
             var labelSubTitle = new Label{
                 Text = AppResources.ForgotPassLabelEnterEmail, 
-                                               Style = BeginApplication.Styles.BodyStyle
+                                               Style = BeginApplication.Styles.TextBodyStyle
                                            };
 
             _entryEmail = new Entry { Placeholder = AppResources.ForgotPassPlaceHolderEmail };

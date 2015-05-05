@@ -7,6 +7,7 @@ namespace BeginMobile.Pages.ShopPages
     {
         public ShopItemPage()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.ShopItemPageTitle;
 
             var browser = new WebView();

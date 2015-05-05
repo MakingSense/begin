@@ -7,6 +7,7 @@ namespace BeginMobile.Pages
     {
         public TabContent(string title, string icon)
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = title;
             Icon = icon;
             Padding = new Thickness(0, 0, 0, 0);

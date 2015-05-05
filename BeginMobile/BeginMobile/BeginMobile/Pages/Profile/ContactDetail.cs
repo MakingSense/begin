@@ -19,6 +19,7 @@ namespace BeginMobile.Pages.Profile
         
         public ContactDetail(Contact contact)
         {
+            Style = BeginApplication.Styles.PageStyle;
             _contact = contact;
             _loginUser = (LoginUser) Application.Current.Properties["LoginUser"];
 

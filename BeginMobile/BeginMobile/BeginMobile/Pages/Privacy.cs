@@ -7,6 +7,7 @@ namespace BeginMobile.Pages
     {
         public Privacy()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.PrivacyTitle;
             Content = new StackLayout
                       {

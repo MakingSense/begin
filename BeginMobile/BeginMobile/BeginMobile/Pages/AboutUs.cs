@@ -7,6 +7,7 @@ namespace BeginMobile.Pages
     {
         public AboutUs()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.AboutUsTitle;
             Content = new StackLayout
                       {

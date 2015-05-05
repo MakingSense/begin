@@ -9,6 +9,7 @@ namespace BeginMobile.Pages.Profile
     {
         public ProfileMe(User user)
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.LabelProfileMeTitle;
             var userAvatar = BeginApplication.Styles.DefaultProfileUserIconName;
 

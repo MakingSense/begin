@@ -19,6 +19,7 @@ namespace BeginMobile.Accounts
 
         public Login(ILoginManager iLoginManager)
         {
+            Style = BeginApplication.Styles.PageStyle;
             var logo = new Image
                        {
                            Source = ImageSource.FromFile("logotype.png"),
@@ -30,13 +31,15 @@ namespace BeginMobile.Accounts
             _entryEmail = new Entry
                           {
                               Placeholder = AppResources.UsernamePlaceholder,
-                              Keyboard = Keyboard.Email
+                              Keyboard = Keyboard.Email,
+                              Style = BeginApplication.Styles.EntryStyle
                           };
 
             _entryPassword = new Entry
                              {
                                  Placeholder = AppResources.PasswordPlaceholder,
-                                 IsPassword = true
+                                 IsPassword = true,
+                                 Style = BeginApplication.Styles.EntryStyle
                              };
 
             var buttonForgotPassword = new Button

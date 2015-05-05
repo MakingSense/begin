@@ -15,6 +15,7 @@ namespace BeginMobile.Pages.MessagePages
 
         public SendMessage()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = "Send Message";
 
             var labelTextUserName = new Label
@@ -32,8 +33,14 @@ namespace BeginMobile.Pages.MessagePages
                                        Text = AppResources.EditorMessagePlaceholder,
                                        Style = BeginApplication.Styles.SubtitleStyle
                                    };
-            _entryUserName = new Entry();
-            _entrySubject = new Entry();
+            _entryUserName = new Entry
+                             {
+                                 Style = BeginApplication.Styles.EntryStyle
+                             };
+            _entrySubject = new Entry
+                            {
+                                Style = BeginApplication.Styles.EntryStyle
+                            };
             _editorMessageContent = new Editor
                                     {
                                         HeightRequest = 100,

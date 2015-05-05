@@ -11,13 +11,14 @@ namespace BeginMobile.Pages.Profile
 
         public Information()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = "Information";
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             Init();
         }
 
         private async Task Init()
-        {
+        {            
             _profileInfo = await BeginApplication.ProfileServices.GetInformationDetail(_currentUser.User.UserName, _currentUser.AuthToken) ??
                            new ProfileInfo { Details = new UserDetails() };
 

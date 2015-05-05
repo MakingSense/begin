@@ -9,6 +9,7 @@ namespace BeginMobile.Pages.Notifications
 
         public NotificationDetail(NotificationViewModel notificationViewModel)
         {
+            Style = BeginApplication.Styles.PageStyle;
             _notificationViewModel = notificationViewModel;
 
             Content = new StackLayout

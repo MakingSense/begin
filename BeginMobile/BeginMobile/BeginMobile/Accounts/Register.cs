@@ -25,6 +25,7 @@ namespace BeginMobile.Accounts
         private readonly ILoginManager _iLoginManager;
         public Register(ILoginManager iLoginManager)
         {
+            Style = BeginApplication.Styles.PageStyle;
             _iLoginManager = iLoginManager;
             if (AppResources.RegisterFormTitle != null) Title = AppResources.RegisterFormTitle;
 

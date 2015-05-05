@@ -254,7 +254,6 @@ namespace BeginMobile.Menu
             var labelOptionName = new Label
                                   {
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
-                                      Style = BeginApplication.Styles.ListItemTextStyle,
                                       TextColor = BeginApplication.Styles.MenuTextOptionsColor
                                   };
 
@@ -304,13 +303,13 @@ namespace BeginMobile.Menu
                                   {
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       YAlign = TextAlignment.Center,
-                                      Style = BeginApplication.Styles.ListItemTextStyle,
+                                      TextColor = BeginApplication.Styles.MenuTextOptionsColor
                                   };
             var labelDescription = new Label
                                    {
                                        HorizontalOptions = LayoutOptions.FillAndExpand,
                                        YAlign = TextAlignment.Center,
-                                       Style = BeginApplication.Styles.ListItemDetailTextStyle
+                                       TextColor = BeginApplication.Styles.MenuTextOptionsColor
                                    };
             labelDescription.SetBinding(Label.TextProperty, "OptionDetail");
             labelOptionName.SetBinding(Label.TextProperty, "OptionName");

@@ -12,6 +12,7 @@ namespace BeginMobile.Accounts
 
         public UpdateProfilePage()
         {
+            Style = BeginApplication.Styles.PageStyle;
             var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             var loginUserManager = new LoginUserManager();
 

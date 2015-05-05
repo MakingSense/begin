@@ -7,6 +7,7 @@ namespace BeginMobile.Pages
     {
         public HelpCenter()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.HelpCenterTitle;
 
             Content = new StackLayout

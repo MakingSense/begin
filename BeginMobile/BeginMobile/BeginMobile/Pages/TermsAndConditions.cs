@@ -7,12 +7,13 @@ namespace BeginMobile.Pages
     {
         public TermsAndConditions(bool isLoadByLogin)
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.TermsAndConditionsTitle;
 
             var labelBody = new Label
                             {
                                 Text = AppResources.TermsAndConditionsLabelTermsAndConditions,
-                                Style = BeginApplication.Styles.BodyStyle
+                                Style = BeginApplication.Styles.TextBodyStyle
                             };
 
             if (isLoadByLogin)

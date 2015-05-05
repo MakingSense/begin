@@ -16,6 +16,7 @@ namespace BeginMobile.Pages.GroupPages
 
         public GroupItemPage(Group group)
         {
+            Style = BeginApplication.Styles.PageStyle;
             this.SetBinding(TitleProperty, "Name", stringFormat: "Group - {0}");
             _groupItem = group;
             _currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];

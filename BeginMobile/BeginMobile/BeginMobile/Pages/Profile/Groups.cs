@@ -22,6 +22,7 @@ namespace BeginMobile.Pages.Profile
 
         public Groups()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = "Groups";
             var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 

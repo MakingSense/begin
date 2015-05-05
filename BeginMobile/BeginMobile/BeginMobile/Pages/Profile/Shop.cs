@@ -14,6 +14,7 @@ namespace BeginMobile.Pages.Profile
         private LoginUser currentUser;
         public Shop()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.LabelShopTitle;
             
             currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];

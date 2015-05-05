@@ -28,6 +28,7 @@ namespace BeginMobile.Pages.Profile
 
         public Events()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.LabelEventTitle;
 
             _searchView = new SearchView();

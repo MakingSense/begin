@@ -38,6 +38,7 @@ namespace BeginMobile.Pages.MessagePages
 
         public SentMessage()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.MessageSentTitle;
             IsSent = true;
             InboxMessage.IsInbox = false;

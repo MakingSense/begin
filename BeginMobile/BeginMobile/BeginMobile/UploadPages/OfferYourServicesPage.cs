@@ -6,25 +6,31 @@ namespace BeginMobile.UploadPages
 {
     public class OfferYourServices : ContentPage
     {
+        private readonly StackLayout _mainStackLayout;
+
         public OfferYourServices()
         {
             var user = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+            Style = BeginApplication.Styles.PageStyle;
+            BackgroundColor = BeginApplication.Styles.UploadBackgroundColor;
             var labelServicesTitle = new Label
                                      {
                                          Text = "Offer your Services",
-                                         Style = BeginApplication.Styles.TitleStyle
+                                         Style = BeginApplication.Styles.TitleStyle,
+                                         XAlign = TextAlignment.Center
                                      };
 
             var labelWhatDoYouDo = new Label
                                    {
                                        Text = "What do you do?",
-                                       Style = BeginApplication.Styles.SubtitleStyle
+                                       Style = BeginApplication.Styles.SubtitleStyle,
+                                       XAlign = TextAlignment.Center
                                    };
 
             var imageCarier = new CircleImage
                               {
                                   Source = BeginApplication.Styles.DefaultWallIcon,
-                                  Style = BeginApplication.Styles.CircleImageCommon,
+                                  Style = BeginApplication.Styles.CircleImageUpload
                               };
 
             
@@ -38,13 +44,15 @@ namespace BeginMobile.UploadPages
                                        "I'm  a Teacher",
                                        "I'm  a Painter",
                                        "I'm  a Student"
-                                   }
+                                   },
+                                   Style = BeginApplication.Styles.PickerStyle
                                };
 
             var buttonOkReady = new Button
                                 {
                                     Text = "Ok, I'm Ready",
-                                    BackgroundColor = Color.Transparent
+                                    Style = BeginApplication.Styles.LinkButton,
+                                    FontSize = 16
                                 };
 
             
@@ -54,8 +62,9 @@ namespace BeginMobile.UploadPages
                 BeginApplication.CurrentBeginApplication.ShowMainPage(user);
             };
 
-            Content = new StackLayout
+            _mainStackLayout = new StackLayout
                       {
+                          HorizontalOptions = LayoutOptions.Center,
                           BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                           Children =
                           {
@@ -66,6 +75,17 @@ namespace BeginMobile.UploadPages
                               buttonOkReady
                           }
                       };
+            _mainStackLayout.Padding = new Thickness(10,30, 10, 10);
+            Content = _mainStackLayout;
+
+            //SizeChanged +=(sender,e)=> ChangePadding(this);
+
+        }
+        private void ChangePadding(Page page)
+        {
+            _mainStackLayout.Padding = page.Width > page.Height
+                ? new Thickness(page.Width * 0.01, page.Height * 0.15, page.Width * 0.01, page.Height * 0.01)
+                : new Thickness(page.Width * 0.01, page.Height * 0.25, page.Width * 0.01, page.Height * 0.01);
         }
     }
 }

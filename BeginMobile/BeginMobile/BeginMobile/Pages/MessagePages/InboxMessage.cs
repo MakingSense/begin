@@ -38,6 +38,7 @@ namespace BeginMobile.Pages.MessagePages
 
         public InboxMessage()
         {
+            Style = BeginApplication.Styles.PageStyle;
             _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
 
             LoadDeafultImage();

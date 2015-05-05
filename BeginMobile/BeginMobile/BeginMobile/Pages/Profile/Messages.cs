@@ -11,6 +11,7 @@ namespace BeginMobile.Pages.Profile
         private ProfileInformationMessages _profileMessage;
         public Messages()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = "Messages";
 
             var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];

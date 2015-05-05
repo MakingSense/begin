@@ -54,7 +54,6 @@ namespace BeginMobile.Pages.MessagePages
                                            VerticalOptions = LayoutOptions.Start,
                                            ItemsSource = listMessageMenuItems,
                                            ItemTemplate = dataTemplateMenuOptions,
-                                           BackgroundColor = BeginApplication.Styles.MenuBackground,
                                            HasUnevenRows = true
                                        };
 

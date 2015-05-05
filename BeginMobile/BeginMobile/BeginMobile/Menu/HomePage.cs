@@ -14,6 +14,7 @@ namespace BeginMobile.Menu
 
         public HomePage(LoginUser loginUser)
         {
+            Style = BeginApplication.Styles.PageStyle;
             LoadInitialServices();
 
             _loginUser = loginUser;

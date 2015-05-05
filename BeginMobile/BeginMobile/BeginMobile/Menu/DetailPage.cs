@@ -7,6 +7,7 @@ namespace BeginMobile.Menu
         {
             public DetailPage()
             {
+                Style = BeginApplication.Styles.PageStyle;
                 Title = AppResources.LabelDetailPageHome.ToUpper();
                 Icon = null;
 

@@ -16,6 +16,7 @@ namespace BeginMobile.Pages.MessagePages
 
         public MessageDetail(MessageViewModel messageViewModel)
         {
+            Style = BeginApplication.Styles.PageStyle;
             if (messageViewModel != null) MessageViewModel = messageViewModel;
             Title = AppResources.MessageDetailTitle;
             _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];

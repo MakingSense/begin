@@ -15,6 +15,7 @@ namespace BeginMobile.Pages.Profile
 
         public MyActivity()
         {
+            Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.LabelActivityTitle;
             _currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
 
