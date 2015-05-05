@@ -235,28 +235,34 @@ namespace BeginMobile.Android
 			public const int padlock = 2130837526;
 			
 			// aapt resource value: 0x7f020017
-			public const int privacy = 2130837527;
+			public const int photo = 2130837527;
 			
 			// aapt resource value: 0x7f020018
-			public const int ratingoff = 2130837528;
+			public const int privacy = 2130837528;
 			
 			// aapt resource value: 0x7f020019
-			public const int ratingon = 2130837529;
+			public const int ratingoff = 2130837529;
 			
 			// aapt resource value: 0x7f02001a
-			public const int shop = 2130837530;
+			public const int ratingon = 2130837530;
 			
 			// aapt resource value: 0x7f02001b
-			public const int terms_conditions = 2130837531;
+			public const int shop = 2130837531;
 			
 			// aapt resource value: 0x7f02001c
-			public const int userdefault = 2130837532;
+			public const int takephoto = 2130837532;
 			
 			// aapt resource value: 0x7f02001d
-			public const int userdefault3 = 2130837533;
+			public const int terms_conditions = 2130837533;
 			
 			// aapt resource value: 0x7f02001e
-			public const int userprofile = 2130837534;
+			public const int userdefault = 2130837534;
+			
+			// aapt resource value: 0x7f02001f
+			public const int userdefault3 = 2130837535;
+			
+			// aapt resource value: 0x7f020020
+			public const int userprofile = 2130837536;
 			
 			static Drawable()
 			{

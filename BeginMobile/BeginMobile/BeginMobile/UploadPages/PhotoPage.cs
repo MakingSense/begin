@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BeginMobile.UploadPages;
+using ImageCircle.Forms.Plugin.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +21,9 @@ namespace BeginMobile.Pages.PhotoUpload
         private ImageSource imageSource;
         private string status;
 
-        public PhotoPage()
+        public PhotoPage(PictureUploader uploader, bool isCamera = false)
         {
-            Title = "Camera test";
+            Title = isCamera ? "Take photo" : "Select photo";
             
             img.WidthRequest = 60;
             img.HeightRequest = 60;
@@ -31,13 +33,131 @@ namespace BeginMobile.Pages.PhotoUpload
             {
                 Text = "test",
             };
-
             button.Clicked += async (s, e) =>
             {
                 //SelectPicture();
             };
 
-            this.Content = new StackLayout
+            var tapGestureRecognizer = new TapGestureRecognizer()
+            {
+                NumberOfTapsRequired = 1,
+            };
+            tapGestureRecognizer.Tapped += async (s, e) =>
+            {
+                var imageSource = ImageSource.FromFile("photo");
+                uploader.UpdatePhoto(imageSource);
+                await Navigation.PopAsync();
+            };
+
+            var gridOptions = new Grid()
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
+                {
+                    new RowDefinition{Height = GridLength.Auto}
+                }
+
+            };
+
+            var buttonCancelar = new Button
+            {
+                Text = "Cancelar",
+                BackgroundColor = Color.Transparent
+            };
+            buttonCancelar.Clicked += async (s, e) =>
+            {
+                await Navigation.PopAsync();
+            };
+
+            var labelCarrete = new Label
+            {
+                Text = "Carrete",
+                BackgroundColor = Color.Transparent,
+                YAlign = TextAlignment.Center,
+                FontAttributes = FontAttributes.Bold,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            var buttonCerrar = new Button
+            {
+                Text = "Cerrar",
+                BackgroundColor = Color.Transparent
+            };
+
+            gridOptions.Children.Add(buttonCancelar, 0, 0);
+            gridOptions.Children.Add(labelCarrete, 1, 0);
+            gridOptions.Children.Add(buttonCerrar, 2, 0);
+
+
+            var gridMain = new Grid()
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
+                {
+                    new RowDefinition(){ Height =  40},
+                    new RowDefinition(){ Height =  GridLength.Auto},
+                    new RowDefinition(){ Height =  60}
+                }
+            };
+
+
+            gridMain.Children.Add(gridOptions, 0, 0);
+
+            if (isCamera == true)
+            {
+                var imageCamera = new Image()
+                {
+                    Source =  "photo.jpg",
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.FillAndExpand,
+                };
+
+                var imageCircleTakephoto = new CircleImage()
+                {
+                    Source = "takephoto.jpg",
+                    HorizontalOptions = LayoutOptions.FillAndExpand
+                };
+                imageCircleTakephoto.GestureRecognizers.Add(tapGestureRecognizer);
+
+                gridMain.Children.Add(imageCamera, 0, 1);
+                gridMain.Children.Add(imageCircleTakephoto, 0, 2);
+            }
+            else
+            {
+                var gridPhotos = new Grid()
+                {
+                    HorizontalOptions =LayoutOptions.FillAndExpand,
+                    RowDefinitions =
+                    {
+                        new RowDefinition(){Height = GridLength.Auto},
+                        new RowDefinition(){Height = GridLength.Auto},
+                        new RowDefinition(){Height = GridLength.Auto}
+                    },
+                    ColumnDefinitions =
+                    {
+                        new ColumnDefinition(){Width = GridLength.Auto},
+                        new ColumnDefinition(){Width = GridLength.Auto},
+                        new ColumnDefinition(){Width = GridLength.Auto}
+                    }
+                };
+
+                var imageCamera = new Image()
+                {
+                    Source =  "photo.jpg",
+                    HeightRequest = 100,
+                    WidthRequest = 100
+                };
+                imageCamera.GestureRecognizers.Add(tapGestureRecognizer);
+
+                gridPhotos.Children.Add(imageCamera, 0, 0);
+
+                gridMain.Children.Add(gridPhotos, 0, 1);
+            }
+
+
+            Content = gridMain;
+
+            /*this.Content = new StackLayout
             {
                 Orientation = StackOrientation.Vertical,
                 VerticalOptions = LayoutOptions.Center,
@@ -50,7 +170,7 @@ namespace BeginMobile.Pages.PhotoUpload
                     img,
                     button
                 }
-            };
+            };*/
 
             //var device = Resolver.Resolve<IDevice>();
             //task = DependencyService.Get<IMediaPicker>() ?? device.MediaPicker;
@@ -88,7 +208,7 @@ namespace BeginMobile.Pages.PhotoUpload
             }); */
         }
 
-        private async Task SelectPicture()
+        /*private async Task SelectPicture()
         {
             var device = Resolver.Resolve<IDevice>();
             var mediaPicker = DependencyService.Get<IMediaPicker>() ?? device.MediaPicker;
@@ -109,7 +229,7 @@ namespace BeginMobile.Pages.PhotoUpload
             {
                 this.status = ex.Message;
             }
-        }
+        }*/
 
         /*private async Task TakePicture()
         {
@@ -139,5 +259,12 @@ namespace BeginMobile.Pages.PhotoUpload
                 return null;
             }, _scheduler);
         }*/
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            Content = null;
+        }
     }
+
 }

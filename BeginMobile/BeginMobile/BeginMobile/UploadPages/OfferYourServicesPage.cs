@@ -1,12 +1,14 @@
-﻿using ImageCircle.Forms.Plugin.Abstractions;
+﻿using BeginMobile.Services.DTO;
+using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
-namespace BeginMobile.Accounts
+namespace BeginMobile.UploadPages
 {
     public class OfferYourServices : ContentPage
     {
         public OfferYourServices()
         {
+            var user = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             var labelServicesTitle = new Label
                                      {
                                          Text = "Offer your Services",
@@ -22,8 +24,10 @@ namespace BeginMobile.Accounts
             var imageCarier = new CircleImage
                               {
                                   Source = BeginApplication.Styles.DefaultWallIcon,
-                                  Style = BeginApplication.Styles.CircleImageCommon
+                                  Style = BeginApplication.Styles.CircleImageCommon,
                               };
+
+            
 
             var pickerCarier = new Picker
                                {
@@ -42,6 +46,14 @@ namespace BeginMobile.Accounts
                                     Text = "Ok, I'm Ready",
                                     BackgroundColor = Color.Transparent
                                 };
+
+            
+
+            buttonOkReady.Clicked += (s, e) =>
+            {
+                BeginApplication.CurrentBeginApplication.ShowMainPage(user);
+            };
+
             Content = new StackLayout
                       {
                           BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,

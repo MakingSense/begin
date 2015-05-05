@@ -179,6 +179,8 @@
     <AndroidResource Include="Resources\Drawable\a_event.png" />
     <AndroidResource Include="Resources\Drawable\groups.png" />
     <AndroidResource Include="Resources\Drawable\ifeed.png" />
+    <AndroidResource Include="Resources\Drawable\photo.jpg" />
+    <AndroidResource Include="Resources\Drawable\takephoto.jpg" />
     <EmbeddedResource Include="Resources\Drawable\ifeeds.png" />
     <AndroidResource Include="Resources\Drawable\privacy.png" />
     <AndroidResource Include="Resources\Drawable\igroup.png" />

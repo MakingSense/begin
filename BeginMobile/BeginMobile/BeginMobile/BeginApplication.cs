@@ -52,7 +52,7 @@ namespace BeginMobile
 
         public void ShowUploaderPage()
         {
-            MainPage = new Uploader();
+            MainPage = new NavigationPage(new Uploader());
         }
 
         public void Logout()
