@@ -108,6 +108,37 @@ namespace BeginMobile.Utils
             }
         }
 
+        public Style LinkLabelButton
+        {
+            get
+            {
+                var style = new Style(typeof (Button))
+                            {
+                                Setters =
+                                {
+                                    new Setter
+                                    {
+                                        Property = VisualElement.BackgroundColorProperty,
+                                        Value = Color.Transparent
+                                    },
+                                    new Setter {Property = Button.BorderRadiusProperty, Value = 0},
+                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamily},
+                                    new Setter {Property = Button.FontSizeProperty, Value = _textFontSizeSmall},
+                                    new Setter
+                                    {
+                                        Property = Button.TextColorProperty,
+                                        Value = Device.OnPlatform
+                                            (Color.FromHex("646567"), Color.FromHex("646567"), Color.FromHex("646567"))
+                                    },
+                                }
+                            };
+
+                return style;
+            }
+        }
+
+        
+
         public Style DefaultButton
         {
             get

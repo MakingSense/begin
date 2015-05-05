@@ -54,7 +54,7 @@ namespace BeginMobile.UploadPages
             _imageUploaded = new CircleImage
             {
                 Source = BeginApplication.Styles.DefaultWallIcon,
-                Style = BeginApplication.Styles.CircleImageCommon,
+                Style = BeginApplication.Styles.CircleImageUpload,
                 HorizontalOptions =  LayoutOptions.CenterAndExpand,
             };
             _imageUploaded.GestureRecognizers.Add(tapGestureRecognizer);
@@ -62,8 +62,9 @@ namespace BeginMobile.UploadPages
             _labelUploadPicture = new Label
                                 {
                                     Text = "Upload Picture",
-                                    BackgroundColor = Color.Transparent,
-                                    HorizontalOptions =  LayoutOptions.CenterAndExpand,
+                                    Style = BeginApplication.Styles.PickerStyle,
+                                    XAlign = TextAlignment.Center,
+                                    HorizontalOptions = LayoutOptions.CenterAndExpand,
                                     IsVisible = true
                                 };
             _labelUploadPicture.GestureRecognizers.Add(tapGestureRecognizer);
@@ -71,7 +72,8 @@ namespace BeginMobile.UploadPages
             _labelReplacePicture = new Label
                                 {
                                     Text = "Replace",
-                                    BackgroundColor = Color.Transparent,
+                                    Style = BeginApplication.Styles.PickerStyle,
+                                    XAlign = TextAlignment.Center,
                                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                                     IsVisible =  false
                                 };
@@ -82,16 +84,19 @@ namespace BeginMobile.UploadPages
             _buttonNextStep = new Button()
             {
                 Text = "Next step!",
+                Style = BeginApplication.Styles.LinkLabelButton,
                 BackgroundColor = Color.Transparent,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
+                FontSize = 16,
                 IsVisible = false
             };
             _buttonNextStep.Clicked += (e, s) => MessagingCenter.Send<ContentPage>(this, "OfferYourServices");
 
             var stackLayoutPicture = new StackLayout()
             {
-                Spacing = 2,
-                HorizontalOptions =  LayoutOptions.CenterAndExpand,
+                BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
+                Spacing = 5,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Children =
                 {
@@ -105,17 +110,22 @@ namespace BeginMobile.UploadPages
             var labelUploadPicture = new Label()
             {
                 Text = "Upload your Picture",
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                Style = BeginApplication.Styles.TitleStyle,
+                XAlign = TextAlignment.Center,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
             };
 
             var labelGooLooking = new Label()
             {
                 Text = "a Good Looking One....",
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                Style = BeginApplication.Styles.SubtitleStyle,
+                XAlign = TextAlignment.Center,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
             };
 
             var gridMain = new Grid()
             {
+                BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 RowSpacing = 6,
@@ -133,6 +143,7 @@ namespace BeginMobile.UploadPages
 
             Content = new StackLayout()
             {
+                BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                 Padding = new Thickness(10, Device.OnPlatform(20, 20, 20), 10, 10),
                 Children = {gridMain}
             };
@@ -148,7 +159,13 @@ namespace BeginMobile.UploadPages
 
         private BoxView BoxViewLine()
         {
-            return new BoxView { Color = BeginApplication.Styles.ColorLine, WidthRequest = 100, HeightRequest = 1 };
+            return new BoxView
+            {
+                Color = BeginApplication.Styles.ColorLine, 
+                WidthRequest = 100, 
+                HeightRequest = 1,
+                HorizontalOptions = LayoutOptions. FillAndExpand
+            };
         }
     }
 }

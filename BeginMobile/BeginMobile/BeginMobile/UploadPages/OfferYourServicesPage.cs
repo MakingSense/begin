@@ -30,7 +30,8 @@ namespace BeginMobile.UploadPages
             var imageCarier = new CircleImage
                               {
                                   Source = BeginApplication.Styles.DefaultWallIcon,
-                                  Style = BeginApplication.Styles.CircleImageUpload
+                                  Style = BeginApplication.Styles.CircleImageUpload,
+                                  HorizontalOptions = LayoutOptions.CenterAndExpand,
                               };
 
             
@@ -57,7 +58,7 @@ namespace BeginMobile.UploadPages
 
             
 
-            buttonOkReady.Clicked += (s, e) =>
+            buttonOkReady.Clicked += async (s, e) =>
             {
                 BeginApplication.CurrentBeginApplication.ShowMainPage(user);
             };

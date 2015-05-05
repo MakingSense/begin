@@ -45,7 +45,7 @@ namespace BeginMobile
             _log.Exception(eventArgs.ExceptionObject as Exception);
         }
 
-        public void ShowMainPage(LoginUser loginUser)
+        public async void ShowMainPage(LoginUser loginUser)
         {
             MainPage = new NavigationPage(new HomePage(loginUser));
         }
