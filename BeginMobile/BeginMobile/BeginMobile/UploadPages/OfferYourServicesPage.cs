@@ -44,6 +44,7 @@ namespace BeginMobile.Accounts
                                 };
             Content = new StackLayout
                       {
+                          BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                           Children =
                           {
                               labelServicesTitle,
