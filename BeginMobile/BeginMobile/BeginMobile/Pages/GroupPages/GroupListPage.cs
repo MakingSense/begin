@@ -11,7 +11,7 @@ using System.IO;
 
 namespace BeginMobile.Pages.GroupPages
 {
-    public class GroupListPage : TabContent
+    public class GroupListPage : TabContent, IDisposable
     {
         private ListView _listViewGroup;
         private Label _labelNoGroupsMessage;
@@ -213,6 +213,11 @@ namespace BeginMobile.Pages.GroupPages
             #if __IOS__
                         this._imageSourceGroupByDefault = BeginApplication.Styles.DefaultGroupIcon;
             #endif
+        }
+
+        public void Dispose()
+        {
+            //throw new NotImplementedException();
         }
     }
 }

@@ -342,5 +342,12 @@ namespace BeginMobile.Menu
         public const string HelpCenter = "Help Center";
         public const string TermsAndConditions = "Terms And Conditions";
         public const string UpdateProfile = "Update Profile";
+
+        //New
+        public const string AppHomeChildGroups = "Groups";
+        public const string AppHomeChildFindContacts = "Find Contacts";
+        public const string AppHomeChildEvents = "Events";
+        public const string AppHomeChildMyActivities = "My Activities";
+
     }
 }

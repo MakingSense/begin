@@ -11,7 +11,7 @@ using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.Pages.Profile
 {
-    public class Events : ContentPage
+    public class Events : ContentPage,IDisposable
     {
         private Label _labelNoEventsMessage;
         private ListView _eventsListView;
@@ -241,6 +241,11 @@ namespace BeginMobile.Pages.Profile
             base.OnDisappearing();
            // this.Content = null;
             _profileEvents = null;
+        }
+
+        public void Dispose()
+        {
+            //throw new NotImplementedException();
         }
     }
 }

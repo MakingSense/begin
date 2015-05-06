@@ -12,7 +12,7 @@ using Xamarin.Forms;
 
 namespace BeginMobile.Pages.ContactPages
 {
-    public class ContactPage : TabContent
+    public class ContactPage : TabContent, IDisposable
     {
         private readonly ListView _listViewContacts;
         private Label _labelNoContactsMessage;
@@ -431,5 +431,10 @@ namespace BeginMobile.Pages.ContactPages
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            
+        }
     }
 }

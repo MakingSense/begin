@@ -55,6 +55,7 @@ namespace BeginMobile.UploadPages
                                 {
                                     Text = "Ok, I'm Ready",
                                     Style = BeginApplication.Styles.LinkButton,
+                                    HorizontalOptions = LayoutOptions.CenterAndExpand,
                                     FontSize = 16
                                 };
 

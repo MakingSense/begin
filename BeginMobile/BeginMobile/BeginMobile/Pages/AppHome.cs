@@ -1,4 +1,5 @@
 ﻿using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Menu;
 using BeginMobile.Pages.ContactPages;
 using BeginMobile.Pages.GroupPages;
 using BeginMobile.Pages.MessagePages;
@@ -33,6 +34,20 @@ namespace BeginMobile.Pages
                 new Notification(new Label { Text = AppResources.AppHomeChildNotifications, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
                     Device.OnPlatform("Chat.png", "padlock.png", "padlock.png")));
 
+            //Children.Add(
+            //    new GroupListPage(new Label { Text = AppResources.AppHomeChildGroups, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
+            //        Device.OnPlatform("Users_three_2.png", "padlock.png", "padlock.png")));
+
+            //Children.Add(
+            //   new ContactPage(new Label { Text = AppResources.AppHomeChildFindContacts, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
+            //       Device.OnPlatform("Users_three_switch.png", "padlock.png", "padlock.png")));
+
+#if __ANDROID__
+            Children.Add(
+                new OptionsPage(new Label { Text = "...", Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
+                    "padlock.png"));
+#endif
+#if __IOS__
             Children.Add(
                 new GroupListPage(new Label { Text = AppResources.AppHomeChildGroups, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
                     Device.OnPlatform("Users_three_2.png", "padlock.png", "padlock.png")));
@@ -40,6 +55,7 @@ namespace BeginMobile.Pages
             Children.Add(
                new ContactPage(new Label { Text = AppResources.AppHomeChildFindContacts, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
                    Device.OnPlatform("Users_three_switch.png", "padlock.png", "padlock.png")));
+#endif
         }
     }
 }
