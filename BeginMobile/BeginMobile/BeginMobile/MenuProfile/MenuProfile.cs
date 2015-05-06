@@ -18,7 +18,7 @@ namespace BeginMobile.MenuProfile
             this.Add(new MenuItem()
             {
                 Title = AppResources.ToolBarProfileMeMyAct,
-                //IconSource = "contacts.png"
+                IconSource = "Icon.png", 
                 TargetType = typeof(MyActivity)
             });
 

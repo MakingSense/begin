@@ -26,8 +26,8 @@ namespace BeginMobile.Pages.Profile
             //Toolbar menu item
             var toolBarItemMyActivity = new ToolbarItem
                                  {
-                                     Icon = "",
-                                     Text = AppResources.ToolBarProfileMeMyAct,
+                                     Icon = "Icon.png",
+                                     Text = "",//AppResources.ToolBarProfileMeMyAct,
                                      Order = ToolbarItemOrder.Primary,
                                      Command = new Command(() => Navigation.PushAsync(new MyActivity()))
                                  };
