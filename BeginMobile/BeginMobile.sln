@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BeginMobile.Shared", "BeginMobile\BeginMobile\BeginMobile.Shared.shproj", "{CD333786-513F-4168-9ECE-CE3AEC22052A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeginMobile.Android", "BeginMobile\BeginMobile.Android\BeginMobile.Android.csproj", "{EDF0336A-4AE5-4BA7-805D-7735B0ACF8E9}"
