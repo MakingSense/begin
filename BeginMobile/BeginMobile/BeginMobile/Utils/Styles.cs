@@ -196,8 +196,8 @@ namespace BeginMobile.Utils
                                                         {
                                                             Property = Label.TextColorProperty,
                                                             Value =
-                                                                Device.OnPlatform(Color.FromHex("7A7B7D"),
-                                                                    Color.FromHex("7A7B7D"), Color.FromHex("7A7B7D"))
+                                                                Device.OnPlatform(Color.FromHex("646566"),
+                                                                    Color.FromHex("646566"), Color.FromHex("646566"))
                                                         });
 
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter
@@ -228,8 +228,8 @@ namespace BeginMobile.Utils
                                                     {
                                                         Property = Label.TextColorProperty,
                                                         Value =
-                                                            Device.OnPlatform(Color.FromHex("6C6D6E"),
-                                                                Color.FromHex("6C6D6E"), Color.FromHex("6C6D6E"))
+                                                            Device.OnPlatform(Color.FromHex("646566"),
+                                                                Color.FromHex("646566"), Color.FromHex("646566"))
                                                     });
                 Device.Styles.BodyStyle.Setters.Add(new Setter
                                                     {
@@ -621,7 +621,14 @@ namespace BeginMobile.Utils
                 return style;
             }
         }
-
+        public Thickness LayoutInternalThickness
+        {
+            get
+            {
+                return Device.OnPlatform(new Thickness(20, 20, 20, 20), new Thickness(20, 20, 20, 20),
+                    new Thickness(20, 20, 20, 20));
+            }
+        }
         public Color ColorLine
         {
             get
@@ -774,16 +781,16 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.HeightRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(40, 80, 70)
-                                                : Device.OnPlatform(100, 110, 70)
+                                                ? Device.OnPlatform(150, 150, 150)
+                                                : Device.OnPlatform(300, 300, 300)
                                     },
                                     new Setter
                                     {
                                         Property = VisualElement.WidthRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(40, 80, 70)
-                                                : Device.OnPlatform(100, 110, 70)
+                                                ? Device.OnPlatform(150, 150, 150)
+                                                : Device.OnPlatform(300, 300, 300)
                                     },
                                      new Setter
                                     {
@@ -795,7 +802,7 @@ namespace BeginMobile.Utils
                                     new Setter
                                     {
                                         Property = CircleImage.BorderThicknessProperty,
-                                        Value = Device.OnPlatform(2, 3, 3)
+                                        Value = Device.OnPlatform(0, 0, 0)
                                     }
                                 }
                             };
@@ -821,7 +828,7 @@ namespace BeginMobile.Utils
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
                                                 ? Device.OnPlatform(100, 100, 100)
-                                                : Device.OnPlatform(200, 200, 200)
+                                                : Device.OnPlatform(150, 150, 150)
                                     },
                                     new Setter
                                     {
@@ -829,7 +836,7 @@ namespace BeginMobile.Utils
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
                                                 ? Device.OnPlatform(100, 100, 100)
-                                                : Device.OnPlatform(200, 200, 200)
+                                                : Device.OnPlatform(150, 150, 150)
                                     },
                                     new Setter
                                     {
@@ -852,7 +859,7 @@ namespace BeginMobile.Utils
 
         public string DefaultProfileUserIconName
         {
-            get { return "userdefault3.png"; }
+            get { return "userprofile.png"; }
         }
 
         public string ProfileMenuItemIcon
