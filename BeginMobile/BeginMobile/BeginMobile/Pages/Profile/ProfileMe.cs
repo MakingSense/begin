@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.GroupPages;
 using BeginMobile.Services.DTO;
@@ -11,49 +14,44 @@ namespace BeginMobile.Pages.Profile
 {
     public class ProfileMe : ContentPage
     {
-        private Grid _detailsGridLayout ;
-        private Grid _gridMenuButtons;
-        private Grid _gridResultContainer;
-        private ScrollView _mainScrollView;
-        private Button _buttonGroups;
-        private Button buttonInformation;
-        private Button buttonOthers;
+        private Grid _commonGridDetailLayout ;
+        private Grid _commonGridMenuButtons;
+        private Grid _commonGridResults;
+        private ListView _commonListView;
+        private Grid _commonMainGrid;
+        private ScrollView _commonMainScrollView;
+        private Button _buttonActivities;
+        private Button _buttonInformation;
+        private Button _buttonOthers;
         private ImageSource _imageSourceGroupByDefault;
-        private ProfileInformationGroups _groupInformation;
-        private LoginUser currentUser;
+        
+        private LoginUser _currentUser;
         private BoxView boxViewButtonSelectedInfo;
         private BoxView boxViewButtonSelectedGroups;
         private BoxView boxViewButtonSelectedOthers;
 
-        private List<Group> _defaultGroups = new List<Group>();
+        private Information _information = new Information();
 
-        private ObservableCollection<Group> _groups;
+        
 
-        public ProfileMe(User user)
+        public ProfileMe(LoginUser currenLoginUser)
         {
+            //loads the navidator Image
+            LoadDeafultImage();
+
+            //set the styles to this Page
             Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.LabelProfileMeTitle;
-            currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];          
-            //Toolbar menu item
-            InitToolBar();
+            _currentUser = currenLoginUser;   
 
-            //Content
-            InitializeComponents(user);
+            //Initialize components           
+            InitProfileDetails(_currentUser.User);
+            
         }
 
-        private void InitializeComponents(User user)
+        private void InitProfileDetails(User user)
         {
-            //if (user != null)
-            //{
-            //    var userAvatarUrl = user.Avatar;
-
-            //    if (!string.IsNullOrEmpty(userAvatarUrl))
-            //    {
-            //        userAvatar = userAvatarUrl;
-            //    }
-            //}
-            
-            
+            InitProfileControlButtons();
             var userAvatar = BeginApplication.Styles.DefaultProfileUserIconName;
             var circleProfileImage = new CircleImage
             {
@@ -87,7 +85,7 @@ namespace BeginMobile.Pages.Profile
 
             var labelDirection = new Label
             {
-                Text = "@"+user.UserName,
+                Text = "@" + user.UserName,
                 HorizontalOptions = LayoutOptions.Center,
                 Style = BeginApplication.Styles.TextBodyStyle
             };
@@ -97,43 +95,88 @@ namespace BeginMobile.Pages.Profile
                 HorizontalOptions = LayoutOptions.Center,
                 Style = BeginApplication.Styles.TitleStyle
             };
-            var test = Width/2;
-            _detailsGridLayout = new Grid
-                                 {
-                                     MinimumHeightRequest = Width/2,
-                                     HorizontalOptions = LayoutOptions.Center,
-                                     VerticalOptions = LayoutOptions.Center,
-                                     RowDefinitions =
-                                     {
-                                         new RowDefinition {Height = GridLength.Auto},
-                                         new RowDefinition {Height = GridLength.Auto},
-                                         new RowDefinition {Height = GridLength.Auto},
-                                         new RowDefinition {Height = GridLength.Auto},
-                                         new RowDefinition {Height = GridLength.Auto}
-                                     },
-                                     ColumnDefinitions =
-                                     {
-                                         new ColumnDefinition {Width = GridLength.Auto}
-                                     }
-                                 };
-            _detailsGridLayout.Children.Add(circleProfileImage,0,0);
-            _detailsGridLayout.Children.Add(labelName,0,1);
-            _detailsGridLayout.Children.Add(labelJob,0,2);
-            _detailsGridLayout.Children.Add(labelDirection,0,3);
-            _detailsGridLayout.Children.Add(labelRating, 0, 4);
+
+            _commonGridDetailLayout = new Grid
+                                      {
+                                          HorizontalOptions = LayoutOptions.Center,
+                                          VerticalOptions = LayoutOptions.Center,
+                                          RowDefinitions =
+                                          {
+                                              new RowDefinition {Height = GridLength.Auto},
+                                              new RowDefinition {Height = GridLength.Auto},
+                                              new RowDefinition {Height = GridLength.Auto},
+                                              new RowDefinition {Height = GridLength.Auto},
+                                              new RowDefinition {Height = GridLength.Auto}
+                                          },
+                                          ColumnDefinitions =
+                                          {
+                                              new ColumnDefinition {Width = GridLength.Auto}
+                                          }
+                                      };
+            _commonGridDetailLayout.Children.Add(circleProfileImage, 0, 0);
+            _commonGridDetailLayout.Children.Add(labelName, 0, 1);
+            _commonGridDetailLayout.Children.Add(labelJob, 0, 2);
+            _commonGridDetailLayout.Children.Add(labelDirection, 0, 3);
+            _commonGridDetailLayout.Children.Add(labelRating, 0, 4);
+
+            //main grid layouts
+            _commonMainScrollView = new ScrollView();
+
+            _commonMainGrid = new Grid
+            {
+                VerticalOptions = LayoutOptions.StartAndExpand,
+                HorizontalOptions = LayoutOptions.StartAndExpand,
+                RowDefinitions = new RowDefinitionCollection
+                                                        {
+                                                        new RowDefinition{Height = GridLength.Auto},
+                                                        new RowDefinition{Height = GridLength.Auto},
+                                                        new RowDefinition{Height = GridLength.Auto}
+                                                        },
+                ColumnDefinitions =
+                                       {
+                                           new ColumnDefinition { Width = GridLength.Auto}
+                                       }
+            };
+            _commonGridResults = new Grid
+            {
+                VerticalOptions = LayoutOptions.StartAndExpand,
+                HorizontalOptions = LayoutOptions.StartAndExpand,
+                RowDefinitions = new RowDefinitionCollection
+                                                        {
+                                                        new RowDefinition{Height = GridLength.Auto},                                                       
+                                                        },
+                ColumnDefinitions =
+                                       {
+                                           new ColumnDefinition { Width = GridLength.Auto}
+                                       }
+            };
+            _commonListView = new ListView {HasUnevenRows = true};
+            
+            _commonGridResults.Children.Add(_commonListView,0,0);
 
 
-            // Buttons
+            _commonMainGrid.Children.Add(_commonGridDetailLayout, 0, 0);
+            _commonMainGrid.Children.Add(_commonGridMenuButtons, 0, 1);
+            _commonMainGrid.Children.Add(_commonGridResults, 0, 2);
+            _commonMainScrollView.Content = _commonMainGrid;
 
-            _buttonGroups = new Button { Text = "Groups", Style = BeginApplication.Styles.LinkButton};
-            buttonInformation = new Button
+            Content = _commonMainScrollView;
+        }
+
+        /**
+         * Initialize the control buttons that simulate the tabbed options
+         **/
+        private void InitProfileControlButtons()
+        {           
+            _buttonActivities = new Button { Text = "Activities", Style = BeginApplication.Styles.LinkButton};
+            _buttonInformation = new Button
             {
                 Text = "Information",
-                Style = BeginApplication.Styles.LinkButton,
+                Style = BeginApplication.Styles.LinkButton
                 
             };
-            buttonOthers = new Button { Text = "ooo", Style = BeginApplication.Styles.LinkButton};
-            _gridMenuButtons = new Grid
+            _buttonOthers = new Button { Text = "...", Style = BeginApplication.Styles.LinkButton};
+            _commonGridMenuButtons = new Grid
             {
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
@@ -153,85 +196,31 @@ namespace BeginMobile.Pages.Profile
             boxViewButtonSelectedGroups = new BoxView { Color = Color.Blue, WidthRequest = 100, HeightRequest = 3, IsVisible = false };
             boxViewButtonSelectedOthers = new BoxView { Color = Color.Blue, WidthRequest = 100, HeightRequest = 3, IsVisible = false };
 
-            _gridMenuButtons.Children.Add(buttonInformation, 0, 0);
-            _gridMenuButtons.Children.Add(boxViewButtonSelectedInfo, 0, 1);
-            _gridMenuButtons.Children.Add(_buttonGroups, 1, 0);
-            _gridMenuButtons.Children.Add(boxViewButtonSelectedGroups, 1, 1);
-            _gridMenuButtons.Children.Add(buttonOthers, 2, 0);
-            _gridMenuButtons.Children.Add(boxViewButtonSelectedOthers, 2, 1);
-            _gridResultContainer = new Grid();
+            _commonGridMenuButtons.Children.Add(_buttonInformation, 0, 0);
+            _commonGridMenuButtons.Children.Add(boxViewButtonSelectedInfo, 0, 1);
+            _commonGridMenuButtons.Children.Add(_buttonActivities, 1, 0);
+            _commonGridMenuButtons.Children.Add(boxViewButtonSelectedGroups, 1, 1);
+            _commonGridMenuButtons.Children.Add(_buttonOthers, 2, 0);
+            _commonGridMenuButtons.Children.Add(boxViewButtonSelectedOthers, 2, 1);
+            _commonGridResults = new Grid();
 
 
-            _buttonGroups.Clicked += GroupEventHandler;
-            buttonInformation.Clicked += InformationEventHandler;
-            buttonOthers.Clicked += OtherEventHadler;
+            _buttonActivities.Clicked += ButtonActivityEventHandler;
+            _buttonInformation.Clicked += ButtonInformationEventHandler;
+            _buttonOthers.Clicked += ButtonOtherEventHadler;
 
-            _mainScrollView = new ScrollView
-                      {
-                          Content = new StackLayout
-                                    {
-                                        VerticalOptions = LayoutOptions.StartAndExpand,
-                                        Orientation = StackOrientation.Vertical,
-                                        Children =
-                                        {
-                                            _detailsGridLayout,
-                                            _gridMenuButtons,
-                                            _gridResultContainer
-                                        }
-                                    }
-                      };
-
-            Content = _mainScrollView;
         }
 
-        private async void GroupEventHandler(object sender, EventArgs e)
+        /*
+         * clear the common list view
+         */
+        private void ClearListViewAndHideDetailsGrid()
         {
-            LoadDeafultImage();
-            var thisButton = sender as Button;
-            thisButton.TextColor = Color.Black;
-            boxViewButtonSelectedInfo.IsVisible = false;
-            boxViewButtonSelectedGroups.IsVisible = true;
-            boxViewButtonSelectedOthers.IsVisible = false;
-
-            buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
-            buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
-
-
-            _groupInformation = await BeginApplication.ProfileServices.GetGroups(currentUser.User.UserName,
-                currentUser.AuthToken);
-
-            _groups = _groupInformation != null ? _groupInformation.Groups :
-                new ObservableCollection<Group>(_defaultGroups);
-
-            _gridResultContainer = null;
-            _mainScrollView = null;
-            _gridResultContainer = new Grid();
-
-            var _listViewGroup = new ListView
-            {
-                ItemTemplate = new DataTemplate(() => new ProfileGroupItemCell(_imageSourceGroupByDefault)),
-                ItemsSource = _groups,
-                HasUnevenRows = true
-            };
-            _listViewGroup.ItemSelected += LisViewGroupsItemSelected;
-            _gridResultContainer.Children.Add(_listViewGroup);
-            
-            _mainScrollView = new ScrollView
-                              {
-                                  Content = new StackLayout
-                                            {
-                                                VerticalOptions = LayoutOptions.StartAndExpand,
-                                                Orientation = StackOrientation.Vertical,
-                                                Children =
-                                                {
-                                                    _gridMenuButtons,
-                                                    _gridResultContainer
-                                                }
-                                            }
-                              };
-            Content = _mainScrollView;
+            _commonGridResults.Children.Clear();
+            _commonGridDetailLayout.IsVisible = false;
+            _commonListView.ItemsSource = null;
+            _commonListView.ItemTemplate = null;
         }
-
 
         public async void LoadDeafultImage()
         {
@@ -245,91 +234,111 @@ namespace BeginMobile.Pages.Profile
 #endif
         }
 
+        #region buttons control events
+        private async void ButtonActivityEventHandler(object sender, EventArgs e)
+        {            
+            ClearListViewAndHideDetailsGrid();
 
-        private void InformationEventHandler(object sender, EventArgs e)
-        {
+            //TODO: refactoring this part
             var thisButton = sender as Button;
-            thisButton.TextColor = Color.Black;
+            if (thisButton != null) thisButton.TextColor = Color.Black;
+            _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
+            boxViewButtonSelectedInfo.IsVisible = false;
+            boxViewButtonSelectedGroups.IsVisible = true;
+            boxViewButtonSelectedOthers.IsVisible = false;
 
-            _buttonGroups.TextColor = BeginApplication.Styles.DefaultColorButton;
-            buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _commonListView.ItemTemplate = new DataTemplate(typeof(Activities));
+            _commonListView.ItemsSource = await GetListActivities();
+            _commonListView.ItemSelected += (s, eventArgs) =>
+            {
+                if (eventArgs.SelectedItem == null)
+                {
+                    return;
+                }
+                ((ListView)s).SelectedItem = null;
+            };
+            
+            _commonGridResults.Children.Add(_commonListView, 0 ,0);
+        }
+
+        private void ButtonInformationEventHandler(object sender, EventArgs e)
+        {
+            ClearListViewAndHideDetailsGrid();
+
+            var thisButton = sender as Button;
+            if (thisButton != null) thisButton.TextColor = Color.Black;
+
+            _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
             boxViewButtonSelectedInfo.IsVisible = true;
             boxViewButtonSelectedGroups.IsVisible = false;
             boxViewButtonSelectedOthers.IsVisible = false;
 
-            _detailsGridLayout.IsVisible = false;
-           
-            _gridResultContainer = null;
-            _mainScrollView = null;
-            _gridResultContainer = new Grid();
-
-            var information = new Information();
-            if(information.GetGridInfo()!=null)
-            {
-                _gridResultContainer = information.GetGridInfo();
-            }
+            _commonGridResults.Children.Add(_information.GetGridInfo(), 0, 0);
             
-            _mainScrollView = new ScrollView
-            {
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.StartAndExpand,
-                    Orientation = StackOrientation.Vertical,
-                    Children =
-                                        {
-                                            _gridMenuButtons,
-                                            _gridResultContainer
-                                        }
-                }
-
-            };
-            Content = _mainScrollView;
         }
 
-        private void OtherEventHadler(object sender, EventArgs e)
+        private void ButtonOtherEventHadler(object sender, EventArgs e)
         {
-            _gridResultContainer = null;
-            _mainScrollView = null;
-            _gridResultContainer = new Grid();
+            ClearListViewAndHideDetailsGrid();//clear the common list
 
             var thisButton = sender as Button;
-            thisButton.TextColor = Color.Black;
+            if (thisButton != null) thisButton.TextColor = Color.Black;
             boxViewButtonSelectedInfo.IsVisible = false;
             boxViewButtonSelectedGroups.IsVisible = false;
             boxViewButtonSelectedOthers.IsVisible = true;
-
-            _mainScrollView = new ScrollView
-            {
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.StartAndExpand,
-                    Orientation = StackOrientation.Vertical,
-                    Children =
-                                        {
-                                            _gridMenuButtons,
-                                            _gridResultContainer
-                                        }
-                }
-
-            };
-            Content = _mainScrollView;
-
-            buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _buttonGroups.TextColor = BeginApplication.Styles.DefaultColorButton;
+                        
+            _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
             var action = DisplayActionSheet("Options", "Cancel", "Destrucction", "Activities", "Shop", "Events",
                 "Messages");
 
         }
+        #endregion
+
+       
+        #region private methods
+        private async Task<ObservableCollection<ActivityViewModel>> GetListActivities()
+        {
+            //request the activities API
+            var profileActivity =
+                await BeginApplication.ProfileServices.GetActivities(_currentUser.User.UserName, _currentUser.AuthToken);
+
+            var listActivityData = new ObservableCollection<ActivityViewModel>();
+
+            if (profileActivity != null)
+            {
+                var listActivityViewModel = from activity in profileActivity.Activities
+                                            where activity.Component.Equals("activity", StringComparison.InvariantCultureIgnoreCase)
+                                            select new ActivityViewModel
+                                            {
+                                                Icon = BeginApplication.Styles.DefaultActivityIcon,
+                                                //TODO:change for activity avatar if this exist
+                                                NameSurname = profileActivity.NameSurname,
+                                                ActivityDescription = activity.Content,
+                                                ActivityType = activity.Type,
+                                                DateAndTime = activity.Date
+                                            };
+
+                foreach (var activityViewModel in listActivityViewModel)
+                {
+                    listActivityData.Add(activityViewModel);
+                }
+            }
+            return listActivityData;
+        }
+
 
         private void InitToolBar()
         {
             var toolBarItemMyActivity = new ToolbarItem
-                                 {
-                                     Icon = "Icon.png",
-                                     Text = "",//AppResources.ToolBarProfileMeMyAct,
-                                     Order = ToolbarItemOrder.Primary,
-                                     Command = new Command(() => Navigation.PushAsync(new MyActivity()))
-                                 };
+            {
+                Icon = "Icon.png",
+                Text = "",//AppResources.ToolBarProfileMeMyAct,
+                Order = ToolbarItemOrder.Primary,
+                Command = new Command(() => Navigation.PushAsync(new MyActivity()))
+            };
 
             var toolBarItemInformation = new ToolbarItem
             {
@@ -388,20 +397,6 @@ namespace BeginMobile.Pages.Profile
             ToolbarItems.Add(toolBarItemEvents);
 
         }
-
-        private async void LisViewGroupsItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem == null)
-            {
-                return;
-            }
-
-            var groupItem = (Group)e.SelectedItem;
-            var groupPage = new GroupItemPage(groupItem) { BindingContext = groupItem };
-            await Navigation.PushAsync(groupPage);
-
-            // clears the 'selected' background
-            ((ListView)sender).SelectedItem = null;
-        }
+#endregion
     }
 }

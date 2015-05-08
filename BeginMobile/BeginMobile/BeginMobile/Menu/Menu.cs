@@ -148,7 +148,7 @@ namespace BeginMobile.Menu
                                                           }
                                                           var selectedItemOptionName =
                                                               ((MenuItemViewModel) eventArgs.SelectedItem).OptionName;
-                                                          var profileMe = new ProfileMe(currentUser.User);
+                                                          var profileMe = new ProfileMe(currentUser);
                                                           var contentPageKnocks = new ContentPage
                                                                                   {
                                                                                       Title =
