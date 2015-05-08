@@ -14,13 +14,23 @@ namespace BeginMobile.Pages.Profile
     {
         private ListView _listViewContacts;
         private Label _labelNoContactsMessage;
-        private readonly List<Contact> _defaultList = new List<Contact>();
+        private List<Contact> _defaultList = new List<Contact>();
         private readonly SearchView _searchView;
         private readonly LoginUser _currentUser;
-        private ProfileContacts _profileInformationContacts;
-        private List<Contact> _contacts;
+        //private ProfileContacts _profileInformationContacts;
+        private ObservableCollection<Contact> _profileContacts;
 
-        private const string DefaultLimit = "10";
+        //Paginator
+        private readonly ActivityIndicator _activityIndicatorLoading;
+        private readonly Grid _gridLayoutMain;
+        private readonly StackLayout _stackLayoutLoadingIndicator;
+        private bool _isLoading;
+        private int _offset = 0;
+        private int _limit = DefaultLimit;
+        private string _name;
+        private string _sort;
+        private const int DefaultLimit = 10;
+        private bool _areLastItems;
 
         private Dictionary<string, string> _sortOptionsDictionary = new Dictionary<string, string>
                                                                     {
@@ -44,25 +54,25 @@ namespace BeginMobile.Pages.Profile
 
         private async Task Init()
         {
-            _profileInformationContacts =
-                await BeginApplication.ProfileServices.GetContacts(_currentUser.User.UserName, _currentUser.AuthToken);
-
-            _contacts = new List<Contact>();
+            var profileInformationContacts =
+                await BeginApplication.ProfileServices.GetMyContacts(_currentUser.AuthToken, limit: _limit.ToString(), offset: _offset.ToString());
 
             LoadSortOptionsPicker();
 
-            var profileContacts = _profileInformationContacts != null
-                ? _profileInformationContacts.Contacts
+            var userContacts = profileInformationContacts != null
+                ? profileInformationContacts.Contacts
                 : new List<User>();
 
-            _contacts.AddRange(RetrieveContacts(profileContacts));
+            _profileContacts = new ObservableCollection<Contact>(RetrieveContacts(userContacts));
+
+            //profileInfoContacts.AddRange();
 
             var contactListViewTemplate = new DataTemplate(() => new CustomViewCell(_currentUser));
             MessagingSubscriptions();
 
             _listViewContacts = new ListView
                                 {
-                                    ItemsSource = new ObservableCollection<Contact>(_contacts),
+                                    ItemsSource = _profileContacts,
                                     ItemTemplate = contactListViewTemplate,
                                     HasUnevenRows = true
                                 };
@@ -84,6 +94,24 @@ namespace BeginMobile.Pages.Profile
                                                         await Navigation.PushAsync(contentPageContactDetail);
                                                         ((ListView) sender).SelectedItem = null;
                                                     };
+
+            _listViewContacts.ItemTapped += async (sender, eventArgs) =>
+                                                  {
+                                                      if (eventArgs.Item == null)
+                                                      {
+                                                          return;
+                                                      }
+
+                                                      var contactItem = (Contact) eventArgs.Item;
+
+                                                      var contentPageContactDetail = new ContactDetail(contactItem)
+                                                                                     {
+                                                                                         BindingContext = contactItem
+                                                                                     };
+
+                                                      await Navigation.PushAsync(contentPageContactDetail);
+                                                      ((ListView) sender).SelectedItem = null;
+                                                  };
 
             _searchView.SearchBar.TextChanged += SearchItemEventHandler;
             _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
@@ -283,7 +311,7 @@ namespace BeginMobile.Pages.Profile
         {
             base.OnDisappearing();
             //Content = null;
-            _contacts = null;
+            _profileContacts = null;
         }
     }
 }

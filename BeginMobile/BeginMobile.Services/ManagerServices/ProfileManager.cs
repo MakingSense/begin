@@ -14,8 +14,8 @@ namespace BeginMobile.Services.ManagerServices
     {
         private const string BaseAddress = "http://186.109.86.251:5432/";
         private const string SubAddress = "begin/api/v1/";
-        private const string Identifier = "profile";
-        private const string IdentifierAux = "me";
+        private const string IdentifierProfile = "profile";
+        private const string IdentifierMe = "me";
 
         private readonly GenericBaseClient<Wall> _wallClient;
         private readonly GenericBaseClient<ProfileInfo> _profileInfoClient;
@@ -45,7 +45,7 @@ namespace BeginMobile.Services.ManagerServices
         {
             try
             {
-                var addressSuffix = Identifier + "/" + username;
+                var addressSuffix = IdentifierProfile + "/" + username;
                 return _profileInfoClient.Get(authToken, addressSuffix, "");
             }
             catch (Exception exception)
@@ -60,7 +60,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 const string urlGetParams = "?sections=details";
-                var addressSuffix = Identifier + "/" + username;
+                var addressSuffix = IdentifierProfile + "/" + username;
                 return await _profileInfoClient.GetAsync(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
@@ -75,7 +75,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 const string urlGetParams = "?sections=activities";
-                var addressSuffix = Identifier + "/" + username;
+                var addressSuffix = IdentifierProfile + "/" + username;
                 return await _profileActivityClient.GetAsync(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
@@ -90,7 +90,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 const string urlGetParams = "?sections=events";
-                var addressSuffix = Identifier + "/" + username;
+                var addressSuffix = IdentifierProfile + "/" + username;
                 return _profileEventClient.Get(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
@@ -105,8 +105,8 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 const string urlGetParams = "?sections=groups";
-                var addressSuffix = Identifier + "/" + username;
-                return await _profileGroupClient.GetAsync(authToken, IdentifierAux, urlGetParams);
+                var addressSuffix = IdentifierProfile + "/" + username;
+                return await _profileGroupClient.GetAsync(authToken, IdentifierMe, urlGetParams);
             }
             catch (Exception exception)
             {
@@ -115,13 +115,26 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public async Task<ProfileContacts> GetContactsInformation(string username, string authToken)
+        public async Task<ProfileContacts> GetContactsInformation(
+            string authToken,
+            string username = null,
+            string limit = null,
+            string offset = null
+            )
         {
             try
             {
-                const string urlGetParams = "?sections=contacts";
-                var addressSuffix = Identifier + "/" + username;
-                return await _profileContactClient.GetAsync(authToken, IdentifierAux, urlGetParams);
+                var urlGetParams = "?sections=contacts&limit=" + limit + "&offset="+ offset;
+
+                if (username == null)
+                {
+                    return await _profileContactClient.GetAsync(authToken, IdentifierMe, urlGetParams);
+                }
+                else
+                {
+                    var addressSuffix = IdentifierProfile + "/" + username;
+                    return await _profileContactClient.GetAsync(authToken, addressSuffix, urlGetParams);
+                }
             }
             catch (Exception exception)
             {
@@ -135,7 +148,7 @@ namespace BeginMobile.Services.ManagerServices
             try
             {
                 const string urlGetParams = "?sections=shop";
-                var addressSuffix = Identifier + "/" + username;
+                var addressSuffix = IdentifierProfile + "/" + username;
                 return await _profileShopClient.GetAsync(authToken, addressSuffix, urlGetParams);
             }
             catch (Exception exception)
