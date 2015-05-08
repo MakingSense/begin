@@ -36,9 +36,9 @@ namespace BeginMobile.Pages.GroupPages
                 ? BeginApplication.Styles.DefaultGroupIcon
                 : BeginApplication.Styles.DefaultGroupIcon;
 
-                        var circleGroupImage = new CircleImage
+                        var groupBannerImage = new Image
                                    {
-                                       Style = BeginApplication.Styles.CircleImageForDetails,
+                                       Style = BeginApplication.Styles.SquareImageStyle,
                                        Source = imageResourceGroup//TODO:change for group avatar if this exist
                                    };
 
@@ -84,7 +84,7 @@ namespace BeginMobile.Pages.GroupPages
                                         };
 
             gridImage.Children.Add(stackLayoutLinesLeft, 0, 0);
-            gridImage.Children.Add(circleGroupImage, 1, 0);
+            gridImage.Children.Add(groupBannerImage, 1, 0);
             gridImage.Children.Add(stackLayoutLinesRight, 2, 0);
 
             var labelStatusGroup = new Label
@@ -125,7 +125,7 @@ namespace BeginMobile.Pages.GroupPages
                                        }
                                    };
 
-            gridMain.Children.Add(gridImage, 0, 0);
+            gridMain.Children.Add(groupBannerImage, 0, 0);
             gridMain.Children.Add(stackLayoutTitle, 0, 1);
             gridMain.Children.Add(labelDescription, 0, 2);
 

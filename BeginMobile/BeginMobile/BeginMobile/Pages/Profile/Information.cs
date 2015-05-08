@@ -8,7 +8,7 @@ namespace BeginMobile.Pages.Profile
     {
         private ProfileInfo _profileInfo;
         private readonly LoginUser _currentUser;
-
+        private Grid _gridInfo;
         public Information()
         {
             Style = BeginApplication.Styles.PageStyle;
@@ -41,36 +41,68 @@ namespace BeginMobile.Pages.Profile
             var boxViewBegWorkExp = new BoxView {Color = Color.White, WidthRequest = 100, HeightRequest = 2};
             var boxViewEndWorkExp = new BoxView {Color = Color.White, WidthRequest = 100, HeightRequest = 2};
 
-            var stackLayoutInfo = new StackLayout
-                                  {
-                                      Padding = BeginApplication.Styles.LayoutThickness,
-                                      Children =
-                                      {
-                                          //boxViewBegNameSurname,
-                                          new ProfileTitle("Name and surname"),
-                                          //boxViewEndNameSurname,
-                                          GetNameAndSurname(),
-                                          //boxViewBegAboutMe,
-                                          new ProfileTitle("About Me"),
-                                          //boxViewEndAboutMe,
-                                          GetInformationDetail(),
-                                          //boxViewBegEduProf,
-                                          new ProfileTitle("Education and profession"),
-                                          //boxViewEndEduProf,
-                                          GetEducationProffesion(),
-                                          //boxViewBegWorkExp,
-                                          new ProfileTitle("Work experience"),
-                                          //boxViewEndWorkExp,
-                                          GetWorkExperience()
-                                      }
-                                  };
+            _gridInfo = new Grid
+            {
+                Padding = BeginApplication.Styles.LayoutThickness,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                RowDefinitions =
+                                     {
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto}
+                                     },
+                ColumnDefinitions =
+                                     {
+                                         new ColumnDefinition {Width = GridLength.Auto}
+                                     }
+            };
+            _gridInfo.Children.Add(new ProfileTitle("Name and surname"), 0, 0);
+            _gridInfo.Children.Add(GetNameAndSurname(), 0, 1);
+            _gridInfo.Children.Add(new ProfileTitle("About Me"), 0, 2);
+            _gridInfo.Children.Add(GetInformationDetail(), 0, 3);
+            _gridInfo.Children.Add(new ProfileTitle("Education and profession"), 0, 3);
+            _gridInfo.Children.Add(GetEducationProffesion(), 0, 3);
+            _gridInfo.Children.Add(new ProfileTitle("Work experience"), 0, 3);
+            _gridInfo.Children.Add(GetWorkExperience(), 0, 3);
+
+
+            //stackLayoutInfo = new StackLayout
+            //                      {
+            //                          Padding = BeginApplication.Styles.LayoutThickness,
+            //                          Children =
+            //                          {
+            //                              //boxViewBegNameSurname,
+            //                              new ProfileTitle("Name and surname"),
+            //                              //boxViewEndNameSurname,
+            //                              GetNameAndSurname(),
+            //                              //boxViewBegAboutMe,
+            //                              new ProfileTitle("About Me"),
+            //                              //boxViewEndAboutMe,
+            //                              GetInformationDetail(),
+            //                              //boxViewBegEduProf,
+            //                              new ProfileTitle("Education and profession"),
+            //                              //boxViewEndEduProf,
+            //                              GetEducationProffesion(),
+            //                              //boxViewBegWorkExp,
+            //                              new ProfileTitle("Work experience"),
+            //                              //boxViewEndWorkExp,
+            //                              GetWorkExperience()
+            //                          }
+            //                      };
 
             var scrollViewInfo = new ScrollView
                                  {
-                                     Content = stackLayoutInfo
+                                     Content = _gridInfo
                                  };
 
             Content = scrollViewInfo;
+        }
+
+        public Grid GetGridInfo()
+        {
+            return _gridInfo;
         }
 
         //Information details

@@ -655,7 +655,15 @@ namespace BeginMobile.Utils
                     (Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"));
             }
         }
-
+       
+        public Color DefaultColorButton
+        {
+            get
+            {
+                return Device.OnPlatform
+                    (Color.FromHex("646567"), Color.FromHex("646567"), Color.FromHex("646567"));
+            }
+        }
         public Style MessageContentStyle
         {
             get
@@ -802,7 +810,7 @@ namespace BeginMobile.Utils
                                     new Setter
                                     {
                                         Property = CircleImage.BorderThicknessProperty,
-                                        Value = Device.OnPlatform(0, 0, 0)
+                                        Value = Device.OnPlatform(1, 1, 1)
                                     }
                                 }
                             };
@@ -857,6 +865,41 @@ namespace BeginMobile.Utils
             }
         }
 
+        public Style SquareImageStyle
+        {
+            
+            get
+            {
+                var style = new Style(typeof(Image))
+                {
+                    Setters =
+                                {
+                                    new Setter {Property = Image.AspectProperty, Value = Aspect.Fill},
+                                    new Setter {Property = View.HorizontalOptionsProperty, Value = LayoutOptions.StartAndExpand},
+                                    new Setter {Property = View.VerticalOptionsProperty, Value = LayoutOptions.StartAndExpand},                                    
+                                    new Setter
+                                    {
+                                        Property = VisualElement.HeightRequestProperty,
+                                        Value = Device.Idiom == TargetIdiom.Phone
+                                                ? Device.OnPlatform(200, 200, 200)
+                                                : Device.OnPlatform(300, 300, 300)
+                                            
+                                    },
+                                    new Setter
+                                    {
+                                        Property = VisualElement.WidthRequestProperty,
+                                        Value =
+                                            Device.Idiom == TargetIdiom.Phone
+                                                ? Device.OnPlatform(500, 500, 500)
+                                                : Device.OnPlatform(800, 800, 800)
+                                    }
+                                }
+                };
+
+                return style;
+            }
+        }
+        
         public string DefaultProfileUserIconName
         {
             get { return "userprofile.png"; }

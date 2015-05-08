@@ -15,16 +15,17 @@ namespace BeginMobile.Pages.Profile
         private ListView _listViewGroup;
         private StackLayout _stackLayoutMain;
         private ProfileInformationGroups _groupInformation;
-        private Grid _gridMain;
+        private static Grid _gridMain;
         private ObservableCollection<Group> _groups;
         private List<Group> _defaultGroups = new List<Group>();
         private ImageSource _imageSourceGroupByDefault;
-
+        private LoginUser currentUser;
+        
         public Groups()
         {
             Style = BeginApplication.Styles.PageStyle;
             Title = "Groups";
-            var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+            currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             LoadDeafultImage();
 
@@ -46,6 +47,8 @@ namespace BeginMobile.Pages.Profile
 
         private async Task Init(LoginUser currentUser)
         {
+
+
             _groupInformation = await BeginApplication.ProfileServices.GetGroups(currentUser.User.UserName,
                 currentUser.AuthToken);
 
@@ -91,6 +94,11 @@ namespace BeginMobile.Pages.Profile
 
             //Content = new ScrollView { Content = _stackLayoutMain };
             Content = _gridMain;
+        }
+
+        public List<Group> GetListGroups()
+        {
+            return _defaultGroups;
         }
 
         public async void LoadDeafultImage()
