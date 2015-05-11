@@ -20,9 +20,6 @@ namespace BeginMobile.Pages.Profile
         private ListView _commonListView;
         private Grid _commonMainGrid;
         private ScrollView _commonMainScrollView;
-        private Button _buttonActivities;
-        private Button _buttonInformation;
-        private Button _buttonOthers;
         private ImageSource _imageSourceGroupByDefault;
         
         private LoginUser _currentUser;
@@ -30,10 +27,16 @@ namespace BeginMobile.Pages.Profile
         private BoxView boxViewButtonSelectedGroups;
         private BoxView boxViewButtonSelectedOthers;
 
-        private Information _information = new Information();
+        private Button _buttonActivities;
+        private Button _buttonInformation;
+        private Button _buttonOthers;
+        private Button _buttonContacts;
+        private Button _buttonGroups;
+        private Button _buttonShops;
+        private Button _buttonEvents;                
 
+        private readonly Information _information = new Information();
         
-
         public ProfileMe(LoginUser currenLoginUser)
         {
             //loads the navidator Image
@@ -124,8 +127,8 @@ namespace BeginMobile.Pages.Profile
 
             _commonMainGrid = new Grid
             {
-                VerticalOptions = LayoutOptions.StartAndExpand,
-                HorizontalOptions = LayoutOptions.StartAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
                 RowDefinitions = new RowDefinitionCollection
                                                         {
                                                         new RowDefinition{Height = GridLength.Auto},
@@ -139,16 +142,18 @@ namespace BeginMobile.Pages.Profile
             };
             _commonGridResults = new Grid
             {
-                VerticalOptions = LayoutOptions.StartAndExpand,
-                HorizontalOptions = LayoutOptions.StartAndExpand,
-                RowDefinitions = new RowDefinitionCollection
-                                                        {
-                                                        new RowDefinition{Height = GridLength.Auto},                                                       
-                                                        },
-                ColumnDefinitions =
-                                       {
-                                           new ColumnDefinition { Width = GridLength.Auto}
-                                       }
+                
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Padding = BeginApplication.Styles.LayoutThickness,                
+                //RowDefinitions = new RowDefinitionCollection
+                //                                        {
+                //                                        new RowDefinition{Height = GridLength.Auto}                                                    
+                //                                        },
+                //ColumnDefinitions =
+                //                       {
+                //                           new ColumnDefinition { Width = GridLength.Auto}
+                //                       }
             };
             _commonListView = new ListView {HasUnevenRows = true};
             
@@ -202,9 +207,7 @@ namespace BeginMobile.Pages.Profile
             _commonGridMenuButtons.Children.Add(boxViewButtonSelectedGroups, 1, 1);
             _commonGridMenuButtons.Children.Add(_buttonOthers, 2, 0);
             _commonGridMenuButtons.Children.Add(boxViewButtonSelectedOthers, 2, 1);
-            _commonGridResults = new Grid();
-
-
+            
             _buttonActivities.Clicked += ButtonActivityEventHandler;
             _buttonInformation.Clicked += ButtonInformationEventHandler;
             _buttonOthers.Clicked += ButtonOtherEventHadler;
@@ -274,12 +277,37 @@ namespace BeginMobile.Pages.Profile
             boxViewButtonSelectedInfo.IsVisible = true;
             boxViewButtonSelectedGroups.IsVisible = false;
             boxViewButtonSelectedOthers.IsVisible = false;
+            
 
-            _commonGridResults.Children.Add(_information.GetGridInfo(), 0, 0);
+
+            _commonGridResults.HorizontalOptions = LayoutOptions.StartAndExpand;
+            _commonGridResults.VerticalOptions = LayoutOptions.StartAndExpand;
+            _commonGridResults.RowDefinitions = 
+              _commonGridResults.RowDefinitions =new RowDefinitionCollection{
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto}
+                                     
+              };
+            _commonGridResults.ColumnDefinitions = new ColumnDefinitionCollection
+                                                   {
+                                                       new ColumnDefinition {Width = GridLength.Auto}
+                                                   };
+
+            _commonGridResults.Children.Add(new ProfileTitle("Name and surname"), 0, 0);
+            _commonGridResults.Children.Add(_information.GetNameAndSurname(), 0, 1);
+            _commonGridResults.Children.Add(new ProfileTitle("About Me"), 0, 2);
+            _commonGridResults.Children.Add(_information.GetInformationDetail(), 0, 3);
+            _commonGridResults.Children.Add(new ProfileTitle("Education and profession"), 0, 3);
+            _commonGridResults.Children.Add(_information.GetEducationProffesion(), 0, 3);
+            _commonGridResults.Children.Add(new ProfileTitle("Work experience"), 0, 3);
+            _commonGridResults.Children.Add(_information.GetWorkExperience(), 0, 3);
+
             
         }
 
-        private void ButtonOtherEventHadler(object sender, EventArgs e)
+        private async void ButtonOtherEventHadler(object sender, EventArgs e)
         {
             ClearListViewAndHideDetailsGrid();//clear the common list
 
@@ -291,12 +319,33 @@ namespace BeginMobile.Pages.Profile
                         
             _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
-            var action = DisplayActionSheet("Options", "Cancel", "Destrucction", "Activities", "Shop", "Events",
-                "Messages");
 
+            var action = await DisplayActionSheet(null, OtherOptions.Cancel, null, 
+                OtherOptions.Activity, OtherOptions.Information,OtherOptions.Contacts,
+                OtherOptions.Groups,OtherOptions.Shops,OtherOptions.Events);
+
+            switch (action)
+            {
+                case OtherOptions.Activity:                                        
+                    break;
+                case OtherOptions.Information:
+                    break;
+                case OtherOptions.Contacts:
+                    break;
+                case OtherOptions.Groups:
+                    break;
+                case OtherOptions.Shops:
+                    break;
+                case OtherOptions.Events:
+                    break;
+                case OtherOptions.Cancel:
+                    return;
+                    break;
+                default:
+                    return;
+            }
         }
         #endregion
-
        
         #region private methods
         private async Task<ObservableCollection<ActivityViewModel>> GetListActivities()
@@ -330,73 +379,85 @@ namespace BeginMobile.Pages.Profile
         }
 
 
-        private void InitToolBar()
-        {
-            var toolBarItemMyActivity = new ToolbarItem
-            {
-                Icon = "Icon.png",
-                Text = "",//AppResources.ToolBarProfileMeMyAct,
-                Order = ToolbarItemOrder.Primary,
-                Command = new Command(() => Navigation.PushAsync(new MyActivity()))
-            };
+        //private void InitToolBar()
+        //{
+        //    var toolBarItemMyActivity = new ToolbarItem
+        //    {
+        //        Icon = "Icon.png",
+        //        Text = "",//AppResources.ToolBarProfileMeMyAct,
+        //        Order = ToolbarItemOrder.Primary,
+        //        Command = new Command(() => Navigation.PushAsync(new MyActivity()))
+        //    };
 
-            var toolBarItemInformation = new ToolbarItem
-            {
-                Icon = "",
-                Text = AppResources.ToolBarProfileMeInfo,
-                Order = ToolbarItemOrder.Primary,
-                Command = new Command(() => Navigation.PushAsync(new Information()))
-            };
+        //    var toolBarItemInformation = new ToolbarItem
+        //    {
+        //        Icon = "",
+        //        Text = AppResources.ToolBarProfileMeInfo,
+        //        Order = ToolbarItemOrder.Primary,
+        //        Command = new Command(() => Navigation.PushAsync(new Information()))
+        //    };
 
-            var toolBarItemMessages = new ToolbarItem
-            {
-                Icon = "",
-                Text = AppResources.ToolBarProfileMeMessages,
-                Order = ToolbarItemOrder.Secondary,
-                Command = new Command(() => Navigation.PushAsync(new Messages()))
-            };
+        //    var toolBarItemMessages = new ToolbarItem
+        //    {
+        //        Icon = "",
+        //        Text = AppResources.ToolBarProfileMeMessages,
+        //        Order = ToolbarItemOrder.Secondary,
+        //        Command = new Command(() => Navigation.PushAsync(new Messages()))
+        //    };
 
-            var toolBarItemContacts = new ToolbarItem
-            {
-                Icon = "",
-                Text = AppResources.ToolBarProfileMeContacts,
-                Order = ToolbarItemOrder.Secondary,
-                Command = new Command(() => Navigation.PushAsync(new Contacts()))
-            };
+        //    var toolBarItemContacts = new ToolbarItem
+        //    {
+        //        Icon = "",
+        //        Text = AppResources.ToolBarProfileMeContacts,
+        //        Order = ToolbarItemOrder.Secondary,
+        //        Command = new Command(() => Navigation.PushAsync(new Contacts()))
+        //    };
 
-            var toolBarItemGroups = new ToolbarItem
-            {
-                Icon = "",
-                Text = AppResources.ToolBarProfileMeGroups,
-                Order = ToolbarItemOrder.Secondary,
-                Command = new Command(() => Navigation.PushAsync(new Groups()))
-            };
+        //    var toolBarItemGroups = new ToolbarItem
+        //    {
+        //        Icon = "",
+        //        Text = AppResources.ToolBarProfileMeGroups,
+        //        Order = ToolbarItemOrder.Secondary,
+        //        Command = new Command(() => Navigation.PushAsync(new Groups()))
+        //    };
 
-            var toolBarItemShop = new ToolbarItem
-            {
-                Icon = "",
-                Text = AppResources.ToolBarProfileMeShop,
-                Order = ToolbarItemOrder.Primary,
-                Command = new Command(() => Navigation.PushAsync(new Shop()))
-            };
+        //    var toolBarItemShop = new ToolbarItem
+        //    {
+        //        Icon = "",
+        //        Text = AppResources.ToolBarProfileMeShop,
+        //        Order = ToolbarItemOrder.Primary,
+        //        Command = new Command(() => Navigation.PushAsync(new Shop()))
+        //    };
 
-            var toolBarItemEvents = new ToolbarItem
-            {
-                Icon = "",
-                Text = AppResources.ToolBarProfileMeEvents,
-                Order = ToolbarItemOrder.Secondary,
-                Command = new Command(() => Navigation.PushAsync(new Events()))
-            };
+        //    var toolBarItemEvents = new ToolbarItem
+        //    {
+        //        Icon = "",
+        //        Text = AppResources.ToolBarProfileMeEvents,
+        //        Order = ToolbarItemOrder.Secondary,
+        //        Command = new Command(() => Navigation.PushAsync(new Events()))
+        //    };
 
-            ToolbarItems.Add(toolBarItemMyActivity);
-            ToolbarItems.Add(toolBarItemInformation);
-            ToolbarItems.Add(toolBarItemMessages);
-            ToolbarItems.Add(toolBarItemContacts);
-            ToolbarItems.Add(toolBarItemGroups);
-            ToolbarItems.Add(toolBarItemShop);
-            ToolbarItems.Add(toolBarItemEvents);
+        //    ToolbarItems.Add(toolBarItemMyActivity);
+        //    ToolbarItems.Add(toolBarItemInformation);
+        //    ToolbarItems.Add(toolBarItemMessages);
+        //    ToolbarItems.Add(toolBarItemContacts);
+        //    ToolbarItems.Add(toolBarItemGroups);
+        //    ToolbarItems.Add(toolBarItemShop);
+        //    ToolbarItems.Add(toolBarItemEvents);
 
-        }
+        //}
 #endregion
+    }
+
+
+    public static class OtherOptions
+    {
+        public const string Activity = "Activity";
+        public const string Information = "Information";
+        public const string Contacts = "Contacts";        
+        public const string Groups = "Groups";
+        public  const string Shops = "Shops";
+        public const string Events = "Events";
+        public const string Cancel = "Cancel";
     }
 }

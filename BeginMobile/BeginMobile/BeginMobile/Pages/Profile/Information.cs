@@ -44,8 +44,8 @@ namespace BeginMobile.Pages.Profile
             _gridInfo = new Grid
             {
                 Padding = BeginApplication.Styles.LayoutThickness,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
                 RowDefinitions =
                                      {
                                          new RowDefinition {Height = GridLength.Auto},
@@ -109,7 +109,7 @@ namespace BeginMobile.Pages.Profile
 
         #region Information
 
-        private StackLayout GetNameAndSurname()
+        public StackLayout GetNameAndSurname()
         {
             var stackLayoutNameAndSur = new StackLayout
                                         {
