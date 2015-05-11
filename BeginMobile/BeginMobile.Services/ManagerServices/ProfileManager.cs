@@ -97,13 +97,26 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public ProfileInformationEvents GetEventsInformation(string username, string authToken)
+        public async Task<ProfileInformationEvents> GetEventsInformation(
+            string authToken,
+            string username = null,
+            string limit = null,
+            string offset = null
+            )
         {
             try
             {
-                const string urlGetParams = "?sections=events";
-                var addressSuffix = IdentifierProfile + "/" + username;
-                return _profileEventClient.Get(authToken, addressSuffix, urlGetParams);
+                var urlGetParams = "?sections=events&limit=" + limit + "&offset=" + offset;
+
+                if (username == null)
+                {
+                    return await _profileEventClient.GetAsync(authToken, IdentifierMe, urlGetParams);
+                }
+                else
+                {
+                    var addressSuffix = IdentifierProfile + "/" + username;
+                    return await _profileEventClient.GetAsync(authToken, addressSuffix, urlGetParams);
+                }
             }
             catch (Exception exception)
             {
