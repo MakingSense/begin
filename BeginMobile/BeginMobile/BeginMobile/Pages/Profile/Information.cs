@@ -21,9 +21,8 @@ namespace BeginMobile.Pages.Profile
         {
             _profileInfo =
                 await
-                    BeginApplication.ProfileServices.GetInformationDetail(_currentUser.User.UserName,
-                        _currentUser.AuthToken) ??
-                new ProfileInfo {Details = new UserDetails()};
+                    BeginApplication.ProfileServices.GetInformationDetail(_currentUser.AuthToken, 
+                    _currentUser.User.UserName) ?? new ProfileInfo {Details = new UserDetails()};
 
             //Name and surname
             var boxViewBegNameSurname = new BoxView {Color = Color.White, WidthRequest = 100, HeightRequest = 2};

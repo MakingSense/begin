@@ -55,7 +55,7 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public async Task<ProfileInfo> GetProfileInformationDetail(string username, string authToken)
+        public async Task<ProfileInfo> GetProfileInformationDetail(string authToken, string username)
         {
             try
             {

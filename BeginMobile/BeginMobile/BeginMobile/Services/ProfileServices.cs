@@ -85,9 +85,9 @@ namespace BeginMobile.Services
             return await _profileManager.GetWall(authToken, filter, type, limit, offset);
         }
 
-        public async Task<ProfileInfo> GetInformationDetail(string userName, string authToken)
+        public async Task<ProfileInfo> GetInformationDetail(string authToken, string userName)
         {
-            return await _profileManager.GetProfileInformationDetail(userName, authToken);
+            return await _profileManager.GetProfileInformationDetail(authToken, userName);
         }
 
         //Groups, events and contacts

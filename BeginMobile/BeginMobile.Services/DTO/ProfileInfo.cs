@@ -105,5 +105,11 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("details")]
         public UserDetails Details { set; get; }
+
+        [JsonProperty("education")]
+        public UserEducation Education { set; get; }
+
+        [JsonProperty("work")]
+        public Userwork Work { set; get; }
     }
 }
