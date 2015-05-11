@@ -78,7 +78,7 @@ namespace BeginMobile.Services.ManagerServices
         {
             try
             {
-                const string urlGetParams = "?sections=activities";
+                var urlGetParams = "?sections=activities&limit=" + limit + "&offset=" + offset;
                 
                 if (username == null)
                 {
@@ -155,13 +155,26 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public async Task<ProfileInformationShop> GetShopInformation(string username, string authToken)
+        public async Task<ProfileInformationShop> GetShopInformation(
+            string authToken,
+            string username = null,
+            string limit = null,
+            string offset = null
+            )
         {
             try
             {
-                const string urlGetParams = "?sections=shop";
-                var addressSuffix = IdentifierProfile + "/" + username;
-                return await _profileShopClient.GetAsync(authToken, addressSuffix, urlGetParams);
+                var urlGetParams = "?sections=shop&limit=" + limit + "&offset=" + offset;
+
+                if (username == null)
+                {
+                    return await _profileShopClient.GetAsync(authToken, IdentifierMe, urlGetParams);
+                }
+                else
+                {
+                    var addressSuffix = IdentifierProfile + "/" + username;
+                    return await _profileShopClient.GetAsync(authToken, addressSuffix, urlGetParams);
+                }
             }
             catch (Exception exception)
             {

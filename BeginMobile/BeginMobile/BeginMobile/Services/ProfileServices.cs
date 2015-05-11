@@ -35,9 +35,13 @@ namespace BeginMobile.Services
             return _profileManager.GetProfileInformation(userName, authToken);
         }
 
-        public async Task<ProfileInformationActivities> GetActivities(string authToken, string userName)
+        public async Task<ProfileInformationActivities> GetActivities(
+            string authToken, 
+            string userName = null,
+            string limit = null,
+            string offset = null)
         {
-            return await _profileManager.GetActivitiesInformation(authToken, userName);
+            return await _profileManager.GetActivitiesInformation(authToken, userName, limit, offset);
         }
 
         public ProfileInformationEvents GetEvents(string userName, string authToken)
@@ -64,9 +68,14 @@ namespace BeginMobile.Services
             return await _profileManager.GetContactsInformation(authToken,  username: userName, limit: limit, offset: offset);
         }
 
-        public async Task<ProfileInformationShop> GetShopInfo(string userName, string authToken)
+        public async Task<ProfileInformationShop> GetShopInfo(
+            string authToken,
+            string userName = null,
+            string limit = null,
+            string offset = null 
+            )
         {
-            return await _profileManager.GetShopInformation(userName, authToken);
+            return await _profileManager.GetShopInformation(authToken, userName, limit, offset);
         }
 
         public ProfileInformationMessages GetMessagesInfo(string userName, string authToken)

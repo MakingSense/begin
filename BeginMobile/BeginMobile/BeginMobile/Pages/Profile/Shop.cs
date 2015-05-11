@@ -23,7 +23,7 @@ namespace BeginMobile.Pages.Profile
 
         private async Task Init()
         {
-            _profileShop = await BeginApplication.ProfileServices.GetShopInfo(currentUser.User.UserName, currentUser.AuthToken);
+            _profileShop = await BeginApplication.ProfileServices.GetShopInfo(currentUser.AuthToken, currentUser.User.UserName);
 
             _listViewShops = new ListView
             {
