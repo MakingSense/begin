@@ -23,7 +23,7 @@ namespace BeginMobile.Pages.Profile
         private BoxView boxViewButtonSelectedInfo;
         private BoxView boxViewButtonSelectedGroups;
         private BoxView boxViewButtonSelectedOthers;
-        private BoxView boxViewButtonSelectedContacts;
+        private BoxView _boxViewButtonSelectedContacts;
 
         private Button _buttonActivities;
         private Button _buttonInformation;
@@ -178,7 +178,7 @@ namespace BeginMobile.Pages.Profile
                 Text = "Information",
                 Style = BeginApplication.Styles.LinkButton                
             };
-            _buttonContacts = new Button { Text = "Contacts" };
+            _buttonContacts = new Button { Text = "Contacts", Style = BeginApplication.Styles.LinkButton};
             _buttonOthers = new Button { Text = "...", Style = BeginApplication.Styles.LinkButton};
             
             _commonGridMenuButtons = new Grid
@@ -200,7 +200,7 @@ namespace BeginMobile.Pages.Profile
             };
             boxViewButtonSelectedInfo = new BoxView { Color = Color.Blue, WidthRequest = 100, HeightRequest = 3, IsVisible = false};
             boxViewButtonSelectedGroups = new BoxView { Color = Color.Blue, WidthRequest = 100, HeightRequest = 3, IsVisible = false };
-            boxViewButtonSelectedOthers = new BoxView { Color = Color.Blue, WidthRequest = 100, HeightRequest = 3, IsVisible = false };
+            _boxViewButtonSelectedContacts = new BoxView { Color = Color.Blue, WidthRequest = 100, HeightRequest = 3, IsVisible = false };
             boxViewButtonSelectedOthers = new BoxView { Color = Color.Blue, WidthRequest = 100, HeightRequest = 3, IsVisible = false };
 
             _commonGridMenuButtons.Children.Add(_buttonInformation, 0, 0);
@@ -208,7 +208,7 @@ namespace BeginMobile.Pages.Profile
             _commonGridMenuButtons.Children.Add(_buttonActivities, 1, 0);
             _commonGridMenuButtons.Children.Add(boxViewButtonSelectedGroups, 1, 1);
             _commonGridMenuButtons.Children.Add(_buttonContacts, 2, 0);
-            _commonGridMenuButtons.Children.Add(boxViewButtonSelectedContacts, 2, 1);
+            _commonGridMenuButtons.Children.Add(_boxViewButtonSelectedContacts, 2, 1);
             _commonGridMenuButtons.Children.Add(_buttonOthers, 3, 0);
             _commonGridMenuButtons.Children.Add(boxViewButtonSelectedOthers, 3, 1);
 
@@ -297,7 +297,7 @@ namespace BeginMobile.Pages.Profile
             _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
-            boxViewButtonSelectedContacts.IsVisible = true;
+            _boxViewButtonSelectedContacts.IsVisible = true;
             boxViewButtonSelectedInfo.IsVisible = false;
             boxViewButtonSelectedGroups.IsVisible = false;
             boxViewButtonSelectedOthers.IsVisible = false;
