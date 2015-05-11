@@ -70,13 +70,25 @@ namespace BeginMobile.Services.ManagerServices
             }
         }
 
-        public async Task<ProfileInformationActivities> GetActivitiesInformation(string username, string authToken)
+        public async Task<ProfileInformationActivities> GetActivitiesInformation(
+            string authToken,
+            string username = null,
+            string limit = null,
+            string offset = null)
         {
             try
             {
                 const string urlGetParams = "?sections=activities";
-                var addressSuffix = IdentifierProfile + "/" + username;
-                return await _profileActivityClient.GetAsync(authToken, addressSuffix, urlGetParams);
+                
+                if (username == null)
+                {
+                     return await _profileActivityClient.GetAsync(authToken, IdentifierMe, urlGetParams);
+                }
+                else
+                {
+                    var addressSuffix = IdentifierProfile + "/" + username;
+                    return await _profileActivityClient.GetAsync(authToken, addressSuffix, urlGetParams);
+                }
             }
             catch (Exception exception)
             {

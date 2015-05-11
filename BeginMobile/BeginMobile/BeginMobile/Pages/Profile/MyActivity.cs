@@ -25,7 +25,7 @@ namespace BeginMobile.Pages.Profile
         private async Task Init()
         {
             _profileActivity =
-                await BeginApplication.ProfileServices.GetActivities(_currentUser.User.UserName, _currentUser.AuthToken);
+                await BeginApplication.ProfileServices.GetActivities(_currentUser.AuthToken, _currentUser.User.UserName);
             var listDataSource = new ObservableCollection<ActivityViewModel>();
 
             if (_profileActivity != null)

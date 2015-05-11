@@ -349,7 +349,7 @@ namespace BeginMobile.Pages.Profile
         {
             //request the activities API
             var profileActivity =
-                await BeginApplication.ProfileServices.GetActivities(_currentUser.User.UserName, _currentUser.AuthToken);
+                await BeginApplication.ProfileServices.GetActivities(_currentUser.AuthToken, _currentUser.User.UserName);
 
             var listActivityData = new ObservableCollection<ActivityViewModel>();
 
