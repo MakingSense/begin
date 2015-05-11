@@ -44,10 +44,13 @@ namespace BeginMobile.Pages.Profile
             _gridInfo = new Grid
             {
                 Padding = BeginApplication.Styles.LayoutThickness,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.StartAndExpand,
+                VerticalOptions = LayoutOptions.StartAndExpand,
                 RowDefinitions =
                                      {
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
                                          new RowDefinition {Height = GridLength.Auto},
                                          new RowDefinition {Height = GridLength.Auto},
                                          new RowDefinition {Height = GridLength.Auto},
@@ -62,10 +65,10 @@ namespace BeginMobile.Pages.Profile
             _gridInfo.Children.Add(GetNameAndSurname(), 0, 1);
             _gridInfo.Children.Add(new ProfileTitle("About Me"), 0, 2);
             _gridInfo.Children.Add(GetInformationDetail(), 0, 3);
-            _gridInfo.Children.Add(new ProfileTitle("Education and profession"), 0, 3);
-            _gridInfo.Children.Add(GetEducationProffesion(), 0, 3);
-            _gridInfo.Children.Add(new ProfileTitle("Work experience"), 0, 3);
-            _gridInfo.Children.Add(GetWorkExperience(), 0, 3);
+            _gridInfo.Children.Add(new ProfileTitle("Education and profession"), 0, 4);
+            _gridInfo.Children.Add(GetEducationProffesion(), 0, 5);
+            _gridInfo.Children.Add(new ProfileTitle("Work experience"), 0, 6);
+            _gridInfo.Children.Add(GetWorkExperience(), 0, 7);
 
 
             //stackLayoutInfo = new StackLayout
@@ -119,7 +122,7 @@ namespace BeginMobile.Pages.Profile
                                             {
                                                 new Label
                                                 {
-                                                    Text = _profileInfo.DisplayName,
+                                                    Text = _profileInfo.NameSurname,
                                                     FontAttributes = FontAttributes.Bold,
                                                     Style = BeginApplication.Styles.TextBodyStyle
                                                 }

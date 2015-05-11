@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using BeginMobile.LocalizeResources.Resources;
-using BeginMobile.Pages.GroupPages;
 using BeginMobile.Services.DTO;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
@@ -26,6 +23,7 @@ namespace BeginMobile.Pages.Profile
         private BoxView boxViewButtonSelectedInfo;
         private BoxView boxViewButtonSelectedGroups;
         private BoxView boxViewButtonSelectedOthers;
+        private BoxView boxViewButtonSelectedContacts;
 
         private Button _buttonActivities;
         private Button _buttonInformation;
@@ -36,6 +34,7 @@ namespace BeginMobile.Pages.Profile
         private Button _buttonEvents;                
 
         private readonly Information _information = new Information();
+        private readonly Contacts _contacts = new Contacts();
         
         public ProfileMe(LoginUser currenLoginUser)
         {
@@ -177,10 +176,11 @@ namespace BeginMobile.Pages.Profile
             _buttonInformation = new Button
             {
                 Text = "Information",
-                Style = BeginApplication.Styles.LinkButton
-                
+                Style = BeginApplication.Styles.LinkButton                
             };
+            _buttonContacts = new Button { Text = "Contacts" };
             _buttonOthers = new Button { Text = "...", Style = BeginApplication.Styles.LinkButton};
+            
             _commonGridMenuButtons = new Grid
             {
                 HorizontalOptions = LayoutOptions.Center,
@@ -194,22 +194,28 @@ namespace BeginMobile.Pages.Profile
                                      {
                                          new ColumnDefinition {Width = GridLength.Auto},
                                          new ColumnDefinition {Width = GridLength.Auto},
-                                         new ColumnDefinition {Width = GridLength.Auto}
+                                         new ColumnDefinition {Width = GridLength.Auto},
+                                         new ColumnDefinition {Width = GridLength.Auto},
                                      }
             };
             boxViewButtonSelectedInfo = new BoxView { Color = Color.Blue, WidthRequest = 100, HeightRequest = 3, IsVisible = false};
             boxViewButtonSelectedGroups = new BoxView { Color = Color.Blue, WidthRequest = 100, HeightRequest = 3, IsVisible = false };
+            boxViewButtonSelectedOthers = new BoxView { Color = Color.Blue, WidthRequest = 100, HeightRequest = 3, IsVisible = false };
             boxViewButtonSelectedOthers = new BoxView { Color = Color.Blue, WidthRequest = 100, HeightRequest = 3, IsVisible = false };
 
             _commonGridMenuButtons.Children.Add(_buttonInformation, 0, 0);
             _commonGridMenuButtons.Children.Add(boxViewButtonSelectedInfo, 0, 1);
             _commonGridMenuButtons.Children.Add(_buttonActivities, 1, 0);
             _commonGridMenuButtons.Children.Add(boxViewButtonSelectedGroups, 1, 1);
-            _commonGridMenuButtons.Children.Add(_buttonOthers, 2, 0);
-            _commonGridMenuButtons.Children.Add(boxViewButtonSelectedOthers, 2, 1);
-            
+            _commonGridMenuButtons.Children.Add(_buttonContacts, 2, 0);
+            _commonGridMenuButtons.Children.Add(boxViewButtonSelectedContacts, 2, 1);
+            _commonGridMenuButtons.Children.Add(_buttonOthers, 3, 0);
+            _commonGridMenuButtons.Children.Add(boxViewButtonSelectedOthers, 3, 1);
+
+
             _buttonActivities.Clicked += ButtonActivityEventHandler;
             _buttonInformation.Clicked += ButtonInformationEventHandler;
+            _buttonContacts.Clicked += ButtonContactEventHandler;
             _buttonOthers.Clicked += ButtonOtherEventHadler;
 
         }
@@ -277,34 +283,25 @@ namespace BeginMobile.Pages.Profile
             boxViewButtonSelectedInfo.IsVisible = true;
             boxViewButtonSelectedGroups.IsVisible = false;
             boxViewButtonSelectedOthers.IsVisible = false;
-            
+            _commonGridResults.Children.Add(_information.GetGridInfo());
+
+        }
 
 
-            _commonGridResults.HorizontalOptions = LayoutOptions.StartAndExpand;
-            _commonGridResults.VerticalOptions = LayoutOptions.StartAndExpand;
-            _commonGridResults.RowDefinitions = 
-              _commonGridResults.RowDefinitions =new RowDefinitionCollection{
-                                         new RowDefinition {Height = GridLength.Auto},
-                                         new RowDefinition {Height = GridLength.Auto},
-                                         new RowDefinition {Height = GridLength.Auto},
-                                         new RowDefinition {Height = GridLength.Auto}
-                                     
-              };
-            _commonGridResults.ColumnDefinitions = new ColumnDefinitionCollection
-                                                   {
-                                                       new ColumnDefinition {Width = GridLength.Auto}
-                                                   };
+        private async void ButtonContactEventHandler(object sender, EventArgs e)
+        {
+            ClearListViewAndHideDetailsGrid();
+            var thisButton = sender as Button;
+            if (thisButton != null) thisButton.TextColor = Color.Black;
 
-            _commonGridResults.Children.Add(new ProfileTitle("Name and surname"), 0, 0);
-            _commonGridResults.Children.Add(_information.GetNameAndSurname(), 0, 1);
-            _commonGridResults.Children.Add(new ProfileTitle("About Me"), 0, 2);
-            _commonGridResults.Children.Add(_information.GetInformationDetail(), 0, 3);
-            _commonGridResults.Children.Add(new ProfileTitle("Education and profession"), 0, 3);
-            _commonGridResults.Children.Add(_information.GetEducationProffesion(), 0, 3);
-            _commonGridResults.Children.Add(new ProfileTitle("Work experience"), 0, 3);
-            _commonGridResults.Children.Add(_information.GetWorkExperience(), 0, 3);
-
-            
+            _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
+            boxViewButtonSelectedContacts.IsVisible = true;
+            boxViewButtonSelectedInfo.IsVisible = false;
+            boxViewButtonSelectedGroups.IsVisible = false;
+            boxViewButtonSelectedOthers.IsVisible = false;
+            //TODO here Contacts logic options for load contacts 
         }
 
         private async void ButtonOtherEventHadler(object sender, EventArgs e)
