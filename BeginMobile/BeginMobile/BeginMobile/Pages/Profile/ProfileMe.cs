@@ -36,6 +36,7 @@ namespace BeginMobile.Pages.Profile
 
         private readonly Information _information = new Information();
         private readonly ContactPage _contacts = new ContactPage("", "");
+        private readonly MyActivity _activity = new MyActivity();
 
         public ProfileMe(LoginUser currenLoginUser)
         {
@@ -288,7 +289,7 @@ namespace BeginMobile.Pages.Profile
 
             //_commonGridResults.Children.Add(_commonListView, 0, 0);
 
-            _commonGridResults.Children.Add(GetGridActivities, 0, 0);
+            _commonGridResults.Children.Add(_activity.GetGridActivities, 0, 0);
         }
 
         private void ButtonInformationEventHandler(object sender, EventArgs e)
