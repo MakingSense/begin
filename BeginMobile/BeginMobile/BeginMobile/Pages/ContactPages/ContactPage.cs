@@ -161,6 +161,11 @@ namespace BeginMobile.Pages.ContactPages
             removeLoadingIndicator(_stackLayoutLoadingIndicator);
         }
 
+        public Grid GridContacts()
+        {
+            return _gridLayoutMain;
+        }
+
         #region Events
 
         #region Method of the Paginator

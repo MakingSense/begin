@@ -12,7 +12,7 @@ namespace BeginMobile.Pages.Profile
     {
         private readonly LoginUser _currentUser;
         private ProfileInformationActivities _profileActivity;
-
+        private Grid _gridMainComponents;
         public MyActivity()
         {
             Style = BeginApplication.Styles.PageStyle;
@@ -68,7 +68,7 @@ namespace BeginMobile.Pages.Profile
             listViewActivities.HasUnevenRows = true;
 
 
-            var gridMainComponents = new Grid
+            _gridMainComponents = new Grid
             {
                 Padding = BeginApplication.Styles.LayoutThickness,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -80,12 +80,16 @@ namespace BeginMobile.Pages.Profile
                                   }
             };
 
-            gridMainComponents.Children.Add(listViewActivities, 0, 0);
+            _gridMainComponents.Children.Add(listViewActivities, 0, 0);
 
 
-            Content = gridMainComponents;
+            Content = _gridMainComponents;
         }
 
+        public Grid GetGridActivities
+        {
+            get { return _gridMainComponents; }
+        }
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
