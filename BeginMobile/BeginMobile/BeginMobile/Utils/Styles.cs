@@ -664,6 +664,23 @@ namespace BeginMobile.Utils
                     (Color.FromHex("646567"), Color.FromHex("646567"), Color.FromHex("646567"));
             }
         }
+
+        public Style TabUnderLine
+        {
+            get
+            {
+                
+                return new Style(typeof(BoxView))
+                       {
+                           Setters =
+                           {
+                               new Setter{ Property = BoxView.ColorProperty , Value = Device.OnPlatform (Color.FromHex("4EBD8C"), Color.FromHex("4EBD8C"), Color.FromHex("4EBD8C")) },
+                               new Setter{Property = VisualElement.HeightProperty, Value = 3},
+                               new Setter{Property =VisualElement.WidthProperty, Value=100}
+                           }
+                       };
+            }
+        }
         public Style MessageContentStyle
         {
             get

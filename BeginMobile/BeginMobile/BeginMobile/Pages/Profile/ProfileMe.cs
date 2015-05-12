@@ -193,30 +193,22 @@ namespace BeginMobile.Pages.Profile
                                      };
             _boxViewButtonSelectedInfo = new BoxView
                                          {
-                                             Color = Color.Blue,
-                                             WidthRequest = 100,
-                                             HeightRequest = 3,
+                                             Style = BeginApplication.Styles.TabUnderLine,
                                              IsVisible = false
                                          };
             _boxViewButtonSelectedActivities = new BoxView
                                                {
-                                                   Color = Color.Blue,
-                                                   WidthRequest = 100,
-                                                   HeightRequest = 3,
+                                                   Style = BeginApplication.Styles.TabUnderLine,
                                                    IsVisible = false
                                                };
             _boxViewButtonSelectedContacts = new BoxView
                                              {
-                                                 Color = Color.Blue,
-                                                 WidthRequest = 100,
-                                                 HeightRequest = 3,
+                                                 Style = BeginApplication.Styles.TabUnderLine,
                                                  IsVisible = false
                                              };
             _boxViewButtonSelectedOthers = new BoxView
                                            {
-                                               Color = Color.Blue,
-                                               WidthRequest = 100,
-                                               HeightRequest = 3,
+                                               Style = BeginApplication.Styles.TabUnderLine,
                                                IsVisible = false
                                            };
 
