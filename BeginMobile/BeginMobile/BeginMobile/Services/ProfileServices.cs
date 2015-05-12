@@ -25,9 +25,13 @@ namespace BeginMobile.Services
             _messageManager = new MessageManager();
         }
 
-        public async Task<ProfileInformationGroups> GetGroups(string userName, string authToken)
+        public async Task<ProfileInformationGroups> GetGroups(
+            string authToken,
+            string userName = null,
+            string limit = null,
+            string offset = null)
         {
-            return await _profileManager.GetGroupsInformation(userName, authToken);
+            return await _profileManager.GetGroupsInformation(authToken, userName, limit, offset);
         }
 
         public ProfileInfo GetInformation(string userName, string authToken)

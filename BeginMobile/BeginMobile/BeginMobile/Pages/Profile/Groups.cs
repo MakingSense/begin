@@ -49,8 +49,7 @@ namespace BeginMobile.Pages.Profile
         {
 
 
-            _groupInformation = await BeginApplication.ProfileServices.GetGroups(currentUser.User.UserName,
-                currentUser.AuthToken);
+            _groupInformation = await BeginApplication.ProfileServices.GetGroups(currentUser.AuthToken, currentUser.User.UserName);
 
             _groups = _groupInformation != null ? _groupInformation.Groups : 
                 new ObservableCollection<Group>(_defaultGroups);
