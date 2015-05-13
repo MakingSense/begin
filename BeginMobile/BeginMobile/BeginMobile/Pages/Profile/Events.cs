@@ -123,7 +123,12 @@ namespace BeginMobile.Pages.Profile
                     }
                 }
             };
-
+#if __ANDROID__ || __IOS__
+            ToolbarItems.Add(new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+            {
+                _searchView.Container.IsVisible = true;
+            }));
+#endif
             Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.Start,

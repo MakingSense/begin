@@ -34,6 +34,7 @@ namespace BeginMobile.Pages.Notifications
 
         private bool _isUnread = true;
         private const string DefaultLimit = "10";
+        private const string DefaultStatus = "unread";
         public Notification(string title, string iconImg)
             : base(title, iconImg)
         {
@@ -230,7 +231,7 @@ namespace BeginMobile.Pages.Notifications
         private async void Init()
         {
             var profileNotification =
-                await BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken, DefaultLimit);
+                await BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken, DefaultLimit, DefaultStatus);
 
             if (profileNotification!=null)
             {
@@ -292,11 +293,11 @@ namespace BeginMobile.Pages.Notifications
                                  Children =
                                         {
                                             _searchView.Container,
-                                            gridHeaderTitle,
+                                             //gridHeaderTitle,
                                             _listViewNotifications
                                         }
                              };
-          
+                      
             Content = mainLayout;
         }
         private void LoadStatusOptionsPicker()

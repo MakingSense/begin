@@ -60,8 +60,8 @@ namespace BeginMobile.Pages.Notifications
                                   }
                               };
             gridDetails.Children.Add(labelnotificationDesc, 0, 0);
-            gridDetails.Children.Add(labelintervalDate, 1, 0);
-            gridDetails.Children.Add(isUnread ? buttonMarkAsRead : buttonMarkAsUnread, 2, 0);
+            gridDetails.Children.Add(labelintervalDate, 0, 1);
+           // gridDetails.Children.Add(isUnread ? buttonMarkAsRead : buttonMarkAsUnread, 2, 0);
             View = gridDetails;
 
             View.SetBinding(ClassIdProperty, "Id");

@@ -155,7 +155,12 @@ namespace BeginMobile.Pages.ContactPages
             _gridLayoutMain.Children.Add(_labelNoContactsMessage, 0, 1);
             _gridLayoutMain.Children.Add(stackLayoutContactsList, 0, 2);
 
-
+#if __ANDROID__ || __IOS__
+            ToolbarItems.Add(new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+            {
+                _searchView.Container.IsVisible = true;
+            }));
+#endif
             Content = _gridLayoutMain;
 
             removeLoadingIndicator(_stackLayoutLoadingIndicator);
