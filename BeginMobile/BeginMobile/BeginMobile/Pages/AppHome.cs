@@ -24,15 +24,15 @@ namespace BeginMobile.Pages
 
             Children.Add(new WallPage(
                 new Label { Text = AppResources.AppHomeChildNewsFeed, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
-                Device.OnPlatform("RSS.png", "padlock.png", "padlock.png")));
+                Device.OnPlatform("iconwallactive.png", "iconwallactive.png", "iconwallactive.png")));
 
             Children.Add(
                 new Notification(new Label { Text = AppResources.AppHomeChildNotifications, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
-                    Device.OnPlatform("Chat.png", "padlock.png", "padlock.png")));
+                    Device.OnPlatform("iconnotificationsactive.png", "iconnotificationsactive.png", "iconnotificationsactive.png")));
 
             Children.Add(
                 new MessageListPage(new Label { Text = AppResources.AppHomeChildMessages, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
-                    Device.OnPlatform("Messages.png", "padlock.png", "padlock.png")));
+                    Device.OnPlatform("iconmessagesactive.png", "iconmessagesactive.png", "iconmessagesactive.png")));
 
             Children.Add(
                 new ContactPage(
@@ -41,29 +41,25 @@ namespace BeginMobile.Pages
                         Text = AppResources.AppHomeChildFindContacts,
                         Style = BeginApplication.Styles.StyleNavigationTitle
                     }.Text,
-                    Device.OnPlatform("Users_three_switch.png", "padlock.png", "padlock.png")));
+                    Device.OnPlatform("iconcontactsactive.png", "iconcontactsactive.png", "iconcontactsactive.png")));
 
-            //Children.Add(
-            //   new ContactPage(new Label { Text = AppResources.AppHomeChildFindContacts, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
-            //       Device.OnPlatform("Users_three_switch.png", "padlock.png", "padlock.png")));
-
-            //Children.Add(
-            //    new GroupListPage(new Label { Text = AppResources.AppHomeChildGroups, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
-            //        Device.OnPlatform("Users_three_2.png", "padlock.png", "padlock.png")));
-#if __ANDROID__
             Children.Add(
                 new OptionsPage(new Label { Text = "...", Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
-                    "padlock.png"));
-#endif
-#if __IOS__
-            Children.Add(
-                new GroupListPage(new Label { Text = AppResources.AppHomeChildGroups, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
-                    Device.OnPlatform("Users_three_2.png", "padlock.png", "padlock.png")));
+                    Device.OnPlatform("iconmenuactive.png", "iconmenuactive.png", "iconmenuactive.png")));
+//#if __ANDROID__
+//            Children.Add(
+//                new OptionsPage(new Label { Text = "...", Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
+//                    "padlock.png"));
+//#endif
+//#if __IOS__
+//            Children.Add(
+//                new GroupListPage(new Label { Text = AppResources.AppHomeChildGroups, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
+//                    Device.OnPlatform("Users_three_2.png", "padlock.png", "padlock.png")));
 
-            Children.Add(
-               new ContactPage(new Label { Text = AppResources.AppHomeChildFindContacts, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
-                   Device.OnPlatform("Users_three_switch.png", "padlock.png", "padlock.png")));
-#endif
+//            Children.Add(
+//               new ContactPage(new Label { Text = AppResources.AppHomeChildFindContacts, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
+//                   Device.OnPlatform("Users_three_switch.png", "padlock.png", "padlock.png")));
+//#endif
         }
     }
 }
