@@ -27,21 +27,29 @@ namespace BeginMobile.Pages
                 Device.OnPlatform("RSS.png", "padlock.png", "padlock.png")));
 
             Children.Add(
+                new Notification(new Label { Text = AppResources.AppHomeChildNotifications, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
+                    Device.OnPlatform("Chat.png", "padlock.png", "padlock.png")));
+
+            Children.Add(
                 new MessageListPage(new Label { Text = AppResources.AppHomeChildMessages, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
                     Device.OnPlatform("Messages.png", "padlock.png", "padlock.png")));
 
             Children.Add(
-                new Notification(new Label { Text = AppResources.AppHomeChildNotifications, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
-                    Device.OnPlatform("Chat.png", "padlock.png", "padlock.png")));
-
-            //Children.Add(
-            //    new GroupListPage(new Label { Text = AppResources.AppHomeChildGroups, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
-            //        Device.OnPlatform("Users_three_2.png", "padlock.png", "padlock.png")));
+                new ContactPage(
+                    new Label
+                    {
+                        Text = AppResources.AppHomeChildFindContacts,
+                        Style = BeginApplication.Styles.StyleNavigationTitle
+                    }.Text,
+                    Device.OnPlatform("Users_three_switch.png", "padlock.png", "padlock.png")));
 
             //Children.Add(
             //   new ContactPage(new Label { Text = AppResources.AppHomeChildFindContacts, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
             //       Device.OnPlatform("Users_three_switch.png", "padlock.png", "padlock.png")));
 
+            //Children.Add(
+            //    new GroupListPage(new Label { Text = AppResources.AppHomeChildGroups, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
+            //        Device.OnPlatform("Users_three_2.png", "padlock.png", "padlock.png")));
 #if __ANDROID__
             Children.Add(
                 new OptionsPage(new Label { Text = "...", Style = BeginApplication.Styles.StyleNavigationTitle }.Text,

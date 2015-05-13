@@ -5,8 +5,11 @@ using Android.App;
 using Android.Views;
 using Android.Widget;
 using BeginMobile.Android.Renderers;
+using BeginMobile.Menu;
 using BeginMobile.Pages;
+using BeginMobile.Pages.ContactPages;
 using BeginMobile.Pages.MessagePages;
+using BeginMobile.Pages.Wall;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -25,6 +28,12 @@ namespace BeginMobile.Android.Renderers
         {
             base.OnElementPropertyChanged(sender, e);
             _activity = this.Context as Activity;
+
+            if (_activity != null)
+            {
+                var actionBar = _activity.ActionBar;
+                SetUpTabSelected(actionBar);
+            }
         }
 
         protected override void OnDraw(global::Android.Graphics.Canvas canvas)
@@ -36,25 +45,6 @@ namespace BeginMobile.Android.Renderers
             SetUpTabs(actionBar, appHome);
         }
 
-        //protected override void DispatchDraw(global::Android.Graphics.Canvas canvas)
-        //{
-        //    base.DispatchDraw(canvas);
-        //    var appHome = (AppHome)this.Element;
-        //    ActionBar actionBar = _activity.ActionBar;
-
-        //    SetUpTabs(actionBar, appHome);
-        //}
-
-        //protected override void OnWindowVisibilityChanged(ViewStates visibility)
-        //{
-        //    base.OnWindowVisibilityChanged(visibility);
-        //    var appHome = (AppHome)this.Element;
-        //    ActionBar actionBar = _activity.ActionBar;
-
-        //    SetUpTabs(actionBar, appHome);
-        //}
-
-
         # region "Helper methods"
         private bool TabIsEmpty(ActionBar.Tab tab)
         {
@@ -64,14 +54,18 @@ namespace BeginMobile.Android.Renderers
             return false;
         }
 
+
         private void SetUpTabs(ActionBar actionBar, AppHome appHome)
         {
             if (actionBar.TabCount > 0)
             {
                 var count = 0;
+                var selectedTab = actionBar.SelectedTab;
+                var numTabSelected = selectedTab != null ? selectedTab.Position : 0 ;
+
                 while (count < actionBar.TabCount)
                 {
-                    ActionBar.Tab tabOne = actionBar.GetTabAt(count);
+                    var tabOne = actionBar.GetTabAt(count);
 
                     if (TabIsEmpty(tabOne))
                     {
@@ -79,13 +73,30 @@ namespace BeginMobile.Android.Renderers
 
                         tabOne.SetCustomView(Resource.Layout.BarTabLayout);
 
+                        var tabIcontAux = tabOne.CustomView.FindViewById<ImageView>(Resource.Id.tab_icon);
                         var tabTextAux = tabOne.CustomView.FindViewById<TextView>(Resource.Id.tab_title);
                         var tabBadge = tabOne.CustomView.FindViewById<TextView>(Resource.Id.tab_badge);
+
                         tabTextAux.Text = childTab.Title;
 
-                        if (childTab is MessageListPage)
+                        var typeChild = childTab.GetType();
+
+                        if (typeChild == typeof(WallPage))
+                        {
+                            var tabMessage = (WallPage)childTab;
+                            tabIcontAux.SetImageResource(numTabSelected == count
+                                ? Resource.Drawable.iconwallinactive
+                                : Resource.Drawable.iconwallactive);
+
+                            tabBadge.Visibility = ViewStates.Invisible;
+                        }
+                        else if (typeChild == typeof(MessageListPage))
                         {
                             var tabMessage = (MessageListPage)childTab;
+                            tabIcontAux.SetImageResource(numTabSelected == count
+                                ? Resource.Drawable.iconmessagesinactive
+                                : Resource.Drawable.iconmessagesactive);
+
                             int counter;
 
                             if (int.TryParse(tabMessage.LabelCounter.Text, out counter))
@@ -106,12 +117,14 @@ namespace BeginMobile.Android.Renderers
                             {
                                 tabBadge.Visibility = ViewStates.Invisible;
                             }
-
-
                         }
-                        else if (childTab is Pages.Notifications.Notification)
+                        else if (typeChild == typeof(Pages.Notifications.Notification))
                         {
                             var tabNotification = (Pages.Notifications.Notification)childTab;
+                            tabIcontAux.SetImageResource(numTabSelected == count
+                                ? Resource.Drawable.iconnotificationsinactive
+                                : Resource.Drawable.iconnotificationsactive);
+
                             int counter;
 
                             if (int.TryParse(tabNotification.LabelCounter.Text, out counter))
@@ -134,8 +147,20 @@ namespace BeginMobile.Android.Renderers
                                 tabBadge.Visibility = ViewStates.Invisible;
                             }
                         }
-                        else
+                        else if (typeChild == typeof(ContactPage))
                         {
+                            var tabMessage = (ContactPage)childTab;
+                            tabIcontAux.SetImageResource(numTabSelected == count
+                                ? Resource.Drawable.iconcontactsinactive
+                                : Resource.Drawable.iconcontactsactive);
+                            tabBadge.Visibility = ViewStates.Invisible;
+                        }
+                        else if (typeChild == typeof(OptionsPage))
+                        {
+                            var tabMessage = (OptionsPage)childTab;
+                            tabIcontAux.SetImageResource(numTabSelected == count
+                                ? Resource.Drawable.iconmenuinactive
+                                : Resource.Drawable.iconmenuactive);
                             tabBadge.Visibility = ViewStates.Invisible;
                         }
 
@@ -144,6 +169,54 @@ namespace BeginMobile.Android.Renderers
                 }
             }
         }
+
+        private void SetUpTabSelected(ActionBar actionBar)
+        {
+            var tabselected = actionBar.SelectedTab;
+            if (actionBar.TabCount > 0 && tabselected != null && tabselected.CustomView != null)
+            {
+                var count = 0;
+                var numTabSelected = actionBar.SelectedNavigationIndex;
+
+                while (count < actionBar.TabCount)
+                {
+                    var tabOne = actionBar.GetTabAt(count);
+                    var tabIcontAux = tabOne.CustomView.FindViewById<ImageView>(Resource.Id.tab_icon);
+
+                    switch (count)
+                    {
+                        case 0:
+                            tabIcontAux.SetImageResource(numTabSelected == count
+                                ? Resource.Drawable.iconwallinactive
+                                : Resource.Drawable.iconwallactive);
+                            break;
+                        case 1:
+                            tabIcontAux.SetImageResource(numTabSelected == count
+                                ? Resource.Drawable.iconnotificationsinactive
+                                : Resource.Drawable.iconnotificationsactive);
+                            break;
+                        case 2:
+                            tabIcontAux.SetImageResource(numTabSelected == count
+                                ? Resource.Drawable.iconmessagesinactive
+                                : Resource.Drawable.iconmessagesactive);
+                            break;
+                        case 3:
+                            tabIcontAux.SetImageResource(numTabSelected == count
+                                ? Resource.Drawable.iconcontactsinactive
+                                : Resource.Drawable.iconcontactsactive);
+                            break;
+                        case 4:
+                            tabIcontAux.SetImageResource(numTabSelected == count
+                                ? Resource.Drawable.iconmenuinactive
+                                : Resource.Drawable.iconmenuactive);
+                            break;
+                    }
+
+                    count++;
+                }
+            }
+        }
+
         #endregion
     }
 }

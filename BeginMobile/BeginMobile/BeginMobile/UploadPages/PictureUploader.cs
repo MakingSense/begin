@@ -4,7 +4,11 @@ using ImageCircle.Forms.Plugin.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
+using XLabs.Ioc;
+using XLabs.Platform.Device;
+using XLabs.Platform.Services.Media;
 
 namespace BeginMobile.UploadPages
 {
@@ -18,7 +22,16 @@ namespace BeginMobile.UploadPages
         private Label _labelReplacePicture;
         private Button _buttonNextStep;
 
+        //
+        private readonly TaskScheduler _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
         private CircleImage _imageUploaded;
+        private ImageSource _imageSourceAvatar;
+        private IMediaPicker _mediaPicker = null;
+
+        public string Status
+        { set; get; }
+
+        //private CircleImage _imageUploaded;
         public PictureUploader()
         {
             Title = "Upload avatar";
@@ -37,10 +50,23 @@ namespace BeginMobile.UploadPages
                     case SelectFromFolder:
                         var photoPageFolder = new PhotoPage(this, false);
                         await Navigation.PushAsync(photoPageFolder);
+                        //Setup();
+                        //var options = new CameraMediaStorageOptions();
+                        //var test = await _mediaPicker.SelectPhotoAsync(options);
+
+                        //var stream = test.Source;
+
+                        //if (stream != null)
+                        //{
+                        //    _imageSourceAvatar = StreamImageSource.FromStream(() => stream);
+                        //}
                         break;
                     case AccessYourCamera:
                         var photoPageCamera = new PhotoPage(this, true);
                         await Navigation.PushAsync(photoPageCamera);
+                        //await TakePicture();
+					var test1 = "";
+					//var tes = new PictureUploader();
                         break;
                     case Cancel:
                         return;
@@ -147,6 +173,53 @@ namespace BeginMobile.UploadPages
                 Padding = new Thickness(10, Device.OnPlatform(20, 20, 20), 10, 10),
                 Children = {gridMain}
             };
+        }
+
+        private async Task<MediaFile> TakePicture()
+        {
+            Setup();
+
+            _imageSourceAvatar = null;
+
+            return await _mediaPicker.TakePhotoAsync(new CameraMediaStorageOptions
+            {
+                DefaultCamera = CameraDevice.Rear, 
+                MaxPixelDimension = 400,
+            
+            }).ContinueWith(t =>
+            {
+                if (t.IsFaulted)
+                {
+                    Status = t.Exception.InnerException.ToString();
+                }
+                else if (t.IsCanceled)
+                {
+                    Status = "Canceled";
+                }
+                else
+                {
+                    var mediaFile = t.Result;
+
+                    _imageSourceAvatar = ImageSource.FromStream(() => mediaFile.Source);
+
+                    return mediaFile;
+                }
+
+                return null;
+            });
+        }
+
+        private void Setup()
+        {
+            if (_mediaPicker != null)
+            {
+                return;
+            }
+
+            var device = Resolver.Resolve<IDevice>();
+
+            ////RM: hack for working on windows phone? 
+            _mediaPicker = DependencyService.Get<IMediaPicker>() ?? device.MediaPicker;
         }
 
         public async void UpdatePhoto(ImageSource imageSource)

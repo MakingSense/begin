@@ -183,6 +183,16 @@
     <AndroidResource Include="Resources\Drawable\splash_screen.PNG" />
     <AndroidResource Include="Resources\Drawable\services.PNG" />
     <AndroidResource Include="Resources\Drawable\logotype.png" />
+    <AndroidResource Include="Resources\Drawable\iconcontactsactive.png" />
+    <AndroidResource Include="Resources\Drawable\iconcontactsinactive.png" />
+    <AndroidResource Include="Resources\Drawable\iconmenuactive.png" />
+    <AndroidResource Include="Resources\Drawable\iconmenuinactive.png" />
+    <AndroidResource Include="Resources\Drawable\iconmessagesactive.png" />
+    <AndroidResource Include="Resources\Drawable\iconmessagesinactive.png" />
+    <AndroidResource Include="Resources\Drawable\iconnotificationsinactive.png" />
+    <AndroidResource Include="Resources\Drawable\iconnotificationsactive.png" />
+    <AndroidResource Include="Resources\Drawable\iconwallactive.png" />
+    <AndroidResource Include="Resources\Drawable\iconwallinactive.png" />
     <EmbeddedResource Include="Resources\Drawable\ifeeds.png" />
     <AndroidResource Include="Resources\Drawable\privacy.png" />
     <AndroidResource Include="Resources\Drawable\igroup.png" />

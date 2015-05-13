@@ -32,7 +32,7 @@ namespace BeginMobile.Accounts
                           {
                               Placeholder = AppResources.UsernamePlaceholder,
                               Keyboard = Keyboard.Email,
-                              Style = BeginApplication.Styles.EntryStyle
+                              Style = BeginApplication.Styles.EntryStyle,
                           };
 
             _entryPassword = new Entry

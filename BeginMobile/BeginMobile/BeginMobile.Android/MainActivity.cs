@@ -18,6 +18,7 @@ namespace BeginMobile.Android
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+
             SetIoC();
             Xamarin.Forms.Forms.Init(this, bundle);
             ImageCircleRenderer.Init();
@@ -27,6 +28,7 @@ namespace BeginMobile.Android
 
         private void SetIoC()
         {
+            
             // New Xlabs
             if (Resolver.IsSet == false)
             {

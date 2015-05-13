@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/tab_icon"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="7dp">
+    <LinearLayout
+        android:id="@+id/IconTextLayout"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent" />
-    <TextView
-        android:id="@+id/tab_title"
-        android:layout_width="wrap_content"
-        android:layout_height="35dip"
-        android:gravity="bottom|center"
-        android:textColor="#FFFFFF"
-        android:textSize="11dp"
-        android:textAllCaps="false" />
+        android:paddingLeft="2dp">
+        <ImageView
+            android:id="@+id/tab_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent" />
+        <TextView
+            android:id="@+id/tab_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:textColor="#FFFFFF"
+            android:textSize="11dp"
+            android:textAllCaps="false" />
+    </LinearLayout>
     <TextView
         android:id="@+id/tab_badge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/BadgeCircle"
-        android:layout_alignTop="@id/tab_title"
-        android:layout_alignRight="@id/tab_title"
+        android:layout_alignTop="@id/IconTextLayout"
+        android:layout_alignRight="@id/IconTextLayout"
         android:textColor="#FFF"
         android:textSize="8dp" />
 </RelativeLayout>
