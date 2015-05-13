@@ -60,6 +60,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Groups.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Information.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Messages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\MessagesTab.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\MyActivity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\ProfileMe.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\ProfileTitle.cs" />

@@ -43,8 +43,8 @@ namespace BeginMobile.Pages.Profile
             _gridInfo = new Grid
             {
                 Padding = BeginApplication.Styles.LayoutThickness,
-                HorizontalOptions = LayoutOptions.StartAndExpand,
-                VerticalOptions = LayoutOptions.StartAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
                 RowDefinitions =
                                      {
                                          new RowDefinition {Height = GridLength.Auto},

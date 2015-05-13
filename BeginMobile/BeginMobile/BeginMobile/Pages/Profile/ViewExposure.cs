@@ -6,13 +6,16 @@ namespace BeginMobile.Pages.Profile
     public class ViewExposure : ContentPage
     {
         private Grid _gridResults;
-        private readonly Label _optionsForAll;
-        private readonly Label _optionsForMe;
-        private BoxView _boxViewSelectedAllOption;
-        private BoxView _boxViewSeletedMeOption;
+        private readonly Label _optionsAll;
+        private readonly Label _optionsMe;
+        private readonly BoxView _boxViewSelectedAllOption;
+        private readonly BoxView _boxViewSeletedMeOption;
+        private Grid _gridMeItems;
+        private Grid _gridAllItems;
 
         public ViewExposure()
         {
+            BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor;
             var tapGestureRecognizerAll = new TapGestureRecognizer
                                           {
                                               NumberOfTapsRequired = 1
@@ -25,24 +28,23 @@ namespace BeginMobile.Pages.Profile
             tapGestureRecognizerAll.Tapped += ShowAllEventHandler;
             tapGestureRecognizerMe.Tapped += ShowOnlyMeEventHandler;
 
-            _optionsForAll = new Label
+            _optionsAll = new Label
                              {
-                                 Style = BeginApplication.Styles.PickerStyle,
+                                 Text = "All",
+                                 Style = BeginApplication.Styles.SubtitleStyle,
                                  XAlign = TextAlignment.Start,
-                                 HorizontalOptions = LayoutOptions.Start,
-                                 IsVisible = false
+                                 HorizontalOptions = LayoutOptions.Start
                              };
-            _optionsForAll.GestureRecognizers.Add(tapGestureRecognizerAll);
+            _optionsAll.GestureRecognizers.Add(tapGestureRecognizerAll);
 
-            _optionsForMe = new Label
-                            {
-                                Style = BeginApplication.Styles.PickerStyle,
+            _optionsMe = new Label
+                            { 
+                                Text = "Detail",
+                                Style = BeginApplication.Styles.SubtitleStyle,
                                 XAlign = TextAlignment.Start,
-                                HorizontalOptions = LayoutOptions.Start,
-                                IsVisible = false
+                                HorizontalOptions = LayoutOptions.Start
                             };
-            _optionsForMe.GestureRecognizers.Add(tapGestureRecognizerMe);
-
+            _optionsMe.GestureRecognizers.Add(tapGestureRecognizerMe);
 
             _boxViewSelectedAllOption = new BoxView
                                         {
@@ -73,11 +75,10 @@ namespace BeginMobile.Pages.Profile
                                                    }
                            };
 
-
             var gridControls = new Grid
                                {
-                                   HorizontalOptions = LayoutOptions.StartAndExpand,
-                                   VerticalOptions = LayoutOptions.StartAndExpand,
+                                   HorizontalOptions = LayoutOptions.FillAndExpand,
+                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                    RowDefinitions = new RowDefinitionCollection
                                                     {
                                                         new RowDefinition {Height = GridLength.Auto}
@@ -88,34 +89,47 @@ namespace BeginMobile.Pages.Profile
                                                            new ColumnDefinition {Width = GridLength.Auto}
                                                        }
                                };
-            gridControls.Children.Add(_optionsForAll, 0, 0);
-            gridControls.Children.Add(_optionsForMe, 0, 0);
+            gridControls.Children.Add(_optionsAll, 0, 0);
+            gridControls.Children.Add(_optionsMe, 1, 0);
             _gridResults = new Grid();
 
             mainGrid.Children.Add(gridControls, 0, 0);
             mainGrid.Children.Add(_gridResults, 0, 1);
+            Content = mainGrid;
         }
 
         public void SetViewToExpose(Grid gridOfAllItems, Grid gridOnlyMeItems, string allOptionsName,
             string onlyMeOptionsName)
         {
-            _optionsForAll.Text = allOptionsName;
-            _optionsForAll.IsVisible = true;
-
-            _optionsForMe.Text = onlyMeOptionsName;
-            _optionsForMe.IsVisible = false;
-
-            _gridResults = gridOfAllItems;
+            _optionsAll.Text = allOptionsName;
+            _optionsMe.Text = onlyMeOptionsName;            
+            _boxViewSelectedAllOption.IsVisible = true;
+            _boxViewSeletedMeOption.IsVisible = false;
+            _gridAllItems = gridOfAllItems;
+            _gridMeItems = gridOnlyMeItems;
+            _gridResults.Children.Add(gridOfAllItems,0,0);
+           
         }
 
         private void ShowAllEventHandler(object sender, EventArgs e)
         {
-            //TODO add logic here
+            var thisSeleceted = sender as Label;
+            if (thisSeleceted != null) thisSeleceted.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            _optionsMe.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _boxViewSelectedAllOption.IsVisible = true;
+            _boxViewSeletedMeOption.IsVisible = false;
+            if (_gridAllItems != null) _gridResults.Children.Add(_gridAllItems, 0, 0);
         }
 
         private void ShowOnlyMeEventHandler(object sender, EventArgs e)
         {
-            //TODO add logic here
+            var thisSeleceted = sender as Label;
+            if (thisSeleceted != null) thisSeleceted.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            _optionsAll.TextColor = BeginApplication.Styles.DefaultColorButton;
+
+            _boxViewSeletedMeOption.IsVisible = true;
+            _boxViewSelectedAllOption.IsVisible = false;
+            if (_gridMeItems != null) _gridResults.Children.Add(_gridMeItems, 0, 0);
         }
     }
 }

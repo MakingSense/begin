@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.ContactPages;
+using BeginMobile.Pages.GroupPages;
 using BeginMobile.Services.DTO;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
@@ -24,19 +25,24 @@ namespace BeginMobile.Pages.Profile
         private BoxView _boxViewButtonSelectedInfo;
         private BoxView _boxViewButtonSelectedActivities;
         private BoxView _boxViewButtonSelectedOthers;
-        private BoxView _boxViewButtonSelectedContacts;
+        //private BoxView _boxViewButtonSelectedContacts;
 
         private Button _buttonActivities;
         private Button _buttonInformation;
         private Button _buttonOthers;
-        private Button _buttonContacts;
+     //   private Button _buttonContacts;
         private Button _buttonGroups;
         private Button _buttonShops;
         private Button _buttonEvents;
 
         private readonly Information _information = new Information();
-        private readonly ContactPage _contacts = new ContactPage("", "");
+        private readonly ContactPage _contacts = new ContactPage(String.Empty, String.Empty);
         private readonly MyActivity _activity = new MyActivity();
+        private readonly GroupListPage _groups = new GroupListPage(String.Empty, String.Empty);
+        private readonly Shop _shops = new Shop();
+        private readonly Events _events = new Events();
+
+        private ViewExposure _viewExposure = new ViewExposure();
 
         public ProfileMe(LoginUser currenLoginUser)
         {
@@ -149,7 +155,7 @@ namespace BeginMobile.Pages.Profile
             _commonListView = new ListView {HasUnevenRows = true};
 
             _commonGridResults.Children.Add(_commonListView, 0, 0);
-
+            //Init();
 
             _commonMainGrid.Children.Add(_commonGridDetailLayout, 0, 0);
             _commonMainGrid.Children.Add(_commonGridMenuButtons, 0, 1);
@@ -159,19 +165,24 @@ namespace BeginMobile.Pages.Profile
             Content = _commonMainGrid;
         }
 
+        public async void Init()
+        {
+            _commonGridResults.Children.Add(_activity.GetGridActivities, 0, 0);
+        }
+
         /**
          * Initialize the control buttons that simulate the tabbed options
          **/
 
         private void InitProfileControlButtons()
         {
-            _buttonActivities = new Button {Text = "Activities", Style = BeginApplication.Styles.LinkButton};
+            _buttonActivities = new Button { Text = "Activities", Style = BeginApplication.Styles.LinkButton, TextColor = BeginApplication.Styles.TabSelectedTextColor };
             _buttonInformation = new Button
                                  {
                                      Text = "Information",
                                      Style = BeginApplication.Styles.LinkButton
                                  };
-            _buttonContacts = new Button {Text = "Contacts", Style = BeginApplication.Styles.LinkButton};
+           // _buttonContacts = new Button {Text = "Contacts", Style = BeginApplication.Styles.LinkButton};
             _buttonOthers = new Button {Text = "...", Style = BeginApplication.Styles.LinkButton};
 
             _commonGridMenuButtons = new Grid
@@ -199,32 +210,32 @@ namespace BeginMobile.Pages.Profile
             _boxViewButtonSelectedActivities = new BoxView
                                                {
                                                    Style = BeginApplication.Styles.TabUnderLine,
-                                                   IsVisible = false
+                                                   IsVisible = true,
                                                };
-            _boxViewButtonSelectedContacts = new BoxView
-                                             {
-                                                 Style = BeginApplication.Styles.TabUnderLine,
-                                                 IsVisible = false
-                                             };
+            //_boxViewButtonSelectedContacts = new BoxView
+            //                                 {
+            //                                     Style = BeginApplication.Styles.TabUnderLine,
+            //                                     IsVisible = false
+            //                                 };
             _boxViewButtonSelectedOthers = new BoxView
                                            {
                                                Style = BeginApplication.Styles.TabUnderLine,
                                                IsVisible = false
                                            };
 
-            _commonGridMenuButtons.Children.Add(_buttonInformation, 0, 0);
-            _commonGridMenuButtons.Children.Add(_boxViewButtonSelectedInfo, 0, 1);
-            _commonGridMenuButtons.Children.Add(_buttonActivities, 1, 0);
-            _commonGridMenuButtons.Children.Add(_boxViewButtonSelectedActivities, 1, 1);
-            _commonGridMenuButtons.Children.Add(_buttonContacts, 2, 0);
-            _commonGridMenuButtons.Children.Add(_boxViewButtonSelectedContacts, 2, 1);
+            _commonGridMenuButtons.Children.Add(_buttonActivities, 0, 0);
+            _commonGridMenuButtons.Children.Add(_boxViewButtonSelectedActivities, 0, 1);
+            _commonGridMenuButtons.Children.Add(_buttonInformation, 1, 0);
+            _commonGridMenuButtons.Children.Add(_boxViewButtonSelectedInfo, 1, 1);
+            //_commonGridMenuButtons.Children.Add(_buttonContacts, 2, 0);
+            //_commonGridMenuButtons.Children.Add(_boxViewButtonSelectedContacts, 2, 1);
             _commonGridMenuButtons.Children.Add(_buttonOthers, 3, 0);
             _commonGridMenuButtons.Children.Add(_boxViewButtonSelectedOthers, 3, 1);
 
 
             _buttonActivities.Clicked += ButtonActivityEventHandler;
             _buttonInformation.Clicked += ButtonInformationEventHandler;
-            _buttonContacts.Clicked += ButtonContactEventHandler;
+           // _buttonContacts.Clicked += ButtonContactEventHandler;
             _buttonOthers.Clicked += ButtonOtherEventHadler;
         }
 
@@ -260,13 +271,13 @@ namespace BeginMobile.Pages.Profile
 
             //TODO: refactoring this part
             var thisButton = sender as Button;
-            if (thisButton != null) thisButton.TextColor = Color.Black;
+            if (thisButton != null) thisButton.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
             _boxViewButtonSelectedInfo.IsVisible = false;
             _boxViewButtonSelectedActivities.IsVisible = true;
             _boxViewButtonSelectedOthers.IsVisible = false;
-            _boxViewButtonSelectedContacts.IsVisible = false;
+         //   _boxViewButtonSelectedContacts.IsVisible = false;
 
             //_commonListView.ItemTemplate = new DataTemplate(typeof (Activities));
             //_commonListView.ItemsSource = await GetListActivities();
@@ -289,14 +300,14 @@ namespace BeginMobile.Pages.Profile
             ClearListViewAndHideDetailsGrid();
 
             var thisButton = sender as Button;
-            if (thisButton != null) thisButton.TextColor = Color.Black;
+            if (thisButton != null) thisButton.TextColor = BeginApplication.Styles.TabSelectedTextColor;
 
             _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
             _boxViewButtonSelectedInfo.IsVisible = true;
             _boxViewButtonSelectedActivities.IsVisible = false;
             _boxViewButtonSelectedOthers.IsVisible = false;
-            _boxViewButtonSelectedContacts.IsVisible = false;
+            //_boxViewButtonSelectedContacts.IsVisible = false;
             _commonGridResults.Children.Add(_information.GetGridInfo());
         }
 
@@ -305,12 +316,12 @@ namespace BeginMobile.Pages.Profile
         {
             ClearListViewAndHideDetailsGrid();
             var thisButton = sender as Button;
-            if (thisButton != null) thisButton.TextColor = Color.Black;
+            if (thisButton != null) thisButton.TextColor = BeginApplication.Styles.TabSelectedTextColor;
 
             _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _boxViewButtonSelectedContacts.IsVisible = true;
+           // _boxViewButtonSelectedContacts.IsVisible = true;
             _boxViewButtonSelectedInfo.IsVisible = false;
             _boxViewButtonSelectedActivities.IsVisible = false;
             _boxViewButtonSelectedOthers.IsVisible = false;
@@ -325,35 +336,36 @@ namespace BeginMobile.Pages.Profile
             ClearListViewAndHideDetailsGrid(); //clear the common list
 
             var thisButton = sender as Button;
-            if (thisButton != null) thisButton.TextColor = Color.Black;
+            if (thisButton != null) thisButton.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _boxViewButtonSelectedInfo.IsVisible = false;
             _boxViewButtonSelectedActivities.IsVisible = false;
             _boxViewButtonSelectedOthers.IsVisible = true;
-            _boxViewButtonSelectedContacts.IsVisible = false;
+            //_boxViewButtonSelectedContacts.IsVisible = false;
             _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
 
-            var action = await DisplayActionSheet(null, OtherOptions.Cancel, null,
-                OtherOptions.Activity, OtherOptions.Information, OtherOptions.Contacts,
+            var action = await DisplayActionSheet(null, OtherOptions.Cancel, null,OtherOptions.Contacts,
                 OtherOptions.Groups, OtherOptions.Shops, OtherOptions.Events);
 
             switch (action)
-            {
-                case OtherOptions.Activity:
-                    break;
-                case OtherOptions.Information:
-                    break;
+            {                
                 case OtherOptions.Contacts:
+                   // _viewExposure.SetViewToExpose(_contacts.GridContacts(), _contacts.GridContacts(),"All contacts", "My Contacts");
+                    //await Navigation.PushAsync(_viewExposure);
+                    await Navigation.PushAsync(_contacts);
                     break;
                 case OtherOptions.Groups:
+                    await Navigation.PushAsync(_groups);
                     break;
                 case OtherOptions.Shops:
+                    await Navigation.PushAsync(_shops);
                     break;
                 case OtherOptions.Events:
+                    await Navigation.PushAsync(_events);
                     break;
                 case OtherOptions.Cancel:
-                    return;
-                    break;
+                    return;  
+                    
                 default:
                     return;
             }
@@ -475,5 +487,5 @@ namespace BeginMobile.Pages.Profile
         public const string Shops = "Shops";
         public const string Events = "Events";
         public const string Cancel = "Cancel";
-    }
+    }      
 }
