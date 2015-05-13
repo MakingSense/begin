@@ -47,8 +47,6 @@ namespace BeginMobile.Pages.Profile
 
         private async Task Init(LoginUser currentUser)
         {
-
-
             _groupInformation = await BeginApplication.ProfileServices.GetGroups(currentUser.AuthToken, currentUser.User.UserName);
 
             _groups = _groupInformation != null ? _groupInformation.Groups : 

@@ -82,7 +82,12 @@ namespace BeginMobile.Pages.GroupPages
                 // clears the 'selected' background
                 ((ListView)sender).SelectedItem = null;
             };
-
+#if __ANDROID__ || __IOS__
+            ToolbarItems.Add(new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+            {
+                _searchView.Container.IsVisible = true;
+            }));
+#endif
             var mainLayout = new StackLayout
             {
                 Padding = BeginApplication.Styles.LayoutThickness,

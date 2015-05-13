@@ -52,6 +52,12 @@ namespace BeginMobile.Pages.Profile
                 Constraint.Constant(0), Constraint.Constant(0),
                 Constraint.RelativeToParent(parent => parent.Width),
                 Constraint.RelativeToParent(parent => parent.Height));
+//#if __ANDROID__ || __IOS__
+//            ToolbarItems.Add(new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+//            {
+//                _searchView.Container.IsVisible = true;
+//            }));
+//#endif
 
             Content = new ScrollView { Content = _relativeLayoutMain };
         }

@@ -150,10 +150,12 @@ namespace BeginMobile.Utils
                                     new Setter
                                     {
                                         Property = VisualElement.BackgroundColorProperty,
-                                        Value = Color.FromHex("646567")
+                                        Value = Device.OnPlatform(Color.FromHex("43BB88"),
+                                                             Color.FromHex("43BB88"), Color.FromHex("43BB88")),
                                     },
                                     new Setter {Property = Button.BorderRadiusProperty, Value = 25},
-                                    new Setter {Property = Button.TextColorProperty, Value = Color.FromHex("EFEFF0")},
+                                    new Setter {Property = Button.TextColorProperty, Value = Device.OnPlatform(Color.FromHex("444444"),
+                                                             Color.FromHex("444444"), Color.FromHex("444444"))  },
                                     new Setter {Property = Button.FontFamilyProperty, Value = FontFamily},
                                 }
                             };
@@ -985,6 +987,14 @@ namespace BeginMobile.Utils
 
 
         //icons
+        public string FilterIcon
+        {
+            get { return "ratingon.png"; }
+        }
+        public string FilterCloseIcon
+        {
+            get { return "ratingon.png"; }
+        }
         public string AboutUsIcon
         {
             get { return "about_us.png"; }

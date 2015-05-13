@@ -6,6 +6,9 @@ using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.ContactPages;
 using BeginMobile.Pages.GroupPages;
 using BeginMobile.Services.DTO;
+using BeginMobile.Services.Interfaces;
+using BeginMobile.Services.Logging;
+using BeginMobile.Services.Utils;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
@@ -18,6 +21,7 @@ namespace BeginMobile.Pages.Profile
         private Grid _commonGridResults;
         private ListView _commonListView;
         private Grid _commonMainGrid;
+        //private RelativeLayout _commonMainGrid;
         private ScrollView _commonMainScrollView;
         private ImageSource _imageSourceGroupByDefault;
 
@@ -43,6 +47,8 @@ namespace BeginMobile.Pages.Profile
         private readonly Events _events = new Events();
 
         private ViewExposure _viewExposure = new ViewExposure();
+
+        private readonly ILoggingService _log = Logger.Current;
 
         public ProfileMe(LoginUser currenLoginUser)
         {
@@ -87,7 +93,7 @@ namespace BeginMobile.Pages.Profile
 
             var labelJob = new Label
                            {
-                               Text = "Web Developer", //user.Profession,
+                               Text = "Web Developer", //user.Profession,//TODO: remove the harcode data and uncomment the user.Profession
                                HorizontalOptions = LayoutOptions.Center,
                                Style = BeginApplication.Styles.SubtitleStyle
                            };
@@ -146,28 +152,58 @@ namespace BeginMobile.Pages.Profile
                                       new ColumnDefinition {Width = GridLength.Auto}
                                   }
                               };
+
+
+
+            //_commonMainGrid = new RelativeLayout{BackgroundColor = Color.Pink};
+           
+
             _commonGridResults = new Grid
                                  {
-                                     VerticalOptions = LayoutOptions.FillAndExpand,
-                                     HorizontalOptions = LayoutOptions.FillAndExpand,
-                                     Padding = BeginApplication.Styles.LayoutThickness
+                                     VerticalOptions = LayoutOptions.StartAndExpand,
+                                     HorizontalOptions = LayoutOptions.StartAndExpand,
+                                     Padding = BeginApplication.Styles.LayoutThickness,
+                                     RowDefinitions = new RowDefinitionCollection
+                                                   {
+                                                       new RowDefinition {Height = GridLength.Auto},                                                    
+                                                   },
+                                     ColumnDefinitions =
+                                  {
+                                      new ColumnDefinition {Width = GridLength.Auto}
+                                  }
                                  };
             _commonListView = new ListView {HasUnevenRows = true};
 
             _commonGridResults.Children.Add(_commonListView, 0, 0);
-            //Init();
+            Init();
 
             _commonMainGrid.Children.Add(_commonGridDetailLayout, 0, 0);
             _commonMainGrid.Children.Add(_commonGridMenuButtons, 0, 1);
             _commonMainGrid.Children.Add(_commonGridResults, 0, 2);
+
+
+            //_commonMainGrid.Children.Add(_commonGridDetailLayout, Constraint.RelativeToParent((parent) => 0));
+            //_commonMainGrid.Children.Add(_commonGridMenuButtons, Constraint.RelativeToParent((parent) => parent.Width/3));
+            //_commonMainGrid.Children.Add(_commonGridResults, Constraint.RelativeToParent((parent)=> parent.Width/3));
+                   
             _commonMainScrollView.Content = _commonMainGrid;
 
-            Content = _commonMainGrid;
+            Content = _commonMainScrollView;
         }
 
         public async void Init()
         {
-            _commonGridResults.Children.Add(_activity.GetGridActivities, 0, 0);
+            try
+            {
+                if (_activity.GetGridActivities != null)
+                    _commonGridResults.Children.Add(_activity.GetGridActivities, 0, 0);
+            }
+            catch (Exception e)
+            {
+                _log.Exception(e);
+                AppContextError.Send(typeof(ProfileMe).Name, "Login", e, null, ExceptionLevel.Application);
+            }
+
         }
 
         /**
@@ -176,7 +212,9 @@ namespace BeginMobile.Pages.Profile
 
         private void InitProfileControlButtons()
         {
-            _buttonActivities = new Button { Text = "Activities", Style = BeginApplication.Styles.LinkButton, TextColor = BeginApplication.Styles.TabSelectedTextColor };
+            _buttonActivities = new Button { Text = "Activities", 
+                Style = BeginApplication.Styles.LinkButton, 
+                TextColor = BeginApplication.Styles.TabSelectedTextColor };
             _buttonInformation = new Button
                                  {
                                      Text = "Information",
@@ -245,8 +283,9 @@ namespace BeginMobile.Pages.Profile
 
         private void ClearListViewAndHideDetailsGrid()
         {
-            _commonGridResults.Children.Clear();
+            
             _commonGridDetailLayout.IsVisible = false;
+            _commonGridResults.Children.Clear();
             _commonListView.ItemsSource = null;
             _commonListView.ItemTemplate = null;
         }
@@ -308,7 +347,8 @@ namespace BeginMobile.Pages.Profile
             _boxViewButtonSelectedActivities.IsVisible = false;
             _boxViewButtonSelectedOthers.IsVisible = false;
             //_boxViewButtonSelectedContacts.IsVisible = false;
-            _commonGridResults.Children.Add(_information.GetGridInfo());
+           
+            _commonGridResults.Children.Add(_information.GetGridInfo(),0,0);
         }
 
 
