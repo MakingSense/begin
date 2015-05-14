@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.ContactPages;
 using BeginMobile.Pages.GroupPages;
@@ -19,49 +16,37 @@ namespace BeginMobile.Pages.Profile
         private Grid _commonGridDetailLayout;
         private Grid _commonGridMenuButtons;
         private Grid _commonGridResults;
-        private ListView _commonListView;
         private Grid _commonMainGrid;
-        //private RelativeLayout _commonMainGrid;
         private ScrollView _commonMainScrollView;
-        private ImageSource _imageSourceGroupByDefault;
-
-        private readonly LoginUser _currentUser;
         private BoxView _boxViewButtonSelectedInfo;
         private BoxView _boxViewButtonSelectedActivities;
         private BoxView _boxViewButtonSelectedOthers;
-        //private BoxView _boxViewButtonSelectedContacts;
-
         private Button _buttonActivities;
         private Button _buttonInformation;
         private Button _buttonOthers;
-     //   private Button _buttonContacts;
-        private Button _buttonGroups;
-        private Button _buttonShops;
-        private Button _buttonEvents;
-
-        private readonly Information _information = new Information();
-        private readonly ContactPage _contacts = new ContactPage(String.Empty, String.Empty);
-        private readonly MyActivity _activity = new MyActivity();
-        private readonly GroupListPage _groups = new GroupListPage(String.Empty, String.Empty);
-        private readonly Shop _shops = new Shop();
-        private readonly Events _events = new Events();
-
-        private ViewExposure _viewExposure = new ViewExposure();
-
+        private readonly Information _information;
+        private readonly ContactPage _contacts;
+        private readonly MyActivity _activity;
+        private readonly GroupListPage _groups;
+        private readonly Shop _shops;
+        private readonly Events _events;
+        private readonly ViewExposure _viewExposure = new ViewExposure();
         private readonly ILoggingService _log = Logger.Current;
+        private ImageSource _imageSourceGroupByDefault;
 
         public ProfileMe(LoginUser currenLoginUser)
         {
-            //loads the navidator Image
             LoadDeafultImage();
-
-            //set the styles to this Page
             Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.LabelProfileMeTitle;
-            _currentUser = currenLoginUser;
 
-            //Initialize components           
-            InitProfileDetails(_currentUser.User);
+            _information = new Information();
+            _contacts = new ContactPage(String.Empty, String.Empty);
+            _activity = new MyActivity();
+            _groups = new GroupListPage(String.Empty, String.Empty);
+            _shops = new Shop();
+            _events = new Events();
+            InitProfileDetails(currenLoginUser.User);
         }
 
         private void InitProfileDetails(User user)
@@ -93,7 +78,8 @@ namespace BeginMobile.Pages.Profile
 
             var labelJob = new Label
                            {
-                               Text = "Web Developer", //user.Profession,//TODO: remove the harcode data and uncomment the user.Profession
+                               Text = "Web Developer",
+                               //user.Profession,//TODO: remove the harcode data and uncomment the user.Profession
                                HorizontalOptions = LayoutOptions.Center,
                                Style = BeginApplication.Styles.SubtitleStyle
                            };
@@ -133,10 +119,7 @@ namespace BeginMobile.Pages.Profile
             _commonGridDetailLayout.Children.Add(labelJob, 0, 2);
             _commonGridDetailLayout.Children.Add(labelDirection, 0, 3);
             _commonGridDetailLayout.Children.Add(labelRating, 0, 4);
-
-            //main grid layouts
             _commonMainScrollView = new ScrollView();
-
             _commonMainGrid = new Grid
                               {
                                   VerticalOptions = LayoutOptions.FillAndExpand,
@@ -152,40 +135,25 @@ namespace BeginMobile.Pages.Profile
                                       new ColumnDefinition {Width = GridLength.Auto}
                                   }
                               };
-
-
-
-            //_commonMainGrid = new RelativeLayout{BackgroundColor = Color.Pink};
-           
-
             _commonGridResults = new Grid
                                  {
                                      VerticalOptions = LayoutOptions.StartAndExpand,
                                      HorizontalOptions = LayoutOptions.StartAndExpand,
                                      Padding = BeginApplication.Styles.LayoutThickness,
                                      RowDefinitions = new RowDefinitionCollection
-                                                   {
-                                                       new RowDefinition {Height = GridLength.Auto},                                                    
-                                                   },
+                                                      {
+                                                          new RowDefinition {Height = GridLength.Auto},
+                                                      },
                                      ColumnDefinitions =
-                                  {
-                                      new ColumnDefinition {Width = GridLength.Auto}
-                                  }
+                                     {
+                                         new ColumnDefinition {Width = GridLength.Auto}
+                                     }
                                  };
-            _commonListView = new ListView {HasUnevenRows = true};
-
-            _commonGridResults.Children.Add(_commonListView, 0, 0);
             Init();
-
             _commonMainGrid.Children.Add(_commonGridDetailLayout, 0, 0);
             _commonMainGrid.Children.Add(_commonGridMenuButtons, 0, 1);
             _commonMainGrid.Children.Add(_commonGridResults, 0, 2);
 
-
-            //_commonMainGrid.Children.Add(_commonGridDetailLayout, Constraint.RelativeToParent((parent) => 0));
-            //_commonMainGrid.Children.Add(_commonGridMenuButtons, Constraint.RelativeToParent((parent) => parent.Width/3));
-            //_commonMainGrid.Children.Add(_commonGridResults, Constraint.RelativeToParent((parent)=> parent.Width/3));
-                   
             _commonMainScrollView.Content = _commonMainGrid;
 
             Content = _commonMainScrollView;
@@ -201,9 +169,8 @@ namespace BeginMobile.Pages.Profile
             catch (Exception e)
             {
                 _log.Exception(e);
-                AppContextError.Send(typeof(ProfileMe).Name, "Login", e, null, ExceptionLevel.Application);
+                AppContextError.Send(typeof (ProfileMe).Name, "Init", e, null, ExceptionLevel.Application);
             }
-
         }
 
         /**
@@ -212,15 +179,17 @@ namespace BeginMobile.Pages.Profile
 
         private void InitProfileControlButtons()
         {
-            _buttonActivities = new Button { Text = "Activities", 
-                Style = BeginApplication.Styles.LinkButton, 
-                TextColor = BeginApplication.Styles.TabSelectedTextColor };
+            _buttonActivities = new Button
+                                {
+                                    Text = TabsNames.Tab1,
+                                    Style = BeginApplication.Styles.LinkButton,
+                                    TextColor = BeginApplication.Styles.TabSelectedTextColor
+                                };
             _buttonInformation = new Button
                                  {
-                                     Text = "Information",
+                                     Text = TabsNames.Tab2,
                                      Style = BeginApplication.Styles.LinkButton
                                  };
-           // _buttonContacts = new Button {Text = "Contacts", Style = BeginApplication.Styles.LinkButton};
             _buttonOthers = new Button {Text = "...", Style = BeginApplication.Styles.LinkButton};
 
             _commonGridMenuButtons = new Grid
@@ -250,11 +219,7 @@ namespace BeginMobile.Pages.Profile
                                                    Style = BeginApplication.Styles.TabUnderLine,
                                                    IsVisible = true,
                                                };
-            //_boxViewButtonSelectedContacts = new BoxView
-            //                                 {
-            //                                     Style = BeginApplication.Styles.TabUnderLine,
-            //                                     IsVisible = false
-            //                                 };
+
             _boxViewButtonSelectedOthers = new BoxView
                                            {
                                                Style = BeginApplication.Styles.TabUnderLine,
@@ -265,16 +230,11 @@ namespace BeginMobile.Pages.Profile
             _commonGridMenuButtons.Children.Add(_boxViewButtonSelectedActivities, 0, 1);
             _commonGridMenuButtons.Children.Add(_buttonInformation, 1, 0);
             _commonGridMenuButtons.Children.Add(_boxViewButtonSelectedInfo, 1, 1);
-            //_commonGridMenuButtons.Children.Add(_buttonContacts, 2, 0);
-            //_commonGridMenuButtons.Children.Add(_boxViewButtonSelectedContacts, 2, 1);
             _commonGridMenuButtons.Children.Add(_buttonOthers, 3, 0);
             _commonGridMenuButtons.Children.Add(_boxViewButtonSelectedOthers, 3, 1);
-
-
             _buttonActivities.Clicked += ButtonActivityEventHandler;
             _buttonInformation.Clicked += ButtonInformationEventHandler;
-           // _buttonContacts.Clicked += ButtonContactEventHandler;
-            _buttonOthers.Clicked += ButtonOtherEventHadler;
+            _buttonOthers.Clicked += ButtonMoreEventHadler;
         }
 
         /*
@@ -283,11 +243,30 @@ namespace BeginMobile.Pages.Profile
 
         private void ClearListViewAndHideDetailsGrid()
         {
-            
-            _commonGridDetailLayout.IsVisible = false;
-            _commonGridResults.Children.Clear();
-            _commonListView.ItemsSource = null;
-            _commonListView.ItemTemplate = null;
+            try
+            {
+                _commonGridResults = null;
+                _commonGridResults = new Grid
+                                     {
+                                         VerticalOptions = LayoutOptions.StartAndExpand,
+                                         HorizontalOptions = LayoutOptions.StartAndExpand,
+                                         Padding = BeginApplication.Styles.LayoutThickness,
+                                         RowDefinitions = new RowDefinitionCollection
+                                                          {
+                                                              new RowDefinition {Height = GridLength.Auto},
+                                                          },
+                                         ColumnDefinitions =
+                                         {
+                                             new ColumnDefinition {Width = GridLength.Auto}
+                                         }
+                                     };
+            }
+            catch (Exception ex)
+            {
+                _log.Exception(ex);
+                AppContextError.Send(typeof (ProfileMe).Name, "ClearListViewAndHideDetailsGrid", ex, null,
+                    ExceptionLevel.Application);
+            }
         }
 
         public async void LoadDeafultImage()
@@ -298,100 +277,44 @@ namespace BeginMobile.Pages.Profile
             this._imageSourceGroupByDefault = BeginApplication.Styles.DefaultGroupIcon;
 #endif
 #if __IOS__
-            this._imageSourceGroupByDefault = BeginApplication.Styles.DefaultGroupIcon;
 #endif
         }
 
         #region buttons control events
 
-        private async void ButtonActivityEventHandler(object sender, EventArgs e)
+        private void ButtonActivityEventHandler(object sender, EventArgs e)
         {
             ClearListViewAndHideDetailsGrid();
-
-            //TODO: refactoring this part
-            var thisButton = sender as Button;
-            if (thisButton != null) thisButton.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-            _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _boxViewButtonSelectedInfo.IsVisible = false;
-            _boxViewButtonSelectedActivities.IsVisible = true;
-            _boxViewButtonSelectedOthers.IsVisible = false;
-         //   _boxViewButtonSelectedContacts.IsVisible = false;
-
-            //_commonListView.ItemTemplate = new DataTemplate(typeof (Activities));
-            //_commonListView.ItemsSource = await GetListActivities();
-            //_commonListView.ItemSelected += (s, eventArgs) =>
-            //                                {
-            //                                    if (eventArgs.SelectedItem == null)
-            //                                    {
-            //                                        return;
-            //                                    }
-            //                                    ((ListView) s).SelectedItem = null;
-            //                                };
-
-            //_commonGridResults.Children.Add(_commonListView, 0, 0);
-
             _commonGridResults.Children.Add(_activity.GetGridActivities, 0, 0);
+            _viewExposure.SetViewToExpose(_activity.GetGridActivities, TabsNames.Tab1);
+            Navigation.PushAsync(_viewExposure);
         }
 
         private void ButtonInformationEventHandler(object sender, EventArgs e)
         {
             ClearListViewAndHideDetailsGrid();
-
-            var thisButton = sender as Button;
-            if (thisButton != null) thisButton.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-
-            _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _boxViewButtonSelectedInfo.IsVisible = true;
-            _boxViewButtonSelectedActivities.IsVisible = false;
-            _boxViewButtonSelectedOthers.IsVisible = false;
-            //_boxViewButtonSelectedContacts.IsVisible = false;
-           
-            _commonGridResults.Children.Add(_information.GetGridInfo(),0,0);
+            _commonGridResults.Children.Add(_information.GetGridInfo(), 0, 0);
+            _viewExposure.SetViewToExpose(_information.GetGridInfo(), TabsNames.Tab2);
+            Navigation.PushAsync(_viewExposure);
         }
 
-
-        private async void ButtonContactEventHandler(object sender, EventArgs e)
+        private async void ButtonMoreEventHadler(object sender, EventArgs e)
         {
             ClearListViewAndHideDetailsGrid();
-            var thisButton = sender as Button;
-            if (thisButton != null) thisButton.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-
-            _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
-           // _boxViewButtonSelectedContacts.IsVisible = true;
-            _boxViewButtonSelectedInfo.IsVisible = false;
-            _boxViewButtonSelectedActivities.IsVisible = false;
-            _boxViewButtonSelectedOthers.IsVisible = false;
-            //TODO here Contacts logic options for load contacts 
-
-
-            _commonGridResults.Children.Add(_contacts.GridContacts(), 0, 0);
-        }
-
-        private async void ButtonOtherEventHadler(object sender, EventArgs e)
-        {
-            ClearListViewAndHideDetailsGrid(); //clear the common list
-
             var thisButton = sender as Button;
             if (thisButton != null) thisButton.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _boxViewButtonSelectedInfo.IsVisible = false;
             _boxViewButtonSelectedActivities.IsVisible = false;
             _boxViewButtonSelectedOthers.IsVisible = true;
-            //_boxViewButtonSelectedContacts.IsVisible = false;
             _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
 
-            var action = await DisplayActionSheet(null, OtherOptions.Cancel, null,OtherOptions.Contacts,
+            var action = await DisplayActionSheet(null, OtherOptions.Cancel, null, OtherOptions.Contacts,
                 OtherOptions.Groups, OtherOptions.Shops, OtherOptions.Events);
 
             switch (action)
-            {                
+            {
                 case OtherOptions.Contacts:
-                   // _viewExposure.SetViewToExpose(_contacts.GridContacts(), _contacts.GridContacts(),"All contacts", "My Contacts");
-                    //await Navigation.PushAsync(_viewExposure);
                     await Navigation.PushAsync(_contacts);
                     break;
                 case OtherOptions.Groups:
@@ -404,115 +327,12 @@ namespace BeginMobile.Pages.Profile
                     await Navigation.PushAsync(_events);
                     break;
                 case OtherOptions.Cancel:
-                    return;  
-                    
+                    return;
+
                 default:
                     return;
             }
         }
-
-        #endregion
-
-        #region private methods
-
-        private async Task<ObservableCollection<ActivityViewModel>> GetListActivities()
-        {
-            //request the activities API
-            var profileActivity =
-                await BeginApplication.ProfileServices.GetActivities(_currentUser.AuthToken, _currentUser.User.UserName);
-
-            var listActivityData = new ObservableCollection<ActivityViewModel>();
-
-            if (profileActivity != null)
-            {
-                var listActivityViewModel = from activity in profileActivity.Activities
-                    where activity.Component.Equals("activity", StringComparison.InvariantCultureIgnoreCase)
-                    select new ActivityViewModel
-                           {
-                               Icon = BeginApplication.Styles.DefaultActivityIcon,
-                               //TODO:change for activity avatar if this exist
-                               NameSurname = profileActivity.NameSurname,
-                               ActivityDescription = activity.Content,
-                               ActivityType = activity.Type,
-                               DateAndTime = activity.Date
-                           };
-
-                foreach (var activityViewModel in listActivityViewModel)
-                {
-                    listActivityData.Add(activityViewModel);
-                }
-            }
-            return listActivityData;
-        }
-
-
-        //private void InitToolBar()
-        //{
-        //    var toolBarItemMyActivity = new ToolbarItem
-        //    {
-        //        Icon = "Icon.png",
-        //        Text = "",//AppResources.ToolBarProfileMeMyAct,
-        //        Order = ToolbarItemOrder.Primary,
-        //        Command = new Command(() => Navigation.PushAsync(new MyActivity()))
-        //    };
-
-        //    var toolBarItemInformation = new ToolbarItem
-        //    {
-        //        Icon = "",
-        //        Text = AppResources.ToolBarProfileMeInfo,
-        //        Order = ToolbarItemOrder.Primary,
-        //        Command = new Command(() => Navigation.PushAsync(new Information()))
-        //    };
-
-        //    var toolBarItemMessages = new ToolbarItem
-        //    {
-        //        Icon = "",
-        //        Text = AppResources.ToolBarProfileMeMessages,
-        //        Order = ToolbarItemOrder.Secondary,
-        //        Command = new Command(() => Navigation.PushAsync(new Messages()))
-        //    };
-
-        //    var toolBarItemContacts = new ToolbarItem
-        //    {
-        //        Icon = "",
-        //        Text = AppResources.ToolBarProfileMeContacts,
-        //        Order = ToolbarItemOrder.Secondary,
-        //        Command = new Command(() => Navigation.PushAsync(new Contacts()))
-        //    };
-
-        //    var toolBarItemGroups = new ToolbarItem
-        //    {
-        //        Icon = "",
-        //        Text = AppResources.ToolBarProfileMeGroups,
-        //        Order = ToolbarItemOrder.Secondary,
-        //        Command = new Command(() => Navigation.PushAsync(new Groups()))
-        //    };
-
-        //    var toolBarItemShop = new ToolbarItem
-        //    {
-        //        Icon = "",
-        //        Text = AppResources.ToolBarProfileMeShop,
-        //        Order = ToolbarItemOrder.Primary,
-        //        Command = new Command(() => Navigation.PushAsync(new Shop()))
-        //    };
-
-        //    var toolBarItemEvents = new ToolbarItem
-        //    {
-        //        Icon = "",
-        //        Text = AppResources.ToolBarProfileMeEvents,
-        //        Order = ToolbarItemOrder.Secondary,
-        //        Command = new Command(() => Navigation.PushAsync(new Events()))
-        //    };
-
-        //    ToolbarItems.Add(toolBarItemMyActivity);
-        //    ToolbarItems.Add(toolBarItemInformation);
-        //    ToolbarItems.Add(toolBarItemMessages);
-        //    ToolbarItems.Add(toolBarItemContacts);
-        //    ToolbarItems.Add(toolBarItemGroups);
-        //    ToolbarItems.Add(toolBarItemShop);
-        //    ToolbarItems.Add(toolBarItemEvents);
-
-        //}
 
         #endregion
     }
@@ -527,5 +347,5 @@ namespace BeginMobile.Pages.Profile
         public const string Shops = "Shops";
         public const string Events = "Events";
         public const string Cancel = "Cancel";
-    }      
+    }
 }

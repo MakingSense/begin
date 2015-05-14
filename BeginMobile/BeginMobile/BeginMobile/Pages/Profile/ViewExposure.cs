@@ -1,57 +1,62 @@
 ﻿using System;
+using BeginMobile.Pages.ContactPages;
+using BeginMobile.Pages.GroupPages;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
 {
     public class ViewExposure : ContentPage
     {
-        private Grid _gridResults;
-        private readonly Label _optionsAll;
-        private readonly Label _optionsMe;
-        private readonly BoxView _boxViewSelectedAllOption;
-        private readonly BoxView _boxViewSeletedMeOption;
-        private Grid _gridMeItems;
-        private Grid _gridAllItems;
+        private readonly Grid _gridResults;
+        private readonly Button _buttonTab1;
+        private readonly Button _buttonTab2;
+        private readonly Button _buttonTab3;
+        private readonly BoxView _boxViewLineSelectedTab1;
+        private readonly BoxView _boxViewLineSeletedTab2;
+        private readonly BoxView _boxViewLineSeletedTab3;
+        private readonly Information _information = new Information();
+        private readonly ContactPage _contacts = new ContactPage(String.Empty, String.Empty);
+        private readonly MyActivity _activity = new MyActivity();
+        private readonly GroupListPage _groups = new GroupListPage(String.Empty, String.Empty);
+        private readonly Shop _shops = new Shop();
+        private readonly Events _events = new Events();
 
         public ViewExposure()
         {
             BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor;
-            var tapGestureRecognizerAll = new TapGestureRecognizer
-                                          {
-                                              NumberOfTapsRequired = 1
-                                          };
-            var tapGestureRecognizerMe = new TapGestureRecognizer
-                                         {
-                                             NumberOfTapsRequired = 1
-                                         };
 
-            tapGestureRecognizerAll.Tapped += ShowAllEventHandler;
-            tapGestureRecognizerMe.Tapped += ShowOnlyMeEventHandler;
+            _buttonTab1 = new Button
+                          {
+                              Text = TabsNames.Tab1,
+                              Style = BeginApplication.Styles.LinkButton,
+                          };
+            _buttonTab1.Clicked += EventHandlerTab1;
 
-            _optionsAll = new Label
-                             {
-                                 Text = "All",
-                                 Style = BeginApplication.Styles.SubtitleStyle,
-                                 XAlign = TextAlignment.Start,
-                                 HorizontalOptions = LayoutOptions.Start
-                             };
-            _optionsAll.GestureRecognizers.Add(tapGestureRecognizerAll);
+            _buttonTab2 = new Button
+                          {
+                              Text = TabsNames.Tab2,
+                              Style = BeginApplication.Styles.LinkButton,
+                          };
+            _buttonTab2.Clicked += EventHandlerTab2;
 
-            _optionsMe = new Label
-                            { 
-                                Text = "Detail",
-                                Style = BeginApplication.Styles.SubtitleStyle,
-                                XAlign = TextAlignment.Start,
-                                HorizontalOptions = LayoutOptions.Start
-                            };
-            _optionsMe.GestureRecognizers.Add(tapGestureRecognizerMe);
+            _buttonTab3 = new Button
+                          {
+                              Text = TabsNames.Tab3,
+                              Style = BeginApplication.Styles.LinkButton,
+                          };
+            _buttonTab3.Clicked += EventHandlerTab3;
 
-            _boxViewSelectedAllOption = new BoxView
-                                        {
-                                            Style = BeginApplication.Styles.TabUnderLine,
-                                            IsVisible = false
-                                        };
-            _boxViewSeletedMeOption = new BoxView
+            _boxViewLineSelectedTab1 = new BoxView
+                                       {
+                                           Style = BeginApplication.Styles.TabUnderLine,
+                                           IsVisible = false
+                                       };
+            _boxViewLineSeletedTab2 = new BoxView
+                                      {
+                                          Style = BeginApplication.Styles.TabUnderLine,
+                                          IsVisible = false
+                                      };
+            _boxViewLineSeletedTab3 = new BoxView
                                       {
                                           Style = BeginApplication.Styles.TabUnderLine,
                                           IsVisible = false
@@ -81,16 +86,22 @@ namespace BeginMobile.Pages.Profile
                                    VerticalOptions = LayoutOptions.FillAndExpand,
                                    RowDefinitions = new RowDefinitionCollection
                                                     {
+                                                        new RowDefinition {Height = GridLength.Auto},
                                                         new RowDefinition {Height = GridLength.Auto}
                                                     },
                                    ColumnDefinitions = new ColumnDefinitionCollection
                                                        {
                                                            new ColumnDefinition {Width = GridLength.Auto},
-                                                           new ColumnDefinition {Width = GridLength.Auto}
+                                                           new ColumnDefinition {Width = GridLength.Auto},
+                                                           new ColumnDefinition {Width = GridLength.Auto},
                                                        }
                                };
-            gridControls.Children.Add(_optionsAll, 0, 0);
-            gridControls.Children.Add(_optionsMe, 1, 0);
+            gridControls.Children.Add(_buttonTab1, 0, 0);
+            gridControls.Children.Add(_boxViewLineSelectedTab1, 0, 1);
+            gridControls.Children.Add(_buttonTab2, 1, 0);
+            gridControls.Children.Add(_boxViewLineSeletedTab2, 1, 1);
+            gridControls.Children.Add(_buttonTab3, 2, 0);
+            gridControls.Children.Add(_boxViewLineSeletedTab3, 2, 1);
             _gridResults = new Grid();
 
             mainGrid.Children.Add(gridControls, 0, 0);
@@ -98,38 +109,105 @@ namespace BeginMobile.Pages.Profile
             Content = mainGrid;
         }
 
-        public void SetViewToExpose(Grid gridOfAllItems, Grid gridOnlyMeItems, string allOptionsName,
-            string onlyMeOptionsName)
+        public Grid GridReceived { get; set; }
+
+        public void SetViewToExpose(Grid selectedItems, string tabSelected)
         {
-            _optionsAll.Text = allOptionsName;
-            _optionsMe.Text = onlyMeOptionsName;            
-            _boxViewSelectedAllOption.IsVisible = true;
-            _boxViewSeletedMeOption.IsVisible = false;
-            _gridAllItems = gridOfAllItems;
-            _gridMeItems = gridOnlyMeItems;
-            _gridResults.Children.Add(gridOfAllItems,0,0);
-           
+            if (tabSelected.Equals(TabsNames.Tab1))
+            {
+                _buttonTab1.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+                _buttonTab2.TextColor = BeginApplication.Styles.DefaultColorButton;
+                _buttonTab3.TextColor = BeginApplication.Styles.DefaultColorButton;
+                _boxViewLineSelectedTab1.IsVisible = true;
+                _boxViewLineSeletedTab2.IsVisible = false;
+                _boxViewLineSeletedTab3.IsVisible = false;
+            }
+            else if (tabSelected.Equals(TabsNames.Tab2))
+            {
+                _buttonTab1.TextColor = BeginApplication.Styles.DefaultColorButton;
+                _buttonTab2.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+                _buttonTab3.TextColor = BeginApplication.Styles.DefaultColorButton;
+                _boxViewLineSelectedTab1.IsVisible = false;
+                _boxViewLineSeletedTab2.IsVisible = true;
+                _boxViewLineSeletedTab3.IsVisible = false;
+            }
+            else
+            {
+                _buttonTab1.TextColor = BeginApplication.Styles.DefaultColorButton;
+                _buttonTab2.TextColor = BeginApplication.Styles.DefaultColorButton;
+                _buttonTab3.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+                _boxViewLineSelectedTab1.IsVisible = false;
+                _boxViewLineSeletedTab2.IsVisible = false;
+                _boxViewLineSeletedTab3.IsVisible = true;
+            }
+
+            _gridResults.Children.Add(selectedItems, 0, 0);
         }
 
-        private void ShowAllEventHandler(object sender, EventArgs e)
+        private void EventHandlerTab1(object sender, EventArgs e)
         {
-            var thisSeleceted = sender as Label;
-            if (thisSeleceted != null) thisSeleceted.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-            _optionsMe.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _boxViewSelectedAllOption.IsVisible = true;
-            _boxViewSeletedMeOption.IsVisible = false;
-            if (_gridAllItems != null) _gridResults.Children.Add(_gridAllItems, 0, 0);
+            _gridResults.Children.Clear();
+            _buttonTab1.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            _buttonTab2.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _buttonTab3.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _boxViewLineSelectedTab1.IsVisible = true;
+            _boxViewLineSeletedTab2.IsVisible = false;
+            _boxViewLineSeletedTab3.IsVisible = false;
+            _gridResults.Children.Add(_activity.GetGridActivities, 0, 0);
         }
 
-        private void ShowOnlyMeEventHandler(object sender, EventArgs e)
+        private void EventHandlerTab2(object sender, EventArgs e)
         {
-            var thisSeleceted = sender as Label;
-            if (thisSeleceted != null) thisSeleceted.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-            _optionsAll.TextColor = BeginApplication.Styles.DefaultColorButton;
-
-            _boxViewSeletedMeOption.IsVisible = true;
-            _boxViewSelectedAllOption.IsVisible = false;
-            if (_gridMeItems != null) _gridResults.Children.Add(_gridMeItems, 0, 0);
+            _gridResults.Children.Clear();
+            _buttonTab1.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _buttonTab2.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            _buttonTab3.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _boxViewLineSelectedTab1.IsVisible = false;
+            _boxViewLineSeletedTab2.IsVisible = true;
+            _boxViewLineSeletedTab3.IsVisible = false;
+            _gridResults.Children.Add(_information.GetGridInfo(), 0, 0);
         }
+
+        private async void EventHandlerTab3(object sender, EventArgs e)
+        {
+            _gridResults.Children.Clear();
+            _buttonTab1.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _buttonTab2.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _buttonTab3.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            _boxViewLineSelectedTab1.IsVisible = false;
+            _boxViewLineSeletedTab2.IsVisible = false;
+            _boxViewLineSeletedTab3.IsVisible = true;
+
+            var action = await DisplayActionSheet(null, OtherOptions.Cancel, null, OtherOptions.Contacts,
+                OtherOptions.Groups, OtherOptions.Shops, OtherOptions.Events);
+
+            switch (action)
+            {
+                case OtherOptions.Contacts:
+                    await Navigation.PushAsync(_contacts);
+                    break;
+                case OtherOptions.Groups:
+                    await Navigation.PushAsync(_groups);
+                    break;
+                case OtherOptions.Shops:
+                    await Navigation.PushAsync(_shops);
+                    break;
+                case OtherOptions.Events:
+                    await Navigation.PushAsync(_events);
+                    break;
+                case OtherOptions.Cancel:
+                    return;
+
+                default:
+                    return;
+            }
+        }
+    }
+
+    public static class TabsNames
+    {
+        public const string Tab1 = "Activities";
+        public const string Tab2 = "Information";
+        public const string Tab3 = "...";
     }
 }
