@@ -510,7 +510,7 @@ namespace BeginMobile.Utils
             get
             {
                 return Device.OnPlatform
-                    (Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"));
+                    (Color.FromHex("646566"), Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"));
             }
         }
 
