@@ -25,8 +25,6 @@ namespace BeginMobile.iOS.Renderers
             if (_appHome == null) return;
             if (!_appHome.Children.Any()) return;
 
-            
-
             var tabBarController = ViewController as UITabBarController;
             if (tabBarController == null) return;
 
@@ -43,6 +41,7 @@ namespace BeginMobile.iOS.Renderers
                 {
                     viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconwallactive.png"); 
                 }
+
                 else if (type == typeof(MessageListPage))
                 {
                     viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmessagesactive.png"); 
@@ -69,10 +68,12 @@ namespace BeginMobile.iOS.Renderers
                         viewController.TabBarItem.BadgeValue = ((Notification)childFromTab).LabelCounter.Text;
                     }
                 }
+
                 else if (type == typeof(ContactPage))
                 {
                     viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconcontactsactive.png"); 
                 }
+
                 else if (type == typeof(OptionsPage))
                 {
                     viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmenuactive.png"); 

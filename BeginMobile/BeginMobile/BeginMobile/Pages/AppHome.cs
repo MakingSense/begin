@@ -44,7 +44,7 @@ namespace BeginMobile.Pages
                     Device.OnPlatform("iconcontactsactive.png", "iconcontactsactive.png", "iconcontactsactive.png")));
 
             Children.Add(
-                new OptionsPage(new Label { Text = "...", Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
+                new OptionsPage(new Label { Text = Device.OnPlatform(string.Empty, "..." , "..."), Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
                     Device.OnPlatform("iconmenuactive.png", "iconmenuactive.png", "iconmenuactive.png")));
 //#if __ANDROID__
 //            Children.Add(
