@@ -1,8 +1,11 @@
 using System.Linq;
 using BeginMobile.iOS.Renderers;
+using BeginMobile.Menu;
 using BeginMobile.Pages;
+using BeginMobile.Pages.ContactPages;
 using BeginMobile.Pages.MessagePages;
 using BeginMobile.Pages.Notifications;
+using BeginMobile.Pages.Wall;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -22,6 +25,8 @@ namespace BeginMobile.iOS.Renderers
             if (_appHome == null) return;
             if (!_appHome.Children.Any()) return;
 
+            
+
             var tabBarController = ViewController as UITabBarController;
             if (tabBarController == null) return;
 
@@ -34,8 +39,13 @@ namespace BeginMobile.iOS.Renderers
 
                 var type = childFromTab.GetType();
 
-                if (type == typeof(MessageListPage))
+                if (type == typeof(WallPage))
                 {
+                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconwallactive.png"); 
+                }
+                else if (type == typeof(MessageListPage))
+                {
+                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmessagesactive.png"); 
                     if (string.IsNullOrEmpty
                         (((MessageListPage) childFromTab).LabelCounter.Text)) continue;
 
@@ -48,6 +58,8 @@ namespace BeginMobile.iOS.Renderers
 
                 else if (type == typeof(Notification))
                 {
+                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconnotificationsactive.png"); 
+
                     if (string.IsNullOrEmpty
                         (((Notification)childFromTab).LabelCounter.Text)) continue;
 
@@ -56,6 +68,14 @@ namespace BeginMobile.iOS.Renderers
                     {
                         viewController.TabBarItem.BadgeValue = ((Notification)childFromTab).LabelCounter.Text;
                     }
+                }
+                else if (type == typeof(ContactPage))
+                {
+                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconcontactsactive.png"); 
+                }
+                else if (type == typeof(OptionsPage))
+                {
+                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmenuactive.png"); 
                 }
             }
         }

@@ -33,7 +33,7 @@ namespace BeginMobile.Pages
             Children.Add(
                 new MessageListPage(new Label { Text = AppResources.AppHomeChildMessages, Style = BeginApplication.Styles.StyleNavigationTitle }.Text,
                     Device.OnPlatform("iconmessagesactive.png", "iconmessagesactive.png", "iconmessagesactive.png")));
-
+            
             Children.Add(
                 new ContactPage(
                     new Label
