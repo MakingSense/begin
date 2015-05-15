@@ -24,6 +24,7 @@ namespace BeginMobile.Pages.Profile
         private readonly Shop _shops;
         private readonly Events _myEvents;
         private readonly TabViewExposure _tabViewExposure;
+
         public ViewExposure()
         {
             _information = new Information();
@@ -36,25 +37,25 @@ namespace BeginMobile.Pages.Profile
             _myEvents = new Events();
             _tabViewExposure = new TabViewExposure();
 
-            BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor;
+            Style = BeginApplication.Styles.PageStyle;
 
             _buttonTab1 = new Button
                           {
-                              Text = TabsNames.Tab1Activity,
+                              Text = String.Empty,
                               Style = BeginApplication.Styles.LinkButton,
                           };
             _buttonTab1.Clicked += EventHandlerTab1;
 
             _buttonTab2 = new Button
                           {
-                              Text = TabsNames.Tab2Information,
+                              Text = String.Empty,
                               Style = BeginApplication.Styles.LinkButton,
                           };
             _buttonTab2.Clicked += EventHandlerTab2;
 
             _buttonTab3 = new Button
                           {
-                              Text = TabsNames.TabMore,
+                              Text = String.Empty,
                               Style = BeginApplication.Styles.LinkButton,
                           };
             _buttonTab3.Clicked += EventHandlerTab3;
@@ -79,24 +80,19 @@ namespace BeginMobile.Pages.Profile
             var mainGrid = new Grid
                            {
                                Padding = BeginApplication.Styles.LayoutThickness,
-                               BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
-                               HorizontalOptions = LayoutOptions.StartAndExpand,
-                               VerticalOptions = LayoutOptions.StartAndExpand,
+                               HorizontalOptions = LayoutOptions.Fill,
+                               VerticalOptions = LayoutOptions.Start,
                                RowDefinitions = new RowDefinitionCollection
                                                 {
                                                     new RowDefinition {Height = GridLength.Auto},
                                                     new RowDefinition {Height = GridLength.Auto}
-                                                },
-                               ColumnDefinitions = new ColumnDefinitionCollection
-                                                   {
-                                                       new ColumnDefinition {Width = GridLength.Auto}
-                                                   }
+                                                }
                            };
 
             var gridControls = new Grid
                                {
-                                   HorizontalOptions = LayoutOptions.FillAndExpand,
-                                   VerticalOptions = LayoutOptions.FillAndExpand,
+                                   HorizontalOptions = LayoutOptions.Center,
+                                   VerticalOptions = LayoutOptions.Start,
                                    RowDefinitions = new RowDefinitionCollection
                                                     {
                                                         new RowDefinition {Height = GridLength.Auto},
@@ -122,68 +118,77 @@ namespace BeginMobile.Pages.Profile
             Content = mainGrid;
         }
 
+        public ContentPage PageOne { get; set; }
+        public ContentPage PageTwo { get; set; }
+        public ContentPage PageThree { get; set; }
+        public String TabOneName { get; set; }
+        public String TabTwoName { get; set; }
+        public String TabThreeName { get; set; }
+        public ToolbarItem ToolbarItemTabOne { get; set; }
+        public ToolbarItem ToolbarItemTabTwo { get; set; }
+        public ToolbarItem ToolbarItemTabThree { get; set; }
+
         public Grid GridReceived { get; set; }
 
-        public void SetViewToExpose(Grid selectedItems, string tabSelected)
+        public void SetViewToExpose(string tabSelected)
         {
             if (tabSelected.Equals(TabsNames.Tab1Activity))
-            {                
-                _buttonTab1.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-                _buttonTab2.TextColor = BeginApplication.Styles.DefaultColorButton;
-                _buttonTab3.TextColor = BeginApplication.Styles.DefaultColorButton;
-                _boxViewLineSelectedTab1.IsVisible = true;
-                _boxViewLineSeletedTab2.IsVisible = false;
-                _boxViewLineSeletedTab3.IsVisible = false;
+            {
+                SetTabOneSettings();
             }
             else if (tabSelected.Equals(TabsNames.Tab2Information))
             {
-                _buttonTab1.TextColor = BeginApplication.Styles.DefaultColorButton;
-                _buttonTab2.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-                _buttonTab3.TextColor = BeginApplication.Styles.DefaultColorButton;
-                _boxViewLineSelectedTab1.IsVisible = false;
-                _boxViewLineSeletedTab2.IsVisible = true;
-                _boxViewLineSeletedTab3.IsVisible = false;
+                SetTabTwoSettings();
             }
             else
             {
-                _buttonTab1.TextColor = BeginApplication.Styles.DefaultColorButton;
-                _buttonTab2.TextColor = BeginApplication.Styles.DefaultColorButton;
-                _buttonTab3.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-                _boxViewLineSelectedTab1.IsVisible = false;
-                _boxViewLineSeletedTab2.IsVisible = false;
-                _boxViewLineSeletedTab3.IsVisible = true;
+                SetTabThreeSettings();
             }
-            GridReceived = selectedItems;
-            _gridResults.Children.Add(selectedItems, 0, 0);                                 
+            _buttonTab1.Text = TabOneName;
+            _buttonTab2.Text = TabTwoName;
+            _buttonTab3.Text = TabThreeName;
         }
 
-        private void EventHandlerTab1(object sender, EventArgs e)
+        private void SetTabOneSettings()
         {
-            _gridResults.Children.Clear();
+            CleanResultsAndToolBarItems();
             _buttonTab1.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _buttonTab2.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonTab3.TextColor = BeginApplication.Styles.DefaultColorButton;
             _boxViewLineSelectedTab1.IsVisible = true;
             _boxViewLineSeletedTab2.IsVisible = false;
             _boxViewLineSeletedTab3.IsVisible = false;
-            _gridResults.Children.Add(_activity.GetGridActivities, 0, 0);
+            if (PageOne != null) _gridResults.Children.Add(PageOne.Content, 0, 0);
+            if (ToolbarItemTabOne != null)
+            {
+#if __ANDROID__ || __IOS__
+                ToolbarItems.Add(ToolbarItemTabOne);
+#endif
+            }
         }
 
-        private void EventHandlerTab2(object sender, EventArgs e)
+        private void SetTabTwoSettings()
         {
-            _gridResults.Children.Clear();
+            CleanResultsAndToolBarItems();
             _buttonTab1.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonTab2.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _buttonTab3.TextColor = BeginApplication.Styles.DefaultColorButton;
             _boxViewLineSelectedTab1.IsVisible = false;
             _boxViewLineSeletedTab2.IsVisible = true;
             _boxViewLineSeletedTab3.IsVisible = false;
-            _gridResults.Children.Add(_information.GetGridInfo(), 0, 0);
+
+            if (PageTwo != null) _gridResults.Children.Add(PageTwo.Content, 0, 0);
+            if (ToolbarItemTabTwo != null)
+            {
+#if __ANDROID__ || __IOS__
+                ToolbarItems.Add(ToolbarItemTabTwo);
+#endif
+            }
         }
 
-        private async void EventHandlerTab3(object sender, EventArgs e)
+        private void SetTabThreeSettings()
         {
-            _gridResults.Children.Clear();
+            CleanResultsAndToolBarItems();
             _buttonTab1.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonTab2.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonTab3.TextColor = BeginApplication.Styles.TabSelectedTextColor;
@@ -191,28 +196,60 @@ namespace BeginMobile.Pages.Profile
             _boxViewLineSeletedTab2.IsVisible = false;
             _boxViewLineSeletedTab3.IsVisible = true;
 
+            if (ToolbarItemTabThree != null)
+            {
+#if __ANDROID__ || __IOS__
+                ToolbarItems.Add(ToolbarItemTabThree);
+#endif
+            }
+        }
+
+        private void CleanResultsAndToolBarItems()
+        {
+            _gridResults.Children.Clear();
+            ToolbarItems.Clear();
+        }
+
+        private void EventHandlerTab1(object sender, EventArgs e)
+        {
+            CleanResultsAndToolBarItems();
+            SetTabOneSettings();
+        }
+
+        private void EventHandlerTab2(object sender, EventArgs e)
+        {
+            CleanResultsAndToolBarItems();
+            SetTabTwoSettings();
+        }
+
+        private async void EventHandlerTab3(object sender, EventArgs e)
+        {
+            CleanResultsAndToolBarItems();
+            SetTabThreeSettings();
+
             var action = await DisplayActionSheet(null, MoreOptionsNames.Cancel, null, MoreOptionsNames.Contacts,
                 MoreOptionsNames.Groups, MoreOptionsNames.Shops, MoreOptionsNames.Events);
 
             switch (action)
             {
                 case MoreOptionsNames.Contacts:
-                    _tabViewExposure.PageOne = _allContacts;                    
+                    _tabViewExposure.PageOne = _allContacts;
                     _tabViewExposure.PageTwo = _requestContacts;
                     _tabViewExposure.TabOneName = TabsNames.Tab1Contacts;
                     _tabViewExposure.TabTwoName = TabsNames.Tab2Contacts;
                     _tabViewExposure.ToolbarItemTabOne = _allContacts.ToolbarItem;
                     _tabViewExposure.ToolbarItemTabTwo = _requestContacts.ToolbarItem;
-                    _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Contacts);//set selected item  
+                    _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Contacts);
+                    //set selected item  
                     await Navigation.PushAsync(_tabViewExposure);
                     break;
-                case MoreOptionsNames.Groups:                                    
+                case MoreOptionsNames.Groups:
                     _tabViewExposure.PageOne = _allGroups;
                     _tabViewExposure.PageTwo = _myGroups;
                     _tabViewExposure.TabOneName = TabsNames.Tab1Groups;
                     _tabViewExposure.TabTwoName = TabsNames.Tab2Groups;
-                    _tabViewExposure.ToolbarItemTabOne = _allGroups.ToolbarItem;    
-                    _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Groups);//set selected item   
+                    _tabViewExposure.ToolbarItemTabOne = _allGroups.ToolbarItem;
+                    _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Groups); //set selected item   
                     await Navigation.PushAsync(_tabViewExposure);
                     break;
                 case MoreOptionsNames.Shops:
@@ -224,8 +261,8 @@ namespace BeginMobile.Pages.Profile
                     _tabViewExposure.TabOneName = TabsNames.Tab1Events;
                     _tabViewExposure.TabTwoName = TabsNames.Tab2Events;
                     _tabViewExposure.ToolbarItemTabOne = _myEvents.ToolbarItem;
-                    _tabViewExposure.ToolbarItemTabTwo = _myEvents.ToolbarItem;    
-                    _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Events);//set selected item   
+                    _tabViewExposure.ToolbarItemTabTwo = _myEvents.ToolbarItem;
+                    _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Events); //set selected item   
                     await Navigation.PushAsync(_tabViewExposure);
                     break;
                 case MoreOptionsNames.Cancel:
@@ -240,7 +277,7 @@ namespace BeginMobile.Pages.Profile
     public static class TabsNames
     {
         //TODO add to resources
-       
+
         public const string Tab1Activity = "Activity";
         public const string Tab2Information = "Information";
         public const string Tab1Groups = "Memberships";
@@ -254,6 +291,5 @@ namespace BeginMobile.Pages.Profile
         public const string TabMore = "More";
         public static string Tab1 { get; set; }
         public static string Tab2 { get; set; }
-
     }
 }

@@ -5,7 +5,7 @@ namespace BeginMobile.Pages.Profile
 {
     public class TabViewExposure : ContentPage
     {
-        private readonly Grid _gridResults;
+        private Grid _gridResults;
         private readonly Button _buttonTab1;
         private readonly Button _buttonTab2;
         private readonly BoxView _boxViewLineSelectedTab1;
@@ -14,12 +14,12 @@ namespace BeginMobile.Pages.Profile
 
         public TabViewExposure()
         {
-            BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor;
+            Style = BeginApplication.Styles.PageStyle;
 
             _buttonTab1 = new Button
                           {
                               Text = String.Empty,
-                              Style = BeginApplication.Styles.LinkButton                              
+                              Style = BeginApplication.Styles.LinkButton
                           };
             _buttonTab1.Clicked += EventHandlerTab1;
 
@@ -45,8 +45,8 @@ namespace BeginMobile.Pages.Profile
                            {
                                Padding = BeginApplication.Styles.LayoutThickness,
                                BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
-                               HorizontalOptions = LayoutOptions.StartAndExpand,
-                               VerticalOptions = LayoutOptions.StartAndExpand,
+                               HorizontalOptions = LayoutOptions.Fill,
+                               VerticalOptions = LayoutOptions.Start,
                                RowDefinitions = new RowDefinitionCollection
                                                 {
                                                     new RowDefinition {Height = GridLength.Auto},
@@ -60,8 +60,8 @@ namespace BeginMobile.Pages.Profile
 
             var gridControls = new Grid
                                {
-                                   HorizontalOptions = LayoutOptions.FillAndExpand,
-                                   VerticalOptions = LayoutOptions.FillAndExpand,
+                                   HorizontalOptions = LayoutOptions.Center,
+                                   VerticalOptions = LayoutOptions.Start,
                                    RowDefinitions = new RowDefinitionCollection
                                                     {
                                                         new RowDefinition {Height = GridLength.Auto},
@@ -101,20 +101,13 @@ namespace BeginMobile.Pages.Profile
             {
                 SetTabTwoSettings();
             }
-            //else
-            //{
-            //    _buttonTab1.TextColor = BeginApplication.Styles.DefaultColorButton;
-            //    _buttonTab2.TextColor = BeginApplication.Styles.DefaultColorButton;
-            //    _boxViewLineSelectedTab1.IsVisible = false;
-            //    _boxViewLineSeletedTab2.IsVisible = false;
-            //}
-
             _buttonTab1.Text = TabOneName;
             _buttonTab2.Text = TabTwoName;
         }
 
         private void SetTabOneSettings()
         {
+            CleanResultsAndToolBarItems();
             _buttonTab1.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _buttonTab2.TextColor = BeginApplication.Styles.DefaultColorButton;
             _boxViewLineSelectedTab1.IsVisible = true;
@@ -127,8 +120,10 @@ namespace BeginMobile.Pages.Profile
 #endif
             }
         }
+
         private void SetTabTwoSettings()
         {
+            CleanResultsAndToolBarItems();
             _buttonTab1.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonTab2.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _boxViewLineSelectedTab1.IsVisible = false;
@@ -141,18 +136,22 @@ namespace BeginMobile.Pages.Profile
 #endif
             }
         }
-        private void EventHandlerTab1(object sender, EventArgs e)
+
+        private void CleanResultsAndToolBarItems()
         {
             _gridResults.Children.Clear();
             ToolbarItems.Clear();
-            SetTabOneSettings();
+        }
 
+        private void EventHandlerTab1(object sender, EventArgs e)
+        {
+            CleanResultsAndToolBarItems();
+            SetTabOneSettings();
         }
 
         private void EventHandlerTab2(object sender, EventArgs e)
         {
-            _gridResults.Children.Clear();
-            ToolbarItems.Clear();
+            CleanResultsAndToolBarItems();
             SetTabTwoSettings();
         }
     }

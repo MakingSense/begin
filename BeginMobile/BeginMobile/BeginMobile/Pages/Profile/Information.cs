@@ -43,8 +43,8 @@ namespace BeginMobile.Pages.Profile
             _gridInfo = new Grid
             {
                 Padding = BeginApplication.Styles.LayoutThickness,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Fill,
+                HorizontalOptions = LayoutOptions.Fill,
                 RowDefinitions =
                                      {
                                          new RowDefinition {Height = GridLength.Auto},
@@ -96,6 +96,8 @@ namespace BeginMobile.Pages.Profile
 
             var scrollViewInfo = new ScrollView
                                  {
+                                     VerticalOptions = LayoutOptions.Fill,
+                                     HorizontalOptions = LayoutOptions.Fill,
                                      Content = _gridInfo
                                  };
 

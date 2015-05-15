@@ -25,11 +25,14 @@ namespace BeginMobile.Pages.Profile
         private Button _buttonInformation;
         private Button _buttonOthers;
         private readonly Information _information;
-        private readonly ContactPage _contacts;
         private readonly MyActivity _activity;
-        private readonly GroupListPage _groups;
         private readonly Shop _shops;
-        private readonly Events _events;
+        private readonly ContactPage _allContacts;
+        private readonly Contacts _requestContacts;
+        private readonly GroupListPage _allGroups;
+        private readonly Groups _myGroups;
+        private readonly Events _myEvents;
+        private readonly TabViewExposure _tabViewExposure;
         private readonly ViewExposure _viewExposure = new ViewExposure();
         private readonly ILoggingService _log = Logger.Current;
         private ImageSource _imageSourceGroupByDefault;
@@ -41,11 +44,14 @@ namespace BeginMobile.Pages.Profile
             Title = AppResources.LabelProfileMeTitle;
 
             _information = new Information();
-            _contacts = new ContactPage(String.Empty, String.Empty);
+            _allContacts = new ContactPage(String.Empty, String.Empty);
+            _requestContacts = new Contacts();
             _activity = new MyActivity();
-            _groups = new GroupListPage(String.Empty, String.Empty);
+            _allGroups = new GroupListPage(String.Empty, String.Empty);
+            _myGroups = new Groups();
             _shops = new Shop();
-            _events = new Events();
+            _myEvents = new Events();
+            _tabViewExposure = new TabViewExposure();
             InitProfileDetails(currenLoginUser.User);
         }
 
@@ -55,6 +61,8 @@ namespace BeginMobile.Pages.Profile
             var userAvatar = BeginApplication.Styles.DefaultProfileUserIconName;
             var circleProfileImage = new CircleImage
                                      {
+                                         HorizontalOptions = LayoutOptions.Center,
+                                         VerticalOptions = LayoutOptions.Center,
                                          Style = BeginApplication.Styles.CircleImageForDetails,
                                          Source = userAvatar
                                      };
@@ -98,7 +106,7 @@ namespace BeginMobile.Pages.Profile
                               };
 
             _commonGridDetailLayout = new Grid
-                                      {
+                                      {                                          
                                           HorizontalOptions = LayoutOptions.Center,
                                           VerticalOptions = LayoutOptions.Center,
                                           RowDefinitions =
@@ -120,35 +128,8 @@ namespace BeginMobile.Pages.Profile
             _commonGridDetailLayout.Children.Add(labelDirection, 0, 3);
             _commonGridDetailLayout.Children.Add(labelRating, 0, 4);
             _commonMainScrollView = new ScrollView();
-            _commonMainGrid = new Grid
-                              {
-                                  VerticalOptions = LayoutOptions.FillAndExpand,
-                                  HorizontalOptions = LayoutOptions.FillAndExpand,
-                                  RowDefinitions = new RowDefinitionCollection
-                                                   {
-                                                       new RowDefinition {Height = GridLength.Auto},
-                                                       new RowDefinition {Height = GridLength.Auto},
-                                                       new RowDefinition {Height = GridLength.Auto}
-                                                   },
-                                  ColumnDefinitions =
-                                  {
-                                      new ColumnDefinition {Width = GridLength.Auto}
-                                  }
-                              };
-            _commonGridResults = new Grid
-                                 {
-                                     VerticalOptions = LayoutOptions.StartAndExpand,
-                                     HorizontalOptions = LayoutOptions.StartAndExpand,
-                                     Padding = BeginApplication.Styles.LayoutThickness,
-                                     RowDefinitions = new RowDefinitionCollection
-                                                      {
-                                                          new RowDefinition {Height = GridLength.Auto},
-                                                      },
-                                     ColumnDefinitions =
-                                     {
-                                         new ColumnDefinition {Width = GridLength.Auto}
-                                     }
-                                 };
+            _commonMainGrid = new Grid();
+            _commonGridResults = new Grid();
             Init();
             _commonMainGrid.Children.Add(_commonGridDetailLayout, 0, 0);
             _commonMainGrid.Children.Add(_commonGridMenuButtons, 0, 1);
@@ -163,8 +144,8 @@ namespace BeginMobile.Pages.Profile
         {
             try
             {
-                if (_activity.GetGridActivities != null)
-                    _commonGridResults.Children.Add(_activity.GetGridActivities, 0, 0);
+                if (_activity.Content != null)
+                    _commonGridResults.Children.Add(_activity.Content, 0, 0);
             }
             catch (Exception e)
             {
@@ -195,7 +176,7 @@ namespace BeginMobile.Pages.Profile
             _commonGridMenuButtons = new Grid
                                      {
                                          HorizontalOptions = LayoutOptions.Center,
-                                         VerticalOptions = LayoutOptions.Center,
+                                         VerticalOptions = LayoutOptions.Start,
                                          RowDefinitions =
                                          {
                                              new RowDefinition {Height = GridLength.Auto},
@@ -245,21 +226,7 @@ namespace BeginMobile.Pages.Profile
         {
             try
             {
-                _commonGridResults = null;
-                _commonGridResults = new Grid
-                                     {
-                                         VerticalOptions = LayoutOptions.StartAndExpand,
-                                         HorizontalOptions = LayoutOptions.StartAndExpand,
-                                         Padding = BeginApplication.Styles.LayoutThickness,
-                                         RowDefinitions = new RowDefinitionCollection
-                                                          {
-                                                              new RowDefinition {Height = GridLength.Auto},
-                                                          },
-                                         ColumnDefinitions =
-                                         {
-                                             new ColumnDefinition {Width = GridLength.Auto}
-                                         }
-                                     };
+                _commonGridResults.Children.Clear();
             }
             catch (Exception ex)
             {
@@ -282,21 +249,41 @@ namespace BeginMobile.Pages.Profile
 
         #region buttons control events
 
-        private void ButtonActivityEventHandler(object sender, EventArgs e)
+        private void ViewExposureSetProperties()
         {
+            if (_activity == null || _information == null) return;
             ClearListViewAndHideDetailsGrid();
-            _commonGridResults.Children.Add(_activity.GetGridActivities, 0, 0);
-            _viewExposure.SetViewToExpose(_activity.GetGridActivities, TabsNames.Tab1=TabsNames.Tab1Activity);
-            Navigation.PushAsync(_viewExposure);
+            _viewExposure.PageOne = _activity;
+            _viewExposure.PageTwo = _information;
+            _viewExposure.TabOneName = TabsNames.Tab1Activity;
+            _viewExposure.TabTwoName = TabsNames.Tab2Information;
+            _viewExposure.TabThreeName = TabsNames.TabMore;
         }
 
-        private void ButtonInformationEventHandler(object sender, EventArgs e)
+        private async void ButtonActivityEventHandler(object sender, EventArgs e)
         {
-            ClearListViewAndHideDetailsGrid();
-            _commonGridResults.Children.Add(_information.GetGridInfo(), 0, 0);
+            if (_activity == null) return;
+            ViewExposureSetProperties();
+            _commonGridResults.Children.Add(_activity.Content, 0, 0);
+            _viewExposure.SetViewToExpose(TabsNames.Tab1 = TabsNames.Tab1Activity);
+            await Navigation.PushAsync(_viewExposure);
+        }
 
-            _viewExposure.SetViewToExpose(_information.GetGridInfo(), TabsNames.Tab2 = TabsNames.Tab2Information);
-            Navigation.PushAsync(_viewExposure);
+        private async void ButtonInformationEventHandler(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_information != null) _commonGridResults.Children.Add(_information.Content, 0, 0);
+                ViewExposureSetProperties();
+                _viewExposure.SetViewToExpose(TabsNames.Tab2 = TabsNames.Tab2Information);
+                await Navigation.PushAsync(_viewExposure);
+            }
+            catch (Exception ex)
+            {
+                _log.Exception(ex);
+                AppContextError.Send(typeof (ProfileMe).Name, "ButtonInformationEventHandler", ex, null,
+                    ExceptionLevel.Application);
+            }
         }
 
         private async void ButtonMoreEventHadler(object sender, EventArgs e)
@@ -316,23 +303,42 @@ namespace BeginMobile.Pages.Profile
             switch (action)
             {
                 case MoreOptionsNames.Contacts:
-                    await Navigation.PushAsync(_contacts);
+                    _tabViewExposure.PageOne = _allContacts;
+                    _tabViewExposure.PageTwo = _requestContacts;
+                    _tabViewExposure.TabOneName = TabsNames.Tab1Contacts;
+                    _tabViewExposure.TabTwoName = TabsNames.Tab2Contacts;
+                    _tabViewExposure.ToolbarItemTabOne = _allContacts.ToolbarItem;
+                    _tabViewExposure.ToolbarItemTabTwo = _requestContacts.ToolbarItem;
+                    _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Contacts);                    
+                    await Navigation.PushAsync(_tabViewExposure);
                     break;
                 case MoreOptionsNames.Groups:
-                    await Navigation.PushAsync(_groups);
+                    _tabViewExposure.PageOne = _allGroups;
+                    _tabViewExposure.PageTwo = _myGroups;
+                    _tabViewExposure.TabOneName = TabsNames.Tab1Groups;
+                    _tabViewExposure.TabTwoName = TabsNames.Tab2Groups;
+                    _tabViewExposure.ToolbarItemTabOne = _allGroups.ToolbarItem;
+                    _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Groups); //set selected item   
+                    await Navigation.PushAsync(_tabViewExposure);
                     break;
                 case MoreOptionsNames.Services:
-                    await Navigation.PushAsync(_groups);
+                    await Navigation.PushAsync(_allGroups); //TODO replace for services page
                     break;
                 case MoreOptionsNames.Shops:
                     await Navigation.PushAsync(_shops);
                     break;
                 case MoreOptionsNames.Events:
-                    await Navigation.PushAsync(_events);
+                    _tabViewExposure.PageOne = _myEvents;
+                    _tabViewExposure.PageTwo = _myEvents;
+                    _tabViewExposure.TabOneName = TabsNames.Tab1Events;
+                    _tabViewExposure.TabTwoName = TabsNames.Tab2Events;
+                    _tabViewExposure.ToolbarItemTabOne = _myEvents.ToolbarItem;
+                    _tabViewExposure.ToolbarItemTabTwo = _myEvents.ToolbarItem;
+                    _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Events); //set selected item   
+                    await Navigation.PushAsync(_tabViewExposure);
                     break;
                 case MoreOptionsNames.Cancel:
                     return;
-
                 default:
                     return;
             }
@@ -343,7 +349,7 @@ namespace BeginMobile.Pages.Profile
 
 
     public static class MoreOptionsNames
-    {        
+    {
         //TODO add to resources
         public const string Contacts = "Contacts";
         public const string Groups = "Groups";
