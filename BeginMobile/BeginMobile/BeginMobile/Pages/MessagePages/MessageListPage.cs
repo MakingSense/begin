@@ -4,6 +4,7 @@ using BeginMobile.Menu;
 using BeginMobile.Services.DTO;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.Pages.MessagePages
 {
@@ -11,11 +12,14 @@ namespace BeginMobile.Pages.MessagePages
     {
         public readonly Label LabelCounter;
         private const string DefaultIcon = "userprofile.png";
+		public string MasterTitle{ get; set; }
 
         public MessageListPage(string title, string iconImg)
             : base(title, iconImg)
         {
             Title = title;
+			MasterTitle = AppResources.AppHomeChildMessages;
+
             CalServiceApi();
 
             LabelCounter = new Label
@@ -114,6 +118,15 @@ namespace BeginMobile.Pages.MessagePages
                                   };
             Content = mainStackLayout;
         }
+
+		protected override void OnAppearing ()
+		{
+			base.OnAppearing ();
+			var title = MasterTitle;
+
+			MessagingCenter.Send (this, "masterTitle", title);
+			MessagingCenter.Unsubscribe<MessageListPage, string>(this, "masterTitle");
+		}
 
         private async void CalServiceApi()
         {

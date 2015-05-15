@@ -35,10 +35,14 @@ namespace BeginMobile.Pages.Notifications
         private bool _isUnread = true;
         private const string DefaultLimit = "10";
         private const string DefaultStatus = "unread";
+		public string MasterTitle{ get; set; }
+
         public Notification(string title, string iconImg)
             : base(title, iconImg)
         {
             Title = title;
+			MasterTitle = AppResources.AppHomeChildNotifications;
+
             LabelCounter = new Label();
 
             _searchView = new SearchView
@@ -54,6 +58,15 @@ namespace BeginMobile.Pages.Notifications
 
             Init();
         }
+
+		protected override void OnAppearing ()
+		{
+			base.OnAppearing ();
+			var title = MasterTitle;
+
+			MessagingCenter.Send (this, "masterTitle", title);
+			MessagingCenter.Unsubscribe<Notification, string>(this, "masterTitle");
+		}
 
         #region Events
 

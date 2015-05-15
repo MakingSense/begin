@@ -44,10 +44,15 @@ namespace BeginMobile.Pages.ContactPages
 
         private Picker _sortPicker;
 
+		public string MasterTitle{ get; set; }
+
+
         public ContactPage(string title, string icon)
             : base(title, icon)
         {
             Title = title;
+			MasterTitle = AppResources.AppHomeChildFindContacts;
+
             _searchView = new SearchView();
             _currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
 
@@ -114,6 +119,15 @@ namespace BeginMobile.Pages.ContactPages
 
             Init();
         }
+
+		protected override void OnAppearing ()
+		{
+			base.OnAppearing ();
+			var title = MasterTitle;
+
+			MessagingCenter.Send (this, "masterTitle", title);
+			MessagingCenter.Unsubscribe<ContactPage, string>(this, "masterTitle");
+		}
 
         private async Task Init()
         {

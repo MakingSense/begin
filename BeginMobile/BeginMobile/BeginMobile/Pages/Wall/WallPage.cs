@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.Pages.Wall
 {
@@ -37,10 +38,13 @@ namespace BeginMobile.Pages.Wall
 
         private ImageSource _imageSourceWallByDefault;
 
+		private string MasterTitle{ get; set; }
+
         public WallPage(string title, string iconImage)
             : base(title, iconImage)
         {
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+			MasterTitle = AppResources.AppHomeChildNewsFeed;
 
             LoadDeafultImage();
 
@@ -418,6 +422,15 @@ namespace BeginMobile.Pages.Wall
             }
             return beginWall;
         }
+
+		protected override void OnAppearing ()
+		{
+			base.OnAppearing ();
+			var title = MasterTitle;
+
+			MessagingCenter.Send (this, "masterTitle", title);
+			MessagingCenter.Unsubscribe<WallPage, string>(this, "masterTitle");
+		}
     }
 
 
