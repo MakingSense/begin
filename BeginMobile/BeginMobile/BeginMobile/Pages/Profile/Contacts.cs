@@ -130,6 +130,17 @@ namespace BeginMobile.Pages.Profile
                                               }
                                           };
 
+            ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+            {
+                _searchView
+                    .Container
+                    .IsVisible
+                    = true;
+            });
+#if __ANDROID__ || __IOS__
+            ToolbarItems.Add(ToolbarItem);
+#endif
+
             Content = new StackLayout
                       {
                           VerticalOptions = LayoutOptions.Start,
@@ -141,6 +152,8 @@ namespace BeginMobile.Pages.Profile
                           }
                       };
         }
+
+        public ToolbarItem ToolbarItem { get; set; }
 
         #region Events
 

@@ -155,17 +155,22 @@ namespace BeginMobile.Pages.ContactPages
             _gridLayoutMain.Children.Add(_labelNoContactsMessage, 0, 1);
             _gridLayoutMain.Children.Add(stackLayoutContactsList, 0, 2);
 
+            ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+                                                                                                        {
+                                                                                                            _searchView
+                                                                                                                .Container
+                                                                                                                .IsVisible
+                                                                                                                = true;
+                                                                                                        });
 #if __ANDROID__ || __IOS__
-            ToolbarItems.Add(new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
-            {
-                _searchView.Container.IsVisible = true;
-            }));
+            ToolbarItems.Add(ToolbarItem);
 #endif
             Content = _gridLayoutMain;
 
             removeLoadingIndicator(_stackLayoutLoadingIndicator);
         }
 
+        public ToolbarItem ToolbarItem { get; set; }
         public Grid GridContacts()
         {
             return _gridLayoutMain;

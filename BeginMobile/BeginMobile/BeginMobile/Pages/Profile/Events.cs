@@ -123,11 +123,16 @@ namespace BeginMobile.Pages.Profile
                     }
                 }
             };
-#if __ANDROID__ || __IOS__
-            ToolbarItems.Add(new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+
+            ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
             {
-                _searchView.Container.IsVisible = true;
-            }));
+                _searchView
+                    .Container
+                    .IsVisible
+                    = true;
+            });
+#if __ANDROID__ || __IOS__
+            ToolbarItems.Add(ToolbarItem);
 #endif
             Content = new StackLayout
             {
@@ -143,7 +148,9 @@ namespace BeginMobile.Pages.Profile
 
             #endregion
         }
-        
+
+        public ToolbarItem ToolbarItem { get; set; }
+
         private void LoadCategoriesPicker()
         {
             _categoriesPicker = new Picker

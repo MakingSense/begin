@@ -181,16 +181,16 @@ namespace BeginMobile.Pages.Profile
         {
             _buttonActivities = new Button
                                 {
-                                    Text = TabsNames.Tab1,
+                                    Text = TabsNames.Tab1Activity,
                                     Style = BeginApplication.Styles.LinkButton,
                                     TextColor = BeginApplication.Styles.TabSelectedTextColor
                                 };
             _buttonInformation = new Button
                                  {
-                                     Text = TabsNames.Tab2,
+                                     Text = TabsNames.Tab2Information,
                                      Style = BeginApplication.Styles.LinkButton
                                  };
-            _buttonOthers = new Button {Text = "...", Style = BeginApplication.Styles.LinkButton};
+            _buttonOthers = new Button {Text = TabsNames.TabMore, Style = BeginApplication.Styles.LinkButton};
 
             _commonGridMenuButtons = new Grid
                                      {
@@ -286,7 +286,7 @@ namespace BeginMobile.Pages.Profile
         {
             ClearListViewAndHideDetailsGrid();
             _commonGridResults.Children.Add(_activity.GetGridActivities, 0, 0);
-            _viewExposure.SetViewToExpose(_activity.GetGridActivities, TabsNames.Tab1);
+            _viewExposure.SetViewToExpose(_activity.GetGridActivities, TabsNames.Tab1=TabsNames.Tab1Activity);
             Navigation.PushAsync(_viewExposure);
         }
 
@@ -294,7 +294,8 @@ namespace BeginMobile.Pages.Profile
         {
             ClearListViewAndHideDetailsGrid();
             _commonGridResults.Children.Add(_information.GetGridInfo(), 0, 0);
-            _viewExposure.SetViewToExpose(_information.GetGridInfo(), TabsNames.Tab2);
+
+            _viewExposure.SetViewToExpose(_information.GetGridInfo(), TabsNames.Tab2 = TabsNames.Tab2Information);
             Navigation.PushAsync(_viewExposure);
         }
 
@@ -309,24 +310,27 @@ namespace BeginMobile.Pages.Profile
             _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
             _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
 
-            var action = await DisplayActionSheet(null, OtherOptions.Cancel, null, OtherOptions.Contacts,
-                OtherOptions.Groups, OtherOptions.Shops, OtherOptions.Events);
+            var action = await DisplayActionSheet(null, MoreOptionsNames.Cancel, null, MoreOptionsNames.Contacts,
+                MoreOptionsNames.Groups, MoreOptionsNames.Shops, MoreOptionsNames.Events);
 
             switch (action)
             {
-                case OtherOptions.Contacts:
+                case MoreOptionsNames.Contacts:
                     await Navigation.PushAsync(_contacts);
                     break;
-                case OtherOptions.Groups:
+                case MoreOptionsNames.Groups:
                     await Navigation.PushAsync(_groups);
                     break;
-                case OtherOptions.Shops:
+                case MoreOptionsNames.Services:
+                    await Navigation.PushAsync(_groups);
+                    break;
+                case MoreOptionsNames.Shops:
                     await Navigation.PushAsync(_shops);
                     break;
-                case OtherOptions.Events:
+                case MoreOptionsNames.Events:
                     await Navigation.PushAsync(_events);
                     break;
-                case OtherOptions.Cancel:
+                case MoreOptionsNames.Cancel:
                     return;
 
                 default:
@@ -338,12 +342,12 @@ namespace BeginMobile.Pages.Profile
     }
 
 
-    public static class OtherOptions
-    {
-        public const string Activity = "Activity";
-        public const string Information = "Information";
+    public static class MoreOptionsNames
+    {        
+        //TODO add to resources
         public const string Contacts = "Contacts";
         public const string Groups = "Groups";
+        public const string Services = "Services";
         public const string Shops = "Shops";
         public const string Events = "Events";
         public const string Cancel = "Cancel";

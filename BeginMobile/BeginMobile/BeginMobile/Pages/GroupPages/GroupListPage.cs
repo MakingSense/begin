@@ -82,12 +82,17 @@ namespace BeginMobile.Pages.GroupPages
                 // clears the 'selected' background
                 ((ListView)sender).SelectedItem = null;
             };
-#if __ANDROID__ || __IOS__
-            ToolbarItems.Add(new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+            ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
             {
-                _searchView.Container.IsVisible = true;
-            }));
+                _searchView
+                    .Container
+                    .IsVisible
+                    = true;
+            });
+#if __ANDROID__ || __IOS__
+            ToolbarItems.Add(ToolbarItem);
 #endif
+
             var mainLayout = new StackLayout
             {
                 Padding = BeginApplication.Styles.LayoutThickness,
@@ -103,6 +108,8 @@ namespace BeginMobile.Pages.GroupPages
 
             Content = mainLayout;
         }
+
+        public ToolbarItem ToolbarItem { get; set; }
 
         private void LoadSectionsPicker()
         {
