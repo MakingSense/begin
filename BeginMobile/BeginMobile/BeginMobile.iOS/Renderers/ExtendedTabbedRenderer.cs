@@ -39,12 +39,12 @@ namespace BeginMobile.iOS.Renderers
 
                 if (type == typeof(WallPage))
                 {
-                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconwallactive.png"); 
+					viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconwallactive.png"); 
                 }
 
                 else if (type == typeof(MessageListPage))
                 {
-                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmessagesactive.png"); 
+					viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmessagesactive.png"); 
                     if (string.IsNullOrEmpty
                         (((MessageListPage) childFromTab).LabelCounter.Text)) continue;
 
@@ -57,7 +57,7 @@ namespace BeginMobile.iOS.Renderers
 
                 else if (type == typeof(Notification))
                 {
-                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconnotificationsactive.png"); 
+					viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconnotificationsactive.png"); 
 
                     if (string.IsNullOrEmpty
                         (((Notification)childFromTab).LabelCounter.Text)) continue;
@@ -71,12 +71,12 @@ namespace BeginMobile.iOS.Renderers
 
                 else if (type == typeof(ContactPage))
                 {
-                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconcontactsactive.png"); 
+					viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconcontactsactive.png"); 
                 }
 
                 else if (type == typeof(OptionsPage))
                 {
-                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmenuactive.png"); 
+					viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmenuactive.png"); 
                 }
             }
         }
@@ -84,7 +84,15 @@ namespace BeginMobile.iOS.Renderers
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
             base.OnElementChanged(e);
-            _appHome = e.NewElement as AppHome;
+          
+			var page = (AppHome)Element;
+
+			if (!page.Children.Any ()) {
+				return;
+			}
+		
+			TabBar.TintColor = UIColor.FromRGB (68, 68, 68);
+
         }
     }
 }
