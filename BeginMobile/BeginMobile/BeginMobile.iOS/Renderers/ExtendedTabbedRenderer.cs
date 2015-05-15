@@ -29,7 +29,8 @@ namespace BeginMobile.iOS.Renderers
             if (tabBarController == null) return;
 
             foreach (var viewController in tabBarController.ViewControllers)
-            {
+            {				
+				
                 var navItemTitle = viewController.NavigationItem.Title;
 
                 var childFromTab = _appHome.Children.FirstOrDefault(x => x.Title == navItemTitle);
@@ -89,10 +90,10 @@ namespace BeginMobile.iOS.Renderers
 
 			if (!page.Children.Any ()) {
 				return;
-			}
-		
-			TabBar.TintColor = UIColor.FromRGB (68, 68, 68);
+			}		
 
+			TabBar.TintColor = UIColor.FromRGB (68, 68, 68);
+			TabBar.BarTintColor = UIColor.White;
         }
     }
 }

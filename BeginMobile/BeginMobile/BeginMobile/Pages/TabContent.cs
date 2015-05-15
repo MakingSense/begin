@@ -11,6 +11,10 @@ namespace BeginMobile.Pages
             Title = title;
             Icon = icon;
             Padding = new Thickness(0, 0, 0, 0);
+
+			if (Device.OS == TargetPlatform.iOS)
+				BackgroundColor = Color.White;
+
         }
     }
 }
