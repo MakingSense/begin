@@ -344,10 +344,13 @@ namespace BeginMobile.Menu
         public const string UpdateProfile = "Update Profile";
 
         //New
+		public const string AppHomeContacts = "Contacts";
         public const string AppHomeChildGroups = "Groups";
         public const string AppHomeChildFindContacts = "Find Contacts";
         public const string AppHomeChildEvents = "Events";
         public const string AppHomeChildMyActivities = "My Activities";
+		public const string AppHomeServices = "Services";
+		public const string AppHomeShops = "Shops";
 
     }
 }

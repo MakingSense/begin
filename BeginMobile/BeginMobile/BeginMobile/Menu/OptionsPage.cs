@@ -1,111 +1,338 @@
-﻿using BeginMobile.Pages;
-using BeginMobile.Pages.ContactPages;
-using BeginMobile.Pages.GroupPages;
-using BeginMobile.Pages.Profile;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using Xamarin.Forms;
+﻿		using BeginMobile.Pages;
+		using BeginMobile.Pages.ContactPages;
+		using BeginMobile.Pages.GroupPages;
+		using BeginMobile.Pages.Profile;
+		using System;
+		using System.Collections.Generic;
+		using System.Collections.ObjectModel;
+		using System.Text;
+		using Xamarin.Forms;
+		using BeginMobile.LocalizeResources.Resources;
+		using BeginMobile.Services.DTO;
+		using BeginMobile.Accounts;
 
-namespace BeginMobile.Menu
-{
-    public class OptionsPage : TabContent
-    {
-        private const string DefaultIcon = "userprofile.png";
-        public OptionsPage(string title, string iconImg)
-            : base(title, iconImg)
-        {
-            var listoptionsItems = new ObservableCollection<MenuItemViewModel>
-                                       {
-                                           new MenuItemViewModel
-                                           {
-                                               Icon = DefaultIcon,
-                                               OptionName =
-                                                   MenuItemsNames
-                                                   .AppHomeChildGroups
-                                           },
-                                           new MenuItemViewModel
-                                           {
-                                               Icon = DefaultIcon,
-                                               OptionName =
-                                                   MenuItemsNames
-                                                   .AppHomeChildFindContacts
-                                           },
-                                           new MenuItemViewModel
-                                           {
-                                               Icon = DefaultIcon,
-                                               OptionName =
-                                                   MenuItemsNames
-                                                   .AppHomeChildEvents
-                                           }
-                                       };
+		namespace BeginMobile.Menu
+		{
+		    public class OptionsPage : TabContent
+		    {
+		        private const string DefaultIcon = "userprofile.png";
+		        public OptionsPage(string title, string iconImg)
+		            : base(title, iconImg)
+		        {
+		//            var listoptionsItems = new ObservableCollection<MenuItemViewModel>
+		//                                       {
+		//                                           new MenuItemViewModel
+		//                                           {
+		//                                               Icon = DefaultIcon,
+		//                                               OptionName =
+		//                                                   MenuItemsNames
+		//                                                   .AppHomeChildGroups
+		//                                           },
+		//                                           new MenuItemViewModel
+		//                                           {
+		//                                               Icon = DefaultIcon,
+		//                                               OptionName =
+		//                                                   MenuItemsNames
+		//                                                   .AppHomeChildFindContacts
+		//                                           },
+		//                                           new MenuItemViewModel
+		//                                           {
+		//                                               Icon = DefaultIcon,
+		//                                               OptionName =
+		//                                                   MenuItemsNames
+		//                                                   .AppHomeChildEvents
+		//                                           }
+		//                                       };
+		//
+		//
+		//            var dataTemplateMenuOptions = new DataTemplate(typeof(MenuDataTemplate));
+		//            var listViewMainControls = new ListView
+		//            {
+		//                VerticalOptions = LayoutOptions.Start,
+		//                ItemsSource = listoptionsItems,
+		//                ItemTemplate = dataTemplateMenuOptions,
+		//                HasUnevenRows = true
+		//            };
+		//
+		//
+		//            listViewMainControls.ItemTapped += async (sender, eventArgs) =>
+		//            {
+		//                if (eventArgs.Item == null)
+		//                {
+		//                    return;
+		//                }
+		//                var selectedItemOptionName =
+		//                    ((MenuItemViewModel)eventArgs.Item).OptionName;
+		//
+		//                switch (selectedItemOptionName)
+		//                {
+		//                    case MenuItemsNames.AppHomeChildGroups:
+		//                        using (
+		//                            var contentPageGroupListPage = new GroupListPage(new Label { Text = MenuItemsNames.AppHomeChildGroups, Style = BeginApplication.Styles.StyleNavigationTitle, TextColor = Color.FromHex("FFFFFF") }.Text,
+		//                    "padlock.png"))
+		//                        {
+		//                            await
+		//                                Navigation.PushAsync(contentPageGroupListPage);
+		//                            break;
+		//                        }
+		//                    case MenuItemsNames.AppHomeChildFindContacts:
+		//                        using (var contentContactPage = new ContactPage(new Label { Text = MenuItemsNames.AppHomeChildFindContacts, Style = BeginApplication.Styles.StyleNavigationTitle, TextColor = Color.FromHex("FFFFFF") }.Text,
+		//                    "padlock.png"))
+		//                            
+		//                        {
+		//                            await
+		//                                Navigation.PushAsync(contentContactPage);
+		//                            break;
+		//                        }
+		//
+		//                    case MenuItemsNames.AppHomeChildEvents:
+		//                        using (var contentEvents = new Events())
+		//                            
+		//                    {
+		//                        await
+		//                            Navigation.PushAsync(contentEvents);
+		//                        break;
+		//                    }
+		//                }
+		//                ((ListView)sender).SelectedItem = null;
+		//            };
+		//
+		//            var gridMain = new Grid()
+		//            {
+		//                HorizontalOptions =  LayoutOptions.FillAndExpand,
+		//                RowDefinitions =
+		//                {
+		//                    new RowDefinition(){Height = GridLength.Auto}
+		//                }
+		//            };
+		//
+		//            gridMain.Children.Add(listViewMainControls);
+
+		            //Content = gridMain;
+					//TODO: Update Menu as Menu profile
+
+					BackgroundColor = BeginApplication.Styles.MenuBackground;
+
+					var currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
+
+					const bool isLoadByLogin = false;			
+
+					var userAvatar = BeginApplication.Styles.DefaultProfileUserIconName;
+					if (currentUser != null)
+					{
+						var userAvatarUrl = currentUser.User.Avatar;
+
+						if (!string.IsNullOrEmpty(userAvatarUrl))
+						{
+							userAvatar = userAvatarUrl;
+						}
+					}
+
+					if (currentUser == null) return;
+
+					var listMenuData = new List<MenuItemViewModel>
+					{
+						new MenuItemViewModel
+						{
+							Icon = userAvatar,
+							OptionName = currentUser.User.DisplayName,
+							OptionDetail = currentUser.User.Email
+						}
+					};
+
+					var dataTemplateListViewMenuIcon = new DataTemplate(typeof (MenuIconDataTemplate));
+
+					var listViewMenuIcon = new ListView {
+						VerticalOptions = LayoutOptions.Start,
+						ItemsSource = listMenuData,
+						ItemTemplate = dataTemplateListViewMenuIcon,
+						BackgroundColor = BeginApplication.Styles.MenuBackground,
+						HeightRequest = 180,
+						HasUnevenRows = true
+					};
 
 
-            var dataTemplateMenuOptions = new DataTemplate(typeof(MenuDataTemplate));
-            var listViewMainControls = new ListView
-            {
-                VerticalOptions = LayoutOptions.Start,
-                ItemsSource = listoptionsItems,
-                ItemTemplate = dataTemplateMenuOptions,
-                HasUnevenRows = true
-            };
+					var dataTemplateMenuOptions = new DataTemplate(typeof (MenuDataTemplate));
 
+					var listOptionsData = new List<MenuItemViewModel> {
 
-            listViewMainControls.ItemTapped += async (sender, eventArgs) =>
-            {
-                if (eventArgs.Item == null)
-                {
-                    return;
-                }
-                var selectedItemOptionName =
-                    ((MenuItemViewModel)eventArgs.Item).OptionName;
+					new MenuItemViewModel {
+						Icon = DefaultIcon, 
+						OptionName = MenuItemsNames.AppHomeContacts
+						},
 
-                switch (selectedItemOptionName)
-                {
-                    case MenuItemsNames.AppHomeChildGroups:
-                        using (
-                            var contentPageGroupListPage = new GroupListPage(new Label { Text = MenuItemsNames.AppHomeChildGroups, Style = BeginApplication.Styles.StyleNavigationTitle, TextColor = Color.FromHex("FFFFFF") }.Text,
-                    "padlock.png"))
-                        {
-                            await
-                                Navigation.PushAsync(contentPageGroupListPage);
-                            break;
-                        }
-                    case MenuItemsNames.AppHomeChildFindContacts:
-                        using (var contentContactPage = new ContactPage(new Label { Text = MenuItemsNames.AppHomeChildFindContacts, Style = BeginApplication.Styles.StyleNavigationTitle, TextColor = Color.FromHex("FFFFFF") }.Text,
-                    "padlock.png"))
-                            
-                        {
-                            await
-                                Navigation.PushAsync(contentContactPage);
-                            break;
-                        }
+						new MenuItemViewModel {
+							Icon = DefaultIcon,
+							OptionName =    MenuItemsNames.AppHomeChildGroups
+						},					
 
-                    case MenuItemsNames.AppHomeChildEvents:
-                        using (var contentEvents = new Events())
-                            
-                    {
-                        await
-                            Navigation.PushAsync(contentEvents);
-                        break;
-                    }
-                }
-                ((ListView)sender).SelectedItem = null;
-            };
+						new MenuItemViewModel {
+							Icon = DefaultIcon,
+							OptionName = MenuItemsNames.AppHomeChildEvents
+								},
 
-            var gridMain = new Grid()
-            {
-                HorizontalOptions =  LayoutOptions.FillAndExpand,
-                RowDefinitions =
-                {
-                    new RowDefinition(){Height = GridLength.Auto}
-                }
-            };
+					new MenuItemViewModel {
+						Icon = DefaultIcon,
+						OptionName = MenuItemsNames.AppHomeServices
+						},
 
-            gridMain.Children.Add(listViewMainControls);
+					new MenuItemViewModel {
+						Icon = DefaultIcon,
+						OptionName = MenuItemsNames.AppHomeShops
+						},	
 
-            Content = gridMain;
-        }
-    }
-}
+						new MenuItemViewModel {
+							Icon = "",
+							OptionName = ""
+						},
+
+						new MenuItemViewModel {
+							Icon = "",
+							OptionName = ""
+						},
+
+						new MenuItemViewModel {
+						Icon = string.Empty,
+							OptionName =
+								MenuItemsNames
+									.Logout
+						}	
+					};
+
+					var listViewMenuOptions = new ListView
+					{
+						VerticalOptions = LayoutOptions.Start,
+						ItemsSource = listOptionsData,
+						ItemTemplate = dataTemplateMenuOptions,
+						BackgroundColor = BeginApplication.Styles.MenuBackground,
+					};
+
+					listViewMenuOptions.ItemSelected += async (sender, eventArgs) =>
+					{
+						if (eventArgs.SelectedItem == null)
+						{
+							return;
+						}
+						var selectedItemOptionName =
+							((MenuItemViewModel) eventArgs.SelectedItem).OptionName;
+						var profileMe = new ProfileMe(currentUser);
+						var contentPageKnocks = new ContentPage
+						{
+							Title =
+								AppResources
+									.LabelMenuKnocks
+								};
+
+						switch (selectedItemOptionName)
+						{
+
+						case MenuItemsNames.AppHomeChildGroups:
+					                        using (
+					                            var contentPageGroupListPage = new GroupListPage(new Label { Text = MenuItemsNames.AppHomeChildGroups, Style = BeginApplication.Styles.StyleNavigationTitle, TextColor = Color.FromHex("FFFFFF") }.Text,
+					                    "padlock.png"))
+					                        {
+					                            await
+					                                Navigation.PushAsync(contentPageGroupListPage);
+					                            break;
+					                        }
+
+						case MenuItemsNames.AppHomeContacts://AppHomeChildFindContacts:
+					                        using (var contentContactPage = 
+						new ContactPage(new Label { Text = MenuItemsNames.AppHomeContacts, Style = BeginApplication.Styles.StyleNavigationTitle, TextColor = Color.FromHex("FFFFFF") }.Text,
+					                    "padlock.png"))
+					                            
+					                        {
+					                            await
+												Navigation.PushAsync(contentContactPage);
+					                            break;
+					                        }
+					
+					    case MenuItemsNames.AppHomeChildEvents:
+					                        using (var contentEvents = new Events())
+					                            
+					                    {
+					                        await
+					                            Navigation.PushAsync(contentEvents);
+					                        break;
+					                    }
+
+						case MenuItemsNames.AppHomeServices:
+								await DisplayAlert("Services", "Goes to services", "Ok");
+								break;
+
+						case MenuItemsNames.AppHomeShops:
+										var shops = new Shop();		
+										await Navigation.PushAsync(shops);							
+										break;
+
+						case MenuItemsNames.Knocks:
+							await Navigation.PushAsync(contentPageKnocks);				
+							break;
+
+						case MenuItemsNames.Profile:
+							await Navigation.PushAsync(profileMe);
+							break;
+
+						case MenuItemsNames.Logout:
+							BeginApplication.CurrentBeginApplication.Logout();
+							break;
+
+						case MenuItemsNames.ChangePassword:
+							await Navigation.PushAsync(new ChangePasswordPage());
+							break;
+
+						case MenuItemsNames.About:
+							await Navigation.PushAsync(new AboutUs());				
+							break;
+
+						case MenuItemsNames.Privacy:
+							await Navigation.PushAsync(new Privacy());
+						
+							break;
+						case MenuItemsNames.HelpCenter:
+							await Navigation.PushAsync(new HelpCenter());						
+							break;
+
+						case MenuItemsNames.TermsAndConditions:
+							await
+							Navigation.PushAsync(
+								new TermsAndConditions(isLoadByLogin));
+						
+							break;
+
+						case MenuItemsNames.UpdateProfile:
+							await Navigation.PushAsync(new UpdateProfilePage());
+							break;
+						}
+
+						((ListView) sender).SelectedItem = null;
+
+					};
+					listViewMenuOptions.HasUnevenRows = true;
+
+				var stackLayoutControls = new StackLayout {
+					WidthRequest = 250,
+					VerticalOptions = LayoutOptions.FillAndExpand,
+					Orientation = StackOrientation.Vertical,
+					Children = {
+						listViewMenuOptions
+					}
+				};
+
+				StackLayout mainStackLayout = 
+
+					new StackLayout {
+						Spacing = 2,
+				
+						Padding = BeginApplication.Styles.LayoutThickness,
+						Children = {
+							//listViewMenuIcon,
+							stackLayoutControls
+						}
+					};
+
+					Content = mainStackLayout;
+
+		        }
+		    }
+		}

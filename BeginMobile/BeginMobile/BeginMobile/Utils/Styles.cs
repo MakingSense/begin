@@ -508,9 +508,9 @@ namespace BeginMobile.Utils
         public Color MenuTextOptionsColor
         {
             get
-            {
+			{	//646566	
                 return Device.OnPlatform
-                    (Color.FromHex("646566"), Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"));
+					(Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"));
             }
         }
 
