@@ -38,6 +38,7 @@ namespace BeginMobile.Pages.MessagePages
 
         public InboxMessage()
         {
+            BackgroundColor = Color.Accent;
             Style = BeginApplication.Styles.PageStyle;
             _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
 
@@ -72,8 +73,8 @@ namespace BeginMobile.Pages.MessagePages
             _gridComponents = new Grid
             {
                 Padding = BeginApplication.Styles.LayoutThickness,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
                 RowDefinitions =
                                      {
                                          new RowDefinition {Height = GridLength.Auto},
@@ -93,9 +94,21 @@ namespace BeginMobile.Pages.MessagePages
             _gridComponents.Children.Add(relativeLayoutListView, 0, 1);
             _gridComponents.Children.Add(_stackLayoutLoadingIndicator, 0, 2);
 
+            ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+            {
+                _searchView
+                    .Container
+                    .IsVisible
+                    = true;
+            });
+#if __ANDROID__ || __IOS__
+            ToolbarItems.Add(ToolbarItem);
+#endif
+
             Content = _gridComponents;
         }
 
+        public ToolbarItem ToolbarItem { get; set; }
 
         #region Paginator Helper
         private void RemoveLoadingIndicator(StackLayout stackLayoutLoading)

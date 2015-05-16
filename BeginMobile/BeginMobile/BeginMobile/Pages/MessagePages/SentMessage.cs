@@ -83,10 +83,21 @@ namespace BeginMobile.Pages.MessagePages
             _gridComponents.Children.Add(_searchView.Container, 0, 0);
             _gridComponents.Children.Add(relativeLayoutMain, 0, 1);
             _gridComponents.Children.Add(_stackLayoutLoadingIndicator, 0, 2);
-
+            ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+            {
+                _searchView
+                    .Container
+                    .IsVisible
+                    = true;
+            });
+#if __ANDROID__ || __IOS__
+            ToolbarItems.Add(ToolbarItem);
+#endif
 
             Content = _gridComponents;
         }
+
+        public ToolbarItem ToolbarItem { get; set; }
 
         /*         
          * Get the Sent Messages from SentBox Service API, parse the Message to MessageViewModel for add into list and return this list
