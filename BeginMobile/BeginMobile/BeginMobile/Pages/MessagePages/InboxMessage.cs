@@ -38,7 +38,6 @@ namespace BeginMobile.Pages.MessagePages
 
         public InboxMessage()
         {
-            BackgroundColor = Color.Accent;
             Style = BeginApplication.Styles.PageStyle;
             _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
 

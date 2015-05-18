@@ -43,9 +43,8 @@ namespace BeginMobile.Pages.Profile
 
             var mainGrid = new Grid
                            {
-                               BackgroundColor = Color.Pink,
                                Padding = BeginApplication.Styles.LayoutThickness,
-                              // BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
+                               BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                                HorizontalOptions = LayoutOptions.Fill,
                                VerticalOptions = LayoutOptions.FillAndExpand,
                                RowDefinitions = new RowDefinitionCollection
