@@ -44,8 +44,9 @@
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
     <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
-    <JavaOptions />
-    <MonoDroidExtraArgs />
+    <Debugger>Xamarin</Debugger>
+    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
+    <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -144,60 +145,66 @@
     <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\Drawable\about_us.png" />
     <AndroidResource Include="Resources\Drawable\activity.png" />
-    <AndroidResource Include="Resources\Drawable\call_center.png" />
-    <AndroidResource Include="Resources\Drawable\ievents.png" />
-    <AndroidResource Include="Resources\Drawable\iphone_message.png" />
-    <AndroidResource Include="Resources\Drawable\logout.png" />
-    <AndroidResource Include="Resources\Drawable\shop.png" />
-    <AndroidResource Include="Resources\Drawable\terms_conditions.png" />
-    <AndroidResource Include="Resources\Layout\BarTabLayout.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
+    <AndroidResource Include="Resources\Drawable\a_event.png" />
     <AndroidResource Include="Resources\Drawable\BadgeCircle.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\Drawable\Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Properties\AndroidManifest.xml" />
-    <AndroidResource Include="Resources\Drawable\menunav.png" />
-    <AndroidResource Include="Resources\Drawable\userprofile.png" />
-    <AndroidResource Include="Resources\Drawable\padlock.png" />
-    <AndroidResource Include="Resources\Drawable\userdefault.png" />
-    <AndroidResource Include="Resources\Drawable\userdefault3.png" />
-    <AndroidResource Include="Resources\Values\ThemeStyles.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
     <AndroidResource Include="Resources\Drawable\badgedefault.png" />
-    <AndroidResource Include="Resources\Drawable\ratingon.png" />
-    <AndroidResource Include="Resources\Drawable\ratingoff.png" />
-    <AndroidResource Include="Resources\Drawable\online_icon.png" />
-    <AndroidResource Include="Resources\Drawable\offline_icon.png" />
-    <AndroidResource Include="Resources\Drawable\a_event.png" />
+    <AndroidResource Include="Resources\Drawable\call_center.png" />
     <AndroidResource Include="Resources\Drawable\groups.png" />
-    <AndroidResource Include="Resources\Drawable\ifeed.png" />
-    <AndroidResource Include="Resources\Drawable\photo.jpg" />
-    <AndroidResource Include="Resources\Drawable\takephoto.jpg" />
-    <AndroidResource Include="Resources\Drawable\splash_screen.PNG" />
-    <AndroidResource Include="Resources\Drawable\services.PNG" />
-    <AndroidResource Include="Resources\Drawable\logotype.png" />
+    <AndroidResource Include="Resources\Drawable\Icon.png" />
     <AndroidResource Include="Resources\Drawable\iconcontactsactive.png" />
     <AndroidResource Include="Resources\Drawable\iconcontactsinactive.png" />
     <AndroidResource Include="Resources\Drawable\iconmenuactive.png" />
     <AndroidResource Include="Resources\Drawable\iconmenuinactive.png" />
     <AndroidResource Include="Resources\Drawable\iconmessagesactive.png" />
     <AndroidResource Include="Resources\Drawable\iconmessagesinactive.png" />
-    <AndroidResource Include="Resources\Drawable\iconnotificationsinactive.png" />
     <AndroidResource Include="Resources\Drawable\iconnotificationsactive.png" />
+    <AndroidResource Include="Resources\Drawable\iconnotificationsinactive.png" />
     <AndroidResource Include="Resources\Drawable\iconwallactive.png" />
     <AndroidResource Include="Resources\Drawable\iconwallinactive.png" />
-    <EmbeddedResource Include="Resources\Drawable\ifeeds.png" />
-    <AndroidResource Include="Resources\Drawable\privacy.png" />
+    <AndroidResource Include="Resources\Drawable\ievents.png" />
+    <AndroidResource Include="Resources\Drawable\ifeed.png" />
     <AndroidResource Include="Resources\Drawable\igroup.png" />
+    <AndroidResource Include="Resources\Drawable\iphone_message.png" />
+    <AndroidResource Include="Resources\Drawable\logotype.png" />
+    <AndroidResource Include="Resources\Drawable\logout.png" />
     <AndroidResource Include="Resources\Drawable\mail.png" />
+    <AndroidResource Include="Resources\Drawable\menunav.png" />
     <AndroidResource Include="Resources\Drawable\netcomputers.jpg" />
+    <AndroidResource Include="Resources\Drawable\offline_icon.png" />
+    <AndroidResource Include="Resources\Drawable\online_icon.png" />
+    <AndroidResource Include="Resources\Drawable\padlock.png" />
+    <AndroidResource Include="Resources\Drawable\photo.jpg" />
+    <AndroidResource Include="Resources\Drawable\privacy.png" />
+    <AndroidResource Include="Resources\Drawable\ratingoff.png" />
+    <AndroidResource Include="Resources\Drawable\ratingon.png" />
+    <AndroidResource Include="Resources\Drawable\services.PNG" />
+    <AndroidResource Include="Resources\Drawable\shop.png" />
+    <AndroidResource Include="Resources\Drawable\splash_screen.PNG" />
+    <AndroidResource Include="Resources\Drawable\takephoto.jpg" />
+    <AndroidResource Include="Resources\Drawable\terms_conditions.png" />
+    <AndroidResource Include="Resources\Drawable\userdefault.png" />
+    <AndroidResource Include="Resources\Drawable\userdefault3.png" />
+    <AndroidResource Include="Resources\Drawable\userprofile.png" />
+    <AndroidResource Include="Resources\Layout\BarTabLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\AndroidManifest.xml" />
+    <AndroidResource Include="Resources\Values\ThemeStyles.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Drawable-hdpi\complete_job.png" />
+    <AndroidResource Include="Resources\Drawable-hdpi\complete_location.png" />
+    <AndroidResource Include="Resources\Drawable-hdpi\complete_photo.png" />
+    <AndroidResource Include="Resources\Drawable-mdpi\complete_job.png" />
+    <AndroidResource Include="Resources\Drawable-mdpi\complete_location.png" />
+    <AndroidResource Include="Resources\Drawable-mdpi\complete_photo.png" />
+    <AndroidResource Include="Resources\Drawable-xhdpi\complete_job.png" />
+    <AndroidResource Include="Resources\Drawable-xhdpi\complete_location.png" />
+    <AndroidResource Include="Resources\Drawable-xhdpi\complete_photo.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">
@@ -209,6 +216,10 @@
       <Name>BeginMobile.Services</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Drawable\ifeeds.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="..\BeginMobile\BeginMobile.projitems" Label="Shared" Condition="Exists('..\BeginMobile\BeginMobile.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

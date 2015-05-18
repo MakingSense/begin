@@ -28,6 +28,9 @@ namespace BeginMobile.UploadPages
         private ImageSource _imageSourceAvatar;
         private IMediaPicker _mediaPicker = null;
 
+        private Label _labelUploadYourPicture;
+        private Label labelNicePicture;
+
         public string Status
         { set; get; }
 
@@ -79,7 +82,7 @@ namespace BeginMobile.UploadPages
 
             _imageUploaded = new CircleImage
             {
-                Source = BeginApplication.Styles.DefaultWallIcon,
+                Source = BeginApplication.Styles.CompletePhotoIcon,
                 Style = BeginApplication.Styles.CircleImageUpload,
                 HorizontalOptions =  LayoutOptions.CenterAndExpand,
             };
@@ -133,12 +136,22 @@ namespace BeginMobile.UploadPages
                 }
             };
 
-            var labelUploadPicture = new Label()
+            _labelUploadYourPicture = new Label()
             {
                 Text = "Upload your Picture",
                 Style = BeginApplication.Styles.TitleStyle,
                 XAlign = TextAlignment.Center,
-                HorizontalOptions = LayoutOptions.CenterAndExpand
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                IsVisible = true
+            };
+
+            labelNicePicture = new Label()
+            {
+                Text = "Nice Picture!",
+                Style = BeginApplication.Styles.TitleStyle,
+                XAlign = TextAlignment.Center,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                IsVisible = false
             };
 
             var labelGooLooking = new Label()
@@ -162,7 +175,7 @@ namespace BeginMobile.UploadPages
                 }
             };
 
-            gridMain.Children.Add(labelUploadPicture, 0, 1);
+            gridMain.Children.Add(_labelUploadYourPicture, 0, 1);
             gridMain.Children.Add(labelGooLooking, 0, 2);
             gridMain.Children.Add(stackLayoutPicture, 0, 3);
             gridMain.Children.Add(_buttonNextStep, 0, 4);
@@ -228,6 +241,9 @@ namespace BeginMobile.UploadPages
             this._buttonNextStep.IsVisible = true;
             this._labelReplacePicture.IsVisible = true;
             this._labelUploadPicture.IsVisible = false;
+
+            //news
+            //this._
         }
 
         private BoxView BoxViewLine()

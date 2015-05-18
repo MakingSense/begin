@@ -1030,7 +1030,21 @@ namespace BeginMobile.Utils
             get { return "splash_screen.PNG"; }
         }
 
+        //Complete icons
+        public string CompletePhotoIcon
+        {
+            get { return "complete_photo.png"; }
+        }
 
+        public string CompleteLocationIcon
+        {
+            get { return "complete_location.png"; }
+        }
+
+        public string CompleteJobIcon
+        {
+            get { return "complete_job.png"; }
+        }
 
         #endregion
     }
