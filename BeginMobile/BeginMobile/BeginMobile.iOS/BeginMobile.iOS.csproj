@@ -363,6 +363,15 @@
   <ItemGroup>
     <BundleResource Include="Resources\iconcontactsinactive%402x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\complete_job.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\complete_location.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\complete_photo.png" />
+  </ItemGroup>
   <Import Project="..\BeginMobile\BeginMobile.projitems" Label="Shared" Condition="Exists('..\BeginMobile\BeginMobile.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
