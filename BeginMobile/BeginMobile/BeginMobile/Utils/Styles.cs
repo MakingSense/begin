@@ -860,16 +860,16 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.HeightRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(100, 100, 100)
-                                                : Device.OnPlatform(150, 150, 150)
+                                                ? Device.OnPlatform(100, 150, 100)
+                                                : Device.OnPlatform(150, 200, 150)
                                     },
                                     new Setter
                                     {
                                         Property = VisualElement.WidthRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(100, 100, 100)
-                                                : Device.OnPlatform(150, 150, 150)
+                                                ? Device.OnPlatform(100, 150, 100)
+                                                : Device.OnPlatform(150, 200, 150)
                                     },
                                     new Setter
                                     {

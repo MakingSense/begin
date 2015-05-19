@@ -7,64 +7,159 @@ namespace BeginMobile.UploadPages
     public class OfferYourServices : ContentPage
     {
         private readonly StackLayout _mainStackLayout;
+        private Picker _pickerCarrier;
+
+        private const string ImaDesigner = "I am a Web Designer";
+        private const string ImaTeacher = "I am a Teacher";
+        private const string ImaPainter = "I am a Painter";
+        private const string ImaStudent = "I am a Student";
+        private const string ImaEngineer = "I am a Engineer";
+        private const string Cancel = "Cancel";
+
+        private Button _buttonOkReady;
+        private StackLayout _stackLayoutButtons;
+        private Label _labelWhatDoYouDo;
+        private Label _labelServicesSubTitle;
+        private TapGestureRecognizer _tapGestureRecognizer;
+        private Button _buttonSelectFromList;
 
         public OfferYourServices()
         {
             var user = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             Style = BeginApplication.Styles.PageStyle;
             BackgroundColor = BeginApplication.Styles.UploadBackgroundColor;
-            var labelServicesTitle = new Label
-                                     {
-                                         Text = "Offer your Services",
-                                         Style = BeginApplication.Styles.TitleStyle,
-                                         XAlign = TextAlignment.Center
-                                     };
 
-            var labelWhatDoYouDo = new Label
+            _tapGestureRecognizer = new TapGestureRecognizer()
+            {
+                NumberOfTapsRequired = 1,
+            };
+
+            _tapGestureRecognizer.Tapped += async (s, e) =>
+            {
+                DisplayOptions();
+            };
+
+            _labelWhatDoYouDo = new Label
                                    {
                                        Text = "What do you do?",
-                                       Style = BeginApplication.Styles.SubtitleStyle,
+                                       Style = BeginApplication.Styles.TitleStyle,
                                        XAlign = TextAlignment.Center
                                    };
 
-            var imageCarier = new CircleImage
+            _labelServicesSubTitle = new Label
+            {
+                Text = "I am a Web Designer",
+                Style = BeginApplication.Styles.SubtitleStyle,
+                XAlign = TextAlignment.Center
+            };
+            
+
+
+            var stackLayoutTitleSubTitle = new StackLayout()
+            {
+                Padding = new Thickness(0, 20, 0, 100),
+                Children =
+                {
+                    _labelWhatDoYouDo,
+                    _labelServicesSubTitle
+                }
+            };
+
+            var imageCarrier = new CircleImage
                               {
-                                  Source = BeginApplication.Styles.OfferServicesIcon,
+                                  Source = BeginApplication.Styles.CompleteJobIcon,
                                   Style = BeginApplication.Styles.CircleImageUpload,
 								  HorizontalOptions = LayoutOptions.CenterAndExpand,
                               };
 
-            
+            var stackLayoutPicture = new StackLayout()
+            {
+                BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
+                Spacing = 5,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Padding = new Thickness(0, 30, 0, 20),
+                Children =
+                {
+                    imageCarrier,
+                }
+            };
 
-            var pickerCarier = new Picker
+            _pickerCarrier = new Picker
                                {
                                    Items =
                                    {
-                                       "I'm  a Designer",
-                                       "I'm  a Teacher",
-                                       "I'm  a Painter",
-                                       "I'm  a Student"
+                                       ImaDesigner,
+                                       ImaTeacher,
+                                       ImaPainter,
+                                       ImaStudent
                                    },
                                    Title = "Select Your Profession",
                                    
                                    Style = BeginApplication.Styles.PickerStyle,
-                                   BackgroundColor = Color.FromHex("A6A6A6")
+                                   BackgroundColor = Color.FromHex("A6A6A6"), 
+                                   
                                };
+            _pickerCarrier.SelectedIndexChanged += async (s, e) =>
+            {
 
-            var buttonOkReady = new Button
+            };
+
+            _buttonOkReady = new Button
                                 {
                                     Text = "Ok, I'm Ready",
                                     Style = BeginApplication.Styles.LinkButton,
+                                    BackgroundColor = Color.Transparent,
                                     HorizontalOptions = LayoutOptions.CenterAndExpand,
-                                    FontSize = 16
+                                    FontSize = 16,
+                                    IsVisible = false,
                                 };
 
             
 
-            buttonOkReady.Clicked += async (s, e) =>
+            _buttonOkReady.Clicked += async (s, e) =>
             {
                 BeginApplication.CurrentBeginApplication.ShowMainPage(user);
             };
+
+            var gridMain = new Grid()
+            {
+                BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                RowSpacing = 6,
+                RowDefinitions =
+                {
+                    new RowDefinition(){Height = GridLength.Auto},
+                    new RowDefinition(){Height = GridLength.Auto}
+                }
+            };
+
+            _buttonSelectFromList = new Button
+            {
+                Text = "Select from List",
+                Style = BeginApplication.Styles.DefaultButton,
+            };
+            _buttonSelectFromList.Clicked += async (s, e) =>
+            {
+                DisplayOptions();
+            };
+
+            _stackLayoutButtons = new StackLayout()
+            {
+                Spacing = 10,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Children =
+                {
+                    _buttonSelectFromList
+                }
+            };
+
+            gridMain.Children.Add(stackLayoutPicture, 0, 1);
+            gridMain.Children.Add(stackLayoutTitleSubTitle, 0, 2);
+            gridMain.Children.Add(_stackLayoutButtons, 0, 3);
+            gridMain.Children.Add(_buttonOkReady, 0, 4);
+            //gridMain.Children.Add(_pickerCarrier, 0, 5);
 
             _mainStackLayout = new StackLayout
                                {
@@ -72,16 +167,12 @@ namespace BeginMobile.UploadPages
                                    BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                                    Children =
                                    {
-                                       labelServicesTitle,
-                                       labelWhatDoYouDo,
-                                       imageCarier,
-                                       pickerCarier,
-                                       buttonOkReady
+                                       gridMain
                                    },
                                    Padding =
                                        Device.Idiom == TargetIdiom.Phone
-                                           ? new Thickness(10, Device.OnPlatform(50, 50, 50), 10, 10)
-                                           : new Thickness(10, Device.OnPlatform(80, 80, 80), 10, 10)
+                                           ? new Thickness(32, Device.OnPlatform(20, 20, 20), 32, 10)
+                                           : new Thickness(32, Device.OnPlatform(40, 40, 40), 32, 10)
                                };
 
             Content = _mainStackLayout;
@@ -94,6 +185,71 @@ namespace BeginMobile.UploadPages
             _mainStackLayout.Padding = page.Width > page.Height
                 ? new Thickness(page.Width * 0.01, page.Height * 0.15, page.Width * 0.01, page.Height * 0.01)
                 : new Thickness(page.Width * 0.01, page.Height * 0.25, page.Width * 0.01, page.Height * 0.01);
+        }
+
+        private void RetrieveCarrierOptionSelected(out string carrier)
+        {
+            var carrierSelectedIndex = _pickerCarrier.SelectedIndex;
+
+            carrier = carrierSelectedIndex == -1
+                ? null
+                : _pickerCarrier.Items[carrierSelectedIndex];
+        }
+
+        private async void DisplayOptions()
+        {
+            string action = await DisplayActionSheet(
+                    null,
+                    Cancel,
+                    null,
+                    ImaDesigner,
+                    ImaTeacher,
+                    ImaPainter,
+                    ImaEngineer,
+                    ImaStudent
+                    );
+
+            switch (action)
+            {
+                case ImaDesigner:
+                    _labelWhatDoYouDo.Text = ImaDesigner;
+                    _labelServicesSubTitle.Text = "Change";
+                    _labelServicesSubTitle.GestureRecognizers.Add(_tapGestureRecognizer);
+                    _buttonOkReady.IsVisible = true;
+                    _buttonSelectFromList.IsVisible = false;
+                    break;
+                case ImaTeacher:
+                    _labelWhatDoYouDo.Text = ImaTeacher;
+                    _labelServicesSubTitle.Text = "Change";
+                    _labelServicesSubTitle.GestureRecognizers.Add(_tapGestureRecognizer);
+                    _buttonOkReady.IsVisible = true;
+                    _buttonSelectFromList.IsVisible = false;
+                    break;
+                case ImaPainter:
+                    _labelWhatDoYouDo.Text = ImaPainter;
+                    _labelServicesSubTitle.Text = "Change";
+                    _labelServicesSubTitle.GestureRecognizers.Add(_tapGestureRecognizer);
+                    _buttonOkReady.IsVisible = true;
+                    _buttonSelectFromList.IsVisible = false;
+                    break;
+                case ImaEngineer:
+                    _labelWhatDoYouDo.Text = ImaEngineer;
+                    _labelServicesSubTitle.Text = "Change";
+                    _labelServicesSubTitle.GestureRecognizers.Add(_tapGestureRecognizer);
+                    _buttonOkReady.IsVisible = true;
+                    _buttonSelectFromList.IsVisible = false;
+                    break;
+                case ImaStudent:
+                    _labelWhatDoYouDo.Text = ImaStudent;
+                    _labelServicesSubTitle.Text = "Change";
+                    _labelServicesSubTitle.GestureRecognizers.Add(_tapGestureRecognizer);
+                    _buttonOkReady.IsVisible = true;
+                    _buttonSelectFromList.IsVisible = false;
+                    break;
+                case Cancel:
+                    return;
+                    break;
+            }
         }
     }
 }

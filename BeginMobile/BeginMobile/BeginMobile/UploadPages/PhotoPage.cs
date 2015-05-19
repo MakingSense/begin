@@ -105,6 +105,8 @@ namespace BeginMobile.Pages.PhotoUpload
 
             if (isCamera == true)
             {
+                displayMessageAlert();
+
                 var imageCamera = new Image()
                 {
                     Source =  "photo.jpg",
@@ -153,9 +155,9 @@ namespace BeginMobile.Pages.PhotoUpload
 
                 gridMain.Children.Add(gridPhotos, 0, 1);
             }
-
-
+            
             Content = gridMain;
+            
 
             /*this.Content = new StackLayout
             {
@@ -259,6 +261,25 @@ namespace BeginMobile.Pages.PhotoUpload
                 return null;
             }, _scheduler);
         }*/
+
+        private async void displayMessageAlert()
+        {
+            var cancel = new Label()
+            {
+                TextColor = Color.Red,
+                Style = BeginApplication.Styles.TitleStyle,
+                Text = "Don't Allow",
+            };
+
+            var description =
+                "\"ForSteps\" need access to your camera \nto take a pticture we must access to your camera";
+            var answer = await DisplayAlert(null, description, "OK", cancel.Text);
+
+            if (answer == false)
+            {
+                await Navigation.PopAsync();
+            }
+        }
 
         protected override void OnDisappearing()
         {
