@@ -49,6 +49,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MessagePages\SentMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\Notification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\NotificationDetail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\ReadNotifications.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\TemplateListViewNotification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Privacy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Activities.cs" />
@@ -64,7 +65,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\MyActivity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\ProfileMe.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\ProfileTitle.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Shop.cs" />    
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Shop.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\TabViewExposure.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\TemplateListViewEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\ViewExposure.cs" />

@@ -22,7 +22,6 @@ namespace BeginMobile.Pages.Profile
 
         //Paginator
         private readonly ActivityIndicator _activityIndicatorLoading;
-        private readonly Grid _gridLayoutMain;
         private readonly StackLayout _stackLayoutLoadingIndicator;
         private bool _isLoading;
         private int _offset = 0;
@@ -31,6 +30,7 @@ namespace BeginMobile.Pages.Profile
         private string _sort;
         private const int DefaultLimit = 10;
         private bool _areLastItems;
+        private Grid _gridMainComponents;
 
         private Dictionary<string, string> _sortOptionsDictionary = new Dictionary<string, string>
                                                                     {
@@ -141,20 +141,32 @@ namespace BeginMobile.Pages.Profile
             ToolbarItems.Add(ToolbarItem);
 #endif
 
-            Content = new StackLayout
+            _gridMainComponents = new Grid
                       {
-                          VerticalOptions = LayoutOptions.Start,
-                          Children =
-                          {
-                              _searchView.Container,
-                              _labelNoContactsMessage,
-                              stackLayoutContactsList
-                          }
+                          Padding = BeginApplication.Styles.LayoutThickness,
+                          VerticalOptions = LayoutOptions.FillAndExpand,
+                          HorizontalOptions = LayoutOptions.FillAndExpand,
+                          RowDefinitions =
+                                  {
+                                      new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto},
+                                      
+                                  }
+                          
                       };
+
+            _gridMainComponents.Children.Add(_searchView.Container, 0, 0);
+            _gridMainComponents.Children.Add(_labelNoContactsMessage, 0, 1);
+            _gridMainComponents.Children.Add(stackLayoutContactsList, 0, 2);
+            Content = _gridMainComponents;
         }
 
         public ToolbarItem ToolbarItem { get; set; }
-
+        public Grid GetGrid()
+        {
+            return _gridMainComponents;
+        }
         #region Events
 
         /// <summary>

@@ -90,6 +90,7 @@ namespace BeginMobile.Pages.Profile
         public String TabTwoName { get; set; }
         public ToolbarItem ToolbarItemTabOne { get; set; }
         public ToolbarItem ToolbarItemTabTwo { get; set; }
+        public ToolbarItem ToolbarItemTabThree { get; set; }
 
         public void SetInitialProperties(string tabSelected)
         {
@@ -119,6 +120,12 @@ namespace BeginMobile.Pages.Profile
                 ToolbarItems.Add(ToolbarItemTabOne);
 #endif
             }
+            if (ToolbarItemTabThree != null)
+            {
+#if __ANDROID__ || __IOS__
+                ToolbarItems.Add(ToolbarItemTabThree);
+#endif
+            }
         }
 
         private void SetTabTwoSettings()
@@ -133,6 +140,12 @@ namespace BeginMobile.Pages.Profile
             {
 #if __ANDROID__ || __IOS__
                 ToolbarItems.Add(ToolbarItemTabTwo);
+#endif
+            }
+            if (ToolbarItemTabThree != null)
+            {
+#if __ANDROID__ || __IOS__
+                ToolbarItems.Add(ToolbarItemTabThree);
 #endif
             }
         }

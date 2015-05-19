@@ -185,7 +185,7 @@ namespace BeginMobile.Pages.ContactPages
         }
 
         public ToolbarItem ToolbarItem { get; set; }
-        public Grid GridContacts()
+        public Grid GetGrid()
         {
             return _gridLayoutMain;
         }

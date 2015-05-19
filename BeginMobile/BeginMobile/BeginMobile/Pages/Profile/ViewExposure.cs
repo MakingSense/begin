@@ -288,6 +288,8 @@ namespace BeginMobile.Pages.Profile
         public const string Tab2Events = "Attending";
         public const string Tab1Messages = "Inbox";
         public const string Tab2Messages = "Sent";
+        public const string Tab1Notifications = "Unread Notifications";
+        public const string Tab2Notifications = "Read Notifications";
         public const string TabMore = "More";
         public static string Tab1 { get; set; }
         public static string Tab2 { get; set; }

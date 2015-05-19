@@ -23,7 +23,7 @@ namespace BeginMobile.Pages.Profile
 
         private readonly LoginUser _currentUser;
         private const string DefaultLimit = "10";
-        
+        private Grid _gridMainComponents;
         private ObservableCollection<ProfileEvent> _profileEvents;
 
         public Events()
@@ -134,23 +134,32 @@ namespace BeginMobile.Pages.Profile
 #if __ANDROID__ || __IOS__
             ToolbarItems.Add(ToolbarItem);
 #endif
-            Content = new StackLayout
+            _gridMainComponents = new Grid
             {
-                VerticalOptions = LayoutOptions.Start,
-                Padding = 20,
-                Children =
-                          {
-                              _searchView.Container,
-                              gridEventHeaderTitle,
-                              scrollView
-                          }
+                Padding = BeginApplication.Styles.LayoutThickness,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
+                                  {
+                                      new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto},
+                                      
+                                  }
             };
+            _gridMainComponents.Children.Add(_searchView.Container, 0, 0);
+            _gridMainComponents.Children.Add(gridEventHeaderTitle, 0, 1);
+            _gridMainComponents.Children.Add(scrollView, 0, 2);
+            Content = _gridMainComponents;
 
             #endregion
         }
 
         public ToolbarItem ToolbarItem { get; set; }
-
+        public Grid GetGrid()
+        {
+            return _gridMainComponents;
+        }
         private void LoadCategoriesPicker()
         {
             _categoriesPicker = new Picker

@@ -86,9 +86,9 @@ namespace BeginMobile.Pages.Profile
             Content = _gridMainComponents;
         }
 
-        public Grid GetGridActivities
+        public Grid GetGrid()
         {
-            get { return _gridMainComponents; }
+            return _gridMainComponents;
         }
         protected override void OnDisappearing()
         {

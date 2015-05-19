@@ -1,72 +1,52 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using BeginMobile.Menu;
+﻿using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Pages.Profile;
 using BeginMobile.Services.DTO;
 using Xamarin.Forms;
-using System.Collections.ObjectModel;
-using BeginMobile.Pages.Profile;
-using BeginMobile.LocalizeResources.Resources;
 
 namespace BeginMobile.Pages.MessagePages
 {
     public class MessageListPage : TabContent
     {
         public readonly Label LabelCounter;
-        private const string DefaultIcon = "userprofile.png";
+        private readonly InboxMessage _inbox;
+        private readonly SentMessage _sent;
+        private readonly SendMessage _send;
         private readonly TabViewExposure _tabViewExposure;
-        private InboxMessage _inbox;
-        private SentMessage _sent;
         public string MasterTitle { get; set; }
+
         public MessageListPage(string title, string iconImg)
             : base(title, iconImg)
         {
             Title = title;
             MasterTitle = AppResources.AppHomeChildMessages;
-            CalServiceApi();
+            LabelCounter = new Label();
             _tabViewExposure = new TabViewExposure();
-            LabelCounter = new Label
-            {
-                Text = ThreadCount
-            };
+            _inbox = new InboxMessage();
+            _sent = new SentMessage();
+            _send = new SendMessage();
+            Init();
         }
-        private async void CalServiceApi()
+
+        private async void Init()
         {
-            var currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+            var currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
             var inboxThreads =
                 await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(currentUser.AuthToken);
             if (inboxThreads != null)
             {
-                var threads = inboxThreads;
-                ThreadCount = threads.ThreadCount;
-                LabelCounter.Text = ThreadCount;
+                LabelCounter.Text = inboxThreads.ThreadCount;
             }
         }
 
-        public string ThreadCount { get; set; }
-
         public void InitMessages()
         {
-            using (var contentPageSentMessage = new SentMessage())
-            {
-                _sent = contentPageSentMessage;
-                SentMessage.IsSent = true;
-                InboxMessage.IsInbox = false;
-                // Navigation.PushAsync(contentPageSentMessage);                
-            }
-            using (var contentPageInboxMessage = new InboxMessage())
-            {
-                _inbox = contentPageInboxMessage;
-                InboxMessage.IsInbox = true;
-                SentMessage.IsSent = false;
-                // Navigation.PushAsync(contentPageInboxMessage);                
-            }
-
             _tabViewExposure.PageOne = _inbox;
             _tabViewExposure.PageTwo = _sent;
             _tabViewExposure.TabOneName = TabsNames.Tab1Messages;
             _tabViewExposure.TabTwoName = TabsNames.Tab2Messages;
             _tabViewExposure.ToolbarItemTabOne = _inbox.ToolbarItem;
             _tabViewExposure.ToolbarItemTabTwo = _sent.ToolbarItem;
+            _tabViewExposure.ToolbarItemTabThree = _send.ToolbarItem;
             _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Messages);
             Content = _tabViewExposure.Content;
         }

@@ -109,6 +109,11 @@ namespace BeginMobile.Pages.MessagePages
 
         public ToolbarItem ToolbarItem { get; set; }
 
+        public Grid GetGrid()
+        {
+            return _gridComponents;
+        }
+
         #region Paginator Helper
         private void RemoveLoadingIndicator(StackLayout stackLayoutLoading)
         {

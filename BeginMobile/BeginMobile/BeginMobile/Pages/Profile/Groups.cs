@@ -1,11 +1,9 @@
-﻿using BeginMobile.Interfaces;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using BeginMobile.Interfaces;
 using BeginMobile.Pages.GroupPages;
 using BeginMobile.Services.DTO;
-using BeginMobile.Utils;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
@@ -13,13 +11,12 @@ namespace BeginMobile.Pages.Profile
     public class Groups : BaseContentPage
     {
         private ListView _listViewGroup;
-        private StackLayout _stackLayoutMain;
         private ProfileInformationGroups _groupInformation;
         private static Grid _gridMain;
         private ObservableCollection<Group> _groups;
-        private List<Group> _defaultGroups = new List<Group>();
+        private readonly List<Group> _defaultGroups = new List<Group>();
         private ImageSource _imageSourceGroupByDefault;
-        private LoginUser currentUser;
+        private readonly LoginUser currentUser;
         
         public Groups()
         {
@@ -28,17 +25,6 @@ namespace BeginMobile.Pages.Profile
             currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
 
             LoadDeafultImage();
-
-            _gridMain = new Grid()
-            {
-                Padding = BeginApplication.Styles.LayoutThickness,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-               HorizontalOptions = LayoutOptions.FillAndExpand,
-                RowDefinitions =
-                {
-                    new RowDefinition(){Height = GridLength.Auto}
-                }
-            };
 
             //Content = _gridMain;
 
@@ -74,22 +60,33 @@ namespace BeginMobile.Pages.Profile
                 ((ListView)sender).SelectedItem = null;
             };
 
-            var relativeLayout = new RelativeLayout
+
+            _gridMain = new Grid()
             {
+                Padding = BeginApplication.Styles.LayoutThickness,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
+                RowDefinitions =
+                {
+                    new RowDefinition{Height = GridLength.Auto}
+                }
             };
-            relativeLayout.Children.Add(_listViewGroup,
-                Constraint.Constant(0),
-                Constraint.Constant(0),
-                Constraint.RelativeToParent(parent => { return parent.Width; }),
-                Constraint.RelativeToParent(parent => { return parent.Height; }));
+            //var relativeLayout = new RelativeLayout
+            //{
+            //    VerticalOptions = LayoutOptions.FillAndExpand,
+            //    HorizontalOptions = LayoutOptions.FillAndExpand,
+            //};
+            //relativeLayout.Children.Add(_listViewGroup,
+            //    Constraint.Constant(0),
+            //    Constraint.Constant(0),
+            //    Constraint.RelativeToParent(parent => { return parent.Width; }),
+            //    Constraint.RelativeToParent(parent => { return parent.Height; }));
 
-            //_stackLayoutMain.Children.Add(relativeLayout);
+           // _stackLayoutMain.Children.Add(relativeLayout);
 
-            _gridMain.Children.Add(relativeLayout, 0, 0);
+            _gridMain.Children.Add(_listViewGroup, 0, 0);
 
-            //Content = new ScrollView { Content = _stackLayoutMain };
+           // Content = new ScrollView { Content = _stackLayoutMain };
             Content = _gridMain;
         }
 

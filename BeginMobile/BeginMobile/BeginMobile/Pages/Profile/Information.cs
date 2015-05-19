@@ -104,7 +104,7 @@ namespace BeginMobile.Pages.Profile
             Content = scrollViewInfo;
         }
 
-        public Grid GetGridInfo()
+        public Grid GetGrid()
         {
             return _gridInfo;
         }

@@ -37,8 +37,7 @@ namespace BeginMobile.Pages.Profile
                 Constraint.Constant(0), Constraint.Constant(0),
                 Constraint.RelativeToParent(parent => parent.Width),
                 Constraint.RelativeToParent(parent => parent.Height));
-
-            Content = new ScrollView { Content = _relativeLayoutMain };
+            Content = _relativeLayoutMain;
         }
 
         protected override void OnDisappearing()

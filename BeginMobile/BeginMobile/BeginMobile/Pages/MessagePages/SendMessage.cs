@@ -74,7 +74,14 @@ namespace BeginMobile.Pages.MessagePages
             gridComponents.Children.Add(_entrySubject, 0, 3);
             gridComponents.Children.Add(labelTextMessage, 0, 4);
             gridComponents.Children.Add(_editorMessageContent, 0, 5);
-
+            ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+                                                                                              {
+                                                                                                  new SendMessage();
+                                                                                              });
+            #if __ANDROID__ || __IOS__
+            ToolbarItems.Add(ToolbarItem);
+            #endif
+        
             Content = new StackLayout
                       {
                           VerticalOptions = LayoutOptions.StartAndExpand,
@@ -82,6 +89,8 @@ namespace BeginMobile.Pages.MessagePages
                           Children = {gridComponents, buttonSend}
                       };
         }
+
+        public ToolbarItem ToolbarItem { get; set; }
 
         private async void SendMessageEventHandler(object sender, EventArgs e)
         {

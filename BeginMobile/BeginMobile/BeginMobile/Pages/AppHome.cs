@@ -14,8 +14,8 @@ namespace BeginMobile.Pages
     public class AppHome : TabbedPage
     {
         private MessageListPage _messages;
-
-        public AppHome()
+        private Notifications.Notification _notification;
+        public AppHome()	
         {
             LoadChilds();
         }
@@ -36,6 +36,17 @@ namespace BeginMobile.Pages
                                             }.Text,
                 Device.OnPlatform("iconmessagesactive.png", "iconmessagesactive.png", "iconmessagesactive.png"));
 
+            _notification = new Notification(new Label
+                                                    {
+                                                        Text =
+                                                            Device.OnPlatform(string.Empty,
+                                                                AppResources.AppHomeChildNotifications,
+                                                                AppResources.AppHomeChildNotifications),
+                                                        Style = BeginApplication.Styles.StyleNavigationTitle
+                                                    }.Text,
+                Device.OnPlatform("iconnotificationsactive.png", "iconnotificationsactive.png",
+                    "iconnotificationsactive.png"));
+
             Children.Add(new WallPage(
                 new Label
                 {
@@ -46,20 +57,8 @@ namespace BeginMobile.Pages
                 }.Text,
                 Device.OnPlatform("iconwallactive.png", "iconwallactive.png", "iconwallactive.png")));
 
-            Children.Add(
-                new Notification(new Label
-                                 {
-                                     Text =
-                                         Device.OnPlatform(string.Empty, AppResources.AppHomeChildNotifications,
-                                             AppResources.AppHomeChildNotifications),
-                                     Style = BeginApplication.Styles.StyleNavigationTitle
-                                 }.Text,
-                    Device.OnPlatform("iconnotificationsactive.png", "iconnotificationsactive.png",
-                        "iconnotificationsactive.png")));
-
-            Children.Add(
-                _messages
-                );
+            Children.Add(_notification);
+            Children.Add(_messages);
 
             Children.Add(
                 new ContactPage(
@@ -91,6 +90,10 @@ namespace BeginMobile.Pages
             if (item != null && item.CurrentPage.Title.Equals(AppResources.AppHomeChildMessages))
             {
                 _messages.InitMessages();
+            }
+            if (item != null && item.CurrentPage.Title.Equals(AppResources.AppHomeChildNotifications))
+            {
+                _notification.InitilizeNotification();
             }
         }
     }

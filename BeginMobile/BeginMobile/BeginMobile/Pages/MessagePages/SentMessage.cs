@@ -73,7 +73,7 @@ namespace BeginMobile.Pages.MessagePages
                                      }
             };
 
-            var relativeLayoutMain = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand };
+            var relativeLayoutMain = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
             relativeLayoutMain.Children.Add(_listViewMessages,
                 xConstraint: Constraint.Constant(0),
                 yConstraint: Constraint.Constant(0),
@@ -98,6 +98,10 @@ namespace BeginMobile.Pages.MessagePages
         }
 
         public ToolbarItem ToolbarItem { get; set; }
+        public Grid GetGrid()
+        {
+            return _gridComponents;
+        }
 
         /*         
          * Get the Sent Messages from SentBox Service API, parse the Message to MessageViewModel for add into list and return this list
