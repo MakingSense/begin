@@ -107,7 +107,7 @@ namespace BeginMobile.UploadPages
             _buttonNextStep = new Button()
             {
                 Text = "Next step!",
-                Style = BeginApplication.Styles.LinkLabelButton,
+                Style = BeginApplication.Styles.UploadLinkLabelButton,
                 BackgroundColor = Color.Transparent,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 FontSize = 16,
@@ -182,6 +182,7 @@ namespace BeginMobile.UploadPages
 
             var gridMain = new Grid()
             {
+                Padding = new Thickness(0 , 0, 0 , 20),
                 BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
@@ -227,16 +228,29 @@ namespace BeginMobile.UploadPages
             };
 
 
+            var stackCircleButtons = new StackLayout()
+            {
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                Children =
+                {
+                    GreenCircle(),
+                    BlackCircle(),
+                }
+            };
+
             gridMain.Children.Add(stackLayoutPicture, 0, 1);
             gridMain.Children.Add(stackLayoutTitleSubTitle, 0, 2);
             gridMain.Children.Add(_stackLayoutButtons, 0, 3);
             gridMain.Children.Add(_buttonNextStep, 0, 4);
 
+
+
             Content = new StackLayout()
             {
                 BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                 Padding = new Thickness(32, Device.OnPlatform(20, 20, 20), 32, 10),
-                Children = {gridMain}
+                Children = {gridMain,stackCircleButtons}
             };
         }
 
@@ -309,6 +323,22 @@ namespace BeginMobile.UploadPages
                 HeightRequest = 1,
                 HorizontalOptions = LayoutOptions. FillAndExpand,
                 
+            };
+        }
+
+        private Image BlackCircle()
+        {
+            return new Image()
+            {
+                Source = BeginApplication.Styles.CompleteBlackCircle
+            };
+        }
+
+        private Image GreenCircle()
+        {
+            return new Image()
+            {
+                Source = BeginApplication.Styles.CompleteGreenCircle,
             };
         }
     }

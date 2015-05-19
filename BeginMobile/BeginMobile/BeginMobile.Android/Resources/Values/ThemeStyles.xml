@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
-    <style name="BeginMobileTheme" parent="@android:style/Theme.Holo">
+    <style name="BeginMobileTheme" parent="@android:style/Theme.Holo.Light">
       <item name="android:actionBarTabTextStyle">@style/ActionBarTabText</item>
       <item name="android:actionBarTabStyle">@style/ActionBarTab</item>
       <item name="android:actionBarTabBarStyle">@style/ActionBarTabBar</item>

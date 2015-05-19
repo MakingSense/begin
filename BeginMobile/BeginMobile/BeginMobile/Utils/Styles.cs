@@ -137,6 +137,36 @@ namespace BeginMobile.Utils
             }
         }
 
+        public Style UploadLinkLabelButton
+        {
+            get
+            {
+                var style = new Style(typeof(Button))
+                {
+                    Setters =
+                                {
+                                    new Setter
+                                    {
+                                        Property = VisualElement.BackgroundColorProperty,
+                                        Value = Color.Transparent
+                                    },
+                                    new Setter {Property = Button.BorderRadiusProperty, Value = 0},
+                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamily},
+                                    new Setter {Property = Button.FontSizeProperty, Value = 32},
+                                    //new Setter {Property = Button.FontAttributesProperty = FontAttributes.Bold},
+                                    new Setter
+                                    {
+                                        Property = Button.TextColorProperty,
+                                        Value = Device.OnPlatform
+                                            (Color.FromHex("43BB88"), Color.FromHex("43BB88"), Color.FromHex("646567"))
+                                    },
+                                }
+                };
+
+                return style;
+            }
+        }
+
         
 
         public Style DefaultButton
@@ -1044,6 +1074,16 @@ namespace BeginMobile.Utils
         public string CompleteJobIcon
         {
             get { return "complete_job.png"; }
+        }
+
+        public string CompleteBlackCircle
+        {
+            get { return "blackcircle.jpg"; }
+        }
+
+        public string CompleteGreenCircle
+        {
+            get { return "greencircle.jpg"; }
         }
 
         #endregion

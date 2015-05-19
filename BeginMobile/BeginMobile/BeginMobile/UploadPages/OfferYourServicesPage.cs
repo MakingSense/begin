@@ -22,6 +22,7 @@ namespace BeginMobile.UploadPages
         private Label _labelServicesSubTitle;
         private TapGestureRecognizer _tapGestureRecognizer;
         private Button _buttonSelectFromList;
+        private Label _labelChangeSubTitle;
 
         public OfferYourServices()
         {
@@ -50,10 +51,21 @@ namespace BeginMobile.UploadPages
             {
                 Text = "I am a Web Designer",
                 Style = BeginApplication.Styles.SubtitleStyle,
-                XAlign = TextAlignment.Center
+                XAlign = TextAlignment.Center,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                IsVisible = true
             };
-            
 
+
+            _labelChangeSubTitle = new Label
+            {
+                Text = "Change",
+                Style = BeginApplication.Styles.SubtitleStyle,
+                XAlign = TextAlignment.Center,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                IsVisible = false
+            };
+            _labelChangeSubTitle.GestureRecognizers.Add(_tapGestureRecognizer);
 
             var stackLayoutTitleSubTitle = new StackLayout()
             {
@@ -61,7 +73,8 @@ namespace BeginMobile.UploadPages
                 Children =
                 {
                     _labelWhatDoYouDo,
-                    _labelServicesSubTitle
+                    _labelServicesSubTitle,
+                    _labelChangeSubTitle
                 }
             };
 
@@ -108,7 +121,7 @@ namespace BeginMobile.UploadPages
             _buttonOkReady = new Button
                                 {
                                     Text = "Ok, I'm Ready",
-                                    Style = BeginApplication.Styles.LinkButton,
+                                    Style = BeginApplication.Styles.UploadLinkLabelButton,
                                     BackgroundColor = Color.Transparent,
                                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                                     FontSize = 16,
@@ -124,6 +137,7 @@ namespace BeginMobile.UploadPages
 
             var gridMain = new Grid()
             {
+                Padding = new Thickness(0, 0, 0, 20),
                 BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
@@ -155,6 +169,17 @@ namespace BeginMobile.UploadPages
                 }
             };
 
+            var stackCircleButtons = new StackLayout()
+            {
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                Children =
+                {
+                    BlackCircle(),
+                    GreenCircle()
+                }
+            };
+
             gridMain.Children.Add(stackLayoutPicture, 0, 1);
             gridMain.Children.Add(stackLayoutTitleSubTitle, 0, 2);
             gridMain.Children.Add(_stackLayoutButtons, 0, 3);
@@ -167,7 +192,7 @@ namespace BeginMobile.UploadPages
                                    BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                                    Children =
                                    {
-                                       gridMain
+                                       gridMain,stackCircleButtons
                                    },
                                    Padding =
                                        Device.Idiom == TargetIdiom.Phone
@@ -213,36 +238,36 @@ namespace BeginMobile.UploadPages
             {
                 case ImaDesigner:
                     _labelWhatDoYouDo.Text = ImaDesigner;
-                    _labelServicesSubTitle.Text = "Change";
-                    _labelServicesSubTitle.GestureRecognizers.Add(_tapGestureRecognizer);
+                    _labelServicesSubTitle.IsVisible = false;
+                    _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
                     _buttonSelectFromList.IsVisible = false;
                     break;
                 case ImaTeacher:
                     _labelWhatDoYouDo.Text = ImaTeacher;
-                    _labelServicesSubTitle.Text = "Change";
-                    _labelServicesSubTitle.GestureRecognizers.Add(_tapGestureRecognizer);
+                    _labelServicesSubTitle.IsVisible = false;
+                    _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
                     _buttonSelectFromList.IsVisible = false;
                     break;
                 case ImaPainter:
                     _labelWhatDoYouDo.Text = ImaPainter;
-                    _labelServicesSubTitle.Text = "Change";
-                    _labelServicesSubTitle.GestureRecognizers.Add(_tapGestureRecognizer);
+                    _labelServicesSubTitle.IsVisible = false;
+                    _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
                     _buttonSelectFromList.IsVisible = false;
                     break;
                 case ImaEngineer:
                     _labelWhatDoYouDo.Text = ImaEngineer;
-                    _labelServicesSubTitle.Text = "Change";
-                    _labelServicesSubTitle.GestureRecognizers.Add(_tapGestureRecognizer);
+                    _labelServicesSubTitle.IsVisible = false;
+                    _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
                     _buttonSelectFromList.IsVisible = false;
                     break;
                 case ImaStudent:
                     _labelWhatDoYouDo.Text = ImaStudent;
-                    _labelServicesSubTitle.Text = "Change";
-                    _labelServicesSubTitle.GestureRecognizers.Add(_tapGestureRecognizer);
+                    _labelServicesSubTitle.IsVisible = false;
+                    _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
                     _buttonSelectFromList.IsVisible = false;
                     break;
@@ -250,6 +275,22 @@ namespace BeginMobile.UploadPages
                     return;
                     break;
             }
+        }
+
+        private Image BlackCircle()
+        {
+            return new Image()
+            {
+                Source = BeginApplication.Styles.CompleteBlackCircle
+            };
+        }
+
+        private Image GreenCircle()
+        {
+            return new Image()
+            {
+                Source = BeginApplication.Styles.CompleteGreenCircle,
+            };
         }
     }
 }
