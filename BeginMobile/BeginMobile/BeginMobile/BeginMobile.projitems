@@ -51,6 +51,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\NotificationDetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\ReadNotifications.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\TemplateListViewNotification.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\Notifications\UnreadNotification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Privacy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\Activities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\Profile\ContactDetail.cs" />
