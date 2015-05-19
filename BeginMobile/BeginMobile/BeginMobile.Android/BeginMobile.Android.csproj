@@ -225,6 +225,8 @@
     <AndroidResource Include="Resources\Drawable-xhdpi\iconnotificationsinactive.png" />
     <AndroidResource Include="Resources\Drawable-xhdpi\iconwallinactive.png" />
     <AndroidResource Include="Resources\Drawable-xhdpi\iconwallactive.png" />
+    <AndroidResource Include="Resources\Drawable\search.png" />
+    <AndroidResource Include="Resources\Drawable\write.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">
