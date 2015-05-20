@@ -58,5 +58,15 @@ namespace BeginMobile.Pages.Notifications
                 _log.Error(exception.Message);
             }
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            var title = MasterTitle;
+
+            MessagingCenter.Send(this, "masterTitle", title);
+            MessagingCenter.Unsubscribe<Notification, string>(this, "masterTitle");
+        }
+
     }
 }

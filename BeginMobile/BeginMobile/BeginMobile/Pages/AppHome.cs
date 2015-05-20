@@ -47,15 +47,15 @@ namespace BeginMobile.Pages
                 Device.OnPlatform("iconnotificationsactive.png", "iconnotificationsactive.png",
                     "iconnotificationsactive.png"));
 
-            Children.Add(new WallPage(
-                new Label
-                {
-                    Text =
-                        Device.OnPlatform(string.Empty, AppResources.AppHomeChildNewsFeed,
-                            AppResources.AppHomeChildNewsFeed),
-                    Style = BeginApplication.Styles.StyleNavigationTitle
-                }.Text,
-                Device.OnPlatform("iconwallactive.png", "iconwallactive.png", "iconwallactive.png")));
+            //Children.Add(new WallPage(
+            //    new Label
+            //    {
+            //        Text =
+            //            Device.OnPlatform(string.Empty, AppResources.AppHomeChildNewsFeed,
+            //                AppResources.AppHomeChildNewsFeed),
+            //        Style = BeginApplication.Styles.StyleNavigationTitle
+            //    }.Text,
+            //    Device.OnPlatform("iconwallactive.png", "iconwallactive.png", "iconwallactive.png")));
 
             Children.Add(_notification);
             Children.Add(_messages);

@@ -39,7 +39,8 @@ namespace BeginMobile.Pages.GroupPages
                         var groupBannerImage = new Image
                                    {
                                        Style = BeginApplication.Styles.SquareImageStyle,
-                                       Source = imageResourceGroup//TODO:change for group avatar if this exist
+                                       Source = imageResourceGroup,
+                                       //TODO:change for group avatar if this exist
                                    };
 
             var gridMain = new Grid

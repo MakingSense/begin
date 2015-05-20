@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.ContactPages;
 using BeginMobile.Pages.GroupPages;
@@ -36,6 +37,10 @@ namespace BeginMobile.Pages.Profile
         private readonly ViewExposure _viewExposure = new ViewExposure();
         private readonly ILoggingService _log = Logger.Current;
         private ImageSource _imageSourceGroupByDefault;
+        private const int RankingQuantity = 5;
+        private const int RankingGridRow = 0;
+        private readonly Write _newPublication;
+        private string _buttonSelected = "";
 
         public ProfileMe(LoginUser currenLoginUser)
         {
@@ -52,11 +57,14 @@ namespace BeginMobile.Pages.Profile
             _shops = new Shop();
             _myEvents = new Events();
             _tabViewExposure = new TabViewExposure();
+            _newPublication = new Write(currenLoginUser);
+
             InitProfileDetails(currenLoginUser.User);
         }
 
         private void InitProfileDetails(User user)
         {
+            Style = BeginApplication.Styles.PageStyle;
             InitProfileControlButtons();
             var userAvatar = BeginApplication.Styles.DefaultProfileUserIconName;
             var circleProfileImage = new CircleImage
@@ -66,15 +74,6 @@ namespace BeginMobile.Pages.Profile
                                          Style = BeginApplication.Styles.CircleImageForDetails,
                                          Source = userAvatar
                                      };
-
-            var labelTitle = new Label
-                             {
-                                 Text = AppResources.LabelTitleProfile,
-                                 FontSize = 20,
-                                 FontAttributes = FontAttributes.Bold,
-                                 HorizontalOptions = LayoutOptions.Center,
-                                 Style = BeginApplication.Styles.TitleStyle
-                             };
 
             var labelName = new Label
                             {
@@ -98,15 +97,30 @@ namespace BeginMobile.Pages.Profile
                                      HorizontalOptions = LayoutOptions.Center,
                                      Style = BeginApplication.Styles.TextBodyStyle
                                  };
-            var labelRating = new Label
-                              {
-                                  Text = "*****",
-                                  HorizontalOptions = LayoutOptions.Center,
-                                  Style = BeginApplication.Styles.TitleStyle
-                              };
+
+            var gridRakingImage = new Grid
+                                  {
+                                      HorizontalOptions = LayoutOptions.Center,
+                                      VerticalOptions = LayoutOptions.Center,
+                                      RowDefinitions = new RowDefinitionCollection
+                                                       {
+                                                           new RowDefinition {Height = GridLength.Auto}
+                                                       }
+                                  };
+            for (var indexer = 1; indexer <= RankingQuantity; indexer++)
+            {
+                var image = new Image
+                            {
+                                Source = ImageSource.FromFile(BeginApplication.Styles.RankingIcon),
+                                WidthRequest = 30,
+                                HeightRequest = 30
+                            };
+                gridRakingImage.Children.Add(image, indexer, RankingGridRow);
+            }
 
             _commonGridDetailLayout = new Grid
-                                      {                                          
+                                      {            
+                                          BackgroundColor = Color.Transparent,
                                           HorizontalOptions = LayoutOptions.Center,
                                           VerticalOptions = LayoutOptions.Center,
                                           RowDefinitions =
@@ -122,30 +136,86 @@ namespace BeginMobile.Pages.Profile
                                               new ColumnDefinition {Width = GridLength.Auto}
                                           }
                                       };
-            _commonGridDetailLayout.Children.Add(circleProfileImage, 0, 0);
-            _commonGridDetailLayout.Children.Add(labelName, 0, 1);
-            _commonGridDetailLayout.Children.Add(labelJob, 0, 2);
-            _commonGridDetailLayout.Children.Add(labelDirection, 0, 3);
-            _commonGridDetailLayout.Children.Add(labelRating, 0, 4);
+            _commonGridDetailLayout.Children.Add(circleProfileImage, 0, 1);
+            _commonGridDetailLayout.Children.Add(labelName, 0, 2);
+            _commonGridDetailLayout.Children.Add(labelJob, 0, 3);
+            _commonGridDetailLayout.Children.Add(labelDirection, 0, 4);
+            _commonGridDetailLayout.Children.Add(gridRakingImage, 0, 5);
             _commonMainScrollView = new ScrollView();
-            _commonMainGrid = new Grid();
-            _commonGridResults = new Grid();
-            Init();
-            _commonMainGrid.Children.Add(_commonGridDetailLayout, 0, 0);
-            _commonMainGrid.Children.Add(_commonGridMenuButtons, 0, 1);
-            _commonMainGrid.Children.Add(_commonGridResults, 0, 2);
+            _commonMainGrid = new Grid
+                              {
+                                  HorizontalOptions = LayoutOptions.FillAndExpand,
+                                  VerticalOptions = LayoutOptions.Start,
+                                  RowSpacing = 0,
+                                  ColumnSpacing = 0,
+                                  RowDefinitions =
+                                     {
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto},
+                                         new RowDefinition {Height = GridLength.Auto}
+                                     }
+                              };
+
+            var imageBanner = new Image
+                       {
+                          Source = ImageSource.FromFile(BeginApplication.Styles.DefaultProfileMeBannerImage),
+                          Aspect = Aspect.Fill,
+                          HorizontalOptions = LayoutOptions.FillAndExpand,
+                          VerticalOptions = LayoutOptions.FillAndExpand,
+                       };
+            _commonGridResults = new Grid
+                                 {
+                                     HorizontalOptions = LayoutOptions.FillAndExpand,
+                                     VerticalOptions = LayoutOptions.Start,
+                                     RowDefinitions =
+                                     {
+                                         new RowDefinition {Height = GridLength.Auto}
+                                     }
+                                 };                             
+            var boxBlacknew = new BoxView
+                              {
+                                  BackgroundColor = Color.FromHex("000000"),
+                                  HorizontalOptions = LayoutOptions.FillAndExpand,
+                                  VerticalOptions = LayoutOptions.Start,
+                                  HeightRequest = 50,
+                              };
+            
+            _commonMainGrid.Children.Add(_newPublication.Container, 0, 0);
+            _commonMainGrid.Children.Add(imageBanner, 0, 1);
+            _commonMainGrid.Children.Add(_commonGridDetailLayout, 0, 1);
+            _commonMainGrid.Children.Add(boxBlacknew, 0, 2);
+            _commonMainGrid.Children.Add(_commonGridMenuButtons, 0, 3);
+            _commonMainGrid.Children.Add(_commonGridResults, 0, 4);
 
             _commonMainScrollView.Content = _commonMainGrid;
+            ToolbarItems.Add(new ToolbarItem("Publication", BeginApplication.Styles.WriteIcon, async () =>
+                                                                                                     {
+                                                                                                         _newPublication
+                                                                                                             .Container
+                                                                                                             .IsVisible
+                                                                                                             = true;
+                                                                                                     }));
+            //_commonMainScrollView.Focused += ;
+
+            _commonMainScrollView.Scrolled += ScrollViewScrolled;
 
             Content = _commonMainScrollView;
+            Init();
         }
 
+
+
+
+        public Grid GridResults { get { return _commonGridResults; } set { _commonGridResults = value; } }
         public async void Init()
         {
             try
             {
-                if (_activity.Content != null)
-                    _commonGridResults.Children.Add(_activity.Content, 0, 0);
+                var activity = new MyActivity();
+                if (activity.Content != null)
+                    _commonGridResults.Children.Add(activity.Content, 0, 0);
             }
             catch (Exception e)
             {
@@ -157,25 +227,26 @@ namespace BeginMobile.Pages.Profile
         /**
          * Initialize the control buttons that simulate the tabbed options
          **/
-
         private void InitProfileControlButtons()
         {
             _buttonActivities = new Button
                                 {
                                     Text = TabsNames.Tab1Activity,
                                     Style = BeginApplication.Styles.LinkButton,
-                                    TextColor = BeginApplication.Styles.TabSelectedTextColor
+                                    TextColor = BeginApplication.Styles.TabSelectedTextColor,
+                                    FontSize = BeginApplication.Styles.TextFontSizeLarge,
                                 };
             _buttonInformation = new Button
                                  {
                                      Text = TabsNames.Tab2Information,
-                                     Style = BeginApplication.Styles.LinkButton
+                                     Style = BeginApplication.Styles.LinkButton,
+                                     FontSize = BeginApplication.Styles.TextFontSizeLarge,
                                  };
-            _buttonOthers = new Button {Text = TabsNames.TabMore, Style = BeginApplication.Styles.LinkButton};
+            _buttonOthers = new Button { Text = TabsNames.TabMore, Style = BeginApplication.Styles.LinkButton, FontSize = BeginApplication.Styles.TextFontSizeLarge, };
 
             _commonGridMenuButtons = new Grid
                                      {
-                                         HorizontalOptions = LayoutOptions.Center,
+                                         HorizontalOptions = LayoutOptions.CenterAndExpand,
                                          VerticalOptions = LayoutOptions.Start,
                                          RowDefinitions =
                                          {
@@ -249,10 +320,49 @@ namespace BeginMobile.Pages.Profile
 
         #region buttons control events
 
+
+        private async void ScrollViewScrolled(object sender, ScrolledEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(_buttonSelected))
+            {                
+                    ViewExposureSetProperties();
+                    switch (_buttonSelected)
+                    {
+                        case TabsNames.Tab1Activity:
+                            _viewExposure.SetViewToExpose(TabsNames.Tab1 = TabsNames.Tab1Activity);
+                            await Navigation.PushAsync(_viewExposure);
+                            break;
+                        case TabsNames.Tab2Information:
+                            _viewExposure.SetViewToExpose(TabsNames.Tab2 = TabsNames.Tab2Information);
+                            await Navigation.PushAsync(_viewExposure);
+                            break;
+                    }                                                                                      
+            }
+        }
+        //private async void ScrollViewFocused(object sender, FocusEventArgs e)
+        //{
+        //    if (string.IsNullOrEmpty(_buttonSelected))
+        //    {
+        //        ViewExposureSetProperties();
+        //        switch (_buttonSelected)
+        //        {
+        //            case TabsNames.Tab1Activity:
+        //                _viewExposure.SetViewToExpose(TabsNames.Tab1 = TabsNames.Tab1Activity);
+        //                await Navigation.PushAsync(_viewExposure);
+        //                break;
+        //            case TabsNames.Tab2Information:
+        //                _viewExposure.SetViewToExpose(TabsNames.Tab2 = TabsNames.Tab2Information);
+        //                await Navigation.PushAsync(_viewExposure);
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //}
+
         private void ViewExposureSetProperties()
         {
             if (_activity == null || _information == null) return;
-            ClearListViewAndHideDetailsGrid();
             _viewExposure.PageOne = _activity;
             _viewExposure.PageTwo = _information;
             _viewExposure.TabOneName = TabsNames.Tab1Activity;
@@ -263,20 +373,43 @@ namespace BeginMobile.Pages.Profile
         private async void ButtonActivityEventHandler(object sender, EventArgs e)
         {
             if (_activity == null) return;
-            ViewExposureSetProperties();
+            var thisButton = sender as Button;
+            if (thisButton != null) thisButton.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            _boxViewButtonSelectedInfo.IsVisible = false;
+            _boxViewButtonSelectedActivities.IsVisible = true;
+            _boxViewButtonSelectedOthers.IsVisible = false;
+            _buttonInformation.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
+
+            _buttonSelected = TabsNames.Tab1Activity;
+            ClearListViewAndHideDetailsGrid();
             _commonGridResults.Children.Add(_activity.Content, 0, 0);
-            _viewExposure.SetViewToExpose(TabsNames.Tab1 = TabsNames.Tab1Activity);
-            await Navigation.PushAsync(_viewExposure);
+            //ViewExposureSetProperties();            
+            //_viewExposure.SetViewToExpose(TabsNames.Tab1 = TabsNames.Tab1Activity);
+            //await Navigation.PushAsync(_viewExposure);
         }
 
         private async void ButtonInformationEventHandler(object sender, EventArgs e)
         {
             try
             {
-                if (_information != null) _commonGridResults.Children.Add(_information.Content, 0, 0);
-                ViewExposureSetProperties();
-                _viewExposure.SetViewToExpose(TabsNames.Tab2 = TabsNames.Tab2Information);
-                await Navigation.PushAsync(_viewExposure);
+                if (_information == null) return;
+
+                var thisButton = sender as Button;
+                if (thisButton != null) thisButton.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+                _boxViewButtonSelectedInfo.IsVisible = true;
+                _boxViewButtonSelectedActivities.IsVisible = false;
+                _boxViewButtonSelectedOthers.IsVisible = false;
+                _buttonActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
+                _buttonOthers.TextColor = BeginApplication.Styles.DefaultColorButton;
+
+                _buttonSelected = TabsNames.Tab2Information;
+                ClearListViewAndHideDetailsGrid();
+
+                _commonGridResults.Children.Add(_information.Content, 0, 0);
+                //ViewExposureSetProperties();
+                //_viewExposure.SetViewToExpose(TabsNames.Tab2 = TabsNames.Tab2Information);
+                //await Navigation.PushAsync(_viewExposure);
             }
             catch (Exception ex)
             {
@@ -309,7 +442,7 @@ namespace BeginMobile.Pages.Profile
                     _tabViewExposure.TabTwoName = TabsNames.Tab2Contacts;
                     _tabViewExposure.ToolbarItemTabOne = _allContacts.ToolbarItem;
                     _tabViewExposure.ToolbarItemTabTwo = _requestContacts.ToolbarItem;
-                    _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Contacts);                    
+                    _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Contacts);
                     await Navigation.PushAsync(_tabViewExposure);
                     break;
                 case MoreOptionsNames.Groups:
@@ -347,6 +480,47 @@ namespace BeginMobile.Pages.Profile
         #endregion
     }
 
+    public class Write
+    {
+        public Write(LoginUser loginUser)
+        {
+            ButtonCloseSearch = new Button
+                                {
+                                    Text = "X",
+                                    HeightRequest = 40,
+                                    WidthRequest = 40,
+                                    HorizontalOptions = LayoutOptions.End
+                                };
+            ButtonCloseSearch.Clicked += CloseSearchEventHandler;
+            Editor = new Editor
+                     {
+                         BackgroundColor = BeginApplication.Styles.ColorWhiteBackground,
+                         HorizontalOptions = LayoutOptions.FillAndExpand,
+                         HeightRequest = 100
+                     };
+            Container = new StackLayout
+                        {
+                            HorizontalOptions = LayoutOptions.FillAndExpand,
+                            Orientation = StackOrientation.Vertical,
+                            Padding = new Thickness(20, 10, 20, 10),
+                            BackgroundColor = BeginApplication.Styles.ApplicationGreenColor,
+                            IsVisible = false
+                        };
+            Container.Children.Add(ButtonCloseSearch);
+            Container.Children.Add(Editor);
+        }
+
+        public Button ButtonCloseSearch { get; set; }
+        public Editor Editor { get; set; }
+        public StackLayout Container { get; set; }
+
+        private void CloseSearchEventHandler(object sender, EventArgs e)
+        {
+            var button = sender as Button;
+            if (button == null) return;
+            Container.IsVisible = false;
+        }
+    }
 
     public static class MoreOptionsNames
     {

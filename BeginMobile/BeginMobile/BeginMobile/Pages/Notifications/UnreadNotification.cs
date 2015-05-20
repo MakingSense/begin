@@ -34,7 +34,7 @@ namespace BeginMobile.Pages.Notifications
         private bool _isUnread = true;
         private const string DefaultLimit = "10";
         private const string DefaultStatus = "unread";
-        public string MasterTitle { get; set; }
+        //public string MasterTitle { get; set; }
         private Grid _gridMainComponents;
 
         public UnreadNotification()
@@ -58,14 +58,14 @@ namespace BeginMobile.Pages.Notifications
             Init();
         }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            var title = MasterTitle;
+        //protected override void OnAppearing()
+        //{
+        //    base.OnAppearing();
+        //    var title = MasterTitle;
 
-            MessagingCenter.Send(this, "masterTitle", title);
-            MessagingCenter.Unsubscribe<UnreadNotification, string>(this, "masterTitle");
-        }
+        //    MessagingCenter.Send(this, "masterTitle", title);
+        //    MessagingCenter.Unsubscribe<UnreadNotification, string>(this, "masterTitle");
+        //}
 
         #region Events
 

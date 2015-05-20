@@ -41,7 +41,6 @@ namespace BeginMobile.Pages.ContactPages
                                                                         {"alpha", "Alphabetical"},
                                                                         {string.Empty, "None"}
                                                                     };
-
         private Picker _sortPicker;
 
 		public string MasterTitle{ get; set; }

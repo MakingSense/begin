@@ -653,6 +653,22 @@ namespace BeginMobile.Utils
                 return style;
             }
         }
+        public Color ApplicationGreenColor
+        {
+            get
+            {
+                return Device.OnPlatform
+                    (Color.FromHex("43BB88"), Color.FromHex("43BB88"), Color.FromHex("43BB88"));
+            }
+        }
+        public Color ApplicationPageColor
+        {
+            get
+            {
+                return Device.OnPlatform
+                    (Color.FromHex("E6E6E6"), Color.FromHex("E6E6E6"), Color.FromHex("E6E6E6"));
+            }
+        }
         public Thickness LayoutInternalThickness
         {
             get
@@ -930,15 +946,14 @@ namespace BeginMobile.Utils
                     Setters =
                                 {
                                     new Setter {Property = Image.AspectProperty, Value = Aspect.Fill},
-                                    new Setter {Property = View.HorizontalOptionsProperty, Value = LayoutOptions.StartAndExpand},
-                                    new Setter {Property = View.VerticalOptionsProperty, Value = LayoutOptions.StartAndExpand},                                    
+                                    new Setter {Property = View.HorizontalOptionsProperty, Value = LayoutOptions.FillAndExpand},
+                                    new Setter {Property = View.VerticalOptionsProperty, Value = LayoutOptions.FillAndExpand},                                    
                                     new Setter
                                     {
                                         Property = VisualElement.HeightRequestProperty,
                                         Value = Device.Idiom == TargetIdiom.Phone
                                                 ? Device.OnPlatform(200, 200, 200)
-                                                : Device.OnPlatform(300, 300, 300)
-                                            
+                                                : Device.OnPlatform(300, 300, 300)                                            
                                     },
                                     new Setter
                                     {
@@ -954,7 +969,11 @@ namespace BeginMobile.Utils
                 return style;
             }
         }
-        
+
+        public string DefaultProfileMeBannerImage
+        {
+            get { return "Icon.png"; }
+        }
         public string DefaultProfileUserIconName
         {
             get { return "userprofile.png"; }
@@ -1075,8 +1094,36 @@ namespace BeginMobile.Utils
         {
             get { return "complete_job.png"; }
         }
-
-        public string CompleteBlackCircle
+        //General Iconsratingon
+        public string RankingIcon
+        {
+            get { return "ratingoff.png"; }
+        }
+        public string WriteIcon
+        {
+            get { return "write.png"; }
+        }
+        public string SearchIcon
+        {
+            get { return "search.png"; }
+        }
+        public string ContactAddIcon
+        {
+            get { return "contact_add.png"; }
+        }
+        public string ContactAddedIcon
+        {
+            get { return "contact_added.png"; }
+        }
+        public string ContactOfflineIcon
+        {
+            get { return "offline.png"; }
+        }
+        public string ContactOnlineIcon
+        {
+            get { return "online.png"; }
+        }
+	    public string CompleteBlackCircle
         {
             get { return "blackcircle.jpg"; }
         }
@@ -1085,7 +1132,6 @@ namespace BeginMobile.Utils
         {
             get { return "greencircle.jpg"; }
         }
-
         #endregion
     }
 }
