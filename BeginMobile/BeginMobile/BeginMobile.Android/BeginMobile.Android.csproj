@@ -229,6 +229,14 @@
     <AndroidResource Include="Resources\Drawable\write.png" />
     <AndroidResource Include="Resources\Drawable\greencircle.jpg" />
     <AndroidResource Include="Resources\Drawable\blackcircle.jpg" />
+    <AndroidResource Include="Resources\Drawable\actionbar_tab_indicator.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Drawable\colors.xml" />
+    <AndroidResource Include="Resources\Drawable\tab_bar_background_selected_pressed.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Drawable\tab_bar_background_selected.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">
