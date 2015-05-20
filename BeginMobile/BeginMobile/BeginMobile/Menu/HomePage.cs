@@ -25,7 +25,9 @@ namespace BeginMobile.Menu
 
             Icon = Device.OS != TargetPlatform.iOS ? null : new FileImageSource {File = "Icon-57.png"};
             Master = new Menu(OnToggleRequest);
-            Detail = new AppHome(); 
+            Detail = new AppHome();
+
+            MasterBehavior = Xamarin.Forms.MasterBehavior.Popover;
 
 			MessageSubscribes ();
         }

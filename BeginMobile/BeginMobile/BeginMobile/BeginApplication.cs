@@ -2,6 +2,8 @@
 using BeginMobile.Interfaces;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Menu;
+using BeginMobile.MenuProfile;
+using BeginMobile.Pages;
 using BeginMobile.Services;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
@@ -56,7 +58,8 @@ namespace BeginMobile
 
         public async void ShowMainPage(LoginUser loginUser)
         {
-            MainPage = new NavigationPage(new HomePage(loginUser));
+            //MainPage = new NavigationPage(new HomePage(loginUser));
+            MainPage = new NavigationPage(new AppHome());
         }
 
         public void ShowUploaderPage()

@@ -212,7 +212,7 @@ namespace BeginMobile.UploadPages
             };
             _buttonSelectFromFolder.Clicked += async (s, e) =>
             {
-                var photoPageFolder = new PhotoPage(this, false);
+                var photoPageFolder = new PhotoPage(this);
                 await Navigation.PushAsync(photoPageFolder);
             };
 

@@ -19,24 +19,60 @@ namespace BeginMobile.Android.Renderers
 {
     public class CustomTabbedRenderer: TabbedRenderer
     {
+
+
         private Activity _activity;
 
         private const string LimitCounter = "9+";
         private const string SpaceCounter = " ";
 
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        /// <summary>
+        /// Used for registration with dependency service
+        /// </summary>
+        public static void Init() { }
+
+        protected override void DispatchDraw(global::Android.Graphics.Canvas canvas)
         {
-            base.OnElementPropertyChanged(sender, e);
+            base.DispatchDraw(canvas);
             _activity = this.Context as Activity;
+
+            var element = this.Element;
+            if (element == null)
+            {
+                return;
+            }
 
             if (_activity != null)
             {
                 var actionBar = _activity.ActionBar;
                 var appHome = (AppHome)this.Element;
 
-                SetUpTabSelected(actionBar, appHome);
+                SetUpTabs(actionBar, appHome);
             }
         }
+
+        public override void Draw(global::Android.Graphics.Canvas canvas)
+        {
+            base.Draw(canvas);
+            var appHome = (AppHome)this.Element;
+            ActionBar actionBar = _activity.ActionBar;
+
+            SetUpTabs(actionBar, appHome);
+        }
+
+        //protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    base.OnElementPropertyChanged(sender, e);
+        //    _activity = this.Context as Activity;
+
+        //    if (_activity != null)
+        //    {
+        //        var actionBar = _activity.ActionBar;
+        //        var appHome = (AppHome)this.Element;
+
+        //        SetUpTabs(actionBar, appHome);
+        //    }
+        //}
 
         protected override void OnDraw(global::Android.Graphics.Canvas canvas)
         {
@@ -71,7 +107,7 @@ namespace BeginMobile.Android.Renderers
 
                     if (TabIsEmpty(tabOne))
                     {
-                        var childTab = (TabContent)appHome.Children[count];
+                        var childTab = (TabContent) appHome.Children[count];
 
                         tabOne.SetCustomView(Resource.Layout.BarTabLayout);
 
@@ -83,18 +119,18 @@ namespace BeginMobile.Android.Renderers
 
                         var typeChild = childTab.GetType();
 
-                        if (typeChild == typeof(WallPage))
+                        if (typeChild == typeof (WallPage))
                         {
-                            var tabMessage = (WallPage)childTab;
+                            var tabMessage = (WallPage) childTab;
                             tabIcontAux.SetImageResource(numTabSelected == count
                                 ? Resource.Drawable.iconwallactive
                                 : Resource.Drawable.iconwallinactive);
 
                             tabBadge.Visibility = ViewStates.Invisible;
                         }
-                        else if (typeChild == typeof(MessageListPage))
+                        else if (typeChild == typeof (MessageListPage))
                         {
-                            var tabMessage = (MessageListPage)childTab;
+                            var tabMessage = (MessageListPage) childTab;
                             tabIcontAux.SetImageResource(numTabSelected == count
                                 ? Resource.Drawable.iconmessagesactive
                                 : Resource.Drawable.iconmessagesinactive);
@@ -105,8 +141,9 @@ namespace BeginMobile.Android.Renderers
                             {
                                 if (counter > 0)
                                 {
-                                    tabBadge.Text = counter >= 9 ?
-                                        LimitCounter : SpaceCounter + tabMessage.LabelCounter.Text + SpaceCounter;
+                                    tabBadge.Text = counter >= 9
+                                        ? LimitCounter
+                                        : SpaceCounter + tabMessage.LabelCounter.Text + SpaceCounter;
 
                                     //tabTextAux.Gravity = GravityFlags.Bottom | GravityFlags.Left;
                                 }
@@ -120,9 +157,9 @@ namespace BeginMobile.Android.Renderers
                                 tabBadge.Visibility = ViewStates.Invisible;
                             }
                         }
-                        else if (typeChild == typeof(Pages.Notifications.Notification))
+                        else if (typeChild == typeof (Pages.Notifications.Notification))
                         {
-                            var tabNotification = (Pages.Notifications.Notification)childTab;
+                            var tabNotification = (Pages.Notifications.Notification) childTab;
                             tabIcontAux.SetImageResource(numTabSelected == count
                                 ? Resource.Drawable.iconnotificationsactive
                                 : Resource.Drawable.iconnotificationsinactive);
@@ -149,17 +186,17 @@ namespace BeginMobile.Android.Renderers
                                 tabBadge.Visibility = ViewStates.Invisible;
                             }
                         }
-                        else if (typeChild == typeof(ContactPage))
+                        else if (typeChild == typeof (ContactPage))
                         {
-                            var tabMessage = (ContactPage)childTab;
+                            var tabMessage = (ContactPage) childTab;
                             tabIcontAux.SetImageResource(numTabSelected == count
                                 ? Resource.Drawable.iconcontactsactive
                                 : Resource.Drawable.iconcontactsinactive);
                             tabBadge.Visibility = ViewStates.Invisible;
                         }
-                        else if (typeChild == typeof(OptionsPage))
+                        else if (typeChild == typeof (OptionsPage))
                         {
-                            var tabMessage = (OptionsPage)childTab;
+                            var tabMessage = (OptionsPage) childTab;
                             tabIcontAux.SetImageResource(numTabSelected == count
                                 ? Resource.Drawable.iconmenuactive
                                 : Resource.Drawable.iconmenuinactive);
@@ -167,6 +204,11 @@ namespace BeginMobile.Android.Renderers
                         }
 
                     }
+                    else
+                    {
+                        SetUpTabSelected(actionBar, appHome);
+                    }
+
                     count++;
                 }
             }

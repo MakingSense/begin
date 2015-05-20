@@ -20,8 +20,10 @@ namespace BeginMobile.Android
             base.OnCreate(bundle);
 
             SetIoC();
+
             Xamarin.Forms.Forms.Init(this, bundle);
             ImageCircleRenderer.Init();
+            CustomTabbedRenderer.Init();
 
             LoadApplication(new BeginApplication());
         }

@@ -23,6 +23,7 @@ namespace BeginMobile.Menu
 
             Title = AppResources.LabelMenuTitle;
             Icon = Device.OS == TargetPlatform.iOS ? "More.png" : null;
+            NavigationPage.SetHasNavigationBar(this, false);
 
             var userAvatar = BeginApplication.Styles.DefaultProfileUserIconName;
             if (currentUser != null)
@@ -45,7 +46,7 @@ namespace BeginMobile.Menu
                                        OptionDetail = currentUser.User.Email
                                    }
                                };
-            var dataTemplateListViewMenuIcon = new DataTemplate(typeof (MenuIconDataTemplate));
+            var dataTemplateListViewMenuIcon = new DataTemplate(typeof(MenuIconDataTemplate));
             var listViewMenuIcon = new ListView
                                    {
                                        VerticalOptions = LayoutOptions.Start,
@@ -57,7 +58,7 @@ namespace BeginMobile.Menu
                                    };
 
 
-            var dataTemplateMenuOptions = new DataTemplate(typeof (MenuDataTemplate));
+            var dataTemplateMenuOptions = new DataTemplate(typeof(MenuDataTemplate));
 
             var listOptionsData = new List<MenuItemViewModel>
                                   {
@@ -147,7 +148,7 @@ namespace BeginMobile.Menu
                                                               return;
                                                           }
                                                           var selectedItemOptionName =
-                                                              ((MenuItemViewModel) eventArgs.SelectedItem).OptionName;
+                                                              ((MenuItemViewModel)eventArgs.SelectedItem).OptionName;
                                                           var profileMe = new ProfileMe(currentUser);
                                                           var contentPageKnocks = new ContentPage
                                                                                   {
@@ -196,7 +197,7 @@ namespace BeginMobile.Menu
                                                                   _onToggleRequest();
                                                                   break;
                                                           }
-                                                          ((ListView) sender).SelectedItem = null;
+                                                          ((ListView)sender).SelectedItem = null;
                                                           _onToggleRequest();
                                                       };
             listViewMenuOptions.HasUnevenRows = true;
@@ -225,7 +226,7 @@ namespace BeginMobile.Menu
             Content = mainStackLayout;
         }
     }
-
+    /*
     public class MenuDataTemplate : ViewCell
     {
         public MenuDataTemplate()
@@ -352,5 +353,5 @@ namespace BeginMobile.Menu
 		public const string AppHomeServices = "Services";
 		public const string AppHomeShops = "Shops";
 
-    }
+    }*/
 }
