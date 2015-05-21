@@ -19,14 +19,18 @@
     </style>
     
     <style name="ActionBarTabBar" parent="@android:style/Widget.Holo.ActionBar.TabBar">
-      <item name="android:paddingLeft">5dp</item>
-      <item name="android:paddingRight">5dp</item>
+      <item name="android:paddingLeft">0dp</item>
+      <item name="android:paddingRight">0dp</item>
+      <item name="android:dividerPadding">0dp</item>
       <item name="android:background">#ffffff</item>
       <item name="android:showDividers">none</item>
     </style>
     
     <style name="ActionBarTab" parent="@android:style/Widget.Holo.ActionBar.TabView">
         <item name="android:gravity">center</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:measureWithLargestChild">true</item>
         <!--<item name="android:background">@drawable/actionbar_tab_indicator</item>-->
         <!--<item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">5dp</item>
