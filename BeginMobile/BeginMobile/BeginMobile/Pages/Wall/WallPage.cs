@@ -38,15 +38,18 @@ namespace BeginMobile.Pages.Wall
 
         private ImageSource _imageSourceWallByDefault;
 
-		private string MasterTitle{ get; set; }
+        private string MasterTitle{ get; set; }
 
         public WallPage(string title, string iconImage)
             : base(title, iconImage)
         {
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
-			MasterTitle = AppResources.AppHomeChildNewsFeed;
+            //MasterTitle = AppResources.AppHomeChildNewsFeed;
 
-            LoadDeafultImage();
+            Title = AppResources.AppHomeChildNewsFeed;
+
+            this._imageSourceWallByDefault = BeginApplication.Styles.DefaultWallIcon;
+            //LoadDeafultImage();
 
             _areLastItems = false;
 
@@ -423,14 +426,14 @@ namespace BeginMobile.Pages.Wall
             return beginWall;
         }
 
-		protected override void OnAppearing ()
-		{
-			base.OnAppearing ();
-			var title = MasterTitle;
+        //protected override void OnAppearing ()
+        //{
+        //    base.OnAppearing ();
+        //    var title = MasterTitle;
 
-			MessagingCenter.Send (this, "masterTitle", title);
-			MessagingCenter.Unsubscribe<WallPage, string>(this, "masterTitle");
-		}
+        //    MessagingCenter.Send (this, "masterTitle", title);
+        //    MessagingCenter.Unsubscribe<WallPage, string>(this, "masterTitle");
+        //}
     }
 
 
