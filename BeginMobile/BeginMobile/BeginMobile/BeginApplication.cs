@@ -59,7 +59,7 @@ namespace BeginMobile
         public async void ShowMainPage(LoginUser loginUser)
         {
             //MainPage = new NavigationPage(new HomePage(loginUser));
-            MainPage = new NavigationPage(new AppHome());
+            MainPage = new NavigationHomePage(new AppHome());
         }
 
         public void ShowUploaderPage()

@@ -349,29 +349,32 @@ namespace BeginMobile.Android
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f080001
+			public const int IconTextLayout = 2131230721;
+			
 			// aapt resource value: 0x7f080000
-			public const int IconTextLayout = 2131230720;
+			public const int action_bar_title = 2131230720;
 			
-			// aapt resource value: 0x7f080007
-			public const int calendar_grid = 2131230727;
-			
-			// aapt resource value: 0x7f080004
-			public const int calendar_view = 2131230724;
-			
-			// aapt resource value: 0x7f080006
-			public const int left_arrow = 2131230726;
+			// aapt resource value: 0x7f080008
+			public const int calendar_grid = 2131230728;
 			
 			// aapt resource value: 0x7f080005
-			public const int right_arrow = 2131230725;
+			public const int calendar_view = 2131230725;
 			
-			// aapt resource value: 0x7f080002
-			public const int tab_badge = 2131230722;
+			// aapt resource value: 0x7f080007
+			public const int left_arrow = 2131230727;
 			
-			// aapt resource value: 0x7f080001
-			public const int tab_icon = 2131230721;
+			// aapt resource value: 0x7f080006
+			public const int right_arrow = 2131230726;
 			
 			// aapt resource value: 0x7f080003
-			public const int title = 2131230723;
+			public const int tab_badge = 2131230723;
+			
+			// aapt resource value: 0x7f080002
+			public const int tab_icon = 2131230722;
+			
+			// aapt resource value: 0x7f080004
+			public const int title = 2131230724;
 			
 			static Id()
 			{
@@ -387,22 +390,25 @@ namespace BeginMobile.Android
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int BarTabLayout = 2130903040;
+			public const int ActionBar = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int calendar_pager_layout = 2130903041;
+			public const int BarTabLayout = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int calendar_picker = 2130903042;
+			public const int calendar_pager_layout = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int dialog = 2130903043;
+			public const int calendar_picker = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int month = 2130903044;
+			public const int dialog = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int week = 2130903045;
+			public const int month = 2130903045;
+			
+			// aapt resource value: 0x7f030006
+			public const int week = 2130903046;
 			
 			static Layout()
 			{

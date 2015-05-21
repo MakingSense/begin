@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Menu\DetailPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Menu\HomePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Menu\Menu.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Menu\NavigationHomePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Menu\OptionsPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AboutUs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\ContactPages\ContactListItem.cs" />

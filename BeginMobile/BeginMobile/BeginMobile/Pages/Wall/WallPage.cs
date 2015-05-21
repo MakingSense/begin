@@ -68,8 +68,26 @@ namespace BeginMobile.Pages.Wall
             _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator(ref _activityIndicatorLoading);
 
             _gridMain.Children.Add(_stackLayoutLoadingIndicator, 0, 1);
+
+            //Section Toolbar items
+            var toolBarEditPublicWall = new ToolbarItem()
+            {
+                Order = ToolbarItemOrder.Primary,
+                Name = "Public Wall",
+                Icon = BeginApplication.Styles.WriteIcon,
+                Command = new Command(async () => ExecuteEditPublicWallCommand())
+            };
+
+            ToolbarItems.Add(toolBarEditPublicWall);
+            //End Toolbar items
+
             Content = _gridMain;
             Init();
+        }
+
+        protected async Task ExecuteEditPublicWallCommand()
+        {
+            await DisplayAlert("Public Wall", "Edit wall", "Ok");
         }
 
         private ObservableCollection<BeginWallViewModel> ListBeginWallViewModel(List<BeginMobile.Services.DTO.Wall> oldListWall)
@@ -101,8 +119,7 @@ namespace BeginMobile.Pages.Wall
 
             _profileShop = await BeginApplication.ProfileServices.GetWall(_currentUser.AuthToken, limit: _limit.ToString(), offset: _offset.ToString());
             _listWall = ListBeginWallViewModel(_profileShop.ListOfWall);
-
-            
+            //_listWall = HDListGetWall();
 
             _listViewWall = new ListView
             {
@@ -224,6 +241,42 @@ namespace BeginMobile.Pages.Wall
             #endif
         }
 
+
+        private ObservableCollection<BeginWallViewModel> HDListGetWall()
+        {
+            var result = new List<BeginWallViewModel>();
+
+            string[] components =
+            {
+                WallParameters.Groups,
+                WallParameters.Activity,
+                WallParameters.Event,
+                WallParameters.Profile
+            };
+
+            var random = new Random();
+
+            for (var i = 0; i < 20; i++)
+            {
+                var beginWall = new BeginWallViewModel()
+                {
+                    ItemId = i.ToString(),
+                    Component = components[random.Next(0, 4)],
+                    Type = "Type " + i,
+                    PublicDate = "10/10/15 18:" + i,
+                    DisplayName = "User " + i,
+                    Title = "My title " + i,
+                    Description = "Description " + i,
+                    Reason = "Reason " + i,
+                    Date = "10/11/15 18:" + i,
+                };
+
+                result.Add(beginWall);
+            }
+
+            return new ObservableCollection<BeginWallViewModel>(result);
+        }
+
         private BeginWallViewModel GetBeginWallViewModel(BeginMobile.Services.DTO.Wall wallItem)
         {
             var beginWall = new BeginWallViewModel()
@@ -233,6 +286,7 @@ namespace BeginMobile.Pages.Wall
                 Type = wallItem.Type,
                 PublicDate = wallItem.Date
             };
+
 
             switch (wallItem.Type)
             {

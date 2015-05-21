@@ -100,6 +100,7 @@ namespace BeginMobile.Android.Renderers
                 var count = 0;
                 var selectedTab = actionBar.SelectedTab;
                 var numTabSelected = selectedTab != null ? selectedTab.Position : 0 ;
+                //actionBar.SetDisplayOptions(ActionBarDisplayOptions.ShowHome, ActionBarDisplayOptions.ShowHome);
 
                 while (count < actionBar.TabCount)
                 {

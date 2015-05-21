@@ -29,6 +29,17 @@ namespace BeginMobile.Pages
             var topPadding = Device.OnPlatform<double>(20, 0, 0);
             Padding = new Thickness(0, topPadding, 0, 0);
 
+            
+
+            Children.Add(new WallPage(
+                new Label
+                {
+                    Text =
+                        Device.OnPlatform(string.Empty, AppResources.AppHomeChildNewsFeed,
+                            AppResources.AppHomeChildNewsFeed),
+                    Style = BeginApplication.Styles.StyleNavigationTitle
+                }.Text,
+                Device.OnPlatform("iconwallactive.png", "iconwallactive.png", "iconwallactive.png")));
 
             _messages = new MessageListPage(new Label
                                             {
@@ -50,15 +61,7 @@ namespace BeginMobile.Pages
                 Device.OnPlatform("iconnotificationsactive.png", "iconnotificationsactive.png",
                     "iconnotificationsactive.png"));
 
-            Children.Add(new WallPage(
-                new Label
-                {
-                    Text =
-                        Device.OnPlatform(string.Empty, AppResources.AppHomeChildNewsFeed,
-                            AppResources.AppHomeChildNewsFeed),
-                    Style = BeginApplication.Styles.StyleNavigationTitle
-                }.Text,
-                Device.OnPlatform("iconwallactive.png", "iconwallactive.png", "iconwallactive.png")));
+
 
             Children.Add(_notification);
             Children.Add(_messages);

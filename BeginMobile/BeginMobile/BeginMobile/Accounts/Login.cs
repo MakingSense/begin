@@ -7,6 +7,7 @@ using BeginMobile.Services.Interfaces;
 using BeginMobile.Services.Logging;
 using BeginMobile.Services.ManagerServices;
 using Xamarin.Forms;
+using BeginMobile.Services.DTO;
 
 namespace BeginMobile.Accounts
 {
@@ -84,6 +85,8 @@ namespace BeginMobile.Accounts
                                                  ActivityIndicatorLoading.IsVisible = true;
                                                  ActivityIndicatorLoading.IsRunning = true;
 
+                                                 //LoginUserMock(iLoginManager);
+
                                                  var loginUserManager = new LoginUserManager();
                                                  var loginUser =
                                                      await loginUserManager.Login(_entryEmail.Text, _entryPassword.Text);
@@ -109,27 +112,13 @@ namespace BeginMobile.Accounts
                                                          iLoginManager.ShowUploaderPage();
                                                      }
                                                  }
-
+                                                 
                                                  ActivityIndicatorLoading.IsVisible = false;
                                                  ActivityIndicatorLoading.IsRunning = false;
                                              }
                                          };
 
             buttonRegister.Clicked += (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "Register");
-
-            //var buttonLog = new Button()
-            //{
-            //    Text = "Log",
-            //    Style = BeginApplication.Styles.DefaultButton
-            //};
-
-            //buttonLog.Clicked += delegate(object sender, EventArgs args)
-            //{
-            //    _log.Info("Clicked Log Info");
-            //    _log.Warning("Clicked Log Warning");
-            //    _log.Error("Clicked Log Error");
-            //    _log.DebugFormat("Clicked Log Debug {0}", "hi");
-            //};
 
             var stackLayoutLoading = CreateStackLayoutWithLoadingIndicator();
             _mainScrollView = new ScrollView();
@@ -152,6 +141,30 @@ namespace BeginMobile.Accounts
             _mainScrollView.Content = componentsLayout;
             Content = _mainScrollView;
             SizeChanged += (sender, e) => SetOrientation(this);
+        }
+
+        private void LoginUserMock(ILoginManager iLoginManagerMock)
+        {
+            var loginUserMock = new LoginUser()
+            {
+                AuthToken = "8d16fcbd56cdafde0fc1ba4e68c4636c",
+                User = new User()
+                {
+                    Avatar = "",
+                    DisplayName = "Yoe",
+                    Description = "Desc",
+                    Email = "yoe@gmail.com",
+                    FirstName = "Yoe",
+                    NameSurname = "Yoe",
+                    NameUsername = "Yoe",
+                    NickName = "Yoe",
+                }
+            };
+
+             Application.Current.Properties["IsLoggedIn"] = true;
+             Application.Current.Properties["LoginUser"] = loginUserMock;
+
+            iLoginManagerMock.ShowMainPage(loginUserMock);
         }
 
         public void SetOrientation(Page page)
