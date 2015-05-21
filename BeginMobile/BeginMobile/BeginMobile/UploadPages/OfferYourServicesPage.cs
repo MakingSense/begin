@@ -200,6 +200,11 @@ namespace BeginMobile.UploadPages
                                            : new Thickness(32, Device.OnPlatform(40, 40, 40), 32, 10)
                                };
 
+            //TODO:chage this code for services api to profession            
+            //save the harcode profession for recovery in the Profile ME this is temporaly
+            BeginApplication.SelectedUserProfession = _labelServicesSubTitle.Text;
+
+
             Content = _mainStackLayout;
 
             //SizeChanged +=(sender,e)=> ChangePadding(this);
@@ -242,6 +247,7 @@ namespace BeginMobile.UploadPages
                     _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
                     _buttonSelectFromList.IsVisible = false;
+                    BeginApplication.SelectedUserProfession = _labelWhatDoYouDo.Text;
                     break;
                 case ImaTeacher:
                     _labelWhatDoYouDo.Text = ImaTeacher;
@@ -249,6 +255,7 @@ namespace BeginMobile.UploadPages
                     _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
                     _buttonSelectFromList.IsVisible = false;
+                    BeginApplication.SelectedUserProfession = _labelWhatDoYouDo.Text;
                     break;
                 case ImaPainter:
                     _labelWhatDoYouDo.Text = ImaPainter;
@@ -256,6 +263,7 @@ namespace BeginMobile.UploadPages
                     _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
                     _buttonSelectFromList.IsVisible = false;
+                    BeginApplication.SelectedUserProfession = _labelWhatDoYouDo.Text;
                     break;
                 case ImaEngineer:
                     _labelWhatDoYouDo.Text = ImaEngineer;
@@ -263,6 +271,7 @@ namespace BeginMobile.UploadPages
                     _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
                     _buttonSelectFromList.IsVisible = false;
+                    BeginApplication.SelectedUserProfession = _labelWhatDoYouDo.Text;
                     break;
                 case ImaStudent:
                     _labelWhatDoYouDo.Text = ImaStudent;
@@ -270,6 +279,7 @@ namespace BeginMobile.UploadPages
                     _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
                     _buttonSelectFromList.IsVisible = false;
+                    BeginApplication.SelectedUserProfession = _labelWhatDoYouDo.Text;
                     break;
                 case Cancel:
                     return;

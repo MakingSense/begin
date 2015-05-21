@@ -1,6 +1,10 @@
-﻿using BeginMobile.LocalizeResources.Resources;
+﻿using System;
+using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.Profile;
 using BeginMobile.Services.DTO;
+using BeginMobile.Services.Interfaces;
+using BeginMobile.Services.Logging;
+using BeginMobile.Services.Utils;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.MessagePages
@@ -9,9 +13,9 @@ namespace BeginMobile.Pages.MessagePages
     {
         public readonly Label LabelCounter;
         private readonly InboxMessage _inbox;
-        private readonly SentMessage _sent;
-        private readonly SendMessage _send;
+        private readonly SentMessage _sent;        
         private readonly TabViewExposure _tabViewExposure;
+        private readonly ILoggingService _log = Logger.Current;
         public string MasterTitle { get; set; }
 
         public MessageListPage(string title, string iconImg)
@@ -22,8 +26,7 @@ namespace BeginMobile.Pages.MessagePages
             LabelCounter = new Label();
             _tabViewExposure = new TabViewExposure();
             _inbox = new InboxMessage();
-            _sent = new SentMessage();
-            _send = new SendMessage();
+            _sent = new SentMessage();            
             Init();
         }
 
@@ -40,15 +43,23 @@ namespace BeginMobile.Pages.MessagePages
 
         public void InitMessages()
         {
-            _tabViewExposure.PageOne = _inbox;
-            _tabViewExposure.PageTwo = _sent;
-            _tabViewExposure.TabOneName = TabsNames.Tab1Messages;
-            _tabViewExposure.TabTwoName = TabsNames.Tab2Messages;
-            _tabViewExposure.ToolbarItemTabOne = _inbox.ToolbarItem;
-            _tabViewExposure.ToolbarItemTabTwo = _sent.ToolbarItem;
-            _tabViewExposure.ToolbarItemTabThree = _send.ToolbarItem;
-            _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Messages);
-            Content = _tabViewExposure.Content;
+            try
+            {
+                _tabViewExposure.PageOne = _inbox;
+                _tabViewExposure.PageTwo = _sent;
+                _tabViewExposure.TabOneName = TabsNames.Tab1Messages;
+                _tabViewExposure.TabTwoName = TabsNames.Tab2Messages;
+                _tabViewExposure.ToolbarItemTabOne = _inbox.ToolbarItem;
+                _tabViewExposure.ToolbarItemTabTwo = _sent.ToolbarItem;
+                _tabViewExposure.ToolbarItemTabThree = _inbox.ToolbarItemSendMessage;   
+                _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Messages);
+                Content = _tabViewExposure.Content;
+            }
+            catch (Exception exception)
+            {
+                _log.Exception(exception);
+                AppContextError.Send(typeof(MessageListPage).Name, "InitMessages", exception, null, ExceptionLevel.Application);
+            }           
         }
         protected override void OnAppearing()
         {

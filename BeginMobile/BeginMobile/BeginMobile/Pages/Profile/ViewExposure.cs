@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using BeginMobile.Pages.ContactPages;
 using BeginMobile.Pages.GroupPages;
 using Xamarin.Forms;
@@ -8,17 +7,15 @@ namespace BeginMobile.Pages.Profile
 {
     public class ViewExposure : ContentPage
     {
-        private Grid _gridResults;
-        private readonly Button _buttonTab1;
-        private readonly Button _buttonTab2;
-        private readonly Button _buttonTab3;
-        private readonly BoxView _boxViewLineSelectedTab1;
-        private readonly BoxView _boxViewLineSeletedTab2;
-        private readonly BoxView _boxViewLineSeletedTab3;
-        private readonly Information _information;
+        private readonly Grid _gridResults;
+        private readonly Label _tabOne;
+        private readonly Label _tabTwo;
+        private readonly Label _tabThree;
+        private readonly BoxView _boxViewSelectedTabOne;
+        private readonly BoxView _boxViewSeletedTabTwop;
+        private readonly BoxView _boxViewSeletedTabThree;
         private readonly ContactPage _allContacts;
         private readonly Contacts _requestContacts;
-        private readonly MyActivity _activity;
         private readonly GroupListPage _allGroups;
         private readonly Groups _myGroups;
         private readonly Shop _shops;
@@ -27,10 +24,8 @@ namespace BeginMobile.Pages.Profile
 
         public ViewExposure()
         {
-            _information = new Information();
             _allContacts = new ContactPage(String.Empty, String.Empty);
             _requestContacts = new Contacts();
-            _activity = new MyActivity();
             _allGroups = new GroupListPage(String.Empty, String.Empty);
             _myGroups = new Groups();
             _shops = new Shop();
@@ -39,38 +34,58 @@ namespace BeginMobile.Pages.Profile
 
             Style = BeginApplication.Styles.PageStyle;
 
-            _buttonTab1 = new Button
-                          {
-                              Text = String.Empty,
-                              Style = BeginApplication.Styles.LinkButton,
-                          };
-            _buttonTab1.Clicked += EventHandlerTab1;
+            var tapGestureRecognizerTabOne = new TapGestureRecognizer
+                                             {
+                                                 NumberOfTapsRequired = 1
+                                             };
+            var tapGestureRecognizerTabTwo = new TapGestureRecognizer
+                                             {
+                                                 NumberOfTapsRequired = 1
+                                             };
+            var tapGestureRecognizerTabThree = new TapGestureRecognizer
+                                               {
+                                                   NumberOfTapsRequired = 1
+                                               };
 
-            _buttonTab2 = new Button
-                          {
-                              Text = String.Empty,
-                              Style = BeginApplication.Styles.LinkButton,
-                          };
-            _buttonTab2.Clicked += EventHandlerTab2;
+            tapGestureRecognizerTabOne.Tapped += EventHandlerTabOne;
+            tapGestureRecognizerTabTwo.Tapped += EventHandlerTabTwo;
+            tapGestureRecognizerTabThree.Tapped += EventHandlerTabThree;
 
-            _buttonTab3 = new Button
-                          {
-                              Text = String.Empty,
-                              Style = BeginApplication.Styles.LinkButton,
-                          };
-            _buttonTab3.Clicked += EventHandlerTab3;
+            _tabOne = new Label
+                      {
+                          Text = string.Empty,
+                          XAlign = TextAlignment.Center,
+                          FontSize = BeginApplication.Styles.TextFontSizeLarge,
+                      };
+            _tabTwo = new Label
+                      {
+                          Text = string.Empty,
+                          XAlign = TextAlignment.Center,
+                          FontSize = BeginApplication.Styles.TextFontSizeLarge,
+                      };
+            _tabThree = new Label
+                        {
+                            Text = string.Empty,
+                            XAlign = TextAlignment.Center,
+                            FontSize = BeginApplication.Styles.TextFontSizeLarge,
+                        };
 
-            _boxViewLineSelectedTab1 = new BoxView
-                                       {
-                                           Style = BeginApplication.Styles.TabUnderLine,
-                                           IsVisible = false
-                                       };
-            _boxViewLineSeletedTab2 = new BoxView
-                                      {
-                                          Style = BeginApplication.Styles.TabUnderLine,
-                                          IsVisible = false
-                                      };
-            _boxViewLineSeletedTab3 = new BoxView
+            _tabOne.GestureRecognizers.Add(tapGestureRecognizerTabOne);
+            _tabTwo.GestureRecognizers.Add(tapGestureRecognizerTabTwo);
+            _tabThree.GestureRecognizers.Add(tapGestureRecognizerTabThree);
+
+
+            _boxViewSelectedTabOne = new BoxView
+                                     {
+                                         Style = BeginApplication.Styles.TabUnderLine,
+                                         IsVisible = false
+                                     };
+            _boxViewSeletedTabTwop = new BoxView
+                                     {
+                                         Style = BeginApplication.Styles.TabUnderLine,
+                                         IsVisible = false
+                                     };
+            _boxViewSeletedTabThree = new BoxView
                                       {
                                           Style = BeginApplication.Styles.TabUnderLine,
                                           IsVisible = false
@@ -95,22 +110,46 @@ namespace BeginMobile.Pages.Profile
                                    VerticalOptions = LayoutOptions.Start,
                                    RowDefinitions = new RowDefinitionCollection
                                                     {
+                                                        new RowDefinition
+                                                        {
+                                                            Height =
+                                                                new GridLength(10, GridUnitType.Auto)
+                                                        },
                                                         new RowDefinition {Height = GridLength.Auto},
-                                                        new RowDefinition {Height = GridLength.Auto}
+                                                        new RowDefinition
+                                                        {
+                                                            Height =
+                                                                new GridLength(0.3, GridUnitType.Star)
+                                                        }
                                                     },
                                    ColumnDefinitions = new ColumnDefinitionCollection
                                                        {
-                                                           new ColumnDefinition {Width = GridLength.Auto},
-                                                           new ColumnDefinition {Width = GridLength.Auto},
-                                                           new ColumnDefinition {Width = GridLength.Auto},
+                                                           new ColumnDefinition
+                                                           {
+                                                               Width =
+                                                                   new GridLength(5,
+                                                                   GridUnitType.Star)
+                                                           },
+                                                           new ColumnDefinition
+                                                           {
+                                                               Width =
+                                                                   new GridLength(5,
+                                                                   GridUnitType.Star)
+                                                           },
+                                                           new ColumnDefinition
+                                                           {
+                                                               Width =
+                                                                   new GridLength(5,
+                                                                   GridUnitType.Star)
+                                                           }
                                                        }
                                };
-            gridControls.Children.Add(_buttonTab1, 0, 0);
-            gridControls.Children.Add(_boxViewLineSelectedTab1, 0, 1);
-            gridControls.Children.Add(_buttonTab2, 1, 0);
-            gridControls.Children.Add(_boxViewLineSeletedTab2, 1, 1);
-            gridControls.Children.Add(_buttonTab3, 2, 0);
-            gridControls.Children.Add(_boxViewLineSeletedTab3, 2, 1);
+            gridControls.Children.Add(_tabOne, 0, 0);
+            gridControls.Children.Add(_boxViewSelectedTabOne, 0, 1);
+            gridControls.Children.Add(_tabTwo, 1, 0);
+            gridControls.Children.Add(_boxViewSeletedTabTwop, 1, 1);
+            gridControls.Children.Add(_tabThree, 2, 0);
+            gridControls.Children.Add(_boxViewSeletedTabThree, 2, 1);
             _gridResults = new Grid();
 
             mainGrid.Children.Add(gridControls, 0, 0);
@@ -144,20 +183,20 @@ namespace BeginMobile.Pages.Profile
             {
                 SetTabThreeSettings();
             }
-            _buttonTab1.Text = TabOneName;
-            _buttonTab2.Text = TabTwoName;
-            _buttonTab3.Text = TabThreeName;
+            _tabOne.Text = TabOneName;
+            _tabTwo.Text = TabTwoName;
+            _tabThree.Text = TabThreeName;
         }
 
         private void SetTabOneSettings()
         {
             CleanResultsAndToolBarItems();
-            _buttonTab1.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-            _buttonTab2.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _buttonTab3.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _boxViewLineSelectedTab1.IsVisible = true;
-            _boxViewLineSeletedTab2.IsVisible = false;
-            _boxViewLineSeletedTab3.IsVisible = false;
+            _tabOne.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            _tabTwo.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _tabThree.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _boxViewSelectedTabOne.IsVisible = true;
+            _boxViewSeletedTabTwop.IsVisible = false;
+            _boxViewSeletedTabThree.IsVisible = false;
             if (PageOne != null) _gridResults.Children.Add(PageOne.Content, 0, 0);
             if (ToolbarItemTabOne != null)
             {
@@ -170,12 +209,12 @@ namespace BeginMobile.Pages.Profile
         private void SetTabTwoSettings()
         {
             CleanResultsAndToolBarItems();
-            _buttonTab1.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _buttonTab2.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-            _buttonTab3.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _boxViewLineSelectedTab1.IsVisible = false;
-            _boxViewLineSeletedTab2.IsVisible = true;
-            _boxViewLineSeletedTab3.IsVisible = false;
+            _tabOne.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _tabTwo.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            _tabThree.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _boxViewSelectedTabOne.IsVisible = false;
+            _boxViewSeletedTabTwop.IsVisible = true;
+            _boxViewSeletedTabThree.IsVisible = false;
 
             if (PageTwo != null) _gridResults.Children.Add(PageTwo.Content, 0, 0);
             if (ToolbarItemTabTwo != null)
@@ -189,12 +228,12 @@ namespace BeginMobile.Pages.Profile
         private void SetTabThreeSettings()
         {
             CleanResultsAndToolBarItems();
-            _buttonTab1.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _buttonTab2.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _buttonTab3.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-            _boxViewLineSelectedTab1.IsVisible = false;
-            _boxViewLineSeletedTab2.IsVisible = false;
-            _boxViewLineSeletedTab3.IsVisible = true;
+            _tabOne.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _tabTwo.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _tabThree.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            _boxViewSelectedTabOne.IsVisible = false;
+            _boxViewSeletedTabTwop.IsVisible = false;
+            _boxViewSeletedTabThree.IsVisible = true;
 
             if (ToolbarItemTabThree != null)
             {
@@ -210,19 +249,19 @@ namespace BeginMobile.Pages.Profile
             ToolbarItems.Clear();
         }
 
-        private void EventHandlerTab1(object sender, EventArgs e)
+        private void EventHandlerTabOne(object sender, EventArgs e)
         {
             CleanResultsAndToolBarItems();
             SetTabOneSettings();
         }
 
-        private void EventHandlerTab2(object sender, EventArgs e)
+        private void EventHandlerTabTwo(object sender, EventArgs e)
         {
             CleanResultsAndToolBarItems();
             SetTabTwoSettings();
         }
 
-        private async void EventHandlerTab3(object sender, EventArgs e)
+        private async void EventHandlerTabThree(object sender, EventArgs e)
         {
             CleanResultsAndToolBarItems();
             SetTabThreeSettings();

@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Specialized;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Menu;
 using BeginMobile.Pages.ContactPages;
-using BeginMobile.Pages.GroupPages;
 using BeginMobile.Pages.MessagePages;
 using BeginMobile.Pages.Notifications;
-using BeginMobile.Pages.Wall;
+using BeginMobile.Pages.Profile;
+using BeginMobile.Services.Interfaces;
+using BeginMobile.Services.Logging;
+using BeginMobile.Services.Utils;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages
@@ -14,7 +15,8 @@ namespace BeginMobile.Pages
     public class AppHome : TabbedPage
     {
         private MessageListPage _messages;
-        private Notifications.Notification _notification;
+        private Notification _notification;
+        private readonly ILoggingService _log = Logger.Current;
         public AppHome()	
         {
             LoadChilds();
@@ -89,7 +91,16 @@ namespace BeginMobile.Pages
 
             if (item != null && item.CurrentPage.Title.Equals(AppResources.AppHomeChildMessages))
             {
-                _messages.InitMessages();
+                try
+                {
+                    _messages.InitMessages();
+
+                }
+                catch (Exception exception)
+                {
+                    _log.Exception(exception);
+                    AppContextError.Send(typeof(AppHome).Name, "OnPropertyChanging", exception, null, ExceptionLevel.Application);
+                }
             }
             if (item != null && item.CurrentPage.Title.Equals(AppResources.AppHomeChildNotifications))
             {

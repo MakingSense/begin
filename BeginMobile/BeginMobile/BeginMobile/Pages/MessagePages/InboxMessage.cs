@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Reflection;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using BeginMobile.Interfaces;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Services.DTO;
+using BeginMobile.Services.Interfaces;
+using BeginMobile.Services.Logging;
 using BeginMobile.Services.Models;
+using BeginMobile.Services.Utils;
 using BeginMobile.Utils;
 using Xamarin.Forms;
-using BeginMobile.Interfaces;
-using System.IO;
 
 namespace BeginMobile.Pages.MessagePages
 {
@@ -20,8 +21,9 @@ namespace BeginMobile.Pages.MessagePages
         private static ListView _listViewMessages;
         private static LoginUser _currentUser;
         private readonly SearchView _searchView;
-        private Grid _gridComponents;
+        private readonly Grid _gridComponents;
 
+        private readonly ILoggingService _log = Logger.Current;
         //Paginator
         private ActivityIndicator _activityIndicatorLoading;
         private StackLayout _stackLayoutLoadingIndicator;
@@ -38,76 +40,102 @@ namespace BeginMobile.Pages.MessagePages
 
         public InboxMessage()
         {
-            Style = BeginApplication.Styles.PageStyle;
-            _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
-
-            LoadDeafultImage();
-            CallServiceApi();
-
-            Title = AppResources.MessageInboxTitle;
-            IsInbox = true;
-            _areLastItems = false;
-
-            _defaultListModel = new List<MessageViewModel>();
-
-
-            _searchView = new SearchView {SearchBar = {Placeholder = AppResources.PlaceholderFilterBySubjectOrContent}};
-            _searchView.SearchBar.TextChanged += SearchItemEventHandler;
-            _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
-            MessagingSubscriptions();
-
-            _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator(ref _activityIndicatorLoading);
-
-            _listViewMessages = new ListView
-                                {
-                                    ItemTemplate = new DataTemplate(() => new ProfileMessagesItem(_imageSourceMailByDefault)),
-                                    HasUnevenRows = true,
-                                    ClassId = "InboxMessageId",
-                                };
-
-
-            _listViewMessages.ItemSelected += ListViewItemSelectedEventHandler;
-            _listViewMessages.ItemAppearing += ItemOnAppearing;
-
-            _gridComponents = new Grid
+            try
             {
-                Padding = BeginApplication.Styles.LayoutThickness,
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Fill,
-                RowDefinitions =
-                                     {
-                                         new RowDefinition {Height = GridLength.Auto},
-                                         new RowDefinition {Height = GridLength.Auto},
-                                         new RowDefinition {Height = GridLength.Auto}
-                                     }
-            };
+                Style = BeginApplication.Styles.PageStyle;
+                _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
 
-            var relativeLayoutListView = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand };
-            relativeLayoutListView.Children.Add(_listViewMessages,
-                xConstraint: Constraint.Constant(0),
-                yConstraint: Constraint.Constant(0),
-                widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
-                heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+                LoadDeafultImage();
+                CallServiceApi();
 
-            _gridComponents.Children.Add(_searchView.Container, 0, 0);
-            _gridComponents.Children.Add(relativeLayoutListView, 0, 1);
-            _gridComponents.Children.Add(_stackLayoutLoadingIndicator, 0, 2);
+                Title = AppResources.MessageInboxTitle;
+                IsInbox = true;
+                _areLastItems = false;
 
-            ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+                _defaultListModel = new List<MessageViewModel>();
+
+
+                _searchView = new SearchView
+                              {
+                                  SearchBar =
+                                  {
+                                      Placeholder =
+                                          AppResources.PlaceholderFilterBySubjectOrContent
+                                  }
+                              };
+                _searchView.SearchBar.TextChanged += SearchItemEventHandler;
+                _searchView.Limit.SelectedIndexChanged += SearchItemEventHandler;
+                MessagingSubscriptions();
+
+                _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator(ref _activityIndicatorLoading);
+
+                _listViewMessages = new ListView
+                                    {
+                                        ItemTemplate =
+                                            new DataTemplate(() => new ProfileMessagesItem(_imageSourceMailByDefault)),
+                                        HasUnevenRows = true,
+                                        ClassId = "InboxMessageId",
+                                    };
+
+
+                _listViewMessages.ItemSelected += ListViewItemSelectedEventHandler;
+                _listViewMessages.ItemAppearing += ItemOnAppearing;
+
+                _gridComponents = new Grid
+                                  {
+                                      HeightRequest = 500,
+                                      WidthRequest = 800,
+                                      Padding = BeginApplication.Styles.LayoutThickness,
+                                      HorizontalOptions = LayoutOptions.Fill,
+                                      VerticalOptions = LayoutOptions.Fill,
+                                      RowDefinitions =
+                                      {
+                                          new RowDefinition {Height = GridLength.Auto},
+                                          new RowDefinition {Height = GridLength.Auto},
+                                          new RowDefinition {Height = GridLength.Auto}
+                                      }
+                                  };
+
+                var relativeLayoutListView = new RelativeLayout() {VerticalOptions = LayoutOptions.FillAndExpand};
+                relativeLayoutListView.Children.Add(_listViewMessages,
+                    xConstraint: Constraint.Constant(0),
+                    yConstraint: Constraint.Constant(0),
+                    widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+                    heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
+                _gridComponents.Children.Add(_searchView.Container, 0, 0);
+                _gridComponents.Children.Add(relativeLayoutListView, 0, 1);
+                _gridComponents.Children.Add(_stackLayoutLoadingIndicator, 0, 2);
+
+                ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+                                                                                                  {
+                                                                                                      _searchView
+                                                                                                          .Container
+                                                                                                          .IsVisible
+                                                                                                          = true;
+                                                                                                  });
+
+                ToolbarItemSendMessage = new ToolbarItem("SendMessage", BeginApplication.Styles.FilterIcon, async () =>
+                                                                                                             {
+                                                                                                                 await Navigation
+                                                                                                                     .PushAsync
+                                                                                                                     (new SendMessage
+                                                                                                                         ());
+                                                                                                             });
+
+                Content = _gridComponents;
+            }
+            catch (Exception exception)
             {
-                _searchView
-                    .Container
-                    .IsVisible
-                    = true;
-            });
-#if __ANDROID__ || __IOS__
-            ToolbarItems.Add(ToolbarItem);
-#endif
-
-            Content = _gridComponents;
+                _log.Exception(exception);
+                AppContextError.Send(typeof (InboxMessage).Name, "InboxMessage", exception, null,
+                    ExceptionLevel.Application);
+            }
         }
 
         public ToolbarItem ToolbarItem { get; set; }
+        public ToolbarItem ToolbarItemSendMessage { get; set; }
+
 
         public Grid GetGrid()
         {
@@ -115,6 +143,7 @@ namespace BeginMobile.Pages.MessagePages
         }
 
         #region Paginator Helper
+
         private void RemoveLoadingIndicator(StackLayout stackLayoutLoading)
         {
             _gridComponents.RowDefinitions[2].Height = GridLength.Auto;
@@ -132,6 +161,7 @@ namespace BeginMobile.Pages.MessagePages
                 _gridComponents.Children.Add(stackLayoutLoading, 0, 2);
             }
         }
+
         private async void LoadItems()
         {
             _offset += _limit;
@@ -140,28 +170,30 @@ namespace BeginMobile.Pages.MessagePages
             _activityIndicatorLoading.IsRunning = true;
             _activityIndicatorLoading.IsVisible = true;
 
-            var resultRequest= await
-                    BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, _name,
-                        _limit.ToString(), _offset.ToString());
+            var resultRequest = await
+                BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, _name,
+                    _limit.ToString(), _offset.ToString());
 
             if (resultRequest != null)
             {
                 if (resultRequest.Threads != null && resultRequest.Threads.Any())
                 {
                     Device.StartTimer(TimeSpan.FromSeconds(2), () =>
-                    {
-                        foreach (var message in RetrieveThreadMessages(resultRequest))
-                        {
-                            _inboxMessages.Add(message);
-                        }
+                                                               {
+                                                                   foreach (
+                                                                       var message in
+                                                                           RetrieveThreadMessages(resultRequest))
+                                                                   {
+                                                                       _inboxMessages.Add(message);
+                                                                   }
 
-                        _activityIndicatorLoading.IsRunning = false;
-                        _activityIndicatorLoading.IsVisible = false;
-                        RemoveLoadingIndicator(_stackLayoutLoadingIndicator);
+                                                                   _activityIndicatorLoading.IsRunning = false;
+                                                                   _activityIndicatorLoading.IsVisible = false;
+                                                                   RemoveLoadingIndicator(_stackLayoutLoadingIndicator);
 
-                        _isLoading = false;
-                        return false;
-                    });
+                                                                   _isLoading = false;
+                                                                   return false;
+                                                               });
                 }
                 else
                 {
@@ -172,7 +204,6 @@ namespace BeginMobile.Pages.MessagePages
                     _isLoading = false;
                     _areLastItems = true;
                 }
-                
             }
             else
             {
@@ -186,11 +217,11 @@ namespace BeginMobile.Pages.MessagePages
 
         private async void ItemOnAppearing(object sender, ItemVisibilityEventArgs e)
         {
-            if (_isLoading == true || 
-                _inboxMessages.Count == 0 || 
+            if (_isLoading == true ||
+                _inboxMessages.Count == 0 ||
                 _areLastItems == true) return;
 
-            var appearingItem = (MessageViewModel)e.Item;
+            var appearingItem = (MessageViewModel) e.Item;
             var lastItem = _inboxMessages[_inboxMessages.Count - 1];
 
             if ((appearingItem.ThreadId == lastItem.ThreadId) &&
@@ -200,6 +231,7 @@ namespace BeginMobile.Pages.MessagePages
                 LoadItems();
             }
         }
+
         #endregion
 
         private void MessagingSubscriptions()
@@ -276,7 +308,7 @@ namespace BeginMobile.Pages.MessagePages
                 return;
             }
             var item = (MessageViewModel) eventArgs.SelectedItem;
-           
+
             var messageDetail = new MessageDetail(item)
                                 {
                                     BindingContext = item
@@ -284,7 +316,8 @@ namespace BeginMobile.Pages.MessagePages
             await Navigation.PushAsync(messageDetail);
             if (item.ThreadUnRead.Equals(AppResources.New))
             {
-                await BeginApplication.ProfileServices.MarkAsReadByThread(_currentUser.AuthToken, item.ThreadId);//Marked as read 
+                await BeginApplication.ProfileServices.MarkAsReadByThread(_currentUser.AuthToken, item.ThreadId);
+                    //Marked as read 
                 await CallServiceApi();
             }
             ((ListView) sender).SelectedItem = null;
@@ -306,7 +339,9 @@ namespace BeginMobile.Pages.MessagePages
             _limit = string.IsNullOrEmpty(limit) ? DefaultLimit : int.Parse(limit);
 
             var profileThreadMessages =
-                await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, _name, limit, _offset.ToString());
+                await
+                    BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(_currentUser.AuthToken, _name, limit,
+                        _offset.ToString());
             if (profileThreadMessages != null)
             {
                 _listViewMessages.ItemsSource = profileThreadMessages.Threads != null &&
@@ -342,7 +377,9 @@ namespace BeginMobile.Pages.MessagePages
 
                                  if (toRemove == null || !messagesListView.Remove(toRemove)) return;
                                  await BeginApplication.ProfileServices.DeleteByThread(_currentUser.AuthToken, threadId);
-                                 await DisplayAlert(AppResources.AlertInfoTitle,AppResources.ServerRemovedSuccess, AppResources.AlertOk);
+                                 await
+                                     DisplayAlert(AppResources.AlertInfoTitle, AppResources.ServerRemovedSuccess,
+                                         AppResources.AlertOk);
                              }
                          };
         }
@@ -359,12 +396,12 @@ namespace BeginMobile.Pages.MessagePages
 
         public async void LoadDeafultImage()
         {
-            #if __ANDROID__
-            //var imageArray = await ImageResizer.GetResizeImage(BeginApplication.Styles.MessageIcon);
-            //this._imageSourceMailByDefault = ImageSource.FromStream(() => new MemoryStream(imageArray));
+#if __ANDROID__
+    //var imageArray = await ImageResizer.GetResizeImage(BeginApplication.Styles.MessageIcon);
+    //this._imageSourceMailByDefault = ImageSource.FromStream(() => new MemoryStream(imageArray));
             this._imageSourceMailByDefault = BeginApplication.Styles.MessageIcon;
             #endif
-            #if __IOS__
+#if __IOS__
             this._imageSourceMailByDefault = BeginApplication.Styles.MessageIcon;
             #endif
         }

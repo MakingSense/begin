@@ -117,6 +117,8 @@ namespace BeginMobile
             get { return _styles ?? (_styles = new Styles()); }
         }
 
+        //TODO: Temporaly added to save profession selected and saveit in this property to recovery in profile Me
+        public static string SelectedUserProfession { get; set; }
         #endregion
     }
 
