@@ -20,11 +20,13 @@ namespace BeginMobile.Utils
             Limit = new Picker
                     {
                         Title = "Max number rows",
+                        BackgroundColor = BeginApplication.Styles.ColorWhite
                     };
 
             SearchBar = new SearchBar
                         {
-                            Placeholder = "Filter by Name"
+                            Placeholder = "Filter by Name",
+                            BackgroundColor = BeginApplication.Styles.ColorWhite
                         };
 
             for (var i = 1; i <= LimitMax; i++)
@@ -41,10 +43,9 @@ namespace BeginMobile.Utils
         
             Container = new StackLayout
                         {
+                            Style = BeginApplication.Styles.SearchContainer,
                             HorizontalOptions = LayoutOptions.FillAndExpand,
                             Orientation = StackOrientation.Vertical,
-                            Padding = new Thickness(20, 10, 20, 10),
-                            BackgroundColor = BeginApplication.Styles.SearchBackground,
                             IsVisible = false
                         };
             Container.Children.Add(ButtonCloseSearch);

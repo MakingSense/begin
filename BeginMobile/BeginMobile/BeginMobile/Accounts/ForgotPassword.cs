@@ -15,13 +15,20 @@ namespace BeginMobile.Accounts
 
 	    public ForgotPassword ()
 		{
-            Style = BeginApplication.Styles.PageStyle;
-		    var logo = new Image
+            Style = BeginApplication.Styles.InitialPageStyle;
+            //var logo = new Image
+            //{
+            //    Source = Device.OS == TargetPlatform.iOS
+            //        ? ImageSource.FromFile("logotype.png")
+            //        : ImageSource.FromFile("logotype.png"),
+            //    Aspect = Aspect.AspectFit,
+            //};
+            var mainTitle = new Label
             {
-                Source = Device.OS == TargetPlatform.iOS
-                    ? ImageSource.FromFile("logotype.png")
-                    : ImageSource.FromFile("logotype.png"),
-                Aspect = Aspect.AspectFit,
+                Text = "Forgot Password",//AppResources.LoginFormTitle,
+                Style = BeginApplication.Styles.InitialPageTitleStyle,
+                XAlign = TextAlignment.Center,
+                YAlign = TextAlignment.Center
             };
 
             var labelTitle = new Label
@@ -104,13 +111,13 @@ namespace BeginMobile.Accounts
              
 			Content = new StackLayout {
                 Spacing = 10,
-                Padding = BeginApplication.Styles.LayoutThickness,
+                Padding = BeginApplication.Styles.InitialPagesThickness,
                 VerticalOptions = LayoutOptions.Center,
                 Children = { 
                     stackLayoutLoading,
-                    logo,
-                    labelTitle,
-                    labelSubTitle,
+                    mainTitle,
+                    //labelTitle,
+                    //labelSubTitle,
                     _entryEmail,
                     buttonReset,
                     buttonBack}                   			

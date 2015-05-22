@@ -20,14 +20,20 @@ namespace BeginMobile.Accounts
 
         public Login(ILoginManager iLoginManager)
         {
-            Style = BeginApplication.Styles.PageStyle;
-            var logo = new Image
-                       {
-                           Source = ImageSource.FromFile("logotype.png"),
-                           Aspect = Aspect.AspectFit
-                       };
-
-            Title = AppResources.LoginFormTitle;
+            Style = BeginApplication.Styles.InitialPageStyle;
+            //var logo = new Image
+            //           {
+            //               Source = ImageSource.FromFile("logotype.png"),
+            //               Aspect = Aspect.AspectFit
+            //           };            
+            var mainTitle = new Label
+                            {
+                                Text = "Log In",//AppResources.LoginFormTitle,
+                                Style = BeginApplication.Styles.TitleStyle,
+                                XAlign = TextAlignment.Center,
+                                YAlign = TextAlignment.Center
+                            };
+            Title = mainTitle.Text;
 
             _entryEmail = new Entry
                           {
@@ -47,6 +53,7 @@ namespace BeginMobile.Accounts
                                        {
                                            Text = AppResources.ButtonForgotPassword,
                                            Style = BeginApplication.Styles.LinkButton,
+                                           FontSize = BeginApplication.Styles.TextFontSizeLarge
                                        };
             var buttonLoginWithFacebook = new Button
                                           {
@@ -55,15 +62,15 @@ namespace BeginMobile.Accounts
                                           };
             var buttonLogin = new Button
                               {
-                                  Text = "Login with Email", //AppResources.ButtonLogin,
+                                  Text = "Log In", //AppResources.ButtonLogin,
                                   Style = BeginApplication.Styles.DefaultButton
                               };
 
-            var buttonRegister = new Button
-                                 {
-                                     Text = "Create account", //AppResources.ButtonRegister,
-                                     Style = BeginApplication.Styles.DefaultButton
-                                 };
+            //var buttonRegister = new Button
+            //                     {
+            //                         Text = "Create account", //AppResources.ButtonRegister,
+            //                         Style = BeginApplication.Styles.DefaultButton
+            //                     };
 
             buttonForgotPassword.Clicked +=
                 (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "ForgotPassword");
@@ -118,24 +125,39 @@ namespace BeginMobile.Accounts
                                              }
                                          };
 
-            buttonRegister.Clicked += (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "Register");
+            //buttonRegister.Clicked += (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "Register");
+
+            //var buttonLog = new Button()
+            //{
+            //    Text = "Log",
+            //    Style = BeginApplication.Styles.DefaultButton
+            //};
+
+            //buttonLog.Clicked += delegate(object sender, EventArgs args)
+            //{
+            //    _log.Info("Clicked Log Info");
+            //    _log.Warning("Clicked Log Warning");
+            //    _log.Error("Clicked Log Error");
+            //    _log.DebugFormat("Clicked Log Debug {0}", "hi");
+            //};
 
             var stackLayoutLoading = CreateStackLayoutWithLoadingIndicator();
             _mainScrollView = new ScrollView();
             var componentsLayout = new StackLayout
                                    {
                                        VerticalOptions = LayoutOptions.FillAndExpand,
-                                       Spacing = 10,
+                                       Padding = BeginApplication.Styles.InitialPagesThickness,
                                        Children =
                                        {
                                            stackLayoutLoading,
-                                           logo,
+                                           mainTitle,
+                                          // logo,
                                            _entryEmail,
                                            _entryPassword,
                                            //buttonLoginWithFacebook,
                                            buttonLogin,
                                            buttonForgotPassword,
-                                           buttonRegister
+                                          // buttonRegister
                                        }
                                    };
             _mainScrollView.Content = componentsLayout;

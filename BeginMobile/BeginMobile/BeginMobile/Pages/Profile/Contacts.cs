@@ -208,7 +208,8 @@ namespace BeginMobile.Pages.Profile
             _sortPicker = new Picker
                           {
                               Title = "Sort by",
-                              VerticalOptions = LayoutOptions.CenterAndExpand
+                              VerticalOptions = LayoutOptions.CenterAndExpand,
+                              BackgroundColor = BeginApplication.Styles.ColorWhite
                           };
 
             if (_sortOptionsDictionary != null)

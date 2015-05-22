@@ -131,8 +131,8 @@ namespace BeginMobile
             Content = new StackLayout
                       {
                           
-                          HorizontalOptions = LayoutOptions.Center,
-                          VerticalOptions = LayoutOptions.Center,
+                          HorizontalOptions = LayoutOptions.FillAndExpand,
+                          VerticalOptions = LayoutOptions.FillAndExpand,
                           Children = { image}
                       };
         }

@@ -51,8 +51,7 @@ namespace BeginMobile.Accounts
 
             var mainLayout = new StackLayout
                              {
-                                 Spacing = 20,
-                                 Padding = 50,
+                                 Padding = BeginApplication.Styles.InitialPagesThickness,
                                  VerticalOptions = LayoutOptions.Start,
                                  Orientation = StackOrientation.Vertical,
                                  Children =

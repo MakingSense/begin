@@ -25,16 +25,23 @@ namespace BeginMobile.Accounts
         private readonly ILoginManager _iLoginManager;
         public Register(ILoginManager iLoginManager)
         {
-            Style = BeginApplication.Styles.PageStyle;
+            Style = BeginApplication.Styles.InitialPageStyle;
             _iLoginManager = iLoginManager;
             if (AppResources.RegisterFormTitle != null) Title = AppResources.RegisterFormTitle;
 
-            var imageLogo = new Image
+            //var imageLogo = new Image
+            //{
+            //    Source = Device.OS == TargetPlatform.iOS
+            //        ? ImageSource.FromFile("logotype.png")
+            //        : ImageSource.FromFile("logotype.png"),
+            //    Aspect = Aspect.AspectFit,
+            //};
+            var mainTitle = new Label
             {
-                Source = Device.OS == TargetPlatform.iOS
-                    ? ImageSource.FromFile("logotype.png")
-                    : ImageSource.FromFile("logotype.png"),
-                Aspect = Aspect.AspectFit,
+                Text = "Create Account",//AppResources.LoginFormTitle,
+                Style = BeginApplication.Styles.InitialPageTitleStyle,
+                XAlign = TextAlignment.Center,
+                YAlign = TextAlignment.Center
             };
 
             _entryUsername = new Entry
@@ -110,13 +117,12 @@ namespace BeginMobile.Accounts
                       {
                           Content = new StackLayout
                                     {
-                                        Spacing = 10,
-                                        Padding = 10,
+                                        Padding = BeginApplication.Styles.InitialPagesThickness,
                                         VerticalOptions = LayoutOptions.Center,
                                         Children =
                                         {
                                             stackLayoutLoading,
-                                            imageLogo,
+                                            mainTitle,
                                             _entryUsername,
                                             _entryFullName,
                                             _entryEmail,
