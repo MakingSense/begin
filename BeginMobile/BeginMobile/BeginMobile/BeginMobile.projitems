@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\ChangePasswordPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\ForgotPassword.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\Login.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Accounts\LoginMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\LoginModalPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\Register.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Accounts\UpdateProfilePage.cs" />
