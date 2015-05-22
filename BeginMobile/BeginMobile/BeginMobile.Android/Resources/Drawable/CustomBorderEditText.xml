@@ -4,8 +4,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
 
   //You can change the color of the edit text here which removes the border line as well
   <item android:state_focused="true" >
-    <shape android:shape="rectangle" android:padding="12dp">
-      <solid android:color="#FFFFFF"/>
+    <shape android:shape="rectangle" android:padding="15dp">
       <gradient
           android:startColor="#FFFFFF"
           android:endColor="#FFFFFF"
@@ -14,27 +13,28 @@ xmlns:android="http://schemas.android.com/apk/res/android">
           android:width="2dp"
           android:color="#DDDDDD" />
       <corners
-          android:bottomRightRadius="17dp"
-     android:bottomLeftRadius="17dp"
-  android:topLeftRadius="17dp"
-  android:topRightRadius="17dp"/>
+          android:bottomRightRadius="20dp"
+     android:bottomLeftRadius="20dp"
+  android:topLeftRadius="20dp"
+  android:topRightRadius="20dp"/>
     </shape>
   </item>
   <item>
-    <shape android:shape="rectangle" android:padding="12dp">
+    <shape android:shape="rectangle" android:padding="15dp">
       <solid android:color="#FFFFFF"/>
       <gradient
-          android:startColor="#FFFFFF"
+          android:startColor="#F1F3F3"
           android:endColor="#FFFFFF"
           android:angle="270" />
       <stroke
           android:width="2dp"
           android:color="#DDDDDD" />
       <corners
-          android:bottomRightRadius="17dp"
-     android:bottomLeftRadius="17dp"
-  android:topLeftRadius="17dp"
-  android:topRightRadius="17dp"/>
+          android:bottomRightRadius="20dp"
+     android:bottomLeftRadius="20dp"
+  android:topLeftRadius="20dp"
+  android:topRightRadius="20dp"/>
     </shape>
   </item>
+
 </selector>
