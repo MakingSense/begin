@@ -131,6 +131,7 @@
   <ItemGroup>
     <Compile Include="DependencyService\Localize.cs" />
     <Compile Include="DependencyService\Logging.cs" />
+    <Compile Include="Renderers\CustomButtonRenderer.cs" />
     <Compile Include="Renderers\CustomNavigationRenderer.cs" />
     <Compile Include="Renderers\CustomTabbedRenderer.cs" />
     <Compile Include="Renderers\ImageCircleRenderer.cs" />

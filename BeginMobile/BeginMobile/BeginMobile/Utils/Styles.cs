@@ -974,7 +974,78 @@ namespace BeginMobile.Utils
                 };
             }
         }
+
+        public Thickness WallPageGridRowListView
+        {
+            get
+            {
+                return Device.OnPlatform(new Thickness(8, 0, 0, 0), new Thickness(8, 0, 0, 0),
+                    new Thickness(8, 0, 0, 0));
+            }
+        }
+
         #endregion
+
+        /*
+         * Standard Styles based on design
+         */
+        public Thickness PageStandardThickness
+        {
+            get
+            {
+                return Device.Idiom == TargetIdiom.Phone
+                    ? new Thickness(10, 0, 10, 0)
+                    : new Thickness(10, 0, 10, 0);
+
+            }
+        }
+
+        public Style PageCircleImageCommon
+        {
+            get
+            {
+                var style = new Style(typeof(CircleImage))
+                {
+                    Setters =
+                                {
+                                    new Setter {Property = Image.AspectProperty, Value = Aspect.AspectFit},
+                                    new Setter {Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Start},
+                                    new Setter {Property = View.VerticalOptionsProperty, Value = LayoutOptions.Start},
+                                    new Setter
+                                    {
+                                        Property = VisualElement.HeightRequestProperty,
+                                        Value =
+                                            Device.Idiom == TargetIdiom.Phone
+                                                ? Device.OnPlatform(40, 80, 70)
+                                                : Device.OnPlatform(100, 110, 70)
+                                    },
+                                    new Setter
+                                    {
+                                        Property = VisualElement.WidthRequestProperty,
+                                        Value =
+                                            Device.Idiom == TargetIdiom.Phone
+                                                ? Device.OnPlatform(40, 80, 70)
+                                                : Device.OnPlatform(100, 110, 70)
+                                    },
+                                    new Setter
+                                    {
+                                        Property = CircleImage.BorderColorProperty,
+                                        Value =
+                                            Device.OnPlatform(Color.FromHex("646567"), Color.FromHex("646567"),
+                                                Color.FromHex("646567"))
+                                    },
+                                    new Setter
+                                    {
+                                        Property = CircleImage.BorderThicknessProperty,
+                                        Value = Device.OnPlatform(0, 0, 0)
+                                    }
+                                }
+                };
+
+                return style;
+            }
+        }
+        // => End 
 
         #region Images Icons
 
@@ -1015,7 +1086,7 @@ namespace BeginMobile.Utils
                                     new Setter
                                     {
                                         Property = CircleImage.BorderThicknessProperty,
-                                        Value = Device.OnPlatform(2, 3, 3)
+                                        Value = Device.OnPlatform(0, 0, 0)
                                     }
                                 }
                             };

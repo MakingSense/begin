@@ -15,7 +15,8 @@ namespace BeginMobile.Pages.Wall
             {
                 YAlign = TextAlignment.End,
                 FontAttributes = FontAttributes.Bold,
-                Style = BeginApplication.Styles.ListTitleWallStyle
+                Style = BeginApplication.Styles.ListTitleWallStyle,
+                LineBreakMode = LineBreakMode.WordWrap,
             };
             labelUserName.SetBinding(Label.TextProperty, "DisplayName", stringFormat: "@ {0}");
 
@@ -47,14 +48,16 @@ namespace BeginMobile.Pages.Wall
             var labelReason = new Label
                               {
                                   YAlign = TextAlignment.End,
-                                  Style = BeginApplication.Styles.ListDescriptionWallStyle
+                                  Style = BeginApplication.Styles.ListDescriptionWallStyle,
+                                  LineBreakMode = LineBreakMode.WordWrap,
                               };
             labelReason.SetBinding(Label.TextProperty, "Reason");
 
             var labelDescription = new Label
                                    {
                                        YAlign = TextAlignment.End,
-                                       Style = BeginApplication.Styles.ListDescriptionWallStyle
+                                       Style = BeginApplication.Styles.ListDescriptionWallStyle,
+                                       LineBreakMode = LineBreakMode.WordWrap,
                                    };
 
             labelDescription.SetBinding(Label.TextProperty, "Description");
@@ -97,8 +100,8 @@ namespace BeginMobile.Pages.Wall
 
             var gridDetails = new Grid
                               {
-                                  Padding = BeginApplication.Styles.GridOfListView,
-                                  HorizontalOptions = LayoutOptions.FillAndExpand,
+                                  Padding = BeginApplication.Styles.WallPageGridRowListView,
+                                  //HorizontalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =
                                   {
                                       new RowDefinition {Height = GridLength.Auto},
@@ -108,7 +111,7 @@ namespace BeginMobile.Pages.Wall
                                   },
                                   ColumnDefinitions =
                                   {
-                                      new ColumnDefinition {Width = GridLength.Auto}
+                                      //new ColumnDefinition {Width = GridLength.Auto}
                                   }
                               };
 
@@ -120,8 +123,8 @@ namespace BeginMobile.Pages.Wall
 
             var circleImageWall = new CircleImage
                                   {
-                                      Style = BeginApplication.Styles.CircleImageCommon,
-                                      Source = imageSourceDefault
+                                      Style = BeginApplication.Styles.PageCircleImageCommon,
+                                      Source = imageSourceDefault,
                                   };
 
             var imageStar = new Image
@@ -135,6 +138,7 @@ namespace BeginMobile.Pages.Wall
             var layoutStackItem = new StackLayout
                                   {
                                       //BackgroundColor = Color.White,
+                                      Padding = BeginApplication.Styles.PageStandardThickness,
                                       Orientation = StackOrientation.Horizontal,
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       Children =

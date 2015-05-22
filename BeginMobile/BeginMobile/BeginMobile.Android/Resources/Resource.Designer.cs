@@ -262,79 +262,85 @@ namespace BeginMobile.Android
 			public const int iphone_message = 2130837535;
 			
 			// aapt resource value: 0x7f020020
-			public const int logotype = 2130837536;
+			public const int logo = 2130837536;
 			
 			// aapt resource value: 0x7f020021
-			public const int logout = 2130837537;
+			public const int logotype = 2130837537;
 			
 			// aapt resource value: 0x7f020022
-			public const int mail = 2130837538;
+			public const int logout = 2130837538;
 			
 			// aapt resource value: 0x7f020023
-			public const int menunav = 2130837539;
+			public const int mail = 2130837539;
 			
 			// aapt resource value: 0x7f020024
-			public const int monoandroidsplash = 2130837540;
+			public const int menunav = 2130837540;
 			
 			// aapt resource value: 0x7f020025
-			public const int netcomputers = 2130837541;
+			public const int monoandroidsplash = 2130837541;
 			
 			// aapt resource value: 0x7f020026
-			public const int offline_icon = 2130837542;
+			public const int netcomputers = 2130837542;
 			
 			// aapt resource value: 0x7f020027
-			public const int online_icon = 2130837543;
+			public const int offline_icon = 2130837543;
 			
 			// aapt resource value: 0x7f020028
-			public const int padlock = 2130837544;
+			public const int online_icon = 2130837544;
 			
 			// aapt resource value: 0x7f020029
-			public const int photo = 2130837545;
+			public const int padlock = 2130837545;
 			
 			// aapt resource value: 0x7f02002a
-			public const int privacy = 2130837546;
+			public const int photo = 2130837546;
 			
 			// aapt resource value: 0x7f02002b
-			public const int ratingoff = 2130837547;
+			public const int privacy = 2130837547;
 			
 			// aapt resource value: 0x7f02002c
-			public const int ratingon = 2130837548;
+			public const int ratingoff = 2130837548;
 			
 			// aapt resource value: 0x7f02002d
-			public const int search = 2130837549;
+			public const int ratingon = 2130837549;
 			
 			// aapt resource value: 0x7f02002e
-			public const int services = 2130837550;
+			public const int search = 2130837550;
 			
 			// aapt resource value: 0x7f02002f
-			public const int shop = 2130837551;
+			public const int services = 2130837551;
 			
 			// aapt resource value: 0x7f020030
-			public const int splash_screen = 2130837552;
+			public const int shop = 2130837552;
 			
 			// aapt resource value: 0x7f020031
-			public const int tab_bar_background_selected = 2130837553;
+			public const int splash = 2130837553;
 			
 			// aapt resource value: 0x7f020032
-			public const int tab_bar_background_selected_pressed = 2130837554;
+			public const int splash_screen = 2130837554;
 			
 			// aapt resource value: 0x7f020033
-			public const int takephoto = 2130837555;
+			public const int tab_bar_background_selected = 2130837555;
 			
 			// aapt resource value: 0x7f020034
-			public const int terms_conditions = 2130837556;
+			public const int tab_bar_background_selected_pressed = 2130837556;
 			
 			// aapt resource value: 0x7f020035
-			public const int userdefault = 2130837557;
+			public const int takephoto = 2130837557;
 			
 			// aapt resource value: 0x7f020036
-			public const int userdefault3 = 2130837558;
+			public const int terms_conditions = 2130837558;
 			
 			// aapt resource value: 0x7f020037
-			public const int userprofile = 2130837559;
+			public const int userdefault = 2130837559;
 			
 			// aapt resource value: 0x7f020038
-			public const int write = 2130837560;
+			public const int userdefault3 = 2130837560;
+			
+			// aapt resource value: 0x7f020039
+			public const int userprofile = 2130837561;
+			
+			// aapt resource value: 0x7f02003a
+			public const int write = 2130837562;
 			
 			static Drawable()
 			{
