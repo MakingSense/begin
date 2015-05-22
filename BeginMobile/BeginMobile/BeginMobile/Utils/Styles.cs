@@ -796,6 +796,74 @@ namespace BeginMobile.Utils
             }
         }
 
+        #region "Wall page styles"
+        /*
+         * Wall page Style
+         */
+        public Style ListTitleWallStyle
+        {
+            get
+            {
+
+                return new Style(typeof(Label))
+                {
+                    Setters =
+                           {
+                               new Setter {Property = Label.FontFamilyProperty, Value = FontFamily},
+                               new Setter
+                               {
+                                   Property = Label.FontSizeProperty,
+                                   Value = Device.OnPlatform<double>(16, 16, 16)
+                               },
+                               new Setter
+                                {
+                                    Property = Label.TextColorProperty,
+                                    Value =
+                                        Device.OnPlatform(Color.FromHex("444444"),
+                                            Color.FromHex("444444"), Color.FromHex("444444"))
+                                },
+                                new Setter
+                                {
+                                    Property = Label.FontAttributesProperty,
+                                    Value = FontAttributes.Bold
+                                }
+                           }
+                };
+            }
+        }
+
+        public Style ListDescriptionWallStyle
+        {
+            get
+            {
+                return new Style(typeof(Label))
+                {
+                    Setters =
+                           {
+                               new Setter {Property = Label.FontFamilyProperty, Value = FontFamily},
+                               new Setter
+                               {
+                                   Property = Label.FontSizeProperty,
+                                   Value = Device.OnPlatform<double>(16, 16, 16)
+                               },
+                               new Setter
+                                {
+                                    Property = Label.TextColorProperty,
+                                    Value =
+                                        Device.OnPlatform(Color.FromHex("C3C3C3"),
+                                            Color.FromHex("C3C3C3"), Color.FromHex("C3C3C3"))
+                                },
+                                new Setter
+                                {
+                                    Property = Label.FontAttributesProperty,
+                                    Value = FontAttributes.Bold
+                                }
+                           }
+                };
+            }
+        }
+        #endregion
+
         #region Images Icons
 
         public Style CircleImageCommon

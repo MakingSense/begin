@@ -1,4 +1,7 @@
-﻿namespace BeginMobile.Services.Models
+﻿using System;
+using BeginMobile.Services.Utils;
+
+namespace BeginMobile.Services.Models
 {
     public class BeginWallViewModel
     {
@@ -27,5 +30,27 @@
         public string Type { set; get; }
 
         public string PublicDate { set; get; }
+
+        private string _publicDateShort;
+
+        public string PublicDateShort
+        {
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    _publicDateShort = "";
+                }
+                else
+                {
+                    var groupDate = Convert.ToDateTime(value);
+                    _publicDateShort = DateConverter.GetTimeShortSpan(groupDate);
+                }
+            }
+            get
+            {
+                return _publicDateShort;
+            }
+        }
     }
 }

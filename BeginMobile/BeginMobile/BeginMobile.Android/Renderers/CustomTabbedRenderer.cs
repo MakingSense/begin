@@ -46,7 +46,7 @@ namespace BeginMobile.Android.Renderers
             {
                 var actionBar = _activity.ActionBar;
                 var appHome = (AppHome)this.Element;
-
+                //actionBar.SetDisplayHomeAsUpEnabled(true);
                 SetUpTabs(actionBar, appHome);
             }
         }

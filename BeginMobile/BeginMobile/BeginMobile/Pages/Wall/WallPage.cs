@@ -47,6 +47,7 @@ namespace BeginMobile.Pages.Wall
             //MasterTitle = AppResources.AppHomeChildNewsFeed;
 
             Title = AppResources.AppHomeChildNewsFeed;
+            BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
 
             this._imageSourceWallByDefault = BeginApplication.Styles.DefaultWallIcon;
             //LoadDeafultImage();
@@ -284,7 +285,8 @@ namespace BeginMobile.Pages.Wall
                 ItemId = wallItem.ItemId,
                 Component = wallItem.Component,
                 Type = wallItem.Type,
-                PublicDate = wallItem.Date
+                PublicDate = wallItem.Date,
+                PublicDateShort = wallItem.Date
             };
 
 
