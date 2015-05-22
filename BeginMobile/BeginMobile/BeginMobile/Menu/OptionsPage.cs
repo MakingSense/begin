@@ -17,13 +17,14 @@
 			    {
 			        private const string DefaultIcon = "userprofile.png";
 					public string MasterTitle{ get; set; }
+			        private MyActivity myActivity;
 
 			        public OptionsPage(string title, string iconImg)
 			            : base(title, iconImg)
 			        {
 
 			            MasterTitle = "Options";
-
+                        myActivity = new MyActivity();
 			            BackgroundColor = BeginApplication.Styles.MenuBackground;
                         const bool isLoadByLogin = false;
 
@@ -409,7 +410,8 @@
                                 case MenuItemsNames.Knocks:
                                     await Navigation.PushAsync(contentPageKnocks);
                                     break;
-                                case MenuItemsNames.Profile:
+                                case MenuItemsNames.Profile:                                                                    
+                                    profileMe.Init(myActivity);
                                     await Navigation.PushAsync(profileMe);
                                     break;
                                 case MenuItemsNames.Logout:

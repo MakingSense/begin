@@ -11,7 +11,8 @@ namespace BeginMobile.Pages.Profile
 
         private readonly BoxView _boxViewLineSelectedTabOne;
         private readonly BoxView _boxViewLineSeletedTabTwo;
-
+        private readonly BoxView _boxViewLineInactiveTabOne;
+        private readonly BoxView _boxViewLineInactiveTabTwo;
 
         public TabViewExposure()
         {
@@ -58,6 +59,17 @@ namespace BeginMobile.Pages.Profile
                                           IsVisible = false
                                       };
 
+             _boxViewLineInactiveTabOne = new BoxView
+                                       {
+                                           Style = BeginApplication.Styles.TabUnderLineInactive,
+                                           IsVisible = false
+                                       };
+            _boxViewLineInactiveTabTwo = new BoxView
+                                      {
+                                          Style = BeginApplication.Styles.TabUnderLineInactive,
+                                          IsVisible = false
+                                      };
+
             var mainGrid = new Grid
                            {
                                Padding = BeginApplication.Styles.LayoutThickness,
@@ -79,6 +91,7 @@ namespace BeginMobile.Pages.Profile
                                {
                                    HorizontalOptions = LayoutOptions.FillAndExpand,
                                    VerticalOptions = LayoutOptions.Start,
+                                   ColumnSpacing = 0,
                                    RowDefinitions = new RowDefinitionCollection
                                                     {
                                                         new RowDefinition {Height = new GridLength(10,GridUnitType.Auto)},
@@ -93,8 +106,10 @@ namespace BeginMobile.Pages.Profile
                                };
             gridControls.Children.Add(_tabOne, 0, 0);
             gridControls.Children.Add(_boxViewLineSelectedTabOne, 0, 1);
+            gridControls.Children.Add(_boxViewLineInactiveTabOne, 0, 1);
             gridControls.Children.Add(_tabTwo, 1, 0);
             gridControls.Children.Add(_boxViewLineSeletedTabTwo, 1, 1);
+            gridControls.Children.Add(_boxViewLineInactiveTabTwo, 1, 1);
             _gridResults = new Grid();
 
             mainGrid.Children.Add(gridControls, 0, 0);
@@ -130,7 +145,9 @@ namespace BeginMobile.Pages.Profile
             _tabOne.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _tabTwo.TextColor = BeginApplication.Styles.DefaultColorButton;
             _boxViewLineSelectedTabOne.IsVisible = true;
+            _boxViewLineInactiveTabOne.IsVisible = false;
             _boxViewLineSeletedTabTwo.IsVisible = false;
+            _boxViewLineInactiveTabTwo.IsVisible = true;
             if (PageOne != null) _gridResults.Children.Add(PageOne.Content, 0, 0);
             if (ToolbarItemTabOne != null)
             {
@@ -152,7 +169,10 @@ namespace BeginMobile.Pages.Profile
             _tabOne.TextColor = BeginApplication.Styles.DefaultColorButton;
             _tabTwo.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _boxViewLineSelectedTabOne.IsVisible = false;
+            _boxViewLineInactiveTabOne.IsVisible = true;
             _boxViewLineSeletedTabTwo.IsVisible = true;
+            _boxViewLineInactiveTabTwo.IsVisible = false;
+
             if (PageTwo != null) _gridResults.Children.Add(PageTwo.Content, 0, 0);
             if (ToolbarItemTabTwo != null)
             {

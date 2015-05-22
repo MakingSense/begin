@@ -12,8 +12,11 @@ namespace BeginMobile.Pages.Profile
         private readonly Label _tabTwo;
         private readonly Label _tabThree;
         private readonly BoxView _boxViewSelectedTabOne;
-        private readonly BoxView _boxViewSeletedTabTwop;
+        private readonly BoxView _boxViewSeletedTabTwo;
         private readonly BoxView _boxViewSeletedTabThree;
+        private readonly BoxView _boxViewInactiveTabOne;
+        private readonly BoxView _boxViewInactiveTabTwo;
+        private readonly BoxView _boxViewInactiveTabThree;
         private readonly ContactPage _allContacts;
         private readonly Contacts _requestContacts;
         private readonly GroupListPage _allGroups;
@@ -80,7 +83,7 @@ namespace BeginMobile.Pages.Profile
                                          Style = BeginApplication.Styles.TabUnderLine,
                                          IsVisible = false
                                      };
-            _boxViewSeletedTabTwop = new BoxView
+            _boxViewSeletedTabTwo = new BoxView
                                      {
                                          Style = BeginApplication.Styles.TabUnderLine,
                                          IsVisible = false
@@ -90,6 +93,23 @@ namespace BeginMobile.Pages.Profile
                                           Style = BeginApplication.Styles.TabUnderLine,
                                           IsVisible = false
                                       };
+
+
+            _boxViewInactiveTabOne = new BoxView
+            {
+                Style = BeginApplication.Styles.TabUnderLineInactive,
+                IsVisible = false
+            };
+            _boxViewInactiveTabTwo = new BoxView
+            {
+                Style = BeginApplication.Styles.TabUnderLineInactive,
+                IsVisible = false
+            };
+            _boxViewInactiveTabThree = new BoxView
+            {
+                Style = BeginApplication.Styles.TabUnderLineInactive,
+                IsVisible = false
+            };
 
 
             var mainGrid = new Grid
@@ -106,8 +126,9 @@ namespace BeginMobile.Pages.Profile
 
             var gridControls = new Grid
                                {
-                                   HorizontalOptions = LayoutOptions.Center,
+                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                    VerticalOptions = LayoutOptions.Start,
+                                   ColumnSpacing = 0,
                                    RowDefinitions = new RowDefinitionCollection
                                                     {
                                                         new RowDefinition
@@ -121,35 +142,17 @@ namespace BeginMobile.Pages.Profile
                                                             Height =
                                                                 new GridLength(0.3, GridUnitType.Star)
                                                         }
-                                                    },
-                                   ColumnDefinitions = new ColumnDefinitionCollection
-                                                       {
-                                                           new ColumnDefinition
-                                                           {
-                                                               Width =
-                                                                   new GridLength(5,
-                                                                   GridUnitType.Star)
-                                                           },
-                                                           new ColumnDefinition
-                                                           {
-                                                               Width =
-                                                                   new GridLength(5,
-                                                                   GridUnitType.Star)
-                                                           },
-                                                           new ColumnDefinition
-                                                           {
-                                                               Width =
-                                                                   new GridLength(5,
-                                                                   GridUnitType.Star)
-                                                           }
-                                                       }
+                                                    }
                                };
             gridControls.Children.Add(_tabOne, 0, 0);
             gridControls.Children.Add(_boxViewSelectedTabOne, 0, 1);
+            gridControls.Children.Add(_boxViewInactiveTabOne, 0, 1);
             gridControls.Children.Add(_tabTwo, 1, 0);
-            gridControls.Children.Add(_boxViewSeletedTabTwop, 1, 1);
+            gridControls.Children.Add(_boxViewSeletedTabTwo, 1, 1);
+            gridControls.Children.Add(_boxViewInactiveTabTwo, 1, 1);
             gridControls.Children.Add(_tabThree, 2, 0);
             gridControls.Children.Add(_boxViewSeletedTabThree, 2, 1);
+            gridControls.Children.Add(_boxViewInactiveTabThree, 2, 1);
             _gridResults = new Grid();
 
             mainGrid.Children.Add(gridControls, 0, 0);
@@ -195,8 +198,11 @@ namespace BeginMobile.Pages.Profile
             _tabTwo.TextColor = BeginApplication.Styles.DefaultColorButton;
             _tabThree.TextColor = BeginApplication.Styles.DefaultColorButton;
             _boxViewSelectedTabOne.IsVisible = true;
-            _boxViewSeletedTabTwop.IsVisible = false;
+            _boxViewSeletedTabTwo.IsVisible = false;
             _boxViewSeletedTabThree.IsVisible = false;
+            _boxViewInactiveTabOne.IsVisible = false;
+            _boxViewInactiveTabTwo.IsVisible = true;
+            _boxViewInactiveTabThree.IsVisible = true;
             if (PageOne != null) _gridResults.Children.Add(PageOne.Content, 0, 0);
             if (ToolbarItemTabOne != null)
             {
@@ -213,8 +219,11 @@ namespace BeginMobile.Pages.Profile
             _tabTwo.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _tabThree.TextColor = BeginApplication.Styles.DefaultColorButton;
             _boxViewSelectedTabOne.IsVisible = false;
-            _boxViewSeletedTabTwop.IsVisible = true;
+            _boxViewSeletedTabTwo.IsVisible = true;
             _boxViewSeletedTabThree.IsVisible = false;
+            _boxViewInactiveTabOne.IsVisible = true;
+            _boxViewInactiveTabTwo.IsVisible = false;
+            _boxViewInactiveTabThree.IsVisible = true;
 
             if (PageTwo != null) _gridResults.Children.Add(PageTwo.Content, 0, 0);
             if (ToolbarItemTabTwo != null)
@@ -232,8 +241,11 @@ namespace BeginMobile.Pages.Profile
             _tabTwo.TextColor = BeginApplication.Styles.DefaultColorButton;
             _tabThree.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _boxViewSelectedTabOne.IsVisible = false;
-            _boxViewSeletedTabTwop.IsVisible = false;
+            _boxViewSeletedTabTwo.IsVisible = false;
             _boxViewSeletedTabThree.IsVisible = true;
+            _boxViewInactiveTabOne.IsVisible = true;
+            _boxViewInactiveTabTwo.IsVisible = true;
+            _boxViewInactiveTabThree.IsVisible = false;
 
             if (ToolbarItemTabThree != null)
             {
@@ -327,8 +339,8 @@ namespace BeginMobile.Pages.Profile
         public const string Tab2Events = "Attending";
         public const string Tab1Messages = "Inbox";
         public const string Tab2Messages = "Sent";
-        public const string Tab1Notifications = "Unread Notifications";
-        public const string Tab2Notifications = "Read Notifications";
+        public const string Tab1Notifications = "Unread";
+        public const string Tab2Notifications = "Read";
         public const string TabMore = "More";
         public static string Tab1 { get; set; }
         public static string Tab2 { get; set; }

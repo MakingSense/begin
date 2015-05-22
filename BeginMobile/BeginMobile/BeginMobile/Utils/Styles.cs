@@ -11,6 +11,9 @@ namespace BeginMobile.Utils
         private readonly double _textFontSizeSmall;
         private readonly Setter _buttonFontSize;
         private readonly Setter _titleFontSize;
+        private readonly Setter titleFontSize;
+        private readonly Setter subTitleFontSize;
+        private readonly Setter textBodyFontSize;
 
         public Styles()
         {
@@ -48,37 +51,54 @@ namespace BeginMobile.Utils
 
             _buttonFontSize = new Setter();
             _titleFontSize = new Setter();
-            var subTitleFontSize = new Setter();
-            var textBodyFontSize = new Setter();
+            titleFontSize = new Setter();
+            titleFontSize = new Setter();
+            subTitleFontSize = new Setter();
+            textBodyFontSize = new Setter();
+
+            _buttonFontSize.Property = Button.FontSizeProperty;
+            _buttonFontSize.Value = fontSizeButtonLarge;
+            _titleFontSize.Property = Label.FontSizeProperty;
+            _titleFontSize.Value = _textfontSizeLarge;
+            titleFontSize.Property = Label.FontSizeProperty;
+            titleFontSize.Value = _textfontSizeLarge;
+            subTitleFontSize.Property = Label.FontSizeProperty;
+            subTitleFontSize.Value = _textfontSizeMedium;
+            textBodyFontSize.Property = Label.FontSizeProperty;
+            textBodyFontSize.Value = _textFontSizeSmall;
 
 
-            if (Device.Idiom == TargetIdiom.Tablet)
-            {
-                _buttonFontSize.Property = Button.FontSizeProperty;
-                _buttonFontSize.Value = fontSizeButtonLarge;
-                _titleFontSize.Property = Label.FontSizeProperty;
-                _titleFontSize.Value = _textfontSizeLarge;
-                subTitleFontSize.Property = Label.FontSizeProperty;
-                subTitleFontSize.Value = _textfontSizeMedium;
-                textBodyFontSize.Property = Label.FontSizeProperty;
-                textBodyFontSize.Value = _textFontSizeSmall;
-            }
-            if (Device.Idiom == TargetIdiom.Phone)
-            {
-                _buttonFontSize.Property = Button.FontSizeProperty;
-                _buttonFontSize.Value = fontSizeForButtonMedium;
-                _titleFontSize.Property = Label.FontSizeProperty;
-                _titleFontSize.Value = _textfontSizeMedium;
-                subTitleFontSize.Property = Label.FontSizeProperty;
-                subTitleFontSize.Value = _textFontSizeSmall;
-                textBodyFontSize.Property = Label.FontSizeProperty;
-                textBodyFontSize.Value = _textFontSizeSmall;
-            }
+            //if (Device.Idiom == TargetIdiom.Tablet)
+            //{
+            //    _buttonFontSize.Property = Button.FontSizeProperty;
+            //    _buttonFontSize.Value = fontSizeButtonLarge;
+            //    _titleFontSize.Property = Label.FontSizeProperty;
+            //    _titleFontSize.Value = _textfontSizeLarge;
+            //    titleFontSize.Property = Label.FontSizeProperty;
+            //    titleFontSize.Value = _textfontSizeLarge;
+            //    subTitleFontSize.Property = Label.FontSizeProperty;
+            //    subTitleFontSize.Value = _textfontSizeMedium;
+            //    textBodyFontSize.Property = Label.FontSizeProperty;
+            //    textBodyFontSize.Value = _textFontSizeSmall;
+            //}
+            //if (Device.Idiom == TargetIdiom.Phone)
+            //{
+            //    _buttonFontSize.Property = Button.FontSizeProperty;
+            //    _buttonFontSize.Value = fontSizeForButtonMedium;
+            //    _titleFontSize.Property = Label.FontSizeProperty;
+            //    _titleFontSize.Value = _textfontSizeMedium;
+            //    titleFontSize.Property = Label.FontSizeProperty;
+            //    titleFontSize.Value = _textfontSizeMedium;
+            //    subTitleFontSize.Property = Label.FontSizeProperty;
+            //    subTitleFontSize.Value = _textFontSizeSmall;
+            //    textBodyFontSize.Property = Label.FontSizeProperty;
+            //    textBodyFontSize.Value = _textFontSizeSmall;
+            //}
         }
 
         public Page CurrentPage { get; set; }
         public string FontFamily { get; set; }
-
+        public double SubtitleFontSize { get { return _textfontSizeMedium; } }
 
         public Style LinkButton
         {
@@ -226,7 +246,6 @@ namespace BeginMobile.Utils
         {
             get
             {
-                Device.Styles.TitleStyle.Setters.Add(_titleFontSize);
                 Device.Styles.TitleStyle.Setters.Add(new Setter
                                                      {
                                                          Property = Label.FontFamilyProperty,
@@ -243,6 +262,7 @@ namespace BeginMobile.Utils
                                                          Property = Label.FontAttributesProperty,
                                                          Value = FontAttributes.Bold
                                                      });
+                Device.Styles.TitleStyle.Setters.Add(titleFontSize);
                 return Device.Styles.TitleStyle;
             }
         }
@@ -273,8 +293,9 @@ namespace BeginMobile.Utils
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter
                                                         {
                                                             Property = Label.FontAttributesProperty,
-                                                            Value = FontAttributes.Bold
+                                                            Value = FontAttributes.None
                                                         });
+                Device.Styles.SubtitleStyle.Setters.Add(subTitleFontSize);
                 return Device.Styles.SubtitleStyle;
             }
         }
@@ -825,6 +846,16 @@ namespace BeginMobile.Utils
                     (Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"));
             }
         }
+
+        public Color DefaultProfileMeBannerColor
+        {
+            get
+            {
+                return Device.OnPlatform
+                    (Color.FromHex("42595C"), Color.FromHex("42595C"), Color.FromHex("42595C"));
+            }
+        }
+      
         public Style TabUnderLine
         {
             get
@@ -840,10 +871,32 @@ namespace BeginMobile.Utils
                                        Device.OnPlatform(Color.FromHex("4EBD8C"), Color.FromHex("4EBD8C"),
                                            Color.FromHex("4EBD8C"))
                                },
-                               new Setter {Property = VisualElement.HeightRequestProperty, Value = 3},
+                               new Setter {Property = VisualElement.HeightRequestProperty, Value = 5},
                                new Setter {Property = VisualElement.WidthRequestProperty, Value = 100}
                            }
                        };
+            }
+        }
+
+        public Style TabUnderLineInactive
+        {
+            get
+            {
+                return new Style(typeof(BoxView))
+                {
+                    Setters =
+                           {
+                               new Setter
+                               {
+                                   Property = BoxView.ColorProperty,
+                                   Value =
+                                       Device.OnPlatform(Color.FromHex("aaaaaa"), Color.FromHex("aaaaaa"),
+                                           Color.FromHex("aaaaaa"))
+                               },
+                               new Setter {Property = VisualElement.HeightRequestProperty, Value = 5},
+                               new Setter {Property = VisualElement.WidthRequestProperty, Value = 100}
+                           }
+                };
             }
         }
 
@@ -1397,11 +1450,14 @@ namespace BeginMobile.Utils
         }
 
         //General Iconsratingon
-        public string RankingIcon
+        public string RankingAddIcon
+        {
+            get { return "ratingon.png"; }
+        }
+        public string RankingDefaultIcon
         {
             get { return "ratingoff.png"; }
         }
-
         public string WriteIcon
         {
             get { return "write.png"; }
