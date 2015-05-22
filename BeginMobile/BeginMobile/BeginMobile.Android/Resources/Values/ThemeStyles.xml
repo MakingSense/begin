@@ -31,7 +31,7 @@
         <item name="android:paddingRight">2dp</item>
         <item name="android:paddingLeft">2dp</item>
         <item name="android:measureWithLargestChild">true</item>
-        <!--<item name="android:background">@drawable/actionbar_tab_indicator</item>-->
+        <item name="android:background">@drawable/tab_main_selector</item>
         <!--<item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">5dp</item>
         <item name="android:minWidth">10dp</item>

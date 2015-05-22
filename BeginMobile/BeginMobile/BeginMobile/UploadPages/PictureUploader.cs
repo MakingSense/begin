@@ -121,7 +121,7 @@ namespace BeginMobile.UploadPages
                 Spacing = 5,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                Padding = new Thickness(0, 30, 0, 20),
+                Padding = new Thickness(0, 20, 0, 0),
                 Children =
                 {
                     _imageUploaded,
@@ -170,7 +170,7 @@ namespace BeginMobile.UploadPages
 
             var stackLayoutTitleSubTitle = new StackLayout()
             {
-                Padding = new Thickness(0, 20, 0, 100),
+                Padding = new Thickness(0, 20, 0, 50),
                 Children =
                 {
                     _labelUploadYourPicture,

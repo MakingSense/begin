@@ -1090,7 +1090,7 @@ namespace BeginMobile.Utils
                                     new Setter
                                     {
                                         Property = CircleImage.BorderThicknessProperty,
-                                        Value = Device.OnPlatform(0, 0, 0)
+                                        Value = Device.OnPlatform(2, 2, 2)
                                     }
                                 }
                 };

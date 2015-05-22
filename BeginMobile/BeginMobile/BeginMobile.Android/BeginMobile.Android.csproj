@@ -235,17 +235,24 @@
     <AndroidResource Include="Resources\Drawable\write.png" />
     <AndroidResource Include="Resources\Drawable\greencircle.jpg" />
     <AndroidResource Include="Resources\Drawable\blackcircle.jpg" />
-    <AndroidResource Include="Resources\Drawable\actionbar_tab_indicator.xml">
+    <AndroidResource Include="Resources\Drawable\tab_main_selector.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\Drawable\colors.xml" />
-    <AndroidResource Include="Resources\Drawable\tab_bar_background_selected_pressed.xml">
+    <AndroidResource Include="Resources\Drawable\Colors.xml" />
+    <AndroidResource Include="Resources\Drawable\TabBackgroundFocused.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\Drawable\tab_bar_background_selected.xml" />
+    <AndroidResource Include="Resources\Drawable\TabBackgroundSelected.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\Drawable\logo.png" />
     <AndroidResource Include="Resources\Drawable\splash.png" />
-    <AndroidResource Include="Resources\Drawable\CustomBorderEditText.xml" />
+    <AndroidResource Include="Resources\Drawable\CustomBorderEditText.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Drawable\TabBackgroundNormal.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">
