@@ -18,7 +18,7 @@ using Xamarin.Forms.Platform.Android;
 [assembly: ExportRenderer(typeof(NavigationHomePage), typeof(CustomNavigationRenderer))]
 namespace BeginMobile.Android.Renderers
 {
-    class CustomNavigationRenderer : NavigationRenderer
+    public class CustomNavigationRenderer : NavigationRenderer
     {
         protected override void OnElementChanged(ElementChangedEventArgs<NavigationPage> e)
         {

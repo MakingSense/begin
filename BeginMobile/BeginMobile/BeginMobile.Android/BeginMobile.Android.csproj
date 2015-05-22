@@ -132,6 +132,7 @@
     <Compile Include="DependencyService\Localize.cs" />
     <Compile Include="DependencyService\Logging.cs" />
     <Compile Include="Renderers\CustomButtonRenderer.cs" />
+    <Compile Include="Renderers\CustomEntryRenderer.cs" />
     <Compile Include="Renderers\CustomNavigationRenderer.cs" />
     <Compile Include="Renderers\CustomTabbedRenderer.cs" />
     <Compile Include="Renderers\ImageCircleRenderer.cs" />
@@ -244,6 +245,7 @@
     <AndroidResource Include="Resources\Drawable\tab_bar_background_selected.xml" />
     <AndroidResource Include="Resources\Drawable\logo.png" />
     <AndroidResource Include="Resources\Drawable\splash.png" />
+    <AndroidResource Include="Resources\Drawable\CustomBorderEditText.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">
