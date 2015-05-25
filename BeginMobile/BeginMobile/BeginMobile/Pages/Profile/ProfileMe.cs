@@ -38,7 +38,7 @@ namespace BeginMobile.Pages.Profile
         private readonly ViewExposure _viewExposure = new ViewExposure();
         private readonly ILoggingService _log = Logger.Current;
         private ImageSource _imageSourceGroupByDefault;
-        private const int gotPuntuation = 3;
+        private const int GotPuntuation = 3;
         private const int RankingGridRow = 0;
         private Write _newPublication;
         private string _tabSelected = "";
@@ -128,7 +128,7 @@ namespace BeginMobile.Pages.Profile
             gridRakingImage.Children.Add(imageRankingDefault, 3, 0);
             gridRakingImage.Children.Add(imageRankingDefault, 4, 0);            
 
-            for (var indexer = 0; indexer < gotPuntuation; indexer ++)
+            for (var indexer = 0; indexer < GotPuntuation; indexer ++)
             {                
                 var image = new Image
                             {

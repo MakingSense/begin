@@ -47,6 +47,7 @@ namespace BeginMobile.Pages.ContactPages
 
             var gridComponents = new Grid
                                  {
+                                     Padding = BeginApplication.Styles.ThicknessInsideListView,  
                                      HorizontalOptions = LayoutOptions.FillAndExpand,
                                      VerticalOptions = LayoutOptions.FillAndExpand,
                                      RowDefinitions =
@@ -130,7 +131,7 @@ namespace BeginMobile.Pages.ContactPages
 
             var grid = new Grid
                        {
-                           Padding = BeginApplication.Styles.GridOfListView,
+                           Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,                          
                            HorizontalOptions = LayoutOptions.FillAndExpand,
                            VerticalOptions = LayoutOptions.FillAndExpand,
                            RowDefinitions =

@@ -44,7 +44,7 @@ namespace BeginMobile.Pages.Profile
 
             _gridInfo = new Grid
             {
-                Padding = BeginApplication.Styles.LayoutThickness,
+                Padding = BeginApplication.Styles.ThicknessInsideListView,
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
                 RowDefinitions =

@@ -79,7 +79,7 @@ namespace BeginMobile.Accounts
             var mainLayout = new StackLayout
             {
                 Spacing = 20,
-                Padding = BeginApplication.Styles.LayoutThickness,
+                Padding = BeginApplication.Styles.ThicknessMainLayout,
                 VerticalOptions = LayoutOptions.Start,
                 Orientation = StackOrientation.Vertical,
                 Children =

@@ -95,7 +95,7 @@ namespace BeginMobile.Pages.GroupPages
 
             var mainLayout = new StackLayout
             {
-                Padding = BeginApplication.Styles.LayoutThickness,
+                Padding = BeginApplication.Styles.ThicknessMainLayout,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Children =

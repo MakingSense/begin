@@ -75,7 +75,7 @@ namespace BeginMobile.Pages.MessagePages
 
             var gridDetails = new Grid
                               {
-                                  Padding = BeginApplication.Styles.GridOfListView,
+                                  Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =
@@ -99,6 +99,7 @@ namespace BeginMobile.Pages.MessagePages
 
             var stackLayoutView = new StackLayout
                                   {
+                                      Padding = BeginApplication.Styles.ThicknessInsideListView,
                                       Orientation = StackOrientation.Horizontal,
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       VerticalOptions = LayoutOptions.FillAndExpand,

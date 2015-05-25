@@ -484,12 +484,27 @@ namespace BeginMobile.Utils
             }
         }
 
-        public Thickness LayoutThickness
+        public Thickness ThicknessMainLayout
         {
             get
             {
-                return new Thickness(0, 0, 0, 0);
+                return new Thickness(0, 0, 0, 50);
+            }
+        }
+        public Thickness ThicknessInsideListView
+        {
+            get
+            {
+                return new Thickness(15, 0, 15, 0);
 
+            }
+        }
+        public Thickness ThicknessBetweenImageAndDetails
+        {
+            get
+            {
+                return Device.OnPlatform(new Thickness(5, 0, 0, 0), new Thickness(5, 0, 0, 0),
+                    new Thickness(5, 0, 0, 0));
             }
         }
 
@@ -776,15 +791,6 @@ namespace BeginMobile.Utils
             }
         }
 
-        public Thickness LayoutInternalThickness
-        {
-            get
-            {
-                return Device.OnPlatform(new Thickness(20, 20, 20, 20), new Thickness(20, 20, 20, 20),
-                    new Thickness(20, 20, 20, 20));
-            }
-        }
-
         public Color ColorLine
         {
             get
@@ -956,8 +962,8 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return Device.OnPlatform(new Thickness(10, 5, 0, 5), new Thickness(10, 5, 0, 5),
-                    new Thickness(10, 5, 0, 5));
+                return Device.OnPlatform(new Thickness(15, 5, 0,5), new Thickness(15, 5, 0, 5),
+                    new Thickness(15, 5, 0, 5));
             }
         }
 
@@ -1118,16 +1124,16 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.HeightRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(40, 80, 70)
-                                                : Device.OnPlatform(100, 110, 70)
+                                                ? Device.OnPlatform(70, 70, 70)
+                                                : Device.OnPlatform(100, 100, 100)
                                     },
                                     new Setter
                                     {
                                         Property = VisualElement.WidthRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(40, 80, 70)
-                                                : Device.OnPlatform(100, 110, 70)
+                                                ? Device.OnPlatform(70, 70, 70)
+                                                : Device.OnPlatform(100, 100, 100)
                                     },
                                     new Setter
                                     {
@@ -1164,7 +1170,7 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.HeightRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(150, 150, 150)
+                                                ? Device.OnPlatform(125, 125, 125)
                                                 : Device.OnPlatform(300, 300, 300)
                                     },
                                     new Setter
@@ -1172,7 +1178,7 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.WidthRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(150, 150, 150)
+                                                ? Device.OnPlatform(125, 125, 125)
                                                 : Device.OnPlatform(300, 300, 300)
                                     },
                                     new Setter

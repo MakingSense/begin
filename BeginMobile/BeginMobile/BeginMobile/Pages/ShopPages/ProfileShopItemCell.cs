@@ -93,6 +93,7 @@ namespace BeginMobile.Pages.ShopPages
 
             var stackLayoutCenter = new StackLayout
                                     {
+                                        Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,
                                         HorizontalOptions = LayoutOptions.FillAndExpand,
                                         Children =
                                         {
@@ -102,7 +103,7 @@ namespace BeginMobile.Pages.ShopPages
                                     };
 
             var stackLayoutItem = new StackLayout
-                                  {
+                                  {                                      
                                       Orientation = StackOrientation.Horizontal,
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       Children =

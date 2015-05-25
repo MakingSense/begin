@@ -67,6 +67,7 @@ namespace BeginMobile.Pages.Profile
             {
                 WidthRequest = 200,
                 HeightRequest = 80,
+                Padding = BeginApplication.Styles.ThicknessInsideListView,
                 Text = AppResources.LabelEventName,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Style = BeginApplication.Styles.SubtitleStyle
@@ -115,7 +116,6 @@ namespace BeginMobile.Pages.Profile
             {
                 Content = new StackLayout
                 {
-                    Spacing = 2,
                     VerticalOptions = LayoutOptions.Start,
                     Children =
                     {
@@ -136,7 +136,7 @@ namespace BeginMobile.Pages.Profile
 #endif
             _gridMainComponents = new Grid
             {
-                Padding = BeginApplication.Styles.LayoutThickness,
+                Padding = BeginApplication.Styles.ThicknessMainLayout,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 RowDefinitions =

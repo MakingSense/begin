@@ -33,6 +33,7 @@ namespace BeginMobile.Pages.Profile
 
             View = new StackLayout
                    {
+                       Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,
                        Orientation = StackOrientation.Horizontal,
                        Children =
                        {
@@ -79,7 +80,7 @@ namespace BeginMobile.Pages.Profile
 
             var grid = new Grid
                               {
-                                  Padding = BeginApplication.Styles.GridOfListView,
+                                  Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =

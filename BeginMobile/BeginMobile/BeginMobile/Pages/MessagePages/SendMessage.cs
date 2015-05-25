@@ -55,6 +55,7 @@ namespace BeginMobile.Pages.MessagePages
 
             var gridComponents = new Grid
                                  {
+                                     Padding = Device.OnPlatform(new Thickness(0, 0, 15, 0), new Thickness(0, 0, 15, 0), new Thickness(0, 0, 15, 0)),
                                      VerticalOptions = LayoutOptions.CenterAndExpand,
                                      HorizontalOptions = LayoutOptions.StartAndExpand,
                                      RowDefinitions =
@@ -77,7 +78,7 @@ namespace BeginMobile.Pages.MessagePages
             Content = new StackLayout
                       {
                           VerticalOptions = LayoutOptions.StartAndExpand,
-                          Padding = BeginApplication.Styles.LayoutThickness,
+                          Padding = BeginApplication.Styles.ThicknessMainLayout,
                           Children = {gridComponents, buttonSend}
                       };
         }

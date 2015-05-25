@@ -85,7 +85,7 @@ namespace BeginMobile.Pages.MessagePages
                                   {
                                       HeightRequest = 500,
                                       WidthRequest = 800,
-                                      Padding = BeginApplication.Styles.LayoutThickness,
+                                      Padding = BeginApplication.Styles.ThicknessMainLayout,
                                       HorizontalOptions = LayoutOptions.Fill,
                                       VerticalOptions = LayoutOptions.Fill,
                                       RowDefinitions =

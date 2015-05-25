@@ -47,7 +47,7 @@ namespace BeginMobile.Pages.Notifications
 
             var gridDetails = new Grid
                               {
-                                  Padding = BeginApplication.Styles.GridOfListView,
+                                  Padding = BeginApplication.Styles.ThicknessInsideListView,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =

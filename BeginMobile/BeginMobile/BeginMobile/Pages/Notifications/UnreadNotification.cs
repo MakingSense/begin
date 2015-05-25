@@ -43,7 +43,7 @@ namespace BeginMobile.Pages.Notifications
             //MasterTitle = AppResources.AppHomeChildNotifications;
 
             //LabelCounter = new Label();
-
+            Style = BeginApplication.Styles.PageStyle;
             _searchView = new SearchView
                           {
                               SearchBar =
@@ -307,7 +307,7 @@ namespace BeginMobile.Pages.Notifications
 
             _gridMainComponents = new Grid
                                   {
-                                      Padding = BeginApplication.Styles.LayoutThickness,
+                                      Padding = BeginApplication.Styles.ThicknessMainLayout,
                                       VerticalOptions = LayoutOptions.FillAndExpand,
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       RowDefinitions =

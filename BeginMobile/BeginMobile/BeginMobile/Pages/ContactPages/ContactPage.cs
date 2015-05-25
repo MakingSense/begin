@@ -99,7 +99,7 @@ namespace BeginMobile.Pages.ContactPages
 
             _gridLayoutMain = new Grid()
                               {
-                                  Padding = BeginApplication.Styles.LayoutThickness,
+                                  Padding = BeginApplication.Styles.ThicknessMainLayout,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =
@@ -155,7 +155,6 @@ namespace BeginMobile.Pages.ContactPages
 
             var stackLayoutContactsList = new StackLayout
                                           {
-                                              Padding = BeginApplication.Styles.LayoutThickness,
                                               VerticalOptions = LayoutOptions.FillAndExpand,
                                               Orientation = StackOrientation.Vertical,
                                               Children =

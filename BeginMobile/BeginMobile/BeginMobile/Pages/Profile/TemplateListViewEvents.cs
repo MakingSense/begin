@@ -23,6 +23,7 @@ namespace BeginMobile.Pages.Profile
 
             View = new StackLayout
                    {
+                       Padding = BeginApplication.Styles.ThicknessInsideListView,
                        HeightRequest = 60,
                        Orientation = StackOrientation.Horizontal,
                        Children =
@@ -52,6 +53,7 @@ namespace BeginMobile.Pages.Profile
             return new StackLayout
             {
                 HeightRequest = 50,
+                Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Orientation = StackOrientation.Vertical,
                 Children = { labelEventIntervalDate, labelEventTime }

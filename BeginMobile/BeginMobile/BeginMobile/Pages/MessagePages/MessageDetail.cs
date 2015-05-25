@@ -89,7 +89,7 @@ namespace BeginMobile.Pages.MessagePages
 
             var gridComponents = new Grid
                                  {
-                                     Padding = BeginApplication.Styles.LayoutThickness,
+                                     Padding = BeginApplication.Styles.ThicknessMainLayout,
                                      HorizontalOptions = LayoutOptions.FillAndExpand,
                                      VerticalOptions = LayoutOptions.FillAndExpand,
                                      RowDefinitions =
@@ -245,7 +245,7 @@ public class MessageTemplate : ViewCell
         var stackLayoutView = new StackLayout
                               {
                                   Spacing = 2,
-                                  Padding = BeginApplication.Styles.LayoutThickness,
+                                  Padding = BeginApplication.Styles.ThicknessMainLayout,
                                   Orientation = StackOrientation.Horizontal,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   Children =

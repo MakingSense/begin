@@ -66,6 +66,7 @@ namespace BeginMobile.Pages.GroupPages
 
             var stackLayoutCenter = new StackLayout
                                     {
+                                        Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,
                                         Orientation = StackOrientation.Vertical,
                                         HorizontalOptions = LayoutOptions.FillAndExpand,
                                         Children =
@@ -79,10 +80,11 @@ namespace BeginMobile.Pages.GroupPages
 
             var stackLayoutItem = new StackLayout
                                   {
+                                      Padding = BeginApplication.Styles.ThicknessInsideListView,
                                       Orientation = StackOrientation.Horizontal,
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       Children =
-                                      {
+                                      {                                          
                                           circleGroupImage,
                                           stackLayoutCenter
                                       }

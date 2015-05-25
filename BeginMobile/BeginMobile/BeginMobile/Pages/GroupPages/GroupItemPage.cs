@@ -144,7 +144,7 @@ namespace BeginMobile.Pages.GroupPages
                 var stackLayoutMembers = new StackLayout
                                          {
                                              Spacing = 2,
-                                             Padding = BeginApplication.Styles.LayoutThickness,
+                                             Padding = BeginApplication.Styles.ThicknessMainLayout,
                                              Children =
                                              {
                                                  labelTitleMember,

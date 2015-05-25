@@ -56,7 +56,7 @@ namespace BeginMobile.Pages.Wall
 
             _gridMain = new Grid()
             {
-                Padding = BeginApplication.Styles.LayoutThickness,
+                Padding = BeginApplication.Styles.ThicknessMainLayout,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 RowDefinitions =

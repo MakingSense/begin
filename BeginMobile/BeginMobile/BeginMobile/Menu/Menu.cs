@@ -215,7 +215,7 @@ namespace BeginMobile.Menu
             StackLayout mainStackLayout = new StackLayout
                                           {
                                               Spacing = 2,
-                                              Padding = BeginApplication.Styles.LayoutThickness,
+                                              Padding = BeginApplication.Styles.ThicknessMainLayout,
                                               Children =
                                               {
                                                   listViewMenuIcon,

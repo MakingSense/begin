@@ -72,7 +72,7 @@ namespace BeginMobile.Pages.Profile
 
             var mainGrid = new Grid
                            {
-                               Padding = BeginApplication.Styles.LayoutThickness,
+                               Padding = BeginApplication.Styles.ThicknessMainLayout,
                                BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                                HorizontalOptions = LayoutOptions.Center,
                                VerticalOptions = LayoutOptions.FillAndExpand,

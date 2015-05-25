@@ -19,7 +19,7 @@ namespace BeginMobile.Pages.MessagePages
             var stackLayoutView = new StackLayout
                            {
                                Spacing = 2,
-                               Padding = BeginApplication.Styles.LayoutThickness,
+                               Padding = BeginApplication.Styles.ThicknessMainLayout,
                                HorizontalOptions = LayoutOptions.FillAndExpand,
                                Orientation = StackOrientation.Horizontal,
                                Children =

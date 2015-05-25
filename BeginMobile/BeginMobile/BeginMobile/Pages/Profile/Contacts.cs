@@ -121,7 +121,7 @@ namespace BeginMobile.Pages.Profile
 
             var stackLayoutContactsList = new StackLayout
                                           {
-                                              Padding = BeginApplication.Styles.LayoutThickness,
+                                              Padding = BeginApplication.Styles.ThicknessMainLayout,
                                               VerticalOptions = LayoutOptions.FillAndExpand,
                                               Orientation = StackOrientation.Vertical,
                                               Children =
@@ -143,7 +143,7 @@ namespace BeginMobile.Pages.Profile
 
             _gridMainComponents = new Grid
                       {
-                          Padding = BeginApplication.Styles.LayoutThickness,
+                          Padding = BeginApplication.Styles.ThicknessMainLayout,
                           VerticalOptions = LayoutOptions.FillAndExpand,
                           HorizontalOptions = LayoutOptions.FillAndExpand,
                           RowDefinitions =
