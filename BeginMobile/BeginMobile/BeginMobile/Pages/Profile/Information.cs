@@ -1,5 +1,7 @@
-﻿using BeginMobile.Services.DTO;
+﻿using System;
+using BeginMobile.Services.DTO;
 using System.Threading.Tasks;
+using BeginMobile.Services.Utils;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
@@ -9,20 +11,20 @@ namespace BeginMobile.Pages.Profile
         private ProfileInfo _profileInfo;
         private readonly LoginUser _currentUser;
         private Grid _gridInfo;
-        public Information()
+        public Information(LoginUser loginUser)
         {
             Style = BeginApplication.Styles.PageStyle;
             Title = "Information";
-            _currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
-            Init();
+            _currentUser = loginUser;
+            if (_currentUser != null) Init(_currentUser);
         }
 
-        private async Task Init()
+        private void Init(LoginUser currentUser)
         {
             _profileInfo =
-                await
-                    BeginApplication.ProfileServices.GetInformationDetail(_currentUser.AuthToken, 
-                    _currentUser.User.UserName) ?? new ProfileInfo {Details = new UserDetails()};
+                
+                    BeginApplication.ProfileServices.GetInformation(currentUser.AuthToken, 
+                    currentUser.User.UserName) ?? new ProfileInfo {Details = new UserDetails()};
 
             //Name and surname
             var boxViewBegNameSurname = new BoxView {Color = Color.White, WidthRequest = 100, HeightRequest = 2};

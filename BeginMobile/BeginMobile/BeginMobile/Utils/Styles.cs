@@ -912,8 +912,8 @@ namespace BeginMobile.Utils
                                     {
                                         Property = VisualElement.BackgroundColorProperty,
                                         Value =
-                                            Device.OnPlatform(Color.FromHex("DBE1ED"), Color.FromHex("333333"),
-                                                Color.FromHex("333333")),
+                                            Device.OnPlatform(Color.FromHex("ffffff"), Color.FromHex("ffffff"),
+                                                Color.FromHex("ffffff")),
                                     }
                                 }
                             };

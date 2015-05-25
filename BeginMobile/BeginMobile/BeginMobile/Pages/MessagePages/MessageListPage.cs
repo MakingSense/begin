@@ -26,7 +26,16 @@ namespace BeginMobile.Pages.MessagePages
             LabelCounter = new Label();
             _tabViewExposure = new TabViewExposure();
             _inbox = new InboxMessage();
-            _sent = new SentMessage();            
+            _sent = new SentMessage();
+
+            ToolbarItems.Add(new ToolbarItem("SendMessage", BeginApplication.Styles.WriteIcon, async () =>
+            {
+                await Navigation
+                    .PushAsync
+                    (new SendMessage
+                        ());
+            }, ToolbarItemOrder.Primary));
+            
             Init();
         }
 

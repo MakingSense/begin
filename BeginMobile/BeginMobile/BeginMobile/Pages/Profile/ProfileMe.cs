@@ -49,7 +49,7 @@ namespace BeginMobile.Pages.Profile
             Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.LabelProfileMeTitle;
 
-            _information = new Information();
+            _information = new Information(currenLoginUser);
             _allContacts = new ContactPage(string.Empty, string.Empty);
             _requestContacts = new Contacts();
             _activity = new MyActivity();
