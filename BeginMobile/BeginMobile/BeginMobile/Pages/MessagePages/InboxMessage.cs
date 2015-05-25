@@ -115,13 +115,14 @@ namespace BeginMobile.Pages.MessagePages
                                                                                                           = true;
                                                                                                   });
 
-                ToolbarItemSendMessage = new ToolbarItem("SendMessage", BeginApplication.Styles.FilterIcon, async () =>
-                                                                                                             {
-                                                                                                                 await Navigation
-                                                                                                                     .PushAsync
-                                                                                                                     (new SendMessage
-                                                                                                                         ());
-                                                                                                             });
+                ToolbarItemSendMessage = new ToolbarItem("SendMessage", 
+                    BeginApplication.Styles.FilterIcon, async () =>
+                    {
+                        await Navigation
+                            .PushAsync
+                            (new SendMessage
+                                ());
+                    });
 
                 Content = _gridComponents;
             }

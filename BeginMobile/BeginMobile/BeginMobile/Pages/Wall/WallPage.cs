@@ -91,7 +91,7 @@ namespace BeginMobile.Pages.Wall
             await DisplayAlert("Public Wall", "Edit wall", "Ok");
         }
 
-        private ObservableCollection<BeginWallViewModel> ListBeginWallViewModel(List<BeginMobile.Services.DTO.Wall> oldListWall)
+        private ObservableCollection<BeginWallViewModel> ListBeginWallViewModel(List<BeginMobile.Services.DTO.WallActivityItem> oldListWall)
         {
             ObservableCollection<BeginWallViewModel> resultList = null;
 
@@ -278,7 +278,7 @@ namespace BeginMobile.Pages.Wall
             return new ObservableCollection<BeginWallViewModel>(result);
         }
 
-        private BeginWallViewModel GetBeginWallViewModel(BeginMobile.Services.DTO.Wall wallItem)
+        private BeginWallViewModel GetBeginWallViewModel(BeginMobile.Services.DTO.WallActivityItem wallItem)
         {
             var beginWall = new BeginWallViewModel()
             {

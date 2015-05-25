@@ -2,7 +2,7 @@
 
 namespace BeginMobile.Services.DTO
 {
-    public class Wall
+    public class WallActivityItem
     {
         [JsonProperty("item_id")]
         public string ItemId { set; get; }

@@ -25,6 +25,6 @@ namespace BeginMobile.Services.DTO
         public string NameSurname { set; get; }
 
         [JsonProperty("activities")]
-        public ObservableCollection<ProfileActivity> Activities { set; get; }
+        public List<WallActivityItem> Activities { set; get; }
     }
 }

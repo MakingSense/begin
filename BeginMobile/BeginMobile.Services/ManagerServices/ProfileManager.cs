@@ -17,7 +17,7 @@ namespace BeginMobile.Services.ManagerServices
         private const string IdentifierProfile = "profile";
         private const string IdentifierMe = "me";
 
-        private readonly GenericBaseClient<Wall> _wallClient;
+        private readonly GenericBaseClient<WallActivityItem> _wallClient;
         private readonly GenericBaseClient<ProfileInfo> _profileInfoClient;
         private readonly GenericBaseClient<ProfileInformationActivities> _profileActivityClient;
         private readonly GenericBaseClient<ProfileInformationEvents> _profileEventClient;
@@ -32,7 +32,7 @@ namespace BeginMobile.Services.ManagerServices
         private static readonly string ThisClassName = typeof(ProfileManager).Name;
         public ProfileManager()
         {
-            _wallClient = new GenericBaseClient<Wall>(BaseAddress, SubAddress);
+            _wallClient = new GenericBaseClient<WallActivityItem>(BaseAddress, SubAddress);
             _profileInfoClient = new GenericBaseClient<ProfileInfo>(BaseAddress, SubAddress);
             _profileEventClient = new GenericBaseClient<ProfileInformationEvents>(BaseAddress, SubAddress);
             _profileActivityClient = new GenericBaseClient<ProfileInformationActivities>(BaseAddress, SubAddress);

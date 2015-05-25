@@ -31,8 +31,9 @@ namespace BeginMobile.Services.Models
 
         public string PublicDate { set; get; }
 
-        private string _publicDateShort;
+        public string Icon { get; set; }
 
+        private string _publicDateShort;
         public string PublicDateShort
         {
             set
