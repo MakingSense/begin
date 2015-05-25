@@ -18,9 +18,13 @@ namespace BeginMobile.Pages.MessagePages
         private readonly ILoggingService _log = Logger.Current;
         public string MasterTitle { get; set; }
 
-        public MessageListPage(string title, string iconImg)
+        private AppHome _appHome;
+
+        public MessageListPage(string title, string iconImg, AppHome parentHome)
             : base(title, iconImg)
         {
+            _appHome = parentHome;
+
             Title = title;
             MasterTitle = AppResources.AppHomeChildMessages;
             LabelCounter = new Label();
@@ -47,6 +51,7 @@ namespace BeginMobile.Pages.MessagePages
             if (inboxThreads != null)
             {
                 LabelCounter.Text = inboxThreads.ThreadCount;
+                _appHome.CounterText = inboxThreads.ThreadCount;
             }
         }
 

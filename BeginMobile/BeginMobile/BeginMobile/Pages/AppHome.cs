@@ -48,7 +48,7 @@ namespace BeginMobile.Pages
                                                         AppResources.AppHomeChildMessages),
                                                 Style = BeginApplication.Styles.StyleNavigationTitle
                                             }.Text,
-                Device.OnPlatform("iconmessagesactive.png", "iconmessagesactive.png", "iconmessagesactive.png"));
+                Device.OnPlatform("iconmessagesactive.png", "iconmessagesactive.png", "iconmessagesactive.png"), this);
 
             _notification = new Notification(new Label
                                                     {
@@ -59,7 +59,7 @@ namespace BeginMobile.Pages
                                                         Style = BeginApplication.Styles.StyleNavigationTitle
                                                     }.Text,
                 Device.OnPlatform("iconnotificationsactive.png", "iconnotificationsactive.png",
-                    "iconnotificationsactive.png"));
+                    "iconnotificationsactive.png"), this);
 
 
 
@@ -87,6 +87,14 @@ namespace BeginMobile.Pages
                     Device.OnPlatform("iconmenuactive.png", "iconmenuactive.png", "iconmenuactive.png")));
 
             this.CurrentPageChanged += OnPropertyChanging;
+        }
+
+        public static readonly BindableProperty CounterTextProperty =
+        BindableProperty.Create<AppHome, string>(p => p.CounterText, string.Empty);
+        public string CounterText
+        {
+            get { return (string)base.GetValue(CounterTextProperty); }
+            set { base.SetValue(CounterTextProperty, value); }
         }
 
         private void OnPropertyChanging(object sender, EventArgs e)

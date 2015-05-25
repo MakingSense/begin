@@ -51,36 +51,19 @@ namespace BeginMobile.Android.Renderers
             }
         }
 
-        public override void Draw(global::Android.Graphics.Canvas canvas)
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            base.Draw(canvas);
-            var appHome = (AppHome)this.Element;
-            ActionBar actionBar = _activity.ActionBar;
+            base.OnElementPropertyChanged(sender, e);
+            _activity = this.Context as Activity;
 
-            SetUpTabs(actionBar, appHome);
-        }
+            if (_activity != null && e.PropertyName ==
+                AppHome.CounterTextProperty.PropertyName)
+            {
+                    var actionBar = _activity.ActionBar;
+                    var appHome = (AppHome)this.Element;
 
-        //protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        //{
-        //    base.OnElementPropertyChanged(sender, e);
-        //    _activity = this.Context as Activity;
-
-        //    if (_activity != null)
-        //    {
-        //        var actionBar = _activity.ActionBar;
-        //        var appHome = (AppHome)this.Element;
-
-        //        SetUpTabs(actionBar, appHome);
-        //    }
-        //}
-
-        protected override void OnDraw(global::Android.Graphics.Canvas canvas)
-        {
-            base.OnDraw(canvas);
-            var appHome = (AppHome)this.Element;
-            ActionBar actionBar = _activity.ActionBar;
-
-            SetUpTabs(actionBar, appHome);
+                    SetUpTabs(actionBar, appHome);
+            }
         }
 
         # region "Helper methods"
@@ -100,7 +83,6 @@ namespace BeginMobile.Android.Renderers
                 var count = 0;
                 var selectedTab = actionBar.SelectedTab;
                 var numTabSelected = selectedTab != null ? selectedTab.Position : 0 ;
-                //actionBar.SetDisplayOptions(ActionBarDisplayOptions.ShowHome, ActionBarDisplayOptions.ShowHome);
 
                 while (count < actionBar.TabCount)
                 {
@@ -115,8 +97,6 @@ namespace BeginMobile.Android.Renderers
                         var tabIcontAux = tabOne.CustomView.FindViewById<ImageView>(Resource.Id.tab_icon);
                         //var tabTextAux = tabOne.CustomView.FindViewById<TextView>(Resource.Id.tab_title);
                         var tabBadge = tabOne.CustomView.FindViewById<TextView>(Resource.Id.tab_badge);
-
-                        //tabTextAux.Text = childTab.Title;
 
                         var typeChild = childTab.GetType();
 
@@ -207,7 +187,7 @@ namespace BeginMobile.Android.Renderers
                     }
                     else
                     {
-                        SetUpTabSelected(actionBar, appHome);
+                        SetUpTabSelected(appHome, tabOne, count, numTabSelected);
                     }
 
                     count++;
@@ -215,57 +195,70 @@ namespace BeginMobile.Android.Renderers
             }
         }
 
-        private void SetUpTabSelected(ActionBar actionBar, AppHome appHome)
+        private void SetUpTabSelected(AppHome appHome, ActionBar.Tab tabOne, int indexTab, int numTabSelected)
         {
-            var tabselected = actionBar.SelectedTab;
-            if (actionBar.TabCount > 0 && tabselected != null && tabselected.CustomView != null)
+            var tabIcontAux = tabOne.CustomView.FindViewById<ImageView>(Resource.Id.tab_icon);
+
+            var childTab = (TabContent)appHome.Children[indexTab];
+            var typeChild = childTab.GetType();
+
+            var tabBadge = tabOne.CustomView.FindViewById<TextView>(Resource.Id.tab_badge);
+
+            if (typeChild == typeof(WallPage))
             {
-                var count = 0;
-                var numTabSelected = actionBar.SelectedNavigationIndex;
+                tabIcontAux.SetImageResource(numTabSelected == indexTab
+                        ? Resource.Drawable.iconwallactive
+                        : Resource.Drawable.iconwallinactive);
+            }
+            else if (typeChild == typeof(MessageListPage))
+            {
+                tabIcontAux.SetImageResource(numTabSelected == indexTab
+                        ? Resource.Drawable.iconmessagesactive
+                        : Resource.Drawable.iconmessagesinactive);
 
-                while (count < actionBar.TabCount)
+                var tabMessage = (MessageListPage)childTab;
+                int counter;
+
+                if (int.TryParse(tabMessage.LabelCounter.Text, out counter))
                 {
-                    var tabOne = actionBar.GetTabAt(count);
-                    var tabIcontAux = tabOne.CustomView.FindViewById<ImageView>(Resource.Id.tab_icon);
+                    if (counter > 0)
+                    {
+                        tabBadge.Text = counter >= 9
+                            ? LimitCounter
+                            : SpaceCounter + tabMessage.LabelCounter.Text + SpaceCounter;
 
-                    var childTab = (TabContent)appHome.Children[count];
-                    var typeChild = childTab.GetType();
-
-                    if (typeChild == typeof (WallPage))
-                    {
-                        tabIcontAux.SetImageResource(numTabSelected == count
-                                ? Resource.Drawable.iconwallactive
-                                : Resource.Drawable.iconwallinactive);
+                        tabBadge.Visibility = ViewStates.Visible;
                     }
-                    else if (typeChild == typeof (MessageListPage))
+                    else
                     {
-                        tabIcontAux.SetImageResource(numTabSelected == count
-                                ? Resource.Drawable.iconmessagesactive
-                                : Resource.Drawable.iconmessagesinactive);
+                        tabBadge.Visibility = ViewStates.Invisible;
                     }
-                    else if (typeChild == typeof (Pages.Notifications.Notification))
-                    {
-                        tabIcontAux.SetImageResource(numTabSelected == count
-                                ? Resource.Drawable.iconnotificationsactive
-                                : Resource.Drawable.iconnotificationsinactive);
-                    }
-                    else if (typeChild == typeof (ContactPage))
-                    {
-                        tabIcontAux.SetImageResource(numTabSelected == count
-                                ? Resource.Drawable.iconcontactsactive
-                                : Resource.Drawable.iconcontactsinactive);
-                    }
-                    else if (typeChild == typeof (OptionsPage))
-                    {
-                        tabIcontAux.SetImageResource(numTabSelected == count
-                                ? Resource.Drawable.iconmenuactive
-                                : Resource.Drawable.iconmenuinactive);
-                    }
-                    count++;
                 }
+                else
+                {
+                    tabBadge.Visibility = ViewStates.Invisible;
+                }
+
+            }
+            else if (typeChild == typeof(Pages.Notifications.Notification))
+            {
+                tabIcontAux.SetImageResource(numTabSelected == indexTab
+                        ? Resource.Drawable.iconnotificationsactive
+                        : Resource.Drawable.iconnotificationsinactive);
+            }
+            else if (typeChild == typeof(ContactPage))
+            {
+                tabIcontAux.SetImageResource(numTabSelected == indexTab
+                        ? Resource.Drawable.iconcontactsactive
+                        : Resource.Drawable.iconcontactsinactive);
+            }
+            else if (typeChild == typeof(OptionsPage))
+            {
+                tabIcontAux.SetImageResource(numTabSelected == indexTab
+                        ? Resource.Drawable.iconmenuactive
+                        : Resource.Drawable.iconmenuinactive);
             }
         }
-
         #endregion
     }
 }

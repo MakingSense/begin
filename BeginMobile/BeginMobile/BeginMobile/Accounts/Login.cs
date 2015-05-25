@@ -115,8 +115,8 @@ namespace BeginMobile.Accounts
                                                          Application.Current.Properties["IsLoggedIn"] = true;
                                                          Application.Current.Properties["LoginUser"] = loginUser;
 
-                                                         iLoginManager.ShowMainPage(loginUser);
-                                                         //iLoginManager.ShowUploaderPage();
+                                                         //iLoginManager.ShowMainPage(loginUser);
+                                                         iLoginManager.ShowUploaderPage();
                                                      }
                                                  }
                                                  

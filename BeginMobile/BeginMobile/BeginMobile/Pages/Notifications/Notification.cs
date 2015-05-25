@@ -5,12 +5,13 @@ using BeginMobile.Services.DTO;
 using BeginMobile.Services.Interfaces;
 using BeginMobile.Services.Logging;
 using Xamarin.Forms;
+using System.ComponentModel;
 
 namespace BeginMobile.Pages.Notifications
 {
     public class Notification : TabContent
     {
-        public readonly Label LabelCounter;
+        public Label LabelCounter;
         private readonly LoginUser _currentUser;
         public string MasterTitle { get; set; }
         private readonly UnreadNotification _unreadNotifications;
@@ -18,9 +19,13 @@ namespace BeginMobile.Pages.Notifications
         private readonly TabViewExposure _tabViewExposure;
         private readonly ILoggingService _log = Logger.Current;
 
-        public Notification(string title, string iconImg)
+        private AppHome _appHome;
+
+        public Notification(string title, string iconImg, AppHome parentHome)
             : base(title, iconImg)
         {
+            _appHome = parentHome;
+
             Title = title;
             MasterTitle = AppResources.AppHomeChildNotifications;
             LabelCounter = new Label();
@@ -39,6 +44,7 @@ namespace BeginMobile.Pages.Notifications
             if (profileNotification != null)
             {
                 LabelCounter.Text = profileNotification.UnreadCount;
+                _appHome.CounterText = profileNotification.UnreadCount;
             }
         }
 
@@ -67,6 +73,8 @@ namespace BeginMobile.Pages.Notifications
             MessagingCenter.Send(this, "masterTitle", title);
             MessagingCenter.Unsubscribe<Notification, string>(this, "masterTitle");
         }
+
+        
 
     }
 }
