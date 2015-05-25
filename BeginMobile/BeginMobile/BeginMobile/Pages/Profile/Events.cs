@@ -60,6 +60,7 @@ namespace BeginMobile.Pages.Profile
 
             var gridEventHeaderTitle = new Grid
             {
+                Padding = BeginApplication.Styles.ThicknessInsideListView,
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
 
@@ -67,7 +68,7 @@ namespace BeginMobile.Pages.Profile
             {
                 WidthRequest = 200,
                 HeightRequest = 80,
-                Padding = BeginApplication.Styles.ThicknessInsideListView,
+                
                 Text = AppResources.LabelEventName,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Style = BeginApplication.Styles.SubtitleStyle
