@@ -29,10 +29,9 @@ namespace BeginMobile.iOS.Renderers
             var tabBarController = ViewController as UITabBarController;
             if (tabBarController == null) return;
 
-            _window = new UIWindow(UIScreen.MainScreen.Bounds);
-
+            /*_window = new UIWindow(UIScreen.MainScreen.Bounds);
             _window.RootViewController = tabBarController;
-            _window.MakeKeyAndVisible();
+            _window.MakeKeyAndVisible();*/
             
 
             foreach (var viewController in tabBarController.ViewControllers)
