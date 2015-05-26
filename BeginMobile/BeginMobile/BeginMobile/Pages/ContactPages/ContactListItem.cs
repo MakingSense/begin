@@ -69,32 +69,42 @@ namespace BeginMobile.Pages.ContactPages
         {
             _buttonAddFriend = new Button
                                {
-                                   Text =  AppResources.ButtonAddFriend,
-                                   Style = BeginApplication.Styles.ListViewItemButton
+                                   //Text =  AppResources.ButtonAddFriend,
+                                   Image = BeginApplication.Styles.ContactAddIcon,
+                                   Style = BeginApplication.Styles.ButtonContactsListView,
+                                   HorizontalOptions = LayoutOptions.Start,
                                };
 
             _buttonRemoveFriend = new Button
                                   {
-                                      Text =  AppResources.ButtonRemoveFriend,
-                                      Style = BeginApplication.Styles.ListViewItemButton                                      
+                                      //Text =  AppResources.ButtonRemoveFriend,
+                                      Image = BeginApplication.Styles.ContactAddedIcon,
+                                      Style = BeginApplication.Styles.ButtonContactsListView,
+                                      HorizontalOptions = LayoutOptions.Start,
                                   };
 
             _buttonCancelFriend = new Button
                                   {
-                                      Text = AppResources.ButtonCancelRequestFriend,
-                                      Style = BeginApplication.Styles.ListViewItemButton                                     
+                                     // Text = AppResources.ButtonCancelRequestFriend,
+                                      Image = BeginApplication.Styles.ContactAddIcon,
+                                      Style = BeginApplication.Styles.ButtonContactsListView,
+                                      HorizontalOptions = LayoutOptions.Start,
                                   };
 
             _buttonAcceptFriend = new Button
                                   {
-                                      Text =  AppResources.ButtonAcceptFriend,
-                                      Style = BeginApplication.Styles.ListViewItemButton
+                                     // Text =  AppResources.ButtonAcceptFriend,
+                                      Image = BeginApplication.Styles.ContactAddIcon,
+                                      Style = BeginApplication.Styles.ButtonContactsListView,
+                                      HorizontalOptions = LayoutOptions.Start,
                                   };
 
             _buttonRejectFriend = new Button
                                   {
-                                      Text =  AppResources.ButtonRejectFriend,
-                                      Style = BeginApplication.Styles.ListViewItemButton
+                                      //Text =  AppResources.ButtonRejectFriend,
+                                      Image = BeginApplication.Styles.ContactAddIcon,
+                                      Style = BeginApplication.Styles.ButtonContactsListView,
+                                      HorizontalOptions = LayoutOptions.Start,
                                   };
 
             _buttonAddFriend.Clicked += AddFriendEventHandler;

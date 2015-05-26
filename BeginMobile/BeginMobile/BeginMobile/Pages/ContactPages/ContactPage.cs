@@ -99,7 +99,7 @@ namespace BeginMobile.Pages.ContactPages
 
             _gridLayoutMain = new Grid()
                               {
-                                  Padding = BeginApplication.Styles.ThicknessMainLayout,
+                                  //Padding = BeginApplication.Styles.ThicknessMainLayout,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   VerticalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =
@@ -115,7 +115,6 @@ namespace BeginMobile.Pages.ContactPages
             _gridLayoutMain.Children.Add(_stackLayoutLoadingIndicator, 0, 3);
 
             Content = _gridLayoutMain;
-
             Init();
         }
 
