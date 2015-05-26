@@ -18,6 +18,15 @@ namespace BeginMobile.Pages
         private MessageListPage _messages;
         private Notification _notification;
         private readonly ILoggingService _log = Logger.Current;
+
+        public static readonly BindableProperty CounterTextProperty =
+        BindableProperty.Create<AppHome, string>(p => p.CounterText, string.Empty);
+        public string CounterText
+        {
+            get { return (string)base.GetValue(CounterTextProperty); }
+            set { base.SetValue(CounterTextProperty, value); }
+        }
+
         public AppHome()	
         {
             LoadChilds();
@@ -81,43 +90,26 @@ namespace BeginMobile.Pages
                 new OptionsPage(
                     new Label
                     {
-                        Text = Device.OnPlatform(string.Empty, "...", "..."),
+                        Text = Device.OnPlatform(string.Empty, "More", "More"),
                         Style = BeginApplication.Styles.StyleNavigationTitle
                     }.Text,
                     Device.OnPlatform("iconmenuactive.png", "iconmenuactive.png", "iconmenuactive.png")));
 
-            this.CurrentPageChanged += OnPropertyChanging;
-        }
 
-        public static readonly BindableProperty CounterTextProperty =
-        BindableProperty.Create<AppHome, string>(p => p.CounterText, string.Empty);
-        public string CounterText
-        {
-            get { return (string)base.GetValue(CounterTextProperty); }
-            set { base.SetValue(CounterTextProperty, value); }
+            Title = CurrentPage.Title;
+
+            this.CurrentPageChanged += OnPropertyChanging;
         }
 
         private void OnPropertyChanging(object sender, EventArgs e)
         {
-            var item = sender as TabbedPage;
-
-            if (item != null && item.CurrentPage.Title.Equals(AppResources.AppHomeChildMessages))
+            var tabbedPage = sender as TabbedPage;
+            if (tabbedPage == null)
             {
-                try
-                {
-                    _messages.InitMessages();
+                return;
+            }
 
-                }
-                catch (Exception exception)
-                {
-                    _log.Exception(exception);
-                    AppContextError.Send(typeof(AppHome).Name, "OnPropertyChanging", exception, null, ExceptionLevel.Application);
-                }
-            }
-            if (item != null && item.CurrentPage.Title.Equals(AppResources.AppHomeChildNotifications))
-            {
-                _notification.InitilizeNotification();
-            }
+            Title = tabbedPage.CurrentPage.Title;
         }
     }
 }
