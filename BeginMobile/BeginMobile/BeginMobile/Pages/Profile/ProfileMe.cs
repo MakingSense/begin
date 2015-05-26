@@ -269,19 +269,19 @@ namespace BeginMobile.Pages.Profile
                              {
                                  Text = TabsNames.Tab1Activity,
                                  XAlign = TextAlignment.Center,
-                                 FontSize = BeginApplication.Styles.TextFontSizeLarge
+                                 FontSize = BeginApplication.Styles.TextFontSizeMedium,      
                              };
             _tabInformation = new Label
                               {
                                   Text = TabsNames.Tab2Information,
                                   XAlign = TextAlignment.Center,
-                                  FontSize = BeginApplication.Styles.TextFontSizeLarge,
+                                  FontSize = BeginApplication.Styles.TextFontSizeMedium,      
                               };
             _tabMore = new Label
                        {
                            Text = TabsNames.TabMore,
                            XAlign = TextAlignment.Center,
-                           FontSize = BeginApplication.Styles.TextFontSizeLarge,
+                           FontSize = BeginApplication.Styles.TextFontSizeMedium,      
                        };
 
             _tabActivities.GestureRecognizers.Add(tapGestureRecognizerTabOne);

@@ -21,7 +21,7 @@ namespace BeginMobile.Pages.Notifications
     public class ReadNotifications : ContentPage
     {
         private ListView _listViewNotifications;
-        public readonly Label LabelCounter;
+       // public readonly Label LabelCounter;
         private readonly LoginUser _currentUser;
 
         private readonly SearchView _searchView;
@@ -44,7 +44,7 @@ namespace BeginMobile.Pages.Notifications
             Title = "Read Notifications";
             //MasterTitle = AppResources.AppHomeChildNotifications;
             BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
-            LabelCounter = new Label();
+            //LabelCounter = new Label();
 
             _searchView = new SearchView
             {
@@ -89,7 +89,7 @@ namespace BeginMobile.Pages.Notifications
                     BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken, limit, status);
             if (profileNotification != null)
             {
-                LabelCounter.Text = profileNotification.UnreadCount;
+                //LabelCounter.Text = profileNotification.UnreadCount;
             }
             _listViewNotifications.ItemsSource = profileNotification != null && profileNotification.Notifications.Any()
                 ? new ObservableCollection<NotificationViewModel>(RetrieveNotifications(profileNotification))
@@ -249,7 +249,7 @@ namespace BeginMobile.Pages.Notifications
 
             if (profileNotification != null)
             {
-                LabelCounter.Text = profileNotification.UnreadCount;
+                //LabelCounter.Text = profileNotification.UnreadCount;
             }
             LoadStatusOptionsPicker();
 
@@ -425,7 +425,7 @@ namespace BeginMobile.Pages.Notifications
                         var updatedNotifications = await BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken);
                         if (updatedNotifications != null)
                         {
-                            LabelCounter.Text = updatedNotifications.UnreadCount;
+                           // LabelCounter.Text = updatedNotifications.UnreadCount;
                         }
                     }
                 }
@@ -454,7 +454,7 @@ namespace BeginMobile.Pages.Notifications
 
                         var updatedNotifications = await
                           BeginApplication.ProfileServices.GetProfileNotification(_currentUser.AuthToken);
-                        LabelCounter.Text = updatedNotifications.UnreadCount;
+                        //LabelCounter.Text = updatedNotifications.UnreadCount;
                     }
                 }
             };

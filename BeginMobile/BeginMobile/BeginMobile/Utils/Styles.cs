@@ -489,14 +489,14 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return new Thickness(0, 10, 0, 50);
+                return new Thickness(0, 10, 0, 0);
             }
         }
         public Thickness ThicknessInsideListView
         {
             get
             {
-                return new Thickness(15, 10, 15, 10);
+                return new Thickness(15, 0, 0, 0);
 
             }
         }
@@ -504,8 +504,8 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return Device.OnPlatform(new Thickness(5, 0, 0, 0), new Thickness(5, 0, 0, 0),
-                    new Thickness(5, 0, 0, 0));
+                return Device.OnPlatform(new Thickness(5, 0, 15, 0), new Thickness(5, 0, 15, 0),
+                    new Thickness(5, 0, 15, 0));
             }
         }
 
@@ -1459,11 +1459,11 @@ namespace BeginMobile.Utils
         //General Iconsratingon
         public string RankingAddIcon
         {
-            get { return "ratingon.png"; }
+            get { return "star_active.png"; }
         }
         public string RankingDefaultIcon
         {
-            get { return "ratingoff.png"; }
+            get { return "star_inactive.png"; }
         }
         public string WriteIcon
         {

@@ -36,14 +36,14 @@ namespace BeginMobile.Pages.Profile
             {
                 Text = string.Empty,
                 XAlign = TextAlignment.Center,
-                FontSize = BeginApplication.Styles.TextFontSizeLarge,                
+                FontSize = BeginApplication.Styles.TextFontSizeMedium,                
             };
 
             _tabTwo = new Label
             {
                 Text = string.Empty,
                 XAlign = TextAlignment.Center,
-                FontSize = BeginApplication.Styles.TextFontSizeLarge
+                FontSize = BeginApplication.Styles.TextFontSizeMedium
             };
 
             _tabOne.GestureRecognizers.Add(tapGestureRecognizerTabOne);
@@ -74,7 +74,7 @@ namespace BeginMobile.Pages.Profile
             var mainGrid = new Grid
                            {
                                Padding = BeginApplication.Styles.ThicknessMainLayout,
-                               BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
+                               BackgroundColor = BeginApplication.Styles.ColorWhite,
                                HorizontalOptions = LayoutOptions.Center,
                                VerticalOptions = LayoutOptions.FillAndExpand,
                                RowDefinitions = new RowDefinitionCollection
@@ -97,7 +97,7 @@ namespace BeginMobile.Pages.Profile
                                                     {
                                                         new RowDefinition {Height = new GridLength(10,GridUnitType.Auto)},
                                                         new RowDefinition {Height = GridLength.Auto},
-                                                        new RowDefinition {Height = new GridLength(0.3,GridUnitType.Star)}
+                                                        
                                                     },
                                    ColumnDefinitions = new ColumnDefinitionCollection
                                                        {

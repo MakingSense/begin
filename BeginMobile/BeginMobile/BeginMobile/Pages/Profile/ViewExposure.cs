@@ -59,19 +59,19 @@ namespace BeginMobile.Pages.Profile
                       {
                           Text = string.Empty,
                           XAlign = TextAlignment.Center,
-                          FontSize = BeginApplication.Styles.TextFontSizeLarge,
+                          FontSize = BeginApplication.Styles.TextFontSizeMedium,
                       };
             _tabTwo = new Label
                       {
                           Text = string.Empty,
                           XAlign = TextAlignment.Center,
-                          FontSize = BeginApplication.Styles.TextFontSizeLarge,
+                          FontSize = BeginApplication.Styles.TextFontSizeMedium,
                       };
             _tabThree = new Label
                         {
                             Text = string.Empty,
                             XAlign = TextAlignment.Center,
-                            FontSize = BeginApplication.Styles.TextFontSizeLarge,
+                            FontSize = BeginApplication.Styles.TextFontSizeMedium,
                         };
 
             _tabOne.GestureRecognizers.Add(tapGestureRecognizerTabOne);

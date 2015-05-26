@@ -86,11 +86,8 @@ namespace BeginMobile.Pages.Notifications
                 RowDefinitions =
                                   {
                                       new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto}
                                   },
-                ColumnDefinitions =
-                                  {
-                                      new ColumnDefinition {Width = GridLength.Auto}
-                                  }
             };
             gridDetails.Children.Add(labelnotificationDesc, 0, 0);
             gridDetails.Children.Add(labelintervalDate, 0, 1);
