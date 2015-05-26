@@ -24,7 +24,7 @@ namespace BeginMobile.Pages.MessagePages
             : base(title, iconImg)
         {
             _appHome = parentHome;
-
+            BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
             Title = title;
             MasterTitle = AppResources.AppHomeChildMessages;
             LabelCounter = new Label();

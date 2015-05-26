@@ -55,7 +55,7 @@ namespace BeginMobile.Pages.MessagePages
 
             var gridComponents = new Grid
                                  {
-                                     Padding = Device.OnPlatform(new Thickness(0, 0, 15, 0), new Thickness(0, 0, 15, 0), new Thickness(0, 0, 15, 0)),
+                                     Padding = BeginApplication.Styles.ThicknessInsideListView,
                                      VerticalOptions = LayoutOptions.CenterAndExpand,
                                      HorizontalOptions = LayoutOptions.StartAndExpand,
                                      RowDefinitions =

@@ -35,7 +35,8 @@ namespace BeginMobile.Pages.Profile
             _myEvents = new Events();
             _tabViewExposure = new TabViewExposure();
 
-            Style = BeginApplication.Styles.PageStyle;
+           // Style = BeginApplication.Styles.PageStyle;
+            BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
 
             var tapGestureRecognizerTabOne = new TapGestureRecognizer
                                              {

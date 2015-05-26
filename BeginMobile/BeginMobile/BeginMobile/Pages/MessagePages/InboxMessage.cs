@@ -42,7 +42,7 @@ namespace BeginMobile.Pages.MessagePages
         {
             try
             {
-                Style = BeginApplication.Styles.PageStyle;
+                BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
                 _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
 
                 LoadDeafultImage();

@@ -17,7 +17,7 @@ namespace BeginMobile.Utils
 
         public Styles()
         {
-            FontFamily = Device.OnPlatform("Cochin", "Roboto", "Helvetica");
+            FontFamily = Device.OnPlatform("Helvetica", "Roboto", "Helvetica");
 
             var fontSizeForButtonMedium = Device.OnPlatform(
                 Device.GetNamedSize(NamedSize.Medium, typeof (Button)),
@@ -420,8 +420,8 @@ namespace BeginMobile.Utils
             get
             {
                 return Device.OnPlatform
-                    (Color.FromHex("646567"),
-                        Color.FromHex("646567"), Color.FromHex("646567"));
+                    (Color.FromHex("222222"),
+                        Color.FromHex("222222"), Color.FromHex("222222"));
             }
         }
 
@@ -481,6 +481,7 @@ namespace BeginMobile.Utils
                               }
                           }
                       };
+
             }
         }
 
@@ -488,14 +489,14 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return new Thickness(0, 0, 0, 50);
+                return new Thickness(0, 10, 0, 50);
             }
         }
         public Thickness ThicknessInsideListView
         {
             get
             {
-                return new Thickness(15, 0, 15, 0);
+                return new Thickness(15, 10, 15, 10);
 
             }
         }

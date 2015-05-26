@@ -41,7 +41,7 @@ namespace BeginMobile.Pages.MessagePages
         {
             try
             {
-                Style = BeginApplication.Styles.PageStyle;
+                BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
                 Title = AppResources.MessageSentTitle;
                 IsSent = true;
                 InboxMessage.IsInbox = false;

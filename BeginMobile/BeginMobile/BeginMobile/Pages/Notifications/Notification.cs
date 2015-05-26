@@ -27,6 +27,7 @@ namespace BeginMobile.Pages.Notifications
             _appHome = parentHome;
 
             Title = title;
+            BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
             MasterTitle = AppResources.AppHomeChildNotifications;
             LabelCounter = new Label();
             _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
@@ -52,10 +53,10 @@ namespace BeginMobile.Pages.Notifications
         {
             try
             {
-                _tabViewExposure.PageOne = _unreadNotifications;
-                _tabViewExposure.PageTwo = _readNotifications;
-                _tabViewExposure.TabOneName = TabsNames.Tab1Notifications;
-                _tabViewExposure.TabTwoName = TabsNames.Tab2Notifications;
+                _tabViewExposure.PageOne = _readNotifications;
+                _tabViewExposure.PageTwo = _unreadNotifications;
+                _tabViewExposure.TabOneName = TabsNames.Tab2Notifications;
+                _tabViewExposure.TabTwoName = TabsNames.Tab1Notifications;
                 _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Notifications);
                 Content = _tabViewExposure.Content;
             }

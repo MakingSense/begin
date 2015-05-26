@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Pages.Profile;
 
 namespace BeginMobile.Pages.Wall
 {
@@ -33,7 +34,7 @@ namespace BeginMobile.Pages.Wall
         public const string TextGroupTopic = " group topic";
         public const string TextActivity = " activity";
         private bool _areLastItems;
-
+        private Write _newPublication;
         private ActivityIndicator _activityIndicatorLoading;
 
         private ImageSource _imageSourceWallByDefault;
@@ -45,7 +46,7 @@ namespace BeginMobile.Pages.Wall
         {
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             //MasterTitle = AppResources.AppHomeChildNewsFeed;
-
+            _newPublication = new Write(_currentUser);
             Title = AppResources.AppHomeChildNewsFeed;
             BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
 
@@ -67,19 +68,27 @@ namespace BeginMobile.Pages.Wall
             };
 
             _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator(ref _activityIndicatorLoading);
-
-            _gridMain.Children.Add(_stackLayoutLoadingIndicator, 0, 1);
+            _gridMain.Children.Add(_newPublication.Container, 0, 0);
+            _gridMain.Children.Add(_stackLayoutLoadingIndicator, 0, 2);
 
             //Section Toolbar items
-            var toolBarEditPublicWall = new ToolbarItem()
+            ToolbarItems.Add(new ToolbarItem("Publication", BeginApplication.Styles.WriteIcon, async () =>
             {
-                Order = ToolbarItemOrder.Primary,
-                Name = "Public Wall",
-                Icon = BeginApplication.Styles.WriteIcon,
-                Command = new Command(async () => ExecuteEditPublicWallCommand())
-            };
+                _newPublication
+                    .Container
+                    .IsVisible
+                    = true;
+            }));
+            //var toolBarEditPublicWall = new ToolbarItem()
+            //{
+            //    Order = ToolbarItemOrder.Primary,
+            //    Name = "Public Wall",
+            //    Icon = BeginApplication.Styles.WriteIcon,
+            //    Command = new Command(async () => ExecuteEditPublicWallCommand())
+            //};
 
-            ToolbarItems.Add(toolBarEditPublicWall);
+            //ToolbarItems.Add(toolBarEditPublicWall);
+            
             //End Toolbar items
 
             Content = _gridMain;
@@ -88,7 +97,8 @@ namespace BeginMobile.Pages.Wall
 
         protected async Task ExecuteEditPublicWallCommand()
         {
-            await DisplayAlert("Public Wall", "Edit wall", "Ok");
+            _newPublication.Container.IsVisible = true;
+           // await DisplayAlert("Public Wall", "Edit wall", "Ok");
         }
 
         private ObservableCollection<BeginWallViewModel> ListBeginWallViewModel(List<BeginMobile.Services.DTO.WallActivityItem> oldListWall)
@@ -166,7 +176,7 @@ namespace BeginMobile.Pages.Wall
             _activityIndicatorLoading.IsRunning = false;
             _activityIndicatorLoading.IsVisible = false;
 
-            _gridMain.Children.Add(relativeLayoutMain, 0, 0);
+            _gridMain.Children.Add(relativeLayoutMain, 0, 1);
 
             Content = _gridMain;
 

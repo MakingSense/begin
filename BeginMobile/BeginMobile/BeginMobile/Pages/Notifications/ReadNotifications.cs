@@ -43,7 +43,7 @@ namespace BeginMobile.Pages.Notifications
         {
             Title = "Read Notifications";
             //MasterTitle = AppResources.AppHomeChildNotifications;
-            Style = BeginApplication.Styles.PageStyle;
+            BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
             LabelCounter = new Label();
 
             _searchView = new SearchView
@@ -347,6 +347,7 @@ namespace BeginMobile.Pages.Notifications
         {
             return profileNotification.Notifications.Select(model => new NotificationViewModel
             {
+                Icon = BeginApplication.Styles.DefaultContactIcon,
                 Id = model.NotificationId,
                 ItemId = model.ItemId,
                 Action = model.Action,

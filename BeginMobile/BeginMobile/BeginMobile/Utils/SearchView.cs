@@ -50,7 +50,7 @@ namespace BeginMobile.Utils
                         };
             Container.Children.Add(ButtonCloseSearch);
             Container.Children.Add(SearchBar);
-            Container.Children.Add(Limit);
+           // Container.Children.Add(Limit);
         }
 
         private void CloseSearchEventHandler(object sender, EventArgs e)

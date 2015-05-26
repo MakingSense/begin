@@ -318,67 +318,67 @@
                                             OptionName = MenuItemsNames.AppHomeShops
                                         },
                                       //
+                                      //new MenuItemViewModel
+                                      //{
+                                      //    Icon = BeginApplication.Styles.KnocksMenuITemIcon,
+                                      //    OptionName =
+                                      //        MenuItemsNames
+                                      //        .Knocks
+                                      //},
+                                      //new MenuItemViewModel
+                                      //{
+                                      //    Icon = "",
+                                      //    OptionName = ""
+                                      //},
                                       new MenuItemViewModel
                                       {
-                                          Icon = BeginApplication.Styles.KnocksMenuITemIcon,
-                                          OptionName =
-                                              MenuItemsNames
-                                              .Knocks
-                                      },
-                                      new MenuItemViewModel
-                                      {
-                                          Icon = "",
-                                          OptionName = ""
-                                      },
-                                      new MenuItemViewModel
-                                      {
-                                          Icon =  BeginApplication.Styles.LogoutIcon,
+                                          Icon =  BeginApplication.Styles.ProfileMenuItemIcon,
                                           OptionName =
                                               MenuItemsNames
                                               .Logout
                                       },
                                       new MenuItemViewModel
                                       {
-                                          Icon =  BeginApplication.Styles.PrivacyIcon,
+                                          Icon =  BeginApplication.Styles.ProfileMenuItemIcon,
                                           OptionName =
                                               MenuItemsNames
                                               .ChangePassword
                                       },
-                                      new MenuItemViewModel
-                                      {
-                                          Icon =  BeginApplication.Styles.AboutUsIcon,
-                                          OptionName =
-                                              MenuItemsNames
-                                              .About
-                                      },
-                                      new MenuItemViewModel
-                                      {
-                                          Icon =  BeginApplication.Styles.PrivacyIcon,
-                                          OptionName =
-                                              MenuItemsNames
-                                              .Privacy
-                                      },
-                                      new MenuItemViewModel
-                                      {
-                                          Icon = BeginApplication.Styles.HelpCenterIcon,
-                                          OptionName =
-                                              MenuItemsNames
-                                              .HelpCenter
-                                      },
-                                      new MenuItemViewModel
-                                      {
-                                          Icon =  BeginApplication.Styles.TermsAndConditionsIcon,
-                                          OptionName =
-                                              MenuItemsNames
-                                              .TermsAndConditions
-                                      },
-                                      new MenuItemViewModel
-                                      {
-                                          Icon = "",
-                                          OptionName =
-                                              MenuItemsNames
-                                              .UpdateProfile
-                                      }
+                                      //new MenuItemViewModel
+                                      //{
+                                      //    Icon =  BeginApplication.Styles.AboutUsIcon,
+                                      //    OptionName =
+                                      //        MenuItemsNames
+                                      //        .About
+                                      //},
+                                      //new MenuItemViewModel
+                                      //{
+                                      //    Icon =  BeginApplication.Styles.PrivacyIcon,
+                                      //    OptionName =
+                                      //        MenuItemsNames
+                                      //        .Privacy
+                                      //},
+                                      //new MenuItemViewModel
+                                      //{
+                                      //    Icon = BeginApplication.Styles.HelpCenterIcon,
+                                      //    OptionName =
+                                      //        MenuItemsNames
+                                      //        .HelpCenter
+                                      //},
+                                      //new MenuItemViewModel
+                                      //{
+                                      //    Icon =  BeginApplication.Styles.TermsAndConditionsIcon,
+                                      //    OptionName =
+                                      //        MenuItemsNames
+                                      //        .TermsAndConditions
+                                      //},
+                                      //new MenuItemViewModel
+                                      //{
+                                      //    Icon = "",
+                                      //    OptionName =
+                                      //        MenuItemsNames
+                                      //        .UpdateProfile
+                                      //}
                                   };
 
                         var listViewMenuOptions = new ListView
@@ -493,7 +493,7 @@
                             Padding = BeginApplication.Styles.ThicknessMainLayout,
                             Children =
                                               {
-                                                  listViewMenuIcon,
+                                                  //listViewMenuIcon,
                                                   stackLayoutControls
                                               }
                         };
