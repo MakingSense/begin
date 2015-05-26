@@ -103,13 +103,31 @@ namespace BeginMobile.Pages
 
         private void OnPropertyChanging(object sender, EventArgs e)
         {
-            var tabbedPage = sender as TabbedPage;
-            if (tabbedPage == null)
+            var item = sender as TabbedPage;
+
+            if (item == null)
             {
                 return;
             }
 
-            Title = tabbedPage.CurrentPage.Title;
+            Title = item.CurrentPage.Title;
+
+            if (item != null && item.CurrentPage.Title.Equals(AppResources.AppHomeChildMessages))
+            {
+                try
+                {
+                    _messages.InitMessages();
+                }
+                catch (Exception exception)
+                {
+                    _log.Exception(exception);
+                    AppContextError.Send(typeof(AppHome).Name, "OnPropertyChanging", exception, null, ExceptionLevel.Application);
+                }
+            }
+            if (item != null && item.CurrentPage.Title.Equals(AppResources.AppHomeChildNotifications))
+            {
+                _notification.InitilizeNotification();
+            }
         }
     }
 }
