@@ -245,6 +245,29 @@ namespace BeginMobile.Android.Renderers
                 tabIcontAux.SetImageResource(numTabSelected == indexTab
                         ? Resource.Drawable.iconnotificationsactive
                         : Resource.Drawable.iconnotificationsinactive);
+
+                var tabNotification = (Pages.Notifications.Notification)childTab;
+                int counter;
+
+                if (int.TryParse(tabNotification.LabelCounter.Text, out counter))
+                {
+                    if (counter > 0)
+                    {
+                        tabBadge.Text = counter >= 9
+                            ? LimitCounter
+                            : SpaceCounter + tabNotification.LabelCounter.Text + SpaceCounter;
+
+                        tabBadge.Visibility = ViewStates.Visible;
+                    }
+                    else
+                    {
+                        tabBadge.Visibility = ViewStates.Invisible;
+                    }
+                }
+                else
+                {
+                    tabBadge.Visibility = ViewStates.Invisible;
+                }
             }
             else if (typeChild == typeof(ContactPage))
             {

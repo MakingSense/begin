@@ -209,6 +209,8 @@ namespace BeginMobile.UploadPages
             {
                 Text = "Select from Folder",
                 Style = BeginApplication.Styles.DefaultButton,
+                BackgroundColor = BeginApplication.Styles.ColorBrown,
+                TextColor = BeginApplication.Styles.ColorWhiteBackground
             };
             _buttonSelectFromFolder.Clicked += async (s, e) =>
             {

@@ -18,11 +18,14 @@ namespace BeginMobile.Pages.Wall
                 Style = BeginApplication.Styles.ListTitleWallStyle,
                 LineBreakMode = LineBreakMode.WordWrap,
             };
-            labelUserName.SetBinding(Label.TextProperty, "DisplayName", stringFormat: "@ {0}");
+            labelUserName.SetBinding(Label.TextProperty, "DisplayName", stringFormat: "@{0}");
 
             var labelDatePublic = new Label()
             {
                 Style = BeginApplication.Styles.ListDescriptionWallStyle,
+                XAlign = TextAlignment.End,
+                YAlign = TextAlignment.Center,
+                HorizontalOptions = LayoutOptions.End,
             };
             labelDatePublic.SetBinding(Label.TextProperty, "PublicDateShort");
 
@@ -32,6 +35,11 @@ namespace BeginMobile.Pages.Wall
                 RowDefinitions =
                 {
                     new RowDefinition(){ Height = GridLength.Auto}
+                },
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition(){ Width = new GridLength (170, GridUnitType.Absolute)},
+                    new ColumnDefinition(){ Width = GridLength.Auto}
                 }
             };
             gridUserAndTime.Children.Add(labelUserName, 0, 0);
@@ -41,9 +49,10 @@ namespace BeginMobile.Pages.Wall
                              {
                                  YAlign = TextAlignment.End,
                                  //FontAttributes = FontAttributes.Bold,
-                                 Style = BeginApplication.Styles.ListDescriptionWallStyle
+                                 Style = BeginApplication.Styles.ListDescriptionWallStyle,
                              };
             labelTitle.SetBinding(Label.TextProperty, "Title");
+            labelTitle.SetBinding(Label.IsVisibleProperty, "PublicTitle");
 
             var labelReason = new Label
                               {

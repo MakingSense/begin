@@ -63,6 +63,7 @@ namespace BeginMobile.Pages.Wall
                 RowDefinitions =
                 {
                     new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto },
                     new RowDefinition { Height = GridLength.Auto }
                 }
             };
@@ -186,7 +187,7 @@ namespace BeginMobile.Pages.Wall
 
         private void removeLoadingIndicator(View loadingIndicator)
         {
-            _gridMain.RowDefinitions[1].Height = GridLength.Auto;
+            _gridMain.RowDefinitions[2].Height = GridLength.Auto;
             if (_gridMain.Children.Contains(loadingIndicator))
             {
                 _gridMain.Children.Remove(loadingIndicator);
@@ -196,10 +197,10 @@ namespace BeginMobile.Pages.Wall
         
         private void addLoadingIndicator(View loadingIndicator)
         {
-            _gridMain.RowDefinitions[1].Height = Device.OnPlatform<double>(33, 43, 43);
+            _gridMain.RowDefinitions[2].Height = Device.OnPlatform<double>(33, 43, 43);
             if (!_gridMain.Children.Contains(loadingIndicator))
             {
-                _gridMain.Children.Add(loadingIndicator, 0, 1);
+                _gridMain.Children.Add(loadingIndicator, 0, 2);
             }
         }
 
@@ -296,14 +297,13 @@ namespace BeginMobile.Pages.Wall
                 Component = wallItem.Component,
                 Type = wallItem.Type,
                 PublicDate = wallItem.Date,
-                PublicDateShort = wallItem.Date
+                PublicDateShort = wallItem.Date,
             };
 
 
             switch (wallItem.Type)
             {
                 case WallParameters.CreatedGroup:
-                    
                     beginWall.DisplayName = wallItem.User.DisplayName;
                     beginWall.ExtraText = "";
                     beginWall.DisplayNameTwo = "";
@@ -370,6 +370,7 @@ namespace BeginMobile.Pages.Wall
                     break;
                 case WallParameters.FriendshipCreated:
                 case WallParameters.FriendshipAccepted:
+                    beginWall.PublicTitle = true;
                     beginWall.DisplayName = wallItem.User1.DisplayName;
                     beginWall.ExtraText = TextAnd;
                     beginWall.DisplayNameTwo = wallItem.User2.DisplayName;
