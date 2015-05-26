@@ -774,6 +774,28 @@ namespace BeginMobile.Utils
             }
         }
 
+        public Style ButtonContactsListView
+        {
+            get
+            {
+                var style = new Style(typeof (Button))
+                            {
+                                Setters =
+                                {
+                                    new Setter
+                                    {
+                                        Property = VisualElement.BackgroundColorProperty,
+                                        Value = Color.Transparent
+                                    },
+                                    
+                                    new Setter {Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Start}
+                                }
+                            };
+                
+                return style;
+            }
+        }
+
         public Color ApplicationGreenColor
         {
             get

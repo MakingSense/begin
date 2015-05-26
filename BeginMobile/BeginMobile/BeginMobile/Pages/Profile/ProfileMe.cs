@@ -128,7 +128,7 @@ namespace BeginMobile.Pages.Profile
             gridRakingImage.Children.Add(imageRankingDefault, 3, 0);
             gridRakingImage.Children.Add(imageRankingDefault, 4, 0);            
 
-            for (var indexer = 0; indexer < GotPuntuation; indexer ++)
+            for (var indexer = 0; indexer <= GotPuntuation; indexer ++)
             {                
                 var image = new Image
                             {
