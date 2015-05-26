@@ -226,6 +226,7 @@ namespace BeginMobile.Pages.Profile
                     break;
                 case WallParameters.FriendshipCreated:
                 case WallParameters.FriendshipAccepted:
+                    beginWall.PublicTitle = true;
                     beginWall.DisplayName = wallItem.User1.DisplayName;
                     beginWall.ExtraText = TextAnd;
                     beginWall.DisplayNameTwo = wallItem.User2.DisplayName;
