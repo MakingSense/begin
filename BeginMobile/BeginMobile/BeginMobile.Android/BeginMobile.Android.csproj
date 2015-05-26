@@ -253,6 +253,10 @@
     <AndroidResource Include="Resources\Drawable\TabBackgroundNormal.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\Drawable\contact_add.png" />
+    <AndroidResource Include="Resources\Drawable\contact_added.png" />
+    <AndroidResource Include="Resources\Drawable\star_active.png" />
+    <AndroidResource Include="Resources\Drawable\star_inactive.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">
