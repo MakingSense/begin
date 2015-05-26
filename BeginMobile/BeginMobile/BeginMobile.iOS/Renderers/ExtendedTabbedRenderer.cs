@@ -16,6 +16,7 @@ namespace BeginMobile.iOS.Renderers
     public class ExtendedTabbedRenderer : TabbedRenderer
     {
         private AppHome _appHome;
+        private UIWindow _window;
 
         public override void ViewWillAppear(bool animated)
         {
@@ -27,6 +28,12 @@ namespace BeginMobile.iOS.Renderers
 
             var tabBarController = ViewController as UITabBarController;
             if (tabBarController == null) return;
+
+            _window = new UIWindow(UIScreen.MainScreen.Bounds);
+
+            _window.RootViewController = tabBarController;
+            _window.MakeKeyAndVisible();
+            
 
             foreach (var viewController in tabBarController.ViewControllers)
             {				
