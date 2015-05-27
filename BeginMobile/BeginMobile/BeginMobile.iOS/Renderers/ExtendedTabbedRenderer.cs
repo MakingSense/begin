@@ -16,7 +16,7 @@ namespace BeginMobile.iOS.Renderers
     public class ExtendedTabbedRenderer : TabbedRenderer
     {
         private AppHome _appHome;
-        private UIWindow _window;
+        //private UIWindow _window;
 
         public override void ViewWillAppear(bool animated)
         {

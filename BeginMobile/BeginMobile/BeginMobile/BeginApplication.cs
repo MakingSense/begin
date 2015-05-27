@@ -39,16 +39,19 @@ namespace BeginMobile
 
             _log.Info("Start Begin Xamarin Application.");
 
-            nav = new NavigationPage(new SplashPage());    //load splash page      
-            MainPage = nav;
-            LoadData();                                                
+            MainPage = new NavigationPage(new LoginModalPage(this));
+
+            //nav = new NavigationPage(new SplashPage());    //load splash page      
+            //MainPage = nav;
+            //LoadData();                                                
         }
         
-        private async void LoadData()
+        /*private async void LoadData()
         {
             await Task.Delay(3000);
             MainPage = new NavigationPage(new LoginModalPage(this));
-        }
+        }*/
+
         private void AppExceptionEventHander(object sender, UnhandledExceptionEventArgs eventArgs)
         {
             MessagingCenter.Send(this, "UnhandledException", eventArgs);

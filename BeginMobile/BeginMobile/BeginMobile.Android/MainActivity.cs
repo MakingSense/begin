@@ -11,7 +11,7 @@ using XLabs.Platform.Services.Media;
 
 namespace BeginMobile.Android
 {
-    [Activity(Label = "BeginMobile", Icon = "@drawable/icon", MainLauncher = true, Theme = "@style/BeginMobileTheme",
+    [Activity(Label = "BeginMobile", Icon = "@drawable/icon", MainLauncher = false, Theme = "@style/BeginMobileTheme",
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
