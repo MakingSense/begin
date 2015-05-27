@@ -287,7 +287,7 @@
                                       new MenuItemViewModel
                                       {
                                           Icon =
-                                              BeginApplication.Styles.ProfileMenuItemIcon,
+                                              BeginApplication.Styles.ContactsMenu,
                                           OptionName =
                                               MenuItemsNames
                                               .Profile
@@ -296,25 +296,25 @@
                                       //More options
                                         new MenuItemViewModel
                                         {
-                                            Icon = DefaultIcon,
+                                            Icon = BeginApplication.Styles.GroupsMenu,
                                             OptionName = MenuItemsNames.AppHomeChildGroups
                                         },
 
                                         new MenuItemViewModel
                                         {
-                                            Icon = DefaultIcon,
+                                            Icon = BeginApplication.Styles.EventsMenu,
                                             OptionName = MenuItemsNames.AppHomeChildEvents
                                         },
 
                                         new MenuItemViewModel
                                         {
-                                            Icon = DefaultIcon,
+                                            Icon =BeginApplication.Styles.ServicesMenu,
                                             OptionName = MenuItemsNames.AppHomeServices
                                         },
 
                                         new MenuItemViewModel
                                         {
-                                            Icon = DefaultIcon,
+                                            Icon = BeginApplication.Styles.ShopsMenu,
                                             OptionName = MenuItemsNames.AppHomeShops
                                         },
                                       //
@@ -332,14 +332,14 @@
                                       //},
                                       new MenuItemViewModel
                                       {
-                                          Icon =  BeginApplication.Styles.ProfileMenuItemIcon,
+                                          Icon =  BeginApplication.Styles.ContactsMenu,
                                           OptionName =
                                               MenuItemsNames
                                               .Logout
                                       },
                                       new MenuItemViewModel
                                       {
-                                          Icon =  BeginApplication.Styles.ProfileMenuItemIcon,
+                                          Icon =  BeginApplication.Styles.ContactsMenu,
                                           OptionName =
                                               MenuItemsNames
                                               .ChangePassword
@@ -479,6 +479,7 @@
 
                         var stackLayoutControls = new StackLayout
                         {
+                            Padding = BeginApplication.Styles.ThicknessInsideListView,
                             VerticalOptions = LayoutOptions.FillAndExpand,
                             Orientation = StackOrientation.Vertical,
                             Children =
@@ -519,7 +520,8 @@
                     {
                         var icon = new Image
                         {
-                            HorizontalOptions = LayoutOptions.Start
+                            HorizontalOptions = LayoutOptions.Start,
+                            VerticalOptions = LayoutOptions.Start
                         };
                         icon.SetBinding(Image.SourceProperty, new Binding("Icon"));
                         icon.WidthRequest = icon.HeightRequest = 40;
@@ -541,6 +543,8 @@
                         var labelOptionName = new Label
                         {
                             HorizontalOptions = LayoutOptions.FillAndExpand,
+                            YAlign = TextAlignment.Center,
+                            XAlign = TextAlignment.Start,
                             TextColor = BeginApplication.Styles.MenuTextOptionsColor
                         };
 
@@ -574,7 +578,7 @@
 
                         var optionLayout = CreateOptionLayout();
                         View = new StackLayout
-                        {
+                        {                            
                             Orientation = StackOrientation.Horizontal,
                             Children =
                        {

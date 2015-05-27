@@ -1532,6 +1532,31 @@ namespace BeginMobile.Utils
             get { return "logo.png"; }
         }
 
+        //menu
+
+        public string ServicesMenu
+        {
+            get { return "services_menu.PNG"; }
+        }
+        public string ShopsMenu
+        {
+            get { return "shops_menu.PNG"; }
+        }
+
+        public string GroupsMenu
+        {
+            get { return "groups_menu.PNG"; }
+        }
+        public string EventsMenu
+        {
+            get { return "events_menu.PNG"; }
+        }
+        public string ContactsMenu
+        {
+            get { return "contacts_menu.PNG"; }
+        }
+        
+
         #endregion
     }
 }
