@@ -16,12 +16,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" image="Icon-60.png" translatesAutoresizingMaskIntoConstraints="NO" id="23">
+                            <imageView userInteractionEnabled="NO" contentMode="center" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="23" alpha="1" image="logoSplash.png">
                                 <rect key="frame" x="270" y="270" width="60" height="60"/>
                                 <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                <color key="backgroundColor" colorSpace="calibratedRGB" red="0.30588235294117649" green="0.74117647058823533" blue="0.5490196078431373" alpha="0"/>
+                                <color key="tintColor" colorSpace="calibratedRGB" red="0.30588235294117649" green="0.74117647058823533" blue="0.5490196078431373" alpha="1"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.30588235294117649" green="0.74117647058823533" blue="0.5490196078431373" alpha="1"/>
                         <constraints>
                             <constraint firstItem="23" firstAttribute="centerY" secondItem="yd7-JS-zBw" secondAttribute="centerY" priority="1" id="39"/>
                             <constraint firstItem="23" firstAttribute="centerX" secondItem="yd7-JS-zBw" secondAttribute="centerX" priority="1" id="41"/>
@@ -35,5 +37,79 @@
     </scenes>
     <resources>
         <image name="Icon-60.png" width="180" height="180"/>
+        <image name="a_event.png" width="150" height="150"/>
+        <image name="about_us.png" width="80" height="80"/>
+        <image name="activity.png" width="80" height="80"/>
+        <image name="blackcircle.jpg" width="12" height="12"/>
+        <image name="call_center.png" width="80" height="80"/>
+        <image name="Chat.png" width="32" height="32"/>
+        <image name="complete_job.png" width="240" height="240"/>
+        <image name="complete_location.png" width="240" height="240"/>
+        <image name="complete_photo.png" width="240" height="240"/>
+        <image name="Contact.png" width="25" height="25"/>
+        <image name="contact_add.png" width="101" height="60"/>
+        <image name="contact_added.png" width="100" height="60"/>
+        <image name="Default-568h.png" width="640" height="1136"/>
+        <image name="Default-Portrait.png" width="768" height="1004"/>
+        <image name="Default.png" width="320" height="480"/>
+        <image name="greencircle.jpg" width="12" height="12"/>
+        <image name="groups.png" width="225" height="225"/>
+        <image name="Icon-114.png" width="114" height="114"/>
+        <image name="Icon-120.png" width="120" height="120"/>
+        <image name="Icon-29.png" width="29" height="29"/>
+        <image name="Icon-57.png" width="57" height="57"/>
+        <image name="Icon-58.png" width="58" height="58"/>
+        <image name="Icon-76.png" width="76" height="76"/>
+        <image name="Icon-80.png" width="80" height="80"/>
+        <image name="Icon-Small-40.png" width="40" height="40"/>
+        <image name="Icon-Small.png" width="29" height="29"/>
+        <image name="Icon.png" width="57" height="57"/>
+        <image name="iconcontactsactive.png" width="24" height="24"/>
+        <image name="iconcontactsinactive.png" width="24" height="24"/>
+        <image name="iconmenuactive.png" width="24" height="24"/>
+        <image name="iconmenuinactive.png" width="24" height="24"/>
+        <image name="iconmessagesactive.png" width="24" height="23"/>
+        <image name="iconmessagesinactive.png" width="24" height="23"/>
+        <image name="iconnotificationsactive.png" width="24" height="24"/>
+        <image name="iconnotificationsinactive.png" width="24" height="24"/>
+        <image name="iconwallactive.png" width="24" height="24"/>
+        <image name="iconwallinactive.png" width="24" height="24"/>
+        <image name="ievents.png" width="80" height="80"/>
+        <image name="ifeed.png" width="256" height="256"/>
+        <image name="ifeeds.png" width="200" height="200"/>
+        <image name="igroup.png" width="80" height="80"/>
+        <image name="iphone_message.png" width="80" height="80"/>
+        <image name="logo.png" width="232" height="251"/>
+        <image name="logotype.png" width="134" height="47"/>
+        <image name="logout.png" width="80" height="80"/>
+        <image name="mail.png" width="80" height="80"/>
+        <image name="Messages.png" width="31" height="14"/>
+        <image name="More.png" width="25" height="5"/>
+        <image name="offline_icon.png" width="25" height="25"/>
+        <image name="online_icon.png" width="25" height="25"/>
+        <image name="padlock.png" width="64" height="80"/>
+        <image name="photo.jpg" width="275" height="315"/>
+        <image name="privacy.png" width="128" height="128"/>
+        <image name="ratingoff.png" width="16" height="16"/>
+        <image name="ratingon.png" width="16" height="16"/>
+        <image name="RSS.png" width="25" height="25"/>
+        <image name="search.png" width="50" height="50"/>
+        <image name="services.PNG" width="145" height="136"/>
+        <image name="shop.png" width="80" height="80"/>
+        <image name="splash.png" width="640" height="1130"/>
+        <image name="splash_screen.PNG" width="481" height="800"/>
+        <image name="star_active.png" width="30" height="30"/>
+        <image name="star_inactive.png" width="30" height="30"/>
+        <image name="takephoto.jpg" width="69" height="65"/>
+        <image name="terms_conditions.png" width="80" height="80"/>
+        <image name="userdefault.png" width="256" height="256"/>
+        <image name="userdefault3.png" width="256" height="256"/>
+        <image name="userprofile.png" width="64" height="80"/>
+        <image name="Users_three_2.png" width="32" height="32"/>
+        <image name="Users_three_switch.png" width="32" height="32"/>
+        <image name="write.png" width="46" height="46"/>
+        <image name="logo.gif" width="560" height="560"/>
+        <image name="logotype1.png" width="335" height="118"/>
+        <image name="logoSplash.png" width="560" height="560"/>
     </resources>
 </document>

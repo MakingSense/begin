@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BeginMobile.Shared", "BeginMobile\BeginMobile\BeginMobile.Shared.shproj", "{CD333786-513F-4168-9ECE-CE3AEC22052A}"
 EndProject
@@ -9,18 +9,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeginMobile.Android", "Begi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeginMobile.Services", "BeginMobile.Services\BeginMobile.Services.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0B48E055-B74A-467C-B64C-9DBCCCC8DE52}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeginMobile.Services.Tests", "BeginMobile.Services.Tests\BeginMobile.Services.Tests.csproj", "{C5D29C0B-D261-4FA4-AB29-B32480AD28FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeginMobile.LocalizeResources", "BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj", "{48226F83-3CBB-4234-9A72-4866E1939311}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeginMobile.iOS", "BeginMobile\BeginMobile.iOS\BeginMobile.iOS.csproj", "{2209375D-9CC4-4A5C-97CA-27192F5E8F88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DF538C1E-E5E0-416E-8005-940661C45390}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
