@@ -87,7 +87,7 @@ namespace BeginMobile.Pages
                 new OptionsPage(
                     new Label
                     {
-                        Text = Device.OnPlatform(string.Empty, "More", "More"),
+                        Text = Device.OnPlatform(string.Empty, "Menu", "Menu"),
                         Style = BeginApplication.Styles.StyleNavigationTitle
                     }.Text,
                     Device.OnPlatform("iconmenuactive.png", "iconmenuactive.png", "iconmenuactive.png")));

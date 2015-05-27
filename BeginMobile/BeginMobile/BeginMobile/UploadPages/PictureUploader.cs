@@ -22,6 +22,7 @@ namespace BeginMobile.UploadPages
         private Label _labelReplacePicture;
         private Button _buttonNextStep;
 
+
         //
         private readonly TaskScheduler _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
         private CircleImage _imageUploaded;
@@ -221,6 +222,7 @@ namespace BeginMobile.UploadPages
             _stackLayoutButtons = new StackLayout()
             {
                 Spacing = 10,
+                Padding = new Thickness(0 , 20, 0, 0),
                 HorizontalOptions =  LayoutOptions.FillAndExpand,
                 Children =
                 {

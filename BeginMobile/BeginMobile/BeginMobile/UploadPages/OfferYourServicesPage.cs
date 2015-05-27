@@ -162,6 +162,7 @@ namespace BeginMobile.UploadPages
             _stackLayoutButtons = new StackLayout()
             {
                 Spacing = 10,
+                Padding = new Thickness(0, 20, 0, 0),
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
                 {
