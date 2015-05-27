@@ -303,24 +303,34 @@ namespace BeginMobile.Pages.MessagePages
 
         public async void ListViewItemSelectedEventHandler(object sender, SelectedItemChangedEventArgs eventArgs)
         {
-            if (eventArgs.SelectedItem == null)
+            try
             {
-                return;
-            }
-            var item = (MessageViewModel) eventArgs.SelectedItem;
+                if (eventArgs.SelectedItem == null)
+                {
+                    return;
+                }
+                var item = (MessageViewModel)eventArgs.SelectedItem;
 
-            var messageDetail = new MessageDetail(item)
-                                {
-                                    BindingContext = item
-                                };
-            await Navigation.PushAsync(messageDetail);
-            if (item.ThreadUnRead.Equals(AppResources.New))
-            {
-                await BeginApplication.ProfileServices.MarkAsReadByThread(_currentUser.AuthToken, item.ThreadId);
+                var messageDetail = new MessageDetail(item)
+                {
+                    BindingContext = item
+                };
+                 await Navigation.PushAsync(messageDetail);
+                if (item.ThreadUnRead.Equals(AppResources.New))
+                {
+                    await BeginApplication.ProfileServices.MarkAsReadByThread(_currentUser.AuthToken, item.ThreadId);
                     //Marked as read 
-                await CallServiceApi();
+                    await CallServiceApi();
+                }
+                ((ListView)sender).SelectedItem = null;
             }
-            ((ListView) sender).SelectedItem = null;
+            catch (Exception exception)
+            {
+                _log.Exception(exception);
+                AppContextError.Send(typeof(InboxMessage).Name, "InboxMessage", exception, null,
+                    ExceptionLevel.Application);                
+            }
+           
         }
 
         /// <summary>

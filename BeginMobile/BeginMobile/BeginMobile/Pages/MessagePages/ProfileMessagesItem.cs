@@ -85,7 +85,7 @@ namespace BeginMobile.Pages.MessagePages
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
-                                      new RowDefinition {Height = GridLength.Auto}
+//                                      new RowDefinition {Height = GridLength.Auto}
                                   }
                               };
 
@@ -95,7 +95,7 @@ namespace BeginMobile.Pages.MessagePages
             gridDetails.Children.Add(labelContent, 0, 2);
             gridDetails.Children.Add(labelCreate, 0, 3);
             gridDetails.Children.Add(labelMarkedAs, 0, 4);
-            gridDetails.Children.Add(buttonRemove, 0, 5);
+            //gridDetails.Children.Add(buttonRemove, 0, 5);
 
             var stackLayoutView = new StackLayout
                                   {

@@ -1499,12 +1499,12 @@ namespace BeginMobile.Utils
 
         public string ContactAddIcon
         {
-            get { return "contact_add.png"; }
+            get { return "contact_add1.png"; }
         }
 
         public string ContactAddedIcon
         {
-            get { return "contact_added.png"; }
+            get { return "contact_added1.png"; }
         }
 
         public string ContactOfflineIcon

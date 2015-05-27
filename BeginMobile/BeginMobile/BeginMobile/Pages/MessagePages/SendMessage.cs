@@ -69,10 +69,10 @@ namespace BeginMobile.Pages.MessagePages
                                      }
                                  };
 
-            gridComponents.Children.Add(labelTextUserName, 0, 0);
-            gridComponents.Children.Add(_entryUserName, 0, 1);
-            gridComponents.Children.Add(labelTextSubject, 0, 2);
-            gridComponents.Children.Add(_entrySubject, 0, 3);
+            gridComponents.Children.Add(labelTextSubject, 0, 0);
+            gridComponents.Children.Add(_entrySubject, 0, 1);
+            gridComponents.Children.Add(labelTextUserName, 0, 2);
+            gridComponents.Children.Add(_entryUserName, 0, 3);
             gridComponents.Children.Add(labelTextMessage, 0, 4);
             gridComponents.Children.Add(_editorMessageContent, 0, 5);                    
             Content = new StackLayout
