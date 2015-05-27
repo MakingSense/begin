@@ -123,7 +123,8 @@ namespace BeginMobile.Pages.Profile
 
             var labelRegistered = new Label
                                   {
-                                      Text = DateConverter.GetTimeSpan(Convert.ToDateTime(_contact.Registered))
+                                      Text = _contact.Registered//DateConverter.GetTimeSpan(DateTime.Parse(_contact.Registered)),
+                                    //  Text = DateConverter.GetTimeSpan(Convert.ToDateTime(_contact.Registered))
                                   };
 
             var buttonAddFriend = new Button()
