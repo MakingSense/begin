@@ -409,19 +409,31 @@
     <BundleResource Include="Resources\star_inactive.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\services_menu.PNG" />
+    <BundleResource Include="Resources\contact_add1.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\shops_menu.PNG" />
+    <BundleResource Include="Resources\contact_add2.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\events_menu.PNG" />
+    <BundleResource Include="Resources\contact_added1.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\groups_menu.PNG" />
+    <BundleResource Include="Resources\contact_added2.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\contacts_menu.PNG" />
+    <BundleResource Include="Resources\contacts_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\events_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\groups_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\services_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\shops_menu.png" />
   </ItemGroup>
   <Import Project="..\BeginMobile\BeginMobile.projitems" Label="Shared" Condition="Exists('..\BeginMobile\BeginMobile.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
