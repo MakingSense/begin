@@ -136,8 +136,9 @@ namespace BeginMobile.Pages.ContactPages
 
 
             labelNameSurname.SetBinding(Label.TextProperty, "NameSurname");
-            labelUserName.SetBinding(Label.TextProperty, "UserName");
-            labelEmail.SetBinding(Label.TextProperty, "Email");
+            //labelUserName.SetBinding(Label.TextProperty, "UserName");
+            labelUserName.SetBinding(Label.TextProperty, "Registered");
+            labelEmail.SetBinding(Label.TextProperty, "Profession");
 
             var grid = new Grid
                        {

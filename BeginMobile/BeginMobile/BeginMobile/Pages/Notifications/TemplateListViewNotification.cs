@@ -43,10 +43,9 @@ namespace BeginMobile.Pages.Notifications
         private Grid CreateOptionLayout()
         {
             var labelnotificationDesc = new Label
-            {
-                VerticalOptions = LayoutOptions.Start,
-                HorizontalOptions = LayoutOptions.Start,
+            {               
                 WidthRequest = 350,
+                YAlign = TextAlignment.Center,
                 Style = BeginApplication.Styles.ListItemTextStyle
             };
 
@@ -55,8 +54,8 @@ namespace BeginMobile.Pages.Notifications
 
             var labelintervalDate = new Label
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = BeginApplication.Styles.ListItemDetailTextStyle
+                Style = BeginApplication.Styles.ListItemDetailTextStyle,
+                YAlign = TextAlignment.Center
             };
 
             labelintervalDate.SetBinding(Label.TextProperty, "IntervalDate");
@@ -81,8 +80,8 @@ namespace BeginMobile.Pages.Notifications
             var gridDetails = new Grid
             {
                 Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions =  LayoutOptions.FillAndExpand,
+                VerticalOptions =  LayoutOptions.FillAndExpand,
                 RowDefinitions =
                                   {
                                       new RowDefinition {Height = GridLength.Auto},

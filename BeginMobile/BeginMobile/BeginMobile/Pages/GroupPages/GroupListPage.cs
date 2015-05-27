@@ -118,7 +118,8 @@ namespace BeginMobile.Pages.GroupPages
             _sectionsPicker = new Picker
                               {
                                   Title = "Sections",
-                                  VerticalOptions = LayoutOptions.CenterAndExpand
+                                  VerticalOptions = LayoutOptions.CenterAndExpand,
+                                  BackgroundColor = BeginApplication.Styles.ColorWhite
                               };
 
             foreach (var item in _sectionsList)
@@ -133,7 +134,8 @@ namespace BeginMobile.Pages.GroupPages
             _categoriesPicker = new Picker
                                 {
                                     Title = "Filter by Category",
-                                    VerticalOptions = LayoutOptions.CenterAndExpand
+                                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                                    BackgroundColor = BeginApplication.Styles.ColorWhite
                                 };
 
             if (_categoriesList != null)

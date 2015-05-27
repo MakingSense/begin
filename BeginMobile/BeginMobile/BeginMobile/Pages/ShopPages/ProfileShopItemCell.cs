@@ -71,7 +71,7 @@ namespace BeginMobile.Pages.ShopPages
 
             var gridDetails = new Grid
                               {
-                                  Padding = new Thickness(10, 5, 10, 5),
+                                  Padding = BeginApplication.Styles.ThicknessInsideListView,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =
                                   {
@@ -103,7 +103,8 @@ namespace BeginMobile.Pages.ShopPages
                                     };
 
             var stackLayoutItem = new StackLayout
-                                  {                                      
+                                  {                  
+                                      Padding = BeginApplication.Styles.ThicknessInsideListView,
                                       Orientation = StackOrientation.Horizontal,
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       Children =

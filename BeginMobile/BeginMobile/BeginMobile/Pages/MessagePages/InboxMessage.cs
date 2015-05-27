@@ -54,7 +54,6 @@ namespace BeginMobile.Pages.MessagePages
 
                 _defaultListModel = new List<MessageViewModel>();
 
-
                 _searchView = new SearchView
                               {
                                   SearchBar =

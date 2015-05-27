@@ -166,7 +166,8 @@ namespace BeginMobile.Pages.Profile
             _categoriesPicker = new Picker
             {
                 Title = AppResources.PickerEventFilterBycategory,
-                VerticalOptions = LayoutOptions.CenterAndExpand
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                BackgroundColor = BeginApplication.Styles.ColorWhite
             };
 
             if (_categoriesList != null)

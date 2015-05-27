@@ -37,9 +37,6 @@ namespace BeginMobile.Pages
             Title = AppResources.AppHomeTitle;
             var topPadding = Device.OnPlatform<double>(20, 0, 0);
             Padding = new Thickness(0, topPadding, 0, 0);
-
-            
-
             Children.Add(new WallPage(
                 new Label
                 {
@@ -123,11 +120,13 @@ namespace BeginMobile.Pages
                     _log.Exception(exception);
                     AppContextError.Send(typeof(AppHome).Name, "OnPropertyChanging", exception, null, ExceptionLevel.Application);
                 }
-            }
-            if (item != null && item.CurrentPage.Title.Equals(AppResources.AppHomeChildNotifications))
-            {
-                _notification.InitilizeNotification();
-            }
+            }           
+            #region for notifications two tabs discoment this setences
+            //if (item != null && item.CurrentPage.Title.Equals(AppResources.AppHomeChildNotifications))
+            //{
+            //    _notification.InitilizeNotification();
+            //}
+            #endregion
         }
     }
 }

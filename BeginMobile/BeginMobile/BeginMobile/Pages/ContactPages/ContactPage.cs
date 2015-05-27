@@ -7,6 +7,7 @@ using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.Profile;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
+using BeginMobile.Services.Utils;
 using BeginMobile.Utils;
 using Xamarin.Forms;
 
@@ -324,7 +325,7 @@ namespace BeginMobile.Pages.ContactPages
                 _sortOptionsDictionary = new Dictionary<string, string> {{"last_active", "Last Active"}};
             }
 
-            _searchView.Container.Children.Add(_sortPicker);
+            //_searchView.Container.Children.Add(_sortPicker);
         }
 
         private void RetrieveSortOptionSelected(out string sort)
@@ -366,10 +367,11 @@ namespace BeginMobile.Pages.ContactPages
                                                                                       contact.Email),
                                                                               Url = contact.Url,
                                                                               UserName = contact.UserName,
-                                                                              Registered = contact.Registered,
+                                                                              Registered = DateConverter.GetTimeSpan(DateTime.Parse(contact.Registered)),
                                                                               Id = contact.Id.ToString(),
                                                                               Relationship = contact.Relationship,
-                                                                              IsOnline = contact.IsOnline
+                                                                              IsOnline = contact.IsOnline,
+                                                                              Profession = contact.Profession
                                                                           });
             }
             else
