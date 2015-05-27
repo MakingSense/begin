@@ -259,6 +259,11 @@
     <AndroidResource Include="Resources\Drawable\star_active.png" />
     <AndroidResource Include="Resources\Drawable\star_inactive.png" />
     <AndroidResource Include="Resources\Values\ThemeSplash.xml" />
+    <AndroidResource Include="Resources\Drawable\contacts_menu.PNG" />
+    <AndroidResource Include="Resources\Drawable\events_menu.PNG" />
+    <AndroidResource Include="Resources\Drawable\groups_menu.PNG" />
+    <AndroidResource Include="Resources\Drawable\services_menu.PNG" />
+    <AndroidResource Include="Resources\Drawable\shops_menu.PNG" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">
