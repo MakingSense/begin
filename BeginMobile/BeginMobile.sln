@@ -167,8 +167,8 @@ Global
 		{2209375D-9CC4-4A5C-97CA-27192F5E8F88}.AppStore|Mixed Platforms.ActiveCfg = AppStore|iPhone
 		{2209375D-9CC4-4A5C-97CA-27192F5E8F88}.AppStore|Mixed Platforms.Build.0 = AppStore|iPhone
 		{2209375D-9CC4-4A5C-97CA-27192F5E8F88}.Debug|Any CPU.ActiveCfg = Debug|iPhone
-		{2209375D-9CC4-4A5C-97CA-27192F5E8F88}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{2209375D-9CC4-4A5C-97CA-27192F5E8F88}.Debug|iPhone.Build.0 = Debug|iPhone
+		{2209375D-9CC4-4A5C-97CA-27192F5E8F88}.Debug|iPhone.ActiveCfg = Debug|iPhoneSimulator
+		{2209375D-9CC4-4A5C-97CA-27192F5E8F88}.Debug|iPhone.Build.0 = Debug|iPhoneSimulator
 		{2209375D-9CC4-4A5C-97CA-27192F5E8F88}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{2209375D-9CC4-4A5C-97CA-27192F5E8F88}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{2209375D-9CC4-4A5C-97CA-27192F5E8F88}.Debug|Mixed Platforms.ActiveCfg = Debug|iPhone

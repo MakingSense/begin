@@ -16,7 +16,7 @@ namespace BeginMobile.iOS.Renderers
     public class ExtendedTabbedRenderer : TabbedRenderer
     {
         private AppHome _appHome;
-        //private UIWindow _window;
+        private const string LimitCounter = "9+";
 
         public override void ViewWillAppear(bool animated)
         {
@@ -25,81 +25,99 @@ namespace BeginMobile.iOS.Renderers
             _appHome = (AppHome)Element;
             if (_appHome == null) return;
             if (!_appHome.Children.Any()) return;
+            SetUpTabs();
 
+        }
+
+        private void SetUpTabs()
+        {
             var tabBarController = ViewController as UITabBarController;
             if (tabBarController == null) return;
 
-            /*_window = new UIWindow(UIScreen.MainScreen.Bounds);
-            _window.RootViewController = tabBarController;
-            _window.MakeKeyAndVisible();*/
-            
-
-            foreach (var viewController in tabBarController.ViewControllers)
-            {				
-				
-                var navItemTitle = viewController.NavigationItem.Title;
-
-                var childFromTab = _appHome.Children.FirstOrDefault(x => x.Title == navItemTitle);
+            foreach (PageRenderer viewController in tabBarController.ViewControllers)
+            {
+                var childFromTab = viewController.Element;
                 if (childFromTab == null) continue;
+
+                viewController.Title = "";
 
                 var type = childFromTab.GetType();
 
                 if (type == typeof(WallPage))
                 {
-					viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconwallactive.png"); 
+                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconwallactive.png");
                 }
-
                 else if (type == typeof(MessageListPage))
                 {
-					viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmessagesactive.png"); 
-                    if (string.IsNullOrEmpty
-                        (((MessageListPage) childFromTab).LabelCounter.Text)) continue;
+                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmessagesactive.png");
 
-                    var counter = int.Parse(((MessageListPage) childFromTab).LabelCounter.Text);
+                    var numMessages = ((MessageListPage)childFromTab).LabelCounter.Text;
+
+                    if (string.IsNullOrEmpty
+                        (numMessages)) continue;
+
+                    var counter = int.Parse(numMessages);
                     if (counter > 0)
                     {
-                        viewController.TabBarItem.BadgeValue = ((MessageListPage)childFromTab).LabelCounter.Text;
+                        viewController.TabBarItem.BadgeValue = counter > 9 ? LimitCounter : numMessages;
                     }
                 }
 
                 else if (type == typeof(Notification))
                 {
-					viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconnotificationsactive.png"); 
+                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconnotificationsactive.png");
 
-                    if (string.IsNullOrEmpty
-                        (((Notification)childFromTab).LabelCounter.Text)) continue;
+                    var numNotifications = ((Notification)childFromTab).LabelCounter.Text;
 
-                    var counter = int.Parse(((Notification)childFromTab).LabelCounter.Text);
+                    if (string.IsNullOrEmpty (numNotifications)) continue;
+                    var counter = int.Parse(numNotifications);
                     if (counter > 0)
                     {
-                        viewController.TabBarItem.BadgeValue = ((Notification)childFromTab).LabelCounter.Text;
+                        viewController.TabBarItem.BadgeValue = counter > 9 ? LimitCounter : numNotifications;
                     }
                 }
 
                 else if (type == typeof(ContactPage))
                 {
-					viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconcontactsactive.png"); 
+                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconcontactsactive.png");
                 }
 
                 else if (type == typeof(OptionsPage))
                 {
-					viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmenuactive.png"); 
+                    viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmenuactive.png");
                 }
             }
+        }
+
+        public override void ObserveValue(Foundation.NSString keyPath, Foundation.NSObject ofObject, Foundation.NSDictionary change, System.IntPtr context)
+        {
+            base.ObserveValue(keyPath, ofObject, change, context);
+            var test = "";
         }
 
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
             base.OnElementChanged(e);
           
-			var page = (AppHome)Element;
+            var page = (AppHome)Element;
 
-			if (!page.Children.Any ()) {
-				return;
-			}		
+            if (!page.Children.Any ()) {
+                return;
+            }
 
-			TabBar.TintColor = UIColor.FromRGB (68, 68, 68);
-			TabBar.BarTintColor = UIColor.White;
+            TabBar.TintColor = UIColor.FromRGB (68, 68, 68);
+            TabBar.BarTintColor = UIColor.White;
+
+            Element.PropertyChanged += (s_, e_) => ElementPropertyChanged(s_, e_);
+        }
+
+
+        private void ElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == AppHome.CounterTextProperty.PropertyName)
+            {
+                SetUpTabs();
+            }
         }
     }
 }

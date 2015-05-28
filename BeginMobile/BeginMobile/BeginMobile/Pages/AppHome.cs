@@ -10,6 +10,7 @@ using BeginMobile.Services.Logging;
 using BeginMobile.Services.Utils;
 using Xamarin.Forms;
 using BeginMobile.Pages.Wall;
+using System.ComponentModel;
 
 namespace BeginMobile.Pages
 {
@@ -19,12 +20,12 @@ namespace BeginMobile.Pages
         private Notification _notification;
         private readonly ILoggingService _log = Logger.Current;
 
-        public static readonly BindableProperty CounterTextProperty =
+        public static BindableProperty CounterTextProperty =
         BindableProperty.Create<AppHome, string>(p => p.CounterText, string.Empty);
         public string CounterText
         {
-            get { return (string)base.GetValue(CounterTextProperty); }
-            set { base.SetValue(CounterTextProperty, value); }
+            get{return (string)base.GetValue(CounterTextProperty);}
+            set{base.SetValue(CounterTextProperty, value);}
         }
 
         public AppHome()	
@@ -41,7 +42,7 @@ namespace BeginMobile.Pages
                 new Label
                 {
                     Text =
-                        Device.OnPlatform(string.Empty, AppResources.AppHomeChildNewsFeed,
+                        Device.OnPlatform(AppResources.AppHomeChildNewsFeed, AppResources.AppHomeChildNewsFeed,
                             AppResources.AppHomeChildNewsFeed),
                     Style = BeginApplication.Styles.StyleNavigationTitle
                 }.Text,
@@ -50,7 +51,7 @@ namespace BeginMobile.Pages
             _messages = new MessageListPage(new Label
                                             {
                                                 Text =
-                                                    Device.OnPlatform(string.Empty, AppResources.AppHomeChildMessages,
+                                                    Device.OnPlatform(AppResources.AppHomeChildMessages, AppResources.AppHomeChildMessages,
                                                         AppResources.AppHomeChildMessages),
                                                 Style = BeginApplication.Styles.StyleNavigationTitle
                                             }.Text,
@@ -59,7 +60,7 @@ namespace BeginMobile.Pages
             _notification = new Notification(new Label
                                                     {
                                                         Text =
-                                                            Device.OnPlatform(string.Empty,
+                                                            Device.OnPlatform(AppResources.AppHomeChildNotifications,
                                                                 AppResources.AppHomeChildNotifications,
                                                                 AppResources.AppHomeChildNotifications),
                                                         Style = BeginApplication.Styles.StyleNavigationTitle
@@ -77,7 +78,7 @@ namespace BeginMobile.Pages
                     new Label
                     {
                         Text =
-                            Device.OnPlatform(string.Empty, AppResources.AppHomeChildFindContacts,
+                            Device.OnPlatform(AppResources.AppHomeChildFindContacts, AppResources.AppHomeChildFindContacts,
                                 AppResources.AppHomeChildFindContacts),
                         Style = BeginApplication.Styles.StyleNavigationTitle
                     }.Text,
@@ -87,7 +88,7 @@ namespace BeginMobile.Pages
                 new OptionsPage(
                     new Label
                     {
-                        Text = Device.OnPlatform(string.Empty, "Menu", "Menu"),
+                        Text = Device.OnPlatform("Menu", "Menu", "Menu"),
                         Style = BeginApplication.Styles.StyleNavigationTitle
                     }.Text,
                     Device.OnPlatform("iconmenuactive.png", "iconmenuactive.png", "iconmenuactive.png")));
@@ -108,8 +109,9 @@ namespace BeginMobile.Pages
             }
 
             Title = item.CurrentPage.Title;
+            var itemMessage = item.CurrentPage as MessageListPage;
 
-            if (item != null && item.CurrentPage.Title.Equals(AppResources.AppHomeChildMessages))
+            if (itemMessage != null)
             {
                 try
                 {
@@ -122,11 +124,15 @@ namespace BeginMobile.Pages
                 }
             }           
             #region for notifications two tabs discoment this setences
-            //if (item != null && item.CurrentPage.Title.Equals(AppResources.AppHomeChildNotifications))
-            //{
-            //    _notification.InitilizeNotification();
-            //}
             #endregion
         }
+
+        public void NotifyDateSelected(DateTime dateSelected)
+        {
+            if (DateSelected != null)
+                DateSelected(this, dateSelected);
+        }
+
+        public event EventHandler<DateTime> DateSelected;
     }
 }

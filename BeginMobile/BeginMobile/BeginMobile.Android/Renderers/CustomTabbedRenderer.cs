@@ -95,7 +95,6 @@ namespace BeginMobile.Android.Renderers
                         tabOne.SetCustomView(Resource.Layout.BarTabLayout);
 
                         var tabIcontAux = tabOne.CustomView.FindViewById<ImageView>(Resource.Id.tab_icon);
-                        //var tabTextAux = tabOne.CustomView.FindViewById<TextView>(Resource.Id.tab_title);
                         var tabBadge = tabOne.CustomView.FindViewById<TextView>(Resource.Id.tab_badge);
 
                         var typeChild = childTab.GetType();
@@ -154,8 +153,6 @@ namespace BeginMobile.Android.Renderers
                                     tabBadge.Text = counter >= 9
                                         ? LimitCounter
                                         : SpaceCounter + tabNotification.LabelCounter.Text + SpaceCounter;
-
-                                    //tabTextAux.Gravity = GravityFlags.Bottom | GravityFlags.Left;
                                 }
                                 else
                                 {

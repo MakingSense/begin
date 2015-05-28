@@ -572,6 +572,9 @@ namespace BeginMobile.Pages.Notifications
 
                     var toMark = notifications.FirstOrDefault(n => n.Id == notificationId);
 
+                    //Decrement counter
+                    UpdateCounter(true);
+
                     if (toMark != null && notifications.Remove(toMark))
                     {
                         NotificationActions
@@ -582,6 +585,35 @@ namespace BeginMobile.Pages.Notifications
                         LabelCounter.Text = updatedNotifications.UnreadCount;
                     }
                 }           
+        }
+
+        private void UpdateCounter(bool isDecreasing = true)
+        {
+            if (isDecreasing == true)
+            {
+                int numCounter;
+                if (int.TryParse(_appHome.CounterText, out numCounter))
+                {
+                    _appHome.CounterText = numCounter <= 0 ? "0" : (numCounter - 1).ToString();
+                }
+                else
+                {
+                    _appHome.CounterText = "0";
+                }
+            }
+            else
+            {
+                int numCounter;
+                if (int.TryParse(_appHome.CounterText, out numCounter))
+                {
+                    _appHome.CounterText = (numCounter + 1).ToString();
+                }
+                else
+                {
+                    _appHome.CounterText = "0";
+                }
+            }
+
         }
 
         #endregion
