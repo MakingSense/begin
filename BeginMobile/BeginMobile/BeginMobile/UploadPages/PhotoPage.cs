@@ -44,7 +44,7 @@ namespace BeginMobile.Pages.PhotoUpload
             };
             tapGestureRecognizer.Tapped += async (s, e) =>
             {
-                var imageSource = ImageSource.FromFile("photo");
+                var imageSource = "photo.jpg";
                 uploader.UpdatePhoto(imageSource);
                 await Navigation.PopAsync();
             };
