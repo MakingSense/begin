@@ -268,6 +268,7 @@
     <AndroidResource Include="Resources\Drawable\groups_menu.png" />
     <AndroidResource Include="Resources\Drawable\services_menu.png" />
     <AndroidResource Include="Resources\Drawable\shops_menu.png" />
+    <AndroidResource Include="Resources\Drawable\sendIcon.PNG" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">

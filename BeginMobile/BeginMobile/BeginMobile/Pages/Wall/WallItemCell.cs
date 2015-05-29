@@ -14,7 +14,7 @@ namespace BeginMobile.Pages.Wall
             var labelUserName = new Label
             {
                 YAlign = TextAlignment.End,
-                FontAttributes = FontAttributes.Bold,
+                //FontAttributes = FontAttributes.Bold,
                 Style = BeginApplication.Styles.ListTitleWallStyle,
                 LineBreakMode = LineBreakMode.WordWrap,
             };

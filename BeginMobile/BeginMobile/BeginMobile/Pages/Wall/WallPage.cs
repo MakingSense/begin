@@ -34,7 +34,6 @@ namespace BeginMobile.Pages.Wall
         public const string TextGroupTopic = " group topic";
         public const string TextActivity = " activity";
         private bool _areLastItems;
-        private Write _newPublication;
         private ActivityIndicator _activityIndicatorLoading;
 
         private ImageSource _imageSourceWallByDefault;
@@ -46,7 +45,6 @@ namespace BeginMobile.Pages.Wall
         {
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
             //MasterTitle = AppResources.AppHomeChildNewsFeed;
-            _newPublication = new Write(_currentUser);
             Title = AppResources.AppHomeChildNewsFeed;
             BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
 
@@ -69,16 +67,16 @@ namespace BeginMobile.Pages.Wall
             };
 
             _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator(ref _activityIndicatorLoading);
-            _gridMain.Children.Add(_newPublication.Container, 0, 0);
+            //_gridMain.Children.Add(_newPublication.Container, 0, 0);
             _gridMain.Children.Add(_stackLayoutLoadingIndicator, 0, 2);
 
-            //Section Toolbar items
+            //Section Toolbar items            
             ToolbarItems.Add(new ToolbarItem("Publication", BeginApplication.Styles.WriteIcon, async () =>
             {
-                _newPublication
-                    .Container
-                    .IsVisible
-                    = true;
+                await
+                    Navigation
+                        .PushAsync
+                        (new NewPublication(_currentUser));
             }));
             //var toolBarEditPublicWall = new ToolbarItem()
             //{
@@ -98,7 +96,7 @@ namespace BeginMobile.Pages.Wall
 
         protected async Task ExecuteEditPublicWallCommand()
         {
-            _newPublication.Container.IsVisible = true;
+            //_newPublication.Container.IsVisible = true;
            // await DisplayAlert("Public Wall", "Edit wall", "Ok");
         }
 

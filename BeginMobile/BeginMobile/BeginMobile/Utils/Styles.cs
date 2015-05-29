@@ -254,8 +254,8 @@ namespace BeginMobile.Utils
                 Device.Styles.TitleStyle.Setters.Add(new Setter
                                                      {
                                                          Property = Label.TextColorProperty,
-                                                         Value = Device.OnPlatform(Color.FromHex("646566"),
-                                                             Color.FromHex("646566"), Color.FromHex("646566"))
+						Value = Device.OnPlatform(Color.FromHex("444444"),
+							Color.FromHex("444444"), Color.FromHex("444444"))
                                                      });
                 Device.Styles.TitleStyle.Setters.Add(new Setter
                                                      {
@@ -276,8 +276,8 @@ namespace BeginMobile.Utils
                                                         {
                                                             Property = Label.TextColorProperty,
                                                             Value =
-                                                                Device.OnPlatform(Color.FromHex("646566"),
-                                                                    Color.FromHex("646566"), Color.FromHex("646566"))
+                                                                Device.OnPlatform(Color.FromHex("444444"),
+                                                                    Color.FromHex("444444"), Color.FromHex("444444"))
                                                         });
 
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter
@@ -309,8 +309,8 @@ namespace BeginMobile.Utils
                                                     {
                                                         Property = Label.TextColorProperty,
                                                         Value =
-                                                            Device.OnPlatform(Color.FromHex("646566"),
-                                                                Color.FromHex("646566"), Color.FromHex("646566"))
+							Device.OnPlatform(Color.FromHex("999999"),
+								Color.FromHex("999999"), Color.FromHex("999999"))
                                                     });
                 Device.Styles.BodyStyle.Setters.Add(new Setter
                                                     {
@@ -335,8 +335,8 @@ namespace BeginMobile.Utils
                                                        {
                                                            Property = Label.TextColorProperty,
                                                            Value =
-                                                               Device.OnPlatform(Color.FromHex("646566"),
-                                                                   Color.FromHex("646566"), Color.FromHex("646566"))
+                                                               Device.OnPlatform(Color.FromHex("444444"),
+                                                                   Color.FromHex("444444"), Color.FromHex("444444"))
                                                        });
                 return Device.Styles.CaptionStyle;
             }
@@ -356,15 +356,15 @@ namespace BeginMobile.Utils
                                                                   {
                                                                       Property = Label.FontSizeProperty,
                                                                       Value =
-                                                                          Device.OnPlatform<double>(7, 12, 12)
+                                                                          Device.OnPlatform<double>(15, 15, 15)
                                                                   });
                 Device.Styles.ListItemDetailTextStyle.Setters.Add(new Setter
                                                                   {
                                                                       Property = Label.TextColorProperty,
                                                                       Value =
-                                                                          Device.OnPlatform(Color.FromHex("646566"),
-                                                                              Color.FromHex("646566"),
-                                                                              Color.FromHex("646566"))
+							Device.OnPlatform(Color.FromHex("999999"),
+								Color.FromHex("999999"),
+								Color.FromHex("999999"))
                                                                   });
                 return Device.Styles.ListItemDetailTextStyle;
             }
@@ -383,14 +383,14 @@ namespace BeginMobile.Utils
                                                             {
                                                                 Property = Label.FontSizeProperty,
                                                                 Value =
-                                                                    Device.OnPlatform<double>(8, 15, 15)
+                                                                    Device.OnPlatform<double>(16, 16, 16)
                                                             });
                 Device.Styles.ListItemTextStyle.Setters.Add(new Setter
                                                             {
                                                                 Property = Label.TextColorProperty,
                                                                 Value =
-                                                                    Device.OnPlatform(Color.FromHex("646566"),
-                                                                        Color.FromHex("646566"), Color.FromHex("646566"))
+                                                                    Device.OnPlatform(Color.FromHex("444444"),
+                                                                        Color.FromHex("444444"), Color.FromHex("444444"))
                                                             });
                 return Device.Styles.ListItemTextStyle;
             }
@@ -497,6 +497,14 @@ namespace BeginMobile.Utils
             get
             {
                 return new Thickness(15, 0, 0, 0);
+
+            }
+        }
+        public Thickness ThicknessInternalLayout
+        {
+            get
+            {
+                return new Thickness(15, 15, 15, 15);
 
             }
         }
@@ -1016,11 +1024,11 @@ namespace BeginMobile.Utils
                                         Device.OnPlatform(Color.FromHex("444444"),
                                             Color.FromHex("444444"), Color.FromHex("444444"))
                                 },
-                                new Setter
-                                {
-                                    Property = Label.FontAttributesProperty,
-                                    Value = FontAttributes.Bold
-                                }
+                                //new Setter
+                                //{
+                                //    Property = Label.FontAttributesProperty,
+                                //    Value = FontAttributes.Bold
+                                //}
                            }
                 };
             }
@@ -1038,20 +1046,20 @@ namespace BeginMobile.Utils
                                new Setter
                                {
                                    Property = Label.FontSizeProperty,
-                                   Value = Device.OnPlatform<double>(16, 16, 16)
+                                   Value = Device.OnPlatform<double>(15, 15, 15)
                                },
                                new Setter
                                 {
                                     Property = Label.TextColorProperty,
                                     Value =
-                                        Device.OnPlatform(Color.FromHex("C3C3C3"),
-                                            Color.FromHex("C3C3C3"), Color.FromHex("C3C3C3"))
+                                        Device.OnPlatform(Color.FromHex("999999"),
+                                            Color.FromHex("999999"), Color.FromHex("999999"))
                                 },
-                                new Setter
-                                {
-                                    Property = Label.FontAttributesProperty,
-                                    Value = FontAttributes.Bold
-                                }
+                                //new Setter
+                                //{
+                                //    Property = Label.FontAttributesProperty,
+                                //    Value = FontAttributes.Bold
+                                //}
                            }
                 };
             }
@@ -1193,7 +1201,7 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.HeightRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(125, 125, 125)
+                                                ? Device.OnPlatform(200, 200, 200)
                                                 : Device.OnPlatform(300, 300, 300)
                                     },
                                     new Setter
@@ -1530,6 +1538,11 @@ namespace BeginMobile.Utils
         public string LogoIcon
         {
             get { return "logo.png"; }
+        }
+
+        public string PublicationsSendIcon
+        {
+            get { return "sendIcon.PNG"; }
         }
 
         //menu

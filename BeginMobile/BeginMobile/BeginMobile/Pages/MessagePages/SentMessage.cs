@@ -63,7 +63,7 @@ namespace BeginMobile.Pages.MessagePages
                 _listViewMessages = new ListView
                                     {
                                         ItemTemplate =
-                                            new DataTemplate(() => new ProfileMessagesItem(_imageSourceMailByDefault)),
+                                            new DataTemplate(() => new ProfileMessageSentItem(_imageSourceMailByDefault)),
                                         HasUnevenRows = true
                                     };
 

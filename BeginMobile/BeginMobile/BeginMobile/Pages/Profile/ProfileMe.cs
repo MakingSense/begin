@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.ContactPages;
 using BeginMobile.Pages.GroupPages;
@@ -40,16 +42,17 @@ namespace BeginMobile.Pages.Profile
         private ImageSource _imageSourceGroupByDefault;
         private const int GotPuntuation = 3;
         private const int RankingGridRow = 0;
-        private Write _newPublication;
         private string _tabSelected = "";
+        private LoginUser _currentUser;
 
         public ProfileMe(LoginUser currenLoginUser)
         {
             LoadDeafultImage();
+            _currentUser = currenLoginUser;
             Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.LabelProfileMeTitle;
 
-            _information = new Information(currenLoginUser);
+            _information = new Information(_currentUser);
             _allContacts = new ContactPage(string.Empty, string.Empty);
             _requestContacts = new Contacts();
             _activity = new MyActivity();
@@ -58,8 +61,6 @@ namespace BeginMobile.Pages.Profile
             _shops = new Shop();
             _myEvents = new Events();
             _tabViewExposure = new TabViewExposure();
-            _newPublication = new Write(currenLoginUser);
-
             InitProfileDetails(currenLoginUser.User);
         }
 
@@ -83,11 +84,10 @@ namespace BeginMobile.Pages.Profile
                                 FontAttributes = FontAttributes.Bold,
                                 HorizontalOptions = LayoutOptions.Center,
                                 Style = BeginApplication.Styles.TitleStyle,
-                                
                             };
 
             var labelJob = new Label
-                           {        
+                           {
                                Text =
                                    !string.IsNullOrEmpty(BeginApplication.SelectedUserProfession)
                                        ? BeginApplication.SelectedUserProfession
@@ -96,7 +96,7 @@ namespace BeginMobile.Pages.Profile
                                HorizontalOptions = LayoutOptions.Center,
                                FontSize = BeginApplication.Styles.SubtitleFontSize,
                                TextColor = BeginApplication.Styles.ColorWhite
-                           };            
+                           };
 
             var labelDirection = new Label
                                  {
@@ -104,7 +104,6 @@ namespace BeginMobile.Pages.Profile
                                      Text = "@" + user.UserName,
                                      HorizontalOptions = LayoutOptions.Center,
                                      Style = BeginApplication.Styles.SubtitleStyle,
-                                     
                                  };
 
             var gridRakingImage = new Grid
@@ -117,19 +116,19 @@ namespace BeginMobile.Pages.Profile
                                                        }
                                   };
             var imageRankingDefault = new Image
-            {
-                Source = ImageSource.FromFile(BeginApplication.Styles.RankingDefaultIcon),
-                WidthRequest = 30,
-                HeightRequest = 30
-            };
+                                      {
+                                          Source = ImageSource.FromFile(BeginApplication.Styles.RankingDefaultIcon),
+                                          WidthRequest = 30,
+                                          HeightRequest = 30
+                                      };
             gridRakingImage.Children.Add(imageRankingDefault, 0, 0);
             gridRakingImage.Children.Add(imageRankingDefault, 1, 0);
             gridRakingImage.Children.Add(imageRankingDefault, 2, 0);
             gridRakingImage.Children.Add(imageRankingDefault, 3, 0);
-            gridRakingImage.Children.Add(imageRankingDefault, 4, 0);            
+            gridRakingImage.Children.Add(imageRankingDefault, 4, 0);
 
             for (var indexer = 0; indexer <= GotPuntuation; indexer ++)
-            {                
+            {
                 var image = new Image
                             {
                                 Source = ImageSource.FromFile(BeginApplication.Styles.RankingAddIcon),
@@ -177,7 +176,7 @@ namespace BeginMobile.Pages.Profile
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
-                                      new RowDefinition {Height = GridLength.Auto}
+                                      //new RowDefinition {Height = GridLength.Auto}
                                   }
                               };
 
@@ -189,15 +188,15 @@ namespace BeginMobile.Pages.Profile
                                   VerticalOptions = LayoutOptions.FillAndExpand,
                               };
             GridResults = new Grid
-                                 {
-                                     BackgroundColor = BeginApplication.Styles.ColorWhite,
-                                     HorizontalOptions = LayoutOptions.FillAndExpand,
-                                     VerticalOptions = LayoutOptions.Start,
-                                     RowDefinitions =
-                                     {
-                                         new RowDefinition {Height = GridLength.Auto}
-                                     }
-                                 };                       
+                          {
+                              BackgroundColor = BeginApplication.Styles.ColorWhite,
+                              HorizontalOptions = LayoutOptions.FillAndExpand,
+                              VerticalOptions = LayoutOptions.Start,
+                              RowDefinitions =
+                              {
+                                  new RowDefinition {Height = GridLength.Auto}
+                              }
+                          };
 
             var boxBlacknew = new BoxView
                               {
@@ -207,27 +206,28 @@ namespace BeginMobile.Pages.Profile
                                   HeightRequest = 50,
                               };
 
-            _commonMainGrid.Children.Add(_newPublication.Container, 0, 0);
+            // _commonMainGrid.Children.Add(_newPublication.Container, 0, 0);
             //_commonMainGrid.Children.Add(imageBanner, 0, 1);
-            _commonMainGrid.Children.Add(_commonGridDetailLayout, 0, 1);
-            _commonMainGrid.Children.Add(boxBlacknew, 0, 2);
-            _commonMainGrid.Children.Add(_commonGridMenuButtons, 0, 3);
-            _commonMainGrid.Children.Add(GridResults, 0, 4);
+            _commonMainGrid.Children.Add(_commonGridDetailLayout, 0, 0);
+            _commonMainGrid.Children.Add(boxBlacknew, 0, 1);
+            _commonMainGrid.Children.Add(_commonGridMenuButtons, 0, 2);
+            _commonMainGrid.Children.Add(GridResults, 0, 3);
 
             _commonMainScrollView.Content = _commonMainGrid;
             ToolbarItems.Add(new ToolbarItem("Publication", BeginApplication.Styles.WriteIcon, async () =>
                                                                                                      {
-                                                                                                         _newPublication
-                                                                                                             .Container
-                                                                                                             .IsVisible
-                                                                                                             = true;
+                                                                                                         await
+                                                                                                             Navigation
+                                                                                                                 .PushAsync
+                                                                                                                 (new NewPublication
+                                                                                                                     (_currentUser));
                                                                                                      }));
-            _commonMainScrollView.Scrolled += ScrollViewScrolled;            
-            Content = _commonMainScrollView;            
+            _commonMainScrollView.Scrolled += ScrollViewScrolled;
+            Content = _commonMainScrollView;
         }
 
         public Grid GridResults { get; set; }
-        
+
         public async void Init(ContentPage activityPage)
         {
             try
@@ -238,7 +238,8 @@ namespace BeginMobile.Pages.Profile
             catch (Exception e)
             {
                 _log.Exception(e);
-                AppContextError.Send(typeof(ProfileMe).Name, "InitialActivitiesContent", e, null, ExceptionLevel.Application);
+                AppContextError.Send(typeof (ProfileMe).Name, "InitialActivitiesContent", e, null,
+                    ExceptionLevel.Application);
             }
         }
 
@@ -269,19 +270,19 @@ namespace BeginMobile.Pages.Profile
                              {
                                  Text = TabsNames.Tab1Activity,
                                  XAlign = TextAlignment.Center,
-                                 FontSize = BeginApplication.Styles.TextFontSizeMedium,      
+                                 FontSize = BeginApplication.Styles.TextFontSizeMedium,
                              };
             _tabInformation = new Label
                               {
                                   Text = TabsNames.Tab2Information,
                                   XAlign = TextAlignment.Center,
-                                  FontSize = BeginApplication.Styles.TextFontSizeMedium,      
+                                  FontSize = BeginApplication.Styles.TextFontSizeMedium,
                               };
             _tabMore = new Label
                        {
                            Text = TabsNames.TabMore,
                            XAlign = TextAlignment.Center,
-                           FontSize = BeginApplication.Styles.TextFontSizeMedium,      
+                           FontSize = BeginApplication.Styles.TextFontSizeMedium,
                        };
 
             _tabActivities.GestureRecognizers.Add(tapGestureRecognizerTabOne);
@@ -545,45 +546,104 @@ namespace BeginMobile.Pages.Profile
         #endregion
     }
 
-    public class Write
+    public class NewPublication : ContentPage
     {
-        public Write(LoginUser loginUser)
+        private readonly Editor _publicationEditor;
+        private const string DefaultEditorText = "What is happening?";
+        private LoginUser _currentUser;
+                
+        public NewPublication(LoginUser currentUser)
         {
-            ButtonCloseSearch = new Button
-                                {
-                                    Text = "X",
-                                    HeightRequest = 40,
-                                    WidthRequest = 40,
-                                    HorizontalOptions = LayoutOptions.End
-                                };
-            ButtonCloseSearch.Clicked += CloseSearchEventHandler;
-            Editor = new Editor
-                     {
-                         BackgroundColor = BeginApplication.Styles.ColorWhiteBackground,
-                         HorizontalOptions = LayoutOptions.FillAndExpand,
-                         HeightRequest = 100
-                     };
-            Container = new StackLayout
+            _currentUser = currentUser;
+            Title = "New Publication";
+            BackgroundColor = BeginApplication.Styles.ColorWhite;
+
+            var image = new CircleImage
                         {
-                            HorizontalOptions = LayoutOptions.FillAndExpand,
-                            Orientation = StackOrientation.Vertical,
-                            Padding = new Thickness(20, 10, 20, 10),
-                            BackgroundColor = BeginApplication.Styles.ApplicationGreenColor,
-                            IsVisible = false
+                            Source = BeginApplication.Styles.DefaultContactIcon,
+                            Style = BeginApplication.Styles.CircleImageCommon,
                         };
-            Container.Children.Add(ButtonCloseSearch);
-            Container.Children.Add(Editor);
+
+            _publicationEditor = new Editor
+                                 {
+                                     Text = DefaultEditorText,
+                                     BackgroundColor = BeginApplication.Styles.ColorWhiteBackground,
+                                     HorizontalOptions = LayoutOptions.FillAndExpand,
+                                 };
+            _publicationEditor.Focused += FocusedEventHandler;
+            _publicationEditor.Unfocused += UnfocusedEventHandler;
+            _publicationEditor.TextChanged += TextChangedEventHandler;
+            var mainGrid = new Grid
+                           {
+                               HorizontalOptions = LayoutOptions.FillAndExpand,
+                               Padding = BeginApplication.Styles.ThicknessInternalLayout,
+                               RowDefinitions = new RowDefinitionCollection
+                                                {
+                                                    new RowDefinition {Height = new GridLength(20, GridUnitType.Star)}
+                                                },
+                               ColumnDefinitions = new ColumnDefinitionCollection
+                                                   {
+                                                       new ColumnDefinition {Width = GridLength.Auto},
+                                                       new ColumnDefinition {Width = GridLength.Auto}
+                                                   }
+                           };
+
+            ToolbarItems.Add(new ToolbarItem("SendPublication", BeginApplication.Styles.PublicationsSendIcon,
+                async () => { SendPublication(); }));
+            mainGrid.Children.Add(image, 0, 0);
+            mainGrid.Children.Add(_publicationEditor, 1, 0);
+
+            Content = mainGrid;
         }
 
-        public Button ButtonCloseSearch { get; set; }
-        public Editor Editor { get; set; }
-        public StackLayout Container { get; set; }
-
-        private void CloseSearchEventHandler(object sender, EventArgs e)
+        public async void TextChangedEventHandler(object sender, TextChangedEventArgs e)
         {
-            var button = sender as Button;
-            if (button == null) return;
-            Container.IsVisible = false;
+           
+                       
+
+        }
+
+        public void UnfocusedEventHandler(object sender, FocusEventArgs e)
+        {
+            var editor = sender as Editor;
+            if (editor == null) return; if (editor.Text.StartsWith(" "))
+            {
+                editor.Text.Trim();
+            }
+            if (string.IsNullOrEmpty(editor.Text)){ editor.Text = DefaultEditorText;}
+
+            //else
+            //{
+            //    if (editor.Text.Length <= 0) return;
+            //    if (editor.Text.StartsWith("@"))
+            //    {
+            //        var label = new Label ();
+            //        var userName = (editor.Text.Split(' '));
+            //        label.Text = userName[0];
+            //        label.FontAttributes = FontAttributes.Bold;
+            //        var message = editor.Text.Substring(label.Text.Length, editor.Text.Length-1);
+            //        editor.Text = string.Format("{0} {1}", label.Text, message);
+            //    }                
+            //}
+        }
+
+        public void FocusedEventHandler(object sender, FocusEventArgs e)
+        {
+            var editor = sender as Editor;
+            if (editor != null) editor.Text = string.Empty;
+        }
+
+        public async void SendPublication()
+        {
+            if (!string.IsNullOrEmpty(_publicationEditor.Text))
+            {
+                await DisplayAlert("Info", "Sent Successfuly", "ok");
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                await DisplayAlert("Validation Error", "Message is Empty", "re-try");
+            }
         }
     }
 
