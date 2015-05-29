@@ -220,11 +220,9 @@ namespace BeginMobile.Pages.Profile
                                                             Icon = BeginApplication.Styles.DefaultEventIcon,
                                                             EventName = eventInfo.Name,
                                                             EventOwnerUserName = string.Format("{0}{1}", Aroba, eventInfo.Owner.UserName),
-                                                            EventIntervalDateAndTime = string.Format("{0} {1} - {2} {3}",
-                                                            eventInfo.StartDate,
-                                                            eventInfo.StartTime,
-                                                            eventInfo.EndDate, 
-                                                            eventInfo.EndTime),
+                                                            EventIntervalDateAndTime = string.Format("{0} - {1}",
+                                                            string.Format("{0:yyyy, MMMM d}", DateTime.Parse(eventInfo.StartDate)),
+                                                            string.Format("{0:t}",DateTime.Parse(eventInfo.StartTime))),
                                                             EventInfo = eventInfo
                                                         }): new List<EventInfoObject>();
             return new ObservableCollection<EventInfoObject>(listEvents);

@@ -50,8 +50,8 @@ namespace BeginMobile.Pages.MessagePages
                 await BeginApplication.ProfileServices.GetProfileThreadMessagesInbox(currentUser.AuthToken);
             if (inboxThreads != null)
             {
-                LabelCounter.Text = inboxThreads.ThreadCount;
-                _appHome.CounterText = inboxThreads.ThreadCount;
+                LabelCounter.Text = inboxThreads.ThreadUnreadCount;
+                _appHome.CounterText = inboxThreads.ThreadUnreadCount;
             }
         }
 
