@@ -1395,7 +1395,7 @@ namespace BeginMobile.Utils
 
         public string DefaultEventIcon
         {
-            get { return "a_event.png"; }
+            get { return "events_menu.png"; }
         }
 
         public string DefaultNotificationIcon

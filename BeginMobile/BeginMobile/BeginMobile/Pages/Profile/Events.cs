@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using BeginMobile.LocalizeResources.Resources;
+using BeginMobile.Services.Utils;
 
 namespace BeginMobile.Pages.Profile
 {
@@ -25,7 +26,7 @@ namespace BeginMobile.Pages.Profile
         private const string DefaultLimit = "10";
         private Grid _gridMainComponents;
         private ObservableCollection<ProfileEvent> _profileEvents;
-
+        private const string Aroba = "@";
         public Events()
         {
             Style = BeginApplication.Styles.PageStyle;
@@ -56,34 +57,6 @@ namespace BeginMobile.Pages.Profile
 
             #endregion
 
-            #region Subtitles layout
-
-            var gridEventHeaderTitle = new Grid
-            {
-                Padding = BeginApplication.Styles.ThicknessInsideListView,
-                HorizontalOptions = LayoutOptions.FillAndExpand
-            };
-
-            gridEventHeaderTitle.Children.Add(new Label
-            {
-                WidthRequest = 200,
-                HeightRequest = 80,
-                
-                Text = AppResources.LabelEventName,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = BeginApplication.Styles.SubtitleStyle
-            }, 0, 1, 0, 1);
-
-            gridEventHeaderTitle.Children.Add(new Label
-            {
-                Text = AppResources.LabelEventDate,
-                HeightRequest = 50,
-                HorizontalOptions = LayoutOptions.Start,
-                Style = BeginApplication.Styles.SubtitleStyle
-            }, 1, 2, 0, 1);
-
-            #endregion
-
             #region List components
 
             var listEvents = RetrieveEventInfoObjectList(_profileEvents);
@@ -93,7 +66,8 @@ namespace BeginMobile.Pages.Profile
             _eventsListView = new ListView
             {
                 ItemsSource = listEvents,
-                ItemTemplate = eventTemplate
+                ItemTemplate = eventTemplate,
+                HasUnevenRows = true,
             };
 
             _eventsListView.ItemSelected += async (sender, e) =>
@@ -149,8 +123,7 @@ namespace BeginMobile.Pages.Profile
                                   }
             };
             _gridMainComponents.Children.Add(_searchView.Container, 0, 0);
-            _gridMainComponents.Children.Add(gridEventHeaderTitle, 0, 1);
-            _gridMainComponents.Children.Add(scrollView, 0, 2);
+            _gridMainComponents.Children.Add(scrollView, 0, 1);
             Content = _gridMainComponents;
 
             #endregion
@@ -244,13 +217,14 @@ namespace BeginMobile.Pages.Profile
             var listEvents = profileEventList!=null? 
                             profileEventList.Select(eventInfo => new EventInfoObject
                                                         {
+                                                            Icon = BeginApplication.Styles.DefaultEventIcon,
                                                             EventName = eventInfo.Name,
-                                                            EventIntervalDate =
-                                                                String.Format("{0} - {1}", eventInfo.StartDate,
-                                                                    eventInfo.EndDate),
-                                                            EventTime =
-                                                                String.Format("{0} - {1}", eventInfo.StartTime,
-                                                                    eventInfo.EndTime),
+                                                            EventOwnerUserName = string.Format("{0}{1}", Aroba, eventInfo.Owner.UserName),
+                                                            EventIntervalDateAndTime = string.Format("{0} {1} - {2} {3}",
+                                                            eventInfo.StartDate,
+                                                            eventInfo.StartTime,
+                                                            eventInfo.EndDate, 
+                                                            eventInfo.EndTime),
                                                             EventInfo = eventInfo
                                                         }): new List<EventInfoObject>();
             return new ObservableCollection<EventInfoObject>(listEvents);

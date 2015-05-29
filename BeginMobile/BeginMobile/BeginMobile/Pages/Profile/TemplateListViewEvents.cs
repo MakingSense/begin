@@ -1,4 +1,5 @@
 ﻿using BeginMobile.Services.DTO;
+using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Profile
@@ -7,64 +8,87 @@ namespace BeginMobile.Pages.Profile
     {
         public TemplateListViewEvents()
         {
-            var labelEventTitle = new Label
-                             {
-                                 VerticalOptions = LayoutOptions.Start,
-                                 HorizontalOptions = LayoutOptions.Start,
-                                 HeightRequest = 50,
-                                 WidthRequest = 200,
-                                 FontAttributes = FontAttributes.Bold,
-                                 Style = BeginApplication.Styles.ListItemTextStyle
-                                 //TextColor = BeginApplication.Styles.LabelTextColor
-                             };
+            var circleEventListImage = new CircleImage
+                                  {
+                                      Style = BeginApplication.Styles.CircleImageCommon,
+                                  };
 
-            labelEventTitle.SetBinding(Label.TextProperty, "EventName");
+
             var eventDetailsLayout = CreateDetailsLayout();
 
-            View = new StackLayout
+            var gridComponents = new Grid
                    {
                        Padding = BeginApplication.Styles.ThicknessInsideListView,
-                       HeightRequest = 60,
-                       Orientation = StackOrientation.Horizontal,
-                       Children =
-                       {
-                           labelEventTitle,
-                           eventDetailsLayout
-                       }
+                       
+                        RowDefinitions = new RowDefinitionCollection
+                                                   {
+                                                       new RowDefinition {Height = GridLength.Auto},
+                                                       new RowDefinition {Height = GridLength.Auto},
+                                                       new RowDefinition {Height = GridLength.Auto},
+                                                  },
+                       ColumnDefinitions = new ColumnDefinitionCollection
+                                                   {
+                                                      new ColumnDefinition{ Width = GridLength.Auto}                                                                                                            
+                                                  }  
                    };
+            gridComponents.Children.Add(circleEventListImage, 0, 0);
+            gridComponents.Children.Add(eventDetailsLayout, 1, 0);
+            View = gridComponents;
         }
 
-        private static StackLayout CreateDetailsLayout()
+        private static Grid CreateDetailsLayout()
         {
+            var labelEventName = new Label
+                                 {
+                                     HorizontalOptions = LayoutOptions.Start,
+                                     Style = BeginApplication.Styles.ListItemTextStyle
+                                 };
+            labelEventName.SetBinding(Label.TextProperty, "EventName");
+            var labelEventOwnerUsername = new Label
+                                          {
+                                              HorizontalOptions = LayoutOptions.Start,
+                                              Style = BeginApplication.Styles.ListItemDetailTextStyle
+                                          };
+            labelEventOwnerUsername.SetBinding(Label.TextProperty, "EventOwnerUserName");
             var labelEventIntervalDate = new Label
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = BeginApplication.Styles.ListItemTextStyle
-            };
-            var labelEventTime = new Label
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Style = BeginApplication.Styles.ListItemDetailTextStyle
-            };
+                                         {
+                                             HorizontalOptions = LayoutOptions.FillAndExpand,
+                                             Style = BeginApplication.Styles.ListItemDetailTextStyle
+                                         };
+            labelEventIntervalDate.SetBinding(Label.TextProperty, "EventIntervalDateAndTime");
 
-            labelEventIntervalDate.SetBinding(Label.TextProperty, "EventIntervalDate");
-            labelEventTime.SetBinding(Label.TextProperty, "EventTime");
+            //var labelEventTime = new Label
+            //                     {
+            //                         HorizontalOptions = LayoutOptions.FillAndExpand,
+            //                         Style = BeginApplication.Styles.ListItemDetailTextStyle
+            //                     };
+            //labelEventTime.SetBinding(Label.TextProperty, "EventTime");
 
-            return new StackLayout
-            {
-                HeightRequest = 50,
-                Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Orientation = StackOrientation.Vertical,
-                Children = { labelEventIntervalDate, labelEventTime }
-            };
+            var gridDetails = new Grid
+                              {
+                                  Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,
+                                  HorizontalOptions = LayoutOptions.FillAndExpand,
+                                  RowDefinitions = new RowDefinitionCollection
+                                                   {
+                                                       new RowDefinition {Height = GridLength.Auto},
+                                                       new RowDefinition {Height = GridLength.Auto},
+                                                       new RowDefinition {Height = GridLength.Auto},
+                                                   }
+                              };
+
+            gridDetails.Children.Add(labelEventName, 0, 0);
+            gridDetails.Children.Add(labelEventOwnerUsername, 0, 1);
+            gridDetails.Children.Add(labelEventIntervalDate, 0, 2);
+            return gridDetails;
         }
     }
 
     public class EventInfoObject
     {
+        public string Icon { get; set; }
         public string EventName { get; set; }
-        public string EventIntervalDate { get; set; }
+        public string EventIntervalDateAndTime { get; set; }
+        public string EventOwnerUserName { get; set; }
         public string EventTime { get; set; }
         public ProfileEvent EventInfo { get; set; }
     }
