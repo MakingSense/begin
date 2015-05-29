@@ -14,5 +14,8 @@ namespace BeginMobile.Services.DTO
 
         [JsonProperty("thread_count")]
         public string ThreadCount { set; get; }
+
+        [JsonProperty("thread_unread_count")]
+        public string ThreadUnreadCount { set; get; }
     }
 }
