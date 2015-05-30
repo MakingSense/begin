@@ -16,7 +16,7 @@ namespace BeginMobile.iOS.Renderers
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
-            var view = (ExtendedEntry)Element;
+			var view = Element as ExtendedEntry;
 
             if (view != null)
             {
