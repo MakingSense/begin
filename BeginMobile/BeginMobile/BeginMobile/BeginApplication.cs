@@ -39,7 +39,7 @@ namespace BeginMobile
 
             _log.Info("Start Begin Xamarin Application.");
 
-            MainPage = new NavigationPage(new LoginModalPage(this));
+            MainPage = new NavigationHomePage(new LoginModalPage(this));
                                                
         }
 

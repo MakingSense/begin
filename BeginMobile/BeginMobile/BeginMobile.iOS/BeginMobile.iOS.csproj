@@ -90,7 +90,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\ExtendedButtonRenderer.cs" />
-    <Compile Include="Renderers\ExtendedEntryRenderer.cs" />
+    <Compile Include="Renderers\ExtendedNavigationHomeRenderer.cs" />
     <Compile Include="Renderers\ExtendedTabbedRenderer.cs" />
     <Compile Include="Renderers\ImageCircleRenderer.cs" />
     <None Include="Info.plist" />

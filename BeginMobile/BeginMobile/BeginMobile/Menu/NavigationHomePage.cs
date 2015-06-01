@@ -9,7 +9,7 @@ namespace BeginMobile.Menu
     {
         public NavigationHomePage(Page page) : base(page)
         {
-            Title = "Home Main";
+            BarTextColor = Color.White;
         }
     }
 }

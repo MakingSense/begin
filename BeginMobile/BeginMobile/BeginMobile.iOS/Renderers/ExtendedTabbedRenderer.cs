@@ -89,12 +89,6 @@ namespace BeginMobile.iOS.Renderers
             }
         }
 
-        public override void ObserveValue(Foundation.NSString keyPath, Foundation.NSObject ofObject, Foundation.NSDictionary change, System.IntPtr context)
-        {
-            base.ObserveValue(keyPath, ofObject, change, context);
-            var test = "";
-        }
-
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
             base.OnElementChanged(e);
