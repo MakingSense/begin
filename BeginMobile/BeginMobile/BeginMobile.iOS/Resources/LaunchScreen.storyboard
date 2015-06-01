@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="23" alpha="1" image="logoSplash.png">
+                            <imageView userInteractionEnabled="NO" contentMode="center" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="23" alpha="1" image="forsteps_large.png">
                                 <rect key="frame" x="270" y="270" width="60" height="60"/>
                                 <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                 <color key="backgroundColor" colorSpace="calibratedRGB" red="0.30588235294117649" green="0.74117647058823533" blue="0.5490196078431373" alpha="0"/>

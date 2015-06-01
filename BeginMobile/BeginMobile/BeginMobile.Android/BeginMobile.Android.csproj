@@ -335,7 +335,7 @@
     <AndroidResource Include="Resources\Drawable\forsteps_setting_inactive.png" />
     <AndroidResource Include="Resources\Drawable\forsteps_shop_active.png" />
     <AndroidResource Include="Resources\Drawable\forsteps_shop_inactive.png" />
-    <AndroidResource Include="Resources\Drawable-hdpi\hdpi_forsteps.png" />
+    <AndroidResource Include="Resources\Drawable-hdpi\forsteps.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">
