@@ -16,7 +16,7 @@ namespace BeginMobile.Pages.ShopPages
             var circleShopImage = new CircleImage
                                   {
                                       Style = BeginApplication.Styles.CircleImageCommon,
-                                      //Source = GroupImage
+                                      Source = GroupImage
                                   };
 
             circleShopImage.SetBinding(CircleImage.SourceProperty, "Thumbnail");
@@ -24,7 +24,6 @@ namespace BeginMobile.Pages.ShopPages
             var labelTitle = new Label
                              {
                                  YAlign = TextAlignment.Center,
-                                 FontAttributes = FontAttributes.Bold,
                                  Style = BeginApplication.Styles.ListItemTextStyle
                              };
 
@@ -35,7 +34,6 @@ namespace BeginMobile.Pages.ShopPages
                                        {
                                            YAlign = TextAlignment.Center,
                                            Text = AppResources.LabelShopDate,
-                                           FontAttributes = FontAttributes.Bold,
                                            Style = BeginApplication.Styles.ListItemTextStyle,
                                            HorizontalOptions = LayoutOptions.Start
                                        };
@@ -44,17 +42,26 @@ namespace BeginMobile.Pages.ShopPages
                               {
                                   YAlign = TextAlignment.Center,
                                   Style = BeginApplication.Styles.ListItemDetailTextStyle,
-                                  HorizontalOptions = LayoutOptions.Center
+                                  HorizontalOptions = LayoutOptions.Start
                               };
 
             labelCreate.SetBinding(Label.TextProperty, "CreationDate");
+
+            var labelStatus = new Label
+            {
+                YAlign = TextAlignment.Center,
+                XAlign = TextAlignment.Start,
+                Style = BeginApplication.Styles.ListItemDetailTextStyle,
+                HorizontalOptions = LayoutOptions.Start
+            };
+
+            labelStatus.SetBinding(Label.TextProperty, "Status");
 
             //Right section
             var labelPriceTitle = new Label
                                   {
                                       YAlign = TextAlignment.Center,
                                       Text = AppResources.LabelShopPrice,
-                                      FontAttributes = FontAttributes.Bold,
                                       Style = BeginApplication.Styles.ListItemTextStyle,
                                       HorizontalOptions = LayoutOptions.Start
                                   };
@@ -62,45 +69,34 @@ namespace BeginMobile.Pages.ShopPages
             var labelPrice = new Label
                              {
                                  YAlign = TextAlignment.Center,
-                                 XAlign = TextAlignment.Center,
+                                 XAlign = TextAlignment.Start,
                                  Style = BeginApplication.Styles.ListItemDetailTextStyle,
-                                 HorizontalOptions = LayoutOptions.End
+                                 HorizontalOptions = LayoutOptions.Start
                              };
 
-            labelPrice.SetBinding(Label.TextProperty, "Price");
+            labelPrice.SetBinding(Label.TextProperty, "Price",stringFormat:"{0} u$s");
 
             var gridDetails = new Grid
                               {
-                                  Padding = BeginApplication.Styles.ThicknessInsideListView,
+                                  Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =
                                   {
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto}
                                   },
-                                  ColumnDefinitions =
-                                  {
-                                      new ColumnDefinition {Width = GridLength.Auto},
-                                      new ColumnDefinition {Width = GridLength.Auto}
-                                  }
+                                  //ColumnDefinitions =
+                                  //{
+                                  //    new ColumnDefinition {Width = GridLength.Auto},
+                                  //    new ColumnDefinition {Width = GridLength.Auto}
+                                  //}
                               };
 
-            gridDetails.Children.Add(labelCreateDateTitle, 0, 0);
-            gridDetails.Children.Add(labelCreate, 0, 1);
+           // gridDetails.Children.Add(labelCreateDateTitle, 0, 0);
+            gridDetails.Children.Add(labelTitle, 0, 0);
+            gridDetails.Children.Add(labelStatus, 0, 1);
+            gridDetails.Children.Add(labelPrice, 0, 2);
 
-            gridDetails.Children.Add(labelPriceTitle, 1, 0);
-            gridDetails.Children.Add(labelPrice, 1, 1);
-
-            var stackLayoutCenter = new StackLayout
-                                    {
-                                        Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,
-                                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                                        Children =
-                                        {
-                                            labelTitle,
-                                            gridDetails
-                                        }
-                                    };
 
             var stackLayoutItem = new StackLayout
                                   {                  
@@ -110,7 +106,7 @@ namespace BeginMobile.Pages.ShopPages
                                       Children =
                                       {
                                           circleShopImage,
-                                          stackLayoutCenter
+                                          gridDetails
                                       }
                                   };
 

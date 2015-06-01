@@ -84,9 +84,9 @@ namespace BeginMobile.Pages.GroupPages
                                             }
                                         };
 
-            gridImage.Children.Add(stackLayoutLinesLeft, 0, 0);
-            gridImage.Children.Add(groupBannerImage, 1, 0);
-            gridImage.Children.Add(stackLayoutLinesRight, 2, 0);
+           // gridImage.Children.Add(stackLayoutLinesLeft, 0, 0);
+            gridImage.Children.Add(groupBannerImage, 0, 0);
+           // gridImage.Children.Add(stackLayoutLinesRight, 2, 0);
 
             var labelStatusGroup = new Label
                                    {

@@ -1449,7 +1449,7 @@ namespace BeginMobile.Utils
         //icons
         public string FilterIcon
         {
-            get { return "search.png"; }
+            get { return "search_inactive.png"; }
         }
 
         public string FilterCloseIcon
