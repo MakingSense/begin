@@ -72,18 +72,21 @@ namespace BeginMobile.Pages.Profile
             var circleProfileImage = new CircleImage
                                      {
                                          HorizontalOptions = LayoutOptions.Center,
-                                         VerticalOptions = LayoutOptions.Center,
+                                         VerticalOptions = LayoutOptions.End,
                                          Style = BeginApplication.Styles.CircleImageForDetails,
                                          Source = userAvatar
                                      };
 
             var labelName = new Label
                             {
+                                XAlign = TextAlignment.Center,
                                 TextColor = Color.White,
                                 Text = user.NameSurname,
                                 FontAttributes = FontAttributes.Bold,
                                 HorizontalOptions = LayoutOptions.Center,
-                                Style = BeginApplication.Styles.TitleStyle,
+                                //Style = BeginApplication.Styles.TitleStyle,
+                                FontSize = BeginApplication.Styles.TextFontSize18,
+                                WidthRequest = 160
                             };
 
             var labelJob = new Label
@@ -94,8 +97,9 @@ namespace BeginMobile.Pages.Profile
                                        : "Web Designer",
                                //user.Profession,//TODO: remove the harcode data and uncomment the user.Profession                               
                                HorizontalOptions = LayoutOptions.Center,
-                               FontSize = BeginApplication.Styles.SubtitleFontSize,
-                               TextColor = BeginApplication.Styles.ColorWhite
+                               FontSize = BeginApplication.Styles.TextFontSize16,
+                               TextColor = BeginApplication.Styles.ColorWhite,
+                               
                            };
 
             var labelDirection = new Label
@@ -118,8 +122,8 @@ namespace BeginMobile.Pages.Profile
             var imageRankingDefault = new Image
                                       {
                                           Source = ImageSource.FromFile(BeginApplication.Styles.RankingDefaultIcon),
-                                          WidthRequest = 30,
-                                          HeightRequest = 30
+                                          WidthRequest = 12,
+                                          HeightRequest = 12
                                       };
             gridRakingImage.Children.Add(imageRankingDefault, 0, 0);
             gridRakingImage.Children.Add(imageRankingDefault, 1, 0);
@@ -132,8 +136,8 @@ namespace BeginMobile.Pages.Profile
                 var image = new Image
                             {
                                 Source = ImageSource.FromFile(BeginApplication.Styles.RankingAddIcon),
-                                WidthRequest = 30,
-                                HeightRequest = 30
+                                WidthRequest = 12,
+                                HeightRequest = 12
                             };
                 gridRakingImage.Children.Add(image, indexer, RankingGridRow);
             }
@@ -145,7 +149,7 @@ namespace BeginMobile.Pages.Profile
                                           VerticalOptions = LayoutOptions.Center,
                                           RowDefinitions =
                                           {
-                                              new RowDefinition {Height = GridLength.Auto},
+                                              new RowDefinition {Height = new GridLength(180, GridUnitType.Absolute)},
                                               new RowDefinition {Height = GridLength.Auto},
                                               new RowDefinition {Height = GridLength.Auto},
                                               new RowDefinition {Height = GridLength.Auto},
@@ -160,8 +164,8 @@ namespace BeginMobile.Pages.Profile
             _commonGridDetailLayout.Children.Add(circleProfileImage, 0, 0);
             _commonGridDetailLayout.Children.Add(labelName, 0, 1);
             _commonGridDetailLayout.Children.Add(labelJob, 0, 2);
-            _commonGridDetailLayout.Children.Add(labelDirection, 0, 3);
-            _commonGridDetailLayout.Children.Add(gridRakingImage, 0, 4);
+            //_commonGridDetailLayout.Children.Add(labelDirection, 0, 3);
+            _commonGridDetailLayout.Children.Add(gridRakingImage, 0, 3);
             _commonMainScrollView = new ScrollView();
             _commonMainGrid = new Grid
                               {
@@ -203,7 +207,7 @@ namespace BeginMobile.Pages.Profile
                                   BackgroundColor = Color.FromHex("000000"),
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   VerticalOptions = LayoutOptions.Start,
-                                  HeightRequest = 50,
+                                  HeightRequest = 40
                               };
 
             // _commonMainGrid.Children.Add(_newPublication.Container, 0, 0);
@@ -270,19 +274,19 @@ namespace BeginMobile.Pages.Profile
                              {
                                  Text = TabsNames.Tab1Activity,
                                  XAlign = TextAlignment.Center,
-                                 FontSize = BeginApplication.Styles.TextFontSizeMedium,
+                                 FontSize = BeginApplication.Styles.TextFontSize14,
                              };
             _tabInformation = new Label
                               {
                                   Text = TabsNames.Tab2Information,
                                   XAlign = TextAlignment.Center,
-                                  FontSize = BeginApplication.Styles.TextFontSizeMedium,
+                                  FontSize = BeginApplication.Styles.TextFontSize14,
                               };
             _tabMore = new Label
                        {
                            Text = TabsNames.TabMore,
                            XAlign = TextAlignment.Center,
-                           FontSize = BeginApplication.Styles.TextFontSizeMedium,
+                           FontSize = BeginApplication.Styles.TextFontSize14,
                        };
 
             _tabActivities.GestureRecognizers.Add(tapGestureRecognizerTabOne);

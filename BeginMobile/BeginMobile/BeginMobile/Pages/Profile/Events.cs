@@ -221,7 +221,7 @@ namespace BeginMobile.Pages.Profile
                                                             EventName = eventInfo.Name,
                                                             EventOwnerUserName = string.Format("{0}{1}", Aroba, eventInfo.Owner.UserName),
                                                             EventIntervalDateAndTime = string.Format("{0} - {1}",
-                                                            string.Format("{0:yyyy, MMMM d}", DateTime.Parse(eventInfo.StartDate)),
+                                                            string.Format("{0:yyyy, MMM d}", DateTime.Parse(eventInfo.StartDate)),
                                                             string.Format("{0:t}",DateTime.Parse(eventInfo.StartTime))),
                                                             EventInfo = eventInfo
                                                         }): new List<EventInfoObject>();

@@ -13,7 +13,7 @@ namespace BeginMobile.Pages.Profile
                                       Style = BeginApplication.Styles.CircleImageCommon,
                                   };
 
-
+            circleEventListImage.SetBinding(Image.SourceProperty, new Binding("Icon"));
             var eventDetailsLayout = CreateDetailsLayout();
 
             var gridComponents = new Grid

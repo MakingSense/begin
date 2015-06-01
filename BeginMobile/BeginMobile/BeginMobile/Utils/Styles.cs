@@ -316,8 +316,8 @@ namespace BeginMobile.Utils
                                                     {
                                                         Property = Label.FontSizeProperty,
                                                         Value =
-                                                            Device.OnPlatform<double>(12, 12, 12)
-                                                    });
+                                                            Device.OnPlatform<double>(17, 17, 17)
+                                                    });                
                 return Device.Styles.BodyStyle;
             }
         }
@@ -356,7 +356,7 @@ namespace BeginMobile.Utils
                                                                   {
                                                                       Property = Label.FontSizeProperty,
                                                                       Value =
-                                                                          Device.OnPlatform<double>(15, 15, 15)
+                                                                          Device.OnPlatform<double>(17, 17, 17)
                                                                   });
                 Device.Styles.ListItemDetailTextStyle.Setters.Add(new Setter
                                                                   {
@@ -383,7 +383,7 @@ namespace BeginMobile.Utils
                                                             {
                                                                 Property = Label.FontSizeProperty,
                                                                 Value =
-                                                                    Device.OnPlatform<double>(16, 16, 16)
+                                                                    Device.OnPlatform<double>(17, 17, 17)
                                                             });
                 Device.Styles.ListItemTextStyle.Setters.Add(new Setter
                                                             {
@@ -489,7 +489,7 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return new Thickness(0, 10, 0, 0);
+                return new Thickness(0, 0, 0, 0);
             }
         }
         public Thickness ThicknessInsideListView
@@ -607,6 +607,19 @@ namespace BeginMobile.Utils
         public double TextFontSizeMedium
         {
             get { return _textfontSizeMedium; }
+        }
+        public double TextFontSize18
+        {
+            get { return 18; }
+        }
+
+        public double TextFontSize14
+        {
+            get { return 14; }
+        }
+        public double TextFontSize16
+        {
+            get { return 16; }
         }
 
         public double TextFontSizeSmall
@@ -889,7 +902,7 @@ namespace BeginMobile.Utils
             get
             {
                 return Device.OnPlatform
-                    (Color.FromHex("42595C"), Color.FromHex("42595C"), Color.FromHex("42595C"));
+                    (Color.FromHex("314454"), Color.FromHex("314454"), Color.FromHex("314454"));
             }
         }
       
@@ -908,7 +921,7 @@ namespace BeginMobile.Utils
                                        Device.OnPlatform(Color.FromHex("4EBD8C"), Color.FromHex("4EBD8C"),
                                            Color.FromHex("4EBD8C"))
                                },
-                               new Setter {Property = VisualElement.HeightRequestProperty, Value = 5},
+                               new Setter {Property = VisualElement.HeightRequestProperty, Value = 4},
                                new Setter {Property = VisualElement.WidthRequestProperty, Value = 100}
                            }
                        };
@@ -930,7 +943,7 @@ namespace BeginMobile.Utils
                                        Device.OnPlatform(Color.FromHex("aaaaaa"), Color.FromHex("aaaaaa"),
                                            Color.FromHex("aaaaaa"))
                                },
-                               new Setter {Property = VisualElement.HeightRequestProperty, Value = 5},
+                               new Setter {Property = VisualElement.HeightRequestProperty, Value = 3},
                                new Setter {Property = VisualElement.WidthRequestProperty, Value = 100}
                            }
                 };
@@ -1015,7 +1028,7 @@ namespace BeginMobile.Utils
                                new Setter
                                {
                                    Property = Label.FontSizeProperty,
-                                   Value = Device.OnPlatform<double>(16, 16, 16)
+                                   Value = Device.OnPlatform<double>(17, 17, 17)
                                },
                                new Setter
                                 {
@@ -1023,12 +1036,7 @@ namespace BeginMobile.Utils
                                     Value =
                                         Device.OnPlatform(Color.FromHex("444444"),
                                             Color.FromHex("444444"), Color.FromHex("444444"))
-                                },
-                                //new Setter
-                                //{
-                                //    Property = Label.FontAttributesProperty,
-                                //    Value = FontAttributes.Bold
-                                //}
+                                }
                            }
                 };
             }
@@ -1046,7 +1054,7 @@ namespace BeginMobile.Utils
                                new Setter
                                {
                                    Property = Label.FontSizeProperty,
-                                   Value = Device.OnPlatform<double>(15, 15, 15)
+                                   Value = Device.OnPlatform<double>(17, 17, 17)
                                },
                                new Setter
                                 {
@@ -1054,12 +1062,7 @@ namespace BeginMobile.Utils
                                     Value =
                                         Device.OnPlatform(Color.FromHex("999999"),
                                             Color.FromHex("999999"), Color.FromHex("999999"))
-                                },
-                                //new Setter
-                                //{
-                                //    Property = Label.FontAttributesProperty,
-                                //    Value = FontAttributes.Bold
-                                //}
+                                }
                            }
                 };
             }
@@ -1106,7 +1109,7 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.HeightRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(70, 80, 70)
+                                                ? Device.OnPlatform(70, 85, 70)
                                                 : Device.OnPlatform(100, 110, 70)
                                     },
                                     new Setter
@@ -1114,7 +1117,7 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.WidthRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(70, 80, 70)
+                                                ? Device.OnPlatform(70, 85, 70)
                                                 : Device.OnPlatform(100, 110, 70)
                                     },
                                     new Setter
@@ -1155,7 +1158,7 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.HeightRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(70, 70, 70)
+                                                ? Device.OnPlatform(70, 85, 70)
                                                 : Device.OnPlatform(100, 100, 100)
                                     },
                                     new Setter
@@ -1163,7 +1166,7 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.WidthRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(70, 70, 70)
+                                                ? Device.OnPlatform(70, 85, 70)
                                                 : Device.OnPlatform(100, 100, 100)
                                     },
                                     new Setter
@@ -1201,7 +1204,7 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.HeightRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(200, 200, 200)
+                                                ? Device.OnPlatform(140, 140, 140)
                                                 : Device.OnPlatform(300, 300, 300)
                                     },
                                     new Setter
@@ -1209,7 +1212,7 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.WidthRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(125, 125, 125)
+                                                ? Device.OnPlatform(140, 140, 140)
                                                 : Device.OnPlatform(300, 300, 300)
                                     },
                                     new Setter
@@ -1395,7 +1398,7 @@ namespace BeginMobile.Utils
 
         public string DefaultEventIcon
         {
-            get { return "events_menu.png"; }
+            get { return "ievents.png"; }
         }
 
         public string DefaultNotificationIcon

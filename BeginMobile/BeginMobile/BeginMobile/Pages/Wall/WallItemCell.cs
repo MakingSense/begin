@@ -13,7 +13,7 @@ namespace BeginMobile.Pages.Wall
 
             var labelUserName = new Label
             {
-                YAlign = TextAlignment.End,
+                YAlign = TextAlignment.Start,
                 //FontAttributes = FontAttributes.Bold,
                 Style = BeginApplication.Styles.ListTitleWallStyle,
                 LineBreakMode = LineBreakMode.WordWrap,
@@ -24,7 +24,7 @@ namespace BeginMobile.Pages.Wall
             {
                 Style = BeginApplication.Styles.ListDescriptionWallStyle,
                 XAlign = TextAlignment.End,
-                YAlign = TextAlignment.Center,
+                YAlign = TextAlignment.Start,
                 HorizontalOptions = LayoutOptions.End,
             };
             labelDatePublic.SetBinding(Label.TextProperty, "PublicDateShort");
@@ -38,8 +38,8 @@ namespace BeginMobile.Pages.Wall
                 },
                 ColumnDefinitions =
                 {
-                    new ColumnDefinition(){ Width = new GridLength (170, GridUnitType.Absolute)},
-                    new ColumnDefinition(){ Width = GridLength.Auto}
+                    new ColumnDefinition(){ Width = new GridLength (130, GridUnitType.Absolute)},
+                    new ColumnDefinition(){ Width = GridLength.Auto},
                 }
             };
             gridUserAndTime.Children.Add(labelUserName, 0, 0);
@@ -47,7 +47,7 @@ namespace BeginMobile.Pages.Wall
 
             var labelTitle = new Label
                              {
-                                 YAlign = TextAlignment.End,
+                                 YAlign = TextAlignment.Start,
                                  //FontAttributes = FontAttributes.Bold,
                                  Style = BeginApplication.Styles.ListDescriptionWallStyle,
                              };
@@ -56,7 +56,7 @@ namespace BeginMobile.Pages.Wall
 
             var labelReason = new Label
                               {
-                                  YAlign = TextAlignment.End,
+                                  YAlign = TextAlignment.Start,
                                   Style = BeginApplication.Styles.ListDescriptionWallStyle,
                                   LineBreakMode = LineBreakMode.WordWrap,
                               };
@@ -64,7 +64,7 @@ namespace BeginMobile.Pages.Wall
 
             var labelDescription = new Label
                                    {
-                                       YAlign = TextAlignment.End,
+                                       YAlign = TextAlignment.Start,
                                        Style = BeginApplication.Styles.ListDescriptionWallStyle,
                                        LineBreakMode = LineBreakMode.WordWrap,
                                    };
@@ -73,7 +73,7 @@ namespace BeginMobile.Pages.Wall
 
             var labelDate = new Label
                             {
-                                YAlign = TextAlignment.End,
+                                YAlign = TextAlignment.Start,
                                 Style = BeginApplication.Styles.ListDescriptionWallStyle
                             };
 

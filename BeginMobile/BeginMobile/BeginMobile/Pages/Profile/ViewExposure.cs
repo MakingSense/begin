@@ -132,17 +132,8 @@ namespace BeginMobile.Pages.Profile
                                    ColumnSpacing = 0,
                                    RowDefinitions = new RowDefinitionCollection
                                                     {
-                                                        new RowDefinition
-                                                        {
-                                                            Height =
-                                                                new GridLength(10, GridUnitType.Auto)
-                                                        },
                                                         new RowDefinition {Height = GridLength.Auto},
-                                                        new RowDefinition
-                                                        {
-                                                            Height =
-                                                                new GridLength(0.3, GridUnitType.Star)
-                                                        }
+                                                        new RowDefinition {Height = GridLength.Auto}
                                                     }
                                };
             gridControls.Children.Add(_tabOne, 0, 0);

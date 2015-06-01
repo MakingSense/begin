@@ -33,7 +33,7 @@ namespace BeginMobile.Pages.ContactPages
         private string _sort;
         private const int DefaultLimit = 10;
         private bool _areLastItems;
-
+        private const string Aroba = "@";
 
         private Dictionary<string, string> _sortOptionsDictionary = new Dictionary<string, string>
                                                                     {
@@ -54,29 +54,27 @@ namespace BeginMobile.Pages.ContactPages
 			MasterTitle = AppResources.AppHomeChildFindContacts;
 
             _searchView = new SearchView();
-            _currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
 
             _areLastItems = false;
             _listViewContacts = new ListView
                                 {ClassId = "ContactPageId"};
 
-            _listViewContacts.ItemAppearing += async (sender, e) =>
+            _listViewContacts.ItemAppearing += (sender, e) =>
                                                      {
-                                                         if (_isLoading == true ||
+                                                         if (_isLoading ||
                                                              _contactsList.Count == 0 ||
-                                                             _areLastItems == true)
+                                                             _areLastItems)
                                                          {
                                                              return;
                                                          }
                                                          var appearingItem = (Contact) e.Item;
                                                          var lastItem = _contactsList[_contactsList.Count - 1];
 
-                                                         if ((appearingItem.Id == lastItem.Id) &&
-                                                             (appearingItem.Registered == lastItem.Registered))
-                                                         {
-                                                             addLoadingIndicator(_stackLayoutLoadingIndicator);
-                                                             LoadItems();
-                                                         }
+                                                         if ((appearingItem.Id != lastItem.Id) ||
+                                                             (appearingItem.Registered != lastItem.Registered)) return;
+                                                         AddLoadingIndicator(_stackLayoutLoadingIndicator);
+                                                         LoadItems();
                                                      };
 
             _listViewContacts.ItemTapped += async (sender, eventArgs) =>
@@ -167,7 +165,7 @@ namespace BeginMobile.Pages.ContactPages
             _gridLayoutMain.Children.Add(_labelNoContactsMessage, 0, 1);
             _gridLayoutMain.Children.Add(stackLayoutContactsList, 0, 2);
 
-            ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+            ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, () =>
                                                                                                         {
                                                                                                             _searchView
                                                                                                                 .Container
@@ -179,7 +177,7 @@ namespace BeginMobile.Pages.ContactPages
 #endif
             Content = _gridLayoutMain;
 
-            removeLoadingIndicator(_stackLayoutLoadingIndicator);
+            RemoveLoadingIndicator(_stackLayoutLoadingIndicator);
         }
 
         public ToolbarItem ToolbarItem { get; set; }
@@ -192,7 +190,7 @@ namespace BeginMobile.Pages.ContactPages
 
         #region Method of the Paginator
 
-        private void removeLoadingIndicator(View loadingIndicator)
+        private void RemoveLoadingIndicator(View loadingIndicator)
         {
             _gridLayoutMain.RowDefinitions[3].Height = GridLength.Auto;
             if (_gridLayoutMain.Children.Contains(loadingIndicator))
@@ -201,7 +199,7 @@ namespace BeginMobile.Pages.ContactPages
             }
         }
 
-        private void addLoadingIndicator(View loadingIndicator)
+        private void AddLoadingIndicator(View loadingIndicator)
         {
             _gridLayoutMain.RowDefinitions[3].Height = Device.OnPlatform<double>(33, 43, 43);
             if (!_gridLayoutMain.Children.Contains(loadingIndicator))
@@ -234,7 +232,7 @@ namespace BeginMobile.Pages.ContactPages
 
                                                                    _activityIndicatorLoading.IsRunning = false;
                                                                    _activityIndicatorLoading.IsVisible = false;
-                                                                   removeLoadingIndicator(_stackLayoutLoadingIndicator);
+                                                                   RemoveLoadingIndicator(_stackLayoutLoadingIndicator);
 
                                                                    _isLoading = false;
                                                                    return false;
@@ -244,7 +242,7 @@ namespace BeginMobile.Pages.ContactPages
                 {
                     _activityIndicatorLoading.IsRunning = false;
                     _activityIndicatorLoading.IsVisible = false;
-                    removeLoadingIndicator(_stackLayoutLoadingIndicator);
+                    RemoveLoadingIndicator(_stackLayoutLoadingIndicator);
 
                     _isLoading = false;
                     _areLastItems = true;
@@ -254,7 +252,7 @@ namespace BeginMobile.Pages.ContactPages
             {
                 _activityIndicatorLoading.IsRunning = false;
                 _activityIndicatorLoading.IsVisible = false;
-                removeLoadingIndicator(_stackLayoutLoadingIndicator);
+                RemoveLoadingIndicator(_stackLayoutLoadingIndicator);
 
                 _isLoading = false;
             }
@@ -362,11 +360,9 @@ namespace BeginMobile.Pages.ContactPages
                                                                                   BeginApplication.Styles
                                                                                   .DefaultContactIcon,
                                                                               NameSurname = contact.NameSurname,
-                                                                              Email =
-                                                                                  string.Format("e-mail: {0}",
-                                                                                      contact.Email),
+                                                                              Email = contact.Email,
                                                                               Url = contact.Url,
-                                                                              UserName = contact.UserName,
+                                                                              UserName = string.Format("{0}{1}",Aroba,contact.UserName),
                                                                               Registered = DateConverter.GetTimeSpan(DateTime.Parse(contact.Registered)),
                                                                               Id = contact.Id.ToString(),
                                                                               Relationship = contact.Relationship,

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BeginMobile.Services.DTO;
 using BeginMobile.Services.Models;
+using BeginMobile.Services.Utils;
 using BeginMobile.Utils;
 using Xamarin.Forms;
 
@@ -14,11 +15,12 @@ namespace BeginMobile.Pages.Profile
     {
         private ListView _listViewContacts;
         private Label _labelNoContactsMessage;
-        private List<Contact> _defaultList = new List<Contact>();
+        private readonly List<Contact> _defaultList = new List<Contact>();
         private readonly SearchView _searchView;
         private readonly LoginUser _currentUser;
         //private ProfileContacts _profileInformationContacts;
         private ObservableCollection<Contact> _profileContacts;
+        private const string Aroba = "@";
 
         //Paginator
         private readonly ActivityIndicator _activityIndicatorLoading;
@@ -31,7 +33,6 @@ namespace BeginMobile.Pages.Profile
         private const int DefaultLimit = 10;
         private bool _areLastItems;
         private Grid _gridMainComponents;
-
         private Dictionary<string, string> _sortOptionsDictionary = new Dictionary<string, string>
                                                                     {
                                                                         {"last_active", "Last Active"},
@@ -47,7 +48,7 @@ namespace BeginMobile.Pages.Profile
             Style = BeginApplication.Styles.PageStyle;
             Title = "Contacts";
             _searchView = new SearchView();
-            _currentUser = (LoginUser) BeginApplication.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser) Application.Current.Properties["LoginUser"];
 
             Init();
         }
@@ -60,7 +61,7 @@ namespace BeginMobile.Pages.Profile
             LoadSortOptionsPicker();
 
             var userContacts = profileInformationContacts != null
-                ? profileInformationContacts.Contacts
+                ? profileInformationContacts.Contacts as IEnumerable<User>
                 : new List<User>();
 
             _profileContacts = new ObservableCollection<Contact>(RetrieveContacts(userContacts));
@@ -130,7 +131,7 @@ namespace BeginMobile.Pages.Profile
                                               }
                                           };
 
-            ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, async () =>
+            ToolbarItem = new ToolbarItem("Filter", BeginApplication.Styles.FilterIcon, () =>
             {
                 _searchView
                     .Container
@@ -256,16 +257,22 @@ namespace BeginMobile.Pages.Profile
             {
                 return profileInformationContacts.Select(contact => new Contact
                                                                     {
-                                                                        Icon = BeginApplication.Styles.DefaultContactIcon,
+                                                                        Icon =
+                                                                            BeginApplication.Styles.DefaultContactIcon,
                                                                         //TODO:change for contac avatar
                                                                         NameSurname = contact.NameSurname,
                                                                         Email = contact.Email,
                                                                         Url = contact.Url,
-                                                                        UserName = contact.UserName,
-                                                                        Registered = contact.Registered,
+                                                                        UserName =
+                                                                            string.Format("{0}{1}", Aroba,
+                                                                                contact.UserName),
+                                                                        Registered =
+                                                                            DateConverter.GetTimeSpan(
+                                                                                DateTime.Parse(contact.Registered)),
                                                                         Id = contact.Id.ToString(),
                                                                         Relationship = contact.Relationship,
-                                                                        IsOnline = contact.IsOnline
+                                                                        IsOnline = contact.IsOnline,
+                                                                        Profession = contact.Profession
                                                                     });
             }
             else
