@@ -72,7 +72,7 @@ namespace BeginMobile.Pages.ContactPages
                                    //Text =  AppResources.ButtonAddFriend,
                                    Image = BeginApplication.Styles.ContactAddIcon,
                                    Style = BeginApplication.Styles.ButtonContactsListView,
-                                   HorizontalOptions = LayoutOptions.Start,
+                                   HorizontalOptions = LayoutOptions.End,
                                };
 
             _buttonRemoveFriend = new Button
@@ -80,7 +80,7 @@ namespace BeginMobile.Pages.ContactPages
                                       //Text =  AppResources.ButtonRemoveFriend,
                                       Image = BeginApplication.Styles.ContactAddedIcon,
                                       Style = BeginApplication.Styles.ButtonContactsListView,
-                                      HorizontalOptions = LayoutOptions.Start,
+                                      HorizontalOptions = LayoutOptions.End,
                                   };
 
             _buttonCancelFriend = new Button
@@ -88,7 +88,7 @@ namespace BeginMobile.Pages.ContactPages
                                      // Text = AppResources.ButtonCancelRequestFriend,
                                       Image = BeginApplication.Styles.ContactAddIcon,
                                       Style = BeginApplication.Styles.ButtonContactsListView,
-                                      HorizontalOptions = LayoutOptions.Start,
+                                      HorizontalOptions = LayoutOptions.End,
                                   };
 
             _buttonAcceptFriend = new Button
@@ -96,7 +96,7 @@ namespace BeginMobile.Pages.ContactPages
                                      // Text =  AppResources.ButtonAcceptFriend,
                                       Image = BeginApplication.Styles.ContactAddIcon,
                                       Style = BeginApplication.Styles.ButtonContactsListView,
-                                      HorizontalOptions = LayoutOptions.Start,
+                                      HorizontalOptions = LayoutOptions.End,
                                   };
 
             _buttonRejectFriend = new Button
@@ -104,7 +104,7 @@ namespace BeginMobile.Pages.ContactPages
                                       //Text =  AppResources.ButtonRejectFriend,
                                       Image = BeginApplication.Styles.ContactAddIcon,
                                       Style = BeginApplication.Styles.ButtonContactsListView,
-                                      HorizontalOptions = LayoutOptions.Start,
+                                      HorizontalOptions = LayoutOptions.End
                                   };
 
             _buttonAddFriend.Clicked += AddFriendEventHandler;
@@ -116,29 +116,28 @@ namespace BeginMobile.Pages.ContactPages
             var labelNameSurname = new Label
                                    {
                                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                                       YAlign = TextAlignment.Center,
+                                       YAlign = TextAlignment.Start,
                                        Style = BeginApplication.Styles.ListItemTextStyle
                                    };
 
             var labelUserName = new Label
                                 {
                                     HorizontalOptions = LayoutOptions.FillAndExpand,
-                                    YAlign = TextAlignment.Center,
+                                    YAlign = TextAlignment.Start,
                                     Style = BeginApplication.Styles.ListItemDetailTextStyle
                                 };
 
-            var labelEmail = new Label
-                             {
-                                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                                 YAlign = TextAlignment.Center,
-                                 Style = BeginApplication.Styles.ListItemDetailTextStyle
-                             };
+            var labelProfession = new Label
+                                  {
+                                      HorizontalOptions = LayoutOptions.FillAndExpand,
+                                      YAlign = TextAlignment.Start,
+                                      Style = BeginApplication.Styles.ListItemDetailTextStyle
+                                  };
 
 
             labelNameSurname.SetBinding(Label.TextProperty, "NameSurname");
-            //labelUserName.SetBinding(Label.TextProperty, "UserName");
-            labelUserName.SetBinding(Label.TextProperty, "Registered");
-            labelEmail.SetBinding(Label.TextProperty, "Profession");
+            labelUserName.SetBinding(Label.TextProperty, "UserName");
+            labelProfession.SetBinding(Label.TextProperty, "Profession");
 
             var grid = new Grid
                        {
@@ -149,13 +148,12 @@ namespace BeginMobile.Pages.ContactPages
                            {
                                new RowDefinition {Height = GridLength.Auto},
                                new RowDefinition {Height = GridLength.Auto},
-                               new RowDefinition {Height = GridLength.Auto},
                                new RowDefinition {Height = GridLength.Auto}
                            },
                            ColumnDefinitions =
                            {
-                               new ColumnDefinition {Width = GridLength.Auto},
-                               new ColumnDefinition {Width = GridLength.Auto}
+                               new ColumnDefinition {Width = new GridLength(2, GridUnitType.Star)},
+                               new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)},
                            }
                        };
 
@@ -165,17 +163,17 @@ namespace BeginMobile.Pages.ContactPages
             {
                 grid.Children.Add(labelNameSurname, 0, 0);
                 grid.Children.Add(labelUserName, 0, 1);
-                grid.Children.Add(labelEmail, 0, 2);
+                grid.Children.Add(labelProfession, 0, 2);
 
                 if (Relationship != "request_received")
                 {
-                    grid.Children.Add(RelationshipButton(), 0, 3);
+                    grid.Children.Add(RelationshipButton(), 1, 2);
                 }
 
                 else
                 {
-                    grid.Children.Add(_buttonAcceptFriend, 0, 3);
-                    grid.Children.Add(_buttonRejectFriend, 1, 3);
+                    grid.Children.Add(_buttonAcceptFriend, 1, 2);
+                    grid.Children.Add(_buttonRejectFriend, 1, 2);
                 }
             }
 
@@ -222,7 +220,7 @@ namespace BeginMobile.Pages.ContactPages
                     //SubscribeAddContact(username);
                     if (parentGrid.Children.Remove(_buttonAddFriend))
                     {
-                        parentGrid.Children.Add(_buttonCancelFriend, 0, 3);
+                        parentGrid.Children.Add(_buttonCancelFriend, 1, 2);
                     }
                 }
             }
@@ -252,7 +250,7 @@ namespace BeginMobile.Pages.ContactPages
                     //SubscribeRemoveContact(username);
                     if (parentGrid.Children.Remove(_buttonRemoveFriend))
                     {
-                        parentGrid.Children.Add(_buttonAddFriend, 0, 3);
+                        parentGrid.Children.Add(_buttonAddFriend, 1, 2);
                     }
                 }
             }
@@ -283,7 +281,7 @@ namespace BeginMobile.Pages.ContactPages
 
                     if (parentGrid.Children.Remove(_buttonCancelFriend))
                     {
-                        parentGrid.Children.Add(_buttonAddFriend, 0, 3);
+                        parentGrid.Children.Add(_buttonAddFriend, 1, 2);
                     }
                 }
             }
@@ -315,7 +313,7 @@ namespace BeginMobile.Pages.ContactPages
                     if (parentGrid.Children.Remove(_buttonRejectFriend) &&
                         parentGrid.Children.Remove(_buttonAcceptFriend))
                     {
-                        parentGrid.Children.Add(_buttonRemoveFriend, 0, 3);
+                        parentGrid.Children.Add(_buttonRemoveFriend, 1, 2);
                     }
                 }
             }
@@ -346,7 +344,7 @@ namespace BeginMobile.Pages.ContactPages
                     if (parentGrid.Children.Remove(_buttonRejectFriend) &&
                         parentGrid.Children.Remove(_buttonAcceptFriend))
                     {
-                        parentGrid.Children.Add(_buttonAddFriend, 0, 3);
+                        parentGrid.Children.Add(_buttonAddFriend, 1, 2);
                     }
                 }
             }

@@ -337,13 +337,13 @@
                                               MenuItemsNames
                                               .Logout
                                       },
-                                      new MenuItemViewModel
-                                      {
-                                          Icon =  BeginApplication.Styles.ContactsMenu,
-                                          OptionName =
-                                              MenuItemsNames
-                                              .ChangePassword
-                                      },
+                                      //new MenuItemViewModel
+                                      //{
+                                      //    Icon =  BeginApplication.Styles.ContactsMenu,
+                                      //    OptionName =
+                                      //        MenuItemsNames
+                                      //        .ChangePassword
+                                      //},
                                       //new MenuItemViewModel
                                       //{
                                       //    Icon =  BeginApplication.Styles.AboutUsIcon,
@@ -513,29 +513,32 @@
 			        }
 			    }
 
-
+                //Template for menu
                 public class MenuDataTemplate : ViewCell
                 {
                     public MenuDataTemplate()
                     {
                         var icon = new Image
-                        {
+                        {                           
+                            Aspect = Aspect.AspectFit,
                             HorizontalOptions = LayoutOptions.Start,
                             VerticalOptions = LayoutOptions.Start
                         };
                         icon.SetBinding(Image.SourceProperty, new Binding("Icon"));
-                        icon.WidthRequest = icon.HeightRequest = 40;
 
                         var optionLayout = CreateOptionLayout();
+
+
                         View = new StackLayout
-                        {
-                            Orientation = StackOrientation.Horizontal,
-                            Children =
-                       {
-                           icon,
-                           optionLayout
-                       }
-                        };
+                               {
+                                   Orientation = StackOrientation.Horizontal,
+                                   Padding = new Thickness(5, 5, 5, 5),
+                                   Children =
+                                   {
+                                       icon,
+                                       optionLayout
+                                   }
+                               };
                     }
 
                     public static StackLayout CreateOptionLayout()
@@ -568,10 +571,10 @@
                     {
                         var icon = new Image
                         {
-                            HeightRequest = Device.OnPlatform(50, 100, 100),
-                            WidthRequest = Device.OnPlatform(50, 100, 100),
-                            Aspect = Aspect.AspectFill,
-                            HorizontalOptions = LayoutOptions.Start,
+                            HeightRequest = Device.OnPlatform(50, 36, 36),
+                            WidthRequest = Device.OnPlatform(50, 36, 36),
+                            Aspect = Aspect.AspectFit,
+                            HorizontalOptions = LayoutOptions.Start
                         };
 
                         icon.SetBinding(Image.SourceProperty, new Binding("Icon"));

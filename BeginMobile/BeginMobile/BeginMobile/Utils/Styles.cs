@@ -1383,49 +1383,68 @@ namespace BeginMobile.Utils
 
         public string MessageIcon
         {
-            get { return "mail.png"; }
+            get { return "forsteps_mail_inactive.png"; }
         }
 
         public string DefaultGroupIcon
         {
-            get { return "igroup.png"; }
+            get { return "forsteps_groups_inactive.png"; }
         }
 
         public string DefaultWallIcon
         {
-            get { return "ifeeds.png"; }
+            get { return "forsteps_information_inactive.png"; }
         }
 
         public string DefaultEventIcon
         {
-            get { return "ievents.png"; }
+            get { return "forsteps_events_inactive.png"; }
         }
 
         public string DefaultNotificationIcon
         {
-            get { return "userprofile.png"; }
+            get { return "forsteps_notification_inactive.png"; }
         }
 
         public string DefaultContactIcon
         {
-            get { return "userprofile.png"; }
+            get { return "forsteps_contacts_inactive.png"; }
         }
 
         public string DefaultActivityIcon
         {
-            get { return "activity.png"; }
+            get { return "forsteps_activity_inactive.png"; }
         }
 
         public string DefaultShopIcon
         {
-            get { return "shop.png"; }
+            get { return "forsteps_shop_inactive.png"; }
         }
-
+        public string DefaultInformationIcon
+        {
+            get { return "forsteps_information_inactive.png"; }
+        }
         public string RatinGoffIcon
         {
             get { return "ratingoff.png"; }
         }
-
+        //Details icons
+        public string ContactDetailsDefaultIcon
+        {
+            get { return "ratingoff.png"; }
+        }
+        public string GroupsDetailsDefaultIcon
+        {
+            get { return "ratingoff.png"; }
+        }
+        public string EventsDetailsDefaultIcon
+        {
+            get { return "ratingoff.png"; }
+        }
+        public string ServicesDetailsDefaultIcon
+        {
+            get { return "ratingoff.png"; }
+        }
 
         //icons
         public string FilterIcon
@@ -1500,12 +1519,12 @@ namespace BeginMobile.Utils
         }
         public string WriteIcon
         {
-            get { return "write.png"; }
+            get { return "edit_inactive.png"; }
         }
 
         public string SearchIcon
         {
-            get { return "search.png"; }
+            get { return "search_inactive.png"; }
         }
 
         public string ContactAddIcon
@@ -1552,24 +1571,24 @@ namespace BeginMobile.Utils
 
         public string ServicesMenu
         {
-            get { return "services_menu.PNG"; }
+            get { return "services_inactive.PNG"; }
         }
         public string ShopsMenu
         {
-            get { return "shops_menu.PNG"; }
+            get { return "shop_inactive.PNG"; }
         }
 
         public string GroupsMenu
         {
-            get { return "groups_menu.PNG"; }
+            get { return "groups_inactive.PNG"; }
         }
         public string EventsMenu
         {
-            get { return "events_menu.PNG"; }
+            get { return "events_inactive.PNG"; }
         }
         public string ContactsMenu
         {
-            get { return "contacts_menu.PNG"; }
+            get { return "contacts_inactive.PNG"; }
         }
         
 

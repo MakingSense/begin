@@ -28,7 +28,6 @@ namespace BeginMobile.Pages.GroupPages
                           {
                               YAlign = TextAlignment.End,
                               Style = BeginApplication.Styles.ListItemTextStyle,
-                              FontAttributes = FontAttributes.Bold,
                               HorizontalOptions = LayoutOptions.Start
                           };
 

@@ -17,7 +17,6 @@ namespace BeginMobile.Pages.GroupPages
             var labelTitle = new Label
                              {
                                  YAlign = TextAlignment.Center,
-                                 FontAttributes = FontAttributes.Bold,
                                  Style = BeginApplication.Styles.ListItemTextStyle
                              };
 
@@ -45,7 +44,6 @@ namespace BeginMobile.Pages.GroupPages
                               {
                                   YAlign = TextAlignment.Center,
                                   HorizontalOptions = LayoutOptions.Start,
-                                  FontAttributes = FontAttributes.Bold,
                                   Style = BeginApplication.Styles.ListItemTextStyle
                               };
 
@@ -73,7 +71,7 @@ namespace BeginMobile.Pages.GroupPages
                                         {
                                             labelTitle,
                                             labelDesc,
-                                            labelStatus,
+                                            //labelStatus,
                                             labelCreate
                                         }
                                     };

@@ -92,7 +92,7 @@ namespace BeginMobile.Pages.GroupPages
                                    {
                                        YAlign = TextAlignment.End,
                                        Style = BeginApplication.Styles.ListItemTextStyle,
-                                       FontAttributes = FontAttributes.Bold,
+                                      
                                        Text = groupDetail.StatusGroup,
                                        HorizontalOptions = LayoutOptions.FillAndExpand
                                    };
@@ -135,8 +135,7 @@ namespace BeginMobile.Pages.GroupPages
                 var labelTitleMember = new Label
                                        {
                                            YAlign = TextAlignment.End,
-                                           Style = BeginApplication.Styles.LabelLargeTextTitle,
-                                           FontAttributes = FontAttributes.Bold,
+                                           Style = BeginApplication.Styles.LabelLargeTextTitle,                                          
                                            HorizontalOptions = LayoutOptions.Start,
                                            Text = "Members:"
                                        };

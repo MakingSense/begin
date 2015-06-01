@@ -277,7 +277,6 @@
     <AndroidResource Include="Resources\Drawable-hdpi\events_inactive.png" />
     <AndroidResource Include="Resources\Drawable-hdpi\groups_active.png" />
     <AndroidResource Include="Resources\Drawable-hdpi\groups_inactive.png" />
-    <AndroidResource Include="Resources\Drawable-hdpi\hdpi.forsteps.png" />
     <AndroidResource Include="Resources\Drawable-hdpi\search_active.png" />
     <AndroidResource Include="Resources\Drawable-hdpi\search_inactive.png" />
     <AndroidResource Include="Resources\Drawable-hdpi\services_active.png" />
@@ -336,6 +335,7 @@
     <AndroidResource Include="Resources\Drawable\forsteps_setting_inactive.png" />
     <AndroidResource Include="Resources\Drawable\forsteps_shop_active.png" />
     <AndroidResource Include="Resources\Drawable\forsteps_shop_inactive.png" />
+    <AndroidResource Include="Resources\Drawable-hdpi\hdpi_forsteps.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BeginMobile.LocalizeResources\BeginMobile.LocalizeResources.csproj">

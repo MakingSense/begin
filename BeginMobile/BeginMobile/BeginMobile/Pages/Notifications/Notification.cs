@@ -438,7 +438,7 @@ namespace BeginMobile.Pages.Notifications
         {
             return profileNotification.Notifications.Select(model => new NotificationViewModel
             {
-                Icon = BeginApplication.Styles.DefaultContactIcon,
+                Icon = BeginApplication.Styles.DefaultNotificationIcon,
                 Id = model.NotificationId,
                 ItemId = model.ItemId,
                 Action = model.Action,
