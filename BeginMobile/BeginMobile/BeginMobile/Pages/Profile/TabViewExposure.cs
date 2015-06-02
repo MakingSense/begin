@@ -75,35 +75,29 @@ namespace BeginMobile.Pages.Profile
                            {
                                Padding = BeginApplication.Styles.ThicknessMainLayout,
                                BackgroundColor = BeginApplication.Styles.ColorWhite,
-                               HorizontalOptions = LayoutOptions.Center,
-                               VerticalOptions = LayoutOptions.FillAndExpand,
+                               HorizontalOptions = LayoutOptions.Fill,
+                               VerticalOptions = LayoutOptions.Start,
                                RowDefinitions = new RowDefinitionCollection
                                                 {
                                                     new RowDefinition {Height = GridLength.Auto},
                                                     new RowDefinition {Height = GridLength.Auto},
                                                 },
-                               ColumnDefinitions = new ColumnDefinitionCollection
-                                                   {
-                                                       new ColumnDefinition {Width = GridLength.Auto}
-                                                   }
+                               //ColumnDefinitions = new ColumnDefinitionCollection
+                               //                    {
+                               //                        new ColumnDefinition {Width = GridLength.Auto}
+                               //                    }
                            };
 
             var gridControls = new Grid
                                {
-                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                    VerticalOptions = LayoutOptions.Start,
+                                   HorizontalOptions = LayoutOptions.FillAndExpand,                                   
                                    ColumnSpacing = 0,
                                    RowDefinitions = new RowDefinitionCollection
                                                     {
-                                                        new RowDefinition {Height = new GridLength(10,GridUnitType.Auto)},
                                                         new RowDefinition {Height = GridLength.Auto},
-                                                        
-                                                    },
-                                   ColumnDefinitions = new ColumnDefinitionCollection
-                                                       {
-                                                           new ColumnDefinition {Width = new GridLength(5, GridUnitType.Star)},                                                           
-                                                           new ColumnDefinition {Width = new GridLength(5, GridUnitType.Star)}
-                                                       }
+                                                        new RowDefinition {Height = GridLength.Auto}                                                        
+                                                    }
                                };
             gridControls.Children.Add(_tabOne, 0, 0);
             gridControls.Children.Add(_boxViewLineSelectedTabOne, 0, 1);
