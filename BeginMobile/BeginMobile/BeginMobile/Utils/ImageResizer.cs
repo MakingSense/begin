@@ -29,12 +29,15 @@ namespace BeginMobile.Utils
 
         public async static Task<byte[]> ResizeImage(byte[] imageData, float width, float height)
         {
-            #if __IOS__
-                return await ResizeImageIOS ( imageData, width, height );
-            #endif
-            #if __ANDROID__
-                return await ResizeImageAndroid(imageData, width, height);
-            #endif
+            Task<byte[]> result = null;
+#if __IOS__
+                result = ResizeImageIOS ( imageData, width, height );
+#endif
+#if __ANDROID__
+            result = ResizeImageAndroid(imageData, width, height);
+#endif
+
+            return await result;
         }
 
 #if __IOS__
