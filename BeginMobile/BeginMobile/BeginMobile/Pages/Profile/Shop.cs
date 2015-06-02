@@ -1,4 +1,6 @@
-﻿using BeginMobile.LocalizeResources.Resources;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.ShopPages;
 using BeginMobile.Services.DTO;
 using System.Threading.Tasks;
@@ -11,19 +13,19 @@ namespace BeginMobile.Pages.Profile
         private ListView _listViewShops;
         private RelativeLayout _relativeLayoutMain;
         private ProfileInformationShop _profileShop;
-        private LoginUser currentUser;
+        private readonly LoginUser _currentUser;
         public Shop()
         {
             Style = BeginApplication.Styles.PageStyle;
             Title = AppResources.LabelShopTitle;
             
-            currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
+            _currentUser = (LoginUser)Application.Current.Properties["LoginUser"];
             Init();
         }
 
         private async Task Init()
         {
-            _profileShop = await BeginApplication.ProfileServices.GetShopInfo(currentUser.AuthToken, currentUser.User.UserName);
+            _profileShop = await BeginApplication.ProfileServices.GetShopInfo(_currentUser.AuthToken, _currentUser.User.UserName);
 
             _listViewShops = new ListView
             {

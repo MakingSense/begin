@@ -389,13 +389,13 @@ namespace BeginMobile.Pages.Notifications
                         }
                         else
                         {
-                            await DisplayAlert("Error", "An Error has been happened in the Server.", "Ok");
+                            await DisplayAlert(AppResources.AlertInfoTitle, "The message has beeen deleted.", AppResources.AlertOk);
                         }
                     }
                     break;
 
                 default:
-                    await DisplayAlert("Info", string.Format("Goes to {0}", target), "Ok");
+                    await DisplayAlert(AppResources.AlertInfoTitle, string.Format("Goes to {0}", target), AppResources.AlertOk);
                     break;
             }
             
@@ -591,7 +591,7 @@ namespace BeginMobile.Pages.Notifications
 
         private void UpdateCounter(string counterText)
         {
-            _appHome.CounterText = counterText;
+             _appHome.CounterText = counterText;
         }
 
         #endregion

@@ -484,28 +484,45 @@ namespace BeginMobile.Utils
 
             }
         }
+        public double RowSpaceMenuItemLogout
+        {
+            get
+            {
+                return Device.OnPlatform(220, 250, 200);
+            }
+        }
+        public Thickness MenuListItemsPadding
+        {
+            get
+            {
+                return Device.OnPlatform(new Thickness(0, 8, 0, 8), new Thickness(0, 8, 0, 8),
+                    new Thickness(0, 8, 0, 8));
+
+            }
+        }
 
         public Thickness ThicknessMainLayout
         {
             get
             {
-                return new Thickness(0, 0, 0, 0);
+                return Device.OnPlatform(new Thickness(0, 0, 0, 0), new Thickness(0, 0, 0, 0),
+                    new Thickness(0, 0, 0, 0));
             }
         }
         public Thickness ThicknessInsideListView
         {
             get
             {
-                return new Thickness(15, 0, 0, 0);
-
+                return Device.OnPlatform(new Thickness(15, 10, 0, 10), new Thickness(15, 10, 0, 10),
+                    new Thickness(15, 10, 0, 10));
             }
         }
         public Thickness ThicknessInternalLayout
         {
             get
             {
-                return new Thickness(15, 15, 15, 15);
-
+                return Device.OnPlatform(new Thickness(15, 15, 15, 15), new Thickness(15, 15, 15, 15),
+                    new Thickness(15, 15, 15, 15));
             }
         }
         public Thickness ThicknessBetweenImageAndDetails
@@ -1449,7 +1466,7 @@ namespace BeginMobile.Utils
         //icons
         public string FilterIcon
         {
-            get { return "search.png"; }
+            get { return "search_active.png"; }
         }
 
         public string FilterCloseIcon
@@ -1519,12 +1536,12 @@ namespace BeginMobile.Utils
         }
         public string WriteIcon
         {
-            get { return "edit_inactive.png"; }
+            get { return "edit_active.png"; }
         }
 
         public string SearchIcon
         {
-            get { return "search_inactive.png"; }
+            get { return "search_active.png"; }
         }
 
         public string ContactAddIcon
