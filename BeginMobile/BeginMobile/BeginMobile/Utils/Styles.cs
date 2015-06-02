@@ -484,13 +484,33 @@ namespace BeginMobile.Utils
 
             }
         }
-        public double RowSpaceMenuItemLogout
+        #region absolutes sizes for grids
+        public int ProfileDetailsHeight
         {
             get
             {
-                return Device.OnPlatform(220, 250, 200);
+                return Device.OnPlatform(240, 220, 220);
             }
         }
+        #endregion
+        public int RowSpaceMenuItemLogout
+        {
+            get
+            {
+                return Device.OnPlatform(100, 250, 200);
+            }
+        }
+
+        public Thickness ProfileDetailsPadding
+        {
+            get
+            {
+                return Device.OnPlatform(new Thickness(0, 50, 0, 30), new Thickness(0, 50, 0, 30),
+                    new Thickness(0, 50, 0, 30));
+
+            }
+        }
+
         public Thickness MenuListItemsPadding
         {
             get
@@ -1017,7 +1037,6 @@ namespace BeginMobile.Utils
                 return style;
             }
         }
-
 
         public Thickness GridOfListView
         {

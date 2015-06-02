@@ -24,6 +24,7 @@ namespace BeginMobile.Pages.Profile
         private readonly Shop _shops;
         private readonly Events _myEvents;
         private readonly TabViewExposure _tabViewExposure;
+        private string _tabSelected = "";
 
         public ViewExposure()
         {
@@ -155,9 +156,9 @@ namespace BeginMobile.Pages.Profile
         public ContentPage PageOne { get; set; }
         public ContentPage PageTwo { get; set; }
         public ContentPage PageThree { get; set; }
-        public String TabOneName { get; set; }
-        public String TabTwoName { get; set; }
-        public String TabThreeName { get; set; }
+        public string TabOneName { get; set; }
+        public string TabTwoName { get; set; }
+        public string TabThreeName { get; set; }
         public ToolbarItem ToolbarItemTabOne { get; set; }
         public ToolbarItem ToolbarItemTabTwo { get; set; }
         public ToolbarItem ToolbarItemTabThree { get; set; }
@@ -186,15 +187,7 @@ namespace BeginMobile.Pages.Profile
         private void SetTabOneSettings()
         {
             CleanResultsAndToolBarItems();
-            _tabOne.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-            _tabTwo.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _tabThree.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _boxViewSelectedTabOne.IsVisible = true;
-            _boxViewSeletedTabTwo.IsVisible = false;
-            _boxViewSeletedTabThree.IsVisible = false;
-            _boxViewInactiveTabOne.IsVisible = false;
-            _boxViewInactiveTabTwo.IsVisible = true;
-            _boxViewInactiveTabThree.IsVisible = true;
+            SetTabOneSelectedStyle();
             if (PageOne != null) _gridResults.Children.Add(PageOne.Content, 0, 0);
             if (ToolbarItemTabOne != null)
             {
@@ -207,16 +200,7 @@ namespace BeginMobile.Pages.Profile
         private void SetTabTwoSettings()
         {
             CleanResultsAndToolBarItems();
-            _tabOne.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _tabTwo.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-            _tabThree.TextColor = BeginApplication.Styles.DefaultColorButton;
-            _boxViewSelectedTabOne.IsVisible = false;
-            _boxViewSeletedTabTwo.IsVisible = true;
-            _boxViewSeletedTabThree.IsVisible = false;
-            _boxViewInactiveTabOne.IsVisible = true;
-            _boxViewInactiveTabTwo.IsVisible = false;
-            _boxViewInactiveTabThree.IsVisible = true;
-
+            SetTabTwoSelectedStyle();
             if (PageTwo != null) _gridResults.Children.Add(PageTwo.Content, 0, 0);
             if (ToolbarItemTabTwo != null)
             {
@@ -226,9 +210,10 @@ namespace BeginMobile.Pages.Profile
             }
         }
 
+
         private void SetTabThreeSettings()
         {
-            CleanResultsAndToolBarItems();
+            //CleanResultsAndToolBarItems();
             _tabOne.TextColor = BeginApplication.Styles.DefaultColorButton;
             _tabTwo.TextColor = BeginApplication.Styles.DefaultColorButton;
             _tabThree.TextColor = BeginApplication.Styles.TabSelectedTextColor;
@@ -247,6 +232,33 @@ namespace BeginMobile.Pages.Profile
             }
         }
 
+        private void SetTabOneSelectedStyle()
+        {
+
+            _tabOne.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            _tabTwo.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _tabThree.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _boxViewSelectedTabOne.IsVisible = true;
+            _boxViewSeletedTabTwo.IsVisible = false;
+            _boxViewSeletedTabThree.IsVisible = false;
+            _boxViewInactiveTabOne.IsVisible = false;
+            _boxViewInactiveTabTwo.IsVisible = true;
+            _boxViewInactiveTabThree.IsVisible = true;
+            _tabSelected = TabOneName;
+        }
+        private void SetTabTwoSelectedStyle()
+        {
+            _tabOne.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _tabTwo.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            _tabThree.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _boxViewSelectedTabOne.IsVisible = false;
+            _boxViewSeletedTabTwo.IsVisible = true;
+            _boxViewSeletedTabThree.IsVisible = false;
+            _boxViewInactiveTabOne.IsVisible = true;
+            _boxViewInactiveTabTwo.IsVisible = false;
+            _boxViewInactiveTabThree.IsVisible = true;
+            _tabSelected = TabTwoName;
+        }
         private void CleanResultsAndToolBarItems()
         {
             _gridResults.Children.Clear();
@@ -267,7 +279,6 @@ namespace BeginMobile.Pages.Profile
 
         private async void EventHandlerTabThree(object sender, EventArgs e)
         {
-            CleanResultsAndToolBarItems();
             SetTabThreeSettings();
 
             var action = await DisplayActionSheet(null, MoreOptionsNames.Cancel, null, MoreOptionsNames.Contacts,
@@ -309,8 +320,14 @@ namespace BeginMobile.Pages.Profile
                     await Navigation.PushAsync(_tabViewExposure);
                     break;
                 case MoreOptionsNames.Cancel:
-                    return;
-
+                    if (string.IsNullOrEmpty(_tabSelected)) return;
+                    if (TabOneName != null && _tabSelected.Equals(TabOneName))
+                    {
+                        SetTabOneSelectedStyle();
+                        break;
+                    }
+                    SetTabTwoSelectedStyle();
+                    break;
                 default:
                     return;
             }

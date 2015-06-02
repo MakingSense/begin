@@ -99,7 +99,6 @@ namespace BeginMobile.Pages.Profile
                                HorizontalOptions = LayoutOptions.Center,
                                FontSize = BeginApplication.Styles.TextFontSize16,
                                TextColor = BeginApplication.Styles.ColorWhite,
-                               
                            };
 
             var labelDirection = new Label
@@ -144,17 +143,18 @@ namespace BeginMobile.Pages.Profile
 
             _commonGridDetailLayout = new Grid
                                       {
+                                          HeightRequest = BeginApplication.Styles.ProfileDetailsHeight,
                                           BackgroundColor = Color.Transparent,
                                           HorizontalOptions = LayoutOptions.Center,
                                           VerticalOptions = LayoutOptions.Center,
                                           RowDefinitions =
                                           {
-                                              new RowDefinition {Height = new GridLength(180, GridUnitType.Absolute)},
+                                              //new RowDefinition {Height = new GridLength(, GridUnitType.Absolute)},
                                               new RowDefinition {Height = GridLength.Auto},
                                               new RowDefinition {Height = GridLength.Auto},
                                               new RowDefinition {Height = GridLength.Auto},
                                               new RowDefinition {Height = GridLength.Auto},
-                                              new RowDefinition {Height = new GridLength(5, GridUnitType.Star)}
+                                              new RowDefinition {Height = GridLength.Auto}
                                           },
                                           ColumnDefinitions =
                                           {
@@ -169,7 +169,7 @@ namespace BeginMobile.Pages.Profile
             _commonMainScrollView = new ScrollView();
             _commonMainGrid = new Grid
                               {
-                                  BackgroundColor = BeginApplication.Styles.DefaultProfileMeBannerColor,
+                                  BackgroundColor = BeginApplication.Styles.ColorWhite,
                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                   VerticalOptions = LayoutOptions.Start,
                                   RowSpacing = 0,
@@ -210,12 +210,25 @@ namespace BeginMobile.Pages.Profile
                                   HeightRequest = 40
                               };
 
+
+            var stackLayoutDetails = new StackLayout
+                                     {
+                                         BackgroundColor = BeginApplication.Styles.DefaultProfileMeBannerColor,
+                                         Padding = BeginApplication.Styles.ProfileDetailsPadding,
+                                         HeightRequest = 250,
+                                         VerticalOptions = LayoutOptions.FillAndExpand,
+                                         HorizontalOptions = LayoutOptions.FillAndExpand,
+                                         Children =
+                                         {
+                                             _commonGridDetailLayout
+                                         }
+                                     };
             // _commonMainGrid.Children.Add(_newPublication.Container, 0, 0);
             //_commonMainGrid.Children.Add(imageBanner, 0, 1);
-            _commonMainGrid.Children.Add(_commonGridDetailLayout, 0, 0);
-            _commonMainGrid.Children.Add(boxBlacknew, 0, 1);
-            _commonMainGrid.Children.Add(_commonGridMenuButtons, 0, 2);
-            _commonMainGrid.Children.Add(GridResults, 0, 3);
+            _commonMainGrid.Children.Add(stackLayoutDetails, 0, 0);
+            //_commonMainGrid.Children.Add(boxBlacknew, 0, 1);
+            _commonMainGrid.Children.Add(_commonGridMenuButtons, 0, 1);
+            _commonMainGrid.Children.Add(GridResults, 0, 2);
 
             _commonMainScrollView.Content = _commonMainGrid;
             ToolbarItems.Add(new ToolbarItem("Publication", BeginApplication.Styles.WriteIcon, async () =>
@@ -434,7 +447,34 @@ namespace BeginMobile.Pages.Profile
         {
             if (_activity == null) return;
             var thisSender = sender as Label;
-            if (thisSender != null) thisSender.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            if (thisSender != null) ActivitySelected();
+            ClearListViewAndHideDetailsGrid();
+            GridResults.Children.Add(_activity.Content, 0, 0);
+        }
+
+        private async void EventHandlerTabInformation(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_information == null) return;
+
+                var thisSender = sender as Label;
+                if (thisSender != null) InformationSelected();
+                ClearListViewAndHideDetailsGrid();
+
+                GridResults.Children.Add(_information.Content, 0, 0);
+            }
+            catch (Exception ex)
+            {
+                _log.Exception(ex);
+                AppContextError.Send(typeof (ProfileMe).Name, "ButtonInformationEventHandler", ex, null,
+                    ExceptionLevel.Application);
+            }
+        }
+
+        private void ActivitySelected()
+        {
+            _tabActivities.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _boxViewTabSelectedActivities.IsVisible = true;
             _boxViewTabInactiveActivities.IsVisible = false;
             _boxViewTabSelectedInformation.IsVisible = false;
@@ -446,49 +486,26 @@ namespace BeginMobile.Pages.Profile
             _tabMore.TextColor = BeginApplication.Styles.DefaultColorButton;
 
             _tabSelected = TabsNames.Tab1Activity;
-            ClearListViewAndHideDetailsGrid();
-            GridResults.Children.Add(_activity.Content, 0, 0);
-            //ViewExposureSetProperties();            
-            //_viewExposure.SetViewToExpose(TabsNames.Tab1 = TabsNames.Tab1Activity);
-            //await Navigation.PushAsync(_viewExposure);
         }
 
-        private async void EventHandlerTabInformation(object sender, EventArgs e)
+        private void InformationSelected()
         {
-            try
-            {
-                if (_information == null) return;
+            _tabInformation.TextColor = BeginApplication.Styles.TabSelectedTextColor;
+            _boxViewTabSelectedInformation.IsVisible = true;
+            _boxViewTabInactiveInformation.IsVisible = false;
+            _boxViewTabSelectedActivities.IsVisible = false;
+            _boxViewTabInactiveActivities.IsVisible = true;
+            _boxViewTabSelectedMore.IsVisible = false;
+            _boxViewTabInactiveMore.IsVisible = true;
+            _tabActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
+            _tabMore.TextColor = BeginApplication.Styles.DefaultColorButton;
 
-                var thisSender = sender as Label;
-                if (thisSender != null) thisSender.TextColor = BeginApplication.Styles.TabSelectedTextColor;
-                _boxViewTabSelectedInformation.IsVisible = true;
-                _boxViewTabInactiveInformation.IsVisible = false;
-                _boxViewTabSelectedActivities.IsVisible = false;
-                _boxViewTabInactiveActivities.IsVisible = true;
-                _boxViewTabSelectedMore.IsVisible = false;
-                _boxViewTabInactiveMore.IsVisible = true;
-                _tabActivities.TextColor = BeginApplication.Styles.DefaultColorButton;
-                _tabMore.TextColor = BeginApplication.Styles.DefaultColorButton;
-
-                _tabSelected = TabsNames.Tab2Information;
-                ClearListViewAndHideDetailsGrid();
-
-                GridResults.Children.Add(_information.Content, 0, 0);
-                //ViewExposureSetProperties();
-                //_viewExposure.SetViewToExpose(TabsNames.Tab2 = TabsNames.Tab2Information);
-                //await Navigation.PushAsync(_viewExposure);
-            }
-            catch (Exception ex)
-            {
-                _log.Exception(ex);
-                AppContextError.Send(typeof (ProfileMe).Name, "ButtonInformationEventHandler", ex, null,
-                    ExceptionLevel.Application);
-            }
+            _tabSelected = TabsNames.Tab2Information;
         }
 
         private async void EventHadlerTabMore(object sender, EventArgs e)
         {
-            ClearListViewAndHideDetailsGrid();
+            //ClearListViewAndHideDetailsGrid();
             var thisSender = sender as Label;
             if (thisSender != null) thisSender.TextColor = BeginApplication.Styles.TabSelectedTextColor;
             _boxViewTabSelectedInformation.IsVisible = false;
@@ -541,6 +558,16 @@ namespace BeginMobile.Pages.Profile
                     await Navigation.PushAsync(_tabViewExposure);
                     break;
                 case MoreOptionsNames.Cancel:
+                    if (string.IsNullOrEmpty(_tabSelected)) return;
+                    switch (_tabSelected)
+                    {
+                        case TabsNames.Tab1Activity:
+                            ActivitySelected();
+                            break;
+                        case TabsNames.Tab2Information:
+                            InformationSelected();
+                            break;
+                    }
                     return;
                 default:
                     return;
@@ -555,7 +582,7 @@ namespace BeginMobile.Pages.Profile
         private readonly Editor _publicationEditor;
         private const string DefaultEditorText = "What is happening?";
         private LoginUser _currentUser;
-                
+
         public NewPublication(LoginUser currentUser)
         {
             _currentUser = currentUser;
@@ -602,19 +629,20 @@ namespace BeginMobile.Pages.Profile
 
         public async void TextChangedEventHandler(object sender, TextChangedEventArgs e)
         {
-           
-                       
-
         }
 
         public void UnfocusedEventHandler(object sender, FocusEventArgs e)
         {
             var editor = sender as Editor;
-            if (editor == null) return; if (editor.Text.StartsWith(" "))
+            if (editor == null) return;
+            if (editor.Text.StartsWith(" "))
             {
                 editor.Text.Trim();
             }
-            if (string.IsNullOrEmpty(editor.Text)){ editor.Text = DefaultEditorText;}
+            if (string.IsNullOrEmpty(editor.Text))
+            {
+                editor.Text = DefaultEditorText;
+            }
 
             //else
             //{
