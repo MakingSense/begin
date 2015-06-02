@@ -497,10 +497,16 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return Device.OnPlatform(100, 250, 200);
+                return Device.OnPlatform(50, 50, 50);
             }
         }
-
+        public double MenuItemFontSize
+        {
+            get
+            {
+                return Device.OnPlatform(18, 18, 18);
+            }
+        }
         public Thickness ProfileDetailsPadding
         {
             get
@@ -515,8 +521,8 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return Device.OnPlatform(new Thickness(0, 8, 0, 8), new Thickness(0, 8, 0, 8),
-                    new Thickness(0, 8, 0, 8));
+                return Device.OnPlatform(new Thickness(15, 8, 15, 8), new Thickness(15, 8, 15, 8),
+                    new Thickness(15, 8, 15, 8));
 
             }
         }
