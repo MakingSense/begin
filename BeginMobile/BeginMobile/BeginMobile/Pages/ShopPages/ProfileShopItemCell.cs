@@ -16,7 +16,7 @@ namespace BeginMobile.Pages.ShopPages
             var circleShopImage = new CircleImage
                                   {
                                       Style = BeginApplication.Styles.CircleImageCommon,
-                                      Source = GroupImage
+                                      Source =  BeginApplication.Styles.DefaultShopIcon
                                   };
 
             circleShopImage.SetBinding(CircleImage.SourceProperty, "Thumbnail");

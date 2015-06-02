@@ -330,13 +330,7 @@
                                       //    Icon = "",
                                       //    OptionName = ""
                                       //},
-                                      new MenuItemViewModel
-                                      {
-                                          Icon =  BeginApplication.Styles.ContactsMenu,
-                                          OptionName =
-                                              MenuItemsNames
-                                              .Logout
-                                      },
+                                     
                                       //new MenuItemViewModel
                                       //{
                                       //    Icon =  BeginApplication.Styles.ContactsMenu,
@@ -380,7 +374,16 @@
                                       //        .UpdateProfile
                                       //}
                                   };
-
+			            var listOptionsDataLogout = new List<MenuItemViewModel>
+			                                        {
+			                                             new MenuItemViewModel
+                                      {
+                                          Icon =  BeginApplication.Styles.ContactsMenu,
+                                          OptionName =
+                                              MenuItemsNames
+                                              .Logout
+                                      },
+			                                        };
                         var listViewMenuOptions = new ListView
                         {
                             VerticalOptions = LayoutOptions.Start,
@@ -388,6 +391,33 @@
                             ItemTemplate = dataTemplateMenuOptions,
                             BackgroundColor = BeginApplication.Styles.MenuBackground,
                         };
+
+                        var listViewMenuOptionsLogoutOnly = new ListView
+                        {
+                            VerticalOptions = LayoutOptions.End,
+                            ItemsSource = listOptionsDataLogout,
+                            ItemTemplate = dataTemplateMenuOptions,
+                            BackgroundColor = BeginApplication.Styles.MenuBackground,
+                        };
+
+                        listViewMenuOptionsLogoutOnly.ItemSelected += async (sender, eventArgs) =>
+			                                                   {
+			                                                       if (eventArgs.SelectedItem == null)
+			                                                       {
+			                                                           return;
+			                                                       }
+			                                                       var selectedItemOptionName =
+			                                                           ((MenuItemViewModel) eventArgs.SelectedItem)
+			                                                               .OptionName;			                                                      
+			                                                       switch (selectedItemOptionName)
+			                                                       {
+			                                                           case MenuItemsNames.Logout:
+			                                                               BeginApplication.CurrentBeginApplication
+			                                                                   .Logout();
+			                                                               break;
+			                                                       }
+			                                                   };
+			        
 
                         listViewMenuOptions.ItemSelected += async (sender, eventArgs) =>
                         {
@@ -477,29 +507,26 @@
                         };
                         listViewMenuOptions.HasUnevenRows = true;
 
-                        var stackLayoutControls = new StackLayout
+                        var gridControls = new Grid
                         {
                             Padding = BeginApplication.Styles.ThicknessInsideListView,
                             VerticalOptions = LayoutOptions.FillAndExpand,
-                            Orientation = StackOrientation.Vertical,
-                            Children =
-                                          {
-                                              listViewMenuOptions
-                                          }
+                            RowDefinitions =
+                           {
+                               new RowDefinition {Height = GridLength.Auto},
+                               new RowDefinition {Height =new GridLength(BeginApplication.Styles.RowSpaceMenuItemLogout
+                                   , GridUnitType.Star)},
+                           },
+                            ColumnDefinitions =
+                           {
+                               new ColumnDefinition {Width = GridLength.Auto}
+                               
+                           }
+                            
                         };
-
-                        StackLayout mainStackLayout = new StackLayout
-                        {
-                            Spacing = 2,
-                            Padding = BeginApplication.Styles.ThicknessMainLayout,
-                            Children =
-                                              {
-                                                  //listViewMenuIcon,
-                                                  stackLayoutControls
-                                              }
-                        };
-
-                        Content = mainStackLayout;
+			            gridControls.Children.Add(listViewMenuOptions,0,0);
+                        gridControls.Children.Add(listViewMenuOptionsLogoutOnly,0,1);
+                        Content = gridControls;
 
 			        }
 
@@ -532,7 +559,7 @@
                         View = new StackLayout
                                {
                                    Orientation = StackOrientation.Horizontal,
-                                   Padding = new Thickness(5, 5, 5, 5),
+                                   Padding =BeginApplication.Styles.MenuListItemsPadding,
                                    Children =
                                    {
                                        icon,
