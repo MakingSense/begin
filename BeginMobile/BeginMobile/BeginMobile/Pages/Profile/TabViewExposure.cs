@@ -18,58 +18,58 @@ namespace BeginMobile.Pages.Profile
         {
             //Style = BeginApplication.Styles.PageStyle;
             BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
-          
+
             var tapGestureRecognizerTabOne = new TapGestureRecognizer
-                                                             {
-                                                                 NumberOfTapsRequired = 1
-                                                             };
+                                             {
+                                                 NumberOfTapsRequired = 1
+                                             };
             var tapGestureRecognizerTabTwo = new TapGestureRecognizer
-                                                             {
-                                                                 NumberOfTapsRequired = 1
-                                                             };
+                                             {
+                                                 NumberOfTapsRequired = 1
+                                             };
 
             tapGestureRecognizerTabOne.Tapped += EventHandlerTabOne;
             tapGestureRecognizerTabTwo.Tapped += EventHandlerTabTwo;
 
 
             _tabOne = new Label
-            {
-                Text = string.Empty,
-                XAlign = TextAlignment.Center,
-                FontSize = BeginApplication.Styles.TextFontSizeMedium,                
-            };
+                      {
+                          Text = string.Empty,
+                          XAlign = TextAlignment.Center,
+                          FontSize = BeginApplication.Styles.TextFontSizeMedium,
+                      };
 
             _tabTwo = new Label
-            {
-                Text = string.Empty,
-                XAlign = TextAlignment.Center,
-                FontSize = BeginApplication.Styles.TextFontSizeMedium
-            };
+                      {
+                          Text = string.Empty,
+                          XAlign = TextAlignment.Center,
+                          FontSize = BeginApplication.Styles.TextFontSizeMedium
+                      };
 
             _tabOne.GestureRecognizers.Add(tapGestureRecognizerTabOne);
             _tabTwo.GestureRecognizers.Add(tapGestureRecognizerTabTwo);
 
             _boxViewLineSelectedTabOne = new BoxView
-                                       {
-                                           Style = BeginApplication.Styles.TabUnderLine,
-                                           IsVisible = false
-                                       };
+                                         {
+                                             Style = BeginApplication.Styles.TabUnderLine,
+                                             IsVisible = false
+                                         };
             _boxViewLineSeletedTabTwo = new BoxView
-                                      {
-                                          Style = BeginApplication.Styles.TabUnderLine,
-                                          IsVisible = false
-                                      };
+                                        {
+                                            Style = BeginApplication.Styles.TabUnderLine,
+                                            IsVisible = false
+                                        };
 
-             _boxViewLineInactiveTabOne = new BoxView
-                                       {
-                                           Style = BeginApplication.Styles.TabUnderLineInactive,
-                                           IsVisible = false
-                                       };
+            _boxViewLineInactiveTabOne = new BoxView
+                                         {
+                                             Style = BeginApplication.Styles.TabUnderLineInactive,
+                                             IsVisible = false
+                                         };
             _boxViewLineInactiveTabTwo = new BoxView
-                                      {
-                                          Style = BeginApplication.Styles.TabUnderLineInactive,
-                                          IsVisible = false
-                                      };
+                                         {
+                                             Style = BeginApplication.Styles.TabUnderLineInactive,
+                                             IsVisible = false
+                                         };
 
             var mainGrid = new Grid
                            {
@@ -91,12 +91,12 @@ namespace BeginMobile.Pages.Profile
             var gridControls = new Grid
                                {
                                    VerticalOptions = LayoutOptions.Start,
-                                   HorizontalOptions = LayoutOptions.FillAndExpand,                                   
+                                   HorizontalOptions = LayoutOptions.FillAndExpand,
                                    ColumnSpacing = 0,
                                    RowDefinitions = new RowDefinitionCollection
                                                     {
                                                         new RowDefinition {Height = GridLength.Auto},
-                                                        new RowDefinition {Height = GridLength.Auto}                                                        
+                                                        new RowDefinition {Height = GridLength.Auto}
                                                     }
                                };
             gridControls.Children.Add(_tabOne, 0, 0);
@@ -110,12 +110,12 @@ namespace BeginMobile.Pages.Profile
             mainGrid.Children.Add(gridControls, 0, 0);
             mainGrid.Children.Add(_gridResults, 0, 1);
             Content = mainGrid;
-        }        
+        }
 
         public ContentPage PageOne { get; set; }
         public ContentPage PageTwo { get; set; }
-        public String TabOneName { get; set; }
-        public String TabTwoName { get; set; }
+        public string TabOneName { get; set; }
+        public string TabTwoName { get; set; }
         public ToolbarItem ToolbarItemTabOne { get; set; }
         public ToolbarItem ToolbarItemTabTwo { get; set; }
         public ToolbarItem ToolbarItemTabThree { get; set; }

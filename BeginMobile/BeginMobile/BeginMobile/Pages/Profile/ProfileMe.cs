@@ -31,9 +31,9 @@ namespace BeginMobile.Pages.Profile
         private Information _information;
         private MyActivity _activity;
         private Shop _shops;
-        private ContactPage _allContacts;
-        private Contacts _requestContacts;
-        private GroupListPage _allGroups;
+        //private ContactPage _allContacts;
+        private Contacts _myContacts;
+        //private GroupListPage _allGroups;
         private Groups _myGroups;
         private Events _myEvents;
         private TabViewExposure _tabViewExposure;
@@ -42,8 +42,8 @@ namespace BeginMobile.Pages.Profile
         private ImageSource _imageSourceGroupByDefault;
         private const int GotPuntuation = 3;
         private const int RankingGridRow = 0;
-        private string _tabSelected = "";
-        private LoginUser _currentUser;
+        private string _tabSelected = TabsNames.Tab1Activity;
+        private readonly LoginUser _currentUser;
 
         public ProfileMe(LoginUser currenLoginUser)
         {
@@ -53,10 +53,10 @@ namespace BeginMobile.Pages.Profile
             Title = AppResources.LabelProfileMeTitle;
 
             _information = new Information(_currentUser);
-            _allContacts = new ContactPage(string.Empty, string.Empty);
-            _requestContacts = new Contacts();
+            //_allContacts = new ContactPage(string.Empty, string.Empty);
+            _myContacts = new Contacts();
             _activity = new MyActivity();
-            _allGroups = new GroupListPage(String.Empty, String.Empty);
+            //_allGroups = new GroupListPage(String.Empty, String.Empty);
             _myGroups = new Groups();
             _shops = new Shop();
             _myEvents = new Events();
@@ -379,7 +379,10 @@ namespace BeginMobile.Pages.Profile
         {
             try
             {
-                GridResults.Children.Clear();
+                if (GridResults.Children != null)
+                {
+                    GridResults.Children.Clear();                    
+                }                
             }
             catch (Exception ex)
             {
@@ -406,7 +409,7 @@ namespace BeginMobile.Pages.Profile
         {
             try
             {
-                ClearListViewAndHideDetailsGrid();
+               // ClearListViewAndHideDetailsGrid();
                 var scrollView = sender as ScrollView;
                 if (scrollView == null) return;
                 if (!scrollView.Orientation.Equals(ScrollOrientation.Vertical)) return;
@@ -523,26 +526,26 @@ namespace BeginMobile.Pages.Profile
             switch (action)
             {
                 case MoreOptionsNames.Contacts:
-                    _tabViewExposure.PageOne = _allContacts;
-                    _tabViewExposure.PageTwo = _requestContacts;
+                    _tabViewExposure.PageOne = _myContacts;
+                    _tabViewExposure.PageTwo = _myContacts;
                     _tabViewExposure.TabOneName = TabsNames.Tab1Contacts;
                     _tabViewExposure.TabTwoName = TabsNames.Tab2Contacts;
-                    _tabViewExposure.ToolbarItemTabOne = _allContacts.ToolbarItem;
-                    _tabViewExposure.ToolbarItemTabTwo = _requestContacts.ToolbarItem;
+                    _tabViewExposure.ToolbarItemTabOne = _myContacts.ToolbarItem;
+                    _tabViewExposure.ToolbarItemTabTwo = _myContacts.ToolbarItem;
                     _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Contacts);
                     await Navigation.PushAsync(_tabViewExposure);
                     break;
                 case MoreOptionsNames.Groups:
-                    _tabViewExposure.PageOne = _allGroups;
+                    _tabViewExposure.PageOne = _myGroups;
                     _tabViewExposure.PageTwo = _myGroups;
                     _tabViewExposure.TabOneName = TabsNames.Tab1Groups;
                     _tabViewExposure.TabTwoName = TabsNames.Tab2Groups;
-                    _tabViewExposure.ToolbarItemTabOne = _allGroups.ToolbarItem;
+                    //_tabViewExposure.ToolbarItemTabOne = _myGroups.ToolbarItem;
                     _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Groups); //set selected item   
                     await Navigation.PushAsync(_tabViewExposure);
                     break;
                 case MoreOptionsNames.Services:
-                    await Navigation.PushAsync(_allGroups); //TODO replace for services page
+                    await Navigation.PushAsync(_myGroups); //TODO replace for services page
                     break;
                 case MoreOptionsNames.Shops:
                     await Navigation.PushAsync(_shops);

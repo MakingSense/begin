@@ -17,9 +17,9 @@ namespace BeginMobile.Pages.Profile
         private readonly BoxView _boxViewInactiveTabOne;
         private readonly BoxView _boxViewInactiveTabTwo;
         private readonly BoxView _boxViewInactiveTabThree;
-        private readonly ContactPage _allContacts;
-        private readonly Contacts _requestContacts;
-        private readonly GroupListPage _allGroups;
+        //private readonly ContactPage _allContacts;
+        private readonly Contacts _myContacts;
+        //private readonly GroupListPage _allGroups;
         private readonly Groups _myGroups;
         private readonly Shop _shops;
         private readonly Events _myEvents;
@@ -28,14 +28,14 @@ namespace BeginMobile.Pages.Profile
 
         public ViewExposure()
         {
-            _allContacts = new ContactPage(String.Empty, String.Empty);
-            _requestContacts = new Contacts();
-            _allGroups = new GroupListPage(String.Empty, String.Empty);
+            //_allContacts = new ContactPage(String.Empty, String.Empty);
+            _myContacts = new Contacts();
+            //_allGroups = new GroupListPage(String.Empty, String.Empty);
             _myGroups = new Groups();
             _shops = new Shop();
             _myEvents = new Events();
             _tabViewExposure = new TabViewExposure();
-
+            var help = this.Parent;
            // Style = BeginApplication.Styles.PageStyle;
             BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
 
@@ -287,22 +287,22 @@ namespace BeginMobile.Pages.Profile
             switch (action)
             {
                 case MoreOptionsNames.Contacts:
-                    _tabViewExposure.PageOne = _allContacts;
-                    _tabViewExposure.PageTwo = _requestContacts;
+                    _tabViewExposure.PageOne = _myContacts;
+                    _tabViewExposure.PageTwo = _myContacts;
                     _tabViewExposure.TabOneName = TabsNames.Tab1Contacts;
                     _tabViewExposure.TabTwoName = TabsNames.Tab2Contacts;
-                    _tabViewExposure.ToolbarItemTabOne = _allContacts.ToolbarItem;
-                    _tabViewExposure.ToolbarItemTabTwo = _requestContacts.ToolbarItem;
+                    _tabViewExposure.ToolbarItemTabOne = _myContacts.ToolbarItem;
+                    _tabViewExposure.ToolbarItemTabTwo = _myContacts.ToolbarItem;
                     _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Contacts);
                     //set selected item  
                     await Navigation.PushAsync(_tabViewExposure);
                     break;
                 case MoreOptionsNames.Groups:
-                    _tabViewExposure.PageOne = _allGroups;
+                    _tabViewExposure.PageOne = _myGroups;
                     _tabViewExposure.PageTwo = _myGroups;
                     _tabViewExposure.TabOneName = TabsNames.Tab1Groups;
                     _tabViewExposure.TabTwoName = TabsNames.Tab2Groups;
-                    _tabViewExposure.ToolbarItemTabOne = _allGroups.ToolbarItem;
+                    //_tabViewExposure.ToolbarItemTabOne = _myGroups.ToolbarItem;
                     _tabViewExposure.SetInitialProperties(TabsNames.Tab1 = TabsNames.Tab1Groups); //set selected item   
                     await Navigation.PushAsync(_tabViewExposure);
                     break;
