@@ -441,6 +441,7 @@ namespace BeginMobile.Menu
                                                                   await Navigation.PushAsync(contentPageKnocks);
                                                                   break;
                                                               case MenuItemsNames.Profile:
+                                                                  profileMe.ClearListViewAndHideDetailsGrid();
                                                                   profileMe.Init(myActivity);
                                                                   await Navigation.PushAsync(profileMe);
                                                                   break;

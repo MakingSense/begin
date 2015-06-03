@@ -369,18 +369,21 @@ namespace BeginMobile.Pages.Profile
             _commonGridMenuButtons.Children.Add(_tabMore, 2, 0);
             _commonGridMenuButtons.Children.Add(_boxViewTabSelectedMore, 2, 1);
             _commonGridMenuButtons.Children.Add(_boxViewTabInactiveMore, 2, 1);
+
+
+            //ClearListViewAndHideDetailsGrid();
         }
 
         /*
          * clear the common list view
          */
 
-        private void ClearListViewAndHideDetailsGrid()
+        public void ClearListViewAndHideDetailsGrid()
         {
             try
             {
                 if (GridResults.Children != null)
-                {
+                {                    
                     GridResults.Children.Clear();                    
                 }                
             }
@@ -409,7 +412,7 @@ namespace BeginMobile.Pages.Profile
         {
             try
             {
-                ClearListViewAndHideDetailsGrid();
+                //ClearListViewAndHideDetailsGrid();
                 var scrollView = sender as ScrollView;
                 if (scrollView == null) return;
                 if (!scrollView.Orientation.Equals(ScrollOrientation.Vertical)) return;
@@ -463,9 +466,13 @@ namespace BeginMobile.Pages.Profile
 
                 var thisSender = sender as Label;
                 if (thisSender != null) InformationSelected();
-                ClearListViewAndHideDetailsGrid();
-
-                GridResults.Children.Add(_information.Content, 0, 0);
+                
+                //ClearListViewAndHideDetailsGrid();
+                if (GridResults.Children != null)
+                {
+                    GridResults.Children.RemoveAt(0);
+                    GridResults.Children.Add(_information.Content, 0, 0);
+                }                    
             }
             catch (Exception ex)
             {
