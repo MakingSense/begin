@@ -16,20 +16,16 @@ namespace BeginMobile.Accounts
 	    public ForgotPassword ()
 		{
             Style = BeginApplication.Styles.InitialPageStyle;
-            //var logo = new Image
-            //{
-            //    Source = Device.OS == TargetPlatform.iOS
-            //        ? ImageSource.FromFile("logotype.png")
-            //        : ImageSource.FromFile("logotype.png"),
-            //    Aspect = Aspect.AspectFit,
-            //};
-            var mainTitle = new Label
+
+	        Title = "Forgot Password";
+
+            /*var mainTitle = new Label
             {
                 Text = "Forgot Password",//AppResources.LoginFormTitle,
                 Style = BeginApplication.Styles.InitialPageTitleStyle,
                 XAlign = TextAlignment.Center,
                 YAlign = TextAlignment.Center
-            };
+            };*/
 
             var labelTitle = new Label
                                {
@@ -45,7 +41,7 @@ namespace BeginMobile.Accounts
             _entryEmail = new Entry { Placeholder = AppResources.ForgotPassPlaceHolderEmail };
 
             var buttonReset = new Button {
-                Text = AppResources.ButtonSend, 
+                Text = "Forgot Password",//AppResources.ButtonSend, 
                                                 Style = BeginApplication.Styles.DefaultButton
                                             };
 
@@ -101,12 +97,6 @@ namespace BeginMobile.Accounts
 	                                         }
 	                                     };
 
-            var buttonBack = new Button { Text = AppResources.ButtonCancel, Style = BeginApplication.Styles.DefaultButton };
-            buttonBack.Clicked += (sender, eventArgs) =>
-            {
-                MessagingCenter.Send<ContentPage>(this, "Login");
-            };
-
             var stackLayoutLoading = CreateStackLayoutWithLoadingIndicator();
              
 			Content = new StackLayout {
@@ -115,12 +105,10 @@ namespace BeginMobile.Accounts
                 VerticalOptions = LayoutOptions.Center,
                 Children = { 
                     stackLayoutLoading,
-                    mainTitle,
-                    //labelTitle,
-                    //labelSubTitle,
+                    //mainTitle,
                     _entryEmail,
-                    buttonReset,
-                    buttonBack}                   			
+                    buttonReset
+                    }                   			
 			};
 		}
 	}

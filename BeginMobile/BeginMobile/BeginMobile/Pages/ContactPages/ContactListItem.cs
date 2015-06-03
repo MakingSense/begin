@@ -8,7 +8,7 @@ using BeginMobile.Utils;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 using BeginMobile.Services.Models;
-
+using BeginMobile.Utils.Extensions;
 
 namespace BeginMobile.Pages.ContactPages
 {
@@ -72,7 +72,8 @@ namespace BeginMobile.Pages.ContactPages
                                    //Text =  AppResources.ButtonAddFriend,
                                    Image = BeginApplication.Styles.ContactAddIcon,
                                    Style = BeginApplication.Styles.ButtonContactsListView,
-                                   HorizontalOptions = LayoutOptions.End,
+                                   //HorizontalOptions = LayoutOptions.End
+                                   VerticalOptions = LayoutOptions.Start,
                                };
 
             _buttonRemoveFriend = new Button
@@ -80,7 +81,8 @@ namespace BeginMobile.Pages.ContactPages
                                       //Text =  AppResources.ButtonRemoveFriend,
                                       Image = BeginApplication.Styles.ContactAddedIcon,
                                       Style = BeginApplication.Styles.ButtonContactsListView,
-                                      HorizontalOptions = LayoutOptions.End,
+                                      //HorizontalOptions = LayoutOptions.End
+                                      VerticalOptions = LayoutOptions.Start
                                   };
 
             _buttonCancelFriend = new Button
@@ -88,7 +90,8 @@ namespace BeginMobile.Pages.ContactPages
                                      // Text = AppResources.ButtonCancelRequestFriend,
                                       Image = BeginApplication.Styles.ContactAddIcon,
                                       Style = BeginApplication.Styles.ButtonContactsListView,
-                                      HorizontalOptions = LayoutOptions.End,
+                                      //HorizontalOptions = LayoutOptions.End
+                                      VerticalOptions = LayoutOptions.Start
                                   };
 
             _buttonAcceptFriend = new Button
@@ -96,7 +99,8 @@ namespace BeginMobile.Pages.ContactPages
                                      // Text =  AppResources.ButtonAcceptFriend,
                                       Image = BeginApplication.Styles.ContactAddIcon,
                                       Style = BeginApplication.Styles.ButtonContactsListView,
-                                      HorizontalOptions = LayoutOptions.End,
+                                      //HorizontalOptions = LayoutOptions.End
+                                      VerticalOptions = LayoutOptions.Start
                                   };
 
             _buttonRejectFriend = new Button
@@ -104,7 +108,9 @@ namespace BeginMobile.Pages.ContactPages
                                       //Text =  AppResources.ButtonRejectFriend,
                                       Image = BeginApplication.Styles.ContactAddIcon,
                                       Style = BeginApplication.Styles.ButtonContactsListView,
-                                      HorizontalOptions = LayoutOptions.End
+                                      //HorizontalOptions = LayoutOptions.End
+                                      VerticalOptions = LayoutOptions.Start
+
                                   };
 
             _buttonAddFriend.Clicked += AddFriendEventHandler;
@@ -139,6 +145,8 @@ namespace BeginMobile.Pages.ContactPages
             labelUserName.SetBinding(Label.TextProperty, "UserName");
             labelProfession.SetBinding(Label.TextProperty, "Profession");
 
+            
+
             var grid = new Grid
                        {
                            Padding = BeginApplication.Styles.ThicknessBetweenImageAndDetails,                          
@@ -161,19 +169,27 @@ namespace BeginMobile.Pages.ContactPages
 
             try
             {
-                grid.Children.Add(labelNameSurname, 0, 0);
+                /*grid.Children.Add(labelNameSurname, 0, 0);
                 grid.Children.Add(labelUserName, 0, 1);
-                grid.Children.Add(labelProfession, 0, 2);
+                grid.Children.Add(labelProfession, 0, 2);*/
+
+                grid.AddChild(labelNameSurname, 0, 0);
+                grid.AddChild(labelUserName, 1, 0);
+                grid.AddChild(labelProfession, 2, 0);
+                
 
                 if (Relationship != "request_received")
                 {
-                    grid.Children.Add(RelationshipButton(), 1, 2);
+                    //grid.Children.AddChild(RelationshipButton(), 1, 1);
+                    grid.AddChild(RelationshipButton(), 2, 1, 2, 1);
                 }
 
                 else
                 {
-                    grid.Children.Add(_buttonAcceptFriend, 1, 2);
-                    grid.Children.Add(_buttonRejectFriend, 1, 2);
+                    //grid.Children.Add(_buttonAcceptFriend, 1, 2);
+                    //grid.Children.Add(_buttonRejectFriend, 1, 1);
+                    grid.AddChild(_buttonRejectFriend, 2, 1, 2, 1);
+
                 }
             }
 
@@ -188,8 +204,6 @@ namespace BeginMobile.Pages.ContactPages
                                    }
                                });
             }
-
-
             return grid;
         }
 

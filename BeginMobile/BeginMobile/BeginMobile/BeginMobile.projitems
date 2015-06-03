@@ -31,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Menu\HomePage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Menu\Menu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Menu\NavigationHomePage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Menu\NavigationLogin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Menu\OptionsPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AboutUs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\ContactPages\ContactListItem.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UploadPages\PictureUploader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UploadPages\Uploader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CheckBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions\GridExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Extensions\StringExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FriendshipActions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ImageResizer.cs" />

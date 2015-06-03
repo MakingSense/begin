@@ -39,7 +39,7 @@ namespace BeginMobile
 
             _log.Info("Start Begin Xamarin Application.");
 
-            MainPage = new NavigationHomePage(new LoginModalPage(this));
+            MainPage = new NavigationLogin(new LoginMenu(this));
                                                
         }
 
@@ -57,7 +57,7 @@ namespace BeginMobile
 
         public void ShowUploaderPage()
         {
-            MainPage = new NavigationPage(new Uploader());
+            MainPage = new NavigationHomePage(new Uploader());
         }
 
         public void Logout()
@@ -65,7 +65,7 @@ namespace BeginMobile
             Properties["IsLoggedIn"] = false;
             Properties["LoginUser"] = null;
 
-            MainPage = new LoginModalPage(this);
+            MainPage = new NavigationLogin(new LoginMenu(this));
         }
 
         protected override void OnStart()

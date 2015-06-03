@@ -190,7 +190,7 @@
     <value>Send</value>
   </data>
   <data name="ButtonForgotPassword" xml:space="preserve">
-    <value>Forgot Password?</value>
+    <value>Forgot Password</value>
   </data>
   <data name="ButtonLogin" xml:space="preserve">
     <value>Login</value>

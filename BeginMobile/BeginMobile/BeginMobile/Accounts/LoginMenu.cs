@@ -16,8 +16,16 @@ namespace BeginMobile.Accounts
 
         private readonly ScrollView _mainScrollView;
 
-        public LoginMenu()
+        readonly ContentPage _contentPageLogin;
+        readonly ContentPage _contentPageRegister;
+        readonly ContentPage _contentPageForgotPassword;
+
+        public LoginMenu(ILoginManager iloginManager)
         {
+            _contentPageLogin = new Login(iloginManager);
+            _contentPageRegister = new Register(iloginManager);
+            _contentPageForgotPassword = new ForgotPassword();
+
             Style = BeginApplication.Styles.InitialPageStyle;
 
             var logo = new CircleImage
@@ -53,15 +61,20 @@ namespace BeginMobile.Accounts
 
                                  };
 
-            buttonForgotPassword.Clicked +=
-                (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "ForgotPassword");
+            buttonForgotPassword.Clicked += async (sender, eventArgs) =>
+            {
+                await Navigation.PushAsync(_contentPageForgotPassword);
+            };
 
+            buttonLogin.Clicked += async (sender, eventArgs) =>
+            {
+                await Navigation.PushAsync(_contentPageLogin);
+            };
 
-            buttonLogin.Clicked +=
-                (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "LoginWithUserName");
-
-
-            buttonRegister.Clicked += (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "Register");
+            buttonRegister.Clicked += async (sender, eventArgs) =>
+            {
+                await Navigation.PushAsync(_contentPageRegister);
+            };
 
             _mainScrollView = new ScrollView();
         
@@ -94,7 +107,7 @@ namespace BeginMobile.Accounts
             if (_mainScrollView != null)
                 _mainScrollView.Padding = page.Width > page.Height //width > Height landscape else portrait
                     ? new Thickness(page.Width * 0.02, 0, page.Width * 0.02, 0)
-                    : new Thickness(page.Width * 0.02, page.Height * 0.20, page.Width * 0.02, 0);
+                    : new Thickness(page.Width * 0.02, 0, page.Width * 0.02, 0); // top = 0 =>  page.Height * 0.20
         }
 	}
 }

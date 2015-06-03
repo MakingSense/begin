@@ -7,6 +7,7 @@ using BeginMobile.Services.DTO;
 using BeginMobile.Services.ManagerServices;
 using BeginMobile.Services.Utils;
 using Xamarin.Forms;
+using BeginMobile.Pages;
 
 namespace BeginMobile.Accounts
 {
@@ -23,26 +24,26 @@ namespace BeginMobile.Accounts
         private readonly Entry _entryConfirmPassword;
         private bool _switchStatus;
         private readonly ILoginManager _iLoginManager;
+
+        readonly ContentPage _contentPageTermsAndConditions;
+
         public Register(ILoginManager iLoginManager)
         {
             Style = BeginApplication.Styles.InitialPageStyle;
             _iLoginManager = iLoginManager;
             if (AppResources.RegisterFormTitle != null) Title = AppResources.RegisterFormTitle;
 
-            //var imageLogo = new Image
-            //{
-            //    Source = Device.OS == TargetPlatform.iOS
-            //        ? ImageSource.FromFile("logotype.png")
-            //        : ImageSource.FromFile("logotype.png"),
-            //    Aspect = Aspect.AspectFit,
-            //};
-            var mainTitle = new Label
+            Title = "Create Account";
+
+            _contentPageTermsAndConditions = new TermsAndConditions(true);
+
+            /*var mainTitle = new Label
             {
                 Text = "Create Account",//AppResources.LoginFormTitle,
                 Style = BeginApplication.Styles.InitialPageTitleStyle,
                 XAlign = TextAlignment.Center,
                 YAlign = TextAlignment.Center
-            };
+            };*/
 
             _entryUsername = new Entry
             {
@@ -86,20 +87,17 @@ namespace BeginMobile.Accounts
 
             var buttonRegister = new Button
             {
-                Text = AppResources.ButtonRegister,
+                Text = "Create Account",//AppResources.ButtonRegister,
                 Style = BeginApplication.Styles.DefaultButton
 
             };
 
-            var buttonCancel = new Button
+
+            buttonTermsAndConditions.Clicked += async (sender, eventArgs) =>
             {
-                Text = AppResources.ButtonCancel,
-                Style = BeginApplication.Styles.DefaultButton
+                await Navigation.PushAsync(_contentPageTermsAndConditions); 
+                //MessagingCenter.Send<ContentPage>(this, "TermsAndConditions")
             };
-
-            buttonCancel.Clicked += (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "Login");
-
-            buttonTermsAndConditions.Clicked += (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "TermsAndConditions");
 
             buttonRegister.Clicked += RegisterClickEventHandler;
 
@@ -122,7 +120,6 @@ namespace BeginMobile.Accounts
                                         Children =
                                         {
                                             stackLayoutLoading,
-                                            mainTitle,
                                             _entryUsername,
                                             _entryFullName,
                                             _entryEmail,
@@ -130,8 +127,8 @@ namespace BeginMobile.Accounts
                                             _entryConfirmPassword,
                                             _entryConfirmPassword,
                                             stackLayoutSwitch,
-                                            buttonRegister,
-                                            buttonCancel
+                                            buttonRegister
+                                            
                                         }
                                     }
                       };

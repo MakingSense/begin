@@ -20,7 +20,7 @@ namespace BeginMobile.Accounts
             const bool isLoadByLogin = true;
             NavigationPage.SetHasNavigationBar(this, false);
 
-            _contentPageMenuLogin = new LoginMenu();
+            _contentPageMenuLogin = new LoginMenu(iloginManager);
             _contentPageLogin = new Login(iloginManager);
             _contentPageRegister = new Register(iloginManager);
             _contentPageTermsAndConditions = new TermsAndConditions(isLoadByLogin);

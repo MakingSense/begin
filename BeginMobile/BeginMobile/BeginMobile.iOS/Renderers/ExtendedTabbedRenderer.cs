@@ -18,6 +18,8 @@ namespace BeginMobile.iOS.Renderers
         private AppHome _appHome;
         private const string LimitCounter = "9+";
 
+        private UITabBarController tabBarController;
+
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
@@ -25,13 +27,13 @@ namespace BeginMobile.iOS.Renderers
             _appHome = (AppHome)Element;
             if (_appHome == null) return;
             if (!_appHome.Children.Any()) return;
-            SetUpTabs();
 
+            SetUpTabs();
         }
 
         private void SetUpTabs()
         {
-            var tabBarController = ViewController as UITabBarController;
+            //var tabBarController = ViewController as UITabBarController;
             if (tabBarController == null) return;
 
             foreach (PageRenderer viewController in tabBarController.ViewControllers)
@@ -40,6 +42,9 @@ namespace BeginMobile.iOS.Renderers
                 if (childFromTab == null) continue;
 
                 viewController.Title = "";
+
+                //viewController.HidesBottomBarWhenPushed = true;
+                //viewController.NavigationController.PushViewController(tabBarController, true);
 
                 var type = childFromTab.GetType();
 
@@ -87,6 +92,11 @@ namespace BeginMobile.iOS.Renderers
                     viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmenuactive.png");
                 }
             }
+
+            
+            //AppDelegate.NewWindow.MakeKeyAndVisible();
+            //NavigationController.PushViewController(tabBarController, true);
+            //AppDelegate.NewWindow.RootViewController = tabBarController;
         }
 
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
@@ -112,6 +122,15 @@ namespace BeginMobile.iOS.Renderers
             {
                 SetUpTabs();
             }
+        }
+
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+            tabBarController = ViewController as UITabBarController;
+            
+            //NavigationController.PushViewController(tabBarController, true);
+            //AppDelegate.TabBarController = _uiTabBarController;
         }
     }
 }

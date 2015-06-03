@@ -35,8 +35,8 @@ namespace BeginMobile.Pages
                               Padding = 50,
                               Children =
                               {
-                                  labelBody,
-                                  buttonBack
+                                  labelBody
+                                  
                               }
                           };
             }

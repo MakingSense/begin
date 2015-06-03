@@ -8,14 +8,14 @@
     </style>
     
     <style name="BeginMobileActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">#43BB88</item>
+        <!--<item name="android:background">#43BB88</item>-->
         <item name="android:titleTextStyle">@style/BeginMobileTitle</item>
     </style>
   
     <style name="BeginMobileTitle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-      <item name="android:textColor">#ffffff</item>
+      <!--<item name="android:textColor">#ffffff</item>
+      <item name="android:gravity">center</item>-->
       <item name="android:textStyle">bold</item>
-      <item name="android:gravity">center</item>
     </style>
     
     <style name="ActionBarTabBar" parent="@android:style/Widget.Holo.ActionBar.TabBar">

@@ -782,6 +782,26 @@ namespace BeginMobile.Utils
             }
         }
 
+        public Style StyleNavigationHomePage
+        {
+            get
+            {
+                var style = new Style(typeof(Page))
+                {
+                    Setters =
+                                {
+                                    new Setter
+                                    {
+                                        Property = Label.FontAttributesProperty,
+                                        Value = FontAttributes.Bold
+                                    }                                                                                 
+                                }
+                };
+
+                return style;
+            }
+        }
+
         public Style PickerStyle
         {
             get

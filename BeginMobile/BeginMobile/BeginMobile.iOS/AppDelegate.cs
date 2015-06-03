@@ -21,6 +21,7 @@ namespace BeginMobile.iOS
         //
 
         private UIWindow _window;
+        public UITabBarController TabBarController { set; get; }
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
@@ -30,6 +31,7 @@ namespace BeginMobile.iOS
             ImageCircleRenderer.Init();
 
             LoadApplication(new BeginApplication());
+
             return base.FinishedLaunching(app, options);
         }
     }

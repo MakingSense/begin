@@ -18,14 +18,13 @@ namespace BeginMobile.Accounts
         private readonly ILoggingService _log = Logger.Current;
         private readonly ScrollView _mainScrollView;
 
+        readonly ContentPage _contentPageForgotPassword;
+
         public Login(ILoginManager iLoginManager)
         {
-            Style = BeginApplication.Styles.InitialPageStyle;
-            //var logo = new Image
-            //           {
-            //               Source = ImageSource.FromFile("logotype.png"),
-            //               Aspect = Aspect.AspectFit
-            //           };            
+            _contentPageForgotPassword = new ForgotPassword();
+
+            Style = BeginApplication.Styles.InitialPageStyle;          
             var mainTitle = new Label
                             {
                                 Text = "Log In",//AppResources.LoginFormTitle,
@@ -66,14 +65,10 @@ namespace BeginMobile.Accounts
                                   Style = BeginApplication.Styles.DefaultButton
                               };
 
-            //var buttonRegister = new Button
-            //                     {
-            //                         Text = "Create account", //AppResources.ButtonRegister,
-            //                         Style = BeginApplication.Styles.DefaultButton
-            //                     };
-
-            buttonForgotPassword.Clicked +=
-                (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "ForgotPassword");
+            buttonForgotPassword.Clicked += async (sender, eventArgs) =>
+            {
+                Navigation.PushAsync(_contentPageForgotPassword);
+            };
 
 
             buttonLogin.Clicked += async (sender, eventArgs) =>
@@ -125,22 +120,6 @@ namespace BeginMobile.Accounts
                                              }
                                          };
 
-            //buttonRegister.Clicked += (sender, eventArgs) => MessagingCenter.Send<ContentPage>(this, "Register");
-
-            //var buttonLog = new Button()
-            //{
-            //    Text = "Log",
-            //    Style = BeginApplication.Styles.DefaultButton
-            //};
-
-            //buttonLog.Clicked += delegate(object sender, EventArgs args)
-            //{
-            //    _log.Info("Clicked Log Info");
-            //    _log.Warning("Clicked Log Warning");
-            //    _log.Error("Clicked Log Error");
-            //    _log.DebugFormat("Clicked Log Debug {0}", "hi");
-            //};
-
             var stackLayoutLoading = CreateStackLayoutWithLoadingIndicator();
             _mainScrollView = new ScrollView();
             var componentsLayout = new StackLayout
@@ -150,7 +129,7 @@ namespace BeginMobile.Accounts
                                        Children =
                                        {
                                            stackLayoutLoading,
-                                           mainTitle,
+                                           //mainTitle,
                                           // logo,
                                            _entryEmail,
                                            _entryPassword,
