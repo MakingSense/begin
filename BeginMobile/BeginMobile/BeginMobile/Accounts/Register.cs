@@ -88,7 +88,8 @@ namespace BeginMobile.Accounts
             var buttonRegister = new Button
             {
                 Text = "Create Account",//AppResources.ButtonRegister,
-                Style = BeginApplication.Styles.DefaultButton
+                Style = BeginApplication.Styles.DefaultButton,
+                FontSize = 16
 
             };
 

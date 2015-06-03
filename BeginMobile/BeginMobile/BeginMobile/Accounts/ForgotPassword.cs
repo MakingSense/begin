@@ -42,7 +42,8 @@ namespace BeginMobile.Accounts
 
             var buttonReset = new Button {
                 Text = "Forgot Password",//AppResources.ButtonSend, 
-                                                Style = BeginApplication.Styles.DefaultButton
+                                                Style = BeginApplication.Styles.DefaultButton,
+                FontSize = 16
                                             };
 
 	        buttonReset.Clicked += async (sender, eventArgs) =>

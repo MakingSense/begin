@@ -44,7 +44,8 @@ namespace BeginMobile.Accounts
                                            {
                                                Text = AppResources.ButtonChangePasswordSend,
                                                HorizontalOptions = LayoutOptions.FillAndExpand,
-                                               Style = BeginApplication.Styles.DefaultButton
+                                               Style = BeginApplication.Styles.DefaultButton,
+                                               FontSize = 16
                                            };
 
             buttonChangePassword.Clicked += async (sender, eventArgs) =>

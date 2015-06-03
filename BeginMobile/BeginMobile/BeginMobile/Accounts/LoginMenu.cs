@@ -39,7 +39,8 @@ namespace BeginMobile.Accounts
                                        {
                                            Text = AppResources.ButtonForgotPassword,
                                            Style = BeginApplication.Styles.LinkButton,
-                                           FontSize = BeginApplication.Styles.TextFontSizeLarge
+                                           //FontSize = BeginApplication.Styles.TextFontSizeMedium
+                                           FontSize = 16
                                        };
             var buttonLoginWithFacebook = new Button
                                           {
@@ -49,7 +50,8 @@ namespace BeginMobile.Accounts
             var buttonLogin = new Button
                               {
                                   Text = "Log in with User Name", //AppResources.ButtonLogin,
-                                  Style = BeginApplication.Styles.DefaultButton
+                                  Style = BeginApplication.Styles.DefaultButton,
+                                  FontSize = 16
                               };
 
             var buttonRegister = new Button
@@ -57,8 +59,8 @@ namespace BeginMobile.Accounts
                                      Text = "Create Account", //AppResources.ButtonRegister,
                                      Style = BeginApplication.Styles.DefaultButton,
                                      BackgroundColor = BeginApplication.Styles.ColorBrown,
-                                     TextColor = BeginApplication.Styles.ColorWhiteBackground
-
+                                     TextColor = BeginApplication.Styles.ColorWhiteBackground,
+                                     FontSize = 16
                                  };
 
             buttonForgotPassword.Clicked += async (sender, eventArgs) =>
