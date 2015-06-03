@@ -20,9 +20,9 @@ namespace BeginMobile.Android.Renderers
 {
     public class CustomNavigationRenderer : NavigationRenderer
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<NavigationPage> e)
+        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            base.OnElementChanged(e);
+            base.OnElementPropertyChanged(sender, e);
 
             var navigationHome = (NavigationHomePage)this.Element;
 
@@ -36,23 +36,34 @@ namespace BeginMobile.Android.Renderers
 
         void RemoveAppIconFromActionBar(NavigationHomePage navHome)
         {
-            var actionBar = ((Activity)Context).ActionBar;
-            actionBar.SetIcon(new ColorDrawable(Color.Transparent.ToAndroid()));
+            var activity = (Activity)Context;
+            //var actionBar = ((Activity)Context).ActionBar;
+            //actionBar.SetIcon(new ColorDrawable(Color.Transparent.ToAndroid()));
 
-            /*//var paramters = new ActionBar.LayoutParams(LayoutParams.MatchParent,
-            //    LayoutParams.MatchParent,GravityFlags.Center);
+            activity.ActionBar.SetIcon(new ColorDrawable(Color.Transparent.ToAndroid()));
+            /*activity.ActionBar.SetDisplayShowCustomEnabled(true);
+            //activity.ActionBar.Title = "";
 
-            //LayoutInflater inflator = LayoutInflater.From(this.Context);
-            //global::Android.Views.View view = inflator.Inflate(Resource.Layout.ActionBar, null);
+            var linearLayout = new LinearLayout(activity);
+            linearLayout.SetGravity(GravityFlags.Center | GravityFlags.CenterVertical);
 
-            actionBar.SetDisplayShowCustomEnabled(true);
-            actionBar.SetDisplayOptions(ActionBarDisplayOptions.ShowHome, ActionBarDisplayOptions.ShowHome);
-            //actionBar.SetCustomView(view, paramters);
-            actionBar.SetCustomView(Resource.Layout.ActionBar);
+            var textViewParameters =
+                new LinearLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
 
-            var titleText = actionBar.CustomView.FindViewById<TextView>(Resource.Id.action_bar_title);
-            titleText.Text = navHome.Title;
-            //titleText.Text = "Siiiiiiiiiiiiiiiiiiiiiiiiiiii";*/
+            //textViewParameters.RightMargin = (int)(40 * activity.Resources.DisplayMetrics.Density);
+            var modelTitle = new TextView(activity);
+            modelTitle.Text = navHome.CurrentPage.Title;
+            modelTitle.SetTextColor(global::Android.Graphics.Color.White);
+            modelTitle.SetTypeface(null, global::Android.Graphics.TypefaceStyle.Bold);
+            modelTitle.SetTextSize(global::Android.Util.ComplexUnitType.Sp, 16);
+            modelTitle.Gravity = GravityFlags.Center;
+            linearLayout.AddView(modelTitle, textViewParameters);
+
+            var actionbarParams =
+                new ActionBar.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
+
+            activity.ActionBar.SetCustomView(linearLayout, actionbarParams);*/
+            
         }
     }
 }

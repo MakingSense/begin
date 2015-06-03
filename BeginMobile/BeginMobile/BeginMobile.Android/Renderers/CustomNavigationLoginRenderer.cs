@@ -20,9 +20,10 @@ namespace BeginMobile.Android.Renderers
 {
     public class CustomNavigationLoginRenderer : NavigationRenderer
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<NavigationPage> e)
+
+        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            base.OnElementChanged(e);
+            base.OnElementPropertyChanged(sender, e);
 
             var navigationHome = (NavigationLogin)this.Element;
 
@@ -31,14 +32,40 @@ namespace BeginMobile.Android.Renderers
                 return;
             }
 
-            RemoveAppIconFromActionBar(navigationHome);
+            GetCustomActionBar(navigationHome);
         }
 
-        private void RemoveAppIconFromActionBar(NavigationLogin navHome)
+        private void GetCustomActionBar(NavigationLogin navHome)
         {
-            var actionBar = ((Activity) Context).ActionBar;
-            actionBar.SetIcon(new ColorDrawable(Color.Transparent.ToAndroid()));
-            actionBar.SetBackgroundDrawable(new ColorDrawable(Color.Yellow.ToAndroid()));
+            var activity = (Activity) Context;
+
+            //var actionBar = ((Activity) Context).ActionBar;
+            //actionBar.SetIcon(new ColorDrawable(Color.Transparent.ToAndroid()));
+
+            //Set paramas
+            activity.ActionBar.SetIcon(new ColorDrawable(Color.Transparent.ToAndroid()));
+           /* activity.ActionBar.SetDisplayShowCustomEnabled(true);
+            activity.ActionBar.Title = "";
+            
+            var linearLayout = new LinearLayout(activity);
+            linearLayout.SetGravity(GravityFlags.Center | GravityFlags.CenterVertical);
+
+            var textViewParameters =
+                new LinearLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
+
+            textViewParameters.RightMargin = (int)(40 * activity.Resources.DisplayMetrics.Density);
+            var modelTitle = new TextView(activity);
+            modelTitle.Text = navHome.CurrentPage.Title;
+            modelTitle.SetTextColor(global::Android.Graphics.Color.Black);
+            modelTitle.SetTypeface(null, global::Android.Graphics.TypefaceStyle.Bold);
+            modelTitle.SetTextSize(global::Android.Util.ComplexUnitType.Sp, 16);
+            modelTitle.Gravity = GravityFlags.Center;
+            linearLayout.AddView(modelTitle, textViewParameters);
+
+            var actionbarParams =
+                new ActionBar.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
+
+            activity.ActionBar.SetCustomView(linearLayout, actionbarParams);*/
         }
     }
 }

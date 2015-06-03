@@ -28,6 +28,8 @@ namespace BeginMobile.Accounts
 
             Style = BeginApplication.Styles.InitialPageStyle;
 
+            Title = "";
+
             var logo = new CircleImage
                        {
                            Source = BeginApplication.Styles.LogoIcon,

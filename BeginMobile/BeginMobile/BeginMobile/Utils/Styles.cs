@@ -772,6 +772,7 @@ namespace BeginMobile.Utils
                                             Device.OnPlatform(Color.FromHex("FFFFFF"), Color.FromHex("FFFFFF"),
                                                 Color.FromHex("FFFFFF"))
                                     },
+                                    
                                     //new Setter {Property = Page.PaddingProperty, Value =  Device.OnPlatform(new Thickness(50, 5, 50, 5),
                                     //    new Thickness(50, 5, 50, 5),
                                     //    new Thickness(50, 5, 50, 5))}                                                                                  

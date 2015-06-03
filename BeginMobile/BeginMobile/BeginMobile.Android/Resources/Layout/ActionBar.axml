@@ -16,7 +16,8 @@
             android:layout_gravity="center"
             android:color="#ffffff"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:clickable="true" />
     <!--<EditText
             android:id="@+id/search_query"
             android:layout_width="fill_parent"

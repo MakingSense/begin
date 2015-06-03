@@ -92,11 +92,6 @@ namespace BeginMobile.iOS.Renderers
                     viewController.TabBarItem.SelectedImage = UIImage.FromBundle("iconmenuactive.png");
                 }
             }
-
-            
-            //AppDelegate.NewWindow.MakeKeyAndVisible();
-            //NavigationController.PushViewController(tabBarController, true);
-            //AppDelegate.NewWindow.RootViewController = tabBarController;
         }
 
         protected override void OnElementChanged(VisualElementChangedEventArgs e)

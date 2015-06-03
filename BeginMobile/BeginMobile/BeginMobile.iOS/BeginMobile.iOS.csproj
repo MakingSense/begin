@@ -91,6 +91,7 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\ExtendedButtonRenderer.cs" />
     <Compile Include="Renderers\ExtendedNavigationHomeRenderer.cs" />
+    <Compile Include="Renderers\ExtendedNavigationLoginRenderer.cs" />
     <Compile Include="Renderers\ExtendedTabbedRenderer.cs" />
     <Compile Include="Renderers\ImageCircleRenderer.cs" />
     <None Include="Info.plist" />
