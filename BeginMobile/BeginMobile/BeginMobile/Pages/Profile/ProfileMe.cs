@@ -409,7 +409,7 @@ namespace BeginMobile.Pages.Profile
         {
             try
             {
-               // ClearListViewAndHideDetailsGrid();
+                ClearListViewAndHideDetailsGrid();
                 var scrollView = sender as ScrollView;
                 if (scrollView == null) return;
                 if (!scrollView.Orientation.Equals(ScrollOrientation.Vertical)) return;
