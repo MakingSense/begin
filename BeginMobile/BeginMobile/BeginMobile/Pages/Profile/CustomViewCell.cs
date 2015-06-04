@@ -12,7 +12,7 @@ namespace BeginMobile.Pages.Profile
 {
     public class CustomViewCell : ViewCell
     {
-        private Button _buttonRemoveFriend;
+        private Image _buttonRemoveFriend;
         private readonly LoginUser _loginUser;
 
 
@@ -53,17 +53,29 @@ namespace BeginMobile.Pages.Profile
 
         private Grid CreateOptionLayout()
         {
-            _buttonRemoveFriend = new Button
-                                  {
-                                      //Text = AppResources.ButtonRemoveFriend,
-                                      //Style = BeginApplication.Styles.ListViewItemButton
-                                      Image = BeginApplication.Styles.ContactAddedIcon,
-                                      Style = BeginApplication.Styles.ButtonContactsListView,
-                                      HorizontalOptions = LayoutOptions.End,
-                                  };
+            //_buttonRemoveFriend = new Button
+            //                      {
+            //                          //Text = AppResources.ButtonRemoveFriend,
+            //                          //Style = BeginApplication.Styles.ListViewItemButton
+            //                          Image = BeginApplication.Styles.ContactAddedIcon,
+            //                          Style = BeginApplication.Styles.ButtonContactsListView,
+            //                          HorizontalOptions = LayoutOptions.End,
+            //                      };
+            //_buttonRemoveFriend.Clicked += RemoveFriendEventHandler;
 
-            _buttonRemoveFriend.Clicked += RemoveFriendEventHandler;
-
+            var tappedGestureRemoveFriend = new TapGestureRecognizer
+            {
+                NumberOfTapsRequired = 1
+            };
+            tappedGestureRemoveFriend.Tapped += RemoveFriendEventHandler;           
+            _buttonRemoveFriend = new Image
+            {
+                Source = BeginApplication.Styles.ContactAddedIcon,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.End,
+                Style = BeginApplication.Styles.ImageButtonContactsListView,
+            };
+            _buttonRemoveFriend.GestureRecognizers.Add(tappedGestureRemoveFriend);
             var labelNameSurname = new Label
                                    {
                                        HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -103,8 +115,8 @@ namespace BeginMobile.Pages.Profile
                            },
                            ColumnDefinitions =
                            {
-                               new ColumnDefinition {Width = new GridLength(2, GridUnitType.Star)},
-                               new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)},
+                              new ColumnDefinition {Width = new GridLength(Device.OnPlatform(150, 120, 120), GridUnitType.Absolute)},
+                              new ColumnDefinition {Width = GridLength.Auto},
                            }
                        };
 
@@ -151,7 +163,7 @@ namespace BeginMobile.Pages.Profile
 
         private void RemoveFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var objectSender = sender as Button;
+            var objectSender = sender as Image;
 
             if (objectSender == null) return;
 

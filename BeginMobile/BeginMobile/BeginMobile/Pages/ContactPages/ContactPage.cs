@@ -117,7 +117,7 @@ namespace BeginMobile.Pages.ContactPages
             Init();
         }
 
-		protected override void OnAppearing ()
+		protected override void OnAppearing()
 		{
 			base.OnAppearing ();
 			var title = MasterTitle;

@@ -14,11 +14,11 @@ namespace BeginMobile.Pages.ContactPages
 {
     public class ContactListItem : ViewCell
     {
-        private Button _buttonAddFriend;
-        private Button _buttonRemoveFriend;
-        private Button _buttonCancelFriend;
-        private Button _buttonAcceptFriend;
-        private Button _buttonRejectFriend;
+        private Image _buttonAddFriend;
+        private Image _buttonRemoveFriend;
+        private Image _buttonCancelFriend;
+        private Image _buttonAcceptFriend;
+        private Image _buttonRejectFriend;
 
         private readonly LoginUser _loginUser;
 
@@ -66,77 +66,143 @@ namespace BeginMobile.Pages.ContactPages
         }
 
         private Grid CreateOptionLayout()
-        {
-            _buttonAddFriend = new Button
-                               {
-                                   //Text =  AppResources.ButtonAddFriend,
-                                   Image = BeginApplication.Styles.ContactAddIcon,
-                                   Style = BeginApplication.Styles.ButtonContactsListView,
-                                   //HorizontalOptions = LayoutOptions.End
-                                   VerticalOptions = LayoutOptions.Start,
-                               };
+        {                       
+            //_buttonAddFriend = new Button
+            //                   {
+            //                       //Text =  AppResources.ButtonAddFriend,
+            //                       Image = BeginApplication.Styles.ContactAddIcon,
+            //                       Style = BeginApplication.Styles.ButtonContactsListView,
+            //                       //HorizontalOptions = LayoutOptions.End
+            //                       VerticalOptions = LayoutOptions.Start,
+            //                   };
 
-            _buttonRemoveFriend = new Button
-                                  {
-                                      //Text =  AppResources.ButtonRemoveFriend,
-                                      Image = BeginApplication.Styles.ContactAddedIcon,
-                                      Style = BeginApplication.Styles.ButtonContactsListView,
-                                      //HorizontalOptions = LayoutOptions.End
-                                      VerticalOptions = LayoutOptions.Start
-                                  };
+            //_buttonRemoveFriend = new Button
+            //                      {
+            //                          //Text =  AppResources.ButtonRemoveFriend,
+            //                          Image = BeginApplication.Styles.ContactAddedIcon,
+            //                          Style = BeginApplication.Styles.ButtonContactsListView,
+            //                          //HorizontalOptions = LayoutOptions.End
+            //                          VerticalOptions = LayoutOptions.Start
+            //                      };
 
-            _buttonCancelFriend = new Button
-                                  {
-                                     // Text = AppResources.ButtonCancelRequestFriend,
-                                      Image = BeginApplication.Styles.ContactAddIcon,
-                                      Style = BeginApplication.Styles.ButtonContactsListView,
-                                      //HorizontalOptions = LayoutOptions.End
-                                      VerticalOptions = LayoutOptions.Start
-                                  };
+            //_buttonCancelFriend = new Button
+            //                      {
+            //                         // Text = AppResources.ButtonCancelRequestFriend,
+            //                          Image = BeginApplication.Styles.ContactAddIcon,
+            //                          Style = BeginApplication.Styles.ButtonContactsListView,
+            //                          //HorizontalOptions = LayoutOptions.End
+            //                          VerticalOptions = LayoutOptions.Start
+            //                      };
 
-            _buttonAcceptFriend = new Button
-                                  {
-                                     // Text =  AppResources.ButtonAcceptFriend,
-                                      Image = BeginApplication.Styles.ContactAddIcon,
-                                      Style = BeginApplication.Styles.ButtonContactsListView,
-                                      //HorizontalOptions = LayoutOptions.End
-                                      VerticalOptions = LayoutOptions.Start
-                                  };
+            //_buttonAcceptFriend = new Button
+            //                      {
+            //                         // Text =  AppResources.ButtonAcceptFriend,
+            //                          Image = BeginApplication.Styles.ContactAddIcon,
+            //                          Style = BeginApplication.Styles.ButtonContactsListView,
+            //                          //HorizontalOptions = LayoutOptions.End
+            //                          VerticalOptions = LayoutOptions.Start
+            //                      };
 
-            _buttonRejectFriend = new Button
-                                  {
-                                      //Text =  AppResources.ButtonRejectFriend,
-                                      Image = BeginApplication.Styles.ContactAddIcon,
-                                      Style = BeginApplication.Styles.ButtonContactsListView,
-                                      //HorizontalOptions = LayoutOptions.End
-                                      VerticalOptions = LayoutOptions.Start
+            //_buttonRejectFriend = new Button
+            //                      {
+            //                          //Text =  AppResources.ButtonRejectFriend,
+            //                          Image = BeginApplication.Styles.ContactAddIcon,
+            //                          Style = BeginApplication.Styles.ButtonContactsListView,
+            //                          //HorizontalOptions = LayoutOptions.End
+            //                          VerticalOptions = LayoutOptions.Start
 
-                                  };
+            //                      };
+            
+            var tappedGestureAddFriend = new TapGestureRecognizer
+            {
+                NumberOfTapsRequired = 1
+            };
+            var tappedGestureRemoveFriend = new TapGestureRecognizer
+            {
+                NumberOfTapsRequired = 1
+            };
+            var tappedGestureCancelFriend = new TapGestureRecognizer
+            {
+                NumberOfTapsRequired = 1
+            };
+            var tappedGestureAcceptFriend = new TapGestureRecognizer
+            {
+                NumberOfTapsRequired = 1
+            };
+            var tappedGestureRejectFriend = new TapGestureRecognizer
+            {
+                NumberOfTapsRequired = 1
+            };
 
-            _buttonAddFriend.Clicked += AddFriendEventHandler;
-            _buttonRemoveFriend.Clicked += RemoveFriendEventHandler;
-            _buttonCancelFriend.Clicked += CancelFriendEventHandler;
-            _buttonAcceptFriend.Clicked += AcceptFriendEventHandler;
-            _buttonRejectFriend.Clicked += RejectFriendEventHandler;
+            tappedGestureAddFriend.Tapped += AddFriendEventHandler;
+            tappedGestureRemoveFriend.Tapped += RemoveFriendEventHandler;
+            tappedGestureCancelFriend.Tapped += CancelFriendEventHandler;
+            tappedGestureAcceptFriend.Tapped += AcceptFriendEventHandler;
+            tappedGestureRejectFriend.Tapped += RejectFriendEventHandler;
+
+            _buttonAddFriend = new Image
+            {
+                Source = BeginApplication.Styles.ContactAddIcon,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.End,
+                Style = BeginApplication.Styles.ImageButtonContactsListView,
+            };
+            _buttonRemoveFriend = new Image
+            {
+                Source = BeginApplication.Styles.ContactAddedIcon,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.End,
+                Style = BeginApplication.Styles.ImageButtonContactsListView,
+            };
+
+            _buttonCancelFriend = new Image
+            {
+                Source = BeginApplication.Styles.ContactAddIcon,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.End,
+                Style = BeginApplication.Styles.ImageButtonContactsListView,
+            };
+
+            _buttonAcceptFriend = new Image
+            {
+                Source = BeginApplication.Styles.ContactAddIcon,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.End,
+                Style = BeginApplication.Styles.ImageButtonContactsListView,
+            };
+
+            _buttonRejectFriend = new Image
+            {
+                Source = BeginApplication.Styles.ContactAddIcon,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.End,
+                Style = BeginApplication.Styles.ImageButtonContactsListView,
+            };
+
+            _buttonAddFriend.GestureRecognizers.Add(tappedGestureAddFriend);
+            _buttonRemoveFriend.GestureRecognizers.Add(tappedGestureRemoveFriend);
+            _buttonCancelFriend.GestureRecognizers.Add(tappedGestureCancelFriend);
+            _buttonAcceptFriend.GestureRecognizers.Add(tappedGestureAcceptFriend);
+            _buttonRejectFriend.GestureRecognizers.Add(tappedGestureRejectFriend);
 
             var labelNameSurname = new Label
                                    {
                                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                                       YAlign = TextAlignment.Start,
+                                       YAlign = TextAlignment.End,
                                        Style = BeginApplication.Styles.ListItemTextStyle
                                    };
 
             var labelUserName = new Label
                                 {
                                     HorizontalOptions = LayoutOptions.FillAndExpand,
-                                    YAlign = TextAlignment.Start,
+                                    YAlign = TextAlignment.End,
                                     Style = BeginApplication.Styles.ListItemDetailTextStyle
                                 };
 
             var labelProfession = new Label
                                   {
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
-                                      YAlign = TextAlignment.Start,
+                                      YAlign = TextAlignment.End,
                                       Style = BeginApplication.Styles.ListItemDetailTextStyle
                                   };
 
@@ -160,8 +226,8 @@ namespace BeginMobile.Pages.ContactPages
                            },
                            ColumnDefinitions =
                            {
-                               new ColumnDefinition {Width = new GridLength(2, GridUnitType.Star)},
-                               new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)},
+                               new ColumnDefinition {Width = new GridLength(Device.OnPlatform(150, 120, 120), GridUnitType.Absolute)},
+                               new ColumnDefinition {Width = GridLength.Auto},
                            }
                        };
 
@@ -211,7 +277,7 @@ namespace BeginMobile.Pages.ContactPages
 
         private void AddFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var objectSender = sender as Button;
+            var objectSender = sender as Image;
             if (objectSender == null) return;
             var parentGrid = objectSender.Parent as Grid;
 
@@ -242,7 +308,7 @@ namespace BeginMobile.Pages.ContactPages
 
         private void RemoveFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var objectSender = sender as Button;
+            var objectSender = sender as Image;
             if (objectSender == null) return;
             var parentGrid = objectSender.Parent as Grid;
 
@@ -272,7 +338,7 @@ namespace BeginMobile.Pages.ContactPages
 
         private void CancelFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var objectSender = sender as Button;
+            var objectSender = sender as Image;
             if (objectSender == null) return;
             var parentGrid = objectSender.Parent as Grid;
 
@@ -303,7 +369,7 @@ namespace BeginMobile.Pages.ContactPages
 
         private void AcceptFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var objectSender = sender as Button;
+            var objectSender = sender as Image;
             if (objectSender == null) return;
             var parentGrid = objectSender.Parent as Grid;
 
@@ -335,7 +401,7 @@ namespace BeginMobile.Pages.ContactPages
 
         private void RejectFriendEventHandler(object sender, EventArgs eventArgs)
         {
-            var objectSender = sender as Button;
+            var objectSender = sender as Image;
             if (objectSender == null) return;
             var parentGrid = objectSender.Parent as Grid;
 
@@ -385,7 +451,7 @@ namespace BeginMobile.Pages.ContactPages
             MessagingCenter.Unsubscribe<CustomViewCell, string>(this, FriendshipMessages.AddContact);
         }
 
-        private Button RelationshipButton()
+        private Image RelationshipButton()
         {
             if (string.IsNullOrEmpty(Relationship))
             {

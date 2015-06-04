@@ -115,7 +115,7 @@ namespace BeginMobile.Utils
                                     },
                                     new Setter {Property = Button.BorderRadiusProperty, Value = 0},
                                     new Setter {Property = Button.FontFamilyProperty, Value = FontFamily},
-                                    new Setter {Property = Button.FontSizeProperty, Value = _fontSizeButtonSmall},
+                                    new Setter {Property = Button.FontSizeProperty, Value = Device.OnPlatform(16,16,16)},
                                     new Setter
                                     {
                                         Property = Button.TextColorProperty,
@@ -234,9 +234,10 @@ namespace BeginMobile.Utils
                                             Color.FromHex("444444"), Color.FromHex("444444"))
                                     },
                                     new Setter {Property = Button.FontFamilyProperty, Value = FontFamily},
+                                    new Setter {Property = Button.FontSizeProperty, Value = Device.OnPlatform(16,16,16)},
                                 }
                             };
-                style.Setters.Add(_buttonFontSize);
+               // style.Setters.Add(_buttonFontSize);
 
                 return style;
             }
@@ -539,8 +540,8 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return Device.OnPlatform(new Thickness(15, 10, 0, 10), new Thickness(15, 10, 0, 10),
-                    new Thickness(15, 10, 0, 10));
+                return Device.OnPlatform(new Thickness(15, 7, 0, 10), new Thickness(15, 7, 0, 10),
+                    new Thickness(15, 7, 0, 10));
             }
         }
         public Thickness ThicknessInternalLayout
@@ -879,6 +880,35 @@ namespace BeginMobile.Utils
                 
                 return style;
             }
+        }
+        public Style ImageButtonContactsListView
+        {
+            get
+            {
+                var style = new Style(typeof(Image))
+                {
+                    Setters =
+                                {
+                                    new Setter
+                                    {
+                                        Property = VisualElement.BackgroundColorProperty,
+                                        Value = Color.Transparent,
+                                    },
+                                    
+                                    new Setter {Property = VisualElement.HeightRequestProperty, Value =30},
+                                    new Setter {Property = VisualElement.WidthRequestProperty, Value =70},
+                                                                   
+                                    
+                                }
+                };
+
+                return style;
+            }
+        }
+
+        public double ContactGridRowHeight()
+        {
+            return Device.OnPlatform(100, 100, 100);
         }
 
         public Color ApplicationGreenColor
@@ -1592,12 +1622,12 @@ namespace BeginMobile.Utils
 
         public string ContactAddIcon
         {
-            get { return "contact_add1.png"; }
+            get { return "contact_add.png"; }
         }
 
         public string ContactAddedIcon
         {
-            get { return "contact_added1.png"; }
+            get { return "contact_added.png"; }
         }
 
         public string ContactOfflineIcon
