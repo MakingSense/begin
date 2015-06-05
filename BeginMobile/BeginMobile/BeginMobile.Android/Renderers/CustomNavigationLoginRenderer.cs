@@ -44,7 +44,8 @@ namespace BeginMobile.Android.Renderers
 
             //Set paramas
             activity.ActionBar.SetIcon(new ColorDrawable(Color.Transparent.ToAndroid()));
-           /* activity.ActionBar.SetDisplayShowCustomEnabled(true);
+            
+            /* activity.ActionBar.SetDisplayShowCustomEnabled(true);
             activity.ActionBar.Title = "";
             
             var linearLayout = new LinearLayout(activity);
@@ -67,5 +68,6 @@ namespace BeginMobile.Android.Renderers
 
             activity.ActionBar.SetCustomView(linearLayout, actionbarParams);*/
         }
+
     }
 }
