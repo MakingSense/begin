@@ -77,7 +77,7 @@ namespace BeginMobile.Pages.Wall
                     Navigation
                         .PushAsync
                         (new NewPublication(_currentUser));
-            }));
+            }, ToolbarItemOrder.Primary));
             //var toolBarEditPublicWall = new ToolbarItem()
             //{
             //    Order = ToolbarItemOrder.Primary,

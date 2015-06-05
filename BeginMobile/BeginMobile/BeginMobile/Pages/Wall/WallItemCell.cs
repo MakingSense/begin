@@ -1,4 +1,5 @@
 ﻿using ImageCircle.Forms.Plugin.Abstractions;
+using System;
 using Xamarin.Forms;
 
 namespace BeginMobile.Pages.Wall
@@ -38,10 +39,42 @@ namespace BeginMobile.Pages.Wall
                 },
                 ColumnDefinitions =
                 {
-                    new ColumnDefinition(){ Width = new GridLength (130, GridUnitType.Absolute)},
                     new ColumnDefinition(){ Width = GridLength.Auto},
+                    new ColumnDefinition(){ Width = new GridLength (50, GridUnitType.Absolute)},
                 }
             };
+
+            /*var stackLayoutTime = new StackLayout()
+            {
+                //
+                WidthRequest = 100,
+                HorizontalOptions = LayoutOptions.EndAndExpand,
+                Children =
+                {
+                    labelDatePublic
+                }
+            };
+
+            var relativeLayoutTitle = new RelativeLayout();
+
+            var label = new Label() {
+                Text = "I want to be right-aligned.",
+                WidthRequest = 100,
+            };
+            Func<RelativeLayout, double> getLabelWidth = (parent) => labelDatePublic.GetSizeRequest(relativeLayoutTitle.Width, relativeLayoutTitle.Height).Request.Width;
+            relativeLayoutTitle.Children.Add(labelDatePublic,
+                Constraint.RelativeToParent((rl) => rl.Width - getLabelWidth(rl)),
+                Constraint.Constant(10));
+
+            var button = new Button() {
+                Text = "Invalidate"
+            };
+            button.Clicked += (object sender, EventArgs e) => relativeLayoutTitle.ForceLayout();
+            relativeLayoutTitle.Children.Add(labelUserName,
+                Constraint.Constant(10),
+                Constraint.Constant(10));*/
+
+
             gridUserAndTime.Children.Add(labelUserName, 0, 0);
             gridUserAndTime.Children.Add(labelDatePublic, 1, 0);
 
@@ -124,7 +157,7 @@ namespace BeginMobile.Pages.Wall
                                   }
                               };
 
-            gridDetails.Children.Add(gridUserAndTime, 0 ,0);
+            gridDetails.Children.Add(gridUserAndTime, 0, 0);
             gridDetails.Children.Add(labelTitle, 0, 1);
             gridDetails.Children.Add(labelReason, 0, 2);
             gridDetails.Children.Add(labelDescription, 0, 3);
@@ -147,7 +180,7 @@ namespace BeginMobile.Pages.Wall
             var layoutStackItem = new StackLayout
                                   {
                                       //BackgroundColor = Color.White,
-                                      Padding = BeginApplication.Styles.PageStandardThickness,
+                                      Padding = BeginApplication.Styles.PageStandardListThickness,
                                       Orientation = StackOrientation.Horizontal,
                                       HorizontalOptions = LayoutOptions.FillAndExpand,
                                       Children =

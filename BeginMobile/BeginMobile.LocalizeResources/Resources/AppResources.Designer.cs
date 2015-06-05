@@ -188,7 +188,7 @@ namespace BeginMobile.LocalizeResources.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to News Feed.
+        ///   Looks up a localized string similar to Public Wall.
         /// </summary>
         public static string AppHomeChildNewsFeed {
             get {

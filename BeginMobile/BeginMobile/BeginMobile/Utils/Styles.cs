@@ -1195,6 +1195,17 @@ namespace BeginMobile.Utils
             }
         }
 
+		public Thickness PageStandardListThickness
+		{
+			get
+			{
+				return Device.Idiom == TargetIdiom.Phone
+					? new Thickness(10, 10, 10, 10)
+						: new Thickness(10, 10, 10, 10);
+
+			}
+		}
+
         public Style PageCircleImageCommon
         {
             get

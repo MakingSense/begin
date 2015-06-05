@@ -629,8 +629,8 @@ namespace BeginMobile.Pages.Profile
                                                    }
                            };
 
-            ToolbarItems.Add(new ToolbarItem("SendPublication", BeginApplication.Styles.PublicationsSendIcon,
-                async () => { SendPublication(); }));
+            ToolbarItems.Add(new ToolbarItem("Public", null,
+                async () => { SendPublication(); }, ToolbarItemOrder.Primary));
             mainGrid.Children.Add(image, 0, 0);
             mainGrid.Children.Add(_publicationEditor, 1, 0);
 
