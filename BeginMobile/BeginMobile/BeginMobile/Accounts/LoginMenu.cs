@@ -61,6 +61,7 @@ namespace BeginMobile.Accounts
                                      Text = "Create Account", //AppResources.ButtonRegister,
                                      Style = BeginApplication.Styles.DefaultButton,
                                      BackgroundColor = BeginApplication.Styles.ColorBrown,
+                                     VerticalOptions = LayoutOptions.End,
                                      TextColor = BeginApplication.Styles.ColorWhiteBackground,
                                      FontSize = 16
                                  };
@@ -90,8 +91,8 @@ namespace BeginMobile.Accounts
                 Padding = BeginApplication.Styles.InitialPagesThickness,
                 RowDefinitions = new RowDefinitionCollection
                                  {
-                                     new RowDefinition{ Height = new GridLength(8,GridUnitType.Star)},
-                                     new RowDefinition{ Height = new GridLength(4,GridUnitType.Star)},
+                                     new RowDefinition{ Height = new GridLength(140,GridUnitType.Absolute)},
+                                     new RowDefinition{ Height = new GridLength(140,GridUnitType.Absolute)},
                                      new RowDefinition{ Height = GridLength.Auto},
                                      new RowDefinition{ Height = GridLength.Auto},
                                      new RowDefinition{ Height = GridLength.Auto},

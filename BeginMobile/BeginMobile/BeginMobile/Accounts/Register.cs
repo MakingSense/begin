@@ -21,7 +21,6 @@ namespace BeginMobile.Accounts
         private readonly Entry _entryFullName;
         private readonly Entry _entryEmail;
         private readonly Entry _entryPassword;
-        private readonly Entry _entryConfirmPassword;
         private bool _switchStatus;
         private readonly ILoginManager _iLoginManager;
 
@@ -64,13 +63,6 @@ namespace BeginMobile.Accounts
             {
                 IsPassword = true,
                 Placeholder = AppResources.EntryPasswordPlaceholder,
-                
-            };
-
-            _entryConfirmPassword = new Entry
-            {
-                IsPassword = true,
-                Placeholder = AppResources.EntryConfirmPasswordPlaceholder,
                 
             };
 
@@ -125,8 +117,6 @@ namespace BeginMobile.Accounts
                                             _entryFullName,
                                             _entryEmail,
                                             _entryPassword,
-                                            _entryConfirmPassword,
-                                            _entryConfirmPassword,
                                             stackLayoutSwitch,
                                             buttonRegister
                                             
@@ -141,13 +131,11 @@ namespace BeginMobile.Accounts
             var fullName = _entryFullName.Text.Trim();
             var email = _entryEmail.Text.Trim();
             var password = _entryPassword.Text.Trim();
-            var confirmPassword = _entryConfirmPassword.Text.Trim();
 
-            if (String.IsNullOrEmpty(fullName) ||
-                String.IsNullOrEmpty(email)
-                || String.IsNullOrEmpty(password)
-                || String.IsNullOrEmpty(confirmPassword)
-                || String.IsNullOrEmpty(userName)
+            if (string.IsNullOrEmpty(fullName) ||
+                string.IsNullOrEmpty(email)
+                || string.IsNullOrEmpty(password)
+                || string.IsNullOrEmpty(userName)
                 )
             {
                 await DisplayAlert(AppResources.ApplicationValidationError,
@@ -159,8 +147,6 @@ namespace BeginMobile.Accounts
                 var isEmailValid = Regex.IsMatch(email, EmailRegex);
                 if (isEmailValid)
                 {
-                    if (password.Equals(confirmPassword))
-                    {
                         if (_switchStatus)
                         {
                             ActivityIndicatorLoading.IsVisible = true;
@@ -207,13 +193,7 @@ namespace BeginMobile.Accounts
                                 AppResources.RegisterAlertValidationTermsAndConditions,
                                 AppResources.AlertReTry);
                         }
-                    }
-                    else
-                    {
-                        await DisplayAlert(AppResources.ApplicationValidationError,
-                            AppResources.RegisterAlertValidationPassAndConfirm,
-                            AppResources.AlertReTry);
-                    }
+                    
                 }
                 else
                 {
