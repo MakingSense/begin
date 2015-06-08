@@ -63,7 +63,6 @@ namespace BeginMobile.Accounts
                                            VerticalOptions = LayoutOptions.End,
                                            HorizontalOptions = LayoutOptions.Center,
                                            FontFamily = BeginApplication.Styles.FontFamilyRobotoBlack,
-                                           //FontSize = BeginApplication.Styles.TextFontSizeLarge,
                                            FontSize = 16
                                        };
             buttonForgotPassword.GestureRecognizers.Add(tapGestureRecognizer);
@@ -95,8 +94,6 @@ namespace BeginMobile.Accounts
                                              {
                                                  ActivityIndicatorLoading.IsVisible = true;
                                                  ActivityIndicatorLoading.IsRunning = true;
-
-                                                 //LoginUserMock(iLoginManager);
 
                                                  var loginUserManager = new LoginUserManager();
                                                  var loginUser =

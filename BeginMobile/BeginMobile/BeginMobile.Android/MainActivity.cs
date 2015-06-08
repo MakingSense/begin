@@ -1,6 +1,8 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Android.Util;
 using BeginMobile.Android.DependencyService;
 using BeginMobile.Android.Renderers;
 using BeginMobile.Services.Interfaces;
@@ -42,5 +44,10 @@ namespace BeginMobile.Android
             }
 
         }
+
+        /*private int ConvertPxToDp(int px)
+        {
+            return Math.Round(px / (Resources.DisplayMetrics.Xdpi / DisplayMetrics.DensityDefault));
+        }*/
     }
 }

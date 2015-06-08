@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using BeginMobile.LocalizeResources.Resources;
 using BeginMobile.Pages.Profile;
+using XLabs.Ioc;
+using XLabs.Platform.Device;
 
 namespace BeginMobile.Pages.Wall
 {

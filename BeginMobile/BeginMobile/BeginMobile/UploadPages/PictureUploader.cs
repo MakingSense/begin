@@ -36,6 +36,8 @@ namespace BeginMobile.UploadPages
         private Button _buttonSelectFromFolder;
         private StackLayout _stackLayoutButtons;
 
+        private IDevice _device;
+
         public string Status
         { set; get; }
 
@@ -43,6 +45,11 @@ namespace BeginMobile.UploadPages
         public PictureUploader()
         {
             Title = "Upload avatar";
+
+            _device = Resolver.Resolve<IDevice>();
+
+            var height = _device.ScreenHeightInches();
+            var width = _device.ScreenWidthInches();
 
             var tapGestureRecognizer = new TapGestureRecognizer()
             {
@@ -90,6 +97,7 @@ namespace BeginMobile.UploadPages
                 Source = BeginApplication.Styles.CompletePhotoIcon,
                 Style = BeginApplication.Styles.CircleImageUpload,
                 HorizontalOptions =  LayoutOptions.CenterAndExpand,
+                //Aspect = Aspect.AspectFill
             };
 
             _imageUploaded.GestureRecognizers.Add(tapGestureRecognizer);
@@ -299,14 +307,13 @@ namespace BeginMobile.UploadPages
                 return;
             }
 
-            var device = Resolver.Resolve<IDevice>();
-
-            _mediaPicker = DependencyService.Get<IMediaPicker>() ?? device.MediaPicker;
+            _mediaPicker = DependencyService.Get<IMediaPicker>() ?? _device.MediaPicker;
         }
 
         public async void UpdatePhoto(ImageSource imageSource)
         {
             this._imageUploaded.Source = imageSource;
+            this._imageUploaded.BorderColor = Color.Transparent;
 
             this._stackLayoutButtons.IsVisible = false;
             this._buttonNextStep.IsVisible = true;
@@ -315,6 +322,8 @@ namespace BeginMobile.UploadPages
             this._labelUploadSubtitle.IsVisible = false;
             this._labelNicePicture.IsVisible = true;
             this._labelReplacePicture.IsVisible = true;
+
+
             
         }
 

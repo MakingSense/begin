@@ -1357,7 +1357,7 @@ namespace BeginMobile.Utils
                             {
                                 Setters =
                                 {
-                                    new Setter {Property = Image.AspectProperty, Value = Aspect.AspectFit},
+                                    new Setter {Property = Image.AspectProperty, Value = Aspect.Fill},
                                     new Setter {Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center},
                                     new Setter {Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center},
                                     new Setter
@@ -1386,7 +1386,7 @@ namespace BeginMobile.Utils
                                     new Setter
                                     {
                                         Property = CircleImage.BorderThicknessProperty,
-                                        Value = Device.OnPlatform(5, 5, 5)
+                                        Value = Device.OnPlatform(2, 2, 2)
                                     }
                                 }
                             };
