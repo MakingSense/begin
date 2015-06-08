@@ -288,18 +288,24 @@ namespace BeginMobile.Pages.Profile
                                  Text = TabsNames.Tab1Activity,
                                  XAlign = TextAlignment.Center,
                                  FontSize = BeginApplication.Styles.TextFontSize14,
+                                 VerticalOptions = LayoutOptions.Center,
+                                 HorizontalOptions = LayoutOptions.Center
                              };
             _tabInformation = new Label
                               {
                                   Text = TabsNames.Tab2Information,
                                   XAlign = TextAlignment.Center,
                                   FontSize = BeginApplication.Styles.TextFontSize14,
+                                  VerticalOptions = LayoutOptions.Center,
+                                  HorizontalOptions = LayoutOptions.Center
                               };
             _tabMore = new Label
                        {
                            Text = TabsNames.TabMore,
                            XAlign = TextAlignment.Center,
                            FontSize = BeginApplication.Styles.TextFontSize14,
+                           VerticalOptions = LayoutOptions.Center,
+                           HorizontalOptions = LayoutOptions.Center
                        };
 
             _tabActivities.GestureRecognizers.Add(tapGestureRecognizerTabOne);
@@ -313,9 +319,9 @@ namespace BeginMobile.Pages.Profile
                                          VerticalOptions = LayoutOptions.Start,
                                          RowDefinitions =
                                          {
-                                             new RowDefinition {Height = new GridLength(10, GridUnitType.Auto)},
-                                             new RowDefinition {Height = GridLength.Auto},
-                                             new RowDefinition {Height = new GridLength(0.3, GridUnitType.Star)}
+                                             new RowDefinition {Height = 35},
+                                             new RowDefinition {Height = 5},
+                                             new RowDefinition {Height = 5}
                                          },
                                          //ColumnDefinitions =
                                          //{

@@ -37,13 +37,17 @@ namespace BeginMobile.Pages.Profile
                           Text = string.Empty,
                           XAlign = TextAlignment.Center,
                           FontSize = BeginApplication.Styles.TextFontSizeMedium,
+                          VerticalOptions = LayoutOptions.Center,
+                          HorizontalOptions = LayoutOptions.Center
                       };
 
             _tabTwo = new Label
                       {
                           Text = string.Empty,
                           XAlign = TextAlignment.Center,
-                          FontSize = BeginApplication.Styles.TextFontSizeMedium
+                          FontSize = BeginApplication.Styles.TextFontSizeMedium,
+                          VerticalOptions = LayoutOptions.Center,
+                          HorizontalOptions = LayoutOptions.Center
                       };
 
             _tabOne.GestureRecognizers.Add(tapGestureRecognizerTabOne);
@@ -95,8 +99,9 @@ namespace BeginMobile.Pages.Profile
                                    ColumnSpacing = 0,
                                    RowDefinitions = new RowDefinitionCollection
                                                     {
-                                                        new RowDefinition {Height = GridLength.Auto},
-                                                        new RowDefinition {Height = GridLength.Auto}
+                                                        new RowDefinition {Height = 35},
+                                                        new RowDefinition {Height = 5},
+                                                        new RowDefinition {Height = 5}
                                                     }
                                };
             gridControls.Children.Add(_tabOne, 0, 0);
