@@ -11,7 +11,7 @@ namespace BeginMobile.Pages
             BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
             Title = title;
             Icon = icon;
-            Padding = new Thickness(0, 0, 0, 0);
+            Padding =0;
 
 			if (Device.OS == TargetPlatform.iOS)
 				BackgroundColor = Color.White;

@@ -11,13 +11,14 @@ namespace BeginMobile.Pages.Wall
         {
             //var userImage = BeginApplication.Styles.DefaultWallIcon;
             var starImage = BeginApplication.Styles.RatinGoffIcon;
+            
 
             var labelUserName = new Label
             {
-                YAlign = TextAlignment.Start,
-                //FontAttributes = FontAttributes.Bold,
+                YAlign = TextAlignment.Center,
                 Style = BeginApplication.Styles.ListTitleWallStyle,
                 LineBreakMode = LineBreakMode.WordWrap,
+                //HorizontalOptions = LayoutOptions.StartAndExpand
             };
             labelUserName.SetBinding(Label.TextProperty, "DisplayName", stringFormat: "@{0}");
 
@@ -26,7 +27,7 @@ namespace BeginMobile.Pages.Wall
                 Style = BeginApplication.Styles.ListDescriptionWallStyle,
                 XAlign = TextAlignment.End,
                 YAlign = TextAlignment.Start,
-                HorizontalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.EndAndExpand,
             };
             labelDatePublic.SetBinding(Label.TextProperty, "PublicDateShort");
 
@@ -35,45 +36,14 @@ namespace BeginMobile.Pages.Wall
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 RowDefinitions =
                 {
-                    new RowDefinition(){ Height = GridLength.Auto}
+                    new RowDefinition(){Height = new GridLength(1, GridUnitType.Auto) }
                 },
                 ColumnDefinitions =
                 {
-                    new ColumnDefinition(){ Width = GridLength.Auto},
-                    new ColumnDefinition(){ Width = new GridLength (50, GridUnitType.Absolute)},
+                    new ColumnDefinition(){ Width = new GridLength(1, GridUnitType.Star) },
+                    new ColumnDefinition(){ Width = new GridLength(60)},
                 }
             };
-
-            /*var stackLayoutTime = new StackLayout()
-            {
-                //
-                WidthRequest = 100,
-                HorizontalOptions = LayoutOptions.EndAndExpand,
-                Children =
-                {
-                    labelDatePublic
-                }
-            };
-
-            var relativeLayoutTitle = new RelativeLayout();
-
-            var label = new Label() {
-                Text = "I want to be right-aligned.",
-                WidthRequest = 100,
-            };
-            Func<RelativeLayout, double> getLabelWidth = (parent) => labelDatePublic.GetSizeRequest(relativeLayoutTitle.Width, relativeLayoutTitle.Height).Request.Width;
-            relativeLayoutTitle.Children.Add(labelDatePublic,
-                Constraint.RelativeToParent((rl) => rl.Width - getLabelWidth(rl)),
-                Constraint.Constant(10));
-
-            var button = new Button() {
-                Text = "Invalidate"
-            };
-            button.Clicked += (object sender, EventArgs e) => relativeLayoutTitle.ForceLayout();
-            relativeLayoutTitle.Children.Add(labelUserName,
-                Constraint.Constant(10),
-                Constraint.Constant(10));*/
-
 
             gridUserAndTime.Children.Add(labelUserName, 0, 0);
             gridUserAndTime.Children.Add(labelDatePublic, 1, 0);
@@ -81,7 +51,6 @@ namespace BeginMobile.Pages.Wall
             var labelTitle = new Label
                              {
                                  YAlign = TextAlignment.Start,
-                                 //FontAttributes = FontAttributes.Bold,
                                  Style = BeginApplication.Styles.ListDescriptionWallStyle,
                              };
             labelTitle.SetBinding(Label.TextProperty, "Title");
@@ -143,17 +112,14 @@ namespace BeginMobile.Pages.Wall
             var gridDetails = new Grid
                               {
                                   Padding = BeginApplication.Styles.WallPageGridRowListView,
-                                  //HorizontalOptions = LayoutOptions.FillAndExpand,
+                                  HorizontalOptions = LayoutOptions.FillAndExpand,
                                   RowDefinitions =
                                   {
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto},
+                                      new RowDefinition {Height = GridLength.Auto},
                                       new RowDefinition {Height = GridLength.Auto}
-                                  },
-                                  ColumnDefinitions =
-                                  {
-                                      //new ColumnDefinition {Width = GridLength.Auto}
                                   }
                               };
 

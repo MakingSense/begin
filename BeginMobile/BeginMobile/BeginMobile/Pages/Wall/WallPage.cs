@@ -44,18 +44,18 @@ namespace BeginMobile.Pages.Wall
             : base(title, iconImage)
         {
             _currentUser = (LoginUser)BeginApplication.Current.Properties["LoginUser"];
-            //MasterTitle = AppResources.AppHomeChildNewsFeed;
             Title = AppResources.AppHomeChildNewsFeed;
             BackgroundColor = BeginApplication.Styles.ColorWhiteBackground;
+            Padding = 0;
 
             this._imageSourceWallByDefault = BeginApplication.Styles.DefaultWallIcon;
-            //LoadDeafultImage();
 
             _areLastItems = false;
 
             _gridMain = new Grid()
             {
                 Padding = BeginApplication.Styles.ThicknessMainLayout,
+                RowSpacing = 0,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 RowDefinitions =
@@ -122,7 +122,8 @@ namespace BeginMobile.Pages.Wall
 
             _listViewWall = new ListView
             {
-                StyleId = "WallList"
+                StyleId = "WallList",
+                HorizontalOptions = LayoutOptions.FillAndExpand,
             };
 
             _listViewWall.HasUnevenRows = true;
