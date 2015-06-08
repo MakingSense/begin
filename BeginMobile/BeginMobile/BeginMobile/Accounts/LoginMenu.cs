@@ -36,14 +36,23 @@ namespace BeginMobile.Accounts
                            Style = BeginApplication.Styles.CircleImageLogo,
                            HorizontalOptions = LayoutOptions.CenterAndExpand
                        };
+            var tapGestureRecognizer = new TapGestureRecognizer
+            {
+                NumberOfTapsRequired = 1
+            };
 
-            var buttonForgotPassword = new Button
+            var buttonForgotPassword = new Label
                                        {
                                            Text = AppResources.ButtonForgotPassword,
-                                           Style = BeginApplication.Styles.LinkButton,
+                                           XAlign = TextAlignment.Center,
+                                           YAlign = TextAlignment.Start,
+                                           VerticalOptions = LayoutOptions.Start,
+                                           HorizontalOptions = LayoutOptions.Center,
+                                           FontFamily = BeginApplication.Styles.FontFamilyRobotoBlack,
                                            //FontSize = BeginApplication.Styles.TextFontSizeMedium
                                            FontSize = 16
                                        };
+            buttonForgotPassword.GestureRecognizers.Add(tapGestureRecognizer);
             var buttonLoginWithFacebook = new Button
                                           {
                                               Text = "Login with Facebook", //AppResources.ButtonLoginWithFacebook,
@@ -66,7 +75,7 @@ namespace BeginMobile.Accounts
                                      FontSize = 16
                                  };
 
-            buttonForgotPassword.Clicked += async (sender, eventArgs) =>
+            tapGestureRecognizer.Tapped += async (sender, eventArgs) =>
             {
                 await Navigation.PushAsync(_contentPageForgotPassword);
             };
@@ -92,16 +101,17 @@ namespace BeginMobile.Accounts
                 RowDefinitions = new RowDefinitionCollection
                                  {
                                      new RowDefinition{ Height = new GridLength(140,GridUnitType.Absolute)},
-                                     new RowDefinition{ Height = new GridLength(140,GridUnitType.Absolute)},
+                                     new RowDefinition{ Height = new GridLength(130,GridUnitType.Absolute)},
                                      new RowDefinition{ Height = GridLength.Auto},
-                                     new RowDefinition{ Height = GridLength.Auto},
+                                     new RowDefinition{ Height = new GridLength(1,GridUnitType.Absolute)},
+                                     new RowDefinition{ Height = 45},
                                      new RowDefinition{ Height = GridLength.Auto},
                                  }                                 
             };
             mainGrid.Children.Add(logo,0,0);
             mainGrid.Children.Add(buttonLogin,0,2);
-            mainGrid.Children.Add(buttonForgotPassword,0,3);
-            mainGrid.Children.Add(buttonRegister,0,4);
+            mainGrid.Children.Add(buttonForgotPassword,0,4);
+            mainGrid.Children.Add(buttonRegister,0,5);
                             
             _mainScrollView.Content = mainGrid;
             Content = _mainScrollView;

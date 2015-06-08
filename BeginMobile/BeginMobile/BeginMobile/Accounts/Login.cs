@@ -47,14 +47,27 @@ namespace BeginMobile.Accounts
                                  IsPassword = true,
                                  Style = BeginApplication.Styles.EntryStyle
                              };
-
-            var buttonForgotPassword = new Button
+            var tapGestureRecognizer = new TapGestureRecognizer
+            {
+                NumberOfTapsRequired = 1
+            };
+            tapGestureRecognizer.Tapped += async (sender, eventArgs) =>
+            {
+                await Navigation.PushAsync(_contentPageForgotPassword);
+            };
+            var buttonForgotPassword = new Label
                                        {
                                            Text = AppResources.ButtonForgotPassword,
-                                           Style = BeginApplication.Styles.LinkButton,
+                                           XAlign = TextAlignment.Center,
+                                           YAlign = TextAlignment.Start,
+                                           VerticalOptions = LayoutOptions.End,
+                                           HorizontalOptions = LayoutOptions.Center,
+                                           FontFamily = BeginApplication.Styles.FontFamilyRobotoBlack,
                                            //FontSize = BeginApplication.Styles.TextFontSizeLarge,
                                            FontSize = 16
                                        };
+            buttonForgotPassword.GestureRecognizers.Add(tapGestureRecognizer);
+
             var buttonLoginWithFacebook = new Button
                                           {
                                               Text = "Login with Facebook", //AppResources.ButtonLoginWithFacebook,
@@ -66,12 +79,6 @@ namespace BeginMobile.Accounts
                                   Style = BeginApplication.Styles.DefaultButton,
                                   FontSize = 16
                               };
-
-            buttonForgotPassword.Clicked += async (sender, eventArgs) =>
-            {
-                Navigation.PushAsync(_contentPageForgotPassword);
-            };
-
 
             buttonLogin.Clicked += async (sender, eventArgs) =>
                                          {
@@ -124,23 +131,26 @@ namespace BeginMobile.Accounts
 
             var stackLayoutLoading = CreateStackLayoutWithLoadingIndicator();
             _mainScrollView = new ScrollView();
-            var componentsLayout = new StackLayout
+            var componentsLayout = new Grid
                                    {
                                        VerticalOptions = LayoutOptions.FillAndExpand,
                                        Padding = BeginApplication.Styles.InitialPagesThickness,
-                                       Children =
-                                       {
-                                           stackLayoutLoading,
-                                           //mainTitle,
-                                          // logo,
-                                           _entryEmail,
-                                           _entryPassword,
-                                           //buttonLoginWithFacebook,
-                                           buttonLogin,
-                                           buttonForgotPassword,
-                                          // buttonRegister
-                                       }
+                                       RowDefinitions = new RowDefinitionCollection
+                                                        {
+                                                            new RowDefinition {Height = GridLength.Auto},
+                                                            new RowDefinition {Height = GridLength.Auto},
+                                                            new RowDefinition {Height = GridLength.Auto},
+                                                            new RowDefinition{ Height = new GridLength(15,GridUnitType.Absolute)}, 
+                                                            new RowDefinition {Height = GridLength.Auto},   
+                                                            new RowDefinition {Height = 30}
+                                                        }
                                    };
+            componentsLayout.Children.Add(stackLayoutLoading, 0, 0);
+            componentsLayout.Children.Add(_entryEmail, 0, 1);
+            componentsLayout.Children.Add(_entryPassword, 0, 2);
+            componentsLayout.Children.Add(buttonLogin, 0, 4);
+            componentsLayout.Children.Add(buttonForgotPassword, 0, 5);
+
             _mainScrollView.Content = componentsLayout;
             Content = _mainScrollView;
             SizeChanged += (sender, e) => SetOrientation(this);
