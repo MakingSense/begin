@@ -35,7 +35,10 @@ namespace BeginMobile.Accounts
             Title = "Create Account";
 
             _contentPageTermsAndConditions = new TermsAndConditions(true);
-
+            var tapGestureRecognizer = new TapGestureRecognizer
+            {
+                NumberOfTapsRequired = 1
+            };
             /*var mainTitle = new Label
             {
                 Text = "Create Account",//AppResources.LoginFormTitle,
@@ -66,13 +69,17 @@ namespace BeginMobile.Accounts
                 
             };
 
-            var buttonTermsAndConditions = new Button()
+            var buttonTermsAndConditions = new Label()
             {
                 Text = AppResources.RegisterButtonTermsAndConditions,
-                FontSize = 10,
-                Style = BeginApplication.Styles.LinkButton,
+                XAlign = TextAlignment.Start,
+                YAlign = TextAlignment.End,
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Start,
+                FontSize = 11,
                 TextColor = Color.FromHex("77D065")
             };
+            buttonTermsAndConditions.GestureRecognizers.Add(tapGestureRecognizer);
 
             var switchTermsAndConditions = new Switch();
             switchTermsAndConditions.Toggled += (sender, eventArgs) => { _switchStatus = eventArgs != null && eventArgs.Value; };
@@ -86,7 +93,7 @@ namespace BeginMobile.Accounts
             };
 
 
-            buttonTermsAndConditions.Clicked += async (sender, eventArgs) =>
+            tapGestureRecognizer.Tapped += async (sender, eventArgs) =>
             {
                 await Navigation.PushAsync(_contentPageTermsAndConditions); 
                 //MessagingCenter.Send<ContentPage>(this, "TermsAndConditions")
