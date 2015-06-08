@@ -78,17 +78,6 @@ namespace BeginMobile.Pages.Wall
                         .PushAsync
                         (new NewPublication(_currentUser));
             }, ToolbarItemOrder.Primary));
-            //var toolBarEditPublicWall = new ToolbarItem()
-            //{
-            //    Order = ToolbarItemOrder.Primary,
-            //    Name = "Public Wall",
-            //    Icon = BeginApplication.Styles.WriteIcon,
-            //    Command = new Command(async () => ExecuteEditPublicWallCommand())
-            //};
-
-            //ToolbarItems.Add(toolBarEditPublicWall);
-            
-            //End Toolbar items
 
             Content = _gridMain;
             Init();

@@ -622,11 +622,11 @@ namespace BeginMobile.Android
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f07000a
-			public const int ActionBarTab = 2131165194;
+			// aapt resource value: 0x7f07000b
+			public const int ActionBarTab = 2131165195;
 			
-			// aapt resource value: 0x7f070009
-			public const int ActionBarTabBar = 2131165193;
+			// aapt resource value: 0x7f07000a
+			public const int ActionBarTabBar = 2131165194;
 			
 			// aapt resource value: 0x7f070007
 			public const int BeginMobileActionBar = 2131165191;
@@ -634,8 +634,8 @@ namespace BeginMobile.Android
 			// aapt resource value: 0x7f070006
 			public const int BeginMobileTheme = 2131165190;
 			
-			// aapt resource value: 0x7f070008
-			public const int BeginMobileTitle = 2131165192;
+			// aapt resource value: 0x7f070009
+			public const int BeginMobileTitle = 2131165193;
 			
 			// aapt resource value: 0x7f070001
 			public const int CalendarCell = 2131165185;
@@ -648,6 +648,9 @@ namespace BeginMobile.Android
 			
 			// aapt resource value: 0x7f070000
 			public const int CalendarTitle = 2131165184;
+			
+			// aapt resource value: 0x7f070008
+			public const int MenuTextStyle = 2131165192;
 			
 			// aapt resource value: 0x7f070004
 			public const int Mono_Android_Theme_Splash = 2131165188;

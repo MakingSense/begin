@@ -609,11 +609,22 @@ namespace BeginMobile.Pages.Profile
                                  {
                                      Text = DefaultEditorText,
                                      BackgroundColor = BeginApplication.Styles.ColorWhiteBackground,
-                                     HorizontalOptions = LayoutOptions.FillAndExpand,
+                                     VerticalOptions = LayoutOptions.FillAndExpand,
                                  };
             _publicationEditor.Focused += FocusedEventHandler;
             _publicationEditor.Unfocused += UnfocusedEventHandler;
             _publicationEditor.TextChanged += TextChangedEventHandler;
+
+            var stackLayoutPaddingEditor = new StackLayout()
+            {
+                Padding = new Thickness(0, 15, 0, 0),
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Children =
+                {
+                    _publicationEditor
+                }
+            };
+
             var mainGrid = new Grid
                            {
                                HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -632,7 +643,7 @@ namespace BeginMobile.Pages.Profile
             ToolbarItems.Add(new ToolbarItem("Public", null,
                 async () => { SendPublication(); }, ToolbarItemOrder.Primary));
             mainGrid.Children.Add(image, 0, 0);
-            mainGrid.Children.Add(_publicationEditor, 1, 0);
+            mainGrid.Children.Add(stackLayoutPaddingEditor, 1, 0);
 
             Content = mainGrid;
         }
