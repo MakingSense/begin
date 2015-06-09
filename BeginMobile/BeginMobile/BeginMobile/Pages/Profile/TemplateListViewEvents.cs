@@ -53,7 +53,8 @@ namespace BeginMobile.Pages.Profile
             var labelEventIntervalDate = new Label
                                          {
                                              HorizontalOptions = LayoutOptions.FillAndExpand,
-                                             Style = BeginApplication.Styles.ListItemDetailTextStyle
+                                             FontFamily = BeginApplication.Styles.FontFamilyRobotoLight,
+                                             Style = BeginApplication.Styles.ListItemDetailTextStyleWithoutFontFamily,                                            
                                          };
             labelEventIntervalDate.SetBinding(Label.TextProperty, "EventIntervalDateAndTime");
 

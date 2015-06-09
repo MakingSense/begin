@@ -63,7 +63,7 @@ namespace BeginMobile.Accounts
                                            YAlign = TextAlignment.Start,
                                            VerticalOptions = LayoutOptions.End,
                                            HorizontalOptions = LayoutOptions.Center,
-                                           FontFamily = BeginApplication.Styles.FontFamilyRobotoBlack,
+                                           FontFamily = BeginApplication.Styles.FontFamilyRobotoRegular,
                                            FontSize = 16
                                        };
             buttonForgotPassword.GestureRecognizers.Add(tapGestureRecognizer);

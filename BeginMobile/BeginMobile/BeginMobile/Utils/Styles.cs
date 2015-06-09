@@ -18,7 +18,9 @@ namespace BeginMobile.Utils
         public Styles()
         {
             FontFamilyRobotoLight = Device.OnPlatform("RobotoBold", "sans-serif-light", "Helvetica");
-            FontFamilyRobotoBold = Device.OnPlatform("RobotoBold", "sans-serif-light", "Helvetica");
+            FontFamilyRobotoThin = Device.OnPlatform("RobotoBold", "sans-serif-thin", "Helvetica");
+            FontFamilyRobotoRegular = Device.OnPlatform("RobotoBold", "sans-serif", "Helvetica");
+            FontFamilyRobotoCondensed = Device.OnPlatform("RobotoBold", "sans-serif-condensed", "Helvetica");
 
             var fontSizeForButtonMedium = Device.OnPlatform(
                 Device.GetNamedSize(NamedSize.Medium, typeof (Button)),
@@ -98,9 +100,10 @@ namespace BeginMobile.Utils
         }
 
         public Page CurrentPage { get; set; }
+        public string FontFamilyRobotoRegular { get; set; }
+        public string FontFamilyRobotoThin { get; set; }
         public string FontFamilyRobotoLight { get; set; }
-        public string FontFamilyRobotoBold { get; set; }
-        public string FontFamilyRobotoBlack { get; set; }
+        public string FontFamilyRobotoCondensed { get; set; }
         public double SubtitleFontSize { get { return _textfontSizeMedium; } }
 
         public Style LinkButton
@@ -117,13 +120,14 @@ namespace BeginMobile.Utils
                                         Value = Color.Transparent
                                     },
                                     new Setter {Property = Button.BorderRadiusProperty, Value = 0},
-                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamilyRobotoBold},
+                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamilyRobotoThin},
                                     new Setter {Property = Button.FontSizeProperty, Value = Device.OnPlatform(16,16,16)},
                                     new Setter
                                     {
-                                        Property = Button.TextColorProperty,
-                                        Value = Device.OnPlatform
-                                            (Color.FromHex("646567"), Color.FromHex("646567"), Color.FromHex("646567"))
+                                        Property = Label.TextColorProperty,
+                                                         Value = Device.OnPlatform(Color.FromRgba(60, 186, 133, 255),
+                                                             Color.FromRgba(60, 186, 133, 255),
+                                                             Color.FromRgba(60, 186, 133, 255))
                                     },
                                     // new Setter
                                     //{
@@ -151,13 +155,14 @@ namespace BeginMobile.Utils
                                         Value = Color.Transparent
                                     },
                                     new Setter {Property = Button.BorderRadiusProperty, Value = 0},
-                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamilyRobotoLight},
+                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamilyRobotoRegular},
                                     new Setter {Property = Button.FontSizeProperty, Value = _textFontSizeSmall},
                                     new Setter
                                     {
-                                        Property = Button.TextColorProperty,
-                                        Value = Device.OnPlatform
-                                            (Color.FromHex("646567"), Color.FromHex("646567"), Color.FromHex("646567"))
+                                       Property = Label.TextColorProperty,
+                                                         Value = Device.OnPlatform(Color.FromRgba(60, 186, 133, 255),
+                                                             Color.FromRgba(60, 186, 133, 255),
+                                                             Color.FromRgba(60, 186, 133, 255))
                                     },
                                 }
                             };
@@ -173,7 +178,7 @@ namespace BeginMobile.Utils
                 Device.Styles.TitleStyle.Setters.Add(new Setter
                 {
                     Property = Label.FontFamilyProperty,
-                    Value = FontFamilyRobotoLight
+                    Value = FontFamilyRobotoRegular
                 });
                 Device.Styles.TitleStyle.Setters.Add(new Setter
                 {
@@ -208,9 +213,13 @@ namespace BeginMobile.Utils
                                     //new Setter {Property = Button.FontAttributesProperty = FontAttributes.Bold},
                                     new Setter
                                     {
-                                        Property = Button.TextColorProperty,
-                                        Value = Device.OnPlatform
-                                            (Color.FromHex("43BB88"), Color.FromHex("43BB88"), Color.FromHex("646567"))
+                                        Property = Label.TextColorProperty,
+                                                         Value = Device.OnPlatform(Color.FromRgba(60, 186, 133, 255),
+                                                             Color.FromRgba(60, 186, 133, 255),
+                                                             Color.FromRgba(60, 186, 133, 255))
+                                        //Property = Button.TextColorProperty,
+                                        //Value = Device.OnPlatform
+                                        //    (Color.FromHex("43BB88"), Color.FromHex("43BB88"), Color.FromHex("646567"))
                                     },
                                 }
                             };
@@ -241,7 +250,7 @@ namespace BeginMobile.Utils
                                         Value = Device.OnPlatform(Color.FromHex("444444"),
                                             Color.FromHex("444444"), Color.FromHex("444444"))
                                     },
-                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamilyRobotoBold},
+                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamilyRobotoThin},
                                     new Setter {Property = Button.FontSizeProperty, Value = Device.OnPlatform(16,16,16)},
                                     new Setter {Property = Button.FontAttributesProperty, Value = FontAttributes.Bold},
                                 }
@@ -252,6 +261,37 @@ namespace BeginMobile.Utils
             }
         }
 
+        public Style LogTitleStyle
+        {
+            get
+            {
+                Device.Styles.TitleStyle.Setters.Add(new Setter
+                                                     {
+                                                         Property = Label.FontFamilyProperty,
+                                                         Value = FontFamilyRobotoRegular
+                                                     });
+                Device.Styles.TitleStyle.Setters.Add(new Setter
+                                                     {
+                                                         Property = Label.TextColorProperty,
+                                                         Value = Device.OnPlatform(Color.FromRgba(64, 64, 64, 255),
+                                                             Color.FromRgba(64, 64, 64, 255),
+                                                             Color.FromRgba(64, 64, 64, 255))
+                                                     });
+                Device.Styles.TitleStyle.Setters.Add(new Setter
+                                                     {
+                                                         Property = Label.FontAttributesProperty,
+                                                         Value = FontAttributes.Bold
+                                                     });
+                Device.Styles.TitleStyle.Setters.Add(new Setter
+                                                     {
+                                                         Property = Label.FontSizeProperty,
+                                                         Value =
+                                                             Device.OnPlatform<double>(24, 24, 24)
+                                                     });
+                return Device.Styles.TitleStyle;
+            }
+        }
+
         public Style TitleStyle
         {
             get
@@ -259,20 +299,25 @@ namespace BeginMobile.Utils
                 Device.Styles.TitleStyle.Setters.Add(new Setter
                                                      {
                                                          Property = Label.FontFamilyProperty,
-                                                         Value = FontFamilyRobotoLight
+                                                         Value = FontFamilyRobotoRegular
                                                      });
                 Device.Styles.TitleStyle.Setters.Add(new Setter
                                                      {
                                                          Property = Label.TextColorProperty,
-						Value = Device.OnPlatform(Color.FromHex("444444"),
-							Color.FromHex("444444"), Color.FromHex("444444"))
+                                                         Value = Device.OnPlatform(Color.FromRgba(64, 64, 64, 255),
+                            Color.FromRgba(64, 64, 64, 255), Color.FromRgba(64, 64, 64, 255))
                                                      });
                 Device.Styles.TitleStyle.Setters.Add(new Setter
                                                      {
                                                          Property = Label.FontAttributesProperty,
                                                          Value = FontAttributes.Bold
                                                      });
-                Device.Styles.TitleStyle.Setters.Add(titleFontSize);
+                Device.Styles.TitleStyle.Setters.Add(new Setter
+                {
+                    Property = Label.FontSizeProperty,
+                    Value =
+                        Device.OnPlatform<double>(24, 24, 24)
+                });
                 return Device.Styles.TitleStyle;
             }
         }
@@ -286,14 +331,14 @@ namespace BeginMobile.Utils
                                                         {
                                                             Property = Label.TextColorProperty,
                                                             Value =
-                                                                Device.OnPlatform(Color.FromHex("444444"),
-                                                                    Color.FromHex("444444"), Color.FromHex("444444"))
+                                                                Device.OnPlatform(Color.FromRgba(64, 64, 64, 255),
+                                                                    Color.FromRgba(64, 64, 64, 255), Color.FromRgba(64, 64, 64, 255))
                                                         });
 
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter
                                                         {
                                                             Property = Label.FontFamilyProperty,
-                                                            Value = FontFamilyRobotoLight
+                                                            Value = FontFamilyRobotoRegular
                                                         });
                 Device.Styles.SubtitleStyle.Setters.Add(new Setter
                                                         {
@@ -305,7 +350,12 @@ namespace BeginMobile.Utils
                                                             Property = Label.FontAttributesProperty,
                                                             Value = FontAttributes.None
                                                         });
-                Device.Styles.SubtitleStyle.Setters.Add(subTitleFontSize);
+                Device.Styles.SubtitleStyle.Setters.Add(new Setter
+                {
+                    Property = Label.FontSizeProperty,
+                    Value =
+                        Device.OnPlatform<double>(16, 16, 16)
+                });
                 return Device.Styles.SubtitleStyle;
             }
         }
@@ -314,19 +364,18 @@ namespace BeginMobile.Utils
         {
             get
             {
-                Device.Styles.BodyStyle.Setters.Add(new Setter {Property = Label.FontFamilyProperty, Value = FontFamilyRobotoLight});
+                Device.Styles.BodyStyle.Setters.Add(new Setter {Property = Label.FontFamilyProperty, Value = FontFamilyRobotoRegular});
                 Device.Styles.BodyStyle.Setters.Add(new Setter
                                                     {
                                                         Property = Label.TextColorProperty,
-                                                        Value =
-							Device.OnPlatform(Color.FromHex("999999"),
-								Color.FromHex("999999"), Color.FromHex("999999"))
+                                                        Value = Device.OnPlatform(Color.FromRgba(152, 152, 152, 255),
+                                                            Color.FromRgba(152, 152, 152, 255), Color.FromRgba(152, 152, 152, 255))
                                                     });
                 Device.Styles.BodyStyle.Setters.Add(new Setter
                                                     {
                                                         Property = Label.FontSizeProperty,
                                                         Value =
-                                                            Device.OnPlatform<double>(17, 17, 17)
+                                                            Device.OnPlatform<double>(16, 16, 16)
                                                     });                
                 return Device.Styles.BodyStyle;
             }
@@ -339,15 +388,21 @@ namespace BeginMobile.Utils
                 Device.Styles.CaptionStyle.Setters.Add(new Setter
                                                        {
                                                            Property = Label.FontFamilyProperty,
-                                                           Value = FontFamilyRobotoLight
+                                                           Value = FontFamilyRobotoRegular
                                                        });
                 Device.Styles.CaptionStyle.Setters.Add(new Setter
                                                        {
                                                            Property = Label.TextColorProperty,
-                                                           Value =
-                                                               Device.OnPlatform(Color.FromHex("444444"),
-                                                                   Color.FromHex("444444"), Color.FromHex("444444"))
+                                                           Value = Device.OnPlatform(Color.FromRgba(64, 64, 64, 255),
+                                                               Color.FromRgba(64, 64, 64, 255), Color.FromRgba(64, 64, 64, 255))
                                                        });
+
+                Device.Styles.CaptionStyle.Setters.Add(new Setter
+                {
+                    Property = Label.FontSizeProperty,
+                    Value =
+                        Device.OnPlatform<double>(24, 24, 24)
+                });     
                 return Device.Styles.CaptionStyle;
             }
         }
@@ -356,26 +411,45 @@ namespace BeginMobile.Utils
         public Style ListItemDetailTextStyle
         {
             get
-            {
+            {                
                 Device.Styles.ListItemDetailTextStyle.Setters.Add(new Setter
                                                                   {
                                                                       Property = Label.FontFamilyProperty,
-                                                                      Value = FontFamilyRobotoLight
+                                                                      Value = FontFamilyRobotoRegular
                                                                   });
                 Device.Styles.ListItemDetailTextStyle.Setters.Add(new Setter
                                                                   {
                                                                       Property = Label.FontSizeProperty,
                                                                       Value =
-                                                                          Device.OnPlatform<double>(17, 17, 17)
+                                                                          Device.OnPlatform<double>(16, 16, 16)
                                                                   });
                 Device.Styles.ListItemDetailTextStyle.Setters.Add(new Setter
                                                                   {
                                                                       Property = Label.TextColorProperty,
-                                                                      Value =
-							Device.OnPlatform(Color.FromHex("999999"),
-								Color.FromHex("999999"),
-								Color.FromHex("999999"))
+                                                                      Value = Device.OnPlatform(Color.FromRgba(152, 152, 152, 255),
+                                                                          Color.FromRgba(152, 152, 152, 255), Color.FromRgba(152, 152, 152, 255))
                                                                   });
+
+                return Device.Styles.ListItemDetailTextStyle;
+            }
+        }
+        public Style ListItemDetailTextStyleWithoutFontFamily
+        {
+            get
+            {               
+                Device.Styles.ListItemDetailTextStyle.Setters.Add(new Setter
+                {
+                    Property = Label.FontSizeProperty,
+                    Value =
+                        Device.OnPlatform<double>(16, 16, 16)
+                });
+                Device.Styles.ListItemDetailTextStyle.Setters.Add(new Setter
+                {
+                    Property = Label.TextColorProperty,
+                    Value = Device.OnPlatform(Color.FromRgba(152, 152, 152, 255),
+                        Color.FromRgba(152, 152, 152, 255), Color.FromRgba(152, 152, 152, 255))
+                });
+
                 return Device.Styles.ListItemDetailTextStyle;
             }
         }
@@ -387,20 +461,19 @@ namespace BeginMobile.Utils
                 Device.Styles.ListItemTextStyle.Setters.Add(new Setter
                                                             {
                                                                 Property = Label.FontFamilyProperty,
-                                                                Value = FontFamilyRobotoLight
+                                                                Value = FontFamilyRobotoRegular
                                                             });
                 Device.Styles.ListItemTextStyle.Setters.Add(new Setter
                                                             {
                                                                 Property = Label.FontSizeProperty,
                                                                 Value =
-                                                                    Device.OnPlatform<double>(17, 17, 17)
+                                                                    Device.OnPlatform<double>(16, 16, 16)
                                                             });
                 Device.Styles.ListItemTextStyle.Setters.Add(new Setter
                                                             {
                                                                 Property = Label.TextColorProperty,
-                                                                Value =
-                                                                    Device.OnPlatform(Color.FromHex("444444"),
-                                                                        Color.FromHex("444444"), Color.FromHex("444444"))
+                                                                Value = Device.OnPlatform(Color.FromRgba(64, 64, 64, 255),
+                                                                    Color.FromRgba(64, 64, 64, 255), Color.FromRgba(64, 64, 64, 255))
                                                             });
                 return Device.Styles.ListItemTextStyle;
             }
@@ -549,8 +622,8 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return Device.OnPlatform(new Thickness(15, 7, 0, 10), new Thickness(15, 7, 0, 10),
-                    new Thickness(15, 7, 0, 10));
+                return Device.OnPlatform(new Thickness(15, 4, 0, 5), new Thickness(15, 4, 0, 5),
+                    new Thickness(15, 4, 0, 5));
             }
         }
         public Thickness ThicknessInternalLayout
@@ -600,7 +673,7 @@ namespace BeginMobile.Utils
                        {
                            Setters =
                            {
-                               new Setter {Property = Label.FontFamilyProperty, Value = FontFamilyRobotoLight},
+                               new Setter {Property = Label.FontFamilyProperty, Value = FontFamilyRobotoRegular},
                                new Setter
                                {
                                    Property = Label.FontSizeProperty,
@@ -619,7 +692,7 @@ namespace BeginMobile.Utils
                        {
                            Setters =
                            {
-                               new Setter {Property = Label.FontFamilyProperty, Value = FontFamilyRobotoLight},
+                               new Setter {Property = Label.FontFamilyProperty, Value = FontFamilyRobotoRegular},
                                new Setter
                                {
                                    Property = Label.FontSizeProperty,
@@ -859,7 +932,7 @@ namespace BeginMobile.Utils
                                     new Setter {Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Start},
                                     new Setter {Property = Button.TextColorProperty, Value = Color.FromHex("EFEFF0")},
                                     new Setter {Property = Button.BorderRadiusProperty, Value = 2},
-                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamilyRobotoLight}
+                                    new Setter {Property = Button.FontFamilyProperty, Value = FontFamilyRobotoRegular}
                                 }
                             };
                 style.Setters.Add(new Setter
@@ -1128,18 +1201,17 @@ namespace BeginMobile.Utils
                 {
                     Setters =
                            {
-                               new Setter {Property = Label.FontFamilyProperty, Value = FontFamilyRobotoLight},
+                               new Setter {Property = Label.FontFamilyProperty, Value = FontFamilyRobotoRegular},
                                new Setter
                                {
                                    Property = Label.FontSizeProperty,
-                                   Value = Device.OnPlatform<double>(17, 17, 17)
+                                   Value = Device.OnPlatform<double>(16, 16, 16)
                                },
                                new Setter
                                 {
                                     Property = Label.TextColorProperty,
-                                    Value =
-                                        Device.OnPlatform(Color.FromHex("444444"),
-                                            Color.FromHex("444444"), Color.FromHex("444444"))
+                                                           Value = Device.OnPlatform(Color.FromRgba(64, 64, 64, 255),
+                                                               Color.FromRgba(64, 64, 64, 255), Color.FromRgba(64, 64, 64, 255))
                                 }
                            }
                 };
@@ -1154,18 +1226,17 @@ namespace BeginMobile.Utils
                 {
                     Setters =
                            {
-                               new Setter {Property = Label.FontFamilyProperty, Value = FontFamilyRobotoLight},
+                               new Setter {Property = Label.FontFamilyProperty, Value = FontFamilyRobotoRegular},
                                new Setter
                                {
                                    Property = Label.FontSizeProperty,
-                                   Value = Device.OnPlatform<double>(17, 17, 17)
+                                   Value = Device.OnPlatform<double>(16, 16, 16)
                                },
                                new Setter
                                 {
-                                    Property = Label.TextColorProperty,
-                                    Value =
-                                        Device.OnPlatform(Color.FromHex("999999"),
-                                            Color.FromHex("999999"), Color.FromHex("999999"))
+                                   Property = Label.TextColorProperty,
+                                                        Value = Device.OnPlatform(Color.FromRgba(152, 152, 152, 255),
+                                                            Color.FromRgba(152, 152, 152, 255), Color.FromRgba(152, 152, 152, 255))
                                 }
                            }
                 };

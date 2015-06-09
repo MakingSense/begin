@@ -56,7 +56,7 @@ namespace BeginMobile.Accounts
                                            YAlign = TextAlignment.Start,
                                            VerticalOptions = LayoutOptions.Start,
                                            HorizontalOptions = LayoutOptions.Center,
-                                           FontFamily = BeginApplication.Styles.FontFamilyRobotoBlack,
+                                           FontFamily = BeginApplication.Styles.FontFamilyRobotoRegular,
                                            //FontSize = BeginApplication.Styles.TextFontSizeMedium
                                            FontSize = 16
                                        };
