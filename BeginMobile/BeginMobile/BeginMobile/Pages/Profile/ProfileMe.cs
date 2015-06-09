@@ -616,6 +616,7 @@ namespace BeginMobile.Pages.Profile
                                      Text = DefaultEditorText,
                                      BackgroundColor = BeginApplication.Styles.ColorWhiteBackground,
                                      VerticalOptions = LayoutOptions.FillAndExpand,
+                                     HorizontalOptions = LayoutOptions.FillAndExpand
                                  };
             _publicationEditor.Focused += FocusedEventHandler;
             _publicationEditor.Unfocused += UnfocusedEventHandler;

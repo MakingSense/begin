@@ -175,6 +175,7 @@
     </AndroidResource>
     <AndroidResource Include="Resources\Drawable\login_background.png" />
     <AndroidResource Include="Resources\Drawable\profile_background.png" />
+    <AndroidResource Include="Resources\Drawable\logoSplash.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
