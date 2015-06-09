@@ -87,7 +87,7 @@ namespace BeginMobile.UploadPages
 
             var stackLayoutPicture = new StackLayout()
             {
-                BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
+                //BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                 Spacing = 5,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
@@ -138,7 +138,7 @@ namespace BeginMobile.UploadPages
             var gridMain = new Grid()
             {
                 Padding = new Thickness(0, 0, 0, 20),
-                BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
+                //BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 RowSpacing = 6,
