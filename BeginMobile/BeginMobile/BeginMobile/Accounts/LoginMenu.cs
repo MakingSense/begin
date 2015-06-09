@@ -22,6 +22,14 @@ namespace BeginMobile.Accounts
 
         public LoginMenu(ILoginManager iloginManager)
         {
+            //BackgroundImage = "login_background.png";
+            var backgroundImage = new Image
+            {
+                Source = ImageSource.FromFile(BeginApplication.Styles.DefaultLoginBackgroundImage),
+                Aspect = Aspect.Fill,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+            };
             _contentPageLogin = new Login(iloginManager);
             _contentPageRegister = new Register(iloginManager);
             _contentPageForgotPassword = new ForgotPassword();
@@ -95,9 +103,9 @@ namespace BeginMobile.Accounts
 
         var mainGrid = new Grid
             {
+                Padding = BeginApplication.Styles.InitialPagesThickness,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.Start,
-                Padding = BeginApplication.Styles.InitialPagesThickness,
                 RowDefinitions = new RowDefinitionCollection
                                  {
                                      new RowDefinition{ Height = new GridLength(140,GridUnitType.Absolute)},
@@ -108,14 +116,28 @@ namespace BeginMobile.Accounts
                                      new RowDefinition{ Height = GridLength.Auto},
                                  }                                 
             };
+
             mainGrid.Children.Add(logo,0,0);
             mainGrid.Children.Add(buttonLogin,0,2);
             mainGrid.Children.Add(buttonForgotPassword,0,4);
             mainGrid.Children.Add(buttonRegister,0,5);
-                            
-            _mainScrollView.Content = mainGrid;
+
+            var relativeLayout = new RelativeLayout ();            
+            relativeLayout.Children.Add(backgroundImage,
+               xConstraint: Constraint.Constant(0),
+               yConstraint: Constraint.Constant(0),
+               widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+               heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
+            relativeLayout.Children.Add(mainGrid,
+              xConstraint: Constraint.Constant(0),
+              yConstraint: Constraint.Constant(0),
+              widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+              heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+  
+            _mainScrollView.Content = relativeLayout;
             Content = _mainScrollView;
-            SizeChanged += (sender, e) => SetOrientation(this);
+            //SizeChanged += (sender, e) => SetOrientation(this);
 		}
         public void SetOrientation(Page page)
         {

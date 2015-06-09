@@ -22,6 +22,7 @@ namespace BeginMobile.Accounts
 
         public Login(ILoginManager iLoginManager)
         {
+            //BackgroundImage = "login_background.png";
             _contentPageForgotPassword = new ForgotPassword();
 
             Style = BeginApplication.Styles.InitialPageStyle;          
@@ -148,9 +149,28 @@ namespace BeginMobile.Accounts
             componentsLayout.Children.Add(buttonLogin, 0, 4);
             componentsLayout.Children.Add(buttonForgotPassword, 0, 5);
 
-            _mainScrollView.Content = componentsLayout;
+            var backgroundImage = new Image
+            {
+                Source = ImageSource.FromFile(BeginApplication.Styles.DefaultLoginBackgroundImage),
+                Aspect = Aspect.Fill,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+            };
+            var relativeLayout = new RelativeLayout();
+            relativeLayout.Children.Add(backgroundImage,
+               xConstraint: Constraint.Constant(0),
+               yConstraint: Constraint.Constant(0),
+               widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+               heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
+            relativeLayout.Children.Add(componentsLayout,
+              xConstraint: Constraint.Constant(0),
+              yConstraint: Constraint.Constant(0),
+              widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+              heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+            _mainScrollView.Content = relativeLayout;
             Content = _mainScrollView;
-            SizeChanged += (sender, e) => SetOrientation(this);
+           // SizeChanged += (sender, e) => SetOrientation(this);
         }
 
         private void LoginUserMock(ILoginManager iLoginManagerMock)

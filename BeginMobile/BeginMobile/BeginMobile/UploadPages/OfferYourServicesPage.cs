@@ -190,7 +190,7 @@ namespace BeginMobile.UploadPages
             _mainStackLayout = new StackLayout
                                {
                                    HorizontalOptions = LayoutOptions.Center,
-                                   BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
+                                   //BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                                    Children =
                                    {
                                        gridMain,stackCircleButtons
@@ -205,8 +205,26 @@ namespace BeginMobile.UploadPages
             //save the harcode profession for recovery in the Profile ME this is temporaly
             BeginApplication.SelectedUserProfession = _labelServicesSubTitle.Text;
 
+            var backgroundImage = new Image
+            {
+                Source = ImageSource.FromFile(BeginApplication.Styles.DefaultLoginBackgroundImage),
+                Aspect = Aspect.Fill,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+            };
+            var relativeLayout = new RelativeLayout();
+            relativeLayout.Children.Add(backgroundImage,
+               xConstraint: Constraint.Constant(0),
+               yConstraint: Constraint.Constant(0),
+               widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+               heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
 
-            Content = _mainStackLayout;
+            relativeLayout.Children.Add(_mainStackLayout,
+              xConstraint: Constraint.Constant(0),
+              yConstraint: Constraint.Constant(0),
+              widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+              heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+            Content = relativeLayout;
 
             //SizeChanged +=(sender,e)=> ChangePadding(this);
 

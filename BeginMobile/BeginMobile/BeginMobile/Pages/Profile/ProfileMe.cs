@@ -81,7 +81,7 @@ namespace BeginMobile.Pages.Profile
                             {
                                 XAlign = TextAlignment.Center,
                                 TextColor = Color.White,
-                                Text = user.NameSurname,
+                                Text = user.DisplayName,
                                 FontAttributes = FontAttributes.Bold,
                                 HorizontalOptions = LayoutOptions.Center,
                                 //Style = BeginApplication.Styles.TitleStyle,
@@ -213,7 +213,7 @@ namespace BeginMobile.Pages.Profile
 
             var stackLayoutDetails = new StackLayout
                                      {
-                                         BackgroundColor = BeginApplication.Styles.DefaultProfileMeBannerColor,
+                                         BackgroundColor = Color.Transparent,//BeginApplication.Styles.DefaultProfileMeBannerColor,
                                          Padding = BeginApplication.Styles.ProfileDetailsPadding,
                                          HeightRequest = 250,
                                          VerticalOptions = LayoutOptions.FillAndExpand,
@@ -224,7 +224,7 @@ namespace BeginMobile.Pages.Profile
                                          }
                                      };
             // _commonMainGrid.Children.Add(_newPublication.Container, 0, 0);
-            //_commonMainGrid.Children.Add(imageBanner, 0, 1);
+            _commonMainGrid.Children.Add(imageBanner, 0, 0);
             _commonMainGrid.Children.Add(stackLayoutDetails, 0, 0);
             //_commonMainGrid.Children.Add(boxBlacknew, 0, 1);
             _commonMainGrid.Children.Add(_commonGridMenuButtons, 0, 1);

@@ -192,7 +192,7 @@ namespace BeginMobile.UploadPages
             var gridMain = new Grid()
             {
                 Padding = new Thickness(0 , 0, 0 , 20),
-                BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
+                //BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 RowSpacing = 6,
@@ -258,12 +258,33 @@ namespace BeginMobile.UploadPages
 
 
 
-            Content = new StackLayout()
+            var _main = new StackLayout()
             {
                 BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
                 Padding = new Thickness(32, Device.OnPlatform(20, 20, 20), 32, 10),
                 Children = {gridMain,stackCircleButtons}
             };
+
+            var backgroundImage = new Image
+            {
+                Source = ImageSource.FromFile(BeginApplication.Styles.DefaultLoginBackgroundImage),
+                Aspect = Aspect.Fill,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+            };
+            var relativeLayout = new RelativeLayout();
+            relativeLayout.Children.Add(backgroundImage,
+               xConstraint: Constraint.Constant(0),
+               yConstraint: Constraint.Constant(0),
+               widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+               heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
+            relativeLayout.Children.Add(_main,
+              xConstraint: Constraint.Constant(0),
+              yConstraint: Constraint.Constant(0),
+              widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+              heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+            Content = relativeLayout;
         }
 
         private async Task<MediaFile> TakePicture()

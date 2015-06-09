@@ -1475,10 +1475,13 @@ namespace BeginMobile.Utils
             }
         }
 
-
+        public string DefaultLoginBackgroundImage
+        {
+            get { return "login_background.png"; }
+        }
         public string DefaultProfileMeBannerImage
         {
-            get { return "Icon.png"; }
+            get { return "profile_background.png"; }
         }
 
         public string DefaultProfileUserIconName
@@ -1674,7 +1677,7 @@ namespace BeginMobile.Utils
 
         public string LogoIcon
         {
-            get { return "logo.png"; }
+            get { return "logoSplash.png"; }
         }
 
         public string PublicationsSendIcon

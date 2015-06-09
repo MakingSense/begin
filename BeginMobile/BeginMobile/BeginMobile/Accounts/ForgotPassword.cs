@@ -38,11 +38,18 @@ namespace BeginMobile.Accounts
                                                Style = BeginApplication.Styles.TextBodyStyle
                                            };
 
-            _entryEmail = new Entry { Placeholder = AppResources.ForgotPassPlaceHolderEmail };
+            _entryEmail = new Entry
+            {
+                Placeholder = AppResources.ForgotPassPlaceHolderEmail,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Center,
+            };
 
             var buttonReset = new Button {
                 Text = "Forgot Password",//AppResources.ButtonSend, 
                                                 Style = BeginApplication.Styles.DefaultButton,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Center,
                 FontSize = 16
                                             };
 
@@ -99,18 +106,44 @@ namespace BeginMobile.Accounts
 	                                     };
 
             var stackLayoutLoading = CreateStackLayoutWithLoadingIndicator();
-             
-			Content = new StackLayout {
-                Spacing = 10,
+
+            var componentsLayout = new Grid
+            {
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
                 Padding = BeginApplication.Styles.InitialPagesThickness,
-                VerticalOptions = LayoutOptions.Center,
-                Children = { 
-                    stackLayoutLoading,
-                    //mainTitle,
-                    _entryEmail,
-                    buttonReset
-                    }                   			
-			};
+                RowDefinitions = new RowDefinitionCollection
+                                                        {
+                                                            new RowDefinition {Height = GridLength.Auto},
+                                                            new RowDefinition {Height = GridLength.Auto},
+                                                            new RowDefinition {Height = GridLength.Auto},
+                                                            
+                                                        }
+            };
+            componentsLayout.Children.Add(stackLayoutLoading, 0, 0);
+            componentsLayout.Children.Add(_entryEmail, 0, 1);
+            componentsLayout.Children.Add(buttonReset, 0, 2);
+            var backgroundImage = new Image
+            {
+                Source = ImageSource.FromFile(BeginApplication.Styles.DefaultLoginBackgroundImage),
+                Aspect = Aspect.Fill,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+            };
+            var relativeLayout = new RelativeLayout();
+            relativeLayout.Children.Add(backgroundImage,
+               xConstraint: Constraint.Constant(0),
+               yConstraint: Constraint.Constant(0),
+               widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+               heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
+            relativeLayout.Children.Add(componentsLayout,
+              xConstraint: Constraint.Constant(0),
+              yConstraint: Constraint.Constant(0),
+              widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+              heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
+	        Content = relativeLayout;
 		}
 	}
 }

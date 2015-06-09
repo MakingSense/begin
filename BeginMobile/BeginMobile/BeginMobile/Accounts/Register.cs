@@ -111,7 +111,7 @@ namespace BeginMobile.Accounts
             var stackLayoutLoading = CreateStackLayoutWithLoadingIndicator();
 
 
-            Content = new ScrollView
+            var scroll = new ScrollView
                       {
                           Content = new StackLayout
                                     {
@@ -130,6 +130,30 @@ namespace BeginMobile.Accounts
                                         }
                                     }
                       };
+
+
+            var backgroundImage = new Image
+            {
+                Source = ImageSource.FromFile(BeginApplication.Styles.DefaultLoginBackgroundImage),
+                Aspect = Aspect.Fill,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+            };
+            var relativeLayout = new RelativeLayout();
+            relativeLayout.Children.Add(backgroundImage,
+               xConstraint: Constraint.Constant(0),
+               yConstraint: Constraint.Constant(0),
+               widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+               heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
+            relativeLayout.Children.Add(scroll,
+              xConstraint: Constraint.Constant(0),
+              yConstraint: Constraint.Constant(0),
+              widthConstraint: Constraint.RelativeToParent((parent) => { return parent.Width; }),
+              heightConstraint: Constraint.RelativeToParent((parent) => { return parent.Height; }));
+
+            Content = relativeLayout;
+
         }
 
         public async void RegisterClickEventHandler(object sender, EventArgs eventArgs)
