@@ -12,8 +12,8 @@ namespace BeginMobile.Services.ManagerServices
 
     public class GlobalManager
     {
-        private const string BaseAddress = "http://186.109.86.251:5432/";
-        private const string SubAddress = "begin/api/v1/";
+        private static readonly string BaseAddress = ConfigBaseAddress.BaseAddress;
+        private static readonly string SubAddress = ConfigBaseAddress.SubAddress;
 
         private readonly GenericBaseClient<GlobalOptions> _loginGlobalClient =
             new GenericBaseClient<GlobalOptions>(BaseAddress, SubAddress);

@@ -11,9 +11,9 @@ namespace BeginMobile.Services.ManagerServices
 {
     public class GroupManager
     {
-        private const string BaseAddress = "http://186.109.86.251:5432/";
-        private const string SubAddress = "begin/api/v1/";
-        private const string Identifier = "groups";
+        private static readonly string BaseAddress = ConfigBaseAddress.BaseAddress;
+        private static readonly string SubAddress = ConfigBaseAddress.SubAddress;
+        private static readonly string Identifier = ConfigBaseAddress.IdentifierGroups;
 
 
         private readonly GenericBaseClient<Group> _groupClient =

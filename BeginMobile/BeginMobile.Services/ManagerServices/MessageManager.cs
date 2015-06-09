@@ -12,9 +12,9 @@ namespace BeginMobile.Services.ManagerServices
 {
     public class MessageManager
     {
-        private const string BaseAddress = "http://186.109.86.251:5432/";
-        private const string SubAddress = "begin/api/v1/";
-        private const string Identifier = "messages";
+        private static readonly string BaseAddress = ConfigBaseAddress.BaseAddress;
+        private static readonly string SubAddress = ConfigBaseAddress.SubAddress;
+        private static readonly string Identifier = ConfigBaseAddress.IdentifierMessages;
 
         private static readonly string ThisClassName = typeof(MessageManager).Name;
 
@@ -32,7 +32,7 @@ namespace BeginMobile.Services.ManagerServices
         {
             try
             {
-                const string addressSuffix = Identifier + "/inbox";
+                var addressSuffix = Identifier + "/inbox";
                 var urlGetParams = "?q=" + q + "&limit=" + limit + "&offset=" + offset;
 
                 return await _profileThreadMessagesClient.GetAsync(authToken, addressSuffix, urlGetParams);
@@ -57,7 +57,7 @@ namespace BeginMobile.Services.ManagerServices
         {
             try
             {
-                const string addressSuffix = Identifier + "/sentbox";
+                var addressSuffix = Identifier + "/sentbox";
                 var urlGetParams = "?q=" + q + "&limit=" + limit + "&offset=" + offset;
 
                 return await _profileThreadMessagesClient.GetAsync(authToken, addressSuffix, urlGetParams);
@@ -92,7 +92,7 @@ namespace BeginMobile.Services.ManagerServices
 
                 var content = new FormUrlEncodedContent(contentValues.ToArray());
 
-                const string addressSuffix = Identifier + "/send";
+                var addressSuffix = Identifier + "/send";
                 return await _profileThreadMessagesClient.PostAsync(authToken, content, addressSuffix);
             }
             catch (Exception exception)
