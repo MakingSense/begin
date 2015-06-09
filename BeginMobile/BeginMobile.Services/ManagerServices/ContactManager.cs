@@ -11,10 +11,11 @@ namespace BeginMobile.Services.ManagerServices
 {
     public class ContactManager
     {
-        private const string BaseAddress = "http://186.109.86.251:5432/";
-        private const string SubAddress = "begin/api/v1/";
-        private const string Identifier = "contacts";
-        private const string IdentifierAux = "users";
+        private static readonly string BaseAddress = ConfigBaseAddress.BaseAddress;
+        private static readonly string SubAddress = ConfigBaseAddress.SubAddress;
+        private static readonly string Identifier = ConfigBaseAddress.IdentifierContancts;
+        private static readonly string IdentifierAux = ConfigBaseAddress.IdentifierAuxContacts;
+
         private static readonly string ThisClassName = typeof(ContactManager).Name;
 
         private readonly GenericBaseClient<User> _contactClient =

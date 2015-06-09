@@ -11,9 +11,9 @@ namespace BeginMobile.Services.ManagerServices
 {
     public class EventManager
     {
-        private const string BaseAddress = "http://186.109.86.251:5432/";
-        private const string SubAddress = "begin/api/v1/";
-        private const string Identifier = "events";
+        private static readonly string BaseAddress = ConfigBaseAddress.BaseAddress;
+        private static readonly string SubAddress = ConfigBaseAddress.SubAddress;
+        private static readonly string Identifier = ConfigBaseAddress.IdentifierEvents;
 
         private readonly GenericBaseClient<ProfileEvent> _eventClient =
             new GenericBaseClient<ProfileEvent>(BaseAddress, SubAddress);

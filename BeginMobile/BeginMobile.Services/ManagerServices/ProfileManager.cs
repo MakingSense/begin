@@ -12,10 +12,10 @@ namespace BeginMobile.Services.ManagerServices
 {
     public class ProfileManager
     {
-        private const string BaseAddress = "http://186.109.86.251:5432/";
-        private const string SubAddress = "begin/api/v1/";
-        private const string IdentifierProfile = "profile";
-        private const string IdentifierMe = "me";
+        private static readonly string BaseAddress = ConfigBaseAddress.BaseAddress;
+        private static readonly string SubAddress = ConfigBaseAddress.SubAddress;
+        private static readonly string IdentifierProfile = ConfigBaseAddress.IdentifierProfile;
+        private static readonly string IdentifierMe = ConfigBaseAddress.IdentifierMe;
 
         private readonly GenericBaseClient<WallActivityItem> _wallClient;
         private readonly GenericBaseClient<ProfileInfo> _profileInfoClient;
