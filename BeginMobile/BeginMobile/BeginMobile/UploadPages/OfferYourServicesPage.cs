@@ -126,6 +126,7 @@ namespace BeginMobile.UploadPages
                                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                                     FontSize = 16,
                                     IsVisible = false,
+                                    TextColor = Color.FromHex("43BB88")
                                 };
 
             
@@ -145,6 +146,8 @@ namespace BeginMobile.UploadPages
                 RowDefinitions =
                 {
                     new RowDefinition(){Height = GridLength.Auto},
+                    new RowDefinition(){Height = GridLength.Auto},
+                    new RowDefinition(){Height = GridLength.Auto},
                     new RowDefinition(){Height = GridLength.Auto}
                 }
             };
@@ -163,7 +166,7 @@ namespace BeginMobile.UploadPages
             {
                 Spacing = 10,
                 Padding = new Thickness(0, 20, 0, 0),
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.EndAndExpand,
                 Children =
                 {
                     _buttonSelectFromList
@@ -174,6 +177,7 @@ namespace BeginMobile.UploadPages
             {
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
+                Padding = new Thickness(0, 0, 0, Device.OnPlatform(10, 10, 10)),
                 Children =
                 {
                     BlackCircle(),
@@ -189,16 +193,17 @@ namespace BeginMobile.UploadPages
 
             _mainStackLayout = new StackLayout
                                {
-                                   HorizontalOptions = LayoutOptions.Center,
+                                   //HorizontalOptions = LayoutOptions.Center,
                                    //BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
+                                   Padding =
+                                       Device.Idiom == TargetIdiom.Phone
+                                           ? new Thickness(25, Device.OnPlatform(65, 50, 50), 25, Device.OnPlatform(40, 20, 20))
+                                           : new Thickness(25, Device.OnPlatform(65, 50, 50), 25, Device.OnPlatform(40, 20, 20)),
                                    Children =
                                    {
                                        gridMain,stackCircleButtons
-                                   },
-                                   Padding =
-                                       Device.Idiom == TargetIdiom.Phone
-                                           ? new Thickness(32, Device.OnPlatform(20, 20, 20), 32, 10)
-                                           : new Thickness(32, Device.OnPlatform(40, 40, 40), 32, 10)
+                                   }
+                                   
                                };
 
             //TODO:chage this code for services api to profession            
@@ -265,7 +270,7 @@ namespace BeginMobile.UploadPages
                     _labelServicesSubTitle.IsVisible = false;
                     _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
-                    _buttonSelectFromList.IsVisible = false;
+                    _stackLayoutButtons.IsVisible = false;
                     BeginApplication.SelectedUserProfession = _labelWhatDoYouDo.Text;
                     break;
                 case ImaTeacher:
@@ -273,7 +278,7 @@ namespace BeginMobile.UploadPages
                     _labelServicesSubTitle.IsVisible = false;
                     _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
-                    _buttonSelectFromList.IsVisible = false;
+                    _stackLayoutButtons.IsVisible = false;
                     BeginApplication.SelectedUserProfession = _labelWhatDoYouDo.Text;
                     break;
                 case ImaPainter:
@@ -281,7 +286,7 @@ namespace BeginMobile.UploadPages
                     _labelServicesSubTitle.IsVisible = false;
                     _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
-                    _buttonSelectFromList.IsVisible = false;
+                    _stackLayoutButtons.IsVisible = false;
                     BeginApplication.SelectedUserProfession = _labelWhatDoYouDo.Text;
                     break;
                 case ImaEngineer:
@@ -289,7 +294,7 @@ namespace BeginMobile.UploadPages
                     _labelServicesSubTitle.IsVisible = false;
                     _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
-                    _buttonSelectFromList.IsVisible = false;
+                    _stackLayoutButtons.IsVisible = false;
                     BeginApplication.SelectedUserProfession = _labelWhatDoYouDo.Text;
                     break;
                 case ImaStudent:
@@ -297,7 +302,7 @@ namespace BeginMobile.UploadPages
                     _labelServicesSubTitle.IsVisible = false;
                     _labelChangeSubTitle.IsVisible = true;
                     _buttonOkReady.IsVisible = true;
-                    _buttonSelectFromList.IsVisible = false;
+                    _stackLayoutButtons.IsVisible = false;
                     BeginApplication.SelectedUserProfession = _labelWhatDoYouDo.Text;
                     break;
                 case Cancel:

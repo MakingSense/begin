@@ -8,6 +8,7 @@ namespace BeginMobile.Interfaces
 {
     public abstract class BaseContentPage: ContentPage
     {
+
         public ActivityIndicator ActivityIndicatorLoading { private set; get; }
 
         protected ActivityIndicator CreateLoadingIndicator()
@@ -39,7 +40,8 @@ namespace BeginMobile.Interfaces
         {
             var stackLayoutMain = new StackLayout()
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                Padding = 0,
             };
             loading = CreateLoadingIndicator();
             stackLayoutMain.Children.Add(loading);

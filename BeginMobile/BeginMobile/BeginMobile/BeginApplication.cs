@@ -13,6 +13,8 @@ using BeginMobile.Utils;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XLabs.Ioc;
+using XLabs.Platform.Device;
 
 namespace BeginMobile
 {
@@ -22,9 +24,13 @@ namespace BeginMobile
         public static BeginApplication CurrentBeginApplication;
         private readonly ILoggingService _log;
         private NavigationPage nav;
+
+        private IDevice _device;
+
         public BeginApplication()
         {
             CurrentBeginApplication = this;
+
 
             _log = Logger.Current = DependencyService.Get<ILoggingService>();
 
@@ -40,7 +46,17 @@ namespace BeginMobile
             _log.Info("Start Begin Xamarin Application.");
 
             MainPage = new NavigationLogin(new LoginMenu(this));
-                                               
+
+            /*_device = Resolver.Resolve<IDevice>();
+            var height = _device.ScreenHeightInches();
+            var width = _device.ScreenWidthInches();
+
+            var xx = _device.Display.Xdpi;
+            var yy = _device.Display.Ydpi;
+
+            var test = _device.Display.Width;
+            var testy = _device.Display.Height;*/
+
         }
 
         private void AppExceptionEventHander(object sender, UnhandledExceptionEventArgs eventArgs)

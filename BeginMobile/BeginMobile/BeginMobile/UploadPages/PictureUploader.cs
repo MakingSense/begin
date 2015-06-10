@@ -46,10 +46,10 @@ namespace BeginMobile.UploadPages
         {
             Title = "Upload avatar";
 
-            _device = Resolver.Resolve<IDevice>();
+            /*_device = Resolver.Resolve<IDevice>();
 
             var height = _device.ScreenHeightInches();
-            var width = _device.ScreenWidthInches();
+            var width = _device.ScreenWidthInches();*/
 
             var tapGestureRecognizer = new TapGestureRecognizer()
             {
@@ -120,7 +120,8 @@ namespace BeginMobile.UploadPages
                 BackgroundColor = Color.Transparent,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 FontSize = 16,
-                IsVisible = false
+                IsVisible = false,
+                TextColor = Color.FromHex("43BB88")
             };
             _buttonNextStep.Clicked += (e, s) => MessagingCenter.Send<ContentPage>(this, "OfferYourServices");
 
@@ -199,6 +200,7 @@ namespace BeginMobile.UploadPages
                 RowDefinitions =
                 {
                     new RowDefinition(){Height = GridLength.Auto},
+                    new RowDefinition(){Height = GridLength.Auto},
                     new RowDefinition(){Height = GridLength.Auto}
                 }
             };
@@ -229,9 +231,9 @@ namespace BeginMobile.UploadPages
 
             _stackLayoutButtons = new StackLayout()
             {
-                Spacing = 10,
+                Spacing = 20,
                 Padding = new Thickness(0 , 20, 0, 0),
-                HorizontalOptions =  LayoutOptions.FillAndExpand,
+                VerticalOptions =  LayoutOptions.EndAndExpand,
                 Children =
                 {
                     _buttonTakePicture,
@@ -244,6 +246,8 @@ namespace BeginMobile.UploadPages
             {
                 Orientation = StackOrientation.Horizontal,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
+                Spacing = 10,
+                Padding = new Thickness(0, 0, 0, Device.OnPlatform(10, 10, 10)),
                 Children =
                 {
                     GreenCircle(),
@@ -257,11 +261,9 @@ namespace BeginMobile.UploadPages
             gridMain.Children.Add(_buttonNextStep, 0, 4);
 
 
-
             var _main = new StackLayout()
             {
-                //BackgroundColor = BeginApplication.Styles.PageContentBackgroundColor,
-                Padding = new Thickness(32, Device.OnPlatform(20, 20, 20), 32, 10),
+                Padding = new Thickness(25, Device.OnPlatform(65, 50, 50), 25, Device.OnPlatform(40, 5, 5)),
                 Children = {gridMain,stackCircleButtons}
             };
 
@@ -272,7 +274,9 @@ namespace BeginMobile.UploadPages
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
             };
-            var relativeLayout = new RelativeLayout();
+            var relativeLayout = new RelativeLayout()
+            {
+            };
             relativeLayout.Children.Add(backgroundImage,
                xConstraint: Constraint.Constant(0),
                yConstraint: Constraint.Constant(0),

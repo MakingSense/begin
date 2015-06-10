@@ -33,18 +33,16 @@ namespace BeginMobile.iOS.Renderers
 
         private void SetUpTabs()
         {
-            //var tabBarController = ViewController as UITabBarController;
             if (tabBarController == null) return;
 
             foreach (PageRenderer viewController in tabBarController.ViewControllers)
             {
                 var childFromTab = viewController.Element;
                 if (childFromTab == null) continue;
+                
 
                 viewController.Title = "";
-
-                //viewController.HidesBottomBarWhenPushed = true;
-                //viewController.NavigationController.PushViewController(tabBarController, true);
+                viewController.TabBarItem.ImageInsets = new UIEdgeInsets(6, 0, -6, 0);
 
                 var type = childFromTab.GetType();
 
@@ -106,7 +104,7 @@ namespace BeginMobile.iOS.Renderers
 
             TabBar.TintColor = UIColor.FromRGB (68, 68, 68);
             TabBar.BarTintColor = UIColor.White;
-
+            
             Element.PropertyChanged += (s_, e_) => ElementPropertyChanged(s_, e_);
         }
 
@@ -123,9 +121,6 @@ namespace BeginMobile.iOS.Renderers
         {
             base.ViewDidLoad();
             tabBarController = ViewController as UITabBarController;
-            
-            //NavigationController.PushViewController(tabBarController, true);
-            //AppDelegate.TabBarController = _uiTabBarController;
         }
     }
 }

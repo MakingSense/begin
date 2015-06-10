@@ -214,9 +214,9 @@ namespace BeginMobile.Utils
                                     new Setter
                                     {
                                         Property = Label.TextColorProperty,
-                                                         Value = Device.OnPlatform(Color.FromRgba(60, 186, 133, 255),
-                                                             Color.FromRgba(60, 186, 133, 255),
-                                                             Color.FromRgba(60, 186, 133, 255))
+                                                         Value = Device.OnPlatform(Color.FromHex("43BB88"),
+                                                             Color.FromHex("43BB88"),
+                                                             Color.FromHex("43BB88"))
                                         //Property = Button.TextColorProperty,
                                         //Value = Device.OnPlatform
                                         //    (Color.FromHex("43BB88"), Color.FromHex("43BB88"), Color.FromHex("646567"))
@@ -614,7 +614,7 @@ namespace BeginMobile.Utils
         {
             get
             {
-                return Device.OnPlatform(new Thickness(0, 0, 0, 0), new Thickness(0, 0, 0, 0),
+                return Device.OnPlatform(new Thickness(0, 0, 0, -33), new Thickness(0, 0, 0, 0),
                     new Thickness(0, 0, 0, 0));
             }
         }
@@ -1436,16 +1436,16 @@ namespace BeginMobile.Utils
                                         Property = VisualElement.HeightRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(100, 150, 100)
-                                                : Device.OnPlatform(150, 200, 150)
+                                                ? Device.OnPlatform(120, 115, 115)
+                                                : Device.OnPlatform(120, 120, 150)
                                     },
                                     new Setter
                                     {
                                         Property = VisualElement.WidthRequestProperty,
                                         Value =
                                             Device.Idiom == TargetIdiom.Phone
-                                                ? Device.OnPlatform(100, 150, 100)
-                                                : Device.OnPlatform(150, 200, 150)
+                                                ? Device.OnPlatform(120, 115, 115)
+                                                : Device.OnPlatform(120, 120, 150)
                                     },
                                     new Setter
                                     {
@@ -1457,7 +1457,7 @@ namespace BeginMobile.Utils
                                     new Setter
                                     {
                                         Property = CircleImage.BorderThicknessProperty,
-                                        Value = Device.OnPlatform(2, 2, 2)
+                                        Value = Device.OnPlatform(5, 5, 5)
                                     }
                                 }
                             };

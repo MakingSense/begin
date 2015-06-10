@@ -59,7 +59,7 @@ namespace BeginMobile.Pages.Wall
                 Padding = BeginApplication.Styles.ThicknessMainLayout,
                 RowSpacing = 0,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Fill,
                 RowDefinitions =
                 {
                     new RowDefinition { Height = GridLength.Auto },
@@ -69,7 +69,6 @@ namespace BeginMobile.Pages.Wall
             };
 
             _stackLayoutLoadingIndicator = CreateStackLayoutWithLoadingIndicator(ref _activityIndicatorLoading);
-            //_gridMain.Children.Add(_newPublication.Container, 0, 0);
             _gridMain.Children.Add(_stackLayoutLoadingIndicator, 0, 2);
 
             //Section Toolbar items            
@@ -157,7 +156,10 @@ namespace BeginMobile.Pages.Wall
                 }
             };
 
-            var relativeLayoutMain = new RelativeLayout() { VerticalOptions = LayoutOptions.FillAndExpand };
+            var relativeLayoutMain = new RelativeLayout()
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
             relativeLayoutMain.Children.Add(_listViewWall,
                 xConstraint: Constraint.Constant(0),
                 yConstraint: Constraint.Constant(0),
@@ -169,6 +171,7 @@ namespace BeginMobile.Pages.Wall
 
             _gridMain.Children.Add(relativeLayoutMain, 0, 1);
 
+            
             Content = _gridMain;
 
             removeLoadingIndicator(_stackLayoutLoadingIndicator);
